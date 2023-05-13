@@ -4,6 +4,7 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css">
 @endsection
 {{-- page style @S --}}
 
@@ -84,13 +85,26 @@
                         <td>Best Course</td> 
                         <td>01-12-2025</td> 
                         <td>
-                            <div class="action-bttn"> 
-                                <a href="#">
-                                    <i class="fas fa-pen text-primary me-2"></i>
-                                </a> 
-                                <a href="#">
-                                    <i class="fas fa-trash text-danger"></i>
-                                </a>
+                            <div class="action-dropdown">
+                                <div class="dropdown">
+                                    <a class="btn btn-drp" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <div class="bttns-wrap"> 
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-trash"></i>
+                                            </a> 
+                                            <a class="dropdown-item txt-item" href="#">
+                                                <span>Test</span>
+                                            </a>     
+                                        </div>
+                                    </div> 
+                                </div>
                             </div>
                         </td>
                     </tr> 

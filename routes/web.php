@@ -6,6 +6,9 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +54,22 @@ Route::prefix('bundle/course')->controller(CourseBundleController::class)->group
 // profile management page routes
 Route::prefix('instructors')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('/create', 'create');
     Route::get('/profile/{slug}', 'show'); 
     Route::get('/profile/{slug}/edit', 'edit'); 
+});
+
+// settings page routes
+Route::prefix('settings')->controller(SettingsController::class)->group(function () {
+    Route::get('/instructor', 'instructor_setting');
+});
+
+// review page routes
+Route::prefix('review')->controller(ReviewController::class)->group(function () {
+    Route::get('/', 'index'); 
+});
+
+// student page routes
+Route::prefix('students')->controller(StudentController::class)->group(function () {
+    Route::get('/', 'index'); 
 });

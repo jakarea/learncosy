@@ -61,4 +61,57 @@
     }
 }
  
-
+.action-dropdown{
+    .dropdown{
+        .btn-drp{
+            background: v.$light;
+            color: v.$dark;
+            border-radius: .6rem;
+            @include m.para(1rem,600,v.$light);
+            i{
+                color: v.$dark;
+                font-size: 1.3rem;
+            }
+        }
+    }
+    .dropdown-menu{
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+       
+        .bttns-wrap{  
+            @include m.df(flex-end);
+            a{
+                padding: .5rem .7rem;
+                display: inline-block;
+                text-align: center;
+                max-width: 40px;
+                border-right: 1px solid #b9acac;
+                transition: all linear .3s;
+                background: v.$primary;
+                border-radius: 4px;
+                i{
+                    color: v.$light!important;
+                    font-size: .9rem;
+                }
+                span{
+                    color: v.$light;
+                    font-size: .9rem; 
+                }
+                &:hover{
+                    background: v.$btnbg;
+                    i{
+                        color: v.$light!important;
+                    }
+                }
+                &:last-child{
+                    border-right: 0px;
+                }
+            }
+            a.txt-item{
+                max-width: fit-content!important;
+            }
+        }
+        
+    }
+}

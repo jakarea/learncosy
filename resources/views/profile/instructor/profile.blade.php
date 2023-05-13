@@ -15,7 +15,7 @@
         <div class="product-filter-box mt-0">
             <div class="password-change-txt">
                 <h1 class="mb-1">My Profile</h1>
-                <p>This is <span class="text-danger"> Nayan Akram </span> Profile page.</p>
+                <p><span class="text-danger"> Nayan Akram </span> Profile page.</p>
             </div>
             <div class="form-grp-btn mt-0 ms-auto">
                 <a href="{{ url('/') }}" class="btn me-3"><i class="fas fa-list"></i> Dashboard</a>
@@ -74,6 +74,13 @@
         <div class="col-lg-8">
             <div class="row">
                 <div class="col-12">
+                    <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
+                        <h5>Instructor Details :</h5> 
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non quos accusamus ut dicta, suscipit quia deserunt. Unde repellat a suscipit doloribus facere minima sapiente est rerum earum, </p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non quos accusamus ut dicta, suscipit quia deserunt. Unde repellat a suscipit doloribus facere minima sapiente est rerum earum, libero aperiam pariatur. Explicabo, ratione repudiandae! Animi quia tempora nulla reprehenderit amet quam veniam? Maxime, sunt? Possimus debitis aliquam itaque provident. Tempore quas cum quasi sunt ad fugit mollitia suscipit aut impedit!</p>
+                    </div>
+                </div> 
+                <div class="col-12">
                     <div class="productss-list-box payment-history-table">
                         <h5 class="p-3 pb-0">Emails from students :</h5> 
                         <table>
@@ -124,12 +131,50 @@
                             </div>
                         </div>  --}}
                     </div>
-                </div>
+                </div> 
                 <div class="col-12">
-                    <div class="productss-list-box payment-history-table instructor-details-box">
-                        <h5>Instructor Details :</h5> 
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non quos accusamus ut dicta, suscipit quia deserunt. Unde repellat a suscipit doloribus facere minima sapiente est rerum earum, </p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non quos accusamus ut dicta, suscipit quia deserunt. Unde repellat a suscipit doloribus facere minima sapiente est rerum earum, libero aperiam pariatur. Explicabo, ratione repudiandae! Animi quia tempora nulla reprehenderit amet quam veniam? Maxime, sunt? Possimus debitis aliquam itaque provident. Tempore quas cum quasi sunt ad fugit mollitia suscipit aut impedit!</p>
+                    <div class="productss-list-box payment-history-table mt-4">
+                        <h5 class="p-3 pb-0">Instructor Course List :</h5> 
+                        <table>
+                            <tr>
+                                <th width="5%">No</th>
+                                <th>Course Name</th> 
+                                <th>Course Review</th>
+                                <th>Total Stucents</th>
+                                <th>View Course</th>
+
+                            </tr>
+                           {{-- item @S --}} 
+                            <tr>
+                                <td>1</td> 
+                                <td>React Redux</td>
+                                <td>345</td>
+                                <td>45673</td> 
+                                <td>
+                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
+                                </td>
+                            </tr> 
+                           {{-- item @E --}} 
+                           {{-- item @S --}} 
+                            <tr>
+                                <td>2</td> 
+                                <td>React Redux</td>
+                                <td>345</td>
+                                <td>45673</td> 
+                                <td>
+                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
+                                </td>
+                            </tr> 
+                           {{-- item @E --}} 
+                        </table> 
+                        {{-- <div class="row">
+                            <div class="col-12">
+                                <div class="payment-method-info-item">
+                                    <span class="text-mute">Card Brand</span>
+                                    <h6 class="text-success">No Payment Method</h6>
+                                </div>
+                            </div>
+                        </div>  --}}
                     </div>
                 </div> 
             </div>

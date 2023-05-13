@@ -13,10 +13,10 @@ class ProfileManagementController extends Controller
     }
 
     // profile create
-    // public function create()
-    // {  
-    //     return view('profile/admin/create'); 
-    // }
+    public function create()
+    {  
+        return view('profile/admin/create'); 
+    }
 
     // profile show
     public function show()

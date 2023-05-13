@@ -31,9 +31,4 @@ class CourseController extends Controller
         return view('course/admin/show'); 
     }
 
-    // course edit
-    public function edit($slug)
-    {  
-        return view('course/admin/edit'); 
-    } 
 }

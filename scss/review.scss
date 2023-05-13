@@ -1,0 +1,38 @@
+@use './util/variabls' as v;
+@use './util/mixin' as m;
+@use './util/media-query' as q;
+
+.review-item-box{
+    @include m.box(1rem,0.6rem,v.$light);
+    border: 1px solid v.$third;
+    margin-bottom: 1.5rem;
+    h5{
+        @include m.para(1.4rem,700,v.$primary);
+        margin-bottom: 0.4rem; 
+    }
+    p{
+        @include m.para(0.88rem,400,v.$menuclr);
+        
+    }
+    i{
+        color: v.$third;
+        font-size: 1.1rem;
+    }
+    h6{
+        @include m.para(1rem,500,v.$btnbg)
+    }
+    .d-flex{
+        margin-top: 1rem;
+        @include m.df(space-between);
+        ul{
+            @include m.df;
+            li{
+                i{
+                    font-size: 1rem;
+                    margin-left: 0.2rem;
+                    color: v.$primary;
+                }
+            }
+        }
+    }
+}
