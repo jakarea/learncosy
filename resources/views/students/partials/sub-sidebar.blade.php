@@ -4,7 +4,7 @@
             <img src="{{ asset('assets/images/course/book.svg') }}" alt="Dash" class="img-fluid me-2"> All Students </a>
     </li>
     <li>
-        <a href="{{ url('students/add') }}" class="{{ Request::is('course/add')  ? ' active' : '' }}">
+        <a href="{{ url('students/create') }}" class="{{ Request::is('students/create')  ? ' active' : '' }}">
             <img src="{{ asset('assets/images/course/Star.svg') }}" alt="Dash" class="img-fluid me-2"> Create </a>
     </li>
     <li>

@@ -9,26 +9,25 @@ class CourseController extends Controller
     // course list
     public function index()
     {  
-        return view('course/admin/index'); 
+        return view('course/instructor/index'); 
     }
 
     // course create
     public function create()
     {  
-        return view('course/admin/create'); 
+        return view('course/instructor/create'); 
     }
 
     // course store
     public function store(Request $request)
     {  
-        return $request->all();
-        return view('course/admin/create'); 
+        return $request->all(); 
     }
 
     // course create
     public function show()
     {   
-        return view('course/admin/show'); 
+        return view('course/instructor/show'); 
     }
 
 }

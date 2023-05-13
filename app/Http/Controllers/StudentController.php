@@ -11,4 +11,10 @@ class StudentController extends Controller
      {  
          return view('students/instructor/index'); 
      }
+
+    // create page 
+    public function create()
+     {  
+         return view('students/instructor/create'); 
+     }
 }

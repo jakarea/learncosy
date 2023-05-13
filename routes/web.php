@@ -72,4 +72,5 @@ Route::prefix('review')->controller(ReviewController::class)->group(function () 
 // student page routes
 Route::prefix('students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index'); 
+    Route::get('/create', 'create'); 
 });

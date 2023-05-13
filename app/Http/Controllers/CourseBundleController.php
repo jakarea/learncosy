@@ -9,12 +9,12 @@ class CourseBundleController extends Controller
      // course bundle list
      public function index()
      {  
-         return view('bundle/admin/index'); 
+         return view('bundle/instructor/index'); 
      }
  
      // course bundle create
      public function create()
      {  
-         return view('bundle/admin/create'); 
+         return view('bundle/instructor/create'); 
      }
 }
