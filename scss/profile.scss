@@ -1,0 +1,432 @@
+@use './util/variabls' as v;
+@use './util/mixin' as m;
+@use './util/media-query' as q;
+
+
+// user password changes
+.user-password-chnage {
+    padding-left: 1rem;
+}
+
+.password-change-txt {
+    h1 {
+        @include m.para(2rem, 600, v.$btnbg);
+        margin-bottom: 2rem;
+    }
+
+    p {
+        @include m.para(.9rem, 400, v.$fourth);
+        margin-bottom: 2rem;
+    }
+
+    img {
+        mix-blend-mode: darken;
+    }
+}
+
+.change-password-form {
+    background-color: v.$light;
+    padding: 2.5rem;
+    border-radius: .5rem;
+    box-shadow: v.$mbxs;
+    width: 80%;
+    margin: 0 auto;
+
+    h3 {
+        @include m.para(1.4rem, 600, v.$btnbg);
+        margin-bottom: .5rem;
+
+        span {
+            color: v.$primary;
+        }
+    }
+
+    p {
+        @include m.para(.9rem, 400, v.$fourth);
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        label {
+            @include m.para(.95rem, 400, v.$btnbg);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            border: 1px solid v.$third;
+        }
+    }
+
+    .form-submit {
+        margin-top: 1rem;
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            text-align: center;
+            @include m.button(1rem, v.$light, v.$gdbg);
+
+            &:hover {
+                opacity: .7
+            }
+        }
+    }
+}
+
+.set-profile-picture {
+    .media {
+        align-items: center;
+
+        img {
+            width: 9rem;
+            height: 9rem;
+            border-radius: 50%;
+            border: 3px solid v.$primary;
+            margin-right: 1.5rem;
+        }
+
+        .btn-upload-pic {
+            background: v.$gdbg;
+            color: v.$light;
+            font-size: 1rem;
+            padding: .5rem 1rem;
+        }
+
+        .delete-bttn {
+            background: v.$blu;
+            display: block;
+            margin-top: .5rem;
+        }
+    }
+}
+
+.profile-imgs {
+    text-align: center;
+
+    img {
+        width: 70%;
+        display: block;
+        margin: 0 auto;
+        mix-blend-mode: darken;
+    }
+}
+
+.customer-profile-info {
+    padding: 2rem;
+    border: 1px solid v.$third;
+
+    .d-flex {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.7rem;
+
+    }
+
+    h3 {
+        @include m.para(1.5rem, 600, v.$btnbg);
+        text-transform: capitalize;
+    }
+
+    .set-profile-picture {
+        position: relative;
+        margin-bottom: 2rem;
+
+        .media {
+            span {
+                width: 10rem;
+                height: 10rem;
+                background: v.$gdbg;
+                border-radius: 50%;
+                color: v.$light;
+                font-size: 4rem;
+                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            img {
+                border-radius: 20%;
+                width: 12rem;
+                height: 12rem;
+                border: 5px solid v.$primary;
+                object-fit: cover;
+            }
+        }
+
+        .role-label {
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+
+            .badge {
+                font-size: .9rem;
+                background-color: v.$blu !important;
+            }
+        }
+    }
+
+    .form-group {
+        margin-bottom: 0.5rem !important;
+        @include m.df(space-between);
+
+        label {
+            color: v.$fourth;
+
+            i {
+                margin-right: 4px;
+            }
+        }
+
+        p {
+            @include m.para(1rem, 500, v.$btnbg);
+            margin-left: 0.5rem;
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        code {
+            font-size: 1rem;
+            margin-left: 0.5rem;
+            display: inline-block;
+        }
+    }
+
+    h6 {
+        font-size: 1.2rem;
+        color: v.$primary;
+        margin: .5rem 0 1rem !important;
+    }
+}
+
+.payment-history-table {
+    h5 {
+        @include m.para(1.4rem, 600, v.$btnbg);
+    }
+}
+
+// user profile upload css
+
+.file-wrapper {
+    width: 10rem;
+    height: 10rem;
+    border: 3px solid v.$primary;
+    border-radius: .4rem;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+} 
+
+.file-wrapper:after {
+    content: '+';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: max-content;
+    font-size: 3.5rem;
+    color: v.$primary;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.file-wrapper:before {
+    content: 'Upload Profile Picture';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 35px;
+    width: max-content;
+    height: max-content;
+    font-size: 0.75em;
+    color: gray;
+}
+
+
+.file-wrapper .close-btn {
+    display: none;
+}
+
+.file-wrapper input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 99999;
+    cursor: pointer;
+}
+
+.file-set {
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: transparent;
+    padding: 10px;
+    border-width: 0px;
+}
+
+.file-set:hover {
+    transition: all 0.5s ease-out;
+    filter: brightness(110%);
+}
+
+.file-set:before {
+    color: transparent;
+}
+
+.file-set:after {
+    color: transparent;
+}
+
+.file-set .close-btn {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    display: block;
+    background: #000;
+    color: #fff;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    text-align: center;
+    line-height: 1.5;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.file-set>input {
+    pointer-events: none;
+}
+
+
+.table-avatar{
+    img{
+        width: 3rem!important;
+        height: 3rem!important;
+        border-radius: 50%!important;
+        object-fit: cover;
+    }
+    span {
+        width: 3rem;
+        height: 3rem;
+        background: v.$gdbg;
+        border-radius: 50%;
+        color: v.$light;
+        font-size: 1rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.subscription-table{
+    h5 {
+        @include m.para(1.4rem, 600, v.$btnbg);
+    }
+    tr{
+        td{
+            line-height: 70%!important;
+        }
+    }
+}
+
+.refund-bttns{
+    .btn-refund{
+        @include m.button(1rem,v.$light,v.$blu);
+        padding: .3rem 1rem; 
+    }
+    .btn-cancel{
+        @include m.button(1rem,v.$light,v.$gdbg);
+        padding: .3rem 1rem; 
+    }
+}
+
+.refund-modal{
+    h6{
+        @include m.para(1.4rem, 600, v.$btnbg);
+    }
+    .form-group{
+        label{
+            @include m.para(0.9rem, 500, v.$fourth);
+            margin-bottom: 0.4rem;
+        }
+        textarea{
+            border: 1px solid v.$third;
+            @include m.para(1rem, 400, v.$btnbg);
+            resize: none
+        }
+    }
+    .modal-footer{
+        .btn-closes{
+            @include m.button(1rem,v.$light,v.$fourth);
+            padding: .3rem 1rem; 
+        }
+        .btn-request{
+            @include m.button(1rem,v.$light,v.$gdbg);
+            padding: .3rem 1rem; 
+        }
+    }
+}
+
+@include q.responsive(phone) {
+    .user-password-chnage .password-change-txt {
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            width: 100%;
+            display: none;
+        }
+
+        img {
+            display: none;
+        }
+    }
+
+    .user-password-chnage .change-password-form {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .user-password-chnage .change-password-form h3 {
+        font-size: 1.1rem;
+    }
+
+}
+
+@include q.responsive(landphone) {
+    .user-password-chnage .password-change-txt {
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            width: 100%;
+            display: none;
+        }
+
+        img {
+            display: none;
+        }
+    }
+
+    .user-password-chnage .change-password-form {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .user-password-chnage .change-password-form h3 {
+        font-size: 1.1rem;
+    }
+
+}

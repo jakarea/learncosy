@@ -1,0 +1,20 @@
+@mixin responsive($breakpoints){
+    @if $breakpoints == phone {
+        @media(min-width: 320px) and (max-width: 574px) {@content}
+    }
+    @else if ($breakpoints == landphone) {
+        @media (min-width: 574px) and (max-width: 767px) {@content}
+    }
+    @else if $breakpoints == tablet {
+        @media (min-width: 767px) and (max-width: 992px) {@content}
+    }
+    @else if $breakpoints == landtablet { 
+        @media (min-width: 992px) and (max-width: 1199px) {@content}
+    }
+    @else if $breakpoints == regular { 
+        @media (min-width: 1199px) and (max-width: 1399px) {@content}
+    }
+    @else if $breakpoints == large { 
+        @media (min-width: 1399px) {@content}
+    }
+}

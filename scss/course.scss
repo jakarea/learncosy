@@ -1,0 +1,723 @@
+@use './util/variabls' as v;
+@use './util/mixin' as m;
+@use './util/media-query' as q;
+
+// regular css @S
+.course-page-wrap {
+    height: 100%;
+}
+
+.course-title {
+    margin-bottom: 1.6rem;
+
+    h1 {
+        @include m.para(2.6rem, 700, v.$btnbg);
+    }
+}
+
+.course-category-box ul {
+    @include m.df;
+
+    li {
+        span {
+            @include m.para;
+            font-weight: 600;
+        }
+
+        a {
+            display: block;
+            margin-left: 1.8rem;
+            @include m.button(1rem, v.$fourth, v.$light);
+            border-radius: 3rem;
+
+            &:hover {
+                background: v.$btnbg;
+                color: v.$light;
+            }
+        }
+    }
+}
+
+.course-box-wrap {
+    @include m.box(0.8rem 0.6rem, 0.625rem, v.$light);
+    margin-top: 1.8rem;
+    height: 96%;
+    // @include m.df(space-between);
+    // flex-direction: column;
+
+    .course-thumbnail {
+        img {
+            width: 100%;
+            display: block;
+            border-radius: 0.625rem;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+        }
+    }
+
+    .course-content-box {
+
+        .course-txt-box {
+            margin-top: 0.4rem;
+            padding: 1rem;
+
+            h3 {
+                @include m.para(1.16rem, 700, v.$btnbg);
+            }
+
+            ul {
+                @include m.df;
+                margin: .85rem 0;
+
+                li {
+                    a {
+                        display: block;
+                        @include m.para(0.9rem, 600, v.$blu);
+                        margin-right: 1.4rem;
+                    }
+                    &:nth-child(2){
+                        margin-left: 3rem!important;
+                    }
+                }
+            }
+
+            p {
+                @include m.para;
+                letter-spacing: 0.75px;
+                line-height: 180%;
+            }
+        }
+    }
+}
+
+.course-ftr {
+    padding: 1rem;
+    padding-bottom: .4rem;
+    width: 100%;
+    padding-top: 0;
+    h5 {
+        margin-bottom: 0.8rem;
+        @include m.para(1rem, 700, v.$primary);
+        @include m.df;
+
+        i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+    }
+
+    .progress {
+        background: v.$border;
+        height: 0.5rem;
+
+        .progress-bar {
+            background: v.$gdbg;
+            border-radius: 0.625rem;
+        }
+    }
+}
+.course-more-info{
+    a{
+        @include m.para(.9rem,700,v.$blu);
+        @include m.df;
+        img{
+            margin-right: 0.4rem;
+        }
+    }
+}
+
+// regular css @E
+
+// my learning css @S
+.mylearning-txt-box {
+    h1 {
+        @include m.para(2.2rem, 700, v.$btnbg);
+    }
+
+    p {
+        @include m.para(1.05rem, 400, v.$btnbg);
+        width: 90%;
+        margin: .5rem 0 1.5rem;
+    }
+
+    h5 {
+        @include m.para(1.25rem, 700, v.$btnbg);
+        margin-bottom: 1rem;
+    }
+}
+
+.course-outline-box {
+    margin-left: 2rem;
+
+    .accordion {
+        background: transparent;
+        border: 0;
+
+        .accordion-item {
+            background: transparent;
+            border: 0;
+            position: relative;
+            padding: .6rem 0;
+            i{
+                color: v.$fourth;
+            }
+            &:before {
+                position: absolute;
+                content: "";
+                left: -20px;
+                top: 1rem;
+                height: 100%;
+                width: 3px;
+                background: v.$newbrdr;
+            }
+
+            span.numbering {
+                position: absolute;
+                left: -38px;
+                top: 14px;
+                width: 2.5rem;
+                height: 2.5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: 3.6px solid v.$newbrdr;
+                font-size: 0.9rem;
+                font-weight: 600;
+                background: v.$mainbg;
+                color: v.$newbrdr;
+            }
+
+            span.numbering.active {
+                border-color: v.$primary;
+                color: v.$primary;
+            }
+
+            .accordion-button {
+                background: transparent;
+                padding: .8rem 1rem;
+                border: none;
+                padding-right: 0;
+                .d-flex {
+                    justify-content: space-between;
+                    width: 100%;
+
+                    p {
+                        @include m.para(1rem, 600, v.$btnbg);
+                    }
+                }
+            }
+
+            ul {
+                margin-left: 0.5rem;
+
+                li {
+                    a {
+                        display: block;
+                        @include m.para(.9rem, 400, v.$btnbg);
+                        margin: .8rem 0;
+                        img{
+                            filter: invert(58%) sepia(25%) saturate(3683%) hue-rotate(319deg) brightness(96%) contrast(113%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .accrodin-item-2 {
+            &:before {
+                height: 0 !important;
+                width: 0 !important;
+            }
+
+        }
+    }
+
+    .accordion-button::after {
+        background-image: inherit
+    }
+}
+
+.mylearning-video-content-box {
+    background: v.$light;
+    padding: 2rem;
+}
+.custom-margin-top{
+    margin-top: -2rem;
+}
+
+.add_module_bttn{
+    padding: 10px 15px;
+    border-radius: 1.6rem;
+    background: v.$gdbg;
+    color: v.$light;
+    display: block;
+    text-align: center; 
+    width: 80%;
+    margin: 0 auto;
+    margin-top: .3rem;
+    &:hover{
+        background-color: v.$menuclr;
+        color: v.$light;
+    }
+}
+// {{ url('admin/elearning/modules/create?course='. $course_id.'&'.$module_id) }}
+.add_lesson_bttn{
+    padding: 7px 15px;
+    border-radius: 1.4rem;
+    background-color: v.$blu;
+    color: v.$light;
+    margin-top: .3rem;
+    display: inline-block;
+    text-align: center; 
+    font-size: .9rem;
+    &:hover{
+        background-color: v.$menuclr;
+        color: v.$light;
+    }
+}
+
+.course-outline-box .accordion .accordion-item:last-child:before{
+    height: 0;
+}
+
+.content-txt-box {
+    .d-flex {
+        justify-content: space-between;
+        align-items: center;
+        margin: 2.2rem 0;
+
+        a {
+            @include m.button(1rem, v.$light, v.$gdbg);
+            border-radius: 3rem;
+
+            &:hover {
+                opacity: .7
+            }
+        }
+        a.min_width{
+            min-width: 10rem;
+            text-align: center;
+            margin-left: 0.5rem;
+        }
+    }
+
+    h3 {
+        @include m.para(2rem, 700, v.$btnbg);
+    }
+
+    p {
+        @include m.para;
+        line-height: 180%;
+    }
+}
+
+.profile-box {
+    margin: 2rem 0;
+
+    .media {
+        align-items: center;
+
+        img {
+            margin-right: 1rem;
+        }
+
+        h5 {
+            @include m.para(1.2rem, 700, v.$btnbg);
+        }
+
+        p {
+            @include m.para(1rem, 600, v.$fourth);
+            margin-top: 4px;
+        }
+    }
+}
+
+.course-content-box {
+    .d-flex {
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem 0; 
+        border-top: 1px solid v.$third;
+        border-bottom: 1px solid v.$third;
+
+        h5 {
+            @include m.para(1.2rem, 700, v.$btnbg);
+        }
+
+        p {
+            @include m.para(.9rem, 400, v.$fourth);
+            margin-top: 4px;
+        }
+    }
+
+    .attached-file-box {
+        @include m.df(space-between);
+        align-items: center;
+        margin-top: 1rem;
+
+        h4 {
+            @include m.para(1.25rem, 400, v.$btnbg)
+        }
+    }
+}
+
+.border-right-custom{
+    position: relative;
+    &::before{
+        position: absolute;
+        content: "";
+        left: 50%;
+        top: 0;
+        width: 1px;
+        background: v.$bga;
+        height: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+// my learning css @E
+
+// suggested css @S
+.learning-banners-wrap {
+    @include m.box(2rem 2.2rem, 0,transparent);
+    margin-bottom: 2rem;
+    margin-left: -24px;
+    margin-top: -17px;
+    @include m.bgi('../images/course/suggested-banner.png');
+    .media {
+        align-items: center;
+
+        .media-body {
+            .addspy-main-title {
+                @include m.para(3rem, 600, v.$light);
+
+                span {
+                    color: v.$secondary;
+                }
+            }
+
+            p {
+                @include m.para(1rem, 400, v.$light);
+                margin: .6rem 0 1.4rem;
+            }
+
+            a {
+                @include m.button(1rem, v.$light, v.$gdbg);
+                border-radius: 3rem;
+                padding-left: 4rem !important;
+                padding-right: 4rem !important;
+
+                &:hover {
+                    background: v.$light;
+                    color: v.$dark;
+                }
+            }
+        }
+    }
+}
+
+
+.frame-box{
+    .media{
+        background: v.$light;
+        padding: 1rem;
+        border-radius: 0.625rem;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
+        h5{
+            @include m.para(1.25rem,600,v.$btnbg);
+        }
+        p{
+            @include m.para(0.9rem,400,v.$btnbg);
+            margin: .3rem 0;
+        }
+        span{
+            @include m.para(0.8rem,400,v.$fourth);
+            display: block;
+        }
+        img{
+            margin-right: 1rem;
+        }
+    }
+}
+
+.learning-content-box-2{
+    border-radius: 0.625rem;
+    .profile-box-2{
+        @include m.df(space-between);
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid v.$border;
+    }
+    .muted-content-box{
+        h5{
+            @include m.para(1rem,700,v.$fourth);
+            margin-bottom: 1rem;
+        }
+        p{
+            @include m.para(0.95rem,500,v.$newbrdr);
+            margin-bottom: 1rem;
+            line-height: 160%;
+            width: 90%;
+        }
+        ul {
+            margin-top: 2rem;
+            li{
+                a{
+                    display: block;
+                    @include m.para(1rem,500,v.$blu);
+                    margin-top: 0.8rem;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.course-outline-box {
+    .accordion-body {
+        padding: 0 !important;
+    }
+}
+
+.video-iframe-vox{
+    img{
+        display: block;
+        width: 100%;
+    }
+}
+// suggested css @E
+
+// mobile responsive device css
+@include q.responsive(phone) {
+    .course-category-box ul {
+        display: grid;
+        grid-template-columns: 50% 50%;
+
+        li a {
+            margin-left: 0;
+        }
+    }
+
+    .content-txt-box h3 {
+        font-size: 1.5rem;
+    }
+
+    .mylearning-txt-box h1 {
+        font-size: 2rem;
+    }
+
+    .mylearning-txt-box p {
+        font-size: .9rem;
+        width: 100%;
+    }
+
+    .mylearning-video-content-box {
+        margin-top: 2rem;
+    }
+
+    .course-content-box .d-flex,
+    .content-txt-box .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .content-txt-box .d-flex a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .course-content-box .attached-file-box h4 {
+        font-size: 1rem;
+    }
+    .suggested-banners-wrap{
+        padding: 1.5rem;
+        h1.addspy-main-title{
+            font-size: 2rem!important;
+        }
+    }
+    .frame-box{
+        .media{
+            img{
+                width: 6rem;
+            }
+        }
+    }
+    .learning-content-box-2 .profile-box-2{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .learning-content-box-2 .profile-box-2{
+        margin-top: 0;
+        margin-bottom: 1rem;
+        .media {
+            h5{
+                font-size: 1rem;
+            }
+            p{
+                font-size: 0.9rem;
+            }
+        }
+    }
+    .learning-banners-wrap{
+        padding: 1rem;
+    }
+    .learning-banners-wrap .media .media-body .addspy-main-title{
+        font-size: 2rem;
+    }
+    .learning-banners-wrap .media .media-body p{
+        font-size: .9rem;
+    }
+    .border-right-custom::before {
+        width: 0!important;
+    }
+    .mylearning-txt-box {
+        margin-top: 0!important;
+    }
+    .mylearning-video-content-box{
+        padding: 1rem;
+    }
+    .content-txt-box p{
+        font-size: 0.9rem;
+        line-height: 160%;
+    }
+    .custom-margin-top{
+        margin-top: 1rem;
+    }
+    .profile-box a{
+        margin-top: 1rem;
+    }
+    .learning-content-box-2 .muted-content-box p{
+        width: 100%;
+    }
+}
+
+// landscape mobile responsive device css
+@include q.responsive(landphone) {
+    .border-right-custom::before {
+        width: 0!important;
+    }
+    .custom-margin-top{
+        margin-top: 2rem;
+    }
+    .content-txt-box .d-flex{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .learning-content-box-2 .muted-content-box p{
+        width: 100%;
+    }
+}
+
+// tablet responsive device css
+@include q.responsive(tablet) {
+    .mylearning-txt-box h1{
+        font-size: 2rem;
+    }
+    .course-content-box .d-flex,
+    .content-txt-box .d-flex{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .content-txt-box .d-flex a{
+        margin-top: 1rem;
+    }
+    .mylearning-txt-box p{
+        width: 100%;
+    }
+    .frame-box .media {
+        flex-direction: column;
+    }
+    .border-right-custom::before {
+        width: 0!important;
+    }
+    .frame-box .media img{
+        margin-right: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+// landscape tablet responsive device css
+@include q.responsive(landtablet) {
+    .course-content-box .d-flex,
+    .content-txt-box .d-flex{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .content-txt-box .d-flex a{
+        margin-top: 1rem;
+    }
+    .mylearning-txt-box h1{
+        font-size: 1.7rem;
+    }
+    .course-content-box .attached-file-box h4{
+        font-size: .8rem;
+        img{
+            width: 2rem!important;
+        }
+    }
+    .mylearning-txt-box p{
+        width: 100%;
+    }
+    .frame-box .media {
+        flex-direction: column;
+    }
+    .course-box-wrap .course-content-box .course-txt-box ul li:nth-child(2){
+        margin-left: 0;
+    }
+    .course-box-wrap .course-content-box .course-txt-box ul li a{
+        margin-right: 0;
+    }
+    .frame-box .media img{
+        margin-right: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+// regular device 
+@include q.responsive(regular) {
+    .course-content-box .d-flex,
+    .content-txt-box .d-flex{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .content-txt-box .d-flex a{
+        margin-top: 1rem;
+    }
+    .mylearning-txt-box h1{
+        font-size: 2rem;
+    }
+    .course-content-box .attached-file-box h4{
+        font-size: .8rem;
+        img{
+            width: 2rem!important;
+        }
+    }
+    .course-box-wrap .course-content-box .course-txt-box ul li a{
+        margin-right: 0;
+    }
+    .course-box-wrap .course-content-box .course-txt-box p{
+        line-height: 140%;
+    }
+    .course-box-wrap .course-content-box .course-txt-box{
+        padding: 0.5rem;
+    } 
+    .frame-box .media {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .frame-box .media img{
+        margin-right: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

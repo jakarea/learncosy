@@ -1,0 +1,52 @@
+.productss-list-box .btn-table {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 140%;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  border-radius: 0.4rem;
+  padding: 0.3rem 0.8rem;
+}
+
+.table-avatar img {
+  width: 3rem !important;
+  height: 3rem !important;
+  border-radius: 50% !important;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.table-avatar span {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-check-input:checked {
+  background-color: #FF6262;
+  border-color: #FF6262;
+}
+
+.custom-select .form-group .dropdown button {
+  background: transparent !important;
+  border: 1px solid #ccc !important;
+}
+.custom-select .form-control.dropdown div span,
+.custom-select .form-control.dropdown .dropdown-item {
+  background: transparent !important;
+  color: #000000;
+}
+.custom-select .bootstrap-select .dropdown-menu li a span.check-mark {
+  color: #FF6262;
+  margin-right: 0.5rem;
+}

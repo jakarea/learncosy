@@ -1,0 +1,183 @@
+@use './util/index' as m;
+@use './util/variabls' as v;
+@use './util/media-query' as q;
+
+.header-section {
+    padding: 1.5rem;
+    box-shadow: v.$mbxs;
+    background-color: v.$light;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+
+.header-left-part {
+    display: grid;
+    grid-template-columns: 14.7rem 1fr;
+}
+
+.header-logo-wrap {
+    @include m.df(space-between);
+}
+
+.header-search-wrap {
+    @include m.df;
+    margin-left: 2rem;
+
+    input {
+        border: none;
+        background-color: transparent;
+        @include m.para;
+        padding-left: 0.8rem;
+        width: 100%;
+        display: block;
+    }
+}
+
+.header-start-menu-wrapper {
+    @include m.df(flex-end);
+
+    .header-navbar-wrap {
+        text-align: end;
+
+        .head-navbar {
+            @include m.df;
+
+            .link-item {
+                .link-click {
+                    @include m.para;
+                    margin-right: 1.6rem;
+                }
+            }
+        }
+    }
+
+    .header-right-icon-wrap {
+        .icon-nav {
+            @include m.df(flex-end);
+
+            .dark-mode-bttn {
+                @include m.df;
+                background: v.$third;
+                padding: .3rem .8rem;
+                border-radius: 200px;
+                margin-right: 0.6rem;
+                cursor: pointer;
+                transition: all linear .3;
+
+                .fa-solid {
+                    color: v.$fourth;
+                    margin-right: 0.4rem;
+                }
+
+                span {
+                    @include m.para(.8rem, 600, v.$dark)
+                }
+
+                &:hover {
+                    background-color: v.$dark;
+
+                    span {
+                        color: v.$light;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// collapse menu css @S 
+
+// settings toggle css @S
+.settings-dropdown{
+    border-radius: .2rem;
+    padding: .20rem 0;
+    li{
+        a{
+            display: block;
+            @include m.para(.9rem,400,v.$fourth);
+            padding: .4rem .6rem;
+            i{
+                margin-right: 0.4rem;
+                color: v.$btnbg;
+            }
+            &:hover{
+                background: v.$bga;
+            }
+        }
+    }
+}
+// settings toggle css @E
+
+
+// responsive css start
+@include q.responsive(phone) { 
+    .header-left-part { 
+        grid-template-columns: 100%;
+    }
+    .header-search-wrap{
+        margin: 0;
+        display: none;
+    }  
+    .header-section {
+        padding: 0.8rem 1rem;
+
+        .header-start-menu-wrapper {
+            justify-content: space-between;
+
+            .header-navbar-wrap {
+                width: 100%;
+                display: block;
+                justify-content: space-between;
+                margin-top: 1rem;
+                .head-navbar{
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+    .header-start-menu-wrapper .header-navbar-wrap .head-navbar .link-item .link-click{
+        margin-right: 0;
+        font-size: .86rem;
+    }
+}
+
+@include q.responsive(landphone) {
+    .header-left-part { 
+        grid-template-columns: 100%;
+    }
+    .header-search-wrap{
+        margin: 0;
+        display: none;
+    }
+    .header-start-menu-wrapper{
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+}
+
+@include q.responsive(tablet) {
+    .header-left-part { 
+        grid-template-columns: 100%;
+    }
+    .header-search-wrap{
+        margin: 0;
+        display: none;
+    }
+    .header-start-menu-wrapper{
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+}
+@include q.responsive(landtablet) {
+    .header-left-part { 
+        grid-template-columns: 70% 30%;
+    }
+    .header-search-wrap{
+        margin: 0;
+        display: none;
+    }
+    .header-start-menu-wrapper{
+        justify-content: flex-start; 
+    }
+}
