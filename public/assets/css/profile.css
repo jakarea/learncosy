@@ -387,6 +387,18 @@
   padding: 0.3rem 1rem;
 }
 
+.instructor-details-box {
+  margin-top: 2rem;
+  padding: 1.5rem;
+}
+.instructor-details-box p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #8C8FAE;
+  line-height: 140%;
+  margin-top: 0.6rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-password-chnage .password-change-txt h1 {
     font-size: 1.4rem;

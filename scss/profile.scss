@@ -375,6 +375,15 @@
     }
 }
 
+.instructor-details-box{
+    margin-top: 2rem;
+    padding: 1.5rem;
+    p{
+        @include m.para(0.9rem, 500, v.$fourth);
+        margin-top: 0.6rem;
+    }
+}
+
 @include q.responsive(phone) {
     .user-password-chnage .password-change-txt {
         h1 {
@@ -430,3 +439,4 @@
     }
 
 }
+

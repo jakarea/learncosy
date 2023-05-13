@@ -2,7 +2,8 @@
     {{-- header user @S --}}
     <div class="header-user-box">
         <div class="media"> 
-            <img src="{{ asset('assets/images/avatar.png') }}" alt="Nayan Akram" class="img-fluid"> 
+            {{-- <img src="{{ asset('assets/images/avatar.png') }}" alt="Nayan Akram" class="img-fluid">  --}}
+            <span>N</span>
             <div class="media-body">
                 <h5>Nayan Akram</h5>
                 <p>Admin</p>
@@ -22,7 +23,7 @@
             </li>
             <li class="menu-item">
                 <a href="{{ url('/course') }}" class="{{ Request::is('course*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="Course" title="Course" class="img-fluid" />
+                    <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
                     <span>Course</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a>
@@ -32,11 +33,19 @@
             </li>  
             <li class="menu-item">
                 <a href="{{ url('/bundle/course') }}" class="{{ Request::is('bundle/course*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="Course" title="Course" class="img-fluid" />
+                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Adspy" title="Adspy" class="img-fluid" />
                     <span>Bundle Course</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('bundle/partials/sub-sidebar') 
+            </li>  
+            <li class="menu-item">
+                <a href="{{ url('/instructors') }}" class="{{ Request::is('instructors*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Instructors</span>
+                    <i class="fa-solid fa-angles-right"></i>
+                </a> 
+                 @include('profile/partials/sub-sidebar') 
             </li>   
             <li class="menu-item">
                 <a class="menu-link bg-white" href="#">

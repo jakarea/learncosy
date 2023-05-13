@@ -33,13 +33,16 @@
                           <a href="{{ url('/') }}" class="link-click">Dashboard</a>
                       </li>
                       <li class="link-item">
-                          <a href="#" class="link-click">Course</a>
+                          <a href="{{ url('/course') }}" class="link-click">Course</a>
+                      </li>
+                      <li class="link-item">
+                          <a href="{{ url('/instructors') }}" class="link-click">Instructor</a>
                       </li>
                   </ul>
               </div>
               {{-- header navbar @E --}}
   
-              {{-- header right icon @S --}}
+              {{-- header right menu @S --}}
               <div class="header-right-icon-wrap d-none d-sm-block">
                   <ul class="icon-nav">
                       <li>
@@ -53,14 +56,13 @@
                               <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Settings Icon" class="img-fluid" />
                           </a>  
                           <ul class="dropdown-menu settings-dropdown">   
-                              <li><a href="{{ url('/') }}"><i class="fas fa-user"></i> My Profile</a></li> 
-                              <li><a href="{{ url('/') }}"><i class="fa-solid fa-plug"></i>Integrations</a></li> 
+                              <li><a href="{{url('instructors/profile/nayan-akram')}}"><i class="fas fa-user"></i> My Profile</a></li>  
                              <li><a href="{{ url('/') }}"><i class="fas fa-gear"></i> Settings</a></li> 
                           </ul> 
                       </li>
                   </ul>
               </div>
-              {{--  header right icon @E --}}
+              {{--  header right menu @E --}}
             </div>
         </div>
       </div>

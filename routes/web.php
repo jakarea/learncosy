@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseBundleController;
+use App\Http\Controllers\ProfileManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,4 +46,11 @@ Route::prefix('lesson')->controller(LessonController::class)->group(function () 
 Route::prefix('bundle/course')->controller(CourseBundleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+});
+
+// profile management page routes
+Route::prefix('instructors')->controller(ProfileManagementController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/profile/{slug}', 'show'); 
+    Route::get('/profile/{slug}/edit', 'edit'); 
 });
