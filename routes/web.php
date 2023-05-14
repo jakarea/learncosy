@@ -74,10 +74,6 @@ Route::prefix('students')->controller(StudentController::class)->group(function 
     Route::get('/', 'index'); 
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
