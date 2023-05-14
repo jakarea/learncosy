@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends('layouts/instructor')
 @section('title') Profile Update Page @endsection
 
 {{-- page style @S --}}
@@ -111,7 +111,7 @@
                                             <hr>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="hascertificate">Receiving Messages </label>
                                             <div class="d-flex">
@@ -135,22 +135,7 @@
                                                 @enderror</span>
         
                                         </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <label for="status">Status</label>
-                                            <select name="status" id="status"
-                                                class="form-control @error('status') is-invalid @enderror">
-                                                <option value="" disabled>Select Below</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="published">Published</option>
-                                            </select>
-                                            <i class="fa-solid fa-angle-down"></i>
-                                            <span class="invalid-feedback">@error('status'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
+                                    </div> 
 
                                 </div> <!-- row end -->
                             </div>

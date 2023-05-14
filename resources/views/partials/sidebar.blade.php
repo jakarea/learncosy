@@ -6,7 +6,7 @@
             <span>N</span>
             <div class="media-body">
                 <h5>Nayan Akram</h5>
-                <p>Admin</p>
+                <p>Instructor</p>
             </div>
         </div>
     </div>
