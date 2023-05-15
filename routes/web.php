@@ -61,7 +61,8 @@ Route::prefix('instructors')->controller(ProfileManagementController::class)->gr
 
 // settings page routes
 Route::prefix('settings')->controller(SettingsController::class)->group(function () {
-    Route::get('/instructor', 'instructor_setting');
+    Route::get('/instructor/stripe', 'stripeIndex');
+    Route::get('/instructor/vimeo', 'vimeoIndex');
 });
 
 // review page routes

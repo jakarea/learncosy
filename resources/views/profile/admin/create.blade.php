@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends('layouts/instructor')
 @section('title') Profile add Page @endsection
 
 {{-- page style @S --}}

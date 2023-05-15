@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-     // account settings
-     public function instructor_setting()
+     // stripe settings
+     public function stripeIndex()
      {  
-         return view('settings/instructor/index'); 
+         return view('settings/instructor/stripe'); 
+     }
+
+     // vimeo settings
+     public function vimeoIndex()
+     {  
+         return view('settings/instructor/vimeo'); 
      }
 }

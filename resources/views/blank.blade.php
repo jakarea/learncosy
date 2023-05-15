@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends('layouts/instructor')
 @section('title') Blank Page @endsection
 
 {{-- page style @S --}}
