@@ -56,11 +56,13 @@
                  @include('students/partials/sub-sidebar') 
             </li>   
             <li class="menu-item">
-                <a href="{{ url('settings/instructor') }}" class="{{ Request::is('settings*')  ? ' active' : '' }} menu-link"> 
-                    <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" /> 
-                    <span>Settings</span> 
+                <a href="#" class="{{ Request::is('settings*')  ? ' active' : '' }} menu-link"> 
+                   <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
+                    <span>Settings</span>
+                    <i class="fa-solid fa-angles-right"></i>
                 </a> 
-            </li>
+                 @include('settings/partials/sub-sidebar') 
+            </li>    
             <li class="menu-item">
                 <a class="menu-link bg-white" href="#">
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />

@@ -5,7 +5,7 @@
     </li>
     <li>
         <a href="{{ url('students/create') }}" class="{{ Request::is('students/create')  ? ' active' : '' }}">
-            <img src="{{ asset('assets/images/course/Star.svg') }}" alt="Dash" class="img-fluid me-2"> Create </a>
+            <i class="fa-regular fa-pen-to-square me-2"></i> Create </a>
     </li>
     <li>
         <a href="{{ url('students/react-redux') }}" class="{{ Request::is('students/react-redux')  ? ' active' : '' }}">
