@@ -22,7 +22,7 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/', function () {
-    return view('blank');
+    return 'Hello World';;
 });
 
 // course page routes
@@ -75,3 +75,7 @@ Route::prefix('students')->controller(StudentController::class)->group(function 
     Route::get('/', 'index'); 
     Route::get('/create', 'create'); 
 });
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

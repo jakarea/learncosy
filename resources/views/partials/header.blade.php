@@ -57,7 +57,16 @@
                           </a>  
                           <ul class="dropdown-menu settings-dropdown">   
                               <li><a href="{{url('instructors/profile/nayan-akram')}}"><i class="fas fa-user"></i> My Profile</a></li>  
-                             <li><a href="{{ url('/settings/instructors') }}"><i class="fas fa-gear"></i> Settings</a></li> 
+                             <li><a href="{{ url('/') }}"><i class="fas fa-gear"></i> Settings</a></li> 
+                             <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-gear"></i>  Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li> 
                           </ul> 
                       </li>
                   </ul>
