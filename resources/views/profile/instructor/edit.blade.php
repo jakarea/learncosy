@@ -17,8 +17,8 @@
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">
-                        <h6>Update Instructor Profile</h6>
-                        <a href="{{url('instructors/profile/nayan-akram')}}">
+                        <h6>Update Profile</h6>
+                        <a href="{{url('profile/myprofile')}}">
                             <i class="fa-solid fa-user"></i> My Profile </a>
                     </div>
                     <!-- course create form @S -->
@@ -33,7 +33,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter your Name" name="name"
                                                 class="form-control @error('name') is-invalid @enderror"
-                                                value="{{ old('name')}}" id="name">
+                                                value="{{ $user->name }}" id="name">
                                             <span class="invalid-feedback">@error('name'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -44,7 +44,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter short bio" name="short_bio"
                                                 class="form-control @error('short_bio') is-invalid @enderror"
-                                                value="{{ old('short_bio')}}" id="short_bio">
+                                                value="{{ $user->short_bio }}" id="short_bio">
                                             <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -55,7 +55,7 @@
                                             </label>
                                             <input type="email" placeholder="Enter email" name="email"
                                                 class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ old('email')}}" id="email">
+                                                value="{{ $user->email }}" id="email">
                                             <span class="invalid-feedback">@error('email'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -66,7 +66,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter Phone Number" name="phone"
                                                 class="form-control @error('phone') is-invalid @enderror"
-                                                value="{{ old('phone')}}" id="phone">
+                                                value="{{ $user->phone }}" id="phone">
                                             <span class="invalid-feedback">@error('phone'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -74,9 +74,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="files">Profile Picture <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="files"
-                                                class="form-control  @error('thumbnail') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('thumbnail'){{ $message }}
+                                            <input type="file" name="avatar" id="files"
+                                                class="form-control  @error('avatar') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('avatar'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                             <label for="features">Social Media </label>
                                             <input type="text" placeholder="Enter Social Link" name="social_links[]"
                                                 class="form-control @error('social_links') is-invalid @enderror"
-                                                id="features" multiple>
+                                                id="features" multiple value="{{ $user->social_links }}">
                                             <div class="url-extra-field">
                                             </div>
                                             <span class="invalid-feedback">@error('social_links'){{ $message }}
@@ -98,7 +98,7 @@
                                             <label for="description">Description </label>
                                             <textarea name="description" id="description"
                                                 class="form-control @error('description') is-invalid @enderror"
-                                                placeholder="Enter Short Description">{{ old('description')}}</textarea>
+                                                placeholder="Enter Short Description">{{ $user->description }}</textarea>
                                             <span class="invalid-feedback">@error('description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -113,17 +113,17 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="hascertificate">Receiving Messages </label>
+                                            <label for="recivingMessage">Receiving Messages </label>
                                             <div class="d-flex">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="hascertificate"
+                                                    <input class="form-check-input" type="radio" name="recivingMessage"
                                                         id="flexRadioDefault1">
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Enable
                                                     </label>
                                                 </div>
                                                 <div class="form-check ms-4">
-                                                    <input class="form-check-input" type="radio" name="hascertificate"
+                                                    <input class="form-check-input" type="radio" name="recivingMessage"
                                                         id="flexRadioDefault2" checked>
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Disable
@@ -131,7 +131,7 @@
                                                 </div>
                                             </div>
         
-                                            <span class="invalid-feedback">@error('hascertificate'){{ $message }}
+                                            <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                                 @enderror</span>
         
                                         </div>
@@ -144,7 +144,7 @@
                             <div class="col-md-12">
                                 <div class="submit-bttns">
                                     <button type="reset" class="btn btn-reset">Clear</button>
-                                    <button type="submit" class="btn btn-submit">Submit</button>
+                                    <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
                         </div>

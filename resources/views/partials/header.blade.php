@@ -56,7 +56,7 @@
                               <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Settings Icon" class="img-fluid" />
                           </a>  
                           <ul class="dropdown-menu settings-dropdown">   
-                              <li><a href="{{url('instructors/profile/nayan-akram')}}"><i class="fas fa-user"></i> My Profile</a></li>  
+                              <li><a href="{{url('profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>  
                              <li><a href="{{ url('/settings/instructors') }}"><i class="fas fa-gear"></i> Settings</a></li> 
                           </ul> 
                       </li>

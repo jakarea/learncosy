@@ -21,7 +21,12 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/home', function () {
+//     return view('blank');
+// });
+
+
+Route::middleware('auth')->get('/', function () {
     return view('blank');
 });
 
@@ -52,11 +57,11 @@ Route::prefix('bundle/course')->controller(CourseBundleController::class)->group
 });
 
 // profile management page routes
-Route::prefix('instructors')->controller(ProfileManagementController::class)->group(function () {
+Route::middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create');
-    Route::get('/profile/{slug}', 'show'); 
-    Route::get('/profile/{slug}/edit', 'edit'); 
+    Route::get('/myprofile', 'show')->name('myProfile'); 
+    Route::get('/{slug}/edit', 'edit'); 
 });
 
 // settings page routes
@@ -75,3 +80,6 @@ Route::prefix('students')->controller(StudentController::class)->group(function 
     Route::get('/', 'index'); 
     Route::get('/create', 'create'); 
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -27,12 +27,12 @@
             <form action="">
                 <div class="stripe-settings-form-wrap">
                     <div class="form-group">
-                        <label for="">YOUR CLIENT ID</label>
-                        <input type="text" class="form-control" placeholder="Enter Your Client ID" value="1234567890">
+                        <label for="">CLIENT ID</label>
+                        <input type="text" class="form-control" placeholder="Enter Client ID" value="1234567890">
                     </div>
                     <div class="form-group mt-4">
-                        <label for="">YOUR CLIENT SECRET</label>
-                        <input type="text" class="form-control" placeholder="Enter Your Client Secret" value="0987654321">
+                        <label for="">CLIENT SECRET</label>
+                        <input type="text" class="form-control" placeholder="Enter Client Secret" value="0987654321">
                     </div>
                     <div class="form-submit">
                         <div class="go-to-stripe">

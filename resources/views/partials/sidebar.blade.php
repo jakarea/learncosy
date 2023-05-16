@@ -5,8 +5,8 @@
             {{-- <img src="{{ asset('assets/images/avatar.png') }}" alt="Nayan Akram" class="img-fluid">  --}}
             <span>N</span>
             <div class="media-body">
-                <h5>Nayan Akram</h5>
-                <p>Instructor</p>
+                <h5>{{Auth()->user()->name}}</h5>
+                <p>{{Auth()->user()->user_role}}</p>
             </div>
         </div>
     </div>
@@ -39,14 +39,14 @@
                 </a> 
                  @include('bundle/partials/sub-sidebar') 
             </li>  
-            <li class="menu-item">
+            {{-- <li class="menu-item">
                 <a href="{{ url('/instructors') }}" class="{{ Request::is('instructors*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-user-group"></i>
                     <span>Instructors</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('profile/partials/sub-sidebar') 
-            </li>   
+            </li>    --}}
             <li class="menu-item">
                 <a href="{{ url('/students') }}" class="{{ Request::is('students*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-user-group"></i>
@@ -63,12 +63,19 @@
                 </a> 
                  @include('settings/partials/sub-sidebar') 
             </li>    
+            @guest
+            @else
             <li class="menu-item">
-                <a class="menu-link bg-white" href="#">
+                <a class="menu-link bg-white" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
                     <span>{{ __('Logout') }}</span>
                 </a> 
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </li>
+            @endguest
         </ul>
     </div>
     {{-- sidebar menu @E --}}
