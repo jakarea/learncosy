@@ -2,8 +2,11 @@
     {{-- header user @S --}}
     <div class="header-user-box">
         <div class="media"> 
-            {{-- <img src="{{ asset('assets/images/avatar.png') }}" alt="Nayan Akram" class="img-fluid">  --}}
-            <span>N</span>
+            @if($user->avatar)
+            <img src="{{ asset('assets/images/user/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
+            @else
+            <span>{!! strtoupper($user->name[0]) !!}</span>
+            @endif 
             <div class="media-body">
                 <h5>{{Auth()->user()->name}}</h5>
                 <p>{{Auth()->user()->user_role}}</p>

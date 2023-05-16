@@ -18,7 +18,7 @@
                 <p><span class="text-danger">Update</span> profile info to see more details.</p>
             </div>
             <div class="form-grp-btn mt-0 ms-auto">
-                <a href="{{ url('/') }}" class="btn me-3"><i class="fas fa-list"></i> Dashboard</a>
+                <a href="{{ url('profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="col-lg-4">
             <div class="change-password-form w-100 customer-profile-info">
                 <div class="text-end">
-                    <a href="{{url('profile/'.$user->user_name.'/edit')}}">
+                    <a href="{{url('profile/edit')}}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
                 </div>

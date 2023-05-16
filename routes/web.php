@@ -58,10 +58,13 @@ Route::prefix('bundle/course')->controller(CourseBundleController::class)->group
 
 // profile management page routes
 Route::middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/create', 'create');
+    // Route::get('/', 'index');
+    // Route::get('/create', 'create');
     Route::get('/myprofile', 'show')->name('myProfile'); 
-    Route::get('/{slug}/edit', 'edit'); 
+    Route::get('/edit', 'edit'); 
+    Route::post('/edit', 'update')->name('updateMyProfile'); 
+    Route::get('/change-password', 'passwordUpdate');
+    Route::post('/change-password', 'postChangePassword')->name('postChangePassword');
 });
 
 // settings page routes

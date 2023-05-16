@@ -5,6 +5,7 @@
 @section('style')
 <link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -22,7 +23,7 @@
                             <i class="fa-solid fa-user"></i> My Profile </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{ route('updateMyProfile',$user->id) }}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -71,7 +72,7 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="files">Profile Picture <sup class="text-danger">*</sup></label>
                                             <input type="file" name="avatar" id="files"
@@ -79,7 +80,7 @@
                                             <span class="invalid-feedback">@error('avatar'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="features">Social Media </label>
@@ -110,30 +111,35 @@
                                         <div class="custom-hr">
                                             <hr>
                                         </div>
+                                    </div> 
+                                    <div class="col-md-6">
+                                        <div class="file-wrapper" @if($user->avatar) style="background-image:
+                                            url({{asset('assets/images/user/'.$user->avatar)}})" @endif>
+                                            <input type="file" name="avatar" accept="image/*" />
+                                            <div class="close-btn"><i class="fas fa-close"></i></div>
+                                          </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="recivingMessage">Receiving Messages </label>
                                             <div class="d-flex">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault1">
+                                                        id="flexRadioDefault1" value="1" {{ $user->recivingMessage == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Enable
                                                     </label>
                                                 </div>
                                                 <div class="form-check ms-4">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault2" checked>
+                                                        id="flexRadioDefault2" value="0" {{ $user->recivingMessage == 0 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Disable
                                                     </label>
                                                 </div>
-                                            </div>
-        
+                                            </div> 
                                             <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
-                                                @enderror</span>
-        
+                                                @enderror</span> 
                                         </div>
                                     </div> 
 
@@ -161,9 +167,30 @@
 
 {{-- page script @S --}}
 @section('script')
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $('input[name="thumbnail"]').on('change', function(){
+  readURL(this, $('.file-wrapper'));   
+});
 
+$('.close-btn').on('click', function(){  
+   let file = $('input[name="thumbnail"]');
+   $('.file-wrapper').css('background-image', 'unset');
+   $('.file-wrapper').removeClass('file-set');
+   file.replaceWith( file = file.clone( true ) );
+});
+
+//FILE
+function readURL(input, obj){
+  if(input.files && input.files[0]){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      obj.css('background-image', 'url('+e.target.result+')');
+      obj.addClass('file-set');
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+};
 
 <script>
     const urlBttn = document.querySelector('#url_increment');
