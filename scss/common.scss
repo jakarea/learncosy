@@ -132,26 +132,43 @@
     text-transform: capitalize;
 }
 
-.file-prev{
+.file-prev {
     @include m.df;
     align-items: flex-start;
-    img{
-        width: 12rem;
-        height: 12rem;
+
+    img {
+        width: 6rem;
+        height: 6rem;
         object-fit: cover;
         border-radius: .4rem;
         margin-bottom: 1rem;
     }
-    button{ 
-        width: 2.5rem;
-        height: 2.5rem;
+
+    button {
+        width: 1.7rem;
+        height: 1.7rem;
         border-radius: .4rem;
         background: v.$gdbg;
         color: v.$light;
         @include m.df(center);
         display: inline-flex;
-        font-size: 1.2rem;
+        font-size: .9rem;
         margin-left: 1rem;
         display: none;
+    }
+}
+
+.file-prev-show {
+    @include m.df;
+    label{
+        margin-bottom: 0!important;
+    }
+    img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid v.$primary;
+        margin-left: 1rem;
     }
 }

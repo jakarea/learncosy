@@ -11,7 +11,8 @@ class CourseController extends Controller
     // course list
     public function index()
     {  
-        return view('course/instructor/index'); 
+        $courses = Course::orderby('id', 'desc')->paginate(12);
+        return view('course/instructor/index', compact('courses'));  
     }
 
     // course create
@@ -37,16 +38,16 @@ class CourseController extends Controller
             'title' => $request->title,
             'sub_title' => $request->title,
             'slug' => Str::slug($request->title),
-            'features' => implode(",",$request->features),
+            'features' => is_array($request->features) ? implode(",",$request->features) : $request->features,
             'prerequisites' => $request->prerequisites,
             'outcome' => $request->outcome,
             'promo_video' => $request->promo_video,
             'price' => $request->price,
             'offer_price' => $request->offer_price,
-            'categories' => implode(",",$request->categories),
+            'categories' => is_array($request->categories) ? implode(",",$request->categories) : $request->categories,
             'short_description' => $request->short_description, 
             'description' => $request->description, 
-            'meta_keyword' => implode(",",$request->meta_keyword),
+            'meta_keyword' => is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword,
             'meta_description' => $request->meta_description, 
             'number_of_module' => $request->number_of_module, 
             'number_of_lesson' => $request->number_of_lesson, 
@@ -89,7 +90,7 @@ class CourseController extends Controller
         $course->sample_certificates = $name;
 
         $course->save();
-        return redirect('instructor.courses')->with('success', 'Course saved!');
+        return redirect('instructor/courses')->with('success', 'Course saved!');
     }
 
     // course create

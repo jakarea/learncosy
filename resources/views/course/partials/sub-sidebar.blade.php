@@ -6,9 +6,5 @@
     <li>
         <a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">
             <i class="fa-regular fa-pen-to-square me-2"></i> Create </a>
-    </li>
-    <li>
-        <a href="{{ url('instructor/courses/react-redux') }}">
-            <img src="{{ asset('assets/images/course/Star.svg') }}" alt="Dash" class="img-fluid me-2"> Signle </a>
-    </li>
+    </li> 
 </ul>

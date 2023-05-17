@@ -27,7 +27,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="title">Title <sup class="text-danger">*</sup>
@@ -128,8 +128,7 @@
                                                 <select class="form-select @error('categories') is-invalid @enderror"
                                                     id="categories" name="categories[]" multiple data-allow-clear="1"
                                                     data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value=""> Create
-                                                        categories...</option>
+                                                    <option selected="selected" disabled hidden value=""> Add categories...</option>
                                                 </select>
                                             </modular-behaviour>
                                             <i class="fa-solid fa-angle-down"></i>
@@ -137,14 +136,16 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
                                             <input type="file" name="thumbnail" id="file-upload"
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
-                                        </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews"></div>
@@ -153,14 +154,16 @@
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
                                                 @enderror</span>
-                                        </div>
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews-2"></div>
@@ -168,7 +171,7 @@
                                                     class="fas fa-close"></i></button>
                                         </div>
                                         {{-- img preview @E --}}
-                                    </div> 
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="short_description">Short Description <sup
@@ -205,8 +208,7 @@
                                                 <select class="form-select @error('meta_keyword') is-invalid @enderror"
                                                     id="meta_keyword" name="meta_keyword[]" multiple
                                                     data-allow-clear="1" data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value="">Create meta
-                                                        keyword...</option>
+                                                    <option selected="selected" disabled hidden value="">Add meta keyword</option>
                                                 </select>
                                             </modular-behaviour>
                                             <i class="fa-solid fa-angle-down"></i>
@@ -327,14 +329,16 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label for="file-upload-3">Sample Certificates </label>
                                             <input type="file" name="sample_certificates" id="file-upload-3"
                                                 class="form-control  @error('sample_certificates') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('sample_certificates'){{ $message }}
                                                 @enderror</span>
-                                        </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews-3"></div>

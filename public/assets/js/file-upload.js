@@ -9,7 +9,7 @@ fileInput.addEventListener("change", () => {
       filePreview.src = fileReader.result;
       filePreview.classList.add("file-preview");
       document.getElementById("file-previews").appendChild(filePreview);
-      document.getElementById("close-button").style.display = "block";
+      document.getElementById("close-button").style.display = "inline-flex";
     };
     fileReader.readAsDataURL(file);
   }
@@ -34,7 +34,7 @@ fileInput2.addEventListener("change", () => {
       filePreview2.src = fileReader2.result;
       filePreview2.classList.add("file-preview-2");
       document.getElementById("file-previews-2").appendChild(filePreview2);
-      document.getElementById("close-button-2").style.display = "block";
+      document.getElementById("close-button-2").style.display = "inline-flex";
     };
     fileReader2.readAsDataURL(file);
   }
@@ -59,7 +59,7 @@ fileInput3.addEventListener("change", () => {
       filePreview3.src = fileReader3.result;
       filePreview3.classList.add("file-preview-3");
       document.getElementById("file-previews-3").appendChild(filePreview3);
-      document.getElementById("close-button-3").style.display = "block";
+      document.getElementById("close-button-3").style.display = "inline-flex";
     };
     fileReader3.readAsDataURL(file);
   }

@@ -113,34 +113,27 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div id="imgThumbnailPreview"></div>
-                                    </div>
-                                    <div class="col-12">
                                         <div class="custom-hr">
                                             <hr>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        {{-- file upload @S --}}
-                                        <div class="file-upload">
-                                            <div class="image-upload-wrap">
-                                                <input class="file-upload-input" type='file' onchange="readURL(this);"
-                                                    accept="image/*" name="avatar"/>
-                                                <div class="drag-text">
-                                                    <h5>Click here to upload or drag &amp; drop a file here</h5>
-                                                </div>
-                                            </div>
-                                            <div class="file-upload-content">
-                                                <img class="file-upload-image" src="#" alt="your image" />
-                                                <div class="image-title-wrap">
-                                                    <button type="button" onclick="removeUpload()"
-                                                        class="remove-image btn"><i class="fas fa-close"></i></button>
-                                                </div>
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="file-upload">Avatar <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="avatar" id="file-upload"
+                                                class="form-control  @error('avatar') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('avatar'){{ $message }}
+                                                @enderror</span>
                                         </div>
-                                        {{-- file upload @E --}}
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews"></div>
+                                            <button type="button" class="btn" id="close-button"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="recivingMessage">Receiving Messages </label>
                                             <div class="d-flex">
@@ -164,6 +157,18 @@
                                             <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                                 @enderror</span>
                                         </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @if($user->avatar) 
+                                        <div class="form-group file-prev-show">
+                                            <label for="">Current Avatar: </label>
+                                            <div class="file-prev-shows">
+                                                <img src="{{asset('assets/images/user/'.$user->avatar)}}" alt="Avatar"
+                                                    class="img-fluid"> 
+                                            </div>
+                                        </div> 
+                                        
+                                        @endif
                                     </div>
 
                                 </div> <!-- row end -->
