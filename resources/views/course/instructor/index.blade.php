@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('course/create') }}" class="btn me-3"><i
+                    <a href="{{ url('instructor/courses/create') }}" class="btn me-3"><i
                             class="fas fa-pen text-white me-2"></i>Create Course</a>
                 </div>
 

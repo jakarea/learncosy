@@ -23,7 +23,8 @@
                             <i class="fa-solid fa-user"></i> My Profile </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{ route('updateMyProfile',$user->id) }}" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{ route('updateMyProfile',$user->id) }}" method="POST" class="create-form-box"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -41,12 +42,15 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="short_bio">Short Bio <sup class="text-danger">*</sup>
+                                            <label for="user_name">User Name <span class="warning-txt">(after you set
+                                                    the username, it's not changeable.)</span><sup
+                                                    class="text-danger">*</sup>
                                             </label>
-                                            <input type="text" placeholder="Enter short bio" name="short_bio"
-                                                class="form-control @error('short_bio') is-invalid @enderror"
-                                                value="{{ $user->short_bio }}" id="short_bio">
-                                            <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                            <input type="text" placeholder="Enter user name" name="user_name"
+                                                class="form-control @error('user_name') is-invalid @enderror"
+                                                value="{{ $user->user_name }}" id="user_name" {{ $user->user_name ?
+                                            'disabled' : ''}}>
+                                            <span class="invalid-feedback">@error('user_name'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -72,15 +76,18 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="files">Profile Picture <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="avatar" id="files"
-                                                class="form-control  @error('avatar') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('avatar'){{ $message }}
+
+                                    <div class="col-md-12">
+                                        <div class="form-group form-error">
+                                            <label for="short_bio">Short Bio <sup class="text-danger">*</sup>
+                                            </label>
+                                            <input type="text" placeholder="Enter short bio" name="short_bio"
+                                                class="form-control @error('short_bio') is-invalid @enderror"
+                                                value="{{ $user->short_bio }}" id="short_bio">
+                                            <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="features">Social Media </label>
@@ -91,7 +98,8 @@
                                             </div>
                                             <span class="invalid-feedback">@error('social_links'){{ $message }}
                                                 @enderror</span>
-                                            <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                            <a href="javascript:void(0)" id="url_increment"><i
+                                                    class="fas fa-plus"></i></a>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -99,7 +107,7 @@
                                             <label for="description">Description </label>
                                             <textarea name="description" id="description"
                                                 class="form-control @error('description') is-invalid @enderror"
-                                                placeholder="Enter Short Description">{{ $user->description }}</textarea>
+                                                placeholder="Enter Full Description">{{ $user->description }}</textarea>
                                             <span class="invalid-feedback">@error('description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -111,13 +119,26 @@
                                         <div class="custom-hr">
                                             <hr>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-6">
-                                        <div class="file-wrapper" @if($user->avatar) style="background-image:
-                                            url({{asset('assets/images/user/'.$user->avatar)}})" @endif>
-                                            <input type="file" name="avatar" accept="image/*" />
-                                            <div class="close-btn"><i class="fas fa-close"></i></div>
-                                          </div>
+                                        {{-- file upload @S --}}
+                                        <div class="file-upload">
+                                            <div class="image-upload-wrap">
+                                                <input class="file-upload-input" type='file' onchange="readURL(this);"
+                                                    accept="image/*" name="avatar"/>
+                                                <div class="drag-text">
+                                                    <h5>Click here to upload or drag &amp; drop a file here</h5>
+                                                </div>
+                                            </div>
+                                            <div class="file-upload-content">
+                                                <img class="file-upload-image" src="#" alt="your image" />
+                                                <div class="image-title-wrap">
+                                                    <button type="button" onclick="removeUpload()"
+                                                        class="remove-image btn"><i class="fas fa-close"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- file upload @E --}}
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -125,28 +146,30 @@
                                             <div class="d-flex">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault1" value="1" {{ $user->recivingMessage == 1 ? 'checked' : '' }}>
+                                                        id="flexRadioDefault1" value="1" {{ $user->recivingMessage == 1
+                                                    ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Enable
                                                     </label>
                                                 </div>
                                                 <div class="form-check ms-4">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault2" value="0" {{ $user->recivingMessage == 0 ? 'checked' : '' }}>
+                                                        id="flexRadioDefault2" value="0" {{ $user->recivingMessage == 0
+                                                    ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Disable
                                                     </label>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
-                                                @enderror</span> 
+                                                @enderror</span>
                                         </div>
-                                    </div> 
+                                    </div>
 
                                 </div> <!-- row end -->
                             </div>
                         </div>
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="submit-bttns">
                                     <button type="reset" class="btn btn-reset">Clear</button>
@@ -167,35 +190,11 @@
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-  $('input[name="thumbnail"]').on('change', function(){
-  readURL(this, $('.file-wrapper'));   
-});
-
-$('.close-btn').on('click', function(){  
-   let file = $('input[name="thumbnail"]');
-   $('.file-wrapper').css('background-image', 'unset');
-   $('.file-wrapper').removeClass('file-set');
-   file.replaceWith( file = file.clone( true ) );
-});
-
-//FILE
-function readURL(input, obj){
-  if(input.files && input.files[0]){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      obj.css('background-image', 'url('+e.target.result+')');
-      obj.addClass('file-set');
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
-};
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="{{asset('assets/js/file-upload.js')}}"></script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
     let extraFileds = document.querySelector('.url-extra-field'); 
-  
     const createFiled = () => { 
       let div = document.createElement("div");
       let node = document.createElement("input"); 
@@ -215,7 +214,7 @@ function readURL(input, obj){
     urlBttn.addEventListener('click',createFiled,true);
   
    
-  </script>
+</script>
 @endsection
 
 {{-- page script @E --}}

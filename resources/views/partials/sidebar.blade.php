@@ -2,10 +2,10 @@
     {{-- header user @S --}}
     <div class="header-user-box">
         <div class="media"> 
-            @if($user->avatar)
-            <img src="{{ asset('assets/images/user/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
+            @if(Auth()->user()->avatar)
+            <img src="{{ asset('assets/images/user/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
             @else
-            <span>{!! strtoupper($user->name[0]) !!}</span>
+            <span>{!! strtoupper(Auth()->user()->name[0]) !!}</span>
             @endif 
             <div class="media-body">
                 <h5>{{Auth()->user()->name}}</h5>
@@ -25,9 +25,9 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('/course') }}" class="{{ Request::is('course*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
-                    <span>Course</span>
+                    <span>Courses</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a>
                 {{-- inner submenu @S --}}

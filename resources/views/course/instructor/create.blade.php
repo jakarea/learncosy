@@ -18,11 +18,12 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Create a new Course</h6>
-                        <a href="{{url('course')}}">
+                        <a href="{{url('instructor/courses')}}">
                             <i class="fa-solid fa-list"></i> All Courses </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{route('course.store')}}" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('course.store')}}" method="POST" class="create-form-box"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -51,15 +52,19 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                          <label for="features">Key Features 
-                                          </label>
-                                          <input type="text" placeholder="Enter Features" name="features[]" class="form-control @error('features') is-invalid @enderror" id="features" multiple>
-                                          <div class="url-extra-field">
-                                          </div>
-                                          <span class="invalid-feedback">@error('features'){{ $message }} @enderror</span>
-                                          <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                            <label for="features">Key Features
+                                            </label>
+                                            <input type="text" placeholder="Enter Features" name="features[]"
+                                                class="form-control @error('features') is-invalid @enderror"
+                                                id="features" multiple>
+                                            <div class="url-extra-field">
+                                            </div>
+                                            <span class="invalid-feedback">@error('features'){{ $message }}
+                                                @enderror</span>
+                                            <a href="javascript:void(0)" id="url_increment"><i
+                                                    class="fas fa-plus"></i></a>
                                         </div>
-                                      </div> 
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
                                             <label for="prerequisites">Prerequisites <sup class="text-danger">*</sup>
@@ -123,7 +128,7 @@
                                                 <select class="form-select @error('categories') is-invalid @enderror"
                                                     id="categories" name="categories[]" multiple data-allow-clear="1"
                                                     data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value="">Create
+                                                    <option selected="selected" disabled hidden value=""> Create
                                                         categories...</option>
                                                 </select>
                                             </modular-behaviour>
@@ -134,28 +139,36 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="files">Thumbnail <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="files"
+                                            <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="thumbnail" id="file-upload"
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="imgThumbnailPreview"></div>
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews"></div>
+                                            <button type="button" class="btn" id="close-button"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="banner">Banner <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="coverimage" id="banner"
-                                                class="form-control  @error('coverimage') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('coverimage'){{ $message }}
+                                            <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="banner" id="file-upload-2"
+                                                class="form-control  @error('banner') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('banner'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="imgCoverimagePreview"></div>
-                                    </div>
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews-2"></div>
+                                            <button type="button" class="btn" id="close-button-2"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div> 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="short_description">Short Description <sup
@@ -170,10 +183,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="description">Description</label>
-                                            <textarea name="long_description" id="description"
-                                                class="form-control @error('long_description') is-invalid @enderror"
-                                                placeholder="Enter Long Description">{{ old('long_description')}}</textarea>
-                                            <span class="invalid-feedback">@error('long_description'){{ $message }}
+                                            <textarea name="description" id="description"
+                                                class="form-control @error('description') is-invalid @enderror"
+                                                placeholder="Enter Long Description">{{ old('description')}}</textarea>
+                                            <span class="invalid-feedback">@error('description'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -192,7 +205,8 @@
                                                 <select class="form-select @error('meta_keyword') is-invalid @enderror"
                                                     id="meta_keyword" name="meta_keyword[]" multiple
                                                     data-allow-clear="1" data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value="">Create meta keyword...</option>
+                                                    <option selected="selected" disabled hidden value="">Create meta
+                                                        keyword...</option>
                                                 </select>
                                             </modular-behaviour>
                                             <i class="fa-solid fa-angle-down"></i>
@@ -315,12 +329,19 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="form-group">
-                                            <label for="sample_certificates">Sample Certificates </label>
-                                            <input type="file" name="thumbnail" id="sample_certificates"
-                                                class="form-control  @error('thumbnail') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('thumbnail'){{ $message }}
+                                            <label for="file-upload-3">Sample Certificates </label>
+                                            <input type="file" name="sample_certificates" id="file-upload-3"
+                                                class="form-control  @error('sample_certificates') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('sample_certificates'){{ $message }}
                                                 @enderror</span>
                                         </div>
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews-3"></div>
+                                            <button type="button" class="btn" id="close-button-3"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -389,8 +410,6 @@
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
- 
-
 
 <script>
     const urlBttn = document.querySelector('#url_increment');
@@ -415,7 +434,7 @@
     urlBttn.addEventListener('click',createFiled,true);
   
    
-  </script>
+</script>
 @endsection
 
 {{-- page script @E --}}

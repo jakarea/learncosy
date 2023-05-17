@@ -105,3 +105,40 @@
   max-width: -moz-fit-content !important;
   max-width: fit-content !important;
 }
+
+.warning-txt {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #FF6262;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+
+.file-prev {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.file-prev img {
+  width: 12rem;
+  height: 12rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+.file-prev button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.4rem;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  display: none;
+}
