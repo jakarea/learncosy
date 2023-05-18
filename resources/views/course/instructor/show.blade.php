@@ -5,16 +5,19 @@
 @section('style')
 <link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-{{-- style section @E --}}
+{{-- style section @E --}} 
 
 @section('content')
+@php   
+    $i = 0; 
+@endphp
 <main class="course-page-wrap">
     <!-- suggested banner @S -->
-    <div class="learning-banners-wrap">
+    <div class="learning-banners-wrap" @if($course->banner) style="background-image: url('{{asset("assets/images/courses/".$course->banner)}}');" @endif>
         <div class="media">
             <div class="media-body">
-                <h1 class="addspy-main-title">Molestias eaque maxi</h1>
-                <p>Consequatur vitae qu</p>
+                <h1 class="addspy-main-title">{{$course->title}}</h1>
+                <p>{{$course->sub_title}}</p>
                 <a href="#">Continue</a>
             </div>
         </div>
@@ -28,18 +31,20 @@
             </div>
             <div class="course-outline-box">
                 <div class="accordion" id="accordionExample">
+                    @foreach($modules as $module)
+                    @php $i++; @endphp
                     <div class="accordion-item">
-                        <span class="numbering active"> 1 </span>
-                        <div class="accordion-header" id="heading_1">
+                        <span class="numbering active"> {{$i}} </span>
+                        <div class="accordion-header" id="heading_{{$module->id}}">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse_1" aria-expanded="true" aria-controls="collapseOne">
+                                data-bs-target="#collapse_{{$module->id}}" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="d-flex">
-                                    <p>Veniam suscipit mol </p>
+                                    <p>{{ $module->title }}</p>
                                     <i class="fas fa-caret-down"></i>
                                 </div>
                             </button>
                         </div>
-                        <div id="collapse_1" class="accordion-collapse collapse " aria-labelledby="heading_1"
+                        <div id="collapse_{{$module->id}}" class="accordion-collapse collapse " aria-labelledby="heading_{{$module->id}}"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul>
@@ -47,56 +52,30 @@
                                                 alt="" class="img-fluid"> Quibusdam natus tota</a></li>
                                 </ul>
                                 <div class="text-center">
-                                    <a href="{{ url('lesson/create?course=1&module=1') }}"
+                                    <a href="{{ url('instructor/lessons/create?course='.$course->id.'&module='.$module->id) }}"
                                         class="add_lesson_bttn">Add Lesson</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <span class="numbering "> 2 </span>
-                        <div class="accordion-header" id="heading_2">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse_2" aria-expanded="true" aria-controls="collapseOne">
-                                <div class="d-flex">
-                                    <p>Consequuntur aut dol </p>
-                                    <i class="fas fa-caret-down"></i>
-                                </div>
-                            </button>
-                        </div>
-                        <div id="collapse_2" class="accordion-collapse collapse " aria-labelledby="heading_2"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul>
-                                </ul>
-                                <div class="text-center">
-                                    <a href="{{ url('lesson/create?course=1&module=2') }}"
-                                        class="add_lesson_bttn">Add Lesson</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div> 
+                    @endforeach
                 </div>
             </div>
-            <a href="{{ url('module/create?course=1') }}" class="add_module_bttn">Add Module </a> 
+            <a href="{{ url('instructor/modules/create?course='.$course->id) }}" class="add_module_bttn">Add Module </a> 
         </div>
         <div class="col-12 col-sm-12 col-md-7 col-lg-8">
             <div class="mylearning-video-content-box custom-margin-top">
                 <div class="video-iframe-vox">
                     <a href="#">
-                        <img src="{{asset('assets/images/course/harum-dolore-fuga-l-1.png')}}" alt="Course" class="img-fluid">
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" class="img-fluid">
                     </a>
                 </div>
                 <div class="content-txt-box">
                     <div class="d-flex">
-                        <h3>Molestias eaque maxi</h3>
+                        <h3>{{$course->title}}</h3>
                         <a href="#" class="min_width">Continue</a>
                     </div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur nemo eveniet omnis. Deleniti non
-                    dolore odio, ipsa quidem ullam provident eveniet velit qui architecto quasi rem doloremque tenetur
-                    fuga explicabo vitae reprehenderit quos ea laudantium ut repellendus! Id modi ullam possimus
-                    exercitationem architecto accusamus aliquam dolorem provident, quia dolores consectetur atque
-                    repudiandae est laborum corporis doloremque esse at incidunt excepturi.
+                    {!! $course->description !!} 
                 </div>
                 <div class="profile-box">
                     <div class="media">
@@ -113,6 +92,7 @@
                         <p>Last Updated : 2 hours ago</p>
                     </div>
                     <div class="row border-right-custom">
+                        @if($course->number_of_attachment)
                         <div class="col-lg-12">
                             <div class="attached-file-box me-lg-2">
                                 <h4><img src="{{asset('assets/images/course/pdf-icon.svg')}}" alt="Place"
@@ -123,11 +103,13 @@
                                 </a>
                             </div>
                         </div>
+                        @else
                         <div class="col-lg-12">
                             <div class="attached-file-box me-lg-2">
                                 <p>No Resource Found</p>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

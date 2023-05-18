@@ -147,12 +147,17 @@
                                             <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug) }}">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug.'/edit') }}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <form method="post" class="d-inline btn btn-danger" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf 
+                                                @method("DELETE")
+                                                <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                            </form>
+                                            {{-- <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
                                                 <i class="fas fa-trash"></i>
-                                            </a> 
+                                            </a>  --}}
                                             <a class="dropdown-item txt-item" href="{{url('review')}}">
                                                 <span>Review</span>
                                             </a>     

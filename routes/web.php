@@ -36,18 +36,29 @@ Route::prefix('instructor/courses')->controller(CourseController::class)->group(
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
     Route::get('/{slug}', 'show')->name('course.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('course.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('course.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
 });
 
 // module page routes
-Route::prefix('module')->controller(ModuleController::class)->group(function () {
+Route::prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('module.store');
+    Route::get('/{slug}/edit', 'edit')->name('module.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('module.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('module.destroy');
 });
 
 // lesson page routes
-Route::prefix('lesson')->controller(LessonController::class)->group(function () {
+Route::prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('lesson.store');
+    Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('lesson.update');
+    Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
 });
 
 // course bundle page routes

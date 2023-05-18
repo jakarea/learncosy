@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Lesson Create Page @endsection
+@section('title') {{$lesson->title}} Edit Page @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -21,12 +21,12 @@
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">
-                        <h6>Create a new Lesson</h6>
+                        <h6>Update Lesson</h6>
                         <a href="{{url('instructor/lessons')}}">
                             <i class="fa-solid fa-list"></i> All Lesson </a>
                     </div>
                     <!-- Lesson create form @S -->
-                    <form action="{{route('lesson.store')}}" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('lesson.update',$lesson->slug)}}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -52,7 +52,7 @@
                                             <select name="module_id" id="module_id" class="form-control @error('module_id') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
                                                 @foreach($modules as $module)
-                                                    <option value="{{$module->id}}"  {{ $module->id == $module_id ? 'selected' : ''}}>{{$module->title}}</option>
+                                                    <option value="{{$module->id}}" {{ $module->id == $module_id ? 'selected' : ''}}>{{$module->title}}</option>
                                                 @endforeach
                                             </select> 
                                             <span class="invalid-feedback">@error('module_id'){{ $message }}
@@ -65,7 +65,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter Course Title" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
-                                                value="{{ old('title')}}" id="title">
+                                                value="{{ $lesson->title }}" id="title">
                                             <span class="invalid-feedback">@error('title'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -76,7 +76,7 @@
                                             </label>
                                             <input type="url" placeholder="Enter Video URL" name="video_link"
                                                 class="form-control @error('video_link') is-invalid @enderror"
-                                                value="{{ old('video_link')}}" id="video_link">
+                                                value="{{ $lesson->video_link }}" id="video_link">
                                             <span class="invalid-feedback">@error('video_link'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -90,7 +90,7 @@
                                                 @enderror</span>
                                         </div> 
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews"></div>
@@ -100,20 +100,42 @@
                                         {{-- img preview @E --}}
                                     </div>
                                     <div class="col-md-4">
+                                        {{-- img preview @S --}}
                                         <div class="form-group">
-                                            <label for="file-upload-2">File </label>
+                                        <label for="file-upload">Current Thumbnail:<sup class="text-danger">*</sup></label>
+                                        <div class="file-prev">
+                                            <img src="{{asset('assets/images/lessons/'.$lesson->thumbnail)}}" alt="a" class="img-fluid">
+                                             
+                                        </div>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="file-upload-2">File <sup class="text-danger">*</sup></label>
                                             <input type="file" name="lesson_file" id="file-upload-2"
                                                 class="form-control  @error('lesson_file') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('lesson_file'){{ $message }}
                                                 @enderror</span>
                                         </div> 
-                                    </div>
-                                    <div class="col-md-2">
+                                    </div> 
+                                    <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews-2"></div>
                                             <button type="button" class="btn" id="close-button-2"><i
                                                     class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{-- img preview @S --}}
+                                        <div class="form-group">
+                                        <label for="file-upload">Current File:<sup class="text-danger">*</sup></label>
+                                        <div class="file-prev">
+                                            <img src="{{asset('assets/images/lessons/'.$lesson->lesson_file)}}" alt="a" class="img-fluid">
+                                             
+                                        </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
@@ -124,7 +146,7 @@
                                                     class="text-danger">*</sup></label>
                                             <textarea name="short_description" id="short_description"
                                                 class="form-control @error('short_description') is-invalid @enderror"
-                                                placeholder="Enter Short Description">{{ old('short_description')}}</textarea>
+                                                placeholder="Enter Short Description">{{ $lesson->short_description }}</textarea>
                                             <span class="invalid-feedback">@error('short_description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -137,6 +159,9 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            @php 
+                                                $selectedMetaKey = explode(",",$lesson->meta_keyword); 
+                                            @endphp
                                             <label for="meta_keyword">Meta Keyboard <sup
                                                     class="text-danger">*</sup></label>
                                             <modular-behaviour name="Keyword"
@@ -145,6 +170,9 @@
                                                     id="meta_keyword" name="meta_keyword[]" multiple
                                                     data-allow-clear="1" data-allow-new="true" data-separator="|,|">
                                                     <option selected="selected" disabled hidden value="">Add meta keyword</option>
+                                                    @foreach($selectedMetaKey as $key => $metakey)
+                                                        <option value="{{$metakey}}" {{ in_array($metakey,$selectedMetaKey) ? "selected" : ''}} >{{$metakey}}</option> 
+                                                    @endforeach
                                                 </select>
                                             </modular-behaviour>
                                             <i class="fa-solid fa-angle-down"></i>
@@ -158,7 +186,7 @@
                                                     class="text-danger">*</sup></label>
                                             <textarea name="meta_description" id="meta_description"
                                                 class="form-control @error('meta_description') is-invalid @enderror"
-                                                placeholder="Enter Meta Description">{{ old('meta_description')}}</textarea>
+                                                placeholder="Enter Meta Description">{{ $lesson->meta_description }}</textarea>
                                             <span class="invalid-feedback">@error('meta_description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -174,9 +202,9 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="published">Published</option>
+                                                <option value="draft" {{ $lesson->status == 'draft' ? 'selected' : ''}}>Draft</option>
+                                                <option value="pending" {{ $lesson->status == 'pending' ? 'selected' : ''}}>Pending</option>
+                                                <option value="published" {{ $lesson->status == 'published' ? 'selected' : ''}}>Published</option>
                                             </select>
                                             <i class="fa-solid fa-angle-down"></i>
                                             <span class="invalid-feedback">@error('status'){{ $message }}

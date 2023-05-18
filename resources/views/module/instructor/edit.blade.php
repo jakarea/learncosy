@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Module Create Page @endsection
+@section('title') {{$module->title}} Update Page @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -9,26 +9,21 @@
 {{-- page style @S --}}
 
 {{-- page content @S --}}
-@section('content')
-{{-- get course id from url @S --}}
-@php
-  $course_id = isset($_GET['course']) ? $_GET['course'] : ''; 
-@endphp
-{{-- get course id from url @E --}}
+@section('content') 
 
-<!-- === course create page @S === -->
+<!-- === module update page @S === -->
 <main class="product-research-form">
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">
-                        <h6>Create a new Module</h6>
+                        <h6>Update Module</h6>
                         <a href="{{url('instructor/modules')}}">
                             <i class="fa-solid fa-list"></i> All Module </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{route('module.store')}}" method="POST" class="create-form-box">
+                    <form action="{{route('module.update',$module->slug)}}" method="POST" class="create-form-box">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -40,7 +35,7 @@
                                             <select name="course_id" id="course_id" class="form-control @error('course_id') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
                                                 @foreach($courses as $course)
-                                                <option value="{{$course->id}}" {{ $course->id == $course_id ? 'selected' : '' }}>{{$course->title}}</option>
+                                                <option value="{{$course->id}}" {{ $course->id == $module->course_id ? 'selected' : '' }}>{{$course->title}}</option>
                                                 @endforeach
                                             </select> 
                                             <span class="invalid-feedback">@error('course_id'){{ $message }}
@@ -53,7 +48,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter Course Title" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
-                                                value="{{ old('title')}}" id="title">
+                                                value="{{ $module->title }}" id="title">
                                             <span class="invalid-feedback">@error('title'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -65,7 +60,7 @@
                                             <input type="number" placeholder="Enter total lesson"
                                                 name="number_of_lesson"
                                                 class="form-control @error('number_of_lesson') is-invalid @enderror"
-                                                value="{{ old('number_of_lesson')}}" id="number_of_lesson">
+                                                value="{{ $module->number_of_lesson }}" id="number_of_lesson">
                                             <span class="invalid-feedback">@error('number_of_lesson'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -77,7 +72,7 @@
                                             <input type="number" placeholder="Enter total File"
                                                 name="number_of_attachment"
                                                 class="form-control @error('number_of_attachment') is-invalid @enderror"
-                                                value="{{ old('number_of_attachment')}}" id="number_of_attachment">
+                                                value="{{ $module->number_of_attachment }}" id="number_of_attachment">
                                             <span class="invalid-feedback">@error('number_of_attachment'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -89,7 +84,7 @@
                                             <input type="number" placeholder="Enter total video"
                                                 name="number_of_video"
                                                 class="form-control @error('number_of_video') is-invalid @enderror"
-                                                value="{{ old('number_of_video')}}" id="number_of_video">
+                                                value="{{  $module->number_of_video }}" id="number_of_video">
                                             <span class="invalid-feedback">@error('number_of_video'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -100,7 +95,7 @@
                                             </label>
                                             <input type="number" placeholder="Enter duration" name="duration"
                                                 class="form-control @error('duration') is-invalid @enderror"
-                                                value="{{ old('duration')}}" id="duration">
+                                                value="{{ $module->duration }}" id="duration">
                                             <span class="invalid-feedback">@error('duration'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -116,9 +111,9 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="published">Published</option>
+                                                <option value="draft" {{ $module->status == 'draft' ? 'selected' : ''}}>Draft</option>
+                                                <option value="pending" {{ $module->status == 'pending' ? 'selected' : ''}}>Pending</option>
+                                                <option value="published" {{ $module->status == 'published' ? 'selected' : ''}}>Published</option>
                                             </select>
                                             <i class="fa-solid fa-angle-down"></i>
                                             <span class="invalid-feedback">@error('status'){{ $message }}
@@ -133,7 +128,7 @@
                             <div class="col-12">
                                 <div class="submit-bttns">
                                     <button type="reset" class="btn btn-reset">Clear</button>
-                                    <button type="submit" class="btn btn-submit">Submit</button>
+                                    <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -144,13 +139,12 @@
         </div>
     </div>
 </main>
-<!-- === course create page @E === -->
+<!-- === module update page @E === -->
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script')
- 
+@section('script') 
 @endsection
 
 {{-- page script @E --}}

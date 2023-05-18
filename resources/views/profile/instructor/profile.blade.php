@@ -47,6 +47,7 @@
                 </div>
                 <div class="text-center">
                     <h3>{{$user->name}}</h3>
+                    {{-- <span>{{$user->user_name ? '@'.$user->user_name : ''}}</span> --}}
                     <p>{{$user->short_bio}}</p>
                     <!-- details box @S -->
                     <div class="form-group mt-3 mb-1 ">
