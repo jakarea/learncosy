@@ -31,7 +31,7 @@ Route::middleware('auth')->get('/', function () {
 });
 
 // course page routes
-Route::prefix('instructor/courses')->controller(CourseController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
     Route::get('/', 'index')->name('instructor.courses');
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
@@ -42,7 +42,7 @@ Route::prefix('instructor/courses')->controller(CourseController::class)->group(
 });
 
 // module page routes
-Route::prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('module.store');
@@ -52,7 +52,7 @@ Route::prefix('instructor/modules')->controller(ModuleController::class)->group(
 });
 
 // lesson page routes
-Route::prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('lesson.store');
@@ -62,15 +62,13 @@ Route::prefix('instructor/lessons')->controller(LessonController::class)->group(
 });
 
 // course bundle page routes
-Route::prefix('bundle/course')->controller(CourseBundleController::class)->group(function () {
+Route::middleware('auth')->prefix('bundle/course')->controller(CourseBundleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
 });
 
 // profile management page routes
-Route::middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
-    // Route::get('/', 'index');
-    // Route::get('/create', 'create');
+Route::middleware('auth')->middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/myprofile', 'show')->name('myProfile'); 
     Route::get('/edit', 'edit'); 
     Route::post('/edit', 'update')->name('updateMyProfile'); 
@@ -79,21 +77,28 @@ Route::middleware('auth')->prefix('profile')->controller(ProfileManagementContro
 });
 
 // settings page routes
-Route::prefix('settings')->controller(SettingsController::class)->group(function () {
+Route::middleware('auth')->prefix('settings')->controller(SettingsController::class)->group(function () {
     Route::get('/instructor/stripe', 'stripeIndex');
     Route::get('/instructor/vimeo', 'vimeoIndex');
 });
 
 // review page routes
-Route::prefix('review')->controller(ReviewController::class)->group(function () {
+Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
     Route::get('/', 'index'); 
 });
 
 // student page routes
-Route::prefix('students')->controller(StudentController::class)->group(function () {
-    Route::get('/', 'index'); 
+Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
+    Route::get('/', 'index')->name('allStudents'); 
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('student.add');
+    Route::get('/profile/{id}', 'show')->name('studentProfile'); 
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
 });
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// auth route 
+Auth::routes();

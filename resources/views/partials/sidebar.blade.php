@@ -41,17 +41,9 @@
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('bundle/partials/sub-sidebar') 
-            </li>  
-            {{-- <li class="menu-item">
-                <a href="{{ url('/instructors') }}" class="{{ Request::is('instructors*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-user-group"></i>
-                    <span>Instructors</span>
-                    <i class="fa-solid fa-angles-right"></i>
-                </a> 
-                 @include('profile/partials/sub-sidebar') 
-            </li>    --}}
+            </li>   
             <li class="menu-item">
-                <a href="{{ url('/students') }}" class="{{ Request::is('students*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-user-group"></i>
                     <span>Students</span>
                     <i class="fa-solid fa-angles-right"></i>
