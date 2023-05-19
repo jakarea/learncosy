@@ -10,6 +10,11 @@
 {{-- page content @S --}}
 @section('content')
 <main class="profile-page-wrap">
+
+    {{-- session message @S --}}
+    @include('partials/session-message')
+    {{-- session message @E --}}
+
     {{-- user profile header area @S --}}
     <div class="product-filter-wrapper my-0">
         <div class="product-filter-box mt-0">

@@ -62,9 +62,14 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
 });
 
 // course bundle page routes
-Route::middleware('auth')->prefix('bundle/course')->controller(CourseBundleController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(CourseBundleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('course.bundle.store');
+    Route::get('/{slug}', 'show')->name('course.bundle.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
 });
 
 // profile management page routes

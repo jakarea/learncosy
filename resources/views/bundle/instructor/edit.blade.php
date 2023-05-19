@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Bundle Course Create Page @endsection
+@section('title') Bundle Course Edit Page @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -20,35 +20,36 @@
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">
-                        <h6>Create a new Bundle Course</h6>
+                        <h6>Update Bundle Course</h6>
                         <a href="{{url('bundle/course')}}">
                             <i class="fa-solid fa-list"></i> All Bundle Courses </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{route('course.bundle.store')}}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
+                    <form action="{{route('course.bundle.update',$bundleCourse->slug)}}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="title">Title <sup class="text-danger">*</sup>
                                             </label>
                                             <input type="text" placeholder="Enter Course Title" name="title"
                                                 class="form-control @error('title') is-invalid @enderror"
-                                                value="{{ old('title')}}" id="title">
+                                                value="{{ $bundleCourse->title }}" id="title">
                                             <span class="invalid-feedback">@error('title'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
                                     <div class="col-md-10">
                                         <div class="form-group form-error">
+                                            @php $selectedCourses = explode(",", $bundleCourse->selected_course)  @endphp
                                             <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
                                             </label>
                                             <select multiple aria-label="Default select example"
                                                 data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror" name="selected_course[]">
                                                 @foreach($courses as $course)
-                                                    <option value="{{$course->id}}">{{$course->title}}</option>
+                                                    <option value="{{$course->id}}" {{ $course->id == in_array($course->id, $selectedCourses) ? 'selected' : '' }}>{{$course->title}}</option>
                                                 @endforeach 
                                             </select>
                                             <span class="invalid-feedback">@error('selected_course'){{ $message }}
@@ -61,7 +62,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter Price" name="price"
                                                 class="form-control @error('price') is-invalid @enderror"
-                                                value="{{ old('price')}}" id="price">
+                                                value="{{ $bundleCourse->price }}" id="price">
                                             <span class="invalid-feedback">@error('price'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -75,12 +76,23 @@
                                                 @enderror</span>
                                         </div> 
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews"></div>
                                             <button type="button" class="btn" id="close-button"><i
                                                     class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{-- img preview @S --}}
+                                        <div class="form-group">
+                                        <label for="file-upload">Current Thumbnail:<sup class="text-danger">*</sup></label>
+                                        <div class="file-prev">
+                                            <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->thumbnail)}}" alt="a" class="img-fluid">
+                                             
+                                        </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
@@ -93,12 +105,23 @@
                                                 @enderror</span>
                                         </div> 
                                     </div> 
-                                    <div class="col-md-2">
+                                    <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews-2"></div>
                                             <button type="button" class="btn" id="close-button-2"><i
                                                     class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{-- img preview @S --}}
+                                        <div class="form-group">
+                                        <label for="file-upload">Current Banner:<sup class="text-danger">*</sup></label>
+                                        <div class="file-prev">
+                                            <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->banner)}}" alt="a" class="img-fluid">
+                                             
+                                        </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
@@ -108,7 +131,7 @@
                                                     class="text-danger">*</sup></label>
                                             <textarea name="short_description" id="short_description"
                                                 class="form-control @error('short_description') is-invalid @enderror"
-                                                placeholder="Enter Short Description">{{ old('short_description')}}</textarea>
+                                                placeholder="Enter Short Description">{{ $bundleCourse->short_description }}</textarea>
                                             <span class="invalid-feedback">@error('short_description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -124,9 +147,9 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="published">Published</option>
+                                                <option value="draft" {{ $bundleCourse->status == 'draft' ? 'selected' : ''}}>Draft</option>
+                                                <option value="pending" {{ $bundleCourse->status == 'pending' ? 'selected' : ''}}>Pending</option>
+                                                <option value="published" {{ $bundleCourse->status == 'published' ? 'selected' : ''}}>Published</option>
                                             </select>
                                             <i class="fa-solid fa-angle-down"></i>
                                             <span class="invalid-feedback">@error('status'){{ $message }}

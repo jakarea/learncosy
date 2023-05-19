@@ -35,7 +35,7 @@
                {{-- inner submenu @E --}}
             </li>  
             <li class="menu-item">
-                <a href="{{ url('/bundle/course') }}" class="{{ Request::is('bundle/course*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/bundle/courses') }}" class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Adspy" title="Adspy" class="img-fluid" />
                     <span>Bundle Course</span>
                     <i class="fa-solid fa-angles-right"></i>
