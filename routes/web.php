@@ -21,13 +21,13 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-// Route::get('/home', function () {
-//     return view('blank');
-// });
+Route::get('/home', function () {
+    return view('home');
+});
 
 
 Route::middleware('auth')->get('/', function () {
-    return view('blank');
+    return view('home');
 });
 
 // course page routes
