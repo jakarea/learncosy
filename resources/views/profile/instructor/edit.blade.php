@@ -42,15 +42,15 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="user_name">Username <span class="warning-txt">(after you set
+                                            <label for="username">Username <span class="warning-txt">(after you set
                                                     the username, it's not changeable.)</span><sup
                                                     class="text-danger">*</sup>
                                             </label>
-                                            <input type="text" placeholder="Enter username" name="user_name"
-                                                class="form-control @error('user_name') is-invalid @enderror"
-                                                value="{{ $user->user_name }}" id="user_name" {{ $user->user_name ?
+                                            <input type="text" placeholder="Enter username" name="username"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                value="{{ $user->username }}" id="username" {{ $user->username ?
                                             'disabled' : ''}}>
-                                            <span class="invalid-feedback">@error('user_name'){{ $message }}
+                                            <span class="invalid-feedback">@error('username'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>

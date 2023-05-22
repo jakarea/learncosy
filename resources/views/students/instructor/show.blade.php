@@ -47,7 +47,7 @@
                 </div>
                 <div class="text-center">
                     <h3>{{$student->name}}</h3>
-                    {{-- <span>{{$student->user_name ? '@'.$student->user_name : ''}}</span> --}}
+                    {{-- <span>{{$student->username ? '@'.$student->username : ''}}</span> --}}
                     <p>{{$student->short_bio}}</p>
                     <!-- details box @S -->
                     <div class="form-group mt-3 mb-1 ">

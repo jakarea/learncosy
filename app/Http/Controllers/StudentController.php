@@ -104,8 +104,8 @@ class StudentController extends Controller
         
          $user = User::where('id', $userId)->first();
          $user->name = $request->name;
-         if ($request->user_name) {
-            $user->user_name =  Str::slug($request->user_name);
+         if ($request->username) {
+            $user->username =  Str::slug($request->username);
          }
          $user->short_bio = $request->short_bio;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
