@@ -20,7 +20,7 @@ class CourseController extends Controller
 
     public function courseDataTable()
     { 
-            $course = Course::select('id','title','slug','thumbnail','number_of_module','price','subscription_status')->get();
+            $course = Course::select('id','title','slug','thumbnail','number_of_module','price','status')->get();
           
             return Datatables::of($course)
                 ->addColumn('action', function($course){ 
@@ -51,17 +51,14 @@ class CourseController extends Controller
             })
             ->editColumn('status', function ($course) {
                 if($course->status == 'published'){
-                    return '<label class="badge bg-success">'.__('published').'</label>';
+                    return '<label class="badge bg-success">'.__('Published').'</label>';
                 }
                 if($course->status == 'draft'){
-                    return '<label class="badge bg-danger">'.__('draft').'</label>';
+                    return '<label class="badge bg-info">'.__('Draft').'</label>';
                 }
                 if($course->status == 'pending'){
-                    return '<label class="badge bg-info">'.__('pending').'</label>';
-                }
-                else{
-                    return '<label class="badge bg-info">'.__('Test').'</label>';
-                }
+                    return '<label class="badge bg-danger">'.__('Pending').'</label>';
+                } 
              })
             ->addIndexColumn()
             ->rawColumns(['action', 'image','status'])
