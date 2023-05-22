@@ -50,38 +50,43 @@
         }
 
     }
+
     .form-control.dropdown div span,
     .form-control.dropdown .dropdown-item {
         background: transparent !important;
         color: v.$dark;
     }
+
     .bootstrap-select .dropdown-menu li a span.check-mark {
         color: v.$primary;
         margin-right: 0.5rem;
     }
 }
- 
-.action-dropdown{
-    .dropdown{
-        .btn-drp{
+
+.action-dropdown {
+    .dropdown {
+        .btn-drp {
             background: v.$light;
             color: v.$dark;
             border-radius: .6rem;
-            @include m.para(1rem,600,v.$light);
-            i{
+            @include m.para(1rem, 600, v.$light);
+
+            i {
                 color: v.$dark;
                 font-size: 1.3rem;
             }
         }
     }
-    .dropdown-menu{
+
+    .dropdown-menu {
         padding: 0;
         background-color: transparent;
         border: 0;
-       
-        .bttns-wrap{  
+
+        .bttns-wrap {
             @include m.df(flex-end);
-            a{
+
+            a {
                 padding: .5rem .7rem;
                 display: inline-block;
                 text-align: center;
@@ -90,28 +95,108 @@
                 transition: all linear .3s;
                 background: v.$primary;
                 border-radius: 4px;
-                i{
-                    color: v.$light!important;
+
+                i {
+                    color: v.$light !important;
                     font-size: .9rem;
                 }
-                span{
+
+                span {
                     color: v.$light;
-                    font-size: .9rem; 
+                    font-size: .9rem;
                 }
-                &:hover{
+
+                &:hover {
                     background: v.$btnbg;
-                    i{
-                        color: v.$light!important;
+
+                    i {
+                        color: v.$light !important;
                     }
                 }
-                &:last-child{
+
+                &:last-child {
                     border-right: 0px;
                 }
             }
-            a.txt-item{
-                max-width: fit-content!important;
+
+            a.txt-item {
+                max-width: fit-content !important;
             }
         }
-        
+
     }
+}
+
+.warning-txt {
+    @include m.para(.8rem, 500, v.$primary);
+    text-transform: capitalize;
+}
+
+.file-prev {
+    @include m.df;
+    align-items: flex-start;
+
+    img {
+        width: 6rem;
+        height: 6rem;
+        object-fit: cover;
+        border-radius: .4rem;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        width: 1.7rem;
+        height: 1.7rem;
+        border-radius: .4rem;
+        background: v.$gdbg;
+        color: v.$light;
+        @include m.df(center);
+        display: inline-flex;
+        font-size: .9rem;
+        margin-left: 1rem;
+        display: none;
+    }
+}
+
+.file-prev-show {
+    @include m.df;
+    label{
+        margin-bottom: 0!important;
+    }
+    img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid v.$primary;
+        margin-left: 1rem;
+    }
+}
+
+#course_table{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    tr {
+        th{
+            border: 1px solid v.$third;
+        }
+    }
+} 
+
+.dataTables_paginate{
+    margin-top: 1.5rem;
+    .paginate_button {
+        color: v.$dark;
+    }
+    .paginate_button.current{
+        background-color: v.$primary!important;
+        border: v.$primary!important; 
+    }
+}
+
+#course_table tr:nth-child(odd) td{
+    background-color: #dfe5f1!important;
+}
+#course_table tr:nth-child(even) td{
+    background-color: v.$light!important;
 }

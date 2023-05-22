@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('course/create') }}" class="btn me-3"><i
+                    <a href="{{ url('instructor/courses/create') }}" class="btn me-3"><i
                             class="fas fa-pen text-white me-2"></i>Create Course</a>
                 </div>
 
@@ -68,7 +68,7 @@
     <div class="row">
         <div class="col-12">
             <div class="productss-list-box">
-
+                @if(count($courses) > 0)
                 <table>
                     <tr>
                         <th width="5%">
@@ -78,10 +78,13 @@
                             Title
                         </th>
                         <th>
+                            Thumbnail
+                        </th>
+                        <th>
                             Category
                         </th>
                         <th>
-                            Number of students
+                            Total Module
                         </th>
                         <th>
                             Price
@@ -95,16 +98,43 @@
 
                     </tr>
                     {{-- course item @S --}}
+                    @foreach($courses as $key => $course) 
+                    @php 
+                        $text = $course->title;
+                        $maxLength = 60;
+                        if (strlen($text) > $maxLength) {
+                            $lastSpace = strpos($text, ' ', $maxLength);
+                            $text = $lastSpace !== false ? substr($text, 0, $lastSpace) . '...' : $text;
+                        }
+                    @endphp
 
                     <tr>
                         <td>
-                            01
+                            {{ $key +1 }}
                         </td>
-                        <td>Course Title</td>
-                        <td>Course category</td>
-                        <td>123</td>
-                        <td>$65</td>
-                        <td><span class="badge text-bg-info">Active</span></td>
+                        <td>{{ $text }}</td>
+                        <td>
+                            <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->thumbnail }}" class="img-fluid" width="60">
+                        </td>
+                        <td>
+                            @if($course->categories)
+                                @php $cateogires = explode(",",$course->categories)  @endphp
+                                @foreach($cateogires as $key => $category)
+                                <span class="badge text-bg-primary">{{$category}}</span>
+                                @endforeach 
+                            @endif 
+                        </td>
+                        <td>{{ $course->number_of_module }}</td>
+                        <td>${{ $course->price }}</td>
+                        <td>
+                            @if($course->status == 'draft')
+                            <span class="badge text-bg-info">Draft</span>
+                            @elseif($course->status == 'published')
+                            <span class="badge text-bg-success">Published</span>
+                            @else
+                            <span class="badge text-bg-danger">Pending</span>
+                            @endif
+                        </td>
                         <td>
                             <div class="action-dropdown">
                                 <div class="dropdown">
@@ -114,29 +144,29 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <div class="bttns-wrap">
-                                            <a class="dropdown-item" href="{{url('course/react-redux')}}">
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug) }}">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug.'/edit') }}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fas fa-trash"></i>
-                                            </a> 
-                                            <a class="dropdown-item txt-item" href="{{url('review')}}">
-                                                <span>Review</span>
-                                            </a>     
+                                            <form method="post" class="d-inline btn btn-danger" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf 
+                                                @method("DELETE")
+                                                <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                            </form>    
                                         </div>
                                     </div> 
                                 </div>
                             </div>
                         </td> 
                     </tr>
+                    @endforeach
                     {{-- course item @E --}}
                 </table>
-
+                @else 
                 <p class="p-4 text-center">No Course Found!</p>
-
+                @endif
             </div>
         </div>
     </div>
@@ -146,7 +176,7 @@
     <div class="row">
         <div class="col-12">
             <div class="pagginate-wrap">
-                {{-- Course Paggination Link here --}}
+                {{ $courses->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

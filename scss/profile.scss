@@ -47,13 +47,11 @@
     }
 
     .form-group {
-        margin-bottom: 1rem;
-
+        margin-bottom: 1rem; 
         label {
             @include m.para(.95rem, 400, v.$btnbg);
             margin-bottom: 0.4rem;
         }
-
         .form-control {
             border: 1px solid v.$third;
         }
@@ -71,6 +69,18 @@
             &:hover {
                 opacity: .7
             }
+        }
+    }
+}
+
+.change-password-form-2{
+    .form-group{
+        position: relative;
+        i{
+            position: absolute;
+            right: 1rem;
+            top: 2.6rem;
+            cursor: pointer;
         }
     }
 }

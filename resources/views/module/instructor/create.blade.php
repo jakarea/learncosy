@@ -10,6 +10,12 @@
 
 {{-- page content @S --}}
 @section('content')
+{{-- get course id from url @S --}}
+@php
+  $course_id = isset($_GET['course']) ? $_GET['course'] : ''; 
+@endphp
+{{-- get course id from url @E --}}
+
 <!-- === course create page @S === -->
 <main class="product-research-form">
     <div class="product-research-create-wrap">
@@ -18,11 +24,11 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Create a new Module</h6>
-                        <a href="{{url('module')}}">
+                        <a href="{{url('instructor/modules')}}">
                             <i class="fa-solid fa-list"></i> All Module </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('module.store')}}" method="POST" class="create-form-box">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -30,12 +36,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="course_id">Select Course <sup class="text-danger">*</sup>
-                                            </label>
+                                            </label> 
                                             <select name="course_id" id="course_id" class="form-control @error('course_id') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="1">Course One</option>
-                                                <option value="2">Course Two</option>
-                                                <option value="3">Course Three</option>
+                                                @foreach($courses as $course)
+                                                <option value="{{$course->id}}" {{ $course->id == $course_id ? 'selected' : '' }}>{{$course->title}}</option>
+                                                @endforeach
                                             </select> 
                                             <span class="invalid-feedback">@error('course_id'){{ $message }}
                                                 @enderror</span>
@@ -144,39 +150,7 @@
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/modular-behaviour.js@3.1/modular-behaviour.js" type="module"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
  
-
-
-<script>
-    const urlBttn = document.querySelector('#url_increment');
-    let extraFileds = document.querySelector('.url-extra-field'); 
-  
-    const createFiled = () => { 
-      let div = document.createElement("div");
-      let node = document.createElement("input"); 
-      node.setAttribute("class", "form-control @error('features') is-invalid @enderror");
-      node.setAttribute("multiple", ""); 
-      node.setAttribute("type", "text"); 
-      node.setAttribute("placeholder", "Enter Features"); 
-      node.setAttribute("name", "features[]");    
-      let linkk = document.createElement("a");
-      linkk.innerHTML = "<i class='fas fa-minus'></i>";
-      linkk.setAttribute("onclick", "this.parentElement.style.display = 'none';");
-      let divNew = extraFileds.appendChild(div);
-      divNew.appendChild(node);
-      divNew.appendChild(linkk);
-    }
-  
-    urlBttn.addEventListener('click',createFiled,true);
-  
-   
-  </script>
 @endsection
 
 {{-- page script @E --}}

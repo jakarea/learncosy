@@ -25,7 +25,7 @@
                             <i class="fa-solid fa-list"></i> All Bundle Courses </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
+                    <form action="{{route('course.bundle.store')}}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -46,11 +46,10 @@
                                             <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
                                             </label>
                                             <select multiple aria-label="Default select example"
-                                                data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror">
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                                <option value="4">Four</option>
+                                                data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror" name="selected_course[]">
+                                                @foreach($courses as $course)
+                                                    <option value="{{$course->id}}">{{$course->title}}</option>
+                                                @endforeach 
                                             </select>
                                             <span class="invalid-feedback">@error('selected_course'){{ $message }}
                                                 @enderror</span>
@@ -67,29 +66,41 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="files">Thumbnail <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="files"
+                                            <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="thumbnail" id="file-upload"
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews"></div>
+                                            <button type="button" class="btn" id="close-button"><i
+                                                    class="fas fa-close"></i></button>
                                         </div>
+                                        {{-- img preview @E --}}
                                     </div>
-                                    <div class="col-12">
-                                        <div id="imgThumbnailPreview"></div>
-                                    </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="banner">Banner <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="coverimage" id="banner"
-                                                class="form-control  @error('coverimage') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('coverimage'){{ $message }}
+                                            <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="banner" id="file-upload-2"
+                                                class="form-control  @error('banner') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('banner'){{ $message }}
                                                 @enderror</span>
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-2">
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews-2"></div>
+                                            <button type="button" class="btn" id="close-button-2"><i
+                                                    class="fas fa-close"></i></button>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div id="imgCoverimagePreview"></div>
+                                        {{-- img preview @E --}}
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">

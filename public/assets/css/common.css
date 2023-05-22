@@ -105,3 +105,85 @@
   max-width: -moz-fit-content !important;
   max-width: fit-content !important;
 }
+
+.warning-txt {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #FF6262;
+  line-height: 140%;
+  text-transform: capitalize;
+}
+
+.file-prev {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.file-prev img {
+  width: 6rem;
+  height: 6rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+.file-prev button {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 0.4rem;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  display: none;
+}
+
+.file-prev-show {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.file-prev-show label {
+  margin-bottom: 0 !important;
+}
+.file-prev-show img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 4px solid #FF6262;
+  margin-left: 1rem;
+}
+
+#course_table {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+#course_table tr th {
+  border: 1px solid #DEE3EB;
+}
+
+.dataTables_paginate {
+  margin-top: 1.5rem;
+}
+.dataTables_paginate .paginate_button {
+  color: #000000;
+}
+.dataTables_paginate .paginate_button.current {
+  background-color: #FF6262 !important;
+  border: #FF6262 !important;
+}
+
+#course_table tr:nth-child(odd) td {
+  background-color: #dfe5f1 !important;
+}
+
+#course_table tr:nth-child(even) td {
+  background-color: #ffffff !important;
+}

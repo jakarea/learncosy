@@ -50,7 +50,7 @@
                 </div>
  
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('bundle/course/create') }}" class="btn me-3"> <i class="fas fa-pen text-white me-2"></i>Create Bundle Course</a> 
+                    <a href="{{ url('instructor/bundle/courses/create') }}" class="btn me-3"> <i class="fas fa-pen text-white me-2"></i>Create Bundle Course</a> 
                 </div>
 
             </div>
@@ -63,6 +63,7 @@
     <div class="row">
         <div class="col-12">
             <div class="productss-list-box"> 
+                @if(count($bundleCourses) > 0)
                 <table>
                     <tr>
                         <th width="5%">
@@ -72,7 +73,7 @@
                             Name
                         </th>
                         <th>
-                            In total Price
+                            Thumbnail
                         </th> 
                         <th>
                             Price
@@ -86,15 +87,28 @@
 
                     </tr>
                     {{-- Bundle course item @S --}}
+                    @foreach($bundleCourses as $key => $course) 
+                    @php 
+                        $text = $course->title;
+                        $maxLength = 60;
+                        if (strlen($text) > $maxLength) {
+                            $lastSpace = strpos($text, ' ', $maxLength);
+                            $text = $lastSpace !== false ? substr($text, 0, $lastSpace) . '...' : $text;
+                        }
+                    @endphp
  
                     <tr>
                         <td>
-                            01
+                            {{ $key +1 }}
                         </td>
-                        <td>Course Title</td> 
-                        <td>123</td>
-                        <td>$65</td> 
-                        <td>5432</td>  
+                        <td>{{ $text }}</td> 
+                        <td>
+                            <img src="{{asset('assets/images/bundle-courses/'. $course->thumbnail)}}" alt="{{ $course->thumbnail }}" class="img-fluid" width="60">
+                        </td>
+                        <td>
+                            {{ $course->price }}    
+                        </td> 
+                        <td>324</td>  
                         <td>
                             <div class="action-dropdown">
                                 <div class="dropdown">
@@ -104,15 +118,17 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <div class="bttns-wrap">
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug)}}">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fas fa-trash"></i>
-                                            </a> 
+                                            <form method="post" class="d-inline btn btn-danger" action="{{ url('instructor/bundle/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf 
+                                                @method("DELETE")
+                                                <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                            </form>
                                             <a class="dropdown-item txt-item" href="#">
                                                 <span>Test</span>
                                             </a>     
@@ -122,11 +138,12 @@
                             </div> 
                         </td>
                     </tr> 
+                    @endforeach
                     {{-- Bundle course item @E --}}
                 </table>
-                
+                @else 
                 <p class="p-4 text-center">No Bundle Course Found!</p>
-                
+                @endif
             </div>
         </div>
     </div>
@@ -136,7 +153,7 @@
     <div class="row">
         <div class="col-12">
             <div class="pagginate-wrap">
-                {{-- Bundle Course Paggination Link here --}}
+                {{ $bundleCourses->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

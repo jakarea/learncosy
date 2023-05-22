@@ -21,61 +21,90 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-Route::get('/', function () {
-    return 'Hello World';;
+Route::get('/home', function () {
+    return view('home');
+});
+
+
+Route::middleware('auth')->get('/', function () {
+    return view('home');
 });
 
 // course page routes
-Route::prefix('course')->controller(CourseController::class)->group(function () {
-    Route::get('/', 'index');
+Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
+    Route::get('/', 'index')->name('instructor.courses'); 
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
     Route::get('/{slug}', 'show')->name('course.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('course.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('course.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
 });
 
 // module page routes
-Route::prefix('module')->controller(ModuleController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('module.store');
+    Route::get('/{slug}/edit', 'edit')->name('module.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('module.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('module.destroy');
 });
 
 // lesson page routes
-Route::prefix('lesson')->controller(LessonController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('lesson.store');
+    Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('lesson.update');
+    Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
 });
 
 // course bundle page routes
-Route::prefix('bundle/course')->controller(CourseBundleController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(CourseBundleController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('course.bundle.store');
+    Route::get('/{slug}', 'show')->name('course.bundle.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
 });
 
 // profile management page routes
-Route::prefix('instructors')->controller(ProfileManagementController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/create', 'create');
-    Route::get('/profile/{slug}', 'show'); 
-    Route::get('/profile/{slug}/edit', 'edit'); 
+Route::middleware('auth')->middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('myProfile'); 
+    Route::get('/edit', 'edit'); 
+    Route::post('/edit', 'update')->name('updateMyProfile'); 
+    Route::get('/change-password', 'passwordUpdate');
+    Route::post('/change-password', 'postChangePassword')->name('postChangePassword');
 });
 
 // settings page routes
-Route::prefix('settings')->controller(SettingsController::class)->group(function () {
+Route::middleware('auth')->prefix('settings')->controller(SettingsController::class)->group(function () {
     Route::get('/instructor/stripe', 'stripeIndex');
     Route::get('/instructor/vimeo', 'vimeoIndex');
 });
 
 // review page routes
-Route::prefix('review')->controller(ReviewController::class)->group(function () {
+Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
     Route::get('/', 'index'); 
 });
 
 // student page routes
-Route::prefix('students')->controller(StudentController::class)->group(function () {
-    Route::get('/', 'index'); 
+Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
+    Route::get('/', 'index')->name('allStudents'); 
     Route::get('/create', 'create'); 
+
+    Route::post('/create', 'store')->name('student.add');
+    Route::get('/profile/{id}', 'show')->name('studentProfile'); 
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
 });
 
-Auth::routes(['verify' => true]);
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// auth route 
+Auth::routes();

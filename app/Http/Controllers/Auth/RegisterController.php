@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+
+use Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +33,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/course';
+
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/profile/edit';
 
     /**
      * Create a new controller instance.
@@ -51,6 +57,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'user_role' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -65,11 +72,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
+
+        $user = User::create([
+            'name' => $data['name'],  
             'email' => $data['email'],
+            'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // email info
+        $email_data = array(
+            'name' => $data['name'],
+            'user_role' => $data['user_role'],
+            'email' => $data['email'],
+        );
+ 
+        // Mail::send('emails/welcome', $email_data, function ($message) use ($email_data) {
+        //     $message->to($email_data['email'], $email_data['name'])
+        //         ->subject('Welcome to LearnCosy')
+        //         ->from('learncosy@edu.net', 'Learncosy');
+        // });
+   
+        return $user;
+
     }
 }

@@ -10,6 +10,10 @@
 
 {{-- page content @S --}}
 @section('content')
+@php 
+  $course_id = isset($_GET['course']) ? $_GET['course'] : '';
+  $module_id = isset($_GET['module']) ? $_GET['module'] : '';
+@endphp
 <!-- === Lesson create page @S === -->
 <main class="product-research-form">
     <div class="product-research-create-wrap">
@@ -18,11 +22,11 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Create a new Lesson</h6>
-                        <a href="{{url('lesson')}}">
+                        <a href="{{url('instructor/lessons')}}">
                             <i class="fa-solid fa-list"></i> All Lesson </a>
                     </div>
                     <!-- Lesson create form @S -->
-                    <form action="" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('lesson.store')}}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -33,9 +37,9 @@
                                             </label>
                                             <select name="course_id" id="course_id" class="form-control @error('course_id') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="1">Course One</option>
-                                                <option value="2">Course Two</option>
-                                                <option value="3">Course Three</option>
+                                                @foreach($courses as $course)
+                                                    <option value="{{$course->id}}" {{ $course->id == $course_id ? 'selected' : ''}}>{{$course->title}}</option>
+                                                @endforeach
                                             </select> 
                                             <span class="invalid-feedback">@error('course_id'){{ $message }}
                                                 @enderror</span>
@@ -47,9 +51,9 @@
                                             </label>
                                             <select name="module_id" id="module_id" class="form-control @error('module_id') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="1">Module One</option>
-                                                <option value="2">Module Two</option>
-                                                <option value="3">Module Three</option>
+                                                @foreach($modules as $module)
+                                                    <option value="{{$module->id}}"  {{ $module->id == $module_id ? 'selected' : ''}}>{{$module->title}}</option>
+                                                @endforeach
                                             </select> 
                                             <span class="invalid-feedback">@error('module_id'){{ $message }}
                                                 @enderror</span>
@@ -77,30 +81,43 @@
                                                 @enderror</span>
                                         </div>
                                     </div>  
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="files">Thumbnail <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="files"
+                                            <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="thumbnail" id="file-upload"
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews"></div>
+                                            <button type="button" class="btn" id="close-button"><i
+                                                    class="fas fa-close"></i></button>
                                         </div>
+                                        {{-- img preview @E --}}
                                     </div>
-                                    <div class="col-12">
-                                        <div id="imgThumbnailPreview"></div>
-                                    </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file">File <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="file" id="file"
-                                                class="form-control  @error('file') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('file'){{ $message }}
+                                            <label for="file-upload-2">File </label>
+                                            <input type="file" name="lesson_file" id="file-upload-2"
+                                                class="form-control  @error('lesson_file') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('lesson_file'){{ $message }}
                                                 @enderror</span>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews-2"></div>
+                                            <button type="button" class="btn" id="close-button-2"><i
+                                                    class="fas fa-close"></i></button>
                                         </div>
+                                        {{-- img preview @E --}}
                                     </div>
-                                    <div class="col-12">
-                                        <div id="imgCoverimagePreview"></div>
-                                    </div>
+                                     
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="short_description">Short Description <sup
@@ -127,7 +144,7 @@
                                                 <select class="form-select @error('meta_keyword') is-invalid @enderror"
                                                     id="meta_keyword" name="meta_keyword[]" multiple
                                                     data-allow-clear="1" data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value="">Create meta keyword...</option>
+                                                    <option selected="selected" disabled hidden value="">Add meta keyword</option>
                                                 </select>
                                             </modular-behaviour>
                                             <i class="fa-solid fa-angle-down"></i>
@@ -192,38 +209,8 @@
 {{-- page script @S --}}
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/modular-behaviour.js@3.1/modular-behaviour.js" type="module"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
- 
-
-
-<script>
-    const urlBttn = document.querySelector('#url_increment');
-    let extraFileds = document.querySelector('.url-extra-field'); 
-  
-    const createFiled = () => { 
-      let div = document.createElement("div");
-      let node = document.createElement("input"); 
-      node.setAttribute("class", "form-control @error('features') is-invalid @enderror");
-      node.setAttribute("multiple", ""); 
-      node.setAttribute("type", "text"); 
-      node.setAttribute("placeholder", "Enter Features"); 
-      node.setAttribute("name", "features[]");    
-      let linkk = document.createElement("a");
-      linkk.innerHTML = "<i class='fas fa-minus'></i>";
-      linkk.setAttribute("onclick", "this.parentElement.style.display = 'none';");
-      let divNew = extraFileds.appendChild(div);
-      divNew.appendChild(node);
-      divNew.appendChild(linkk);
-    }
-  
-    urlBttn.addEventListener('click',createFiled,true);
-  
-   
-  </script>
 @endsection
 
 {{-- page script @E --}}

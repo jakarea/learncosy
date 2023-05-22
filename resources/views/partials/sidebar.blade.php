@@ -2,11 +2,14 @@
     {{-- header user @S --}}
     <div class="header-user-box">
         <div class="media"> 
-            {{-- <img src="{{ asset('assets/images/avatar.png') }}" alt="Nayan Akram" class="img-fluid">  --}}
-            <span>N</span>
+            @if(Auth()->user()->avatar)
+            <img src="{{ asset('assets/images/user/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
+            @else
+            <span>{!! strtoupper(Auth()->user()->name[0]) !!}</span>
+            @endif 
             <div class="media-body">
-                <h5>Nayan Akram</h5>
-                <p>Instructor</p>
+                <h5>{{Auth()->user()->name}}</h5>
+                <p>{{Auth()->user()->user_role}}</p>
             </div>
         </div>
     </div>
@@ -22,9 +25,9 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('/course') }}" class="{{ Request::is('course*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
-                    <span>Course</span>
+                    <span>Courses</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a>
                 {{-- inner submenu @S --}}
@@ -32,23 +35,15 @@
                {{-- inner submenu @E --}}
             </li>  
             <li class="menu-item">
-                <a href="{{ url('/bundle/course') }}" class="{{ Request::is('bundle/course*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/bundle/courses') }}" class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Adspy" title="Adspy" class="img-fluid" />
                     <span>Bundle Course</span>
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('bundle/partials/sub-sidebar') 
-            </li>  
-            <li class="menu-item">
-                <a href="{{ url('/instructors') }}" class="{{ Request::is('instructors*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-user-group"></i>
-                    <span>Instructors</span>
-                    <i class="fa-solid fa-angles-right"></i>
-                </a> 
-                 @include('profile/partials/sub-sidebar') 
             </li>   
             <li class="menu-item">
-                <a href="{{ url('/students') }}" class="{{ Request::is('students*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-user-group"></i>
                     <span>Students</span>
                     <i class="fa-solid fa-angles-right"></i>
@@ -63,12 +58,19 @@
                 </a> 
                  @include('settings/partials/sub-sidebar') 
             </li>    
+            @guest
+            @else
             <li class="menu-item">
-                <a class="menu-link bg-white" href="#">
+                <a class="menu-link bg-white" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
                     <span>{{ __('Logout') }}</span>
                 </a> 
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </li>
+            @endguest
         </ul>
     </div>
     {{-- sidebar menu @E --}}

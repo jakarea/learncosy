@@ -50,7 +50,7 @@
                 </div>
  
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('module/create') }}" class="btn me-3"><i class="fas fa-pen text-white me-2"></i> Create Module</a> 
+                    <a href="{{ url('instructor/modules/create') }}" class="btn me-3"><i class="fas fa-pen text-white me-2"></i> Create Module</a> 
                 </div>
 
             </div>
@@ -63,7 +63,7 @@
     <div class="row">
         <div class="col-12">
             <div class="productss-list-box">
-                
+                @if(count($modules) > 0)
                 <table>
                     <tr>
                         <th width="5%">
@@ -87,15 +87,32 @@
 
                     </tr>
                     {{-- Module item @S --}}
- 
+                    @foreach($modules as $key => $module)
+                    @php 
+                        $text = $module->title;
+                        $maxLength = 60;
+                        if (strlen($text) > $maxLength) {
+                            $lastSpace = strpos($text, ' ', $maxLength);
+                            $text = $lastSpace !== false ? substr($text, 0, $lastSpace) . '...' : $text;
+                        }
+                    @endphp
+
                     <tr>
                         <td>
-                            01
+                            {{ $key +1 }}
                         </td>
-                        <td>Module Title</td>
-                        <td>432</td>
-                        <td>6 Month</td>
-                        <td>43</td>  
+                        <td>
+                            {{ $text }}
+                        </td>
+                        <td>
+                            {{ $module->number_of_attachment }}
+                        </td>
+                        <td>
+                            {{ $module->duration }}
+                        </td>
+                        <td>
+                            {{ $module->number_of_video }} 
+                        </td>  
                         <td>
                             <div class="action-dropdown">
                                 <div class="dropdown">
@@ -105,12 +122,14 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <div class="bttns-wrap"> 
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ url('instructor/modules/'.$module->slug.'/edit') }}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fas fa-trash"></i>
-                                            </a> 
+                                            <form method="post" class="d-inline btn btn-danger" action="{{ url('instructor/modules/'.$module->slug.'/destroy') }}">
+                                                @csrf 
+                                                @method("DELETE")
+                                                <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                            </form> 
                                             <a class="dropdown-item txt-item" href="#">
                                                 <span>Test</span>
                                             </a>     
@@ -120,11 +139,12 @@
                             </div>
                         </td>
                     </tr> 
+                    @endforeach
                     {{-- Module item @E --}}
                 </table>
-                
+                @else 
                 <p class="p-4 text-center">No Module Found!</p>
-                
+                @endif
             </div>
         </div>
     </div>
@@ -134,7 +154,7 @@
     <div class="row">
         <div class="col-12">
             <div class="pagginate-wrap">
-                {{-- Module Paggination Link here --}}
+                {{ $modules->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

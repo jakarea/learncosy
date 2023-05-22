@@ -42,7 +42,7 @@
                 </div>
  
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('lesson/create') }}" class="btn me-3"><i class="fas fa-pen text-white me-2"></i> Create Lesson</a> 
+                    <a href="{{ url('instructor/lessons/create') }}" class="btn me-3"><i class="fas fa-pen text-white me-2"></i> Create Lesson</a> 
                 </div>
 
             </div>
@@ -55,35 +55,57 @@
     <div class="row">
         <div class="col-12">
             <div class="productss-list-box">
-                
+                @if(count($lessons) > 0)
                 <table>
                     <tr>
                         <th width="5%">
                             No
                         </th>
                         <th>
+                            Thumbnail
+                        </th>
+                        <th>
                             Title
                         </th> 
                         <th>
-                            Keyword
-                        </th> 
+                            URL
+                        </th>
                         <th>
-                            Date
-                        </th> 
+                            Keyword
+                        </th>  
                         <th>
                             Action 
                         </th>
 
                     </tr>
-                    {{-- course item @S --}}
- 
+                    {{-- lesson item @S --}}
+                    @foreach($lessons as $key => $lesson) 
+                    @php 
+                        $text = $lesson->title;
+                        $maxLength = 60;
+                        if (strlen($text) > $maxLength) {
+                            $lastSpace = strpos($text, ' ', $maxLength);
+                            $text = $lastSpace !== false ? substr($text, 0, $lastSpace) . '...' : $text;
+                        }
+                    @endphp
+
                     <tr>
                         <td>
-                            01
+                            {{ $key +1 }}
                         </td>
-                        <td>Lesson Title</td> 
-                        <td>Best Course</td> 
-                        <td>01-12-2025</td> 
+                        <td>
+                            <img src="{{asset('assets/images/lessons/'. $lesson->thumbnail)}}" alt="{{ $lesson->thumbnail }}" class="img-fluid" width="60">
+                        </td>
+                        <td>{{ $text }}</td> 
+                        <td>{{$lesson->video_link}}</td> 
+                        <td>
+                            @if($lesson->meta_keyword)
+                                @php $mkeywords = explode(",",$lesson->meta_keyword)  @endphp
+                                @foreach($mkeywords as $key => $keyword)
+                                <span class="badge text-bg-primary">{{$keyword}}</span>
+                                @endforeach 
+                            @endif  
+                        </td> 
                         <td>
                             <div class="action-dropdown">
                                 <div class="dropdown">
@@ -93,12 +115,14 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <div class="bttns-wrap"> 
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{url('instructor/lessons/'.$lesson->slug.'/edit')}}">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="fas fa-trash"></i>
-                                            </a> 
+                                            <form method="post" class="d-inline btn btn-danger" action="{{ url('instructor/lessons/'.$lesson->slug.'/destroy') }}">
+                                                @csrf 
+                                                @method("DELETE")
+                                                <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                            </form>
                                             <a class="dropdown-item txt-item" href="#">
                                                 <span>Test</span>
                                             </a>     
@@ -108,11 +132,12 @@
                             </div>
                         </td>
                     </tr> 
+                    @endforeach
                     {{-- Lesson item @E --}}
                 </table>
-                
+                @else 
                 <p class="p-4 text-center">No Lesson Found!</p>
-                
+                @endif
             </div>
         </div>
     </div>
@@ -122,7 +147,7 @@
     <div class="row">
         <div class="col-12">
             <div class="pagginate-wrap">
-                {{-- Lesson Paggination Link here --}}
+                {{ $lessons->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

@@ -27,7 +27,7 @@
             <form action="">
                 <div class="stripe-settings-form-wrap">
                     <div class="form-group">
-                        <label for="">YOUR STRIPE SECRET KEY</label>
+                        <label for="">STRIPE SECRET KEY</label>
                         <input type="text" class="form-control" placeholder="Enter Secret Key" value="1234_ghjk_2345_sdfgh">
                     </div>
                     <div class="form-submit">
