@@ -33,6 +33,7 @@ Route::middleware('auth')->get('/', function () {
 // course page routes
 Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
     Route::get('/', 'index')->name('instructor.courses'); 
+    Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
     Route::get('/{slug}', 'show')->name('course.show'); 
