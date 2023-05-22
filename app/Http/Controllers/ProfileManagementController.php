@@ -54,7 +54,7 @@ class ProfileManagementController extends Controller
        
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
-        $user->user_name =  Str::slug($request->user_name);
+        $user->username =  Str::slug($request->username);
         $user->short_bio = $request->short_bio;
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
