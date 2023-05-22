@@ -1,4 +1,3 @@
-
 @extends('layouts.auth')
 
 @section('title')
@@ -55,13 +54,11 @@ Login
                 </form>
                 <div class="login-logo-wrap text-center mt-3"> 
                     <p>Don't have an account? <a href="{{ url('/register') }}" class="registerr">Register</a></p>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 </section>
 <!-- ====== login page content end ====== -->
 @endsection

@@ -74,12 +74,11 @@
             serverSide: true,
             ajax: "{{ route('instructor.courses') }}",
             columns: [
-                {data: 'title', name: 'title'},  
+                {data: 'title', name: 'title'},
                 {data: 'number_of_module', name: 'number_of_module'},
                 {data: 'price', name: 'price'},
                 {data: 'subscription_status', name: 'subscription_status'}, 
-                {data: 'image', name: 'image', orderable:false, searchable: false},
-                {data: 'action', name: 'action', orderable:false, searchable: false}
+                {data: 'image', name: 'image', orderable:false, searchable: false}
             ]
         });
     });
