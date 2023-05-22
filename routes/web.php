@@ -96,6 +96,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     Route::get('/create', 'create'); 
+
     Route::post('/create', 'store')->name('student.add');
     Route::get('/profile/{id}', 'show')->name('studentProfile'); 
     Route::get('/{id}/edit', 'edit'); 
