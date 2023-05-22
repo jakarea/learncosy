@@ -42,11 +42,11 @@
     <div class="row">
         <div class="col-12">
             <div class="productss-list-box p-4">
-                <table id="course_table" class="table table-striped table-bordered">
+                <table id="courseTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Thumbnail</th>
+                            <th width="10%" class="text-center">Thumbnail</th>
                             <th>Total Modules</th>
                             <th>Price</th>
                             <th>Status</th>
@@ -69,16 +69,17 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var table =  $('#course_table').DataTable({
+        var table =  $('#courseTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('instructor.courses') }}",
+            ajax: "{{ route('courses.data.table') }}",
             columns: [
                 {data: 'title', name: 'title'},
+                {data: 'image', name: 'image', orderable:false, searchable: false},
                 {data: 'number_of_module', name: 'number_of_module'},
                 {data: 'price', name: 'price'},
-                {data: 'subscription_status', name: 'subscription_status'}, 
-                {data: 'image', name: 'image', orderable:false, searchable: false}
+                {data: 'status', name: 'status', orderable:false, searchable: false},  
+                {data: 'action', name: 'action', orderable:false, searchable: false}
             ]
         });
     });

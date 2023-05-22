@@ -180,10 +180,14 @@
   border: #FF6262 !important;
 }
 
-#course_table tr:nth-child(odd) td {
+#courseTable tr:nth-child(odd) td {
   background-color: #dfe5f1 !important;
 }
 
-#course_table tr:nth-child(even) td {
+#courseTable tr:nth-child(even) td {
   background-color: #ffffff !important;
+}
+
+#courseTable tr td:nth-child(2) {
+  text-align: center;
 }

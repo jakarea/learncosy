@@ -13,9 +13,13 @@ use File;
 class CourseController extends Controller
 {
     // course list
-    public function index(Request $request){
+    public function index(){
 
-        if ($request->ajax()) {
+        return view('course/instructor/datatable'); 
+    }
+
+    public function courseDataTable()
+    { 
             $course = Course::select('id','title','slug','thumbnail','number_of_module','price','subscription_status')->get();
           
             return Datatables::of($course)
@@ -30,10 +34,8 @@ class CourseController extends Controller
                             <div class="dropdown-menu">
                                 <div class="bttns-wrap">
                                     <a class="dropdown-item" href="courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
-                                    <a class="dropdown-item" href="courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a> 
-                                    <img src="assets/images/courses/'.$course->thumbnail.'" width="50" />
-                                    <form method="post" class="d-inline btn btn-danger" action="courses/'.$course->slug.'/destroy"> 
-                                         
+                                    <a class="dropdown-item" href="courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="courses/'.$course->slug.'/destroy">  
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                     </form>    
                                 </div>
@@ -44,63 +46,27 @@ class CourseController extends Controller
                     return $actions;
 
                 })
-                ->addColumn('image', function ($course) {
-                    return '<a class="dropdown-item" href="courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>';
-                })
-                ->make(true);
-
-        }
-        return view('course/instructor/datatable'); 
-    }
-
-    public function data()
-    {
-        abort_if(!$this->user->cans('view_company'), 403);
-
-         $categories = Company::query();
-
-          if (\request('filter_status') != "") {
-            $categories->where('status', \request('filter_status'));
-        }
-
-        $categories->get();
-
-        return DataTables::of($categories)
-            ->addColumn('action', function ($row) {
-                $action = '';
-
-                $action .= '<a href="' . route('admin.company.show', [$row->id]) . '" class="btn btn-dark btn-circle"
-                data-toggle="tooltip" onclick="this.blur()" data-original-title="' . __('app.view') . '"><i class="fa fa-search" aria-hidden="true"></i></a>&nbsp';
-
-                if ($this->user->cans('edit_company')) {
-                    $action .= '<a href="' . route('admin.company.edit', [$row->id]) . '" class="btn btn-primary btn-circle"
-                      data-toggle="tooltip" onclick="this.blur()" data-original-title="' . __('app.edit') . '"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
-                }
-
-                if ($this->user->cans('delete_company')) {
-                    $action .= ' <a href="javascript:;" class="btn btn-danger btn-circle sa-params"
-                      data-toggle="tooltip" onclick="this.blur()" data-row-id="' . $row->id . '" data-original-title="' . __('app.delete') . '"><i class="fa fa-times" aria-hidden="true"></i></a>';
-                }
-                return $action;
+                ->editColumn('image', function ($course) {
+                return '<img src="/assets/images/courses/'.$course->thumbnail.'" width="50" />';
             })
-            ->editColumn('status', function ($row) {
-                if($row->status == 'active'){
-                    return '<label class="badge bg-success">'.__('app.active').'</label>';
+            ->editColumn('status', function ($course) {
+                if($course->status == 'published'){
+                    return '<label class="badge bg-success">'.__('published').'</label>';
                 }
-                if($row->status == 'inactive'){
-                    return '<label class="badge bg-danger">'.__('app.inactive').'</label>';
+                if($course->status == 'draft'){
+                    return '<label class="badge bg-danger">'.__('draft').'</label>';
+                }
+                if($course->status == 'pending'){
+                    return '<label class="badge bg-info">'.__('pending').'</label>';
+                }
+                else{
+                    return '<label class="badge bg-info">'.__('Test').'</label>';
                 }
              })
-            ->editColumn('logo', function ($row) {
-                return '<img src="' . $row->logo_url . '" class="img-responsive" width = "150px"/>';
-            })
-            ->editColumn('company_name', function ($row) {
-                return '<a href="' . route("admin.company.show", [$row->id]) . '">' . ucfirst($row->company_name) . '</a>';
-                
-            })
             ->addIndexColumn()
-            ->rawColumns(['logo', 'action', 'status','company_name'])
+            ->rawColumns(['action', 'image','status'])
             ->make(true);
+ 
     }
 
     // course create
