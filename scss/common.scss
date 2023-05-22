@@ -172,3 +172,31 @@
         margin-left: 1rem;
     }
 }
+
+#course_table{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    tr {
+        th{
+            border: 1px solid v.$third;
+        }
+    }
+} 
+
+.dataTables_paginate{
+    margin-top: 1.5rem;
+    .paginate_button {
+        color: v.$dark;
+    }
+    .paginate_button.current{
+        background-color: v.$primary!important;
+        border: v.$primary!important; 
+    }
+}
+
+#course_table tr:nth-child(odd) td{
+    background-color: #dfe5f1!important;
+}
+#course_table tr:nth-child(even) td{
+    background-color: v.$light!important;
+}

@@ -7,15 +7,47 @@ use App\Models\Lesson;
 use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use DataTables;
 use File;
 
 class CourseController extends Controller
 {
     // course list
-    public function index()
-    {  
-        $courses = Course::orderby('id', 'desc')->paginate(12);
-        return view('course/instructor/index', compact('courses'));  
+    public function index(Request $request){
+
+        if ($request->ajax()) {
+            $course = Course::select('id','title','slug','thumbnail','number_of_module','price','subscription_status')->get();
+          
+            return Datatables::of($course)
+                ->addColumn('action', function($course){ 
+                     
+                    return '<div class="action-dropdown">
+                        <div class="dropdown">
+                            <a class="btn btn-drp" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="bttns-wrap">
+                                    <a class="dropdown-item" href="courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
+                                    <a class="dropdown-item" href="courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a> 
+                                    <form method="post" class="d-inline btn btn-danger" action="courses/'.$course->slug.'/destroy"> 
+                                         
+                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                    </form>    
+                                </div>
+                            </div> 
+                        </div>
+                    </div>';
+
+                })
+                ->addColumn('image', function ($course) {
+                    return '<img src="assets/images/courses/'.$course->thumbnail.'" width="50" />';
+                })
+                ->make(true);
+
+        }
+        return view('course/instructor/datatable'); 
     }
 
     // course create

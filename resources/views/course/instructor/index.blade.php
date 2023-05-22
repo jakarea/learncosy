@@ -154,13 +154,7 @@
                                                 @csrf 
                                                 @method("DELETE")
                                                 <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                            </form>
-                                            {{-- <a class="dropdown-item" href="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
-                                                <i class="fas fa-trash"></i>
-                                            </a>  --}}
-                                            <a class="dropdown-item txt-item" href="{{url('review')}}">
-                                                <span>Review</span>
-                                            </a>     
+                                            </form>    
                                         </div>
                                     </div> 
                                 </div>
