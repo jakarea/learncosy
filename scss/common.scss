@@ -194,9 +194,13 @@
     }
 }
 
-#course_table tr:nth-child(odd) td{
+#courseTable tr:nth-child(odd) td{
     background-color: #dfe5f1!important;
 }
-#course_table tr:nth-child(even) td{
+#courseTable tr:nth-child(even) td{
     background-color: v.$light!important;
+}
+
+#courseTable tr td:nth-child(2){
+    text-align: center;
 }

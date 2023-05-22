@@ -46,7 +46,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Thumbnail</th>
+                            <th width="10%" class="text-center">Thumbnail</th>
                             <th>Total Modules</th>
                             <th>Price</th>
                             <th>Status</th>

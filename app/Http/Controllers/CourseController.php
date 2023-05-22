@@ -58,7 +58,10 @@ class CourseController extends Controller
                 }
                 if($course->status == 'pending'){
                     return '<label class="badge bg-info">'.__('pending').'</label>';
-                }else
+                }
+                else{
+                    return '<label class="badge bg-info">'.__('Test').'</label>';
+                }
              })
             ->addIndexColumn()
             ->rawColumns(['action', 'image','status'])
