@@ -34,6 +34,8 @@ class ModuleController extends Controller
                                  <div class="bttns-wrap"> 
                                      <a class="dropdown-item" href="/instructor/modules/'.$module->slug.'/edit"> <i class="fas fa-pen"></i></a>  
                                      <form method="post" class="d-inline btn btn-danger" action="/instructor/modules/'.$module->slug.'/destroy">  
+                                     '.csrf_field().'
+                                    '.method_field("DELETE").'
                                          <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                      </form>    
                                  </div>

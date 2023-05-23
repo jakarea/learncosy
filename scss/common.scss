@@ -118,6 +118,20 @@
                     border-right: 0px;
                 }
             }
+            form{
+                background: v.$primary;
+                border-radius: 4px;
+                color: v.$light;
+                border: 0;
+                button{
+                    &:hover{
+                        background: v.$btnbg;
+                    }
+                }
+                &:hover{
+                    background: v.$btnbg;
+                }
+            }
 
             a.txt-item {
                 max-width: fit-content !important;
@@ -215,6 +229,15 @@
     color: v.$light!important;
 }
 
+#myDataTable tr td:first-child{
+    text-align: left;
+}
 #myDataTable tr td:last-child{
     text-align: right;
+}
+
+.dataTables_empty{
+    text-align: center!important;
+    @include m.para(1rem,500,v.$dark);
+    padding: 1rem 0;
 }
