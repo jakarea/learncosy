@@ -21,7 +21,7 @@ class StudentController extends Controller
      // data table getData
     public function studentsDataTable()
     {       $user_role = "students";
-            $user = User::select('id','name','user_name','avatar','email','phone','recivingMessage','user_role')->get();
+            $user = User::where('user_role',$user_role)->get();
           
             return Datatables::of($user)
                 ->addColumn('action', function($user){ 
