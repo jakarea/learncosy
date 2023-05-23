@@ -14,13 +14,13 @@ class CourseController extends Controller
 {
     // course list
     public function index(){
-
-        return view('course/instructor/datatable'); 
+        return view('course/instructor/index'); 
     }
 
+    // data table getData
     public function courseDataTable()
     { 
-            $course = Course::select('id','title','slug','thumbnail','number_of_module','price','status')->get();
+            $course = Course::select('id','title','slug','thumbnail','categories','number_of_module','price','status')->get();
           
             return Datatables::of($course)
                 ->addColumn('action', function($course){ 
@@ -33,9 +33,9 @@ class CourseController extends Controller
                             </a>
                             <div class="dropdown-menu">
                                 <div class="bttns-wrap">
-                                    <a class="dropdown-item" href="courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
-                                    <a class="dropdown-item" href="courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="courses/'.$course->slug.'/destroy">  
+                                    <a class="dropdown-item" href="/instructor/courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
+                                    <a class="dropdown-item" href="/instructor/courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/courses/'.$course->slug.'/destroy">  
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                     </form>    
                                 </div>
@@ -59,11 +59,17 @@ class CourseController extends Controller
                 if($course->status == 'pending'){
                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
                 } 
-             })
+             })->editColumn('categorie', function ($course) {
+                if($course->categories){
+                    $cateogires = explode(",",$course->categories); 
+                    foreach ($cateogires as $key => $category) {
+                        return '<span class="badge text-bg-primary">'.$category.'</span>'; 
+                    } 
+                }
+            })
             ->addIndexColumn()
-            ->rawColumns(['action', 'image','status'])
+            ->rawColumns(['action', 'image','status','categorie'])
             ->make(true);
- 
     }
 
     // course create
@@ -81,9 +87,9 @@ class CourseController extends Controller
             'title' => 'required',
             'features' => 'required',
             'price' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',  
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         //save course
@@ -179,9 +185,9 @@ class CourseController extends Controller
             'title' => 'required',
             'features' => 'required',
             'price' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
         ]);
 
         $course = Course::where('slug', $slug)->first();

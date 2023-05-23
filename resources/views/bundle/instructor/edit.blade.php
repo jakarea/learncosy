@@ -21,7 +21,7 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Update Bundle Course</h6>
-                        <a href="{{url('bundle/course')}}">
+                        <a href="{{url('instructor/bundle/courses')}}">
                             <i class="fa-solid fa-list"></i> All Bundle Courses </a>
                     </div>
                     <!-- course create form @S -->

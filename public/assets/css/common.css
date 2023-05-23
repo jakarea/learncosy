@@ -161,11 +161,11 @@
   margin-left: 1rem;
 }
 
-#courseTable {
+#myDataTable {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-#courseTable tr th {
+#myDataTable tr th {
   border: 1px solid #DEE3EB;
 }
 
@@ -180,20 +180,28 @@
   border: #FF6262 !important;
 }
 
-#courseTable tr:nth-child(odd) td {
+#myDataTable tr:nth-child(odd) td {
   background-color: #dfe5f1 !important;
   vertical-align: middle;
 }
 
-#courseTable tr:nth-child(even) td {
+#myDataTable tr:nth-child(even) td {
   background-color: #ffffff !important;
   vertical-align: middle;
 }
 
-#courseTable tr td:nth-child(5),
-#courseTable tr td:nth-child(4),
-#courseTable tr td:nth-child(3),
-#courseTable tr td:nth-child(2) {
+#myDataTable tr td:nth-child(5),
+#myDataTable tr td:nth-child(4),
+#myDataTable tr td:nth-child(3),
+#myDataTable tr td:nth-child(2) {
   text-align: center;
   vertical-align: middle;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: #ffffff !important;
+}
+
+#myDataTable tr td:last-child {
+  text-align: right;
 }
