@@ -15,7 +15,7 @@ class LessonController extends Controller
     public function index()
     {  
         $lessons = Lesson::orderby('id', 'desc')->paginate(1);
-        return view('lesson/instructor/index',compact('lessons')); 
+        return view('e-learning/lesson/instructor/index',compact('lessons')); 
     }
 
     // data table getData
@@ -79,7 +79,7 @@ class LessonController extends Controller
     {  
         $courses = Course::orderBy('id', 'desc')->get();
         $modules = Module::orderBy('id', 'desc')->get();
-        return view('lesson/instructor/create',compact('courses','modules')); 
+        return view('e-learning/lesson/instructor/create',compact('courses','modules')); 
     }
 
     // lesson store
@@ -140,7 +140,7 @@ class LessonController extends Controller
         $modules = Module::orderBy('id', 'desc')->get();
          $lesson = Lesson::where('slug', $slug)->first();
          if ($lesson) {
-             return view('lesson/instructor/edit', compact('lesson','courses','modules'));
+             return view('e-learning/lesson/instructor/edit', compact('lesson','courses','modules'));
          } else {
              return redirect('instructor/lessons')->with('error', 'Lesson not found!');
          } 
@@ -161,15 +161,17 @@ class LessonController extends Controller
         ]);
 
         $lesson = Lesson::where('slug', $slug)->first();
+        $lesson->course_id = $request->course_id; 
+        $lesson->module_id = $request->module_id; 
         $lesson->title = $request->title; 
         $lesson->slug = Str::slug($request->title);
         $lesson->meta_keyword = is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword;
         $lesson->video_link = $request->video_link; 
+        $lesson->lesson_file = $request->lesson_file; 
         $lesson->short_description = $request->short_description;
         $lesson->meta_description = $request->meta_description;
         $lesson->status = $request->status;
         $lesson->save();
-
 
         if ($request->hasFile('thumbnail')) { 
              // Delete old file

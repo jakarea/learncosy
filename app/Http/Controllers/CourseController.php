@@ -14,7 +14,7 @@ class CourseController extends Controller
 {
     // course list
     public function index(){
-        return view('course/instructor/index'); 
+        return view('e-learning/course/instructor/index'); 
     }
 
     // data table getData
@@ -77,7 +77,7 @@ class CourseController extends Controller
     // course create
     public function create()
     {  
-        return view('course/instructor/create'); 
+        return view('e-learning/course/instructor/create'); 
     }
 
     // course store
@@ -140,7 +140,6 @@ class CourseController extends Controller
             $image->move($destinationPath, $name2);
             $course->banner = $name2;
         }
-        
 
         //if sample_certificates is valid then save it
         if ($request->hasFile('sample_certificates')) {
@@ -162,7 +161,7 @@ class CourseController extends Controller
         $modules = Module::orderby('id', 'desc')->paginate(10);
         $course = Course::where('slug', $slug)->first();
         if ($course) {
-            return view('course/instructor/show', compact('course','modules','lessons'));
+            return view('e-learning/course/instructor/show', compact('course','modules','lessons'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
@@ -173,7 +172,7 @@ class CourseController extends Controller
     {   
         $course = Course::where('slug', $slug)->first();
         if ($course) {
-            return view('course/instructor/edit', compact('course'));
+            return view('e-learning/course/instructor/edit', compact('course'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         } 

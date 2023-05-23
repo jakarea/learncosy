@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Support\Str;
 use App\Models\Module; 
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ModuleController extends Controller
     // module list
     public function index()
     {    
-        return view('module/instructor/index'); 
+        return view('e-learning/module/instructor/index'); 
     }
 
      // data table getData
@@ -66,7 +67,7 @@ class ModuleController extends Controller
     public function create()
     {  
         $courses = Course::orderBy('id', 'desc')->get();
-        return view('module/instructor/create',compact('courses')); 
+        return view('e-learning/module/instructor/create',compact('courses')); 
     }
 
     public function store(Request $request)
@@ -103,7 +104,7 @@ class ModuleController extends Controller
         $courses = Course::orderBy('id', 'desc')->get();
         $module = Module::where('slug', $slug)->first();
         if ($module) {
-            return view('module/instructor/edit', compact('module','courses'));
+            return view('e-learning/module/instructor/edit', compact('module','courses'));
         } else {
             return redirect('instructor/modules')->with('error', 'Module not found!');
         } 
@@ -116,12 +117,20 @@ class ModuleController extends Controller
           // return $request->all();
 
           $request->validate([
-            'title' => 'required'
+            'course_id' => 'required',
+            'title' => 'required',
+            'number_of_lesson' => 'required', 
+            'duration' => 'required', 
         ]);
 
         $module = Module::where('slug', $slug)->first();
+        $module->course_id = $request->course_id; 
         $module->title = $request->title; 
         $module->slug = Str::slug($request->title); 
+        $module->number_of_lesson = $request->number_of_lesson;
+        $module->number_of_attachment = $request->number_of_attachment;
+        $module->number_of_video = $request->number_of_video;
+        $module->duration = $request->duration;
         $module->status = $request->status;
         $module->save();
 
@@ -130,7 +139,27 @@ class ModuleController extends Controller
 
     public function destroy($slug)
     { 
-        $module = Module::where('slug', $slug)->delete(); 
+        // delete module 
+        $module = Module::where('slug', $slug)->first(); 
+
+        //delete lessons
+        $lessons = Lesson::where('module_id', $module->id)->get();
+        foreach ($lessons as $lesson) {
+            //delete lesson thumbnail
+            $lessonOldThumbnail = public_path('/assets/images/lessons/'.$lesson->thumbnail);
+            if (file_exists($lessonOldThumbnail)) {
+                @unlink($lessonOldThumbnail);
+            }
+            //delete lesson file
+            $lessonOldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
+            if (file_exists($lessonOldFile)) {
+                @unlink($lessonOldFile);
+            }
+            
+            $lesson->delete();
+        }
+        $module->delete();
+
         return redirect('instructor/modules')->with('success', 'Module deleted!');
     }
 }

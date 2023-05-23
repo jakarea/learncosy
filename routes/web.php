@@ -22,9 +22,8 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/home', function () {
-    return view('home');
+    return redirect('/');
 });
-
 
 Route::middleware('auth')->get('/', function () {
     return view('home');
@@ -113,7 +112,7 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
     Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // auth route 
 Auth::routes();

@@ -31,7 +31,7 @@
                     <i class="fa-solid fa-angles-right"></i>
                 </a>
                 {{-- inner submenu @S --}}
-                 @include('course/partials/sub-sidebar')
+                 @include('e-learning/course/partials/sub-sidebar')
                {{-- inner submenu @E --}}
             </li>  
             <li class="menu-item">
