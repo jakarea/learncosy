@@ -161,11 +161,11 @@
   margin-left: 1rem;
 }
 
-#course_table {
+#courseTable {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-#course_table tr th {
+#courseTable tr th {
   border: 1px solid #DEE3EB;
 }
 
@@ -182,12 +182,18 @@
 
 #courseTable tr:nth-child(odd) td {
   background-color: #dfe5f1 !important;
+  vertical-align: middle;
 }
 
 #courseTable tr:nth-child(even) td {
   background-color: #ffffff !important;
+  vertical-align: middle;
 }
 
+#courseTable tr td:nth-child(5),
+#courseTable tr td:nth-child(4),
+#courseTable tr td:nth-child(3),
 #courseTable tr td:nth-child(2) {
   text-align: center;
+  vertical-align: middle;
 }

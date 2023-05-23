@@ -45,12 +45,12 @@
                 <table id="courseTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th class="text-start">Title</th>
                             <th width="10%" class="text-center">Thumbnail</th>
-                            <th>Total Modules</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th width="8%" class="text-center">Modules</th>
+                            <th width="8%" class="text-center">Price</th>
+                            <th width="8%" class="text-center">Status</th>
+                            <th width="15%">Action</th>
                         </tr>
                     </thead>
                 </table>
