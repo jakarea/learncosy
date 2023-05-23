@@ -48,7 +48,7 @@ class ProfileManagementController extends Controller
             'short_bio' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|email|unique:users,email,'.$userId, 
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
        

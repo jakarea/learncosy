@@ -8,16 +8,66 @@ use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use DataTables;
 
 class StudentController extends Controller
 {
     // list page 
     public function index()
-     {  
-        $user_role = "students";
-        $students = User::orderby('id', 'desc')->where('user_role', $user_role)->paginate(12);
-         return view('students/instructor/index',compact('students')); 
+     {   
+         return view('students/instructor/index'); 
      }
+
+     // data table getData
+    public function studentsDataTable()
+    {       $user_role = "students";
+            $user = User::where('user_role',$user_role)->get();
+          
+            return Datatables::of($user)
+                ->addColumn('action', function($user){ 
+                     
+                    $actions = '<div class="action-dropdown">
+                        <div class="dropdown">
+                            <a class="btn btn-drp" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="bttns-wrap"> 
+                                    <a class="dropdown-item" href="/instructor/students/profile/'.$user->id.'"> <i class="fas fa-eye"></i></a>  
+                                    <a class="dropdown-item" href="/instructor/students/'.$user->id.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/students/'.$user->id.'/destroy">  
+                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                    </form>    
+                                </div>
+                            </div> 
+                        </div>
+                    </div>';
+
+                    return $actions;
+
+                })
+                ->editColumn('image', function ($user) { 
+                    if($user->avatar){
+                        return '<img src="/assets/images/user/'.$user->avatar.'" width="50" />';
+                    }else{ 
+                        return '<div class="table-avatar">
+                                <span>'.strtoupper($user->name[0]).'</span>
+                            </div>';
+                    } 
+            })
+            ->editColumn('status', function ($user) {
+                if($user->recivingMessage == 1){
+                    return '<label class="badge bg-success">'.__('Enabled').'</label>';
+                }
+                if($user->recivingMessage == 0){
+                    return '<label class="badge bg-danger">'.__('Disabled').'</label>';
+                } 
+             })
+            ->addIndexColumn()
+            ->rawColumns(['action', 'image','status'])
+            ->make(true);
+    }
 
     // create page 
     public function create()
@@ -36,7 +86,7 @@ class StudentController extends Controller
             'short_bio' => 'string',
             'phone' => 'string',
             'email' => 'required|email|unique:users,email', 
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
 
@@ -98,7 +148,7 @@ class StudentController extends Controller
              'short_bio' => 'required|string',
              'phone' => 'required|string',
              'email' => 'required|email|unique:users,email,'.$userId, 
-             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ]);
  
         

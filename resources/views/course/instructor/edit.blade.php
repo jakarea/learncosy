@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="prerequisites">Prerequisites <sup class="text-danger">*</sup>
+                                            <label for="prerequisites">Prerequisites  
                                             </label>
                                             <input type="text" placeholder="Enter Prerequisites" name="prerequisites"
                                                 class="form-control @error('prerequisites') is-invalid @enderror"
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="outcome">Outcome <sup class="text-danger">*</sup>
+                                            <label for="outcome">Outcome  
                                             </label>
                                             <input type="text" placeholder="Enter Outcome" name="outcome"
                                                 class="form-control @error('outcome') is-invalid @enderror"
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="promo_video">Promo Video <sup class="text-danger">*</sup>
+                                            <label for="promo_video">Promo Video  
                                             </label>
                                             <input type="text" placeholder="Enter Promo Video URL" name="promo_video"
                                                 class="form-control @error('promo_video') is-invalid @enderror"
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="offer_price">Offer Price <sup class="text-danger">*</sup>
+                                            <label for="offer_price">Offer Price  
                                             </label>
                                             <input type="text" placeholder="Enter Offer Price" name="offer_price"
                                                 class="form-control @error('offer_price') is-invalid @enderror"
@@ -168,7 +168,7 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Thumbnail:<sup class="text-danger">*</sup></label>
+                                        <label for="file-upload">Current Thumbnail:<sup class="text-success">*</sup></label>
                                         <div class="file-prev">
                                             <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="a" class="img-fluid">
                                              
@@ -178,7 +178,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
+                                            <label for="file-upload-2">Banner  </label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
@@ -197,7 +197,7 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Banner:<sup class="text-danger">*</sup></label>
+                                        <label for="file-upload">Current Banner:<sup class="text-success">*</sup></label>
                                         <div class="file-prev">
                                             <img src="{{asset('assets/images/courses/'.$course->banner)}}" alt="a" class="img-fluid">
                                              
@@ -442,7 +442,7 @@
                             <div class="col-12">
                                 <div class="submit-bttns">
                                     <button type="reset" class="btn btn-reset">Clear</button>
-                                    <button type="submit" class="btn btn-submit">Submit</button>
+                                    <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
                         </div>

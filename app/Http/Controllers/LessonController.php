@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Course;
 use Illuminate\Support\Str;
 use App\Models\Module; 
+use DataTables;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -15,6 +16,60 @@ class LessonController extends Controller
     {  
         $lessons = Lesson::orderby('id', 'desc')->paginate(1);
         return view('lesson/instructor/index',compact('lessons')); 
+    }
+
+    // data table getData
+    public function lessonsDataTable()
+    { 
+            $lesson = Lesson::select('id','title','slug','thumbnail','meta_keyword','video_link','status')->get();
+          
+            return Datatables::of($lesson)
+                ->addColumn('action', function($lesson){ 
+                     
+                    $actions = '<div class="action-dropdown">
+                        <div class="dropdown">
+                            <a class="btn btn-drp" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="bttns-wrap"> 
+                                    <a class="dropdown-item" href="/instructor/lessons/'.$lesson->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/lessons/'.$lesson->slug.'/destroy">  
+                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                    </form>    
+                                </div>
+                            </div> 
+                        </div>
+                    </div>';
+
+                    return $actions;
+
+                })
+                ->editColumn('image', function ($lesson) {
+                return '<img src="/assets/images/lessons/'.$lesson->thumbnail.'" width="50" />';
+            })
+            ->editColumn('status', function ($lesson) {
+                if($lesson->status == 'published'){
+                    return '<label class="badge bg-success">'.__('Published').'</label>';
+                }
+                if($lesson->status == 'draft'){
+                    return '<label class="badge bg-info">'.__('Draft').'</label>';
+                }
+                if($lesson->status == 'pending'){
+                    return '<label class="badge bg-danger">'.__('Pending').'</label>';
+                } 
+             })->editColumn('keyword', function ($lesson) {
+                if($lesson->meta_keyword){
+                    $keywords = explode(",",$lesson->meta_keyword); 
+                    foreach ($keywords as $key => $keyword) {
+                        return '<span class="badge text-bg-primary">'.$keyword.'</span>'; 
+                    } 
+                }
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action', 'image','status','keyword'])
+            ->make(true);
     }
 
     // lesson create
@@ -35,8 +90,8 @@ class LessonController extends Controller
             'module_id' => 'required',
             'title' => 'required', 
             'video_link' => 'required', 
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',  
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         //save lesson
@@ -99,8 +154,8 @@ class LessonController extends Controller
             'module_id' => 'required',
             'title' => 'required', 
             'video_link' => 'required', 
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',  
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         $lesson = Lesson::where('slug', $slug)->first();

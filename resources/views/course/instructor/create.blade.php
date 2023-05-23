@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="prerequisites">Prerequisites <sup class="text-danger">*</sup>
+                                            <label for="prerequisites">Prerequisites  
                                             </label>
                                             <input type="text" placeholder="Enter Prerequisites" name="prerequisites"
                                                 class="form-control @error('prerequisites') is-invalid @enderror"
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="outcome">Outcome <sup class="text-danger">*</sup>
+                                            <label for="outcome">Outcome  
                                             </label>
                                             <input type="text" placeholder="Enter Outcome" name="outcome"
                                                 class="form-control @error('outcome') is-invalid @enderror"
@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="promo_video">Promo Video <sup class="text-danger">*</sup>
+                                            <label for="promo_video">Promo Video  
                                             </label>
                                             <input type="text" placeholder="Enter Promo Video URL" name="promo_video"
                                                 class="form-control @error('promo_video') is-invalid @enderror"
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="offer_price">Offer Price <sup class="text-danger">*</sup>
+                                            <label for="offer_price">Offer Price  
                                             </label>
                                             <input type="text" placeholder="Enter Offer Price" name="offer_price"
                                                 class="form-control @error('offer_price') is-invalid @enderror"
@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
+                                            <label for="file-upload-2">Banner  </label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
@@ -218,8 +218,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="meta_description">Meta Description <sup
-                                                    class="text-danger">*</sup></label>
+                                            <label for="meta_description">Meta Description  </label>
                                             <textarea name="meta_description" id="meta_description"
                                                 class="form-control @error('meta_description') is-invalid @enderror"
                                                 placeholder="Enter Meta Description">{{ old('meta_description')}}</textarea>
@@ -310,14 +309,14 @@
                                             <div class="d-flex">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="hascertificate"
-                                                        id="flexRadioDefault1">
+                                                        id="flexRadioDefault1" value="yes">
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Yes
                                                     </label>
                                                 </div>
                                                 <div class="form-check ms-4">
                                                     <input class="form-check-input" type="radio" name="hascertificate"
-                                                        id="flexRadioDefault2" checked>
+                                                        id="flexRadioDefault2" checked value="no">
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         No
                                                     </label>

@@ -33,11 +33,12 @@ Route::middleware('auth')->get('/', function () {
 // course page routes
 Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
     Route::get('/', 'index')->name('instructor.courses'); 
+    // data table route 
     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
     Route::get('/{slug}', 'show')->name('course.show'); 
-    Route::get('/{slug}/edit', 'edit')->name('course.edit'); 
+    Route::get('/{slug}/edit', 'edit')->name('course.edit');
     Route::post('/{slug}/edit', 'update')->name('course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
 });
@@ -45,6 +46,8 @@ Route::middleware('auth')->prefix('instructor/courses')->controller(CourseContro
 // module page routes
 Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
     Route::get('/', 'index');
+    // data table route 
+    Route::get('/datatable', 'modulesDataTable')->name('modules.data.table'); 
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('module.store');
     Route::get('/{slug}/edit', 'edit')->name('module.edit'); 
@@ -55,6 +58,8 @@ Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleContro
 // lesson page routes
 Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
     Route::get('/', 'index');
+    // data table route 
+    Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('lesson.store');
     Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
@@ -65,6 +70,8 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
 // course bundle page routes
 Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(CourseBundleController::class)->group(function () {
     Route::get('/', 'index');
+     // data table route 
+     Route::get('/datatable', 'bundleDataTable')->name('bundle.data.table');
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('course.bundle.store');
     Route::get('/{slug}', 'show')->name('course.bundle.show'); 
@@ -96,6 +103,8 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 // student page routes
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
+    // data table route 
+    Route::get('/datatable', 'studentsDataTable')->name('students.data.table');
     Route::get('/create', 'create'); 
     Route::post('/create', 'store')->name('student.add');
     Route::get('/profile/{id}', 'show')->name('studentProfile'); 

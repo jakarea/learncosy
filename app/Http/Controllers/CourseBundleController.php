@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\BundleCourse;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use DataTables;
 
 class CourseBundleController extends Controller
 {
@@ -15,6 +16,54 @@ class CourseBundleController extends Controller
         $bundleCourses = BundleCourse::orderby('id', 'desc')->paginate(12);
          return view('bundle/instructor/index',compact('bundleCourses')); 
      }
+
+     // data table getData
+    public function bundleDataTable()
+    { 
+            $course = BundleCourse::select('id','title','slug','thumbnail','price','status')->get();
+          
+            return Datatables::of($course)
+                ->addColumn('action', function($course){ 
+                     
+                    $actions = '<div class="action-dropdown">
+                        <div class="dropdown">
+                            <a class="btn btn-drp" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="bttns-wrap">
+                                    <a class="dropdown-item" href="/instructor/bundle/courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
+                                    <a class="dropdown-item" href="/instructor/bundle/courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/bundle/courses/'.$course->slug.'/destroy">  
+                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
+                                    </form>    
+                                </div>
+                            </div> 
+                        </div>
+                    </div>';
+
+                    return $actions;
+
+                })
+                ->editColumn('image', function ($course) {
+                return '<img src="/assets/images/bundle-courses/'.$course->thumbnail.'" width="50" />';
+            })
+            ->editColumn('status', function ($course) {
+                if($course->status == 'published'){
+                    return '<label class="badge bg-success">'.__('Published').'</label>';
+                }
+                if($course->status == 'draft'){
+                    return '<label class="badge bg-info">'.__('Draft').'</label>';
+                }
+                if($course->status == 'pending'){
+                    return '<label class="badge bg-danger">'.__('Pending').'</label>';
+                } 
+             })
+            ->addIndexColumn()
+            ->rawColumns(['action', 'image','status'])
+            ->make(true);
+    }
  
      // course bundle create
      public function create()
@@ -32,8 +81,8 @@ class CourseBundleController extends Controller
             'title' => 'required',
             'selected_course' => 'required',
             'price' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',  
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         //save bundle course
@@ -100,8 +149,8 @@ class CourseBundleController extends Controller
             'title' => 'required',
             'selected_course' => 'required',
             'price' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',  
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         $bundleCourse = BundleCourse::where('slug', $slug)->first();
