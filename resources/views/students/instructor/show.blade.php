@@ -36,7 +36,7 @@
                 <div class="set-profile-picture">
                     <div class="media justify-content-center">
                         @if(isset($student->avatar))
-                        <img src="{{ asset('assets/images/user/'.$student->avatar) }}" alt="{{$student->name}}" class="img-fluid">
+                        <img src="{{ asset('assets/images/students/'.$student->avatar) }}" alt="{{$student->name}}" class="img-fluid">
                         @else
                         <span>{!! strtoupper($student->name[0]) !!}</span>
                         @endif 
@@ -74,7 +74,7 @@
                 @php $social_links = explode(",",$student->social_links) @endphp
                 @foreach($social_links as $key => $social_link)
                 <div class="form-group my-0">
-                    <label for="" class="mb-0"><i class="fa-brands fa-facebook"></i>Facebook: </label>
+                    <label for="" class="mb-0"><i class="fas fa-link"></i>Social: </label>
                     <p>{{$social_link ? $social_link : 'N/A'}}</p>
                 </div>
                 @endforeach 

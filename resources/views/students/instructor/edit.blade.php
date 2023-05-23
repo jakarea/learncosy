@@ -159,7 +159,7 @@
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
                                             <div class="file-prev-shows">
-                                                <img src="{{asset('assets/images/user/'.$student->avatar)}}" alt="Avatar"
+                                                <img src="{{asset('assets/images/students/'.$student->avatar)}}" alt="Avatar"
                                                     class="img-fluid"> 
                                             </div>
                                         </div> 

@@ -89,9 +89,9 @@ Route::middleware('auth')->middleware('auth')->prefix('profile')->controller(Pro
 });
 
 // settings page routes
-Route::middleware('auth')->prefix('settings')->controller(SettingsController::class)->group(function () {
-    Route::get('/instructor/stripe', 'stripeIndex');
-    Route::get('/instructor/vimeo', 'vimeoIndex');
+Route::middleware('auth')->prefix('settings/instructor')->controller(SettingsController::class)->group(function () {
+    Route::get('/stripe', 'stripeIndex');
+    Route::get('/vimeo', 'vimeoIndex');
 });
 
 // review page routes

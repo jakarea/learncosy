@@ -65,14 +65,23 @@ class ProfileManagementController extends Controller
             $user->password = Hash::make($request->password);
         }else{
             $user->password = $user->password;
-        } 
+        }  
 
-        if ($request->avatar) {
-            $userSlug = Str::slug($user->name); 
-            $imageName = $userSlug.'.'.request()->avatar->getClientOriginalExtension();
-            request()->avatar->move(public_path('assets/images/user'), $imageName); 
-            $user->avatar = $imageName;
-        }
+        if ($request->hasFile('avatar')) { 
+            // Delete old file
+            if ($user->avatar) {
+               $oldFile = public_path('/assets/images/user/'.$user->avatar);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           } 
+           $slugg = Str::slug($request->name);
+           $image = $request->file('avatar');
+           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+           $destinationPath = public_path('/assets/images/user');
+           $image->move($destinationPath, $name);
+           $user->avatar = $name; 
+       }
 
         $user->save();
         return redirect()->route('myProfile')->with('success', 'Your Profile has been Updated successfully!');
