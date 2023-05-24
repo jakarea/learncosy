@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Student\StudentHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +100,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
     Route::get('/', 'index'); 
 });
 
-// student page routes
+// student profile page routes
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     // data table route 
@@ -111,8 +112,12 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
     Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
     Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
 });
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+ 
+// student home page routes
+Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
+    Route::get('/home', 'index')->name('students.all.courses');
+});
+ 
 
 // auth route 
 Auth::routes();

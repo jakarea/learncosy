@@ -18,6 +18,7 @@
    {{-- sidebar menu @S --}}
     <div class="sidebar-nav-area">
         <ul class="menubar"> 
+            @if(Auth::user()->user_role == 'instructor')
             <li class="menu-item">
                 <a href="{{ url('/') }}" class="{{ Request::is('/')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Dashboard" title="Dashboard" class="img-fluid" />
@@ -57,9 +58,15 @@
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('settings/partials/sub-sidebar') 
-            </li>    
-            @guest
-            @else
+            </li> 
+            @elseif(Auth::user()->user_role == 'students')
+            <li class="menu-item">
+                <a href="{{ url('students/home') }}" class="{{ Request::is('students/home*')  ? ' active' : '' }} menu-link">
+                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home" class="img-fluid" />
+                    <span>Home</span> 
+                </a>
+            </li>
+            @endif
             <li class="menu-item">
                 <a class="menu-link bg-white" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
@@ -69,8 +76,7 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
-            </li>
-            @endguest
+            </li> 
         </ul>
     </div>
     {{-- sidebar menu @E --}}

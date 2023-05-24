@@ -61,14 +61,7 @@ class LessonController extends Controller
                 if($lesson->status == 'pending'){
                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
                 } 
-             })->editColumn('keyword', function ($lesson) {
-                if($lesson->meta_keyword){
-                    $keywords = explode(",",$lesson->meta_keyword); 
-                    foreach ($keywords as $key => $keyword) {
-                        return '<span class="badge text-bg-primary">'.$keyword.'</span>'; 
-                    } 
-                }
-            })
+             })
             ->addIndexColumn()
             ->rawColumns(['action', 'image','status','keyword'])
             ->make(true);
@@ -156,7 +149,7 @@ class LessonController extends Controller
             'module_id' => 'required',
             'title' => 'required', 
             'video_link' => 'required', 
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
