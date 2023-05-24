@@ -70,7 +70,7 @@ class ProfileManagementController extends Controller
         if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/user/'.$user->avatar);
+               $oldFile = public_path('/assets/images/instructor/'.$user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
@@ -78,13 +78,13 @@ class ProfileManagementController extends Controller
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/user');
+           $destinationPath = public_path('/assets/images/instructor');
            $image->move($destinationPath, $name);
            $user->avatar = $name; 
        }
 
         $user->save();
-        return redirect()->route('myProfile')->with('success', 'Your Profile has been Updated successfully!');
+        return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
     // password update
@@ -108,6 +108,6 @@ class ProfileManagementController extends Controller
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->route('myProfile')->with('success', 'Your password has been changed successfully!');
+        return redirect()->route('instructor.profile')->with('success', 'Your password has been changed successfully!');
     }
 }

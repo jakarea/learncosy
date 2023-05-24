@@ -23,7 +23,7 @@
                 <p><span class="text-danger">Update</span> profile info to see more details.</p>
             </div>
             <div class="form-grp-btn mt-0 ms-auto">
-                <a href="{{ url('profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
+                <a href="{{ url('instructor/profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
             </div>
         </div>
     </div>
@@ -34,14 +34,14 @@
         <div class="col-lg-4">
             <div class="change-password-form w-100 customer-profile-info">
                 <div class="text-end">
-                    <a href="{{url('profile/edit')}}">
+                    <a href="{{url('instructor/profile/edit')}}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
                 </div>
                 <div class="set-profile-picture">
                     <div class="media justify-content-center">
                         @if($user->avatar)
-                        <img src="{{ asset('assets/images/user/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
+                        <img src="{{ asset('assets/images/instructor/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
                         @else
                         <span>{!! strtoupper($user->name[0]) !!}</span>
                         @endif 
@@ -89,13 +89,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
-                        <h5>Instructor Details :</h5>
+                        <h5>Details :</h5>
                         <p>{{$user->description ? $user->description : 'No Description Available'}}</p> 
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table">
-                        <h5 class="p-3 pb-0">Emails from students :</h5>
+                        <h5 class="p-3 pb-0">Emails / Messages from students:</h5>
                         <table>
                             <tr>
                                 <th width="5%">No</th>
@@ -147,7 +147,7 @@
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table mt-4">
-                        <h5 class="p-3 pb-0">Instructor Course List :</h5>
+                        <h5 class="p-3 pb-0">My Course List :</h5>
                         <table>
                             <tr>
                                 <th width="5%">No</th>

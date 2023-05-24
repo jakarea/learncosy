@@ -153,8 +153,8 @@
                                     </div> 
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Initial Password for this user will be: <code class="bg-danger text-white p-1">12345678</code> </label>
-                                            <sup>*Canbe Change it Later</sup>
+                                            <label for="">Initial Password for this user will be: <code class="bg-danger text-white p-1">1234567890</code> </label>
+                                            <sup>*Can be Change it Later</sup>
                                         </div>
                                     </div>
 

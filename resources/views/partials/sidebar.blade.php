@@ -3,7 +3,11 @@
     <div class="header-user-box">
         <div class="media"> 
             @if(Auth()->user()->avatar)
-            <img src="{{ asset('assets/images/user/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
+            @if(Auth()->user()->user_role == 'students')
+            <img src="{{ asset('assets/images/students/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
+            @elseif(Auth()->user()->user_role == 'instructor')
+            <img src="{{ asset('assets/images/instructor/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
+            @endif
             @else
             <span>{!! strtoupper(Auth()->user()->name[0]) !!}</span>
             @endif 
@@ -18,6 +22,7 @@
    {{-- sidebar menu @S --}}
     <div class="sidebar-nav-area">
         <ul class="menubar"> 
+            {{-- instructor menu link @S --}}
             @if(Auth::user()->user_role == 'instructor')
             <li class="menu-item">
                 <a href="{{ url('/') }}" class="{{ Request::is('/')  ? ' active' : '' }} menu-link">
@@ -59,13 +64,35 @@
                 </a> 
                  @include('settings/partials/sub-sidebar') 
             </li> 
+            {{-- instructor menu link @E --}}
+
+            {{-- student menu link @S --}}
             @elseif(Auth::user()->user_role == 'students')
+            <li class="menu-item">
+                <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} menu-link">
+                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="dashboard" title="dashboard" class="img-fluid" />
+                    <span>Dashboard</span> 
+                </a>
+            </li>
             <li class="menu-item">
                 <a href="{{ url('students/home') }}" class="{{ Request::is('students/home*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home" class="img-fluid" />
                     <span>Home</span> 
                 </a>
             </li>
+            <li class="menu-item">
+                <a href="{{ url('students/courses/catalog') }}" class="{{ Request::is('students/courses/catalog*')  ? ' active' : '' }} menu-link">
+                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Catalog" title="Catalog" class="img-fluid" />
+                    <span>Course Catalog </span> 
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url('students/account-management') }}" class="{{ Request::is('students/account-management*')  ? ' active' : '' }} menu-link">
+                    <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
+                    <span>Account Management </span> 
+                </a>
+            </li>
+            {{-- student menu link @E --}}
             @endif
             <li class="menu-item">
                 <a class="menu-link bg-white" href="{{ route('logout') }}" onclick="event.preventDefault();

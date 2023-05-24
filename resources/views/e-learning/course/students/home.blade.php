@@ -92,11 +92,9 @@
                         <div class="course-ftr"> 
                             <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Overview </a></h5>
 
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                    style="20%">
-                                </div>
-                            </div> 
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 25%"></div>
+                              </div> 
                             <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a> 
                         </div>
                     </div>

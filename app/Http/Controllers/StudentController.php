@@ -91,6 +91,8 @@ class StudentController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
+        // initial password for student if instructor create profile
+        $initialPass = 1234567890;
 
         // add student
         $student = new User([
@@ -102,7 +104,7 @@ class StudentController extends Controller
             'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => 12345678,
+            'password' => Hash::make($initialPass),
         ]);  
 
         $studentslug = Str::slug($request->name);

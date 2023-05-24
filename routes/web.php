@@ -10,6 +10,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Student\StudentProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,16 +82,16 @@ Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(Cours
 });
 
 // profile management page routes
-Route::middleware('auth')->middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
-    Route::get('/myprofile', 'show')->name('myProfile'); 
+Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManagementController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('instructor.profile'); 
     Route::get('/edit', 'edit'); 
-    Route::post('/edit', 'update')->name('updateMyProfile'); 
+    Route::post('/edit', 'update')->name('instructor.profile.update'); 
     Route::get('/change-password', 'passwordUpdate');
-    Route::post('/change-password', 'postChangePassword')->name('postChangePassword');
+    Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
 });
 
 // settings page routes
-Route::middleware('auth')->prefix('settings/instructor')->controller(SettingsController::class)->group(function () {
+Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsController::class)->group(function () {
     Route::get('/stripe', 'stripeIndex');
     Route::get('/vimeo', 'vimeoIndex');
 });
@@ -100,7 +101,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
     Route::get('/', 'index'); 
 });
 
-// student profile page routes
+// student page routes
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     // data table route 
@@ -115,9 +116,20 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
  
 // student home page routes
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
+    Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/home', 'index')->name('students.all.courses');
+    Route::get('/courses/catalog', 'catalog')->name('students.catalog.courses');
+    Route::get('/account-management', 'accountManagement')->name('students.account.management');
 });
- 
+
+// student profile management page routes
+Route::middleware('auth')->prefix('students/profile')->controller(StudentProfileController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('students.profile'); 
+    Route::get('/edit', 'edit'); 
+    Route::post('/edit', 'update')->name('students.profile.update'); 
+    Route::get('/change-password', 'passwordUpdate');
+    Route::post('/change-password', 'postChangePassword')->name('students.password.update');
+});
 
 // auth route 
 Auth::routes();
