@@ -101,7 +101,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
     Route::get('/', 'index'); 
 });
 
-// student page routes
+// all students profile page routes
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     // data table route 
@@ -118,11 +118,12 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/home', 'index')->name('students.all.courses');
-    Route::get('/courses/catalog', 'catalog')->name('students.catalog.courses');
+    Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
+    Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 });
 
-// student profile management page routes
+// student own profile management page routes
 Route::middleware('auth')->prefix('students/profile')->controller(StudentProfileController::class)->group(function () {
     Route::get('/myprofile', 'show')->name('students.profile'); 
     Route::get('/edit', 'edit'); 
