@@ -47,8 +47,7 @@
                         <tr>
                             <th class="text-start">Title</th> 
                             <th width="10%" class="text-center">Thumbnail</th>
-                            <th width="19%" class="text-center">Video Link</th> 
-                            <th width="12%" class="text-center">Meta Keys</th> 
+                            <th width="19%" class="text-center">Video Link</th>  
                             <th width="8%" class="text-center">Status</th>
                             <th width="15%">Action</th>
                         </tr>
@@ -75,7 +74,6 @@
             ajax: "{{ route('lessons.data.table') }}",
             columns: [
                 {data: 'title', name: 'title'},
-                {data: 'keyword', name: 'keyword', orderable:false, searchable: false},
                 {data: 'image', name: 'image', orderable:false, searchable: false},
                 {data: 'video_link', name: 'video_link'}, 
                 {data: 'status', name: 'status', orderable:false, searchable: false},  

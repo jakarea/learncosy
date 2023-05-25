@@ -14,7 +14,7 @@ class CourseController extends Controller
 {
     // course list
     public function index(){
-        return view('course/instructor/index'); 
+        return view('e-learning/course/instructor/index'); 
     }
 
     // data table getData
@@ -23,7 +23,7 @@ class CourseController extends Controller
             $course = Course::select('id','title','slug','thumbnail','categories','number_of_module','price','status')->get();
           
             return Datatables::of($course)
-                ->addColumn('action', function($course){ 
+                ->addColumn('action', function($row){ 
                      
                     $actions = '<div class="action-dropdown">
                         <div class="dropdown">
@@ -33,9 +33,11 @@ class CourseController extends Controller
                             </a>
                             <div class="dropdown-menu">
                                 <div class="bttns-wrap">
-                                    <a class="dropdown-item" href="/instructor/courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
-                                    <a class="dropdown-item" href="/instructor/courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/courses/'.$course->slug.'/destroy">  
+                                    <a class="dropdown-item" href="/instructor/courses/'.$row->slug.'"><i class="fas fa-eye"></i></a>
+                                    <a class="dropdown-item" href="/instructor/courses/'.$row->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/courses/'.$row->slug.'/destroy">  
+                                    '.csrf_field().'
+                                    '.method_field("DELETE").'
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                     </form>    
                                 </div>
@@ -46,22 +48,22 @@ class CourseController extends Controller
                     return $actions;
 
                 })
-                ->editColumn('image', function ($course) {
-                return '<img src="/assets/images/courses/'.$course->thumbnail.'" width="50" />';
+                ->editColumn('image', function ($row) {
+                return '<img src="/assets/images/courses/'.$row->thumbnail.'" width="50" />';
             })
-            ->editColumn('status', function ($course) {
-                if($course->status == 'published'){
+            ->editColumn('status', function ($row) {
+                if($row->status == 'published'){
                     return '<label class="badge bg-success">'.__('Published').'</label>';
                 }
-                if($course->status == 'draft'){
+                if($row->status == 'draft'){
                     return '<label class="badge bg-info">'.__('Draft').'</label>';
                 }
-                if($course->status == 'pending'){
+                if($row->status == 'pending'){
                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
                 } 
-             })->editColumn('categorie', function ($course) {
-                if($course->categories){
-                    $cateogires = explode(",",$course->categories); 
+             })->editColumn('categorie', function ($row) {
+                if($row->categories){
+                    $cateogires = explode(",",$row->categories); 
                     foreach ($cateogires as $key => $category) {
                         return '<span class="badge text-bg-primary">'.$category.'</span>'; 
                     } 
@@ -75,7 +77,7 @@ class CourseController extends Controller
     // course create
     public function create()
     {  
-        return view('course/instructor/create'); 
+        return view('e-learning/course/instructor/create'); 
     }
 
     // course store
@@ -138,7 +140,6 @@ class CourseController extends Controller
             $image->move($destinationPath, $name2);
             $course->banner = $name2;
         }
-        
 
         //if sample_certificates is valid then save it
         if ($request->hasFile('sample_certificates')) {
@@ -156,10 +157,11 @@ class CourseController extends Controller
     // course show
     public function show($slug)
     {   
+        $lessons = Lesson::orderby('id', 'desc')->paginate(10);
         $modules = Module::orderby('id', 'desc')->paginate(10);
         $course = Course::where('slug', $slug)->first();
         if ($course) {
-            return view('course/instructor/show', compact('course','modules'));
+            return view('e-learning/course/instructor/show', compact('course','modules','lessons'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
@@ -170,7 +172,7 @@ class CourseController extends Controller
     {   
         $course = Course::where('slug', $slug)->first();
         if ($course) {
-            return view('course/instructor/edit', compact('course'));
+            return view('e-learning/course/instructor/edit', compact('course'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         } 

@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title','user password chnage')
+@section('title','Student password chnage')
 @section('style') 
 <link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />  
 @endsection
@@ -21,7 +21,7 @@
           <h3> <span>{{ $user->name}}</span>, You are almost done!</h3>
           <p>Click the "Save Changes" button to update your password.</p>
           <!-- change pass form @S -->
-          <form action="{{ route('instructor.password.update',$user->id) }}" method="POST"> 
+          <form action="{{ route('students.password.update',$user->id) }}" method="POST"> 
            @csrf
            <div class="form-group">
               <label for="">Email</label>

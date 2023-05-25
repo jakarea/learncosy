@@ -23,7 +23,7 @@
                 <p><span class="text-danger">Update</span> profile info to see more details.</p>
             </div>
             <div class="form-grp-btn mt-0 ms-auto">
-                <a href="{{ url('instructor/profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
+                <a href="{{ url('/students/profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
             </div>
         </div>
     </div>
@@ -34,14 +34,14 @@
         <div class="col-lg-4">
             <div class="change-password-form w-100 customer-profile-info">
                 <div class="text-end">
-                    <a href="{{url('instructor/profile/edit')}}">
+                    <a href="{{url('students/profile/edit')}}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
                 </div>
                 <div class="set-profile-picture">
                     <div class="media justify-content-center">
                         @if($user->avatar)
-                        <img src="{{ asset('assets/images/instructor/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
+                        <img src="{{ asset('assets/images/students/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
                         @else
                         <span>{!! strtoupper($user->name[0]) !!}</span>
                         @endif 
@@ -61,17 +61,7 @@
                     </div>
                 </div>
                 <!-- details box @E -->
-                <h6>Information :</h6>
-                <div class="form-group mb-0">
-                    <label for="" class="mb-0"><i class="fa-solid fa-flag"></i> Message Status: </label>
-                    <p class="text-success">
-                        @if($user->recivingMessage == 1)
-                        <span class="badge text-bg-success"> Enabled </span>
-                        @else
-                        <span class="badge text-bg-danger"> Disabled </span>
-                        @endif
-                    </p>
-                </div> 
+                <h6>Information :</h6> 
                 <div class="form-group mb-0">
                     <label for="" class="mb-0"><i class="fa-solid fa-phone"></i> Phone: </label>
                     <p>{{$user->phone ? $user->phone : 'N/A'}}</p>
@@ -95,7 +85,7 @@
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table">
-                        <h5 class="p-3 pb-0">Emails / Messages from students:</h5>
+                        <h5 class="p-3 pb-0">Emails / Messages from Instructor:</h5>
                         <table>
                             <tr>
                                 <th width="5%">No</th>
@@ -147,7 +137,7 @@
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table mt-4">
-                        <h5 class="p-3 pb-0">My Course List :</h5>
+                        <h5 class="p-3 pb-0">My Enrolled Course List :</h5>
                         <table>
                             <tr>
                                 <th width="5%">No</th>

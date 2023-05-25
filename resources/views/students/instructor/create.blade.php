@@ -18,11 +18,11 @@
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">
-                        <h6>Update Profile</h6>
+                        <h6>Student Add</h6>
                         <a href="{{url('instructor/students')}}">
                             <i class="fa-solid fa-user-group"></i> All Students </a>
                     </div>
-                    <!-- course create form @S -->
+                    <!-- Student Add form @S -->
                     <form action="{{route('student.add')}}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -32,7 +32,7 @@
                                         <div class="form-group form-error">
                                             <label for="name">Name <sup class="text-danger">*</sup>
                                             </label>
-                                            <input type="text" placeholder="Enter your Name" name="name"
+                                            <input type="text" placeholder="Enter student name" name="name"
                                                 class="form-control @error('name') is-invalid @enderror"
                                                 value="{{ old('name') }}" id="name">
                                             <span class="invalid-feedback">@error('name'){{ $message }}
@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="user_role">User Role </label>
+                                            <label for="user_role">Role </label>
                                             <select name="user_role" id="user_role" class="form-control @error('user_role') is-invalid @enderror">
                                                 <option value="students" selected>Students</option> 
                                             </select> 
@@ -153,8 +153,8 @@
                                     </div> 
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="">Initial Password for this user will be: <code class="bg-danger text-white p-1">12345678</code> </label>
-                                            <sup>*Canbe Change it Later</sup>
+                                            <label for="">Initial Password for this user will be: <code class="bg-danger text-white p-1">1234567890</code> </label>
+                                            <sup>*Can be Change it Later</sup>
                                         </div>
                                     </div>
 
@@ -170,7 +170,7 @@
                             </div>
                         </div>
                     </form>
-                    <!-- course create form @E -->
+                    <!-- Student add form @E -->
                 </div>
             </div>
         </div>

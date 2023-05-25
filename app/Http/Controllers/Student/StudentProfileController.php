@@ -1,32 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-class ProfileManagementController extends Controller
+use Illuminate\Http\Request;
+
+class StudentProfileController extends Controller
 {
-    // profile list
-    public function index()
-    {  
-        return view('profile/admin/index'); 
-    }
-
-    // profile create
-    public function create()
-    {  
-        return view('profile/admin/create'); 
-    }
-
     // profile show
     public function show()
     {  
         $id = Auth::user()->id;
         $user = User::find($id); 
-        return view('profile/instructor/profile',compact('user')); 
+        return view('profile/students/profile',compact('user')); 
     }
 
     // profile edit
@@ -34,7 +24,7 @@ class ProfileManagementController extends Controller
     {    
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
-        return view('profile/instructor/edit',compact('user'));  
+        return view('profile/students/edit',compact('user'));  
     }
 
     public function update(Request $request)
@@ -70,7 +60,7 @@ class ProfileManagementController extends Controller
         if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/instructor/'.$user->avatar);
+               $oldFile = public_path('/assets/images/students/'.$user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
@@ -78,13 +68,13 @@ class ProfileManagementController extends Controller
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/instructor');
+           $destinationPath = public_path('/assets/images/students');
            $image->move($destinationPath, $name);
            $user->avatar = $name; 
        }
 
         $user->save();
-        return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
+        return redirect()->route('students.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
     // password update
@@ -92,7 +82,7 @@ class ProfileManagementController extends Controller
     {    
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
-        return view('profile/instructor/password-change',compact('user'));  
+        return view('profile/students/password-change',compact('user'));  
     }
 
     public function postChangePassword(Request $request)
@@ -108,6 +98,6 @@ class ProfileManagementController extends Controller
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->route('instructor.profile')->with('success', 'Your password has been changed successfully!');
+        return redirect()->route('students.profile')->with('success', 'Your password has been changed successfully!');
     }
 }

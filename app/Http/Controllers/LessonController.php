@@ -15,7 +15,7 @@ class LessonController extends Controller
     public function index()
     {  
         $lessons = Lesson::orderby('id', 'desc')->paginate(1);
-        return view('lesson/instructor/index',compact('lessons')); 
+        return view('e-learning/lesson/instructor/index',compact('lessons')); 
     }
 
     // data table getData
@@ -36,6 +36,8 @@ class LessonController extends Controller
                                 <div class="bttns-wrap"> 
                                     <a class="dropdown-item" href="/instructor/lessons/'.$lesson->slug.'/edit"> <i class="fas fa-pen"></i></a>  
                                     <form method="post" class="d-inline btn btn-danger" action="/instructor/lessons/'.$lesson->slug.'/destroy">  
+                                    '.csrf_field().'
+                                    '.method_field("DELETE").'
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                     </form>    
                                 </div>
@@ -59,14 +61,7 @@ class LessonController extends Controller
                 if($lesson->status == 'pending'){
                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
                 } 
-             })->editColumn('keyword', function ($lesson) {
-                if($lesson->meta_keyword){
-                    $keywords = explode(",",$lesson->meta_keyword); 
-                    foreach ($keywords as $key => $keyword) {
-                        return '<span class="badge text-bg-primary">'.$keyword.'</span>'; 
-                    } 
-                }
-            })
+             })
             ->addIndexColumn()
             ->rawColumns(['action', 'image','status','keyword'])
             ->make(true);
@@ -77,7 +72,7 @@ class LessonController extends Controller
     {  
         $courses = Course::orderBy('id', 'desc')->get();
         $modules = Module::orderBy('id', 'desc')->get();
-        return view('lesson/instructor/create',compact('courses','modules')); 
+        return view('e-learning/lesson/instructor/create',compact('courses','modules')); 
     }
 
     // lesson store
@@ -138,7 +133,7 @@ class LessonController extends Controller
         $modules = Module::orderBy('id', 'desc')->get();
          $lesson = Lesson::where('slug', $slug)->first();
          if ($lesson) {
-             return view('lesson/instructor/edit', compact('lesson','courses','modules'));
+             return view('e-learning/lesson/instructor/edit', compact('lesson','courses','modules'));
          } else {
              return redirect('instructor/lessons')->with('error', 'Lesson not found!');
          } 
@@ -154,20 +149,22 @@ class LessonController extends Controller
             'module_id' => 'required',
             'title' => 'required', 
             'video_link' => 'required', 
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
         $lesson = Lesson::where('slug', $slug)->first();
+        $lesson->course_id = $request->course_id; 
+        $lesson->module_id = $request->module_id; 
         $lesson->title = $request->title; 
         $lesson->slug = Str::slug($request->title);
         $lesson->meta_keyword = is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword;
         $lesson->video_link = $request->video_link; 
+        $lesson->lesson_file = $request->lesson_file; 
         $lesson->short_description = $request->short_description;
         $lesson->meta_description = $request->meta_description;
         $lesson->status = $request->status;
         $lesson->save();
-
 
         if ($request->hasFile('thumbnail')) { 
              // Delete old file

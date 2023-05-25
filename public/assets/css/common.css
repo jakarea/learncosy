@@ -101,6 +101,18 @@
 .action-dropdown .dropdown-menu .bttns-wrap a:last-child {
   border-right: 0px;
 }
+.action-dropdown .dropdown-menu .bttns-wrap form {
+  background: #FF6262;
+  border-radius: 4px;
+  color: #ffffff;
+  border: 0;
+}
+.action-dropdown .dropdown-menu .bttns-wrap form button:hover {
+  background: #2C2C2C;
+}
+.action-dropdown .dropdown-menu .bttns-wrap form:hover {
+  background: #2C2C2C;
+}
 .action-dropdown .dropdown-menu .bttns-wrap a.txt-item {
   max-width: -moz-fit-content !important;
   max-width: fit-content !important;
@@ -202,6 +214,19 @@
   color: #ffffff !important;
 }
 
+#myDataTable tr td:first-child {
+  text-align: left;
+}
+
 #myDataTable tr td:last-child {
   text-align: right;
+}
+
+.dataTables_empty {
+  text-align: center !important;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  line-height: 140%;
+  padding: 1rem 0;
 }

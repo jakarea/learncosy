@@ -19,11 +19,11 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Update Profile</h6>
-                        <a href="{{url('profile/myprofile')}}">
+                        <a href="{{url('instructor/profile/myprofile')}}">
                             <i class="fa-solid fa-user"></i> My Profile </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{ route('updateMyProfile',$user->id) }}" method="POST" class="create-form-box"
+                    <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -163,7 +163,7 @@
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
                                             <div class="file-prev-shows">
-                                                <img src="{{asset('assets/images/user/'.$user->avatar)}}" alt="Avatar"
+                                                <img src="{{asset('assets/images/instructor/'.$user->avatar)}}" alt="Avatar"
                                                     class="img-fluid"> 
                                             </div>
                                         </div> 

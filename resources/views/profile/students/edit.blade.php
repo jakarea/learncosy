@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Student Profile Edit Page @endsection
+@section('title') Profile Update Page @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -19,11 +19,12 @@
                 <div class="create-form-wrap">
                     <div class="create-form-head">
                         <h6>Update Profile</h6>
-                        <a href="{{url('instructor/students')}}">
-                            <i class="fa-solid fa-user-group"></i> All Students </a>
+                        <a href="{{url('students/profile/myprofile')}}">
+                            <i class="fa-solid fa-user"></i> My Profile </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{route('updateStudentProfile',$student->id)}}" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{ route('students.profile.update',$user->id) }}" method="POST" class="create-form-box"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -34,19 +35,22 @@
                                             </label>
                                             <input type="text" placeholder="Enter your Name" name="name"
                                                 class="form-control @error('name') is-invalid @enderror"
-                                                value="{{ $student->name }}" id="name">
+                                                value="{{ $user->name }}" id="name">
                                             <span class="invalid-feedback">@error('name'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="user_role">User Role </label>
-                                            <select name="user_role" id="user_role" class="form-control @error('user_role') is-invalid @enderror">
-                                                <option value="students" selected>Students</option>
-                                                <option value="instructor">Instructor</option>
-                                            </select> 
-                                            <span class="invalid-feedback">@error('user_role'){{ $message }}
+                                            <label for="username">Username <span class="warning-txt">(after you set
+                                                    the username, it's not changeable.)</span><sup
+                                                    class="text-danger">*</sup>
+                                            </label>
+                                            <input type="text" placeholder="Enter username" name="username"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                value="{{ $user->username }}" id="username" {{ $user->username ?
+                                            'disabled' : ''}}>
+                                            <span class="invalid-feedback">@error('username'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -56,7 +60,7 @@
                                             </label>
                                             <input type="email" placeholder="Enter email" name="email"
                                                 class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ $student->email }}" id="email">
+                                                value="{{ $user->email }}" id="email">
                                             <span class="invalid-feedback">@error('email'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -67,7 +71,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter Phone Number" name="phone"
                                                 class="form-control @error('phone') is-invalid @enderror"
-                                                value="{{ $student->phone }}" id="phone">
+                                                value="{{ $user->phone }}" id="phone">
                                             <span class="invalid-feedback">@error('phone'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -79,7 +83,7 @@
                                             </label>
                                             <input type="text" placeholder="Enter short bio" name="short_bio"
                                                 class="form-control @error('short_bio') is-invalid @enderror"
-                                                value="{{ $student->short_bio }}" id="short_bio">
+                                                value="{{ $user->short_bio }}" id="short_bio">
                                             <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -89,7 +93,7 @@
                                             <label for="features">Social Media </label>
                                             <input type="text" placeholder="Enter Social Link" name="social_links[]"
                                                 class="form-control @error('social_links') is-invalid @enderror"
-                                                id="features" multiple value="{{ $student->social_links }}">
+                                                id="features" multiple value="{{ $user->social_links }}">
                                             <div class="url-extra-field">
                                             </div>
                                             <span class="invalid-feedback">@error('social_links'){{ $message }}
@@ -103,7 +107,7 @@
                                             <label for="description">Description </label>
                                             <textarea name="description" id="description"
                                                 class="form-control @error('description') is-invalid @enderror"
-                                                placeholder="Enter Full Description">{{ $student->description }}</textarea>
+                                                placeholder="Enter Full Description">{{ $user->description }}</textarea>
                                             <span class="invalid-feedback">@error('description'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -135,7 +139,7 @@
                                             <div class="d-flex">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault1" value="1" {{ $student->recivingMessage == 1
+                                                        id="flexRadioDefault1" value="1" {{ $user->recivingMessage == 1
                                                     ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Enable
@@ -143,7 +147,7 @@
                                                 </div>
                                                 <div class="form-check ms-4">
                                                     <input class="form-check-input" type="radio" name="recivingMessage"
-                                                        id="flexRadioDefault2" value="0" {{ $student->recivingMessage == 0
+                                                        id="flexRadioDefault2" value="0" {{ $user->recivingMessage == 0
                                                     ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Disable
@@ -155,11 +159,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        @if($student->avatar) 
+                                        @if($user->avatar) 
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
                                             <div class="file-prev-shows">
-                                                <img src="{{asset('assets/images/students/'.$student->avatar)}}" alt="Avatar"
+                                                <img src="{{asset('assets/images/students/'.$user->avatar)}}" alt="Avatar"
                                                     class="img-fluid"> 
                                             </div>
                                         </div> 

@@ -46,10 +46,15 @@
                         </div>
                         <div id="collapse_{{$module->id}}" class="accordion-collapse collapse " aria-labelledby="heading_{{$module->id}}"
                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
+                            <div class="accordion-body"> 
                                 <ul>
-                                    <li><a href="#"><img src="http://localhost:8000/assets/images/course/small-book.svg"
-                                                alt="" class="img-fluid"> Quibusdam natus tota</a></li>
+                                    @foreach($lessons as $lesson)
+                                    <li>
+                                        <a href="#">
+                                            <img src="http://localhost:8000/assets/images/course/small-book.svg" alt="Lesson Icon" class="img-fluid"> {{ $lesson->title }}
+                                        </a>
+                                    </li>
+                                    @endforeach
                                 </ul>
                                 <div class="text-center">
                                     <a href="{{ url('instructor/lessons/create?course='.$course->id.'&module='.$module->id) }}"

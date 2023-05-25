@@ -9,6 +9,8 @@ use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Student\StudentProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +24,8 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/home', function () {
-    return view('home');
+    return redirect('/');
 });
-
 
 Route::middleware('auth')->get('/', function () {
     return view('home');
@@ -81,18 +82,18 @@ Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(Cours
 });
 
 // profile management page routes
-Route::middleware('auth')->middleware('auth')->prefix('profile')->controller(ProfileManagementController::class)->group(function () {
-    Route::get('/myprofile', 'show')->name('myProfile'); 
+Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManagementController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('instructor.profile'); 
     Route::get('/edit', 'edit'); 
-    Route::post('/edit', 'update')->name('updateMyProfile'); 
+    Route::post('/edit', 'update')->name('instructor.profile.update'); 
     Route::get('/change-password', 'passwordUpdate');
-    Route::post('/change-password', 'postChangePassword')->name('postChangePassword');
+    Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
 });
 
 // settings page routes
-Route::middleware('auth')->prefix('settings')->controller(SettingsController::class)->group(function () {
-    Route::get('/instructor/stripe', 'stripeIndex');
-    Route::get('/instructor/vimeo', 'vimeoIndex');
+Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsController::class)->group(function () {
+    Route::get('/stripe', 'stripeIndex');
+    Route::get('/vimeo', 'vimeoIndex');
 });
 
 // review page routes
@@ -112,8 +113,23 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
     Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
     Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
 });
+ 
+// student home page routes
+Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
+    Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/home', 'index')->name('students.all.courses');
+    Route::get('/courses/catalog', 'catalog')->name('students.catalog.courses');
+    Route::get('/account-management', 'accountManagement')->name('students.account.management');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// student profile management page routes
+Route::middleware('auth')->prefix('students/profile')->controller(StudentProfileController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('students.profile'); 
+    Route::get('/edit', 'edit'); 
+    Route::post('/edit', 'update')->name('students.profile.update'); 
+    Route::get('/change-password', 'passwordUpdate');
+    Route::post('/change-password', 'postChangePassword')->name('students.password.update');
+});
 
 // auth route 
 Auth::routes();

@@ -37,6 +37,8 @@ class StudentController extends Controller
                                     <a class="dropdown-item" href="/instructor/students/profile/'.$user->id.'"> <i class="fas fa-eye"></i></a>  
                                     <a class="dropdown-item" href="/instructor/students/'.$user->id.'/edit"> <i class="fas fa-pen"></i></a>  
                                     <form method="post" class="d-inline btn btn-danger" action="/instructor/students/'.$user->id.'/destroy">  
+                                    '.csrf_field().'
+                                    '.method_field("DELETE").'
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
                                     </form>    
                                 </div>
@@ -49,7 +51,7 @@ class StudentController extends Controller
                 })
                 ->editColumn('image', function ($user) { 
                     if($user->avatar){
-                        return '<img src="/assets/images/user/'.$user->avatar.'" width="50" />';
+                        return '<img src="/assets/images/students/'.$user->avatar.'" width="50" />';
                     }else{ 
                         return '<div class="table-avatar">
                                 <span>'.strtoupper($user->name[0]).'</span>
@@ -89,6 +91,8 @@ class StudentController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
+        // initial password for student if instructor create profile
+        $initialPass = 1234567890;
 
         // add student
         $student = new User([
@@ -100,17 +104,15 @@ class StudentController extends Controller
             'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => 12345678,
+            'password' => Hash::make($initialPass),
         ]);  
- 
-
 
         $studentslug = Str::slug($request->name);
          //if avatar is valid then save it
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
-            $name = $studentslug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/user');
+            $name = $studentslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/assets/images/students');
             $image->move($destinationPath, $name);
             $student->avatar = $name;
         } 
@@ -170,12 +172,21 @@ class StudentController extends Controller
              $user->password = $user->password;
          } 
  
-         if ($request->avatar) {
-             $userSlug = Str::slug($user->name); 
-             $imageName = $userSlug.'.'.request()->avatar->getClientOriginalExtension();
-             request()->avatar->move(public_path('assets/images/user'), $imageName); 
-             $user->avatar = $imageName;
-         }
+         if ($request->hasFile('avatar')) { 
+            // Delete old file
+            if ($user->avatar) {
+               $oldFile = public_path('/assets/images/students/'.$user->avatar);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           } 
+           $slugg = Str::slug($request->name);
+           $image = $request->file('avatar');
+           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+           $destinationPath = public_path('/assets/images/students');
+           $image->move($destinationPath, $name);
+           $user->avatar = $name; 
+       }
  
          $user->save();
          return redirect()->route('allStudents')->with('success', 'Students Profile has been Updated successfully!');
@@ -185,7 +196,7 @@ class StudentController extends Controller
          
         $student = User::where('id', $id)->first();
          //delete student avatar
-         $studentOldThumbnail = public_path('/assets/images/user/'.$student->avatar);
+         $studentOldThumbnail = public_path('/assets/images/students/'.$student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
          } 

@@ -26,7 +26,7 @@
             <div class="product-filter-box mt-0">
                 <h5>Bundle Course List</h5>  
                 <div class="form-grp-btn mt-4 ms-auto">
-                    <a href="{{ url('instructor/bundle/courses/create') }}" class="btn me-3"><i class="fas fa-plus text-white me-2"></i>Bundle Create Course</a>
+                    <a href="{{ url('instructor/bundle/courses/create') }}" class="btn me-3"><i class="fas fa-plus text-white me-2"></i>Create Bundle Course</a>
                 </div>
 
             </div>
