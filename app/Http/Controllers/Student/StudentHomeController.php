@@ -20,13 +20,35 @@ class StudentHomeController extends Controller
 
     // all course list
     public function index(){
-        $courses = Course::orderBy('id', 'desc')->get();
+
+        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $courses = Course::orderBy('id','desc');
+        if(!empty($name)){
+            $names = explode( ' ', $name);
+            $courses->where('title','like','%'.trim($names[0]).'%');
+            if(isset($names[1])){
+                $courses->where('title','like','%'.trim($names[1]).'%'); 
+            }
+        }
+        $courses = $courses->paginate(12);
+
         return view('e-learning/course/students/home',compact('courses')); 
     }
 
     // catalog course list
     public function catalog(){
-        $courses = Course::orderBy('id', 'desc')->get();
+
+        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $courses = Course::orderBy('id','desc');
+        if(!empty($name)){
+            $names = explode( ' ', $name);
+            $courses->where('title','like','%'.trim($names[0]).'%');
+            if(isset($names[1])){
+                $courses->where('title','like','%'.trim($names[1]).'%'); 
+            }
+        }
+        $courses = $courses->paginate(12);
+
         return view('e-learning/course/students/catalog',compact('courses')); 
     }
 
@@ -36,5 +58,18 @@ class StudentHomeController extends Controller
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
         return view('settings/students/account-management',compact('user')); 
+    }
+
+    // course show
+    public function show($slug)
+    {   
+        $lessons = Lesson::orderby('id', 'desc')->paginate(10);
+        $modules = Module::orderby('id', 'desc')->paginate(10);
+        $course = Course::where('slug', $slug)->first();
+        if ($course) {
+            return view('e-learning/course/students/show', compact('course','modules','lessons'));
+        } else {
+            return redirect('students/dashboard')->with('error', 'Course not found!');
+        }
     }
 }

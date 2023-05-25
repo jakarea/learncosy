@@ -34,16 +34,18 @@
     {{-- page tab head area @E --}}
 
     {{-- course search area @S --}}
-    <div class="student-search-wrap">
-        <div class="student-search-box">
-            <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search icon" class="img-fluid">
-            <input type="text" class="form-control" placeholder="Search">
+    <form action="" method="GET">
+        <div class="student-search-wrap">
+            <div class="student-search-box">
+                <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search icon" class="img-fluid">
+                <input type="text" name="name" class="form-control" placeholder="Search"
+                    value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
+            </div>
+            <div class="student-bttn-box">
+                <button class="btn btn-search" type="submit">Search</button> 
+            </div>
         </div>
-        <div class="student-bttn-box">
-            <button class="btn btn-search" type="button">Search</button>
-            <button class="btn btn-filter" type="button">Filter</button>
-        </div>
-    </div>
+    </form>
     {{-- course search area @E --}}
 
     {{-- course listing @S --}}
@@ -54,7 +56,6 @@
             <div class="row">
                 <!-- item @S -->
                 @foreach($courses as $course)
-
                 @php
                 $desc = $course->short_description;
                 $max_length = 105;
@@ -65,7 +66,6 @@
                 } else {
                 $short_description = $desc;
                 }
-
                 @endphp
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                     <div class="course-box-wrap">
@@ -75,41 +75,181 @@
                                     alt="{{ $course->slug}}" class="img-fluid">
                             </div>
                             <div class="course-txt-box">
-                                <h3> <a href="{{url('instructor/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
                                 </h3>
                                 <ul>
-                                    <li><a href="#">LESSONS: {{ $course->number_of_lesson}}</a></li>
-                                    <li><a href="#">MODULES: {{ $course->number_of_module}}</a></li>
-                                    <li><a href="#">PRICE: {{ $course->price}}$</a></li> 
+                                    <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>
+                                    <li><a href="#" class="text-dark">MODULES: {{ $course->number_of_module}}</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">Certificate: {{ $course->sample_certificates == 'yes' ? 'YES' : 'NO'}}</a></li>
-                                    <li><a href="#">Duration: {{ $course->duration }}</a></li>
+                                    <li><a href="#" class="text-dark">Certificate: {{ $course->sample_certificates ==
+                                            'yes' ? 'YES' : 'NO'}}</a></li>
+                                    <li><a href="#" class="text-dark">Duration: {{ $course->duration }}</a></li>
                                 </ul>
                                 <p>{{ $short_description}}</p>
                             </div>
                         </div>
-                        <div class="course-ftr"> 
-                            <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Overview </a></h5>
-
-                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 25%"></div>
-                              </div> 
-                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a> 
+                        <div class="course-ftr">
+                            <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Get Overview </a></h5>
+                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a>
                         </div>
                     </div>
                 </div>
                 @endforeach
                 <!-- item @E -->
             </div>
+            <div class="row">
+                @if(count($courses) == 0)
+                <div class="col-12">
+                    <div class="no-result-found">
+                        <h6>No Course Found !</h6>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-center mt-4">
+                      @if ($courses->hasPages())
+                        <div class="pagination-wrapper text-center">
+                            {{ $courses->links('pagination::bootstrap-5') }}
+                        </div>
+                     @endif
+                    </div>
+                 </div>
+                @endif
+            </div>
             {{-- featured course @E --}}
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
             {{-- popular course @S --}}
+            <div class="row">
+                <!-- item @S -->
+                @foreach($courses as $course)
+                @php
+                $desc = $course->short_description;
+                $max_length = 105;
+                if (strlen($desc) > $max_length) {
+                $short_description = substr($desc, 0, $max_length);
+                $last_space = strrpos($short_description, ' ');
+                $short_description = substr($short_description, 0, $last_space) . " ...";
+                } else {
+                $short_description = $desc;
+                }
+                @endphp
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <div class="course-box-wrap">
+                        <div class="course-content-box">
+                            <div class="course-thumbnail">
+                                <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}"
+                                    alt="{{ $course->slug}}" class="img-fluid">
+                            </div>
+                            <div class="course-txt-box">
+                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                </h3>
+                                <ul>
+                                    <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>
+                                    <li><a href="#" class="text-dark">MODULES: {{ $course->number_of_module}}</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="#" class="text-dark">Certificate: {{ $course->sample_certificates ==
+                                            'yes' ? 'YES' : 'NO'}}</a></li>
+                                    <li><a href="#" class="text-dark">Duration: {{ $course->duration }}</a></li>
+                                </ul>
+                                <p>{{ $short_description}}</p>
+                            </div>
+                        </div>
+                        <div class="course-ftr">
+                            <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Get Overview </a></h5>
+                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <!-- item @E -->
+            </div>
+            <div class="row">
+                @if(count($courses) == 0)
+                <div class="col-12">
+                    <div class="no-result-found">
+                        <h6>No Course Found !</h6>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-center mt-4">
+                      @if ($courses->hasPages())
+                        <div class="pagination-wrapper text-center">
+                            {{ $courses->links('pagination::bootstrap-5') }}
+                        </div>
+                     @endif
+                    </div>
+                 </div>
+                @endif
+            </div>
             {{-- popular course @E --}}
         </div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
             {{-- recomended course @S --}}
+            <div class="row">
+                <!-- item @S -->
+                @foreach($courses as $course)
+                @php
+                $desc = $course->short_description;
+                $max_length = 105;
+                if (strlen($desc) > $max_length) {
+                $short_description = substr($desc, 0, $max_length);
+                $last_space = strrpos($short_description, ' ');
+                $short_description = substr($short_description, 0, $last_space) . " ...";
+                } else {
+                $short_description = $desc;
+                }
+                @endphp
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                    <div class="course-box-wrap">
+                        <div class="course-content-box">
+                            <div class="course-thumbnail">
+                                <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}"
+                                    alt="{{ $course->slug}}" class="img-fluid">
+                            </div>
+                            <div class="course-txt-box">
+                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                </h3>
+                                <ul>
+                                    <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>
+                                    <li><a href="#" class="text-dark">MODULES: {{ $course->number_of_module}}</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="#" class="text-dark">Certificate: {{ $course->sample_certificates ==
+                                            'yes' ? 'YES' : 'NO'}}</a></li>
+                                    <li><a href="#" class="text-dark">Duration: {{ $course->duration }}</a></li>
+                                </ul>
+                                <p>{{ $short_description}}</p>
+                            </div>
+                        </div>
+                        <div class="course-ftr">
+                            <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Get Overview </a></h5>
+                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                <!-- item @E -->
+            </div>
+            <div class="row">
+                @if(count($courses) == 0)
+                <div class="col-12">
+                    <div class="no-result-found">
+                        <h6>No Course Found !</h6>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="text-center mt-4">
+                      @if ($courses->hasPages())
+                        <div class="pagination-wrapper text-center">
+                            {{ $courses->links('pagination::bootstrap-5') }}
+                        </div>
+                     @endif
+                    </div>
+                 </div>
+                @endif
+            </div>
             {{-- recomended course @E --}}
         </div>
     </div>
