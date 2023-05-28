@@ -78,8 +78,7 @@ class CourseController extends Controller
     public function create()
     {   
         $courses = Course::all();
-        $categories = $courses->pluck('categories')->unique(); 
-        // return $categories;
+        $categories = $courses->pluck('categories')->unique();  
         return view('e-learning/course/instructor/create',compact('categories')); 
     }
 
@@ -179,8 +178,10 @@ class CourseController extends Controller
     public function edit($slug)
     {   
         $course = Course::where('slug', $slug)->first();
+        $coursess = Course::all();
+        $categories = $coursess->pluck('categories')->unique();
         if ($course) {
-            return view('e-learning/course/instructor/edit', compact('course'));
+            return view('e-learning/course/instructor/edit', compact('course','categories'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         } 
