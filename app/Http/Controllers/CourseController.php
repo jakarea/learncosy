@@ -76,8 +76,11 @@ class CourseController extends Controller
 
     // course create
     public function create()
-    {  
-        return view('e-learning/course/instructor/create'); 
+    {   
+        $courses = Course::all();
+        $categories = $courses->pluck('categories')->unique(); 
+        // return $categories;
+        return view('e-learning/course/instructor/create',compact('categories')); 
     }
 
     // course store
@@ -92,6 +95,12 @@ class CourseController extends Controller
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
+        ],
+        [
+            'thumbnail.required' => 'You have to choose the file!',
+            'thumbnail' => 'Max file size is 5 MB!',
+            'banner' => 'Max file size is 5 MB!',
+            'sample_certificates' => 'Max file size is 5 MB!'
         ]);
 
         //save course
@@ -111,8 +120,7 @@ class CourseController extends Controller
             'meta_keyword' => is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword,
             'meta_description' => $request->meta_description, 
             'number_of_module' => $request->number_of_module, 
-            'number_of_lesson' => $request->number_of_lesson, 
-            'number_of_quiz' => $request->number_of_quiz, 
+            'number_of_lesson' => $request->number_of_lesson,  
             'number_of_attachment' => $request->number_of_attachment, 
             'number_of_video' => $request->number_of_video, 
             'duration' => $request->duration,
@@ -190,6 +198,11 @@ class CourseController extends Controller
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
+        ],
+        [ 
+            'thumbnail' => 'Max file size is 5 MB!',
+            'banner' => 'Max file size is 5 MB!',
+            'sample_certificates' => 'Max file size is 5 MB!'
         ]);
 
         $course = Course::where('slug', $slug)->first();
@@ -207,8 +220,7 @@ class CourseController extends Controller
         $course->meta_keyword = is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword;
         $course->meta_description = $request->meta_description;
         $course->number_of_module = $request->number_of_module;
-        $course->number_of_lesson = $request->number_of_lesson;
-        $course->number_of_quiz = $request->number_of_quiz;
+        $course->number_of_lesson = $request->number_of_lesson; 
         $course->number_of_attachment = $request->number_of_attachment;
         $course->number_of_video = $request->number_of_video;
         $course->duration = $request->duration;
