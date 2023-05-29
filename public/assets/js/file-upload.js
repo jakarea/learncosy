@@ -1,4 +1,5 @@
 // one file upload script @S
+
 const fileInput = document.getElementById("file-upload");
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];

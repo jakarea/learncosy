@@ -62,6 +62,12 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
     // data table route 
     Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
     Route::get('/create', 'create'); 
+    Route::get('/upload-vimeo', 'uploadVimeoPage'); 
+    Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
+    Route::get('/progress', 'getProgress')->name('upload.progress'); 
+    Route::get('/upload', function() {
+        return view('e-learning/lesson/instructor/upload_vimeo');
+    });
     Route::post('/create', 'store')->name('lesson.store');
     Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
     Route::post('/{slug}/edit', 'update')->name('lesson.update');
