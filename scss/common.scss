@@ -241,3 +241,25 @@
     @include m.para(1rem,500,v.$dark);
     padding: 1rem 0;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background: v.$gdbg !important;
+    color: v.$light!important;
+    border: 0!important;
+    font-size: 14px!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    color: v.$light!important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected]{
+    background: v.$gdbg !important;
+}
+
+.arrw-down {
+    position: absolute;
+    right: 1rem;
+    top: 44px;
+    color: v.$fourth;
+}

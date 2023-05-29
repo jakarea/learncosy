@@ -32,8 +32,7 @@ return new class extends Migration
             $table->string('meta_keyword')->nullable();
             $table->longText('meta_description')->nullable();
             $table->string('number_of_module')->nullable();
-            $table->string('number_of_lesson')->nullable();
-            $table->string('number_of_quiz')->nullable();
+            $table->string('number_of_lesson')->nullable(); 
             $table->string('number_of_attachment')->nullable();
             $table->string('number_of_video')->nullable();
             $table->string('duration')->nullable();

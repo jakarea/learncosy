@@ -5,6 +5,7 @@
 @section('style')
 <link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @endsection
 {{-- page style @S --}}
 
@@ -124,26 +125,21 @@
                                             <span class="invalid-feedback">@error('offer_price'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            @php 
-                                                $selectedCategories = explode(",",$course->categories); 
-                                            @endphp
-                                            <label for="categories">Categories <sup class="text-danger">*</sup></label>
-                                            <modular-behaviour name="Tags"
-                                                src="https://cdn.jsdelivr.net/npm/bootstrap5-tags@1.4/tags.min.js" lazy>
-                                                <select class="form-select @error('categories') is-invalid @enderror"
-                                                    id="categories" name="categories[]" multiple data-allow-clear="1"
-                                                    data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value=""> Add categories...</option>
-                                                    @foreach($selectedCategories as $key => $category)
-                                                        <option value="{{$category}}" {{ in_array($category,$selectedCategories) ? "selected" : ''}} >{{$category}}</option> 
-                                                    @endforeach
-                                                </select>
-                                            </modular-behaviour>
-                                            <i class="fa-solid fa-angle-down"></i>
-                                            <span class="invalid-feedback">@error('categories'){{ $message }}
+                                        <div class="form-group"> 
+                                            <label for="categories">Categories </label>
+                                            <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
+                                                <option disabled hidden>Select or Create categories</option> 
+                                                @foreach ($categories as $categorie)
+                                                    @php $selectedcategories = explode(",", $categorie)  @endphp
+                                                    @foreach ($selectedcategories as $category)
+                                                    <option value="{{$category}}" {{ in_array($category,$selectedcategories) ? "selected" : ''}} >{{$category}}</option> 
+                                                    @endforeach 
+                                                @endforeach 
+                                              </select>
+                                              <i class="fas fa-angle-down arrw-down"></i>
+                                              <span class="invalid-feedback">@error('categories'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -459,12 +455,18 @@
 
 {{-- page script @S --}}
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/modular-behaviour.js@3.1/modular-behaviour.js" type="module"></script>
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
     type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+
+<script>
+    $('#categoriess').select2();
+</script>
 
 <script>
     const urlBttn = document.querySelector('#url_increment');
