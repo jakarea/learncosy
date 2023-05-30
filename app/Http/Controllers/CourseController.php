@@ -106,9 +106,12 @@ class CourseController extends Controller
             'sample_certificates' => 'Max file size is 5 MB!'
         ]);
 
+        $user_id = Auth::user()->id;
+
         //save course
         $course = new Course([
             'title' => $request->title,
+            'user_id' => $user_id,
             'sub_title' => $request->sub_title,
             'slug' => Str::slug($request->title),
             'features' => is_array($request->features) ? implode(",",$request->features) : $request->features,

@@ -116,6 +116,14 @@
                     <span>Students</span> 
                 </a>
             </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="E-Learning" title="E-Learning" class="img-fluid" />
+                    <span>E-Learning</span>
+                    <i class="fa-solid fa-angles-right"></i>
+                </a> 
+                 @include('e-learning/course/admin/partials/sub-sidebar') 
+            </li> 
             {{-- admin menu link @E --}}
             @endif
             <li class="menu-item">

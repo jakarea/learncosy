@@ -14,6 +14,7 @@ use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Admin\StudentManagementController;
+use App\Http\Controllers\Admin\CourseManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,6 +140,7 @@ Route::middleware('auth')->prefix('students/profile')->controller(StudentProfile
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('admin.dashboard');  
 });
+
 // admin instructor routes 
 Route::middleware('auth')->prefix('admin/instructor')->controller(InstructorController::class)->group(function () {
     Route::get('/', 'index');  
@@ -162,6 +164,19 @@ Route::middleware('auth')->prefix('admin/students')->controller(StudentManagemen
     Route::get('/{id}/edit', 'edit'); 
     Route::post('/{id}/edit', 'update')->name('admin.updateStudentProfile');
     Route::delete('/{id}/destroy', 'destroy')->name('admin.student.destroy');
+});
+
+// course page routes for admin
+Route::middleware('auth')->prefix('admin/courses')->controller(CourseManagementController::class)->group(function () {
+    Route::get('/', 'index')->name('admin.courses'); 
+    // data table route 
+    Route::get('/datatable', 'courseDataTable')->name('admin.courses.data.table'); 
+    Route::get('/create', 'create');
+    Route::post('/create', 'store')->name('admin.course.store');
+    Route::get('/{slug}', 'show')->name('admin.course.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
+    Route::post('/{slug}/edit', 'update')->name('admin.course.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
 });
 
 // auth route 
