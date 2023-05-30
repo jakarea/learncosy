@@ -158,3 +158,97 @@
   margin-left: 0.2rem;
   color: #FF6262;
 }
+
+.review-box {
+  display: block !important;
+}
+.review-box h4 img {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.review-box {
+  margin-bottom: 1rem;
+}
+.review-box .d_flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.review-box .d_flex h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2C2C2C;
+  line-height: 140%;
+}
+.review-box p {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #8C8FAE;
+  line-height: 140%;
+}
+
+.write-review-box .form-group label {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #2C2C2C;
+  line-height: 140%;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.write-review-box .form-rev {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.write-review-box .form-rev .btn-submit {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 140%;
+  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+}
+.write-review-box #full-stars .rating-group {
+  display: inline-flex;
+}
+.write-review-box #full-stars .rating__icon {
+  pointer-events: none;
+}
+.write-review-box #full-stars .rating__input {
+  position: absolute !important;
+  left: -9999px !important;
+}
+.write-review-box #full-stars .rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+}
+.write-review-box #full-stars .rating__icon--star {
+  color: #FF6262;
+}
+.write-review-box #full-stars .rating__icon--none {
+  color: #eee;
+}
+.write-review-box #full-stars .rating__input--none:checked + .rating__label .rating__icon--none {
+  color: #FF6262;
+}
+.write-review-box #full-stars .rating__input:checked ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+.write-review-box #full-stars .rating-group:hover .rating__label .rating__icon--star {
+  color: #FF6262;
+}
+.write-review-box #full-stars .rating__input:hover ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+.write-review-box #full-stars .rating-group:hover .rating__input--none:not(:hover) + .rating__label .rating__icon--none {
+  color: #eee;
+}
+.write-review-box #full-stars .rating__input--none:hover + .rating__label .rating__icon--none {
+  color: #FF6262;
+}

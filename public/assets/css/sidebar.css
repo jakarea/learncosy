@@ -52,6 +52,7 @@
   font-weight: 400;
   color: #8C8FAE;
   line-height: 140%;
+  text-transform: capitalize;
 }
 .sidebar-wrapper .sidebar-nav-area {
   position: relative;

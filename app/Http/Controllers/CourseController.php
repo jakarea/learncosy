@@ -8,19 +8,23 @@ use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataTables;
+use Auth;
 use File;
 
 class CourseController extends Controller
 {
     // course list
     public function index(){
-        return view('e-learning/course/instructor/index'); 
+        return view('e-learning/course/instructor/index');  
     }
 
     // data table getData
     public function courseDataTable()
     { 
-            $course = Course::select('id','title','slug','thumbnail','categories','number_of_module','price','status')->get();
+        $userId = Auth::user()->id;
+        $course = Course::where('user_id', $userId)->get();
+
+        // return $course;
           
             return Datatables::of($course)
                 ->addColumn('action', function($row){ 

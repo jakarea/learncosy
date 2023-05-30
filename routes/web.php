@@ -11,6 +11,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\Admin\StudentManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,7 +104,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
     Route::get('/', 'index'); 
 });
 
-// all students profile page routes
+// all students profile page routes fr instructor
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     // data table route 
@@ -130,6 +133,35 @@ Route::middleware('auth')->prefix('students/profile')->controller(StudentProfile
     Route::post('/edit', 'update')->name('students.profile.update'); 
     Route::get('/change-password', 'passwordUpdate');
     Route::post('/change-password', 'postChangePassword')->name('students.password.update');
+});
+
+// admin homepage routes 
+Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
+    Route::get('/dashboard', 'dashboard')->name('admin.dashboard');  
+});
+// admin instructor routes 
+Route::middleware('auth')->prefix('admin/instructor')->controller(InstructorController::class)->group(function () {
+    Route::get('/', 'index');  
+    Route::get('/datatable', 'instructorDataTable')->name('instructor.data.table');
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('instructor.add');
+    Route::get('/profile/{id}', 'show')->name('instructorProfile');
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('updateInstructorProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('instructor.destroy');
+});
+
+// all students profile page routes for admin
+Route::middleware('auth')->prefix('admin/students')->controller(StudentManagementController::class)->group(function () {
+    Route::get('/', 'index')->name('admin.allStudents');  
+    // data table route 
+    Route::get('/datatable', 'studentsDataTable')->name('admin.students.data.table');
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('admin.student.add');
+    Route::get('/profile/{id}', 'show')->name('admin.studentProfile'); 
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('admin.updateStudentProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('admin.student.destroy');
 });
 
 // auth route 
