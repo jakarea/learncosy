@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
+use App\Http\Controllers\Admin\AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,7 +106,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
     Route::get('/', 'index'); 
 });
 
-// all students profile page routes fr instructor
+// all students profile page routes for instructor
 Route::middleware('auth')->prefix('instructor/students')->controller(StudentController::class)->group(function () {
     Route::get('/', 'index')->name('allStudents'); 
     // data table route 
@@ -153,7 +154,7 @@ Route::middleware('auth')->prefix('admin/instructor')->controller(InstructorCont
     Route::delete('/{id}/destroy', 'destroy')->name('instructor.destroy');
 });
 
-// all students profile page routes for admin
+// all students manage routes for admin
 Route::middleware('auth')->prefix('admin/students')->controller(StudentManagementController::class)->group(function () {
     Route::get('/', 'index')->name('admin.allStudents');  
     // data table route 
@@ -177,6 +178,15 @@ Route::middleware('auth')->prefix('admin/courses')->controller(CourseManagementC
     Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
     Route::post('/{slug}/edit', 'update')->name('admin.course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
+});
+
+// admin own profile management page routes
+Route::middleware('auth')->prefix('admin/profile')->controller(AdminProfileController::class)->group(function () {
+    Route::get('/myprofile', 'show')->name('admin.profile'); 
+    Route::get('/edit', 'edit'); 
+    Route::post('/edit', 'update')->name('admin.profile.update'); 
+    Route::get('/change-password', 'passwordUpdate');
+    Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
 });
 
 // auth route 
