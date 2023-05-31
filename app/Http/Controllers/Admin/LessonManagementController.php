@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Lesson;
 use App\Models\Course;
 use Illuminate\Support\Str;
 use App\Models\Module; 
-use DataTables;
-use Illuminate\Http\Request;
+use DataTables; 
 
-class LessonController extends Controller
+class LessonManagementController extends Controller
 {
-    // lesson list
-    public function index()
-    {  
-        $lessons = Lesson::orderby('id', 'desc')->paginate(1);
-        return view('e-learning/lesson/instructor/index',compact('lessons')); 
-    }
+     // lesson list
+     public function index()
+     {  
+         $lessons = Lesson::orderby('id', 'desc')->paginate(1);
+         return view('e-learning/lesson/admin/index',compact('lessons')); 
+     }
 
-    // data table getData
+     // data table getData
     public function lessonsDataTable()
     { 
             $lesson = Lesson::select('id','title','slug','thumbnail','meta_keyword','video_link','status')->get();
@@ -34,8 +35,8 @@ class LessonController extends Controller
                             </a>
                             <div class="dropdown-menu">
                                 <div class="bttns-wrap"> 
-                                    <a class="dropdown-item" href="/instructor/lessons/'.$lesson->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/lessons/'.$lesson->slug.'/destroy">  
+                                    <a class="dropdown-item" href="/admin/lessons/'.$lesson->slug.'/edit"> <i class="fas fa-pen"></i></a>  
+                                    <form method="post" class="d-inline btn btn-danger" action="/admin/lessons/'.$lesson->slug.'/destroy">  
                                     '.csrf_field().'
                                     '.method_field("DELETE").'
                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
@@ -72,7 +73,7 @@ class LessonController extends Controller
     {  
         $courses = Course::orderBy('id', 'desc')->get();
         $modules = Module::orderBy('id', 'desc')->get();
-        return view('e-learning/lesson/instructor/create',compact('courses','modules')); 
+        return view('e-learning/lesson/admin/create',compact('courses','modules')); 
     }
 
     // lesson store
@@ -127,7 +128,7 @@ class LessonController extends Controller
         }
           
         $lesson->save();
-        return redirect('instructor/lessons')->with('success', 'Lesson saved!');
+        return redirect('admin/lessons')->with('success', 'Lesson saved!');
 
     }
 
@@ -138,13 +139,13 @@ class LessonController extends Controller
         $modules = Module::orderBy('id', 'desc')->get();
          $lesson = Lesson::where('slug', $slug)->first();
          if ($lesson) {
-             return view('e-learning/lesson/instructor/edit', compact('lesson','courses','modules'));
+             return view('e-learning/lesson/admin/edit', compact('lesson','courses','modules'));
          } else {
-             return redirect('instructor/lessons')->with('error', 'Lesson not found!');
+             return redirect('admin/lessons')->with('error', 'Lesson not found!');
          } 
      }
 
-     // lesson update
+      // lesson update
     public function update(Request $request, $slug)
     {   
         //   return $request->all();
@@ -207,7 +208,7 @@ class LessonController extends Controller
 
         $lesson->save();
 
-        return redirect('instructor/lessons')->with('success', 'Lesson Updated!');
+        return redirect('admin/lessons')->with('success', 'Lesson Updated!');
     }
 
     public function destroy($slug){
@@ -225,6 +226,6 @@ class LessonController extends Controller
          }
         $lesson->delete();
 
-        return redirect('instructor/lessons')->with('success', 'Lesson deleted!');
+        return redirect('admin/lessons')->with('success', 'Lesson deleted!');
     }
 }
