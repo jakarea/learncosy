@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\ModuleManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -178,6 +179,18 @@ Route::middleware('auth')->prefix('admin/courses')->controller(CourseManagementC
     Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
     Route::post('/{slug}/edit', 'update')->name('admin.course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
+});
+
+// module page routes for admin
+Route::middleware('auth')->prefix('admin/modules')->controller(ModuleManagementController::class)->group(function () {
+    Route::get('/', 'index');
+    // data table route 
+    Route::get('/datatable', 'modulesDataTable')->name('admin.modules.data.table'); 
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('admin.module.store');
+    Route::get('/{slug}/edit', 'edit')->name('admin.module.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('admin.module.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('admin.module.destroy');
 });
 
 // admin own profile management page routes
