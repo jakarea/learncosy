@@ -89,6 +89,9 @@ class StudentController extends Controller
             'phone' => 'string',
             'email' => 'required|email|unique:users,email', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [ 
+            'avatar' => 'Max file size is 5 MB!'
         ]);
 
         // initial password for student if instructor create profile
@@ -151,6 +154,9 @@ class StudentController extends Controller
              'phone' => 'required|string',
              'email' => 'required|email|unique:users,email,'.$userId, 
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+         ],
+         [ 
+             'avatar' => 'Max file size is 5 MB!'
          ]);
  
         

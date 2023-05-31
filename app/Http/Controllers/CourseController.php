@@ -8,19 +8,23 @@ use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataTables;
+use Auth;
 use File;
 
 class CourseController extends Controller
 {
     // course list
     public function index(){
-        return view('e-learning/course/instructor/index'); 
+        return view('e-learning/course/instructor/index');  
     }
 
     // data table getData
     public function courseDataTable()
     { 
-            $course = Course::select('id','title','slug','thumbnail','categories','number_of_module','price','status')->get();
+        $userId = Auth::user()->id;
+        $course = Course::where('user_id', $userId)->get();
+
+        // return $course;
           
             return Datatables::of($course)
                 ->addColumn('action', function($row){ 
@@ -102,9 +106,12 @@ class CourseController extends Controller
             'sample_certificates' => 'Max file size is 5 MB!'
         ]);
 
+        $user_id = Auth::user()->id;
+
         //save course
         $course = new Course([
             'title' => $request->title,
+            'user_id' => $user_id,
             'sub_title' => $request->sub_title,
             'slug' => Str::slug($request->title),
             'features' => is_array($request->features) ? implode(",",$request->features) : $request->features,

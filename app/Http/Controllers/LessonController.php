@@ -87,6 +87,11 @@ class LessonController extends Controller
             'video_link' => 'required', 
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
+        ],
+        [ 
+            'thumbnail.required' => 'Thumbnail is required!',
+            'thumbnail' => 'Max file size is 5 MB!',
+            'lesson_file' => 'Max file size is 5 MB!'
         ]);
 
         //save lesson
@@ -151,6 +156,10 @@ class LessonController extends Controller
             'video_link' => 'required', 
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
+        ],
+        [  
+            'thumbnail' => 'Max file size is 5 MB!',
+            'lesson_file' => 'Max file size is 5 MB!'
         ]);
 
         $lesson = Lesson::where('slug', $slug)->first();
