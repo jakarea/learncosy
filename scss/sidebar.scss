@@ -51,6 +51,7 @@
 
                 p {
                     @include m.para(.8rem, 400, v.$fourth);
+                    text-transform: capitalize;
                 }
             }
         }

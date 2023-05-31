@@ -58,8 +58,10 @@
                                 <li><a href="{{ url('/students/account-management') }}"><i class="fa-solid fa-headset"></i> Support</a></li> 
                                 <li><a href="{{ url('/students/account-management') }}"><i class="fas fa-gear"></i> Settings</a></li> 
                             @elseif(Auth::user()->user_role == 'instructor')
-                            <li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
-                            <li><a href="{{ url('/instructor/settings/stripe') }}"><i class="fas fa-gear"></i> Settings</a></li> 
+                                <li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
+                                <li><a href="{{ url('/instructor/settings/stripe') }}"><i class="fas fa-gear"></i> Settings</a></li> 
+                            @elseif(Auth::user()->user_role == 'admin')
+                                <li><a href="{{url('/admin/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li> 
                             @endif 
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();

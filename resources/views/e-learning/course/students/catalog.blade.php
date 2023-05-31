@@ -27,7 +27,6 @@
                     @endforeach
                 @endforeach 
             @endif 
-            
         </ul>
     </div>
     {{-- page tab head area @E --}}
@@ -69,7 +68,7 @@
 
                 @endphp
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="course-box-wrap">
+                    <div class="course-box-wrap"> 
                         <div class="course-content-box">
                             <div class="course-thumbnail">
                                 <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}"
@@ -95,7 +94,7 @@
                         </div>
                         <div class="course-ftr"> 
                             <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Check Intro Video </a></h5> 
-                            <a href="{{url('/review')}}" class="btn btn-exprec enroll__btn">See Rating</a> 
+                            <a href="{{url('/students/courses/'.$course->slug)}}" class="btn btn-exprec enroll__btn">Details</a> 
                         </div>
                     </div>
                 </div>
