@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Lesson;
+use App\Models\Checkout;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
@@ -38,5 +42,34 @@ class Course extends Model
         'subscription_status', 
         'status', 
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function lessons(){
+        return $this->hasMany(Lesson::class);
+    }
+    
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_user')
+                    ->withPivot('payment_method', 'amount', 'paid', 'start_at', 'end_at')
+                    ->withTimestamps();
+    }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_user')
+                    ->where('role', 'student')
+                    ->withPivot('payment_method', 'amount', 'paid', 'start_at', 'end_at')
+                    ->withTimestamps();
+    }
+
+    //attached checkouts
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class);
+    }
     
 }
