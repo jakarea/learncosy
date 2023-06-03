@@ -20,7 +20,12 @@ $i = 0;
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
                 <p>{{$course->sub_title}}</p>
-                <a href="#">Enroll Now</a>
+                <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                    <input type="hidden" name="course_id" value="{{$course->id}}">
+                    <input type="hidden" name="price" value="{{$course->price}}">
+                    <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                    <button type="submit" class="btn btn-primary">Enroll Now</button>
+                </form>
             </div>
         </div>
     </div>

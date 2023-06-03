@@ -24,15 +24,21 @@
     {{-- profile information @S --}}
     <div class="row">
         <div class="col-lg-12">
-            <form action="">
+            @include('partials.session-message')
+            <form action="{{ route('instructor.stripe.update') }}" method="post">
+                @csrf
                 <div class="stripe-settings-form-wrap">
-                    <div class="form-group">
-                        <label for="">STRIPE SECRET KEY</label>
-                        <input type="text" class="form-control" placeholder="Enter Secret Key" value="1234_ghjk_2345_sdfgh">
+                    <div class="form-group mb-3">
+                        <label for="stripe_public_key">STRIPE KEY</label>
+                        <input type="text" class="form-control" name="stripe_public_key" placeholder="Enter Secret Key" value="{{ $user->stripe_public_key }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="stripe_secret_key">STRIPE SECRET KEY</label>
+                        <input type="text" class="form-control" name="stripe_secret_key" placeholder="Enter Secret Key" value="{{ $user->stripe_secret_key }}">
                     </div>
                     <div class="form-submit">
                         <div class="go-to-stripe">
-                            <a href="#" target="_blank"><i class="fa-brands fa-cc-stripe me-2"></i>Go to stripe account <i class="fas fa-arrow-right"></i></a>
+                            <a href="https://stripe.com" target="_blank"><i class="fa-brands fa-cc-stripe me-2"></i>Go to stripe account <i class="fas fa-arrow-right"></i></a>
                         </div>
                         <div class="submit-form">
                             <button class="btn btn-submit" type="submit">Update</button>
