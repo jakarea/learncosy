@@ -4,6 +4,7 @@
 {{-- style section @S --}}
 @section('style')
 <link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/student.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}} 
 
@@ -78,43 +79,59 @@
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('/instructor/courses/'.$course->slug.'/message')}}" class="min_width">Message to Students</a>
+                        <a href="{{url('course/messages')}}" class="min_width">Message</a>
                     </div>
                     {!! $course->description !!} 
-                </div>
-                <div class="profile-box">
-                    <div class="media">
-                        <img src="{{asset('assets/images/course/avatar.png')}}" alt="Place" class="img-fluid">
-                        <div class="media-body">
-                            <h5>Esther Howard</h5>
-                            <p>Professional English Teacher</p>
-                        </div>
-                    </div>
-                </div>
+                </div> 
                 <div class="course-content-box">
                     <div class="d-flex">
-                        <h5>Course’s content</h5>
-                        <p>Last Updated : 2 hours ago</p>
+                        <h5>Course's reviews</h5> 
                     </div>
-                    <div class="row border-right-custom">
-                        @if($course->number_of_attachment)
+                    <div class="row">
                         <div class="col-lg-12">
-                            <div class="attached-file-box me-lg-2">
-                                <h4><img src="{{asset('assets/images/course/pdf-icon.svg')}}" alt="Place"
-                                        class="img-fluid me-1" width="40"> Attachment Name</h4>
-                                <a href="#">
-                                    <img src="{{asset('assets/images/course/download-icon.svg')}}" alt="Place"
-                                        class="img-fluid">
-                                </a>
+                            {{-- review box @S --}}
+                            <div class="attached-file-box review-box">
+                                <div class="d_flex">
+                                    <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
+                                            class="img-fluid me-1"> Jhon Doe</h4>
+                                    <ul class="review-box-icon">
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                    </ul>
+                                </div>
+
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus aperiam, minima
+                                    amet omnis impedit delectus voluptatum iusto quaerat suscipit ipsa at? Ratione
+                                    assumenda nobis quis voluptas neque earum aspernatur optio!</p>
+                            </div>
+                            {{-- review box @E --}}
+                            {{-- review box @S --}}
+                            <div class="attached-file-box review-box">
+                                <div class="d_flex">
+                                    <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
+                                            class="img-fluid me-1"> Sttefen Smith</h4>
+                                    <ul class="review-box-icon">
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li> 
+                                    </ul>
+                                </div>
+
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus aperiam, minima
+                                    amet omnis impedit delectus voluptatum iusto quaerat suscipit ipsa at? Ratione
+                                    assumenda nobis quis voluptas neque earum aspernatur optio!</p>
+                            </div>
+                            {{-- review box @E --}}
+                        </div> 
+                        <div class="col-lg-12">
+                            <div class="attached-file-box">
+                                <p>No Review Found</p>
                             </div>
                         </div>
-                        @else
-                        <div class="col-lg-12">
-                            <div class="attached-file-box me-lg-2">
-                                <p>No Resource Found</p>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                 </div>
             </div>

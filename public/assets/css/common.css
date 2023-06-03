@@ -252,3 +252,29 @@
   top: 44px;
   color: #8C8FAE;
 }
+
+.message-box h5 {
+  font-size: 1rem;
+}
+.message-box .d_flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.message-box .d_flex img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+.message-box a.chat-bttn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 140%;
+  background: #8C8FAE;
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 3px;
+  margin-top: 0.4rem;
+}
