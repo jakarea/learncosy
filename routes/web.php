@@ -46,6 +46,7 @@ Route::middleware('auth')->prefix('instructor/courses')->controller(CourseContro
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
     Route::get('/{slug}', 'show')->name('course.show'); 
+    Route::get('/{slug}/message', 'message')->name('instructor.courses.message'); 
     Route::get('/{slug}/edit', 'edit')->name('course.edit');
     Route::post('/{slug}/edit', 'update')->name('course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
@@ -133,6 +134,7 @@ Route::middleware('auth')->prefix('students')->controller(StudentHomeController:
     Route::get('/home', 'index')->name('students.all.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
+    Route::get('/courses/{slug}/message', 'message')->name('students.courses.message'); 
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 });
 

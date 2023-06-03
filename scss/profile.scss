@@ -47,11 +47,13 @@
     }
 
     .form-group {
-        margin-bottom: 1rem; 
+        margin-bottom: 1rem;
+
         label {
             @include m.para(.95rem, 400, v.$btnbg);
             margin-bottom: 0.4rem;
         }
+
         .form-control {
             border: 1px solid v.$third;
         }
@@ -73,10 +75,11 @@
     }
 }
 
-.change-password-form-2{
-    .form-group{
+.change-password-form-2 {
+    .form-group {
         position: relative;
-        i{
+
+        i {
             position: absolute;
             right: 1rem;
             top: 2.6rem;
@@ -228,7 +231,7 @@
     position: relative;
     background-size: cover;
     background-position: center center;
-} 
+}
 
 .file-wrapper:after {
     content: '+';
@@ -315,13 +318,14 @@
 }
 
 
-.table-avatar{
-    img{
-        width: 3rem!important;
-        height: 3rem!important;
-        border-radius: 50%!important;
+.table-avatar {
+    img {
+        width: 3rem !important;
+        height: 3rem !important;
+        border-radius: 50% !important;
         object-fit: cover;
     }
+
     span {
         width: 3rem;
         height: 3rem;
@@ -336,63 +340,157 @@
     }
 }
 
-.subscription-table{
+.subscription-table {
     h5 {
         @include m.para(1.4rem, 600, v.$btnbg);
     }
-    tr{
-        td{
-            line-height: 70%!important;
+
+    tr {
+        td {
+            line-height: 70% !important;
         }
     }
 }
 
-.refund-bttns{
-    .btn-refund{
-        @include m.button(1rem,v.$light,v.$blu);
-        padding: .3rem 1rem; 
+.refund-bttns {
+    .btn-refund {
+        @include m.button(1rem, v.$light, v.$blu);
+        padding: .3rem 1rem;
     }
-    .btn-cancel{
-        @include m.button(1rem,v.$light,v.$gdbg);
-        padding: .3rem 1rem; 
+
+    .btn-cancel {
+        @include m.button(1rem, v.$light, v.$gdbg);
+        padding: .3rem 1rem;
     }
 }
 
-.refund-modal{
-    h6{
+.refund-modal {
+    h6 {
         @include m.para(1.4rem, 600, v.$btnbg);
     }
-    .form-group{
-        label{
+
+    .form-group {
+        label {
             @include m.para(0.9rem, 500, v.$fourth);
             margin-bottom: 0.4rem;
         }
-        textarea{
+
+        textarea {
             border: 1px solid v.$third;
             @include m.para(1rem, 400, v.$btnbg);
             resize: none
         }
     }
-    .modal-footer{
-        .btn-closes{
-            @include m.button(1rem,v.$light,v.$fourth);
-            padding: .3rem 1rem; 
+
+    .modal-footer {
+        .btn-closes {
+            @include m.button(1rem, v.$light, v.$fourth);
+            padding: .3rem 1rem;
         }
-        .btn-request{
-            @include m.button(1rem,v.$light,v.$gdbg);
-            padding: .3rem 1rem; 
+
+        .btn-request {
+            @include m.button(1rem, v.$light, v.$gdbg);
+            padding: .3rem 1rem;
         }
     }
 }
 
-.instructor-details-box{
+.instructor-details-box {
     margin-top: 2rem;
     padding: 1.5rem;
-    p{
+
+    p {
         @include m.para(0.9rem, 500, v.$fourth);
         margin-top: 0.6rem;
     }
 }
+
+.main-chat-wrapper{
+    margin-top: 1rem;
+    @include m.box(1rem 1.5rem,7px,v.$light);
+    .d-flex{
+        @include m.df(space-between);
+        margin-bottom: 1rem;
+        h5{
+            @include m.para(1.2rem,600,v.$btnbg);
+        }
+        .media{
+            align-items: center;
+            img{
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                margin-right: .5rem;
+            }
+            h5{
+                @include m.para(.9rem,700,v.$btnbg);
+            }
+            p{
+                @include m.para(.8rem,500,v.$fourth);
+            }
+        }
+    }
+}
+ 
+.chat-box-wrap{
+    .message-list-wrap{
+        // max-height: 450px;
+        border: 1px solid v.$third;
+        border-radius: 8px;
+        // overflow-y: scroll;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+        background-color: rgba(0, 0, 0, 0.01);
+        .message-item{
+            display: inline-block;
+            padding: .4rem 1rem;
+            border-radius: 8px;
+            background: v.$third;
+            @include m.para(.9rem,500,v.$btnbg);
+            margin-bottom: 1rem;
+            max-width: 90%;
+            span{
+                display: block;
+                text-align: right;
+                @include m.para(.65rem,400,v.$btnbg);
+                margin-top: 0.4rem;
+            }
+        }
+        .sender{
+            background: v.$gdbg;
+            @include m.para(.9rem,500,v.$light);
+            span{
+                color: v.$light;
+            }
+        }
+        .reciver{
+            // margin-left: auto;
+        }
+    }
+    form{
+        margin-top: 1rem;
+        .form-group{
+            position: relative;
+            .form-control{
+                @include m.para(1rem,500,v.$btnbg);
+                resize: none;
+            }
+        }
+        .form-submit{ 
+            margin-top: 1rem;
+            text-align: right;
+            .btn-submit{
+                @include m.button(1rem,v.$light,v.$gdbg);
+                &:hover{
+                    opacity: .7;
+                }
+            }
+        }
+    }
+}
+
 
 @include q.responsive(phone) {
     .user-password-chnage .password-change-txt {
@@ -419,6 +517,7 @@
     .user-password-chnage .change-password-form h3 {
         font-size: 1.1rem;
     }
+ 
 
 }
 
@@ -449,4 +548,3 @@
     }
 
 }
-

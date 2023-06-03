@@ -72,4 +72,9 @@ class StudentHomeController extends Controller
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
     }
+
+    public function message()
+    {    
+        return view('e-learning/course/students/message'); 
+    }
 }
