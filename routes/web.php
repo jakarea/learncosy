@@ -42,7 +42,9 @@ Route::middleware('auth')->get('/', function () {
 // message page routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index'); 
-    Route::get('/send/{id}', 'send');
+    Route::get('/send/{id}', 'send')->name('get.message');
+    Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+
 });
 
 // course page routes
