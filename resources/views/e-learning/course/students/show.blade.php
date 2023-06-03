@@ -89,10 +89,18 @@ $i = 0;
                 </div>
                 <div class="profile-box">
                     <div class="media">
-                        <img src="{{asset('assets/images/course/avatar.png')}}" alt="Place" class="img-fluid">
+                        @if($course->user->avatar)
+                            @if($course->user->user_role == 'instructor')
+                                <img src="{{asset('assets/images/instructor/'.$course->user->avatar)}}" alt="Place" class="img-fluid">
+                            @elseif($course->user->user_role == 'admin')
+                            <img src="{{asset('assets/images/admin/'.$course->user->avatar)}}" alt="Place" class="img-fluid">
+                            @endif
+                        @else
+                        <span>{!! strtoupper($course->user->name[0]) !!}</span>
+                        @endif
                         <div class="media-body">
-                            <h5>Esther Howard</h5>
-                            <p>Professional English Teacher</p>
+                            <h5>{{$course->user->name}}</h5>
+                            <p>{{$course->user->short_bio ? $course->user->short_bio : 'Instructor'}}</p>
                         </div>
                     </div>
                 </div>

@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="file-upload">Avatar <sup class="text-danger">*</sup></label>
+                                            <label for="file-upload">Avatar  </label>
                                             <input type="file" name="avatar" id="file-upload"
                                                 class="form-control  @error('avatar') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('avatar'){{ $message }}
@@ -163,8 +163,12 @@
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
                                             <div class="file-prev-shows">
+                                                @if ($user->avatar) 
                                                 <img src="{{asset('assets/images/instructor/'.$user->avatar)}}" alt="Avatar"
                                                     class="img-fluid"> 
+                                                @else 
+                                                    <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                                @endif 
                                             </div>
                                         </div> 
                                         

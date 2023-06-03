@@ -102,10 +102,13 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Thumbnail:<sup class="text-danger">*</sup></label>
-                                        <div class="file-prev">
+                                        <label for="file-upload">Current Thumbnail: </label>
+                                        <div class="file-prev"> 
+                                            @if ($lesson->thumbnail) 
                                             <img src="{{asset('assets/images/lessons/'.$lesson->thumbnail)}}" alt="a" class="img-fluid">
-                                             
+                                            @else 
+                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                            @endif
                                         </div>
                                         </div>
                                         {{-- img preview @E --}}
@@ -132,9 +135,12 @@
                                         {{-- img preview @S --}}
                                         <div class="form-group">
                                         <label for="file-upload">Current File:<sup class="text-danger">*</sup></label>
-                                        <div class="file-prev">
+                                        <div class="file-prev"> 
+                                            @if ($lesson->lesson_file) 
                                             <img src="{{asset('assets/images/lessons/'.$lesson->lesson_file)}}" alt="a" class="img-fluid">
-                                             
+                                            @else 
+                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                            @endif
                                         </div>
                                         </div>
                                         {{-- img preview @E --}}

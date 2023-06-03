@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Checkout;
 use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 

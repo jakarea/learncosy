@@ -86,7 +86,7 @@ class InstructorController extends Controller
 
        $request->validate([
            'name' => 'required|string',
-           'user_role' => 'required|string',
+           'username' => 'string',
            'short_bio' => 'string',
            'phone' => 'string',
            'email' => 'required|email|unique:users,email', 
@@ -102,7 +102,7 @@ class InstructorController extends Controller
        // add instructor
        $instructor = new User([
            'name' => $request->name,
-           'user_role' => $request->user_role,
+           'username' => $request->username,
            'email' => $request->email,
            'phone' => $request->phone,
            'short_bio' => $request->short_bio,
@@ -151,7 +151,7 @@ class InstructorController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'user_role' => 'required|string',
+            'username' => 'string',
             'short_bio' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|email|unique:users,email,'.$userId, 
@@ -169,7 +169,7 @@ class InstructorController extends Controller
         }
         $user->short_bio = $request->short_bio;
         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-        $user->user_role = $request->user_role;
+        $user->username = $request->username;
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
