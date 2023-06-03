@@ -78,7 +78,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="#" class="min_width">Enroll Now</a>
+                        <a href="{{url('/students/courses/'.$course->slug.'/message')}}" class="min_width">Message to Instructor</a>
                     </div>
                     {!! $course->description !!}
                 </div>
