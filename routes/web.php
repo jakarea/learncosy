@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Admin\BundleCourseManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -194,6 +195,19 @@ Route::middleware('auth')->prefix('admin/courses')->controller(CourseManagementC
     Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
     Route::post('/{slug}/edit', 'update')->name('admin.course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
+});
+
+// course bundle page routes for admin
+Route::middleware('auth')->prefix('admin/bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
+    Route::get('/', 'index');
+     // data table route 
+     Route::get('/datatable', 'bundleDataTable')->name('admin.bundle.data.table');
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('admin.course.bundle.store');
+    Route::get('/{slug}', 'show')->name('admin.course.bundle.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('admin.course.bundle.edit'); 
+    Route::post('/{slug}/edit', 'update')->name('admin.course.bundle.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.bundle.destroy');
 });
 
 // module page routes for admin

@@ -161,10 +161,13 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Thumbnail:<sup class="text-success">*</sup></label>
+                                        <label for="file-upload">Current Thumbnail: </label>
                                         <div class="file-prev">
+                                            @if ($course->thumbnail) 
                                             <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="a" class="img-fluid">
-                                             
+                                            @else 
+                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                            @endif 
                                         </div>
                                         </div>
                                         {{-- img preview @E --}}
@@ -190,10 +193,13 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Banner:<sup class="text-success">*</sup></label>
-                                        <div class="file-prev">
+                                        <label for="file-upload">Current Banner: </label>
+                                        <div class="file-prev"> 
+                                            @if ($course->banner) 
                                             <img src="{{asset('assets/images/courses/'.$course->banner)}}" alt="a" class="img-fluid">
-                                             
+                                            @else 
+                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                            @endif
                                         </div>
                                         </div>
                                         {{-- img preview @E --}}
@@ -383,10 +389,13 @@
                                     <div class="col-md-3">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Certificates:<sup class="text-danger">*</sup></label>
-                                        <div class="file-prev">
+                                        <label for="file-upload">Current Certificates: </label>
+                                        <div class="file-prev"> 
+                                            @if ($course->sample_certificates) 
                                             <img src="{{asset('assets/images/courses/'.$course->sample_certificates)}}" alt="a" class="img-fluid">
-                                             
+                                            @else 
+                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                            @endif
                                         </div>
                                         </div>
                                         {{-- img preview @E --}}

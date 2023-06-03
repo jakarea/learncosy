@@ -158,9 +158,14 @@
                                         @if($student->avatar) 
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
-                                            <div class="file-prev-shows">
-                                                <img src="{{asset('assets/images/students/'.$student->avatar)}}" alt="Avatar"
-                                                    class="img-fluid"> 
+                                            <div class="file-prev-shows">  
+                                                    @if ($student->avatar) 
+                                                    <img src="{{asset('assets/images/students/'.$student->avatar)}}" alt="Avatar"
+                                                        class="img-fluid"> 
+                                                    @else 
+                                                        <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                                    @endif   
+
                                             </div>
                                         </div> 
                                         

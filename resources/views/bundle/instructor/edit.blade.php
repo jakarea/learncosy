@@ -88,9 +88,13 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Thumbnail:<sup class="text-danger">*</sup></label>
+                                        <label for="file-upload">Current Thumbnail: </label>
                                         <div class="file-prev">
-                                            <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->thumbnail)}}" alt="a" class="img-fluid">
+                                            @if ($bundleCourse->thumbnail)
+                                                <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->thumbnail)}}" alt="a" class="img-fluid">
+                                                @else 
+                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                                @endif 
                                              
                                         </div>
                                         </div>
@@ -117,9 +121,14 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Banner:<sup class="text-danger">*</sup></label>
+                                        <label for="file-upload">Current Banner: </label>
                                         <div class="file-prev">
+                                            @if ($bundleCourse->thumbnail)
                                             <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->banner)}}" alt="a" class="img-fluid">
+                                                @else 
+                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                                @endif 
+                                            
                                              
                                         </div>
                                         </div>
