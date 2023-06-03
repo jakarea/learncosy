@@ -113,6 +113,22 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="subscription_status">Subscription Status</label>
+                                            <select name="subscription_status" id="subscription_status"
+                                                class="form-control @error('subscription_status') is-invalid @enderror">
+                                                <option value="" disabled>Select Below</option>
+                                                <option value="one_time">One Time</option>
+                                                <option value="monthly">Monthly</option>
+                                                <option value="anully">Anully</option>
+                                                <option value="free">Free</option>
+                                            </select>
+                                            <i class="fa-solid fa-angle-down"></i>
+                                            <span class="invalid-feedback">@error('subscription_status'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="custom-hr">
                                             <hr>

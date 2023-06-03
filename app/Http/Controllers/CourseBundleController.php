@@ -7,6 +7,7 @@ use App\Models\BundleCourse;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataTables;
+use Auth;
 
 class CourseBundleController extends Controller
 {
@@ -70,8 +71,9 @@ class CourseBundleController extends Controller
      // course bundle create
      public function create()
      {  
-        $courses = Course::orderBy('id', 'desc')->get();
-         return view('bundle/instructor/create',compact('courses')); 
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get();
+        return view('bundle/instructor/create',compact('courses')); 
      }
 
      // course bundle store
@@ -93,9 +95,11 @@ class CourseBundleController extends Controller
             'slug' => Str::slug($request->title),
             'selected_course' => is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course,
             'price' => $request->price,
+            'subscription_status' => $request->subscription_status,
             'short_description' => $request->short_description, 
             'status' => $request->status,
         ]);  
+ 
         
         $bundleCourse->slug = $bundleCourse->slug . '-';
          //if thumbnail is valid then save it
@@ -160,6 +164,7 @@ class CourseBundleController extends Controller
         $bundleCourse->slug = Str::slug($request->title);
         $bundleCourse->selected_course = is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course;
         $bundleCourse->price = $request->price;
+        $bundleCourse->subscription_status = $request->subscription_status;
         $bundleCourse->short_description = $request->short_description;  
         $bundleCourse->status = $request->status;
         $bundleCourse->save();

@@ -19,7 +19,7 @@
                     <div class="media">
                         <img src="{{asset('assets/images/avatar.png')}}" alt="a" class="img-fluid">
                         <div class="media-body">
-                            <h5>Jhon Doe</h5>
+                            <h5>Student Name</h5>
                             <p>Course Name</p>
                         </div>
                     </div>

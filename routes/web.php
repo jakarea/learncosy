@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,12 @@ Route::middleware('auth')->get('/', function () {
     return view('home');
 });
 
+// message page routes
+Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
+    Route::get('/', 'index'); 
+    Route::get('/send/{id}', 'send');
+});
+
 // course page routes
 Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
     Route::get('/', 'index')->name('instructor.courses'); 
@@ -45,8 +52,7 @@ Route::middleware('auth')->prefix('instructor/courses')->controller(CourseContro
     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
     Route::get('/create', 'create');
     Route::post('/create', 'store')->name('course.store');
-    Route::get('/{slug}', 'show')->name('course.show'); 
-    Route::get('/{slug}/message', 'message')->name('instructor.courses.message'); 
+    Route::get('/{slug}', 'show')->name('course.show');   
     Route::get('/{slug}/edit', 'edit')->name('course.edit');
     Route::post('/{slug}/edit', 'update')->name('course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
