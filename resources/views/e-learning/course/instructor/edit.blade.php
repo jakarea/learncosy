@@ -130,13 +130,10 @@
                                         <div class="form-group"> 
                                             <label for="categories">Categories </label>
                                             <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
-                                                <option disabled hidden>Select or Create categories</option> 
-                                                @foreach ($categories as $categorie)
-                                                    @php $selectedcategories = explode(",", $categorie)  @endphp
-                                                    @foreach ($selectedcategories as $category)
-                                                    <option value="{{$category}}" {{ in_array($category,$selectedcategories) ? "selected" : ''}} >{{$category}}</option> 
-                                                    @endforeach 
-                                                @endforeach 
+                                                <option disabled hidden>Select or Create categories</option>  
+                                                    @foreach ($categories as $category)
+                                                    <option value="{{$category}}" {{ in_array($category,$categories) ? "selected" : ''}} >{{ ucfirst($category) }}</option> 
+                                                    @endforeach  
                                               </select>
                                               <i class="fas fa-angle-down arrw-down"></i>
                                               <span class="invalid-feedback">@error('categories'){{ $message }}

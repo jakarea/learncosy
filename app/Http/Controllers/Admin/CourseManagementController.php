@@ -81,8 +81,19 @@ class CourseManagementController extends Controller
     // course create
     public function create()
     {   
+        $unique_array = [];
         $courses = Course::all();
-        $categories = $courses->pluck('categories')->unique();  
+        $mainCategories = $courses->pluck('categories'); 
+
+        foreach($mainCategories as $category){ 
+            $cats = explode(",", $category);
+            foreach($cats as $cat){
+               $unique_array[] = strtolower($cat);
+            }
+        }
+
+        $categories = array_unique($unique_array);
+
         return view('e-learning/course/admin/create',compact('categories')); 
     }
 
@@ -171,8 +182,20 @@ class CourseManagementController extends Controller
      public function edit($slug)
      {   
          $course = Course::where('slug', $slug)->first();
-         $coursess = Course::all();
-         $categories = $coursess->pluck('categories')->unique();
+         
+        $unique_array = [];
+        $courses = Course::all();
+        $mainCategories = $courses->pluck('categories'); 
+
+        foreach($mainCategories as $category){ 
+            $cats = explode(",", $category);
+            foreach($cats as $cat){
+               $unique_array[] = strtolower($cat);
+            }
+        }
+
+        $categories = array_unique($unique_array);
+
          if ($course) {
              return view('e-learning/course/admin/edit', compact('course','categories'));
          } else {

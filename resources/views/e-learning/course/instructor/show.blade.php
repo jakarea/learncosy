@@ -78,7 +78,7 @@
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="#" class="min_width">Continue</a>
+                        <a href="{{url('/instructor/courses/'.$course->slug.'/message')}}" class="min_width">Message to Students</a>
                     </div>
                     {!! $course->description !!} 
                 </div>
