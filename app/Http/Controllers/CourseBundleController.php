@@ -137,7 +137,8 @@ class CourseBundleController extends Controller
     // course bundle edit
     public function edit($slug)
     {   
-        $courses = Course::orderBy('id', 'desc')->get();
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get();
         $bundleCourse = BundleCourse::where('slug', $slug)->first();
         if ($bundleCourse) {
             return view('bundle/instructor/edit', compact('bundleCourse','courses'));

@@ -65,7 +65,7 @@ class StudentHomeController extends Controller
     {   
         $lessons = Lesson::orderby('id', 'desc')->paginate(10);
         $modules = Module::orderby('id', 'desc')->paginate(10);
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::where('slug', $slug)->with('user')->first();
         if ($course) {
             return view('e-learning/course/students/show', compact('course','modules','lessons'));
         } else {

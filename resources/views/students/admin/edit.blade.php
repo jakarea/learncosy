@@ -41,12 +41,11 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="user_role">User Role </label>
-                                            <select name="user_role" id="user_role" class="form-control @error('user_role') is-invalid @enderror">
-                                                <option value="students" {{$student->user_role == 'students' ? 'selected' : '' }}>Students</option>
-                                                <option value="instructor" {{$student->user_role == 'instructor' ? 'selected' : '' }}>Instructor</option>
-                                            </select> 
-                                            <span class="invalid-feedback">@error('user_role'){{ $message }}
+                                            <label for="username">Username </label>
+                                            <input type="text" placeholder="Enter username" name="username"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                value="{{$student->username }}" id="username">
+                                            <span class="invalid-feedback">@error('username'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -159,8 +158,12 @@
                                         <div class="form-group file-prev-show">
                                             <label for="">Current Avatar: </label>
                                             <div class="file-prev-shows">
+                                                @if ($student->avatar) 
                                                 <img src="{{asset('assets/images/students/'.$student->avatar)}}" alt="Avatar"
                                                     class="img-fluid"> 
+                                                @else 
+                                                    <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
+                                                @endif    
                                             </div>
                                         </div> 
                                         
