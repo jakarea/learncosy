@@ -128,11 +128,12 @@
                                     </div> 
                                     <div class="col-md-12">
                                         <div class="form-group"> 
-                                            <label for="categories">Categories </label>
+                                            <label for="categories">Categories </label> 
                                             <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
                                                 <option disabled hidden>Select or Create categories</option> 
                                                 @foreach ($categories as $category)
-                                                <option value="{{$category}}" {{ in_array($category,$categories) ? "selected" : ''}} >{{ ucfirst($category) }}</option> 
+                                                    <option value="{{$category}}" {{ in_array($category,$categories) ? "selected" : ''}} >
+                                                        {{ ucfirst($category) }}</option> 
                                                 @endforeach 
                                               </select>
                                               <i class="fas fa-angle-down arrw-down"></i>

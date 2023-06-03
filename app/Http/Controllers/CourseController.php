@@ -358,10 +358,4 @@ class CourseController extends Controller
         }
     }
 
-    // message
-    public function message()
-    {    
-        return view('e-learning/course/instructor/message'); 
-    }
-
 }

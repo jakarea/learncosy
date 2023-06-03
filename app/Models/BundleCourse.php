@@ -13,6 +13,7 @@ class BundleCourse extends Model
         'title',   
         'slug',  
         'selected_course', 
+        'subscription_status', 
         'price', 
         'thumbnail', 
         'banner',

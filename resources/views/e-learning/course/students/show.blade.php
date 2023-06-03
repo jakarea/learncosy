@@ -78,7 +78,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('/students/courses/'.$course->slug.'/message')}}" class="min_width">Message to Instructor</a>
+                        <a href="{{url('course/messages/send/1')}}" class="min_width">Message to Instructor</a>
                     </div>
                     {!! $course->description !!}
                 </div>
@@ -93,8 +93,33 @@ $i = 0;
                 </div>
                 <div class="course-content-box">
                     <div class="d-flex">
-                        <h5>Course's reviews</h5>
+                        <h5>Course’s content</h5>
                         <p>Last Updated : 2 hours ago</p>
+                    </div>
+                    <div class="row border-right-custom">
+                        @if($course->number_of_attachment)
+                        <div class="col-lg-12">
+                            <div class="attached-file-box me-lg-2">
+                                <h4><img src="{{asset('assets/images/course/pdf-icon.svg')}}" alt="Place"
+                                        class="img-fluid me-1" width="40"> Attachment Name</h4>
+                                <a href="#">
+                                    <img src="{{asset('assets/images/course/download-icon.svg')}}" alt="Place"
+                                        class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                        @else
+                        <div class="col-lg-12">
+                            <div class="attached-file-box me-lg-2">
+                                <p>No Resource Found</p>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="course-content-box">
+                    <div class="d-flex border-0">
+                        <h5>Course's reviews</h5> 
                     </div>
                     <div class="row">
                         <div class="col-lg-12">

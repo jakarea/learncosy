@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title'); 
             $table->string('slug')->nullable(); 
             $table->string('selected_course'); 
+            $table->string('subscription_status')->default('one_time'); 
             $table->string('price')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('banner')->nullable();
