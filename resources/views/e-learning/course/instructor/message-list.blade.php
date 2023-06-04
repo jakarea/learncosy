@@ -54,87 +54,21 @@
 
     {{-- Review Listing @S --}}
     <div class="row">
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}}
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-    </div>
-    {{-- Review Listing @E --}}
 
+        @foreach($chat_rooms as $chat_room)
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="review-item-box message-box">
+                    <div class="d_flex">
+                        <h5>{{$chat_room[0]->user->name}}</h5> 
+                        <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
+                    </div>
+                    
+                    <p>{{$chat_room[0]->message}}</p>  
+                    <a href="{{url('/course/messages/send/2')}}" class="chat-bttn">send message</a>
+                </div>
+            </div>
+        @endforeach
+       
     {{-- Review pagginate @S --}}
     <div class="row">
         <div class="col-12">

@@ -83,7 +83,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('course/messages/send/1')}}" class="min_width">Message to Instructor</a>
+                        <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Message to Instructor</a>
                     </div>
                     {!! $course->description !!}
                 </div>
