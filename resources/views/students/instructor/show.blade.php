@@ -100,28 +100,17 @@
                                 <th>View Course</th>
 
                             </tr>
-                            {{-- item @S --}}
+                        @foreach($checkout as $key => $checkout)
                             <tr>
-                                <td>1</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>50%</td>
+                                <td>{{$key+1}}</td>
+                                <td>{{$checkout->course->title}}</td>
+                                <td> - </td>
+                                <td> - </td>
                                 <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
+                                    <a href="{{url('instructor/courses/'.$checkout->course->slug)}}" class="btn btn-sm btn-primary">View Course</a>
                                 </td>
                             </tr>
-                            {{-- item @E --}}
-                            {{-- item @S --}}
-                            <tr>
-                                <td>2</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>40%</td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
+                        @endforeach
                         </table>
                         {{-- <div class="row">
                             <div class="col-12">

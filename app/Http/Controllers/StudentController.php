@@ -2,26 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
-use App\Models\User;
 use Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use DataTables;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Checkout;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
     // list page 
     public function index()
-     {   
+     {
+        // get student who purchase course based on course user_id and logged in user_id
+        $course = Course::where('user_id', auth()->user()->id)->get();
+
+        // get student who purchase course based on course user_id and logged in user_id
+        $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+
+        // return dd($checkout);
          return view('students/instructor/index'); 
      }
 
      // data table getData
     public function studentsDataTable()
-    {       $user_role = "students";
-            $user = User::where('user_role',$user_role)->get();
+    {       $course = Course::where('user_id', auth()->user()->id)->get();
+            
+            $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+
+            $user = User::whereIn('id', $checkout->pluck('user_id'))->get();
           
             return Datatables::of($user)
                 ->addColumn('action', function($user){ 
@@ -128,9 +139,13 @@ class StudentController extends Controller
     // show page 
     public function show($id)
      {  
+        $checkout = Checkout::where('user_id', $id)->get();
+
+        $course = Course::whereIn('id', $checkout->pluck('course_id'))->where('user_id', auth()->user()->id)->get();
+
         $student = User::where('id', $id)->first();
-    
-        return view('students/instructor/show',compact('student')); 
+
+        return view('students/instructor/show',compact('checkout', 'student','course'));
      }
 
     // show page 
