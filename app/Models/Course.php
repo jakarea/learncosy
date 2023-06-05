@@ -62,7 +62,7 @@ class Course extends Model
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'course_user')
-                    ->where('role', 'student')
+                    ->where('user_role', 'student')
                     ->withPivot('payment_method', 'amount', 'paid', 'start_at', 'end_at')
                     ->withTimestamps();
     }
@@ -72,5 +72,7 @@ class Course extends Model
     {
         return $this->hasMany(Checkout::class);
     }
+
+    // get purchased students list based on instructor id
     
 }

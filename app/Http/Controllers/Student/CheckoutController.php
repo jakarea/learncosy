@@ -15,8 +15,9 @@ class CheckoutController extends Controller
      */
     public function __construct()
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(auth()->user()->stripe_secret_key);
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -26,16 +27,19 @@ class CheckoutController extends Controller
     {
         //
         $course = Course::where('slug', $slug)->first();
-        // return to stripe checkout page with course offer_price and if offer_price is null then course price
-        // return '<img src="'.asset('assets/images/courses/' . $course->thumbnail).'" width="100px" height="100px" />';
+
         if($course->offer_price == 0){
             $course_price = $course->price;
         }else{
             $course_price = $course->offer_price;
         }
 
-        // Configure Stripe
-        // Stripe::setApiKey(env('STRIPE_SECRET'));
+        // check if checkout table has the logged in user id and course id
+        $checkout = $course->checkouts()->where('user_id', auth()->user()->id)->first();
+
+        if($checkout){
+            return redirect()->route('students.show.courses', $course->slug)->with('error', 'You have already enrolled in this course');
+        }
 
         // Create a checkout session
         $checkout_session = Session::create([
@@ -52,7 +56,7 @@ class CheckoutController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('checkout.success', $course->slug),
+            'success_url' => route('checkout.success', $course->slug) . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.cancel', $course->slug),
         ]);
 
@@ -67,6 +71,27 @@ class CheckoutController extends Controller
     public function success($slug)
     {
         $session_id = Session::all()['data'][0]['id'];
+        // Find the course based on the slug
+        $course = Course::where('slug', $slug)->first();
+        $start_date = null;
+        $end_date = null;
+        // start_date end_date add based on course subscription_status
+        if($course->subscription_status == 'one_time'){
+            $start_date = null;
+            $end_date = null;
+        }else if($course->subscription_status == 'monthly'){
+            $start_date = now()->toDateTimeString();
+            $end_date = now()->addMonth();
+        }else if($course->subscription_status == 'anully'){
+            $start_date = now()->toDateTimeString();
+            $end_date = now()->addYear();
+        }else if($course->subscription_status == 'Free'){
+            $start_date = null;
+            $end_date = null;
+        }
+
+        // return $start_date . ' ' . $end_date;
+
         try {
             // Retrieve the payment data and amount using the session ID
             $session = Session::retrieve($session_id);
@@ -74,16 +99,15 @@ class CheckoutController extends Controller
             $paymentMethod = 'Stripe';
             $amount = $session->amount_total / 100;
     
-            // Find the course based on the slug
-            $course = Course::where('slug', $slug)->first();
+
     
             // Attach the user to the course with the payment details
             $course->students()->attach(auth()->user()->id, [
                 'payment_method' => $paymentMethod,
                 'amount' => $amount,
                 'paid' => true,
-                'start_at' => now(),
-                'end_at' => now()->addMonth(), // or any other logic to determine the end date
+                'start_at' => $start_date,
+                'end_at' => $end_date,
             ]);
     
             // Store the transaction in the checkout table
@@ -94,8 +118,8 @@ class CheckoutController extends Controller
                 'payment_id' => $payment_id,
                 'status' => 'completed',
                 'amount' => $amount,
-                'start_date' => now(),
-                'end_date' => now()->addMonth(),
+                'start_date' => $start_date,
+                'end_date' => $end_date,
             ]);
     
             if ($checkout) {
@@ -115,9 +139,10 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $slug)
+    public function cancel($slug)
     {
         //
+        return redirect()->route('students.show.courses', $slug)->with('error', 'You have cancelled the payment');
     }
 
     /**
