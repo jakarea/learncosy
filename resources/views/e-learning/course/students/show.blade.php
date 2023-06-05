@@ -11,7 +11,6 @@
 @section('content')
 @php
 $i = 0;
-$is_enrolled = $course->checkouts()->where('user_id', auth()->user()->id)->first();
 @endphp
 <main class="course-page-wrap">
     <!-- suggested banner @S -->
@@ -21,24 +20,17 @@ $is_enrolled = $course->checkouts()->where('user_id', auth()->user()->id)->first
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
                 <p>{{$course->sub_title}}</p>
-                @if($is_enrolled)
-                <a href="{{route('students.show.courses', $course->slug)}}">Go to Course</a>
-                @else
                 <form action="{{route('students.checkout', $course->slug)}}" method="GET">
                     <input type="hidden" name="course_id" value="{{$course->id}}">
                     <input type="hidden" name="price" value="{{$course->price}}">
                     <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                     <button type="submit" class="btn btn-primary">Enroll Now</button>
                 </form>
-                @endif
             </div>
         </div>
     </div>
     <!-- suggested banner @E -->
-    <!-- Show error or success message -->
-    <div class="col-12">
-        @include('partials.session-message')
-    </div>
+
     <div class="row">
         <div class="col-12 col-sm-12 col-md-5 col-lg-4">
             <div class="mylearning-txt-box mt-4">

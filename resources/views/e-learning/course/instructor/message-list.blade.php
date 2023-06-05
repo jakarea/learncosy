@@ -28,16 +28,20 @@
                     <label for="">Course name</label> 
                     <select name="course" class="form-custom">
                         <option value="">All</option>
+                        @foreach ($courses as $course)
+                           <option value="{{$course->id}}">{{$course->title}}</option>
+                        @endforeach
                     </select>
                     <i class="fas fa-angle-down"></i>
                 </div>
-                <div class="form-grp">
+                <!-- <div class="form-grp">
                     <label for="">Student name</label>
                     <select name="name" class="form-custom">
-                        <option value="">All</option>
+                           <option value="">All</option>
+                        
                     </select>
                     <i class="fas fa-angle-down"></i>
-                </div>
+                </div> -->
                 <div class="form-grp-btn mt-4 ms-3">
                     <button type="submit" class="btn">Filter</button>
                 </div>

@@ -14,13 +14,13 @@
     <div class="col-12">
         <div class="main-chat-wrapper">
             <div class="d-flex">
-                <h5>Messages to:</h5>
+                <h5>Messages to: {{$reciver_info->user->name}}</h5>
                 <div class="instructor-avatar">
                     <div class="media">
                         <img src="{{asset('assets/images/avatar.png')}}" alt="a" class="img-fluid">
                         <div class="media-body">
-                            <h5>Student Name</h5>
-                            <p>Course Name</p>
+                            <h5>{{$sender_info->name}}</h5>
+                            <p>{{$reciver_info->title}}</p>
                         </div>
                     </div>
                 </div>
