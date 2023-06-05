@@ -26,16 +26,13 @@ class MessageController extends Controller
      public function send($courseId)
      {    
         $userId = Auth::user()->id;
-        $messages = Message::where('user_id', $userId)->where('course_id',$courseId)->get();
-        // if($messages->isEmpty()){
-        //     $first_message = new Message([
-        //         'chat_id'   => mt_rand(10000000, 99999999), 
-        //         'course_id' => $courseId,
-        //         'user_id'   => $userId,
-        //         'message'   => 'Hello'
-        //     ]); 
-        //     $first_message->save();
-        // }
+        $message = Message::where('user_id', $userId)->where('course_id',$courseId)->first();
+        if(isset($message->chat_id)){
+            $messages = Message::with('course')->where('chat_id',$message->chat_id)->get();
+        }else{
+            $messages = Message::where('user_id', $userId)->where('course_id',$courseId)->get();
+        }
+
         return view('e-learning/course/instructor/message',compact('messages','userId','courseId')); 
      } 
 
