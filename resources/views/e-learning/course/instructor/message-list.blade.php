@@ -26,14 +26,14 @@
             <div class="product-filter-box"> 
                 <div class="form-grp">
                     <label for="">Course name</label> 
-                    <select name="price" class="form-custom">
+                    <select name="course" class="form-custom">
                         <option value="">All</option>
                     </select>
                     <i class="fas fa-angle-down"></i>
                 </div>
                 <div class="form-grp">
                     <label for="">Student name</label>
-                    <select name="sell" class="form-custom">
+                    <select name="name" class="form-custom">
                         <option value="">All</option>
                     </select>
                     <i class="fas fa-angle-down"></i>
@@ -63,8 +63,8 @@
                         <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
                     </div>
                     
-                    <p>{{$chat_room[0]->message}}</p>  
-                    <a href="{{url('/course/messages/send/2')}}" class="chat-bttn">send message</a>
+                    <p> <b>Course Name:</b>  {{$chat_room[0]->course->title}}</p>  
+                    <a href="{{url('/course/messages/chat_room',$chat_room[0]->chat_id)}}" class="chat-bttn">send message</a>
                 </div>
             </div>
         @endforeach
