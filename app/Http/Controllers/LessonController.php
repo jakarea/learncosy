@@ -9,7 +9,13 @@ use App\Models\Module;
 use DataTables;
 use Illuminate\Http\Request;
 use Auth;
+use Vimeo\Laravel\Facades\Vimeo;
+use Vimeo\Vimeo as VimeoSDK;
 
+use Illuminate\Http\UploadedFile;
+
+ini_set('upload_max_filesize', '1G');
+ini_set('post_max_size', '1G');
 class LessonController extends Controller
 {
     // lesson list
@@ -138,7 +144,57 @@ class LessonController extends Controller
         }
           
         $lesson->save();
-        return redirect('instructor/lessons')->with('success', 'Lesson saved!');
+        // return redirect('instructor/lessons')->with('success', 'Lesson saved!');
+        return redirect('instructor/lessons/upload-vimeo')->with('success', 'Lesson saved!');
+
+
+    }
+
+    // Vimeo Upload Page
+    public function uploadVimeoPage()
+    {   
+      
+       return view('e-learning/lesson/instructor/upload_vimeo');
+       
+    }
+
+    public function uploadViewToVimeo(Request $request)
+    {   
+        $file = $request->file('video');
+        $videoName = $file->getClientOriginalName();
+
+        $vimeo = Vimeo::connection();
+        // $vimeo = new VimeoSDK(config('vimeo.client_id'), config('vimeo.client_secret'), config('vimeo.access_token'));
+
+        $uri = $vimeo->upload($file->getPathname(), [
+            'name' => $videoName,
+            'approach' => 'tus',
+            'size' => $file->getSize(),
+        ]);
+       
+        return response()->json(['uri' => $uri]);
+        
+    }
+
+    public function getProgress(Request $request)
+    {
+        $uri = $request->input('uri');
+
+        // $vimeo = new VimeoSDK(config('vimeo.access_token'));
+
+        $vimeo = Vimeo::connection();
+
+        $video = $vimeo->request($uri);
+
+
+        if (isset($response['body']['upload']['upload_status']) && $response['body']['upload']['upload_status'] === 'in_progress') {
+            $progress = $response['body']['upload']['upload_progress'] * 100;
+        } else {
+            $progress = 100;
+        }
+    
+
+        return response()->json(['progress' => $progress]);
 
     }
 

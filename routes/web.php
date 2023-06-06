@@ -2,24 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\LessonController;
-use App\Http\Controllers\CourseBundleController;
-use App\Http\Controllers\ProfileManagementController;
-use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\Student\StudentHomeController;
-use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
-use App\Http\Controllers\Admin\StudentManagementController;
-use App\Http\Controllers\Admin\CourseManagementController;
+use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Admin\StudentManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,11 @@ Route::middleware('auth')->get('/', function () {
 // message page routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index'); 
-    Route::get('/send/{id}', 'send');
+    Route::get('/send/{id}', 'send')->name('get.message');
+    Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
+    Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
+    Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+
 });
 
 // course page routes
@@ -77,7 +82,14 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
     // data table route 
     Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
     Route::get('/create', 'create'); 
+
     Route::get('/create/video-upload', 'videoUpload'); 
+    Route::get('/upload-vimeo', 'uploadVimeoPage'); 
+    Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
+    Route::get('/progress', 'getProgress')->name('upload.progress'); 
+    Route::get('/upload', function() {
+        return view('e-learning/lesson/instructor/upload_vimeo');
+    });
     Route::post('/create', 'store')->name('lesson.store');
     Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
     Route::post('/{slug}/edit', 'update')->name('lesson.update');
@@ -109,6 +121,7 @@ Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManag
 // settings page routes
 Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsController::class)->group(function () {
     Route::get('/stripe', 'stripeIndex');
+    Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
     Route::get('/vimeo', 'vimeoIndex');
 });
 
@@ -139,6 +152,14 @@ Route::middleware('auth')->prefix('students')->controller(StudentHomeController:
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message'); 
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
+});
+
+// student checkout page routes
+Route::middleware('auth')->prefix('students/checkout')->controller(CheckoutController::class)->group(function () {
+    Route::get('/{slug}', 'index')->name('students.checkout'); 
+    Route::post('/{slug}', 'store')->name('students.checkout.store'); 
+    Route::get('/{slug}/success', 'success')->name('checkout.success'); 
+    Route::get('/{slug}/cancel', 'cancel')->name('checkout.cancel'); 
 });
 
 // student own profile management page routes

@@ -19,7 +19,13 @@ $i = 0;
         <div class="media">
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
-                <p>{{$course->sub_title}}</p> 
+                <p>{{$course->sub_title}}</p>
+                <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                    <input type="hidden" name="course_id" value="{{$course->id}}">
+                    <input type="hidden" name="price" value="{{$course->price}}">
+                    <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                    <button type="submit" class="btn btn-primary">Enroll Now</button>
+                </form>
             </div>
         </div>
     </div>
@@ -77,7 +83,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('course/messages/send/1')}}" class="min_width">Message to Instructor</a>
+                        <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Message to Instructor</a>
                     </div>
                     {!! $course->description !!}
                 </div>
