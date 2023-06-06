@@ -1,5 +1,5 @@
 .login-section {
-  padding-top: 10rem;
+  padding-top: 8rem;
 }
 
 .login-form-wrap {
@@ -17,7 +17,7 @@
 .login-form-wrap h1 {
   font-size: 1.6rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
@@ -28,14 +28,14 @@
 .login-form-wrap .form-group label {
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 8px;
 }
 .login-form-wrap .form-group .form-control {
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .login-form-wrap .form-group i {
@@ -47,7 +47,7 @@
 .login-form-wrap .form-check label {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0;
 }
@@ -58,15 +58,15 @@
 .login-form-wrap .d-flex a {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
 }
 .login-form-wrap .form-check-input {
-  border: 1px solid #2C2C2C;
+  border: 1px solid #2d3958;
 }
 .login-form-wrap .form-check-input:checked {
-  background-color: #2C2C2C;
-  border-color: #2C2C2C;
+  background-color: #2d3958;
+  border-color: #2d3958;
 }
 .login-form-wrap .form-bttn .btn-submit {
   display: block;
@@ -76,24 +76,24 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }
 .login-form-wrap .form-bttn .btn-submit:hover {
-  opacity: 0.7;
+  background: #fa9210;
 }
 .login-form-wrap .login-logo-wrap p {
   font-size: 0.8rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 1rem;
 }
 .login-form-wrap h5 {
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1.5rem;
 }
@@ -104,12 +104,12 @@
 .form-aggree label.form-check-label {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-left: 12px;
 }
 .form-aggree label a {
-  color: #2C2C2C;
+  color: #2d3958;
   text-decoration: underline;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .registerr {
-  color: #FF6262;
+  color: #d90d77;
 }
 
 /* login css end */
@@ -133,14 +133,14 @@
 .subscription-section .subscription-header h1 {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   line-height: 120%;
 }
 .subscription-section .subscription-header p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   width: 75%;
   margin: 0 auto;
@@ -153,15 +153,15 @@
   justify-content: center;
 }
 .subscription-section .plan-tab-head .nav .nav-item .nav-link {
-  border: 2px solid #FF6262;
+  border: 2px solid #d90d77;
   border-radius: 1px;
   font-size: 1rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
 }
 .subscription-section .plan-tab-head .nav .nav-item .nav-link.active {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 .subscription-section .subscription-plan-box {
@@ -179,7 +179,7 @@
 .subscription-section .subscription-plan-box .plan-header h4 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   text-transform: uppercase;
 }
@@ -187,7 +187,7 @@
   margin: 0.8rem 0;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .subscription-section .subscription-plan-box .plan-body h5.plan-title span {
@@ -201,12 +201,12 @@
   margin-bottom: 0.6rem;
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .subscription-section .subscription-plan-box .plan-body ul li i {
   font-size: 1rem;
-  color: #FF6262;
+  color: #d90d77;
   margin-right: 0.3rem;
 }
 .subscription-section .subscription-plan-box .plan-body ul li.na i {
@@ -224,17 +224,17 @@
   width: 80%;
   margin: 0 auto;
   text-align: center;
-  border: 2px solid #FF6262;
+  border: 2px solid #d90d77;
   padding: 0.6rem 1rem;
   border-radius: 2px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   transition: all linear 0.2s;
 }
 .subscription-section .subscription-plan-box .plan-footer a.plan-btn:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 

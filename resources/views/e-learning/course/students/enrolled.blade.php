@@ -47,7 +47,7 @@
                             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                 <div class="progress-bar" style="width: 25%"></div>
                               </div> 
-                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Download Course Materials</a> 
+                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Go to Course Page</a> 
                         </div>
                     </div>
                 </div>

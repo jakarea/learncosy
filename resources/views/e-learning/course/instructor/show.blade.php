@@ -18,8 +18,7 @@
         <div class="media">
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
-                <p>{{$course->sub_title}}</p>
-                <a href="#">Continue</a>
+                <p>{{$course->sub_title}}</p> 
             </div>
         </div>
     </div>

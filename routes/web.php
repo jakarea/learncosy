@@ -77,6 +77,7 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
     // data table route 
     Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
     Route::get('/create', 'create'); 
+    Route::get('/create/video-upload', 'videoUpload'); 
     Route::post('/create', 'store')->name('lesson.store');
     Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
     Route::post('/{slug}/edit', 'update')->name('lesson.update');

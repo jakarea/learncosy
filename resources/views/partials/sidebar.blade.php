@@ -71,7 +71,7 @@
             {{-- student menu link @S --}}
             @elseif(Auth::user()->user_role == 'students')
             <li class="menu-item">
-                <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('students/dashboard') }}" class="{{ Request::is('/')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home" class="img-fluid" />
                     <span>Dashboard</span> 
                 </a>

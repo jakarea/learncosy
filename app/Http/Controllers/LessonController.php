@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Module; 
 use DataTables;
 use Illuminate\Http\Request;
+use Auth;
 
 class LessonController extends Controller
 {
@@ -70,9 +71,19 @@ class LessonController extends Controller
     // lesson create
     public function create(Request $request)
     {  
-        $courses = Course::orderBy('id', 'desc')->get();
-        $modules = Module::orderBy('id', 'desc')->get();
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get(); 
+        $modules = Module::where('user_id', $userId)->get();
         return view('e-learning/lesson/instructor/create',compact('courses','modules')); 
+    }
+
+    // lesson create
+    public function videoUpload(Request $request)
+    {  
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get(); 
+        $modules = Module::where('user_id', $userId)->get();
+        return view('e-learning/lesson/instructor/video-upload',compact('courses','modules')); 
     }
 
     // lesson store
@@ -83,8 +94,7 @@ class LessonController extends Controller
         $request->validate([
             'course_id' => 'required',
             'module_id' => 'required',
-            'title' => 'required', 
-            'video_link' => 'required', 
+            'title' => 'required',  
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ],
@@ -106,6 +116,7 @@ class LessonController extends Controller
             'meta_description' => $request->meta_description,  
             'status' => $request->status,
         ]);  
+ 
         
         $lesson->slug = $lesson->slug . '-';
          //if thumbnail is valid then save it
@@ -134,8 +145,10 @@ class LessonController extends Controller
      // lesson edit
      public function edit($slug)
      {   
-        $courses = Course::orderBy('id', 'desc')->get();
-        $modules = Module::orderBy('id', 'desc')->get();
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get(); 
+        $modules = Module::where('user_id', $userId)->get();
+
          $lesson = Lesson::where('slug', $slug)->first();
          if ($lesson) {
              return view('e-learning/lesson/instructor/edit', compact('lesson','courses','modules'));
@@ -152,8 +165,7 @@ class LessonController extends Controller
           $request->validate([
             'course_id' => 'required',
             'module_id' => 'required',
-            'title' => 'required', 
-            'video_link' => 'required', 
+            'title' => 'required',  
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ],

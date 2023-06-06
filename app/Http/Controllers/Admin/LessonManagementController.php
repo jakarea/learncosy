@@ -84,8 +84,7 @@ class LessonManagementController extends Controller
         $request->validate([
             'course_id' => 'required',
             'module_id' => 'required',
-            'title' => 'required', 
-            'video_link' => 'required', 
+            'title' => 'required',  
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ],
@@ -153,8 +152,7 @@ class LessonManagementController extends Controller
           $request->validate([
             'course_id' => 'required',
             'module_id' => 'required',
-            'title' => 'required', 
-            'video_link' => 'required', 
+            'title' => 'required',  
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
             'lesson_file' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ],

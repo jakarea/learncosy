@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use Illuminate\Support\Str;
 use App\Models\Module;  
 use DataTables;
+use Auth;
 
 class ModuleManagementController extends Controller
 {
@@ -82,9 +83,12 @@ class ModuleManagementController extends Controller
             'duration' => 'required', 
         ]);
 
+        $userId = Auth::user()->id;
+
         //save module
         $module = new Module([
             'course_id' => $request->course_id, 
+            'user_id' => $userId,
             'title' => $request->title, 
             'slug' => Str::slug($request->title), 
             'number_of_lesson' => $request->number_of_lesson, 

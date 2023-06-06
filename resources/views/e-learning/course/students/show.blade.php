@@ -19,8 +19,7 @@ $i = 0;
         <div class="media">
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
-                <p>{{$course->sub_title}}</p>
-                <a href="#">Enroll Now</a>
+                <p>{{$course->sub_title}}</p> 
             </div>
         </div>
     </div>

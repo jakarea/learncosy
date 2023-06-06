@@ -235,13 +235,13 @@ main {
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
   margin-left: 0.5rem;
-  color: #8C8FAE;
+  background: #d90d77;
   border: 0;
   text-align: center;
 }
 .interrest-search-wrap .interrest-bttn-box button:first-child:hover,
 .interrest-search-wrap .interrest-bttn-box a:first-child:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #fa9210;
   color: #ffffff;
 }
 
@@ -273,17 +273,17 @@ main {
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
-  background: #DEE3EB;
+  background: #d90d77;
   padding: 0.76rem 1.3rem;
   margin: 0 0.4rem;
   transition: all linear 0.2s;
 }
 .popular-interest-wrap .popular-imterest-box ul li a:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 .popular-interest-wrap .popular-imterest-box ul li a.active {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #fa9210;
   color: #ffffff;
 }
 .popular-interest-wrap .selection-textarea-box {
@@ -326,7 +326,7 @@ main {
   width: 100%;
   height: 100%;
   border-radius: 0.7rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
 }
 .popular-interest-wrap .selection-textarea-box .selection-copy-bttns {
   display: flex;
@@ -352,7 +352,7 @@ main {
 .clear-section {
   font-size: 1rem;
   font-weight: 400;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   display: inline-flex;
   align-items: center;
@@ -371,7 +371,7 @@ main {
   line-height: 140%;
 }
 .interest-search-result-wrap h6 span {
-  color: #FF6262;
+  color: #d90d77;
 }
 .interest-search-result-wrap .search-result-head {
   margin: 1.2rem 0;
@@ -387,8 +387,8 @@ main {
   color: #8C8FAE;
 }
 .interest-search-result-wrap .search-result-head .form-check-input:checked {
-  background-color: #FF6262;
-  border-color: #FF6262;
+  background-color: #d90d77;
+  border-color: #d90d77;
 }
 .interest-search-result-wrap .search-result-head a {
   font-size: 1rem;
@@ -440,8 +440,8 @@ main {
   border-radius: 50%;
 }
 .interest-search-result-wrap .search-result-table table tr td div .form-check-input:checked {
-  background-color: #FF6262;
-  border-color: #FF6262;
+  background-color: #d90d77;
+  border-color: #d90d77;
 }
 .interest-search-result-wrap .search-result-table table tr td div a {
   margin-left: 0.6rem;
@@ -511,7 +511,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   padding: 0.5rem 2rem;
@@ -587,8 +587,8 @@ main {
   border-radius: 50%;
 }
 .search-settings-wrap .word-settings-box .word-item .form-check-input:checked {
-  background-color: #FF6262;
-  border-color: #FF6262;
+  background-color: #d90d77;
+  border-color: #d90d77;
 }
 .search-settings-wrap .me-md-5 {
   position: relative;
@@ -724,7 +724,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   line-height: 190%;
   box-shadow: 3px 22px 50px -2px #DEE3EB;
   border-radius: 3rem;
@@ -859,7 +859,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #FF6262;
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.4rem;
@@ -908,8 +908,8 @@ main {
 }
 .pagginate-wrap .active > .page-link,
 .pagginate-wrap .page-link.active {
-  background-color: #FF6262;
-  border: #FF6262;
+  background-color: #d90d77;
+  border: #d90d77;
   color: #ffffff;
 }
 
@@ -939,7 +939,7 @@ main {
   padding: 12px 20px;
 }
 .productss-list-box table tr td .fas {
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .productss-list-box table tr:nth-child(even) td {
@@ -960,13 +960,20 @@ main {
 }
 
 .form-grp-btn .btn {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   border-radius: 3rem;
   color: #ffffff;
 }
 
 .product-filter-wrapper .product-filter-box .form-grp .fa-angle-down {
   top: 70%;
+}
+
+.form-grp-btn .btn {
+  background: #d90d77;
+}
+.form-grp-btn .btn:hover {
+  background: #fa9210;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {
@@ -1025,6 +1032,16 @@ main {
   .student-bttn-box {
     margin-top: 1rem;
   }
+  .uploadOuter {
+    padding: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .upload-progress h3 {
+    font-size: 1.2rem !important;
+  }
+  .upload-progress p {
+    margin-bottom: 1rem !important;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .main-body-wrapper .main-page-wrapper {
@@ -1041,6 +1058,12 @@ main {
   }
   .save-to-project-modal .saveto-modal-txt {
     max-width: 50%;
+  }
+  .upload-progress h3 {
+    font-size: 1.2rem !important;
+  }
+  .upload-progress p {
+    margin-bottom: 1rem !important;
   }
 }
 @media (min-width: 767px) and (max-width: 992px) {

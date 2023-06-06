@@ -202,7 +202,7 @@
 
     .submit-bttn {
         .btn-submit {
-            @include m.button(1.2rem, v.$light, v.$gdbg);
+            @include m.button(1.2rem, v.$light, v.$primary);
             border-radius: 2rem;
             @include m.df(center);
             width: 100%;
@@ -212,7 +212,7 @@
             }
 
             &:hover {
-                opacity: .7;
+               background-color: v.$orang
             }
         }
     }

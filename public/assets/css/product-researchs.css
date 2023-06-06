@@ -8,7 +8,7 @@
 }
 
 .ali-express-bttn a {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%) !important;
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
   border-radius: 3rem !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -22,7 +22,7 @@
   border: none;
   height: 1px;
   width: 100%;
-  background: #FF6262;
+  background: #d90d77;
   margin: 3rem 0;
 }
 
@@ -112,7 +112,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -173,7 +173,7 @@
   line-height: 140%;
 }
 .country-details-wrap div:last-child {
-  border-left: 1px solid #F37F14;
+  border-left: 1px solid #2D3958;
   padding-left: 1.5rem;
 }
 
@@ -195,7 +195,7 @@
 .create-form-head h6 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
 }
 .create-form-head a {
@@ -203,7 +203,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
@@ -215,11 +215,11 @@
   margin-right: 8px;
 }
 .create-form-head a:hover {
-  opacity: 0.7;
+  background: #fa9210;
 }
 
 .form-group .form-control:focus-within {
-  border-color: #FF6262;
+  border-color: #d90d77;
 }
 
 .create-form-box .form-group {
@@ -259,7 +259,7 @@
   color: #ffffff;
   width: 1.5rem;
   height: 1.5rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   border-radius: 50%;
   font-size: 0.9rem;
   display: inline-flex;
@@ -292,12 +292,12 @@
 }
 .submit-bttns .btn-reset {
   background: transparent;
-  color: #FF6262;
-  border: 1px solid #F37F14;
+  color: #d90d77;
+  border: 1px solid #2D3958;
   margin-right: 1rem;
 }
 .submit-bttns .btn-reset:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   color: #fff;
 }
 .submit-bttns .btn-submit {
@@ -305,14 +305,14 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
   padding: 0.6rem 1.6rem;
 }
 .submit-bttns .btn-submit:hover {
-  opacity: 0.7;
+  background: #fa9210;
 }
 
 .p_infos-group .col-md-4 span {
@@ -330,10 +330,10 @@
   margin-bottom: 1rem;
 }
 .create-form-box .form-control.dropdown div span {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%) !important;
+  background: #d90d77 !important;
 }
 .create-form-box .form-control.dropdown .dropdown-item {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%) !important;
+  background: #d90d77 !important;
 }
 
 .tags-input-wrapper {

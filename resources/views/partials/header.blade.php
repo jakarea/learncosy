@@ -6,11 +6,11 @@
             {{-- header logo @S --}}
             <div class="header-logo-wrap">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('assets/images/site-main-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid" /> 
+                    <img src="{{ asset('assets/images/learncosy-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid logo-width" /> 
                 </a>
                 <div class="d-flex align-items-center">
                     <a href="javascript:void(0)" id="toggle-bar">
-                        <img src="{{ asset('assets/images/bars-icon.svg') }}" alt="Bars" class="img-fluid" />
+                        <i class="fas fa-bars text-white"></i>
                     </a> 
                 </div>
             </div>

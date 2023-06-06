@@ -14,7 +14,7 @@
   line-height: 140%;
 }
 .addspy-banner-wrap .media .media-body .addspy-main-title span {
-  color: #F37F14;
+  color: #2D3958;
 }
 .addspy-banner-wrap .media .media-body p {
   font-size: 1rem;
@@ -28,14 +28,13 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
 }
 .addspy-banner-wrap .media .media-body a:hover {
-  background: #ffffff;
-  color: #000000;
+  background: #fa9210;
 }
 
 .wining-product-wrapper {
@@ -167,7 +166,7 @@
   color: #8C8FAE;
 }
 .wining-product-item .wining-product-txt ul li a .fa-regular:hover {
-  color: #FF6262;
+  color: #d90d77;
 }
 .wining-product-item .wining-product-txt ul li a img {
   margin-right: 0.4rem;
@@ -236,7 +235,7 @@
   margin-right: 0.7rem;
 }
 .potential-item-box h6 span {
-  color: #F37F14;
+  color: #2D3958;
   margin-right: 0.4rem;
 }
 
@@ -292,7 +291,7 @@
   line-height: 140%;
 }
 .addspy-dash-head h1 span {
-  color: #F37F14;
+  color: #2D3958;
 }
 .addspy-dash-head p {
   font-size: 1rem;
@@ -316,7 +315,7 @@
 .discover-personalized-list .media p {
   font-size: 1rem;
   font-weight: 400;
-  color: #F37F14;
+  color: #2D3958;
   line-height: 140%;
   text-decoration: underline;
   margin-top: 0.3rem;
@@ -326,7 +325,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -366,7 +365,7 @@
 .add-head p {
   font-size: 1rem;
   font-weight: 400;
-  color: #F37F14;
+  color: #2D3958;
   line-height: 140%;
   text-decoration: underline;
 }
@@ -477,12 +476,12 @@
   margin-right: 1rem;
 }
 .quick-query a:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 .quick-query a:last-child {
   background: transparent;
-  color: #FF6262;
+  color: #d90d77;
   border: 0;
   display: flex;
   align-items: center;
@@ -520,13 +519,13 @@
 .addspy-multi-select a {
   font-size: 1rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #FF6262;
+  border: 1px solid #d90d77;
   padding: 0.6rem 2rem;
 }
 .addspy-multi-select a img {
@@ -536,7 +535,7 @@
   margin-left: 0.4rem;
 }
 .addspy-multi-select a:hover {
-  background: #FF6262;
+  background: #d90d77;
   color: #ffffff;
 }
 .addspy-multi-select a:hover img {
@@ -553,13 +552,13 @@
 .addspy-multi-select .multiple-sort select {
   font-size: 1rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #FF6262;
+  border: 1px solid #d90d77;
   padding: 0.6rem 3rem;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -572,11 +571,11 @@
   position: absolute;
   right: 1rem;
   top: 13px;
-  color: #FF6262;
+  color: #d90d77;
 }
 .addspy-multi-select .form-check-input:checked {
-  background-color: #FF6262;
-  border-color: #FF6262;
+  background-color: #d90d77;
+  border-color: #d90d77;
 }
 
 .adspy-filter-product .wining-product-txt h3 {
@@ -629,11 +628,11 @@
   text-align: center;
 }
 .adspy-filter-product-bttns a:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 .adspy-filter-product-bttns a:last-child {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 .adspy-filter-product-bttns a:last-child:hover {
@@ -655,10 +654,10 @@
   color: #727DFF;
 }
 .about-add-box-wrap .social-site i.fa-instagram {
-  color: #FF6262;
+  color: #d90d77;
 }
 .about-add-box-wrap .social-site i.fa-twitter {
-  color: #F37F14;
+  color: #2D3958;
 }
 .about-add-box-wrap .social-site i.fa-whatsapp {
   color: #34A853;
@@ -678,7 +677,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  border: 3px solid #FF6262;
+  border: 3px solid #d90d77;
   margin-right: 1rem;
 }
 .about-add-box-wrap .media .media-body h6 {
@@ -719,7 +718,7 @@
   position: absolute;
   top: 50%;
   justify-content: center;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
   width: 2rem;
   height: 2rem;
@@ -776,7 +775,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #2C2C2C;
+  background: #2d3958;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
@@ -784,7 +783,7 @@
   text-align: center;
 }
 .about-add-box-wrap .ads-ftr-cta-bttn a.cta-button:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 
@@ -809,7 +808,7 @@
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
-  border: 3px solid #FF6262;
+  border: 3px solid #d90d77;
   margin-right: 1rem;
 }
 .about-page-header-wrap .media .media-body h5 {
@@ -835,12 +834,12 @@
   color: #727DFF;
 }
 .about-page-header-wrap .page-details-wrap .social-site .fa-instagram {
-  color: #FF6262;
+  color: #d90d77;
 }
 .about-page-header-wrap .page-details-wrap .media-body p {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
 }
@@ -870,7 +869,7 @@
 .page-more-info h4 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.1rem;
 }
@@ -881,7 +880,7 @@
   line-height: 140%;
 }
 .page-more-info p span {
-  color: #2C2C2C;
+  color: #2d3958;
   font-weight: 500;
 }
 
@@ -929,7 +928,7 @@
 }
 .list-video-wrapper .progress:before {
   height: 10px !important;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%) !important;
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
 }
 
 .adspy-head-bttn {
@@ -940,7 +939,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;

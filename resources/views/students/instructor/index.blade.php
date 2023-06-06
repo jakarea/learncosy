@@ -46,10 +46,10 @@
                 <table id="myDataTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th class="text-start">Name</th> 
-                            <th width="10%" class="text-center">Avatar</th>
+                            <th class="text-start" width="10%" class="text-center">Avatar</th>
+                            <th class="text-center">Name</th>  
                             <th width="16%" class="text-center">Email</th> 
-                            <th width="12%" class="text-center">Phone</th> 
+                            <th width="18%" class="text-center">Phone</th> 
                             <th width="8%" class="text-center">Message Status</th>
                             <th width="15%">Action</th>
                         </tr>
@@ -75,8 +75,8 @@
             serverSide: true,
             ajax: "{{ route('students.data.table') }}",
             columns: [
-                {data: 'name', name: 'name'}, 
                 {data: 'image', name: 'image', orderable:false, searchable: false},
+                {data: 'name', name: 'name'}, 
                 {data: 'email', name: 'email'}, 
                 {data: 'phone', name: 'phone'}, 
                 {data: 'status', name: 'status', orderable:false, searchable: false},  

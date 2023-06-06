@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Module; 
 use Illuminate\Http\Request;
 use DataTables;
+use Auth;
 
 class ModuleController extends Controller
 {
@@ -66,7 +67,8 @@ class ModuleController extends Controller
     // module create
     public function create()
     {  
-        $courses = Course::orderBy('id', 'desc')->get();
+        $userId = Auth::user()->id;
+        $courses = Course::where('user_id', $userId)->get();
         return view('e-learning/module/instructor/create',compact('courses')); 
     }
 
@@ -76,13 +78,16 @@ class ModuleController extends Controller
 
         $request->validate([
             'course_id' => 'required',
-            'title' => 'required',
+            'title' => 'required', 
             'number_of_lesson' => 'required', 
             'duration' => 'required', 
         ]);
 
+        $userId = Auth::user()->id;
+
         //save module
         $module = new Module([
+            'user_id' => $userId, 
             'course_id' => $request->course_id, 
             'title' => $request->title, 
             'slug' => Str::slug($request->title), 

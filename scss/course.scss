@@ -250,7 +250,7 @@
 .add_module_bttn{
     padding: 10px 15px;
     border-radius: 1.6rem;
-    background: v.$gdbg;
+    background: v.$primary;
     color: v.$light;
     display: block;
     text-align: center; 
@@ -258,8 +258,7 @@
     margin: 0 auto;
     margin-top: .3rem;
     &:hover{
-        background-color: v.$menuclr;
-        color: v.$light;
+        background: v.$orang; 
     }
 }
 // {{ url('admin/elearning/modules/create?course='. $course_id.'&'.$module_id) }}
@@ -404,13 +403,13 @@
             }
 
             a {
-                @include m.button(1rem, v.$light, v.$gdbg);
+                @include m.button(1rem, v.$light, v.$primary);
                 border-radius: 3rem;
                 padding-left: 4rem !important;
                 padding-right: 4rem !important;
 
                 &:hover {
-                    background: v.$light;
+                    background: v.$orang;
                     color: v.$dark;
                 }
             }

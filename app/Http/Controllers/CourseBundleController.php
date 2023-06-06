@@ -14,7 +14,8 @@ class CourseBundleController extends Controller
      // course bundle list
      public function index()
      {  
-        $bundleCourses = BundleCourse::orderby('id', 'desc')->paginate(12);
+        $userId = Auth::user()->id;
+        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
          return view('bundle/instructor/index',compact('bundleCourses')); 
      }
 
@@ -89,8 +90,11 @@ class CourseBundleController extends Controller
             'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
+        $userId = Auth::user()->id;
+
         //save bundle course
         $bundleCourse = new BundleCourse([
+            'user_id' => $userId, 
             'title' => $request->title, 
             'slug' => Str::slug($request->title),
             'selected_course' => is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course,
@@ -160,7 +164,10 @@ class CourseBundleController extends Controller
             'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
         ]);
 
+        $userId = Auth::user()->id;
+
         $bundleCourse = BundleCourse::where('slug', $slug)->first();
+        $bundleCourse->user_id = $userId; 
         $bundleCourse->title = $request->title; 
         $bundleCourse->slug = Str::slug($request->title);
         $bundleCourse->selected_course = is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course;

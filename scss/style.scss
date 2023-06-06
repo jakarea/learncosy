@@ -130,12 +130,12 @@ main {
             @include m.button;
             border-radius: 3rem;
             margin-left: 0.5rem;
-            color: v.$fourth;
+            background: v.$primary;
             border: 0;
             text-align: center;
 
             &:hover {
-                background: v.$gdbg;
+                background: v.$orang;
                 color: v.$light;
             }
         }
@@ -164,7 +164,7 @@ main {
                 a {
                     @include m.button;
                     border-radius: 3rem;
-                    background: v.$third;
+                    background: v.$primary;
                     padding: .76rem 1.3rem;
                     margin: 0 .4rem;
                     transition: all linear .2s;
@@ -176,7 +176,7 @@ main {
                 }
 
                 a.active {
-                    background: v.$gdbg;
+                    background: v.$orang;
                     color: v.$light;
                 }
             }
@@ -410,7 +410,7 @@ main {
             margin-top: 1.6rem;
 
             .btn-submits {
-                @include m.button(1rem, v.$light, v.$gdbg);
+                @include m.button(1rem, v.$light, v.$primary);
                 padding: .5rem 2rem;
             }
 
@@ -861,7 +861,7 @@ main {
 
 .form-grp-btn {
     .btn {
-        background: v.$gdbg;
+        background: v.$primary;
         border-radius: 3rem;
         color: v.$light;
     }
@@ -872,6 +872,12 @@ main {
 }
 
 // product research css @E
+ .form-grp-btn .btn{
+    background: v.$primary;
+    &:hover{
+        background: v.$orang;
+    }
+ }
 
 // responsive css start
 @include q.responsive(phone) {
@@ -909,39 +915,60 @@ main {
     }
 
     #myDataTable {
-        width: 100%!important;
-        display: block!important;
-        overflow-x: scroll!important;
+        width: 100% !important;
+        display: block !important;
+        overflow-x: scroll !important;
     }
-    .productss-list-box{
+
+    .productss-list-box {
         margin-top: 1rem;
     }
-    .profile-page-wrap{ 
-        .product-filter-wrapper .product-filter-box{
-            grid-template-columns: 100%; 
+
+    .profile-page-wrap {
+        .product-filter-wrapper .product-filter-box {
+            grid-template-columns: 100%;
         }
-        .ms-auto{
-            margin-right: auto!important;
+
+        .ms-auto {
+            margin-right: auto !important;
             margin-bottom: 1rem;
         }
-        .password-change-txt h1{
+
+        .password-change-txt h1 {
             font-size: 1.5rem;
         }
     }
+
     .student-head-bttn ul.nav li.nav-item button.nav-link {
-        font-size: .9rem; 
-        padding: 0.65rem .8rem!important; 
+        font-size: .9rem;
+        padding: 0.65rem .8rem !important;
         margin-right: .6rem;
-        margin-bottom: 0.8rem!important; 
+        margin-bottom: 0.8rem !important;
     }
+
     .student-search-wrap {
         display: grid;
-        grid-template-columns: 100%!important;
+        grid-template-columns: 100% !important;
     }
-    .student-bttn-box{
+
+    .student-bttn-box {
         margin-top: 1rem;
     }
-   
+
+    .uploadOuter {
+        padding: 0 !important;
+        margin-bottom: 1rem
+    }
+
+    .upload-progress {
+        h3 {
+            font-size: 1.2rem !important;
+        }
+
+        p {
+            margin-bottom: 1rem !important;
+        }
+    }
 }
 
 @include q.responsive(landphone) {
@@ -964,6 +991,16 @@ main {
 
     .save-to-project-modal .saveto-modal-txt {
         max-width: 50%;
+    }
+
+    .upload-progress {
+        h3 {
+            font-size: 1.2rem !important;
+        }
+
+        p {
+            margin-bottom: 1rem !important;
+        }
     }
 }
 
