@@ -61,7 +61,7 @@
   display: inline-block;
   font-size: 0.8rem;
   font-weight: 500;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   text-decoration: underline;
 }
@@ -138,7 +138,7 @@
 .flow-filter-table table tr td h6 {
   font-size: 0.95rem;
   font-weight: 400;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
 }
 .flow-filter-table table tr td h5 {
@@ -219,7 +219,7 @@
 .keep-head .media a {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   display: inline-block;
   margin-top: 1rem;
@@ -304,11 +304,11 @@
   margin-bottom: 1rem;
 }
 .get-idea-box .keep-item-txt a.get-bttn {
-  color: #727DFF;
-  border-color: #727DFF;
+  color: #A020F0;
+  border-color: #A020F0;
 }
 .get-idea-box .keep-item-txt a.get-bttn:hover {
-  background-color: #727DFF;
+  background-color: #A020F0;
 }
 
 .schedule-form-box {
@@ -369,7 +369,7 @@
   display: inline-block;
   font-size: 1.1rem;
   font-weight: 400;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   margin-top: 1rem;
 }
@@ -417,7 +417,7 @@
 .product-list-table table tr td h5 {
   font-size: 0.95rem;
   font-weight: 400;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
 }
 .product-list-table table tr td h6 {
@@ -515,7 +515,7 @@
   background: #ffffff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
   border-radius: 3rem;
   margin-left: 0.5rem;
@@ -670,7 +670,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -897,7 +897,7 @@
   justify-content: flex-start;
   font-size: 0.95rem;
   font-weight: 400;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   margin-bottom: 0.8rem;
 }
@@ -911,7 +911,7 @@
 .save-time-form-wrap {
   margin-bottom: 1.5rem;
   background: linear-gradient(0deg, rgba(114, 125, 255, 0.1), rgba(114, 125, 255, 0.1)), #FFFFFF;
-  border: 1px solid #727DFF;
+  border: 1px solid #A020F0;
   border-radius: 10px;
   padding: 1rem;
 }
@@ -934,7 +934,7 @@
   line-height: 160%;
 }
 .save-time-form-wrap p a {
-  color: #727DFF;
+  color: #A020F0;
   text-decoration: underline;
 }
 .save-time-form-wrap a {
@@ -1035,7 +1035,7 @@
 }
 .sms-sidebar-box .nav .nav-item .nav-link.active {
   background-color: #ffffff;
-  color: #727DFF;
+  color: #A020F0;
 }
 
 .sms-body-wrap {
@@ -1086,7 +1086,7 @@
   line-height: 140%;
 }
 .top-status p a {
-  color: #727DFF;
+  color: #A020F0;
 }
 
 .phone-image {

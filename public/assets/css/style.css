@@ -279,7 +279,7 @@ main {
   transition: all linear 0.2s;
 }
 .popular-interest-wrap .popular-imterest-box ul li a:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 .popular-interest-wrap .popular-imterest-box ul li a.active {
@@ -326,7 +326,7 @@ main {
   width: 100%;
   height: 100%;
   border-radius: 0.7rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .popular-interest-wrap .selection-textarea-box .selection-copy-bttns {
   display: flex;
@@ -724,7 +724,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   line-height: 190%;
   box-shadow: 3px 22px 50px -2px #DEE3EB;
   border-radius: 3rem;

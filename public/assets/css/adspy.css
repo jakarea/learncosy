@@ -325,7 +325,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -476,7 +476,7 @@
   margin-right: 1rem;
 }
 .quick-query a:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 .quick-query a:last-child {
@@ -628,11 +628,11 @@
   text-align: center;
 }
 .adspy-filter-product-bttns a:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 .adspy-filter-product-bttns a:last-child {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 .adspy-filter-product-bttns a:last-child:hover {
@@ -651,7 +651,7 @@
 }
 .about-add-box-wrap .social-site i.facebook-messenger,
 .about-add-box-wrap .social-site i.fa-facebook {
-  color: #727DFF;
+  color: #A020F0;
 }
 .about-add-box-wrap .social-site i.fa-instagram {
   color: #d90d77;
@@ -703,7 +703,7 @@
   line-height: 140%;
 }
 .about-add-box-wrap .details p a {
-  color: #727DFF;
+  color: #A020F0;
 }
 .about-add-box-wrap .ads-thumbnail-wrap img {
   display: block;
@@ -718,7 +718,7 @@
   position: absolute;
   top: 50%;
   justify-content: center;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
   width: 2rem;
   height: 2rem;
@@ -783,7 +783,7 @@
   text-align: center;
 }
 .about-add-box-wrap .ads-ftr-cta-bttn a.cta-button:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 
@@ -831,7 +831,7 @@
 .about-page-header-wrap .page-details-wrap .social-site i {
   font-size: 3rem;
   margin-right: 1.7rem;
-  color: #727DFF;
+  color: #A020F0;
 }
 .about-page-header-wrap .page-details-wrap .social-site .fa-instagram {
   color: #d90d77;
@@ -928,7 +928,7 @@
 }
 .list-video-wrapper .progress:before {
   height: 10px !important;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe) !important;
 }
 
 .adspy-head-bttn {
@@ -939,7 +939,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;

@@ -8,7 +8,7 @@
 }
 
 .ali-express-bttn a {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe) !important;
   border-radius: 3rem !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -259,7 +259,7 @@
   color: #ffffff;
   width: 1.5rem;
   height: 1.5rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   border-radius: 50%;
   font-size: 0.9rem;
   display: inline-flex;

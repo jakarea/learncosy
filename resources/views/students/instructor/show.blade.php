@@ -47,8 +47,7 @@
                 </div>
                 <div class="text-center">
                     <h3>{{$student->name}}</h3>
-                    {{-- <span>{{$student->username ? '@'.$student->username : ''}}</span> --}}
-                    <p>{{$student->short_bio}}</p>
+                    <p>{{ Str::limit($student->short_bio, $limit = 65, $end = '...') }}</p>
                     <!-- details box @S -->
                     <div class="form-group mt-3 mb-1 ">
                         <label for="" class="mb-0"><i class="fa-solid fa-envelope"></i> Email: </label>
@@ -85,7 +84,7 @@
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
                         <h5>Details :</h5>
-                        <p>{{$student->description ? $student->description : 'No Description Available'}}</p> 
+                      {!! $student->description !!}
                     </div>
                 </div> 
                 <div class="col-12">

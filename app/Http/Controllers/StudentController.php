@@ -151,8 +151,7 @@ class StudentController extends Controller
              'name' => 'required|string',
              'user_role' => 'required|string',
              'short_bio' => 'required|string',
-             'phone' => 'required|string',
-             'email' => 'required|email|unique:users,email,'.$userId, 
+             'phone' => 'required|string',  
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
          [ 
@@ -170,8 +169,9 @@ class StudentController extends Controller
          $user->user_role = $request->user_role;
          $user->phone = $request->phone;
          $user->description = $request->description;
-         $user->recivingMessage = $request->recivingMessage;
-         $user->email = $request->email;
+         $user->recivingMessage = $request->recivingMessage;  
+         $user->email = $user->email; 
+
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{

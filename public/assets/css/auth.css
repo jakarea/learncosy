@@ -161,7 +161,7 @@
   line-height: 140%;
 }
 .subscription-section .plan-tab-head .nav .nav-item .nav-link.active {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 .subscription-section .subscription-plan-box {
@@ -234,7 +234,7 @@
   transition: all linear 0.2s;
 }
 .subscription-section .subscription-plan-box .plan-footer a.plan-btn:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 

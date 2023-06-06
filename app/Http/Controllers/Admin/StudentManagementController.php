@@ -84,8 +84,7 @@ class StudentManagementController extends Controller
         // return $request->all();
 
         $request->validate([
-            'name' => 'required|string',
-            'username' => 'string',
+            'name' => 'required|string', 
             'short_bio' => 'string',
             'phone' => 'string',
             'email' => 'required|email|unique:users,email', 
@@ -100,8 +99,7 @@ class StudentManagementController extends Controller
 
         // add student
         $student = new User([
-            'name' => $request->name,
-            'username' => $request->username,
+            'name' => $request->name, 
             'email' => $request->email,
             'phone' => $request->phone,
             'short_bio' => $request->short_bio,
@@ -149,11 +147,9 @@ class StudentManagementController extends Controller
          $userId = $id;  
  
          $this->validate($request, [
-             'name' => 'required|string',
-             'username' => 'string',
+             'name' => 'required|string', 
              'short_bio' => 'string',
-             'phone' => 'required|string',
-             'email' => 'required|email|unique:users,email,'.$userId, 
+             'phone' => 'required|string', 
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
          [ 
@@ -168,11 +164,10 @@ class StudentManagementController extends Controller
          }
          $user->short_bio = $request->short_bio;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-         $user->username = $request->username;
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $request->email;
+         $user->email = $user->email; 
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{
