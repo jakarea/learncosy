@@ -8,7 +8,7 @@
 .course-title h1 {
   font-size: 2.6rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -37,7 +37,7 @@
   border-radius: 3rem;
 }
 .course-category-box ul li a:hover {
-  background: #2C2C2C;
+  background: #2d3958;
   color: #ffffff;
 }
 
@@ -63,7 +63,7 @@
 .course-box-wrap .course-content-box .course-txt-box h3 {
   font-size: 1.16rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .course-box-wrap .course-content-box .course-txt-box ul {
@@ -102,7 +102,7 @@
   margin-bottom: 0.8rem;
   font-size: 1rem;
   font-weight: 700;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   display: flex;
   align-items: center;
@@ -118,7 +118,7 @@
   height: 0.5rem;
 }
 .course-ftr .progress .progress-bar {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   border-radius: 0.625rem;
 }
 
@@ -138,13 +138,13 @@
 .mylearning-txt-box h1 {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .mylearning-txt-box p {
   font-size: 1.05rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   width: 90%;
   margin: 0.5rem 0 1.5rem;
@@ -152,7 +152,7 @@
 .mylearning-txt-box h5 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
@@ -199,8 +199,8 @@
   color: #A5B4CB;
 }
 .course-outline-box .accordion .accordion-item span.numbering.active {
-  border-color: #FF6262;
-  color: #FF6262;
+  border-color: #d90d77;
+  color: #d90d77;
 }
 .course-outline-box .accordion .accordion-item .accordion-button {
   background: transparent;
@@ -215,7 +215,7 @@
 .course-outline-box .accordion .accordion-item .accordion-button .d-flex p {
   font-size: 1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .course-outline-box .accordion .accordion-item ul {
@@ -225,7 +225,7 @@
   display: block;
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 0.8rem 0;
 }
@@ -252,7 +252,7 @@
 .add_module_bttn {
   padding: 10px 15px;
   border-radius: 1.6rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   color: #ffffff;
   display: block;
   text-align: center;
@@ -261,8 +261,7 @@
   margin-top: 0.3rem;
 }
 .add_module_bttn:hover {
-  background-color: #141736;
-  color: #ffffff;
+  background: #fa9210;
 }
 
 .add_lesson_bttn {
@@ -276,7 +275,7 @@
   font-size: 0.9rem;
 }
 .add_lesson_bttn:hover {
-  background-color: #141736;
+  background-color: #2d3958;
   color: #ffffff;
 }
 
@@ -294,7 +293,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -310,7 +309,7 @@
 .content-txt-box h3 {
   font-size: 2rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .content-txt-box p {
@@ -333,7 +332,7 @@
 .profile-box .media h5 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .profile-box .media p {
@@ -354,7 +353,7 @@
 .course-content-box .d-flex h5 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .course-content-box .d-flex p {
@@ -374,7 +373,7 @@
 .course-content-box .attached-file-box h4 {
   font-size: 1.25rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -414,7 +413,7 @@
   line-height: 140%;
 }
 .learning-banners-wrap .media .media-body .addspy-main-title span {
-  color: #F37F14;
+  color: #2D3958;
 }
 .learning-banners-wrap .media .media-body p {
   font-size: 1rem;
@@ -428,7 +427,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -436,7 +435,7 @@
   padding-right: 4rem !important;
 }
 .learning-banners-wrap .media .media-body a:hover {
-  background: #ffffff;
+  background: #fa9210;
   color: #000000;
 }
 
@@ -450,13 +449,13 @@
 .frame-box .media h5 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .frame-box .media p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 0.3rem 0;
 }
@@ -518,6 +517,10 @@
 .video-iframe-vox img {
   display: block;
   width: 100%;
+}
+
+.course-box-wrap {
+  overflow-x: hidden !important;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {
@@ -608,6 +611,9 @@
   }
   .learning-content-box-2 .muted-content-box p {
     width: 100%;
+  }
+  .course-box-wrap {
+    overflow-x: hidden !important;
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {

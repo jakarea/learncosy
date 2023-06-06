@@ -70,7 +70,7 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="video_link">Video URL <sup class="text-danger">*</sup>
                                             </label>
@@ -80,7 +80,7 @@
                                             <span class="invalid-feedback">@error('video_link'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>  
+                                    </div>   --}}
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
@@ -120,8 +120,7 @@
                                      
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="short_description">Short Description <sup
-                                                    class="text-danger">*</sup></label>
+                                            <label for="short_description">Short Description  </label>
                                             <textarea name="short_description" id="short_description"
                                                 class="form-control @error('short_description') is-invalid @enderror"
                                                 placeholder="Enter Short Description">{{ old('short_description')}}</textarea>
@@ -137,8 +136,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="meta_keyword">Meta Keyboard <sup
-                                                    class="text-danger">*</sup></label>
+                                            <label for="meta_keyword">Meta Keyboard  </label>
                                             <modular-behaviour name="Keyword"
                                                 src="https://cdn.jsdelivr.net/npm/bootstrap5-tags@1.4/tags.min.js" lazy>
                                                 <select class="form-select @error('meta_keyword') is-invalid @enderror"
@@ -154,8 +152,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="meta_description">Meta Description <sup
-                                                    class="text-danger">*</sup></label>
+                                            <label for="meta_description">Meta Description  </label>
                                             <textarea name="meta_description" id="meta_description"
                                                 class="form-control @error('meta_description') is-invalid @enderror"
                                                 placeholder="Enter Meta Description">{{ old('meta_description')}}</textarea>

@@ -1,7 +1,7 @@
 .email-camping-head h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .email-camping-head h1 span {
@@ -14,7 +14,7 @@
 .email-camping-head h5 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 0.3rem;
 }
@@ -85,7 +85,7 @@
   justify-content: flex-start;
   font-size: 1.3rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .e-todo-head h3 img {
@@ -100,14 +100,14 @@
 .growth-form-box h4 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
 .growth-form-box p {
   font-size: 1rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
@@ -116,7 +116,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -182,14 +182,14 @@
 .growth-main-form .form-group label {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
 }
 .growth-main-form .form-group .form-control {
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   border-color: #8C8FAE;
 }
@@ -216,7 +216,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -229,7 +229,7 @@
   margin-left: 0.4rem;
 }
 .growth-main-form .submit-bttn .btn-submit:hover {
-  opacity: 0.7;
+  background-color: #fa9210;
 }
 
 .preview-main-box {
@@ -247,20 +247,20 @@
 .preview-main-box .preview-txt-box h4 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.8rem;
 }
 .preview-main-box .preview-txt-box h6 {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .preview-main-box .preview-txt-box .form-control {
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   border-color: #8C8FAE;
   height: 3rem;
@@ -314,13 +314,13 @@
 .e-camp-sort-bttn a {
   font-size: 1rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #FF6262;
+  border: 1px solid #d90d77;
   padding: 0.7rem 2rem;
 }
 .e-camp-sort-bttn a img {
@@ -330,7 +330,7 @@
   margin-left: 0.4rem;
 }
 .e-camp-sort-bttn a:hover {
-  background: #FF6262;
+  background: #d90d77;
   color: #ffffff;
 }
 .e-camp-sort-bttn a:hover img {
@@ -351,7 +351,7 @@
 .camping-empty-box-wrap .camping-empty-txt h5 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin: 0.7rem 0;
 }
@@ -367,7 +367,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -396,13 +396,13 @@
 .bookmark-box-wrap ul li i {
   font-size: 1rem;
   font-weight: 0;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .bookmark-box-wrap ul li a {
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -424,7 +424,7 @@
 .multi-email-sms-box .sms-txt-box h4 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .multi-email-sms-box .sms-txt-box p {
@@ -469,7 +469,7 @@
   padding-left: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .list-segment-search-filter-wrap .list-segment-filter i,
@@ -494,12 +494,12 @@
 }
 .segment-list-box .d-flex i {
   font-size: 1.5rem;
-  color: #F37F14;
+  color: #2D3958;
 }
 .segment-list-box .d-flex h4 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   display: inline-flex;
   align-items: center;
@@ -523,7 +523,7 @@
 .segment-list-box .segment-author-info p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .segment-list-box .segment-box-ftr {
@@ -558,7 +558,7 @@
 .segment-all-check label p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -573,7 +573,7 @@
 .search-template-bttn a.showcase-bttn {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   background: #ffffff;
   display: inline-block;
@@ -589,7 +589,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -608,13 +608,13 @@
 .e-camp-template-box .media .media-body h6 {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #F37F14;
+  color: #2D3958;
   line-height: 140%;
 }
 .e-camp-template-box .media .media-body h5 {
   font-size: 1rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 0.2rem;
 }
@@ -648,7 +648,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #2C2C2C;
+  background: #2d3958;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -659,7 +659,7 @@
 }
 .addcard-box-wrap a.add-card-bttn:hover {
   background: #8C8FAE;
-  color: #141736;
+  color: #2d3958;
 }
 
 .date-range-filter {
@@ -671,7 +671,7 @@
 .date-range-filter p {
   font-size: 1.15rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-right: 1rem;
 }
@@ -686,7 +686,7 @@
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .date-range-filter .date-filter-select img {
@@ -716,7 +716,7 @@
 .conversational-summary-box-wrap .conv-sammary-head h5 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .conversational-summary-box-wrap .conv-summary-txt {
@@ -726,7 +726,7 @@
 .conversational-summary-box-wrap .conv-summary-txt h4 {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 1rem 0;
 }
@@ -742,7 +742,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #2C2C2C;
+  background: #2d3958;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -753,7 +753,7 @@
 }
 .conversational-summary-box-wrap .conv-summary-txt a:hover {
   background: #8C8FAE;
-  color: #141736;
+  color: #2d3958;
 }
 
 .email-camp-integration-page {
@@ -779,8 +779,8 @@
 }
 .integration-head-wrap .nav .nav-item .nav-link.active {
   background: transparent;
-  color: #FF6262;
-  border-bottom: 2px solid #FF6262;
+  color: #d90d77;
+  border-bottom: 2px solid #d90d77;
 }
 
 .main-page-width .integration-head-wrap {
@@ -795,7 +795,7 @@
 .integration-filter-box h6 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
 }
@@ -810,7 +810,7 @@
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .integration-filter-box .integrate-filter-select img,
@@ -838,7 +838,7 @@
 .integration-box-wrap .media .media-body h5 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .integration-box-wrap .media .media-body h6 {
@@ -850,7 +850,7 @@
 .integration-box-wrap a {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .integration-box-wrap a i {
@@ -884,8 +884,8 @@
 }
 .edit-name-head .nav .nav-item .nav-link.active {
   background: transparent;
-  color: #FF6262;
-  border-color: #FF6262;
+  color: #d90d77;
+  border-color: #d90d77;
 }
 .edit-name-head .nav .nav-item .nav-link.active img {
   filter: invert(56%) sepia(22%) saturate(2064%) hue-rotate(349deg) brightness(96%) contrast(98%);
@@ -900,7 +900,7 @@
 .camping-information-from-wrap h5 {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
 }
@@ -911,7 +911,7 @@
 .camping-information-from-wrap form .form-group label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
 }
@@ -936,7 +936,7 @@
 .skip-txt-box-wrap h4 {
   font-size: 1.06rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
@@ -945,14 +945,14 @@
 .skip-txt-box-wrap h6 {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.8rem;
 }
 .skip-txt-box-wrap p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .skip-txt-box-wrap p a {
@@ -960,21 +960,21 @@
   text-decoration: underline;
 }
 .skip-txt-box-wrap .form-check-input:checked {
-  background-color: #2C2C2C;
-  border-color: #2C2C2C;
+  background-color: #2d3958;
+  border-color: #2d3958;
 }
 
 .camping-information-from-wrap .form-check-input[type=checkbox] {
   border-radius: 0;
 }
 .camping-information-from-wrap .form-check-input:checked {
-  background-color: #2C2C2C;
-  border-color: #2C2C2C;
+  background-color: #2d3958;
+  border-color: #2d3958;
 }
 .camping-information-from-wrap .form-check-label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -987,14 +987,14 @@
 .design-format-wrap h5 {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1.5rem;
 }
 .design-format-wrap .design-patten-box {
   padding: 1.2rem;
   border-radius: 1.25rem;
-  background-color: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background-color: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   background: linear-gradient(98.03deg, rgba(255, 98, 98, 0.1) 18.68%, rgba(243, 127, 20, 0.1) 88.52%);
   text-align: center;
   position: relative;
@@ -1003,7 +1003,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   font-size: 10px;
 }
 .design-format-wrap .design-patten-box .thumbnail-box {
@@ -1015,7 +1015,7 @@
 .design-format-wrap .design-patten-box h6 {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
   margin-top: 0.9rem;
@@ -1023,7 +1023,7 @@
 .design-format-wrap .design-patten-box p {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .design-format-wrap .html-bg {
@@ -1068,14 +1068,14 @@
 .drag-drop-txt-box .form-group h4 {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 1rem 0;
 }
 .drag-drop-txt-box .form-group p {
   font-size: 0.95rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1.2rem;
 }
@@ -1172,9 +1172,9 @@
   padding: 0.6rem 0;
 }
 .drag-drop-head .nav .nav-item .nav-link.active {
-  border-bottom: 2px solid #FF6262;
+  border-bottom: 2px solid #d90d77;
   background: transparent;
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .drag-drop-tools-body {
@@ -1188,7 +1188,7 @@
 .drag-drop-tools-body .single-tool-box a.heading {
   font-size: 0.66rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   display: flex;
   align-items: center;
@@ -1224,7 +1224,7 @@
 .tools-padding .d_flex h6 {
   font-size: 0.66rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -1237,7 +1237,7 @@
 .align-padding-item h6 {
   font-size: 0.66rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -1337,8 +1337,8 @@
 }
 
 .form-check-input:checked {
-  background-color: #2C2C2C;
-  border-color: #2C2C2C;
+  background-color: #2d3958;
+  border-color: #2d3958;
 }
 
 .content-color-box {
@@ -1352,18 +1352,18 @@
 .content-color-box a {
   font-size: 0.5rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 0 1px;
   padding: 2px 4px;
 }
 .content-color-box a:hover {
   background: #ffffff;
-  color: #FF6262;
+  color: #d90d77;
 }
 .content-color-box a.active {
   background: #ffffff;
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .block-tools {
@@ -1396,7 +1396,7 @@
 .drag-drop-action-box h6 {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
@@ -1414,7 +1414,7 @@
   margin-right: 0.6rem;
 }
 .drag-drop-action-box ul li .active {
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .timeline-main-wrap {
@@ -1426,7 +1426,7 @@
 .timeline-main-wrap h1 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   border-bottom: 1px solid #dfe5f1;
   margin-bottom: 1rem;
@@ -1443,21 +1443,21 @@
 .time-line-box h6 {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
 }
 .time-line-box h5 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .time-line-box h5 span {
   font-weight: 400;
 }
 .time-line-box .clr-primary {
-  color: #FF6262;
+  color: #d90d77;
 }
 .time-line-box .d-flex {
   justify-content: space-between;
@@ -1515,7 +1515,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #FF6262;
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   background: #FF6262;
@@ -1561,9 +1561,9 @@
   padding: 0.7rem 1.4rem;
 }
 .editing-panel-header .nav .nav-item .nav-link.active {
-  border-bottom: 2px solid #FF6262;
+  border-bottom: 2px solid #d90d77;
   background: transparent;
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .main-page-width .editing-panel-header {
@@ -1577,7 +1577,7 @@
 .logo-maker-box h6 {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   padding-bottom: 0.7rem;
   margin-bottom: 0.7rem;
@@ -1589,7 +1589,7 @@
 .logo-maker-box .text-center h5 {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .logo-maker-box .text-center p {
@@ -1617,23 +1617,23 @@
 .logo-maker-box .file-upload-box h4 {
   font-size: 0.6rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 0.5rem 0;
 }
 .logo-maker-box .file-upload-box p {
   font-size: 0.5rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin: 0.5rem 0;
 }
 .logo-maker-box .file-upload-box a {
-  border: 1px solid #FF6262;
+  border: 1px solid #d90d77;
   padding: 0.4rem 0.4rem;
   border-radius: 0.625rem;
   font-size: 0.6rem;
-  color: #FF6262;
+  color: #d90d77;
 }
 .logo-maker-box .file-upload-box a img {
   width: 1rem;
@@ -1646,7 +1646,7 @@
 .colors-box h6 {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   padding-bottom: 0.7rem;
   margin-bottom: 0.7rem;
@@ -1667,11 +1667,11 @@
   width: 1.1rem;
   height: 1.1rem;
   border-radius: 50%;
-  background: #2C2C2C;
+  background: #2d3958;
   margin-right: 4px;
 }
 .colors-box .color-pick .orange {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
 }
 .colors-box .color-pick .blu {
   background: #727DFF;
@@ -1698,7 +1698,7 @@
 .font-box-wrap h6 {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   padding-bottom: 0.7rem;
   margin-bottom: 0.7rem;
@@ -1745,7 +1745,7 @@
   line-height: 140%;
 }
 .platform-tab-head .nav .nav-item .nav-link.active {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
 }
 

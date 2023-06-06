@@ -6,7 +6,7 @@
 .stripe-settings-form-wrap .form-group label {
   font-size: 1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   display: block;
   margin-bottom: 0.6rem;
@@ -14,7 +14,7 @@
 .stripe-settings-form-wrap .form-group .form-control {
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   border: 1px solid #8C8FAE;
 }
@@ -29,7 +29,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }

@@ -60,7 +60,7 @@
                                             <input type="number" placeholder="Enter total lesson"
                                                 name="number_of_lesson"
                                                 class="form-control @error('number_of_lesson') is-invalid @enderror"
-                                                value="{{ $module->number_of_lesson }}" id="number_of_lesson">
+                                                value="{{ $module->number_of_lesson }}" id="number_of_lesson" min="0">
                                             <span class="invalid-feedback">@error('number_of_lesson'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -72,7 +72,7 @@
                                             <input type="number" placeholder="Enter total File"
                                                 name="number_of_attachment"
                                                 class="form-control @error('number_of_attachment') is-invalid @enderror"
-                                                value="{{ $module->number_of_attachment }}" id="number_of_attachment">
+                                                value="{{ $module->number_of_attachment }}" id="number_of_attachment" min="0">
                                             <span class="invalid-feedback">@error('number_of_attachment'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -84,7 +84,7 @@
                                             <input type="number" placeholder="Enter total video"
                                                 name="number_of_video"
                                                 class="form-control @error('number_of_video') is-invalid @enderror"
-                                                value="{{  $module->number_of_video }}" id="number_of_video">
+                                                value="{{  $module->number_of_video }}" id="number_of_video" min="0">
                                             <span class="invalid-feedback">@error('number_of_video'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -95,7 +95,7 @@
                                             </label>
                                             <input type="number" placeholder="Enter duration" name="duration"
                                                 class="form-control @error('duration') is-invalid @enderror"
-                                                value="{{ $module->duration }}" id="duration">
+                                                value="{{ $module->duration }}" id="duration" min="0">
                                             <span class="invalid-feedback">@error('duration'){{ $message }}
                                                 @enderror</span>
                                         </div>

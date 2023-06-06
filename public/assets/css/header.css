@@ -1,10 +1,10 @@
 .header-section {
-  padding: 1.5rem;
-  box-shadow: inset 0px -1px 0px #dfe5f1;
-  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+  background-color: #2D3958;
+  background-image: url("../images/header-bg.png");
   position: fixed;
   width: 100%;
-  z-index: 999;
+  z-index: 9999 !important;
 }
 
 .header-left-part {
@@ -16,6 +16,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.header-logo-wrap img.logo-width {
+  width: 10rem;
 }
 
 .header-search-wrap {
@@ -34,6 +37,7 @@
   padding-left: 0.8rem;
   width: 100%;
   display: block;
+  color: #ffffff;
 }
 
 .header-start-menu-wrapper {
@@ -55,6 +59,7 @@
   color: #000000;
   line-height: 140%;
   margin-right: 1.6rem;
+  color: #ffffff;
 }
 .header-start-menu-wrapper .header-right-icon-wrap .icon-nav {
   display: flex;
@@ -103,7 +108,7 @@
 }
 .settings-dropdown li a i {
   margin-right: 0.4rem;
-  color: #2C2C2C;
+  color: #2d3958;
 }
 .settings-dropdown li a:hover {
   background: rgba(235, 240, 249, 0.6);
@@ -118,7 +123,7 @@
     display: none;
   }
   .header-section {
-    padding: 0.8rem 1rem;
+    padding: 0.4rem 1rem;
   }
   .header-section .header-start-menu-wrapper {
     justify-content: space-between;

@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file-upload-2">Banner <sup class="text-danger">*</sup></label>
+                                            <label for="file-upload-2">Banner  </label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
@@ -104,8 +104,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="short_description">Short Description <sup
-                                                    class="text-danger">*</sup></label>
+                                            <label for="short_description">Short Description  </label>
                                             <textarea name="short_description" id="short_description"
                                                 class="form-control @error('short_description') is-invalid @enderror"
                                                 placeholder="Enter Short Description">{{ old('short_description')}}</textarea>

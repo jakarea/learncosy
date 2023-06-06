@@ -4,7 +4,7 @@
 .email-camping-head h1 {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -28,7 +28,7 @@
 .send-item-box .media h5 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .send-item-box .media h6 {
@@ -50,7 +50,7 @@
   margin-top: 2rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .send-item-box .media a.edit-bttn i {
@@ -78,7 +78,7 @@
   border-radius: 3rem;
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   padding-left: 1.5rem;
   border: none;
@@ -89,14 +89,14 @@
   right: 16px;
   top: 50%;
   font-size: 1.2rem;
-  color: #141736;
+  color: #2d3958;
   transform: translateY(-50%);
 }
 
 .flow-dropdown-filter .form-control option {
   font-size: 1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .flow-dropdown-filter img {
@@ -104,7 +104,7 @@
   left: 16px;
   top: 50%;
   font-size: 1.2rem;
-  color: #141736;
+  color: #2d3958;
   transform: translateY(-50%);
 }
 
@@ -120,7 +120,7 @@
 .flow-filter-table table tr th {
   font-size: 1.1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   text-align: center;
   padding-bottom: 0.6rem;
@@ -177,11 +177,11 @@
 }
 .flow-filter-table table tr td .fa-circle-exclamation {
   font-size: 1.2rem;
-  color: #FF6262;
+  color: #d90d77;
   margin-left: 0.3rem;
 }
 .flow-filter-table table tr td h6.error-txt {
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .table-swipe {
@@ -192,12 +192,12 @@
 }
 .table-swipe a i {
   font-size: 1.3rem;
-  color: #FF6262;
+  color: #d90d77;
 }
 .table-swipe span {
   font-size: 1.15rem;
   font-weight: 400;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   display: inline-block;
   margin: 0 0.6rem;
@@ -206,13 +206,13 @@
 .keep-head .media h2 {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .keep-head .media h6 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 0.4rem;
 }
@@ -257,7 +257,7 @@
 .keep-item-box .keep-item-txt h4 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
 }
@@ -330,7 +330,7 @@
 .schedule-form-box .media .media-body h6 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
 }
@@ -380,7 +380,7 @@
 .product-list-head h1 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .product-list-head h1 i {
@@ -399,7 +399,7 @@
 .product-list-table table tr th {
   font-size: 1.1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   text-align: center;
   padding-bottom: 0.6rem;
@@ -475,14 +475,14 @@
 .profile-count-box h5 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
 .profile-count-box h4 {
   font-size: 2rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .profile-count-box p {
@@ -515,7 +515,7 @@
   background: #ffffff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   color: #ffffff;
   border-radius: 3rem;
   margin-left: 0.5rem;
@@ -535,19 +535,18 @@
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
   margin-left: 0.5rem;
-  color: #8C8FAE;
+  background: #d90d77;
   border: 0;
   text-align: center;
 }
 .profile-bttn-box .btn-filter:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
-  color: #ffffff;
+  background: #fa9210;
 }
 
 .products-head h5 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .products-head h6 {
@@ -577,7 +576,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -587,7 +586,7 @@
   margin-right: 1rem;
 }
 .products-head-bttns a:first-child:hover {
-  background: #2C2C2C;
+  background: #fa9210;
 }
 .products-head-bttns a:last-child {
   display: inline-block;
@@ -604,7 +603,7 @@
   border-radius: 3rem;
 }
 .products-head-bttns a:last-child:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   color: #ffffff;
 }
 
@@ -617,7 +616,7 @@
 .inside-products-wrap h5 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .inside-products-wrap h6 {
@@ -645,7 +644,7 @@
 .inside-product-box .inside-txt h6 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
 }
@@ -671,7 +670,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -681,7 +680,7 @@
   cursor: pointer;
 }
 .img-upload label:hover {
-  background: #2C2C2C;
+  background: #2d3958;
 }
 .img-upload p {
   font-size: 0.9rem;
@@ -709,7 +708,7 @@
 .img-brand-head h6 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 0.5rem;
 }
@@ -722,7 +721,7 @@
 .font-customization-form-wrap h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 1rem;
 }
@@ -736,8 +735,8 @@
 }
 .font-customization-form-wrap .nav .nav-item .nav-link.active {
   background-color: #ffffff;
-  color: #FF6262;
-  border-color: #FF6262;
+  color: #d90d77;
+  border-color: #d90d77;
 }
 .font-customization-form-wrap .add-font-form-wrap .form-group {
   position: relative;
@@ -746,7 +745,7 @@
 .font-customization-form-wrap .add-font-form-wrap .form-group label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
   display: block;
@@ -762,7 +761,7 @@
 .font-customization-form-wrap .add-font-form-wrap .form-group .form-control {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   height: 3rem;
   border-radius: 8px;
@@ -780,7 +779,7 @@
 .font-customization-form-wrap .add-font-form-wrap .your-font-group label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
   display: block;
@@ -793,7 +792,7 @@
 .font-customization-form-wrap .add-font-form-wrap .your-font-group .font-box h5 {
   font-size: 1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .font-customization-form-wrap .add-font-form-wrap .your-font-group .font-box h5 span {
@@ -809,7 +808,7 @@
 .font-customization-form-wrap .add-font-form-wrap .your-font-group .font-box p {
   font-size: 0.8rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-top: 1rem;
 }
@@ -819,7 +818,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #2C2C2C;
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -831,7 +830,7 @@
   cursor: pointer;
 }
 .font-customization-form-wrap .add-font-form-wrap .form-submit .btn-submit:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #fa9210;
 }
 
 .metrics-head {
@@ -856,7 +855,7 @@
   transition: all linear 0.2s;
 }
 .metrics-head .metrics-head-bttns a:first-child:hover {
-  background-color: #2C2C2C;
+  background-color: #2d3958;
   color: #ffffff;
 }
 .metrics-head .metrics-head-bttns a:last-child {
@@ -864,7 +863,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #2C2C2C;
+  background: #2d3958;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -875,7 +874,7 @@
 }
 .metrics-head .metrics-head-bttns a:last-child:hover {
   background-color: #ffffff;
-  color: #2C2C2C;
+  color: #2d3958;
 }
 
 .matrics-list-wrap {
@@ -886,7 +885,7 @@
 .matrics-list-wrap h4 {
   font-size: 1.1rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   border-bottom: 1px solid #EBF0F9;
   margin-bottom: 0.96rem;
@@ -923,7 +922,7 @@
 .save-time-form-wrap h5 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.6rem;
 }
@@ -949,7 +948,7 @@
 .bench-filter-box h6 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.7rem;
 }
@@ -986,7 +985,7 @@
   border-radius: 3rem;
 }
 .bench-mark-bttn a:hover {
-  background-color: #2C2C2C;
+  background-color: #2d3958;
   color: #ffffff;
 }
 
@@ -998,7 +997,7 @@
 .explore-bench-mark-wrap h6 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .explore-bench-mark-wrap .bench-mark-explore-box {
@@ -1017,7 +1016,7 @@
 .explore-bench-mark-wrap .bench-mark-explore-box .media h5 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -1028,7 +1027,7 @@
 .sms-sidebar-box .nav .nav-item .nav-link {
   font-size: 0.7rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   border-radius: 0;
   padding: 1rem 0.9rem;
@@ -1061,7 +1060,7 @@
 .styles-items-boxs .media .media-body h6 {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .styles-items-boxs .media .media-body p {
@@ -1083,7 +1082,7 @@
 .top-status p {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .top-status p a {
@@ -1110,7 +1109,7 @@
   .email-camping-head h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #141736;
+    color: #2d3958;
     line-height: 140%;
   }
   .send-item-box .media {
@@ -1136,7 +1135,7 @@
   .keep-head .media h2 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #141736;
+    color: #2d3958;
     line-height: 140%;
   }
   .flow-filter-table table {
@@ -1329,7 +1328,7 @@
   .email-camping-head h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #141736;
+    color: #2d3958;
     line-height: 140%;
   }
   .flow-filter-table table tr th {

@@ -19,7 +19,7 @@
         margin-top: 1rem; 
         @include m.df(space-between);
         .btn-submit{
-            @include m.button(1rem,v.$light,v.$gdbg);
+            @include m.button(1rem,v.$light,v.$primary);
             &:hover{
                 opacity: .7;
             }

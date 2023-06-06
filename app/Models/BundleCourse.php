@@ -10,6 +10,7 @@ class BundleCourse extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',   
         'title',   
         'slug',  
         'selected_course', 

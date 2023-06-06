@@ -8,14 +8,14 @@
 .review-item-box h5 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
   margin-bottom: 0.4rem;
 }
 .review-item-box p {
   font-size: 0.88rem;
   font-weight: 400;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 .review-item-box i {
@@ -25,7 +25,7 @@
 .review-item-box h6 {
   font-size: 1rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .review-item-box .d-flex {
@@ -42,5 +42,5 @@
 .review-item-box .d-flex ul li i {
   font-size: 1rem;
   margin-left: 0.2rem;
-  color: #FF6262;
+  color: #d90d77;
 }

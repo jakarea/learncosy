@@ -3,7 +3,7 @@
 @use './util/media-query' as q;
 
 .sidebar-wrapper {
-    background: v.$light;
+    background: v.$light; 
     box-shadow: inset -1px 0px 0px v.$border;
     padding: 1.5rem 0;
     position: fixed;
@@ -155,7 +155,7 @@
                 }
 
                 a.active {
-                    background: v.$gdbg;
+                    background: v.$primary;
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                     background-clip: text;

@@ -82,6 +82,8 @@ Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonContro
     // data table route 
     Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
     Route::get('/create', 'create'); 
+
+    Route::get('/create/video-upload', 'videoUpload'); 
     Route::get('/upload-vimeo', 'uploadVimeoPage'); 
     Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
     Route::get('/progress', 'getProgress')->name('upload.progress'); 
@@ -144,6 +146,7 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
 // student home page routes
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home', 'index')->name('students.all.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 

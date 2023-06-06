@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('bundle_courses', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); 
-            $table->string('slug')->nullable(); 
+            $table->string('user_id'); 
+            $table->text('title'); 
+            $table->text('slug')->nullable(); 
             $table->string('selected_course'); 
             $table->string('subscription_status')->default('one_time'); 
             $table->string('price')->nullable();

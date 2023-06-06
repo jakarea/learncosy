@@ -15,23 +15,23 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); 
+            $table->text('title'); 
             $table->string('user_id')->nullable(); 
-            $table->string('sub_title')->nullable(); 
-            $table->string('features')->nullable(); 
-            $table->string('slug')->nullable();
-            $table->string('prerequisites')->nullable();
-            $table->string('outcome')->nullable();
+            $table->text('sub_title')->nullable(); 
+            $table->text('features')->nullable(); 
+            $table->text('slug')->nullable();
+            $table->text('prerequisites')->nullable();
+            $table->text('outcome')->nullable();
             $table->string('promo_video')->nullable();
             $table->string('price')->nullable();
             $table->string('offer_price')->nullable();
-            $table->string('categories')->nullable();
+            $table->text('categories')->nullable();
             $table->string('thumbnail')->nullable()->default("thumbnail.png");
-            $table->string('banner')->nullable()->default("thumbnail.png"); 
+            $table->string('banner')->nullable()->default("suggested-banner.png"); 
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
-            $table->string('meta_keyword')->nullable();
-            $table->longText('meta_description')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->string('meta_description', 160)->nullable(); 
             $table->string('number_of_module')->nullable();
             $table->string('number_of_lesson')->nullable(); 
             $table->string('number_of_attachment')->nullable();
