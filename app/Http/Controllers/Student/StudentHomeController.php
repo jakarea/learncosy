@@ -13,9 +13,14 @@ use App\Models\Module;
 class StudentHomeController extends Controller
 {
     // dashboard
-    public function dashboard(){
+    public function dashboard(){ 
+        return view('e-learning/course/students/dashboard'); 
+    }
+
+    // dashboard
+    public function enrolled(){
         $courses = Course::orderBy('id', 'desc')->get();
-        return view('e-learning/course/students/dashboard',compact('courses')); 
+        return view('e-learning/course/students/enrolled',compact('courses')); 
     }
 
     // all course list

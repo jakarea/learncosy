@@ -132,6 +132,7 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
 // student home page routes
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home', 'index')->name('students.all.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 

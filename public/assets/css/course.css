@@ -520,6 +520,10 @@
   width: 100%;
 }
 
+.course-box-wrap {
+  overflow-x: hidden !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-category-box ul {
     display: grid;
@@ -608,6 +612,9 @@
   }
   .learning-content-box-2 .muted-content-box p {
     width: 100%;
+  }
+  .course-box-wrap {
+    overflow-x: hidden !important;
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {

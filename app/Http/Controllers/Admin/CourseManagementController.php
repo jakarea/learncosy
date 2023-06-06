@@ -178,6 +178,19 @@ class CourseManagementController extends Controller
         return redirect('admin/courses')->with('success', 'Course saved Successfully!');
     }
 
+    // course show
+    public function show($slug)
+    {   
+        $lessons = Lesson::orderby('id', 'desc')->paginate(10);
+        $modules = Module::orderby('id', 'desc')->paginate(10);
+        $course = Course::where('slug', $slug)->first();
+        if ($course) {
+            return view('e-learning/course/admin/show', compact('course','modules','lessons'));
+        } else {
+            return redirect('admin/courses')->with('error', 'Course not found!');
+        }
+    }
+
      // course edit
      public function edit($slug)
      {   

@@ -991,6 +991,40 @@ main {
   .product-details-long img {
     width: 95%;
   }
+  .productss-list-box {
+    padding: 1rem !important;
+  }
+  #myDataTable {
+    width: 100% !important;
+    display: block !important;
+    overflow-x: scroll !important;
+  }
+  .productss-list-box {
+    margin-top: 1rem;
+  }
+  .profile-page-wrap .product-filter-wrapper .product-filter-box {
+    grid-template-columns: 100%;
+  }
+  .profile-page-wrap .ms-auto {
+    margin-right: auto !important;
+    margin-bottom: 1rem;
+  }
+  .profile-page-wrap .password-change-txt h1 {
+    font-size: 1.5rem;
+  }
+  .student-head-bttn ul.nav li.nav-item button.nav-link {
+    font-size: 0.9rem;
+    padding: 0.65rem 0.8rem !important;
+    margin-right: 0.6rem;
+    margin-bottom: 0.8rem !important;
+  }
+  .student-search-wrap {
+    display: grid;
+    grid-template-columns: 100% !important;
+  }
+  .student-bttn-box {
+    margin-top: 1rem;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .main-body-wrapper .main-page-wrapper {

@@ -72,8 +72,14 @@
             @elseif(Auth::user()->user_role == 'students')
             <li class="menu-item">
                 <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="dashboard" title="dashboard" class="img-fluid" />
+                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home" class="img-fluid" />
                     <span>Dashboard</span> 
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url('students/dashboard/enrolled') }}" class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} menu-link">
+                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="dashboard" title="dashboard" class="img-fluid" />
+                    <span>Enrolled</span> 
                 </a>
             </li>
             <li class="menu-item">

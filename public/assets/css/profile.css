@@ -538,6 +538,26 @@
   .user-password-chnage .change-password-form h3 {
     font-size: 1.1rem;
   }
+  .message-item p {
+    font-size: 13px;
+  }
+  .main-chat-wrapper {
+    padding: 1rem;
+  }
+  .chat-box-wrap .message-list-wrap {
+    padding: 1rem;
+  }
+  .chat-box-wrap .message-list-wrap .message-item {
+    max-width: 96%;
+  }
+  .sidebar-custom-width .header-user-box .media span, .sidebar-custom-width .header-user-box .media span {
+    margin-right: 1rem;
+  }
+  .productss-list-box table {
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .user-password-chnage .password-change-txt h1 {
@@ -557,5 +577,10 @@
   }
   .user-password-chnage .change-password-form h3 {
     font-size: 1.1rem;
+  }
+  .productss-list-box table {
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
   }
 }

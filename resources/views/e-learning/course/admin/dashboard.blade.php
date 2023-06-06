@@ -10,7 +10,7 @@
 {{-- page content @S --}}
 @section('content')
 <main class="d-flex justify-content-center align-items-center">
-    <h1>Welcome To LearnCosy Admin</h1>
+    <h1>Welcome To LearnCosy, Admin</h1>
 </main>
 @endsection
 {{-- page content @E --}}
