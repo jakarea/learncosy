@@ -76,7 +76,7 @@
   display: block;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   margin-right: 1.4rem;
 }
@@ -118,14 +118,14 @@
   height: 0.5rem;
 }
 .course-ftr .progress .progress-bar {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   border-radius: 0.625rem;
 }
 
 .course-more-info a {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   display: flex;
   align-items: center;
@@ -267,7 +267,7 @@
 .add_lesson_bttn {
   padding: 7px 15px;
   border-radius: 1.4rem;
-  background-color: #727DFF;
+  background-color: #A020F0;
   color: #ffffff;
   margin-top: 0.3rem;
   display: inline-block;
@@ -293,13 +293,13 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
 }
 .content-txt-box .d-flex a:hover {
-  opacity: 0.7;
+  background: #fa9210;
 }
 .content-txt-box .d-flex a.min_width {
   min-width: 10rem;
@@ -504,7 +504,7 @@
   display: block;
   font-size: 1rem;
   font-weight: 500;
-  color: #727DFF;
+  color: #A020F0;
   line-height: 140%;
   margin-top: 0.8rem;
   text-decoration: underline;

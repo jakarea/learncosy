@@ -482,12 +482,34 @@
             margin-top: 1rem;
             text-align: right;
             .btn-submit{
-                @include m.button(1rem,v.$light,v.$gdbg);
+                @include m.button(1rem,v.$light,v.$primary);
                 &:hover{
-                    opacity: .7;
+                    background: v.$orang;
                 }
             }
         }
+    }
+}
+
+.productss-list-box{
+    h1{
+        @include m.para(3.5rem,700,v.$btnbg);
+    }
+    h2{
+        @include m.para(3rem,700,v.$btnbg);
+    }
+    h4,
+    h3{
+        @include m.para(2.5rem,700,v.$btnbg);
+    }
+    h5{
+        @include m.para(2rem,700,v.$btnbg);
+    }
+    h6{
+        @include m.para(1.5rem,700,v.$btnbg);
+    }
+    p{
+        @include m.para; 
     }
 }
 

@@ -39,28 +39,14 @@
                                             <span class="invalid-feedback">@error('name'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group form-error">
-                                            <label for="username">Username <span class="warning-txt">(after you set
-                                                    the username, it's not changeable.)</span><sup
-                                                    class="text-danger">*</sup>
-                                            </label>
-                                            <input type="text" placeholder="Enter username" name="username"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                value="{{ $user->username }}" id="username" {{ $user->username ?
-                                            'disabled' : ''}}>
-                                            <span class="invalid-feedback">@error('username'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
                                             <label for="email">Email <sup class="text-danger">*</sup>
                                             </label>
                                             <input type="email" placeholder="Enter email" name="email"
                                                 class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ $user->email }}" id="email">
+                                                value="{{ $user->email }}" id="email" disabled>
                                             <span class="invalid-feedback">@error('email'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -81,9 +67,9 @@
                                         <div class="form-group form-error">
                                             <label for="short_bio">Short Bio <sup class="text-danger">*</sup>
                                             </label>
-                                            <input type="text" placeholder="Enter short bio" name="short_bio"
+                                            <textarea name="short_bio" id="short_bio"
                                                 class="form-control @error('short_bio') is-invalid @enderror"
-                                                value="{{ $user->short_bio }}" id="short_bio">
+                                                placeholder="Enter short bio">{{ $user->short_bio }}</textarea> 
                                             <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -201,6 +187,10 @@
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="{{asset('assets/js/file-upload.js')}}"></script>
+
+<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
+    type="text/javascript"></script>
+    <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
     let extraFileds = document.querySelector('.url-extra-field'); 

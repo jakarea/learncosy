@@ -31,7 +31,7 @@ class ProfileManagementController extends Controller
 
     // profile edit
     public function edit()
-    {    
+    {     
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
         return view('profile/instructor/edit',compact('user'));  
@@ -46,21 +46,22 @@ class ProfileManagementController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'short_bio' => 'required|string',
-            'phone' => 'required|string',
-            'email' => 'required|email|unique:users,email,'.$userId, 
+            'phone' => 'required|string', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
        
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
-        $user->username =  Str::slug($request->username);
+        if ($request->username) {
+            $user->username =  Str::slug($request->username);
+        }
         $user->short_bio = $request->short_bio;
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
-        $user->email = $request->email;
+        $user->email = $user->email; 
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }else{

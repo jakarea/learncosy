@@ -57,6 +57,22 @@
                     <i class="fa-solid fa-angles-right"></i>
                 </a> 
                  @include('students/partials/sub-sidebar') 
+            </li>  
+            <li class="menu-item">
+                <a href="{{ url('instructor/payments') }}" class="{{ Request::is('instructor/payments')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-euro-sign"></i>
+                    <span>Payment</span>
+                    
+                </a> 
+                 @include('students/partials/sub-sidebar') 
+            </li>  
+            <li class="menu-item">
+                <a href="{{ url('instructor/payments/platform-fee') }}" class="{{ Request::is('instructor/payments/platform-fee*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-euro-sign"></i>
+                    <span>Platform Fee</span>
+                    
+                </a> 
+                 @include('students/partials/sub-sidebar') 
             </li>   
             <li class="menu-item">
                 <a href="#" class="{{ Request::is('settings*')  ? ' active' : '' }} menu-link"> 

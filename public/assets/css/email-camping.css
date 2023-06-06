@@ -116,7 +116,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -271,7 +271,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #727DFF;
+  background: #A020F0;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -367,7 +367,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -589,7 +589,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -956,7 +956,7 @@
   line-height: 140%;
 }
 .skip-txt-box-wrap p a {
-  color: #727DFF;
+  color: #A020F0;
   text-decoration: underline;
 }
 .skip-txt-box-wrap .form-check-input:checked {
@@ -994,7 +994,7 @@
 .design-format-wrap .design-patten-box {
   padding: 1.2rem;
   border-radius: 1.25rem;
-  background-color: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background-color: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   background: linear-gradient(98.03deg, rgba(255, 98, 98, 0.1) 18.68%, rgba(243, 127, 20, 0.1) 88.52%);
   text-align: center;
   position: relative;
@@ -1003,7 +1003,7 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   font-size: 10px;
 }
 .design-format-wrap .design-patten-box .thumbnail-box {
@@ -1084,7 +1084,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #727DFF;
+  background: #A020F0;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -1261,10 +1261,10 @@
   line-height: 140%;
 }
 .padding-align-boxs .left-padding.active {
-  border-color: #727DFF;
+  border-color: #A020F0;
 }
 .padding-align-boxs .left-padding.active p {
-  color: #727DFF;
+  color: #A020F0;
 }
 
 .padding-box {
@@ -1474,7 +1474,7 @@
 
 .time-2 {
   background: rgba(114, 125, 255, 0.1);
-  border-color: #727DFF;
+  border-color: #A020F0;
 }
 
 .timeline-ftr {
@@ -1671,10 +1671,10 @@
   margin-right: 4px;
 }
 .colors-box .color-pick .orange {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .colors-box .color-pick .blu {
-  background: #727DFF;
+  background: #A020F0;
 }
 .colors-box .color-pick .grn {
   background: #34A853;
@@ -1745,7 +1745,7 @@
   line-height: 140%;
 }
 .platform-tab-head .nav .nav-item .nav-link.active {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 

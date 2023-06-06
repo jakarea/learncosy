@@ -288,11 +288,11 @@
         margin: 2.2rem 0;
 
         a {
-            @include m.button(1rem, v.$light, v.$gdbg);
+            @include m.button(1rem, v.$light, v.$primary);
             border-radius: 3rem;
 
             &:hover {
-                opacity: .7
+               background: v.$orang;
             }
         }
         a.min_width{

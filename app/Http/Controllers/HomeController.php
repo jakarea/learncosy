@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function studentsPayment()
+    {
+        return view('payments/instructor/students-payment');
+    }
+
+    public function adminPayment()
+    {
+        return view('payments/instructor/admin-payment');
+    }
 }

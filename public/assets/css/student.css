@@ -104,7 +104,7 @@
   text-align: center;
 }
 .student-bttn-box button:first-child:hover {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 
@@ -208,7 +208,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }
@@ -255,7 +255,7 @@
 .profile-box span {
   width: 3rem;
   height: 3rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   border-radius: 50%;
   margin-right: 1rem;
   color: #ffffff;

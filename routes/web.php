@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
@@ -39,6 +40,12 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->get('/', function () {
     return view('home');
+});
+
+// instructor payment history static pages
+Route::middleware('auth')->prefix('instructor/payments')->controller(HomeController::class)->group(function () {  
+    Route::get('/', 'studentsPayment');  
+    Route::get('/platform-fee', 'adminPayment');  
 });
 
 // message page routes

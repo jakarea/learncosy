@@ -22,7 +22,7 @@
 .table-avatar span {
   width: 3rem;
   height: 3rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   border-radius: 50%;
   color: #ffffff;
   font-size: 1rem;
@@ -144,7 +144,7 @@
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 0.4rem;
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -233,7 +233,7 @@
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe) !important;
   color: #ffffff !important;
   border: 0 !important;
   font-size: 14px !important;
@@ -244,7 +244,7 @@
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background: linear-gradient(98.03deg, #d90d77 18.68%, #fa9210 88.52%) !important;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe) !important;
 }
 
 .arrw-down {
