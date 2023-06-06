@@ -26,18 +26,22 @@
             <div class="product-filter-box"> 
                 <div class="form-grp">
                     <label for="">Course name</label> 
-                    <select name="price" class="form-custom">
+                    <select name="course" class="form-custom">
                         <option value="">All</option>
+                        @foreach ($courses as $course)
+                           <option value="{{$course->id}}">{{$course->title}}</option>
+                        @endforeach
                     </select>
                     <i class="fas fa-angle-down"></i>
                 </div>
-                <div class="form-grp">
+                <!-- <div class="form-grp">
                     <label for="">Student name</label>
-                    <select name="sell" class="form-custom">
-                        <option value="">All</option>
+                    <select name="name" class="form-custom">
+                           <option value="">All</option>
+                        
                     </select>
                     <i class="fas fa-angle-down"></i>
-                </div>
+                </div> -->
                 <div class="form-grp-btn mt-4 ms-3">
                     <button type="submit" class="btn">Filter</button>
                 </div>
@@ -54,87 +58,21 @@
 
     {{-- Review Listing @S --}}
     <div class="row">
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}}
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-        {{-- item @S --}}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-            <div class="review-item-box message-box">
-                <div class="d_flex">
-                    <h5>jhon Doe</h5> 
-                    <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
-                </div>
-                
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. last message show * </p>  
-                <a href="{{url('/course/messages/send/1')}}" class="chat-bttn">send message</a>
-            </div>
-        </div>
-        {{-- item @E --}} 
-    </div>
-    {{-- Review Listing @E --}}
 
+        @foreach($chat_rooms as $chat_room)
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <div class="review-item-box message-box">
+                    <div class="d_flex">
+                        <h5>{{$chat_room[0]->user->name}}</h5> 
+                        <img src="{{asset('assets/images/avatar.png')}}" alt="avatar" class="img-fluid">
+                    </div>
+                    
+                    <p> <b>Course Name:</b>  {{$chat_room[0]->course->title}}</p>  
+                    <a href="{{url('/course/messages/chat_room',$chat_room[0]->chat_id)}}" class="chat-bttn">send message</a>
+                </div>
+            </div>
+        @endforeach
+       
     {{-- Review pagginate @S --}}
     <div class="row">
         <div class="col-12">

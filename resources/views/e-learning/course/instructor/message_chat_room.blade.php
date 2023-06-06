@@ -14,13 +14,13 @@
     <div class="col-12">
         <div class="main-chat-wrapper">
             <div class="d-flex">
-                <h5>Messages to: {{$reciver_info->user->name}}</h5>
+                <h5>Messages to:  {{$reciver_info->name}}</h5>
                 <div class="instructor-avatar">
                     <div class="media">
                         <img src="{{asset('assets/images/avatar.png')}}" alt="a" class="img-fluid">
                         <div class="media-body">
                             <h5>{{$sender_info->name}}</h5>
-                            <p>{{$reciver_info->title}}</p>
+                            <p>{{$messages[0]->course->title}}</p>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     @endforeach
                    
                 </div>
-                <form action="{{route('post.message',$courseId)}}" method="POST"
+                <form action="{{route('post.chat_room.message',$chat_room)}}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                    
