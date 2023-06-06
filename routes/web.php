@@ -147,6 +147,7 @@ Route::middleware('auth')->prefix('students')->controller(StudentHomeController:
     Route::get('/home', 'index')->name('students.all.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
+    Route::post('/courses/{slug}', 'review')->name('students.review.courses'); 
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message'); 
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 });
