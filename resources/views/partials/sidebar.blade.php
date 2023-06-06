@@ -32,6 +32,7 @@
                     <span>Dashboard</span> 
                 </a>
             </li>
+            @can('subscription.check')
             <li class="menu-item">
                 <a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
@@ -66,6 +67,7 @@
                 </a> 
                  @include('students/partials/sub-sidebar') 
             </li>  
+            @endcan
             <li class="menu-item">
                 <a href="{{ url('instructor/payments/platform-fee') }}" class="{{ Request::is('instructor/payments/platform-fee*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-euro-sign"></i>

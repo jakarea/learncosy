@@ -15,7 +15,7 @@ class CheckoutController extends Controller
      */
     public function __construct()
     {
-        Stripe::setApiKey(auth()->user()->stripe_secret_key);
+        Stripe::setApiKey(auth()->user()->stripe_secret_key ?? env('STRIPE_SECRET'));
     }
     
     /**
