@@ -6,7 +6,7 @@
             <!-- header logo @S -->
             <div class="header-logo-wrap">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('assets/images/site-main-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid" /> 
+                    <img src="{{ asset('assets/images/learncosy-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid" style="width: 11rem" /> 
                 </a> 
             </div>
             <!-- header logo @E -->

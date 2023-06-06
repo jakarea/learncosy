@@ -4,7 +4,7 @@
 .email-camping-head h1 {
   font-size: 2.4rem;
   font-weight: 700;
-  color: #141736;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -104,7 +104,7 @@
   text-align: center;
 }
 .student-bttn-box button:first-child:hover {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
 
@@ -113,7 +113,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   display: block;
@@ -121,8 +121,7 @@
   margin-top: 1rem;
 }
 .enroll__btn:hover {
-  opacity: 0.7;
-  color: #ffffff;
+  background: #fa9210;
 }
 
 .course-txt-box-2 {
@@ -133,7 +132,7 @@
 .course-txt-box-2 h6 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 
@@ -144,7 +143,7 @@
 .no-result-found h6 {
   font-size: 1.6rem;
   font-weight: 500;
-  color: #FF6262;
+  color: #d90d77;
   line-height: 140%;
 }
 
@@ -156,7 +155,7 @@
 .review-box-icon li i {
   font-size: 1rem;
   margin-left: 0.2rem;
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .review-box {
@@ -180,7 +179,7 @@
 .review-box .d_flex h4 {
   font-size: 1rem;
   font-weight: 600;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
 }
 .review-box p {
@@ -193,7 +192,7 @@
 .write-review-box .form-group label {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #2C2C2C;
+  color: #2d3958;
   line-height: 140%;
   margin-bottom: 0.5rem;
   display: block;
@@ -209,7 +208,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }
@@ -229,19 +228,19 @@
   font-size: 2rem;
 }
 .write-review-box #full-stars .rating__icon--star {
-  color: #FF6262;
+  color: #d90d77;
 }
 .write-review-box #full-stars .rating__icon--none {
   color: #eee;
 }
 .write-review-box #full-stars .rating__input--none:checked + .rating__label .rating__icon--none {
-  color: #FF6262;
+  color: #d90d77;
 }
 .write-review-box #full-stars .rating__input:checked ~ .rating__label .rating__icon--star {
   color: #ddd;
 }
 .write-review-box #full-stars .rating-group:hover .rating__label .rating__icon--star {
-  color: #FF6262;
+  color: #d90d77;
 }
 .write-review-box #full-stars .rating__input:hover ~ .rating__label .rating__icon--star {
   color: #ddd;
@@ -250,13 +249,13 @@
   color: #eee;
 }
 .write-review-box #full-stars .rating__input--none:hover + .rating__label .rating__icon--none {
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .profile-box span {
   width: 3rem;
   height: 3rem;
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   border-radius: 50%;
   margin-right: 1rem;
   color: #ffffff;

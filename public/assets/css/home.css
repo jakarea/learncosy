@@ -24,7 +24,7 @@
 }
 .total-session-box .d-flex i {
   font-size: 3.2rem;
-  color: #FF6262;
+  color: #d90d77;
 }
 
 .alert-custom-txt {
@@ -45,7 +45,7 @@
   margin-top: 0.6rem;
 }
 .alert-custom-txt .media a {
-  background: linear-gradient(98.03deg, #FF6262 18.68%, #F37F14 88.52%);
+  background: #d90d77;
   color: #ffffff;
   padding: 0.5rem 1rem;
   display: inline-block;

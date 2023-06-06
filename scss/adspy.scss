@@ -24,12 +24,11 @@
             }
 
             a {
-                @include m.button(1rem, v.$light, v.$gdbg);
+                @include m.button(1rem, v.$light, v.$primary);
                 border-radius: 3rem;
 
                 &:hover {
-                    background: v.$light;
-                    color: v.$dark;
+                    background: v.$orang; 
                 }
             }
         }

@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
@@ -41,6 +42,12 @@ Route::middleware('auth')->get('/', function () {
     return view('home');
 });
 
+// instructor payment history static pages
+Route::middleware('auth')->prefix('instructor/payments')->controller(HomeController::class)->group(function () {  
+    Route::get('/', 'studentsPayment');  
+    Route::get('/platform-fee', 'adminPayment');  
+});
+
 // message page routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index'); 
@@ -52,61 +59,66 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 });
 
 // course page routes
-Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
-    Route::get('/', 'index')->name('instructor.courses'); 
-    // data table route 
-    Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
-    Route::get('/create', 'create');
-    Route::post('/create', 'store')->name('course.store');
-    Route::get('/{slug}', 'show')->name('course.show');   
-    Route::get('/{slug}/edit', 'edit')->name('course.edit');
-    Route::post('/{slug}/edit', 'update')->name('course.update'); 
-    Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
-});
-
-// module page routes
-Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
-    Route::get('/', 'index');
-    // data table route 
-    Route::get('/datatable', 'modulesDataTable')->name('modules.data.table'); 
-    Route::get('/create', 'create'); 
-    Route::post('/create', 'store')->name('module.store');
-    Route::get('/{slug}/edit', 'edit')->name('module.edit'); 
-    Route::post('/{slug}/edit', 'update')->name('module.update'); 
-    Route::delete('/{slug}/destroy', 'destroy')->name('module.destroy');
-});
-
-// lesson page routes
-Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
-    Route::get('/', 'index');
-    // data table route 
-    Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
-    Route::get('/create', 'create'); 
-    Route::get('/upload-vimeo', 'uploadVimeoPage'); 
-    Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
-    Route::get('/progress', 'getProgress')->name('upload.progress'); 
-    Route::get('/upload', function() {
-        return view('e-learning/lesson/instructor/upload_vimeo');
+Route::group(['middleware' => ['subscription.check']], function () {
+    // course page routes
+    Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
+        Route::get('/', 'index')->name('instructor.courses'); 
+        // data table route 
+        Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
+        Route::get('/create', 'create');
+        Route::post('/create', 'store')->name('course.store');
+        Route::get('/{slug}', 'show')->name('course.show');   
+        Route::get('/{slug}/edit', 'edit')->name('course.edit');
+        Route::post('/{slug}/edit', 'update')->name('course.update'); 
+        Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
     });
-    Route::post('/create', 'store')->name('lesson.store');
-    Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
-    Route::post('/{slug}/edit', 'update')->name('lesson.update');
-    Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
 });
+Route::group(['middleware' => ['subscription.check']], function () {
+    // module page routes
+    Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
+        Route::get('/', 'index');
+        // data table route 
+        Route::get('/datatable', 'modulesDataTable')->name('modules.data.table'); 
+        Route::get('/create', 'create'); 
+        Route::post('/create', 'store')->name('module.store');
+        Route::get('/{slug}/edit', 'edit')->name('module.edit'); 
+        Route::post('/{slug}/edit', 'update')->name('module.update'); 
+        Route::delete('/{slug}/destroy', 'destroy')->name('module.destroy');
+    });
 
-// course bundle page routes
-Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(CourseBundleController::class)->group(function () {
-    Route::get('/', 'index');
-     // data table route 
-     Route::get('/datatable', 'bundleDataTable')->name('bundle.data.table');
-    Route::get('/create', 'create'); 
-    Route::post('/create', 'store')->name('course.bundle.store');
-    Route::get('/{slug}', 'show')->name('course.bundle.show'); 
-    Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit'); 
-    Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
-    Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
+    // lesson page routes
+    Route::middleware('auth')->prefix('instructor/lessons')->controller(LessonController::class)->group(function () {
+        Route::get('/', 'index');
+        // data table route 
+        Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
+        Route::get('/create', 'create'); 
+
+        Route::get('/create/video-upload', 'videoUpload'); 
+        Route::get('/upload-vimeo', 'uploadVimeoPage'); 
+        Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
+        Route::get('/progress', 'getProgress')->name('upload.progress'); 
+        Route::get('/upload', function() {
+            return view('e-learning/lesson/instructor/upload_vimeo');
+        });
+        Route::post('/create', 'store')->name('lesson.store');
+        Route::get('/{slug}/edit', 'edit')->name('lesson.edit'); 
+        Route::post('/{slug}/edit', 'update')->name('lesson.update');
+        Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
+    });
+
+    // course bundle page routes
+    Route::middleware('auth')->prefix('instructor/bundle/courses')->controller(CourseBundleController::class)->group(function () {
+        Route::get('/', 'index');
+        // data table route 
+        Route::get('/datatable', 'bundleDataTable')->name('bundle.data.table');
+        Route::get('/create', 'create'); 
+        Route::post('/create', 'store')->name('course.bundle.store');
+        Route::get('/{slug}', 'show')->name('course.bundle.show'); 
+        Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit'); 
+        Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
+        Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
+    });
 });
-
 // profile management page routes
 Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/myprofile', 'show')->name('instructor.profile'); 
@@ -144,6 +156,7 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
 // student home page routes
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home', 'index')->name('students.all.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
@@ -210,6 +223,18 @@ Route::middleware('auth')->prefix('admin/courses')->controller(CourseManagementC
     Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
     Route::post('/{slug}/edit', 'update')->name('admin.course.update'); 
     Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
+});
+
+// Subscription paege modify routes for admin
+Route::middleware('auth')->prefix('admin/manage/subscriptionpackage')->controller(AdminSubscriptionPackageController::class)->group(function () {
+    Route::get('/', 'index')->name('admin.subscription'); 
+    Route::get('/datatable', 'subscriptionDataTable')->name('admin.subscription.data.table');
+    Route::get('/create', 'create')->name('admin.subscription.create');
+    Route::post('/store', 'store')->name('admin.subscription.store');
+    Route::get('/{slug}', 'show')->name('admin.subscription.show'); 
+    Route::get('/{slug}/edit', 'edit')->name('admin.subscription.edit');
+    Route::post('/{slug}/edit', 'update')->name('admin.subscription.update'); 
+    Route::delete('/{slug}/destroy', 'destroy')->name('admin.subscription.destroy');
 });
 
 // course bundle page routes for admin

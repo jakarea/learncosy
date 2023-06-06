@@ -5,7 +5,7 @@
 // login css start
 
 .login-section {
-    padding-top: 10rem;
+    padding-top: 8rem;
 }
 
 .login-form-wrap {
@@ -72,10 +72,10 @@
         display: block;
         width: 100%;
         text-align: center;
-        @include m.button(1rem, v.$light, v.$gdbg);
+        @include m.button(1rem, v.$light, v.$primary);
 
         &:hover {
-            opacity: .7
+            background: v.$orang;
         }
     }
 

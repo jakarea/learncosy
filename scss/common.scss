@@ -6,8 +6,8 @@
 .productss-list-box {
     .btn-table {
         display: inline-block;
-        @include m.button(.9rem, v.$light, v.$gdbg);
-        background: v.$gdbg;
+        @include m.button(.9rem, v.$light, v.$primary);
+        background: v.$primary;
         border-radius: .4rem;
         padding: .3rem .8rem;
     }
@@ -118,17 +118,20 @@
                     border-right: 0px;
                 }
             }
-            form{
+
+            form {
                 background: v.$primary;
                 border-radius: 4px;
                 color: v.$light;
                 border: 0;
-                button{
-                    &:hover{
+
+                button {
+                    &:hover {
                         background: v.$btnbg;
                     }
                 }
-                &:hover{
+
+                &:hover {
                     background: v.$btnbg;
                 }
             }
@@ -174,9 +177,11 @@
 
 .file-prev-show {
     @include m.df;
-    label{
-        margin-bottom: 0!important;
+
+    label {
+        margin-bottom: 0 !important;
     }
+
     img {
         width: 4rem;
         height: 4rem;
@@ -187,73 +192,79 @@
     }
 }
 
-#myDataTable{
+#myDataTable {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+
     tr {
-        th{
+        th {
             border: 1px solid v.$third;
         }
     }
-} 
+}
 
-.dataTables_paginate{
+.dataTables_paginate {
     margin-top: 1.5rem;
+
     .paginate_button {
         color: v.$dark;
     }
-    .paginate_button.current{
-        background-color: v.$primary!important;
-        border: v.$primary!important; 
+
+    .paginate_button.current {
+        background-color: v.$primary !important;
+        border: v.$primary !important;
     }
 }
 
-#myDataTable tr:nth-child(odd) td{
-    background-color: #dfe5f1!important;
+#myDataTable tr:nth-child(odd) td {
+    background-color: #dfe5f1 !important;
     vertical-align: middle;
 }
-#myDataTable tr:nth-child(even) td{
-    background-color: v.$light!important;
+
+#myDataTable tr:nth-child(even) td {
+    background-color: v.$light !important;
     vertical-align: middle;
 }
 
 #myDataTable tr td:nth-child(5),
 #myDataTable tr td:nth-child(4),
 #myDataTable tr td:nth-child(3),
-#myDataTable tr td:nth-child(2){
+#myDataTable tr td:nth-child(2) {
     text-align: center;
     vertical-align: middle;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
-    color: v.$light!important;
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: v.$light !important;
 }
 
-#myDataTable tr td:first-child{
+#myDataTable tr td:first-child {
     text-align: left;
 }
-#myDataTable tr td:last-child{
+
+#myDataTable tr td:last-child {
     text-align: right;
 }
 
-.dataTables_empty{
-    text-align: center!important;
-    @include m.para(1rem,500,v.$dark);
+.dataTables_empty {
+    text-align: center !important;
+    @include m.para(1rem, 500, v.$dark);
     padding: 1rem 0;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice{
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
     background: v.$gdbg !important;
-    color: v.$light!important;
-    border: 0!important;
-    font-size: 14px!important;
+    color: v.$light !important;
+    border: 0 !important;
+    font-size: 14px !important;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
-    color: v.$light!important;
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: v.$light !important;
 }
 
-.select2-container--default .select2-results__option--highlighted[aria-selected]{
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
     background: v.$gdbg !important;
 }
 
@@ -264,22 +275,105 @@
     color: v.$fourth;
 }
 
-.message-box{
-    h5{
+.message-box {
+    h5 {
         font-size: 1rem;
     }
-    .d_flex{
+
+    .d_flex {
         @include m.df(space-between);
-        img{
+
+        img {
             width: 2rem;
             height: 2rem;
             border-radius: 50%;
         }
     }
-    a.chat-bttn{
-        @include m.button(.9rem,v.$light,v.$fourth);
+
+    a.chat-bttn {
+        @include m.button(.9rem, v.$light, v.$fourth);
         padding: .4rem .6rem;
         border-radius: 3px;
         margin-top: 0.4rem;
     }
+}
+
+.uploadOuter {
+    text-align: center;
+    padding: 2rem;
+} 
+
+.dragBox {
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    @include m.df(center);
+    flex-direction: column;
+    border: 5px double v.$fourth;
+    transition: transform 0.3s;
+    @include m.para(1.2rem,600,v.$btnbg);
+    cursor: pointer;
+    i{
+        display: block;
+        font-size: 1.8rem;
+        color: v.$primary;
+        border: 2px solid v.$primary;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.8rem;
+        cursor: pointer;
+    }
+}
+
+.upload-progress {
+    .progress{
+        border-radius: 1rem;
+        background-color: v.$third;
+        .progress-bar{
+            background-color: v.$primary;
+            border-radius: 1rem;
+        }
+    }
+    h3{
+        @include m.para(1.5rem,600,v.$btnbg);
+        text-align: center;
+        margin-top: 0.4rem;
+    }
+    p{
+        @include m.para(0.75rem,400,v.$primary);
+        font-style: italic;
+    }
+}
+
+.dragBox input[type="file"] {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+
+.draging {
+    transform: scale(1.1);
+}
+
+#preview {
+    text-align: center;
+}
+
+#preview img {
+    max-width: 100%;
+} 
+.action-dropdown .dropdown-menu .bttns-wrap a:hover{
+    background: v.$orang;
+}
+
+.paginate_button {
+    color: v.$light!important;
 }

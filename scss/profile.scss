@@ -389,7 +389,7 @@
         }
 
         .btn-request {
-            @include m.button(1rem, v.$light, v.$gdbg);
+            @include m.button(1rem, v.$light, v.$primary);
             padding: .3rem 1rem;
         }
     }
@@ -482,12 +482,34 @@
             margin-top: 1rem;
             text-align: right;
             .btn-submit{
-                @include m.button(1rem,v.$light,v.$gdbg);
+                @include m.button(1rem,v.$light,v.$primary);
                 &:hover{
-                    opacity: .7;
+                    background: v.$orang;
                 }
             }
         }
+    }
+}
+
+.productss-list-box{
+    h1{
+        @include m.para(3.5rem,700,v.$btnbg);
+    }
+    h2{
+        @include m.para(3rem,700,v.$btnbg);
+    }
+    h4,
+    h3{
+        @include m.para(2.5rem,700,v.$btnbg);
+    }
+    h5{
+        @include m.para(2rem,700,v.$btnbg);
+    }
+    h6{
+        @include m.para(1.5rem,700,v.$btnbg);
+    }
+    p{
+        @include m.para; 
     }
 }
 
@@ -517,7 +539,29 @@
     .user-password-chnage .change-password-form h3 {
         font-size: 1.1rem;
     }
- 
+
+    .message-item {
+        p{
+            font-size: 13px;
+        }
+    }
+    .main-chat-wrapper{
+        padding: 1rem;
+    }
+    .chat-box-wrap .message-list-wrap{
+        padding: 1rem;
+    }
+    .chat-box-wrap .message-list-wrap .message-item{
+        max-width: 96%;
+    }
+    .sidebar-custom-width .header-user-box .media span, .sidebar-custom-width .header-user-box .media span{
+        margin-right: 1rem;
+    }
+    .productss-list-box table{
+        display: block;
+        width: 100%;
+        overflow-x: scroll;
+    }
 
 }
 
@@ -545,6 +589,11 @@
 
     .user-password-chnage .change-password-form h3 {
         font-size: 1.1rem;
+    }
+    .productss-list-box table{
+        display: block;
+        width: 100%;
+        overflow-x: scroll;
     }
 
 }

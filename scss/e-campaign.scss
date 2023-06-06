@@ -514,13 +514,12 @@
         @include m.button;
         border-radius: 3rem;
         margin-left: 0.5rem;
-        color: v.$fourth;
+        background: v.$primary;
         border: 0;
         text-align: center;
 
         &:hover {
-            background: v.$gdbg;
-            color: v.$light;
+            background: v.$orang; 
         }
     }
 
@@ -555,7 +554,7 @@
     a {
         &:first-child {
             display: inline-block;
-            @include m.button(1.1rem, v.$light, v.$gdbg);
+            @include m.button(1.1rem, v.$light, v.$primary);
             border: 1px solid #E5E9F2;
             font-weight: 700;
             border-radius: 3rem;
@@ -563,7 +562,7 @@
             margin-right: 1rem;
 
             &:hover {
-                background: v.$btnbg;
+                background: v.$orang;
             }
         }
 
@@ -576,7 +575,7 @@
             border-radius: 3rem;
 
             &:hover {
-                background: v.$gdbg;
+                background: v.$primary;
                 color: v.$light;
             }
         }
@@ -773,7 +772,7 @@
         .form-submit {
             .btn-submit {
                 display: inline-block;
-                @include m.button(1.1rem, v.$light, v.$btnbg);
+                @include m.button(1.1rem, v.$light, v.$primary);
                 border: 1px solid #E5E9F2;
                 font-weight: 700;
                 border-radius: 3rem;
@@ -783,7 +782,7 @@
                 cursor: pointer;
 
                 &:hover {
-                    background: v.$gdbg;
+                    background: v.$orang;
                 }
             }
         }

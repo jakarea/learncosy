@@ -123,7 +123,7 @@
                                     </div> 
                                     <div class="col-md-12">
                                         <div class="form-group"> 
-                                            <label for="categories">Categories </label>
+                                            <label for="categories">Categories  <sup class="text-danger">*</sup></label>
                                             <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
                                                 <option disabled hidden>Select or Create categories</option>  
                                                     @foreach ($categories as $category)
@@ -231,7 +231,7 @@
                                             <input type="number" placeholder="Enter total module length"
                                                 name="number_of_module"
                                                 class="form-control @error('number_of_module') is-invalid @enderror"
-                                                value="{{ old('number_of_module')}}" id="number_of_module">
+                                                value="{{ old('number_of_module')}}" id="number_of_module" min="0">
                                             <span class="invalid-feedback">@error('number_of_module'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -243,7 +243,7 @@
                                             <input type="number" placeholder="Enter total lesson length"
                                                 name="number_of_lesson"
                                                 class="form-control @error('number_of_lesson') is-invalid @enderror"
-                                                value="{{ old('number_of_lesson')}}" id="number_of_lesson">
+                                                value="{{ old('number_of_lesson')}}" id="number_of_lesson" min="0">
                                             <span class="invalid-feedback">@error('number_of_lesson'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -255,7 +255,7 @@
                                             <input type="number" placeholder="Enter total attachment length"
                                                 name="number_of_attachment"
                                                 class="form-control @error('number_of_attachment') is-invalid @enderror"
-                                                value="{{ old('number_of_attachment')}}" id="number_of_attachment">
+                                                value="{{ old('number_of_attachment')}}" id="number_of_attachment" min="0">
                                             <span class="invalid-feedback">@error('number_of_attachment'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -267,7 +267,7 @@
                                             <input type="number" placeholder="Enter total video length"
                                                 name="number_of_video"
                                                 class="form-control @error('number_of_video') is-invalid @enderror"
-                                                value="{{ old('number_of_video')}}" id="number_of_video">
+                                                value="{{ old('number_of_video')}}" id="number_of_video" min="0">
                                             <span class="invalid-feedback">@error('number_of_video'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -278,7 +278,7 @@
                                             </label>
                                             <input type="number" placeholder="Enter duration" name="duration"
                                                 class="form-control @error('duration') is-invalid @enderror"
-                                                value="{{ old('duration')}}" id="duration">
+                                                value="{{ old('duration')}}" id="duration" min="0">
                                             <span class="invalid-feedback">@error('duration'){{ $message }}
                                                 @enderror</span>
                                         </div>
