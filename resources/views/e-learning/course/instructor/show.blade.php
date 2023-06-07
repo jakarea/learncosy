@@ -87,50 +87,33 @@
                         <h5>Course's reviews</h5> 
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            {{-- review box @S --}}
-                            <div class="attached-file-box review-box">
-                                <div class="d_flex">
-                                    <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
-                                            class="img-fluid me-1"> Jhon Doe</h4>
-                                    <ul class="review-box-icon">
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                    </ul>
-                                </div>
+                        @if($course_reviews)         
+                            <div class="col-lg-12">
+                                @foreach($course_reviews as $course_review)
+                                    <div class="attached-file-box review-box">
+                                        <div class="d_flex">
+                                            <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
+                                                    class="img-fluid me-1"> {{$course_review->user->name}}</h4>
+                                            <ul class="review-box-icon">
+                                                @for ($i = 0; $i < $course_review->star; $i++)
+                                                    <li><i class="fas fa-star"></i></li>
+                                                @endfor
+                                            </ul>
+                                        </div>
 
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus aperiam, minima
-                                    amet omnis impedit delectus voluptatum iusto quaerat suscipit ipsa at? Ratione
-                                    assumenda nobis quis voluptas neque earum aspernatur optio!</p>
-                            </div>
-                            {{-- review box @E --}}
-                            {{-- review box @S --}}
-                            <div class="attached-file-box review-box">
-                                <div class="d_flex">
-                                    <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
-                                            class="img-fluid me-1"> Sttefen Smith</h4>
-                                    <ul class="review-box-icon">
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li> 
-                                    </ul>
+                                        <p>{{$course_review->comment}}</p>
+                                    </div>
+                                @endforeach
+                            </div>        
+                        @else
+                            <div class="col-lg-12">
+                                <div class="attached-file-box">
+                                    <p>No Review Found</p>
                                 </div>
-
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus aperiam, minima
-                                    amet omnis impedit delectus voluptatum iusto quaerat suscipit ipsa at? Ratione
-                                    assumenda nobis quis voluptas neque earum aspernatur optio!</p>
-                            </div>
-                            {{-- review box @E --}}
-                        </div> 
-                        <div class="col-lg-12">
-                            <div class="attached-file-box">
-                                <p>No Review Found</p>
-                            </div>
-                        </div>
+                            </div>        
+                        @endif
+                         
+                       
                     </div>
                 </div>
             </div>

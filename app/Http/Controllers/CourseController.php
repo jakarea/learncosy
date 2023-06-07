@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\CourseReview;
 use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -186,8 +187,10 @@ class CourseController extends Controller
         $lessons = Lesson::orderby('id', 'desc')->paginate(10);
         $modules = Module::orderby('id', 'desc')->paginate(10);
         $course = Course::where('slug', $slug)->first();
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','modules','lessons'));
+            return view('e-learning/course/instructor/show', compact('course','modules','lessons','course_reviews'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
