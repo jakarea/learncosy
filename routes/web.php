@@ -59,7 +59,7 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 });
 
 // course page routes
-Route::group(['middleware' => ['subscription.check']], function () {
+// Route::group(['middleware' => ['subscription.check']], function () {
     // course page routes
     Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
         Route::get('/', 'index')->name('instructor.courses'); 
@@ -72,8 +72,8 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::post('/{slug}/edit', 'update')->name('course.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
     });
-});
-Route::group(['middleware' => ['subscription.check']], function () {
+// });
+// Route::group(['middleware' => ['subscription.check']], function () {
     // module page routes
     Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
         Route::get('/', 'index');
@@ -118,7 +118,7 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
-});
+// });
 // profile management page routes
 Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/myprofile', 'show')->name('instructor.profile'); 
