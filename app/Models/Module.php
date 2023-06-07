@@ -20,4 +20,8 @@ class Module extends Model
         'duration',
         'status', 
     ];
+
+    public function lessons(){
+        return $this->hasMany(Lesson::class,'module_id','id');
+    }
 }

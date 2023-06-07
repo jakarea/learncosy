@@ -31,7 +31,7 @@
             </div>
             <div class="course-outline-box">
                 <div class="accordion" id="accordionExample">
-                    @foreach($modules as $module)
+                    @foreach($course->modules as $module)
                     @php $i++; @endphp
                     <div class="accordion-item">
                         <span class="numbering active"> {{$i}} </span>
@@ -48,10 +48,10 @@
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body"> 
                                 <ul>
-                                    @foreach($lessons as $lesson)
+                                    @foreach($module->lessons as $lesson)
                                     <li>
                                         <a href="#">
-                                            <img src="http://localhost:8000/assets/images/course/small-book.svg" alt="Lesson Icon" class="img-fluid"> {{ $lesson->title }}
+                                            <img src="{{ url('assets/images/course/small-book.svg') }}" alt="Lesson Icon" class="img-fluid"> {{ $lesson->title }}
                                         </a>
                                     </li>
                                     @endforeach
@@ -80,7 +80,10 @@
                         <h3>{{$course->title}}</h3>
                         <a href="{{url('course/messages')}}" class="min_width">Message</a>
                     </div>
-                    {!! $course->description !!} 
+                    <div class="course-dessc-txt">
+                        {!! $course->description !!} 
+                    </div>
+                   
                 </div> 
                 <div class="course-content-box">
                     <div class="d-flex">
@@ -112,8 +115,6 @@
                                 </div>
                             </div>        
                         @endif
-                         
-                       
                     </div>
                 </div>
             </div>

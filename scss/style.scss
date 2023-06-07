@@ -873,11 +873,12 @@ main {
 
 // product research css @E
  .form-grp-btn .btn{
-    background: v.$primary;
+    background: v.$gdbg;
     &:hover{
-        background: v.$orang;
+        background: v.$gdbg;
     }
  }
+
 
 // responsive css start
 @include q.responsive(phone) {

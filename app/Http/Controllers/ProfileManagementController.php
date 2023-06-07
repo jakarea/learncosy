@@ -4,29 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 class ProfileManagementController extends Controller
 {
-    // profile list
-    public function index()
-    {  
-        return view('profile/admin/index'); 
-    }
-
-    // profile create
-    public function create()
-    {  
-        return view('profile/admin/create'); 
-    }
 
     // profile show
     public function show()
     {  
         $id = Auth::user()->id;
         $user = User::find($id); 
-        return view('profile/instructor/profile',compact('user')); 
+        $courses = Course::where('user_id', $id)->get();
+        return view('profile/instructor/profile',compact('user','courses')); 
     }
 
     // profile edit

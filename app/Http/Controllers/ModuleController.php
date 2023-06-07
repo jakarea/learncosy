@@ -99,7 +99,7 @@ class ModuleController extends Controller
         ]);  
 
         $module->save();
-        return redirect('instructor/modules')->with('success', 'Module saved!');
+        return redirect('instructor/courses')->with('success', 'Module saved!');
 
     }
 

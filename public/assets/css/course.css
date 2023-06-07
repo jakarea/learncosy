@@ -102,7 +102,7 @@
   margin-bottom: 0.8rem;
   font-size: 1rem;
   font-weight: 700;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   display: flex;
   align-items: center;
@@ -199,8 +199,8 @@
   color: #A5B4CB;
 }
 .course-outline-box .accordion .accordion-item span.numbering.active {
-  border-color: #d90d77;
-  color: #d90d77;
+  border-color: #4c60ff;
+  color: #4c60ff;
 }
 .course-outline-box .accordion .accordion-item .accordion-button {
   background: transparent;
@@ -252,7 +252,7 @@
 .add_module_bttn {
   padding: 10px 15px;
   border-radius: 1.6rem;
-  background: #d90d77;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
   display: block;
   text-align: center;
@@ -261,7 +261,8 @@
   margin-top: 0.3rem;
 }
 .add_module_bttn:hover {
-  background: #fa9210;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  color: #ffffff;
 }
 
 .add_lesson_bttn {
@@ -293,13 +294,13 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
 }
 .content-txt-box .d-flex a:hover {
-  background: #fa9210;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .content-txt-box .d-flex a.min_width {
   min-width: 10rem;
@@ -413,7 +414,7 @@
   line-height: 140%;
 }
 .learning-banners-wrap .media .media-body .addspy-main-title span {
-  color: #2D3958;
+  color: #2b91fe;
 }
 .learning-banners-wrap .media .media-body p {
   font-size: 1rem;
@@ -427,7 +428,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -435,7 +436,7 @@
   padding-right: 4rem !important;
 }
 .learning-banners-wrap .media .media-body a:hover {
-  background: #fa9210;
+  background: #2d3958;
   color: #000000;
 }
 
@@ -521,6 +522,34 @@
 
 .course-box-wrap {
   overflow-x: hidden !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.course-dessc-txt h1, .course-dessc-txt h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3958;
+  line-height: 140%;
+}
+.course-dessc-txt h3, .course-dessc-txt h4 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3958;
+  line-height: 140%;
+}
+.course-dessc-txt h5, .course-dessc-txt h6 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #2d3958;
+  line-height: 140%;
+}
+.course-dessc-txt p {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #8C8FAE;
+  line-height: 140%;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

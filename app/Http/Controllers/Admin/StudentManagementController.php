@@ -136,7 +136,7 @@ class StudentManagementController extends Controller
     public function edit($id)
      {  
         $student = User::where('id', $id)->first();
-        
+      
         return view('students/admin/edit',compact('student'));
      }
 
@@ -157,11 +157,14 @@ class StudentManagementController extends Controller
          ]);
  
         
-         $user = User::where('id', $userId)->first();
+         $user = User::where('id', $userId)->first(); 
          $user->name = $request->name;
          if ($request->username) {
             $user->username =  Str::slug($request->username);
-         }
+         }else{
+            $user->username = $user->username;
+        } 
+
          $user->short_bio = $request->short_bio;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
          $user->phone = $request->phone;
@@ -204,7 +207,7 @@ class StudentManagementController extends Controller
          } 
         $student->delete();
 
-        return redirect('instructor/students')->with('success', 'Student Successfully deleted!');
+        return redirect('admin/students')->with('success', 'Student Successfully deleted!');
     }
 
 }

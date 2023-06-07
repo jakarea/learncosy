@@ -94,7 +94,7 @@
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table">
-                        <h5 class="p-3 pb-0">Emails / Messages from students:</h5>
+                        <h5 class="p-3 pb-0">Message from students:</h5>
                         <table>
                             <tr>
                                 <th width="5%">No</th>
@@ -133,60 +133,41 @@
                                 </td>
                             </tr>
                             {{-- item @E --}}
-                        </table>
-                        {{-- <div class="row">
-                            <div class="col-12">
-                                <div class="payment-method-info-item">
-                                    <span class="text-mute">Card Brand</span>
-                                    <h6 class="text-success">No Payment Method</h6>
-                                </div>
-                            </div>
-                        </div> --}}
+                        </table> 
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table mt-4">
                         <h5 class="p-3 pb-0">My Course List :</h5>
+                        @if (count($courses) > 0) 
                         <table>
                             <tr>
                                 <th width="5%">No</th>
                                 <th>Course Name</th>
-                                <th>Course Review</th>
-                                <th>Total Stucents</th>
+                                <th>Price</th>
+                                <th>Short Description</th>
                                 <th>View Course</th>
 
                             </tr>
-                            {{-- item @S --}}
-                            <tr>
-                                <td>1</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>45673</td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
-                            {{-- item @S --}}
-                            <tr>
-                                <td>2</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>45673</td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
+                            @foreach ($courses as $key=> $course)
+                                {{-- item @S --}}
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{$course->title}}</td>
+                                    <td>{{$course->price}}</td>
+                                    <td>{{ Str::limit($course->short_description, $limit = 125, $end = '...') }}</td>
+                                    <td>
+                                        <a href="{{url('instructor/courses/'.$course->slug)}}"><i class="fas fa-eye text-dark"></i></a>
+                                    </td>
+                                </tr>
+                                {{-- item @E --}}
+                            @endforeach 
                         </table>
-                        {{-- <div class="row">
-                            <div class="col-12">
-                                <div class="payment-method-info-item">
-                                    <span class="text-mute">Card Brand</span>
-                                    <h6 class="text-success">No Payment Method</h6>
-                                </div>
-                            </div>
-                        </div> --}}
+                        @else
+                        <div class="text-center pb-4">
+                            <p class="text-danger">No Course Found!</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

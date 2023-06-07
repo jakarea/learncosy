@@ -235,13 +235,13 @@ main {
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
   margin-left: 0.5rem;
-  background: #d90d77;
+  background: #4c60ff;
   border: 0;
   text-align: center;
 }
 .interrest-search-wrap .interrest-bttn-box button:first-child:hover,
 .interrest-search-wrap .interrest-bttn-box a:first-child:hover {
-  background: #fa9210;
+  background: #2d3958;
   color: #ffffff;
 }
 
@@ -273,7 +273,7 @@ main {
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
-  background: #d90d77;
+  background: #4c60ff;
   padding: 0.76rem 1.3rem;
   margin: 0 0.4rem;
   transition: all linear 0.2s;
@@ -283,7 +283,7 @@ main {
   color: #ffffff;
 }
 .popular-interest-wrap .popular-imterest-box ul li a.active {
-  background: #fa9210;
+  background: #2d3958;
   color: #ffffff;
 }
 .popular-interest-wrap .selection-textarea-box {
@@ -352,7 +352,7 @@ main {
 .clear-section {
   font-size: 1rem;
   font-weight: 400;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   display: inline-flex;
   align-items: center;
@@ -371,7 +371,7 @@ main {
   line-height: 140%;
 }
 .interest-search-result-wrap h6 span {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .interest-search-result-wrap .search-result-head {
   margin: 1.2rem 0;
@@ -387,8 +387,8 @@ main {
   color: #8C8FAE;
 }
 .interest-search-result-wrap .search-result-head .form-check-input:checked {
-  background-color: #d90d77;
-  border-color: #d90d77;
+  background-color: #4c60ff;
+  border-color: #4c60ff;
 }
 .interest-search-result-wrap .search-result-head a {
   font-size: 1rem;
@@ -440,8 +440,8 @@ main {
   border-radius: 50%;
 }
 .interest-search-result-wrap .search-result-table table tr td div .form-check-input:checked {
-  background-color: #d90d77;
-  border-color: #d90d77;
+  background-color: #4c60ff;
+  border-color: #4c60ff;
 }
 .interest-search-result-wrap .search-result-table table tr td div a {
   margin-left: 0.6rem;
@@ -511,7 +511,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   padding: 0.5rem 2rem;
@@ -587,8 +587,8 @@ main {
   border-radius: 50%;
 }
 .search-settings-wrap .word-settings-box .word-item .form-check-input:checked {
-  background-color: #d90d77;
-  border-color: #d90d77;
+  background-color: #4c60ff;
+  border-color: #4c60ff;
 }
 .search-settings-wrap .me-md-5 {
   position: relative;
@@ -859,7 +859,7 @@ main {
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.4rem;
@@ -908,8 +908,8 @@ main {
 }
 .pagginate-wrap .active > .page-link,
 .pagginate-wrap .page-link.active {
-  background-color: #d90d77;
-  border: #d90d77;
+  background-color: #4c60ff;
+  border: #4c60ff;
   color: #ffffff;
 }
 
@@ -939,7 +939,7 @@ main {
   padding: 12px 20px;
 }
 .productss-list-box table tr td .fas {
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .productss-list-box table tr:nth-child(even) td {
@@ -960,7 +960,7 @@ main {
 }
 
 .form-grp-btn .btn {
-  background: #d90d77;
+  background: #4c60ff;
   border-radius: 3rem;
   color: #ffffff;
 }
@@ -970,10 +970,10 @@ main {
 }
 
 .form-grp-btn .btn {
-  background: #d90d77;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .form-grp-btn .btn:hover {
-  background: #fa9210;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

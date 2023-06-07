@@ -201,6 +201,14 @@
             border: 1px solid v.$third;
         }
     }
+    tr{
+        img{
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
 }
 
 .dataTables_paginate {
@@ -370,8 +378,12 @@
 #preview img {
     max-width: 100%;
 } 
+.action-dropdown .dropdown-menu .bttns-wrap a{
+    background: v.$gdbg;
+}
+
 .action-dropdown .dropdown-menu .bttns-wrap a:hover{
-    background: v.$orang;
+    background: v.$gdbg;
 }
 
 .paginate_button {

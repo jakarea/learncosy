@@ -5,8 +5,8 @@
 .header-section {
     padding: 1rem 1.5rem;
     // box-shadow: v.$mbxs;
-    background-color: #2D3958;
-    background-image: url('../images/header-bg.png');
+    background: v.$gdbg;
+    // background-image: url('../images/header-bg.png');
     position: fixed;
     width: 100%;
     z-index: 9999!important;
@@ -114,6 +114,30 @@
     }
 }
 // settings toggle css @E
+
+.header-right-icon-wrap{
+    .dropdown{
+        a{
+            i.fa-volleyball{
+                font-size: 1.5rem;
+                color: v.$light;
+            }
+        }
+    }
+}
+
+.header-search-wrap input::placeholder {
+    color: v.$light;
+    opacity: 1; /* Firefox */
+  }
+  
+  .header-search-wrap input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: v.$light;
+  }
+  
+  .header-search-wrap input::-ms-input-placeholder { /* Microsoft Edge */
+   color: v.$light;
+  }
 
 
 // responsive css start

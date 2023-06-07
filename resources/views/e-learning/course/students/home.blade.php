@@ -90,9 +90,26 @@
                             </div>
                         </div>
                         <div class="course-ftr">
-                            <h5><a href="{{$course->promo_video}}"><i class="fas fa-play"></i> Get Overview </a></h5>
+                            <h5><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-play text-info"></i> Check Promo Video </a></h5> 
                             <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a>
                         </div>
+                         {{-- promo video modal @S --}} 
+                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Promo Video</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="promo-video-box">
+                                        <iframe width="100%" height="315" src="{{$course->promo_video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    </div>
+                                </div> 
+                            </div>
+                            </div>
+                        </div>
+                        {{-- promo video modal @E --}}
                     </div>
                 </div>
                 @endforeach

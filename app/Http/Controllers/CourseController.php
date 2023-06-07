@@ -184,13 +184,11 @@ class CourseController extends Controller
     // course show
     public function show($slug)
     {   
-        $lessons = Lesson::orderby('id', 'desc')->paginate(10);
-        $modules = Module::orderby('id', 'desc')->paginate(10);
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','modules','lessons','course_reviews'));
+            return view('e-learning/course/instructor/show', compact('course','course_reviews'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
