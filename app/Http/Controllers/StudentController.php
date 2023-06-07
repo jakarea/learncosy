@@ -178,7 +178,9 @@ class StudentController extends Controller
          $user->name = $request->name;
          if ($request->username) {
             $user->username =  Str::slug($request->username);
-         }
+         }else{
+            $user->username = $user->username;
+        } 
          $user->short_bio = $request->short_bio;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
          $user->user_role = $request->user_role;

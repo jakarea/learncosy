@@ -85,7 +85,7 @@
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
                         <h5>Details :</h5>
-                        {!! $instructor->description !!}
+                        {!! $student->description !!}
                     </div>
                 </div> 
                 <div class="col-12">

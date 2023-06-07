@@ -48,7 +48,7 @@ Route::middleware('auth')->prefix('instructor/payments')->controller(HomeControl
     Route::get('/platform-fee', 'adminPayment');  
 });
 
-// message page routes
+// message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index'); 
     Route::get('/send/{id}', 'send')->name('get.message');

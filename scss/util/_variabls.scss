@@ -1,14 +1,14 @@
 $dark: #000000;
 $light: #ffffff;
 $mainbg: #F4F8FC;
-$primary: #d90d77;
-$secondary: #2D3958;
+$primary: #4c60ff;
+$secondary: #2b91fe;
 $border: #dfe5f1;
 $third: #DEE3EB;
 $fourth: #8C8FAE;
-$orang: #fa9210;
+$orang: #2d3958;
 // $gdbg: linear-gradient(98.03deg, $primary 18.68%, $orang 88.52%); 
-$gdbg: linear-gradient(132deg,#4c60ff 20%,#2b91fe); 
+$gdbg: linear-gradient(132deg,$primary 20%,$secondary); 
 $bxs: 3px 22px 50px -2px $third;
 $mbxs: inset 0px -1px 0px $border;
 $pm-y: 4rem 0;

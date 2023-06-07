@@ -8,7 +8,7 @@
 .review-item-box h5 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   margin-bottom: 0.4rem;
 }
@@ -42,5 +42,5 @@
 .review-item-box .d-flex ul li i {
   font-size: 1rem;
   margin-left: 0.2rem;
-  color: #d90d77;
+  color: #4c60ff;
 }

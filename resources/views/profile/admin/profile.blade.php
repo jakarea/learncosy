@@ -81,58 +81,6 @@
                         <h5>Details :</h5>
                         {!! $user->description !!}
                     </div>
-                </div>
-                <div class="col-12">
-                    <div class="productss-list-box payment-history-table">
-                        <h5 class="p-3 pb-0">Emails / Messages:</h5>
-                        <table>
-                            <tr>
-                                <th width="5%">No</th>
-                                <th>Student Name</th>
-                                <th>Email</th>
-                                <th>Subject</th>
-                                <th>Status</th>
-                                <th>View</th>
-
-                            </tr>
-                            {{-- item @S --}}
-                            <tr>
-                                <td>1</td>
-                                <td>Jhon Doe</td>
-                                <td>doe@yopmail.com</td>
-                                <td>All</td>
-                                <td>
-                                    <span class="badge text-bg-danger">Unread</span>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
-                            {{-- item @S --}}
-                            <tr>
-                                <td>1</td>
-                                <td>Nayan Akram</td>
-                                <td>nayan@yopmail.com</td>
-                                <td>English</td>
-                                <td>
-                                    <span class="badge text-bg-success">Read</span>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
-                        </table>
-                        {{-- <div class="row">
-                            <div class="col-12">
-                                <div class="payment-method-info-item">
-                                    <span class="text-mute">Card Brand</span>
-                                    <h6 class="text-success">No Payment Method</h6>
-                                </div>
-                            </div>
-                        </div> --}}
-                    </div>
                 </div> 
             </div>
         </div>

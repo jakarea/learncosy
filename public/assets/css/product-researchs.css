@@ -22,7 +22,7 @@
   border: none;
   height: 1px;
   width: 100%;
-  background: #d90d77;
+  background: #4c60ff;
   margin: 3rem 0;
 }
 
@@ -112,7 +112,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
@@ -173,7 +173,7 @@
   line-height: 140%;
 }
 .country-details-wrap div:last-child {
-  border-left: 1px solid #2D3958;
+  border-left: 1px solid #2b91fe;
   padding-left: 1.5rem;
 }
 
@@ -195,7 +195,7 @@
 .create-form-head h6 {
   font-size: 1.2rem;
   font-weight: 500;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
 }
 .create-form-head a {
@@ -203,7 +203,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
@@ -215,11 +215,11 @@
   margin-right: 8px;
 }
 .create-form-head a:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .form-group .form-control:focus-within {
-  border-color: #d90d77;
+  border-color: #4c60ff;
 }
 
 .create-form-box .form-group {
@@ -292,12 +292,12 @@
 }
 .submit-bttns .btn-reset {
   background: transparent;
-  color: #d90d77;
-  border: 1px solid #2D3958;
+  color: #4c60ff;
+  border: 1px solid #2b91fe;
   margin-right: 1rem;
 }
 .submit-bttns .btn-reset:hover {
-  background: #d90d77;
+  background: #4c60ff;
   color: #fff;
 }
 .submit-bttns .btn-submit {
@@ -305,14 +305,14 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
   padding: 0.6rem 1.6rem;
 }
 .submit-bttns .btn-submit:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .p_infos-group .col-md-4 span {
@@ -330,10 +330,10 @@
   margin-bottom: 1rem;
 }
 .create-form-box .form-control.dropdown div span {
-  background: #d90d77 !important;
+  background: #4c60ff !important;
 }
 .create-form-box .form-control.dropdown .dropdown-item {
-  background: #d90d77 !important;
+  background: #4c60ff !important;
 }
 
 .tags-input-wrapper {

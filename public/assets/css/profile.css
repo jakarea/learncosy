@@ -36,7 +36,7 @@
   margin-bottom: 0.5rem;
 }
 .change-password-form h3 span {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .change-password-form p {
   font-size: 0.9rem;
@@ -94,7 +94,7 @@
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
-  border: 3px solid #d90d77;
+  border: 3px solid #4c60ff;
   margin-right: 1.5rem;
 }
 .set-profile-picture .media .btn-upload-pic {
@@ -155,7 +155,7 @@
   border-radius: 20%;
   width: 12rem;
   height: 12rem;
-  border: 5px solid #d90d77;
+  border: 5px solid #4c60ff;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -197,7 +197,7 @@
 }
 .customer-profile-info h6 {
   font-size: 1.2rem;
-  color: #d90d77;
+  color: #4c60ff;
   margin: 0.5rem 0 1rem !important;
 }
 
@@ -211,7 +211,7 @@
 .file-wrapper {
   width: 10rem;
   height: 10rem;
-  border: 3px solid #d90d77;
+  border: 3px solid #4c60ff;
   border-radius: 0.4rem;
   position: relative;
   background-size: cover;
@@ -229,7 +229,7 @@
   width: -moz-max-content;
   width: max-content;
   font-size: 3.5rem;
-  color: #d90d77;
+  color: #4c60ff;
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
@@ -391,7 +391,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   padding: 0.3rem 1rem;
@@ -511,46 +511,40 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }
 .chat-box-wrap form .form-submit .btn-submit:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
-.productss-list-box h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #2d3958;
-  line-height: 140%;
-}
-.productss-list-box h2 {
+.instructor-details-box h1 {
   font-size: 3rem;
   font-weight: 700;
   color: #2d3958;
   line-height: 140%;
 }
-.productss-list-box h4,
-.productss-list-box h3 {
+.instructor-details-box h2 {
   font-size: 2.5rem;
   font-weight: 700;
   color: #2d3958;
   line-height: 140%;
 }
-.productss-list-box h5 {
+.instructor-details-box h4,
+.instructor-details-box h3 {
   font-size: 2rem;
   font-weight: 700;
   color: #2d3958;
   line-height: 140%;
 }
-.productss-list-box h6 {
-  font-size: 1.5rem;
+.instructor-details-box h6 {
+  font-size: 1.2rem;
   font-weight: 700;
   color: #2d3958;
   line-height: 140%;
 }
-.productss-list-box p {
+.instructor-details-box p {
   font-size: 1rem;
   font-weight: 400;
   color: #000000;

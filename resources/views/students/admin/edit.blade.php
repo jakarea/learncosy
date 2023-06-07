@@ -23,7 +23,7 @@
                             <i class="fa-solid fa-user-group"></i> All Students </a>
                     </div>
                     <!-- course create form @S -->
-                    <form action="{{route('updateStudentProfile',$student->id)}}" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('admin.updateStudentProfile',$student->id)}}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -38,17 +38,7 @@
                                             <span class="invalid-feedback">@error('name'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group form-error">
-                                            <label for="username">Username </label>
-                                            <input type="text" placeholder="Enter username" name="username"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                value="{{$student->username }}" id="username">
-                                            <span class="invalid-feedback">@error('username'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
                                             <label for="email">Email <sup class="text-danger">*</sup>
