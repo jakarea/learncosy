@@ -38,7 +38,7 @@ $i = 0;
             </div>
             <div class="course-outline-box">
                 <div class="accordion" id="accordionExample">
-                    @foreach($modules as $module)
+                    @foreach($course->modules as $module)
                     @php $i++; @endphp
                     <div class="accordion-item">
                         <span class="numbering active"> {{$i}} </span>
@@ -56,7 +56,7 @@ $i = 0;
                             aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul>
-                                    @foreach($lessons as $lesson)
+                                    @foreach($module->lessons as $lesson)
                                     <li>
                                         <a href="#">
                                             <img src="http://localhost:8000/assets/images/course/small-book.svg"

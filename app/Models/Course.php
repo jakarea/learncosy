@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Lesson;
+use App\Models\Module;
 use App\Models\Checkout;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,12 +46,13 @@ class Course extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class,'id','user_id');
     }
 
-    public function lessons(){
-        return $this->hasMany(Lesson::class);
+    public function modules(){
+        return $this->hasMany(Module::class,'course_id','id');
     }
+
     
     public function users(): BelongsToMany
     {
