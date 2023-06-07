@@ -30,6 +30,7 @@
     @yield('style')
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
+ 
 
 </head>
 

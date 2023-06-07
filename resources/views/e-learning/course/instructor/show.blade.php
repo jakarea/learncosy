@@ -80,7 +80,10 @@
                         <h3>{{$course->title}}</h3>
                         <a href="{{url('course/messages')}}" class="min_width">Message</a>
                     </div>
-                    {!! $course->description !!} 
+                    <div class="course-dessc-txt">
+                        {!! $course->description !!} 
+                    </div>
+                   
                 </div> 
                 <div class="course-content-box">
                     <div class="d-flex">

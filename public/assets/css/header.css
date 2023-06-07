@@ -1,7 +1,6 @@
 .header-section {
   padding: 1rem 1.5rem;
-  background-color: #2D3958;
-  background-image: url("../images/header-bg.png");
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   position: fixed;
   width: 100%;
   z-index: 9999 !important;
@@ -112,6 +111,29 @@
 }
 .settings-dropdown li a:hover {
   background: rgba(235, 240, 249, 0.6);
+}
+
+.header-right-icon-wrap .dropdown a i.fa-volleyball {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.header-search-wrap input::-moz-placeholder {
+  color: #ffffff;
+  opacity: 1; /* Firefox */
+}
+
+.header-search-wrap input::placeholder {
+  color: #ffffff;
+  opacity: 1; /* Firefox */
+}
+
+.header-search-wrap input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #ffffff;
+}
+
+.header-search-wrap input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #ffffff;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

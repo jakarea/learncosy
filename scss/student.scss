@@ -23,7 +23,9 @@
                 @include m.button(1rem, v.$fourth, v.$light);
                 border: 1px solid v.$border;
                 border-radius: 3rem;
-                margin-right: 1rem;
+                margin-right: .4rem;
+                margin-bottom: 0.4rem;
+                padding: .4rem .9rem;
 
                 &:hover {
                     background: v.$dark;
@@ -96,12 +98,13 @@
 }
 
 .enroll__btn{
-    @include m.button(1rem,v.$light,v.$primary);
+    @include m.button(1rem,v.$light,v.$gdbg);
     display: block;
     width: 100%;
     margin-top: 1rem;
     &:hover{
-        background: v.$orang
+        background: v.$gdbg;
+        color: v.$light
     }
 }
 
@@ -245,4 +248,8 @@
         border-radius: 50%;
         object-fit: cover;
     }
+}
+
+.promo-video-box{
+
 }

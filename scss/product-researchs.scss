@@ -192,7 +192,7 @@
     }
 
     a {
-        @include m.button(1rem, v.$light, v.$primary);
+        @include m.button(1rem, v.$light, v.$gdbg);
         border-radius: .625rem;
         display: inline-flex;
         align-items: center;
@@ -203,7 +203,7 @@
         }
 
         &:hover {
-            background: v.$orang;
+            background: v.$gdbg;
         }
     }
 }
@@ -294,12 +294,12 @@
     }
 
     .btn-submit {
-        @include m.button(1rem, v.$light, v.$primary);
+        @include m.button(1rem, v.$light, v.$gdbg);
         border-radius: .625rem;
         padding: .6rem 1.6rem;
 
         &:hover {
-           background: v.$orang;
+           background: v.$gdbg;
         }
     }
 }

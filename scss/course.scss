@@ -250,7 +250,7 @@
 .add_module_bttn{
     padding: 10px 15px;
     border-radius: 1.6rem;
-    background: v.$primary;
+    background: v.$gdbg;
     color: v.$light;
     display: block;
     text-align: center; 
@@ -258,10 +258,10 @@
     margin: 0 auto;
     margin-top: .3rem;
     &:hover{
-        background: v.$orang; 
+        background: v.$gdbg; 
+        color: v.$light;
     }
-}
-// {{ url('admin/elearning/modules/create?course='. $course_id.'&'.$module_id) }}
+} 
 .add_lesson_bttn{
     padding: 7px 15px;
     border-radius: 1.4rem;
@@ -288,11 +288,11 @@
         margin: 2.2rem 0;
 
         a {
-            @include m.button(1rem, v.$light, v.$primary);
+            @include m.button(1rem, v.$light, v.$gdbg);
             border-radius: 3rem;
 
             &:hover {
-               background: v.$orang;
+               background: v.$gdbg;
             }
         }
         a.min_width{
@@ -490,8 +490,26 @@
 
 .course-box-wrap{
     overflow-x: hidden!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
 }
 // suggested css @E
+
+.course-dessc-txt{
+    h1,h2{
+        @include m.para(2.5rem,700,v.$btnbg);
+    }
+    h3,h4{
+        @include m.para(2rem,700,v.$btnbg);
+    }
+    h5,h6{
+        @include m.para(1.5rem,500,v.$btnbg);
+    }
+    p{
+        @include m.para(1rem,400,v.$fourth);
+    }
+}
 
 // mobile responsive device css
 @include q.responsive(phone) {

@@ -31,9 +31,6 @@
                   <ul class="head-navbar"> 
                       <li class="link-item">
                           <a href="{{ url('/') }}" class="link-click">Dashboard</a>
-                      </li>
-                      <li class="link-item">
-                          <a href="{{ url('instructor/courses') }}" class="link-click">Courses</a>
                       </li> 
                   </ul>
               </div>
@@ -42,15 +39,15 @@
               {{-- header right menu @S --}}
               <div class="header-right-icon-wrap d-none d-sm-block">
                   <ul class="icon-nav">
-                      <li>
+                      {{-- <li>
                           <div class="dark-mode-bttn">
                               <i class="fa-solid fa-moon"></i>
                               <span>Dark</span>
                           </div>
-                      </li>
+                      </li> --}}
                       <li class="dropdown">
                           <a href="#"data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Settings Icon" class="img-fluid" />
+                            <i class="fa-solid fa-volleyball"></i>
                           </a>  
                           <ul class="dropdown-menu settings-dropdown">   
                             @if (Auth::user()->user_role == 'students')

@@ -378,8 +378,12 @@
 #preview img {
     max-width: 100%;
 } 
+.action-dropdown .dropdown-menu .bttns-wrap a{
+    background: v.$gdbg;
+}
+
 .action-dropdown .dropdown-menu .bttns-wrap a:hover{
-    background: v.$orang;
+    background: v.$gdbg;
 }
 
 .paginate_button {

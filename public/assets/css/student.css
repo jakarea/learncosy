@@ -29,7 +29,9 @@
   padding: 0.85rem 1.5rem;
   border: 1px solid #dfe5f1;
   border-radius: 3rem;
-  margin-right: 1rem;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding: 0.4rem 0.9rem;
 }
 .student-head-bttn ul.nav li.nav-item button.nav-link:hover {
   background: #000000;
@@ -113,7 +115,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   display: block;
@@ -121,7 +123,8 @@
   margin-top: 1rem;
 }
 .enroll__btn:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  color: #ffffff;
 }
 
 .course-txt-box-2 {

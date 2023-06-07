@@ -76,12 +76,12 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
 }
 .login-form-wrap .form-bttn .btn-submit:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .login-form-wrap .login-logo-wrap p {
   font-size: 0.8rem;
@@ -224,7 +224,7 @@
   width: 80%;
   margin: 0 auto;
   text-align: center;
-  border: 2px solid #4c60ff;
+  border: 2px solid linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   padding: 0.6rem 1rem;
   border-radius: 2px;
   font-size: 0.9rem;
