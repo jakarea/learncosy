@@ -177,11 +177,11 @@
 }
 .flow-filter-table table tr td .fa-circle-exclamation {
   font-size: 1.2rem;
-  color: #d90d77;
+  color: #4c60ff;
   margin-left: 0.3rem;
 }
 .flow-filter-table table tr td h6.error-txt {
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .table-swipe {
@@ -192,12 +192,12 @@
 }
 .table-swipe a i {
   font-size: 1.3rem;
-  color: #d90d77;
+  color: #4c60ff;
 }
 .table-swipe span {
   font-size: 1.15rem;
   font-weight: 400;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   display: inline-block;
   margin: 0 0.6rem;
@@ -535,12 +535,12 @@
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
   margin-left: 0.5rem;
-  background: #d90d77;
+  background: #4c60ff;
   border: 0;
   text-align: center;
 }
 .profile-bttn-box .btn-filter:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .products-head h5 {
@@ -576,7 +576,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -586,7 +586,7 @@
   margin-right: 1rem;
 }
 .products-head-bttns a:first-child:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 .products-head-bttns a:last-child {
   display: inline-block;
@@ -603,7 +603,7 @@
   border-radius: 3rem;
 }
 .products-head-bttns a:last-child:hover {
-  background: #d90d77;
+  background: #4c60ff;
   color: #ffffff;
 }
 
@@ -735,8 +735,8 @@
 }
 .font-customization-form-wrap .nav .nav-item .nav-link.active {
   background-color: #ffffff;
-  color: #d90d77;
-  border-color: #d90d77;
+  color: #4c60ff;
+  border-color: #4c60ff;
 }
 .font-customization-form-wrap .add-font-form-wrap .form-group {
   position: relative;
@@ -818,7 +818,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border: 1px solid #E5E9F2;
@@ -830,7 +830,7 @@
   cursor: pointer;
 }
 .font-customization-form-wrap .add-font-form-wrap .form-submit .btn-submit:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .metrics-head {

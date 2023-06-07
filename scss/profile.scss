@@ -491,22 +491,19 @@
     }
 }
 
-.productss-list-box{
+.instructor-details-box{
     h1{
-        @include m.para(3.5rem,700,v.$btnbg);
+        @include m.para(3rem,700,v.$btnbg);
     }
     h2{
-        @include m.para(3rem,700,v.$btnbg);
+        @include m.para(2.5rem,700,v.$btnbg);
     }
     h4,
     h3{
-        @include m.para(2.5rem,700,v.$btnbg);
-    }
-    h5{
         @include m.para(2rem,700,v.$btnbg);
-    }
+    } 
     h6{
-        @include m.para(1.5rem,700,v.$btnbg);
+        @include m.para(1.2rem,700,v.$btnbg);
     }
     p{
         @include m.para; 

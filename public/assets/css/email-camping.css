@@ -216,7 +216,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2rem;
@@ -229,7 +229,7 @@
   margin-left: 0.4rem;
 }
 .growth-main-form .submit-bttn .btn-submit:hover {
-  background-color: #fa9210;
+  background-color: #2d3958;
 }
 
 .preview-main-box {
@@ -314,13 +314,13 @@
 .e-camp-sort-bttn a {
   font-size: 1rem;
   font-weight: 500;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #d90d77;
+  border: 1px solid #4c60ff;
   padding: 0.7rem 2rem;
 }
 .e-camp-sort-bttn a img {
@@ -330,7 +330,7 @@
   margin-left: 0.4rem;
 }
 .e-camp-sort-bttn a:hover {
-  background: #d90d77;
+  background: #4c60ff;
   color: #ffffff;
 }
 .e-camp-sort-bttn a:hover img {
@@ -494,7 +494,7 @@
 }
 .segment-list-box .d-flex i {
   font-size: 1.5rem;
-  color: #2D3958;
+  color: #2b91fe;
 }
 .segment-list-box .d-flex h4 {
   font-size: 1.15rem;
@@ -608,7 +608,7 @@
 .e-camp-template-box .media .media-body h6 {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #2D3958;
+  color: #2b91fe;
   line-height: 140%;
 }
 .e-camp-template-box .media .media-body h5 {
@@ -779,8 +779,8 @@
 }
 .integration-head-wrap .nav .nav-item .nav-link.active {
   background: transparent;
-  color: #d90d77;
-  border-bottom: 2px solid #d90d77;
+  color: #4c60ff;
+  border-bottom: 2px solid #4c60ff;
 }
 
 .main-page-width .integration-head-wrap {
@@ -884,8 +884,8 @@
 }
 .edit-name-head .nav .nav-item .nav-link.active {
   background: transparent;
-  color: #d90d77;
-  border-color: #d90d77;
+  color: #4c60ff;
+  border-color: #4c60ff;
 }
 .edit-name-head .nav .nav-item .nav-link.active img {
   filter: invert(56%) sepia(22%) saturate(2064%) hue-rotate(349deg) brightness(96%) contrast(98%);
@@ -1172,9 +1172,9 @@
   padding: 0.6rem 0;
 }
 .drag-drop-head .nav .nav-item .nav-link.active {
-  border-bottom: 2px solid #d90d77;
+  border-bottom: 2px solid #4c60ff;
   background: transparent;
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .drag-drop-tools-body {
@@ -1359,11 +1359,11 @@
 }
 .content-color-box a:hover {
   background: #ffffff;
-  color: #d90d77;
+  color: #4c60ff;
 }
 .content-color-box a.active {
   background: #ffffff;
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .block-tools {
@@ -1414,7 +1414,7 @@
   margin-right: 0.6rem;
 }
 .drag-drop-action-box ul li .active {
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .timeline-main-wrap {
@@ -1457,7 +1457,7 @@
   font-weight: 400;
 }
 .time-line-box .clr-primary {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .time-line-box .d-flex {
   justify-content: space-between;
@@ -1515,7 +1515,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   background: #FF6262;
@@ -1561,9 +1561,9 @@
   padding: 0.7rem 1.4rem;
 }
 .editing-panel-header .nav .nav-item .nav-link.active {
-  border-bottom: 2px solid #d90d77;
+  border-bottom: 2px solid #4c60ff;
   background: transparent;
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .main-page-width .editing-panel-header {
@@ -1629,11 +1629,11 @@
   margin: 0.5rem 0;
 }
 .logo-maker-box .file-upload-box a {
-  border: 1px solid #d90d77;
+  border: 1px solid #4c60ff;
   padding: 0.4rem 0.4rem;
   border-radius: 0.625rem;
   font-size: 0.6rem;
-  color: #d90d77;
+  color: #4c60ff;
 }
 .logo-maker-box .file-upload-box a img {
   width: 1rem;

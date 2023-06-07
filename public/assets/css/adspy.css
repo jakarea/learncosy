@@ -14,7 +14,7 @@
   line-height: 140%;
 }
 .addspy-banner-wrap .media .media-body .addspy-main-title span {
-  color: #2D3958;
+  color: #2b91fe;
 }
 .addspy-banner-wrap .media .media-body p {
   font-size: 1rem;
@@ -28,13 +28,13 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
 }
 .addspy-banner-wrap .media .media-body a:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .wining-product-wrapper {
@@ -166,7 +166,7 @@
   color: #8C8FAE;
 }
 .wining-product-item .wining-product-txt ul li a .fa-regular:hover {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .wining-product-item .wining-product-txt ul li a img {
   margin-right: 0.4rem;
@@ -235,7 +235,7 @@
   margin-right: 0.7rem;
 }
 .potential-item-box h6 span {
-  color: #2D3958;
+  color: #2b91fe;
   margin-right: 0.4rem;
 }
 
@@ -291,7 +291,7 @@
   line-height: 140%;
 }
 .addspy-dash-head h1 span {
-  color: #2D3958;
+  color: #2b91fe;
 }
 .addspy-dash-head p {
   font-size: 1rem;
@@ -315,7 +315,7 @@
 .discover-personalized-list .media p {
   font-size: 1rem;
   font-weight: 400;
-  color: #2D3958;
+  color: #2b91fe;
   line-height: 140%;
   text-decoration: underline;
   margin-top: 0.3rem;
@@ -365,7 +365,7 @@
 .add-head p {
   font-size: 1rem;
   font-weight: 400;
-  color: #2D3958;
+  color: #2b91fe;
   line-height: 140%;
   text-decoration: underline;
 }
@@ -481,7 +481,7 @@
 }
 .quick-query a:last-child {
   background: transparent;
-  color: #d90d77;
+  color: #4c60ff;
   border: 0;
   display: flex;
   align-items: center;
@@ -519,13 +519,13 @@
 .addspy-multi-select a {
   font-size: 1rem;
   font-weight: 500;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #d90d77;
+  border: 1px solid #4c60ff;
   padding: 0.6rem 2rem;
 }
 .addspy-multi-select a img {
@@ -535,7 +535,7 @@
   margin-left: 0.4rem;
 }
 .addspy-multi-select a:hover {
-  background: #d90d77;
+  background: #4c60ff;
   color: #ffffff;
 }
 .addspy-multi-select a:hover img {
@@ -552,13 +552,13 @@
 .addspy-multi-select .multiple-sort select {
   font-size: 1rem;
   font-weight: 500;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
   background: transparent;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 2.5rem;
-  border: 1px solid #d90d77;
+  border: 1px solid #4c60ff;
   padding: 0.6rem 3rem;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -571,11 +571,11 @@
   position: absolute;
   right: 1rem;
   top: 13px;
-  color: #d90d77;
+  color: #4c60ff;
 }
 .addspy-multi-select .form-check-input:checked {
-  background-color: #d90d77;
-  border-color: #d90d77;
+  background-color: #4c60ff;
+  border-color: #4c60ff;
 }
 
 .adspy-filter-product .wining-product-txt h3 {
@@ -654,10 +654,10 @@
   color: #A020F0;
 }
 .about-add-box-wrap .social-site i.fa-instagram {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .about-add-box-wrap .social-site i.fa-twitter {
-  color: #2D3958;
+  color: #2b91fe;
 }
 .about-add-box-wrap .social-site i.fa-whatsapp {
   color: #34A853;
@@ -677,7 +677,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  border: 3px solid #d90d77;
+  border: 3px solid #4c60ff;
   margin-right: 1rem;
 }
 .about-add-box-wrap .media .media-body h6 {
@@ -808,7 +808,7 @@
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
-  border: 3px solid #d90d77;
+  border: 3px solid #4c60ff;
   margin-right: 1rem;
 }
 .about-page-header-wrap .media .media-body h5 {
@@ -834,7 +834,7 @@
   color: #A020F0;
 }
 .about-page-header-wrap .page-details-wrap .social-site .fa-instagram {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .about-page-header-wrap .page-details-wrap .media-body p {
   font-size: 0.9rem;

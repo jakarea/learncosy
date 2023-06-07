@@ -113,7 +113,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #d90d77;
+  background: #4c60ff;
   display: inline-block;
   padding: 0.85rem 1.5rem;
   display: block;
@@ -121,7 +121,7 @@
   margin-top: 1rem;
 }
 .enroll__btn:hover {
-  background: #fa9210;
+  background: #2d3958;
 }
 
 .course-txt-box-2 {
@@ -143,7 +143,7 @@
 .no-result-found h6 {
   font-size: 1.6rem;
   font-weight: 500;
-  color: #d90d77;
+  color: #4c60ff;
   line-height: 140%;
 }
 
@@ -155,7 +155,7 @@
 .review-box-icon li i {
   font-size: 1rem;
   margin-left: 0.2rem;
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .review-box {
@@ -228,19 +228,19 @@
   font-size: 2rem;
 }
 .write-review-box #full-stars .rating__icon--star {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .write-review-box #full-stars .rating__icon--none {
   color: #eee;
 }
 .write-review-box #full-stars .rating__input--none:checked + .rating__label .rating__icon--none {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .write-review-box #full-stars .rating__input:checked ~ .rating__label .rating__icon--star {
   color: #ddd;
 }
 .write-review-box #full-stars .rating-group:hover .rating__label .rating__icon--star {
-  color: #d90d77;
+  color: #4c60ff;
 }
 .write-review-box #full-stars .rating__input:hover ~ .rating__label .rating__icon--star {
   color: #ddd;
@@ -249,7 +249,7 @@
   color: #eee;
 }
 .write-review-box #full-stars .rating__input--none:hover + .rating__label .rating__icon--none {
-  color: #d90d77;
+  color: #4c60ff;
 }
 
 .profile-box span {
