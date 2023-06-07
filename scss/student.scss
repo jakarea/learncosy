@@ -96,12 +96,13 @@
 }
 
 .enroll__btn{
-    @include m.button(1rem,v.$light,v.$primary);
+    @include m.button(1rem,v.$light,v.$gdbg);
     display: block;
     width: 100%;
     margin-top: 1rem;
     &:hover{
-        background: v.$orang
+        background: v.$gdbg;
+        color: v.$light
     }
 }
 

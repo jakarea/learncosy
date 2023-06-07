@@ -369,8 +369,12 @@
   max-width: 100%;
 }
 
+.action-dropdown .dropdown-menu .bttns-wrap a {
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+}
+
 .action-dropdown .dropdown-menu .bttns-wrap a:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 
 .paginate_button {

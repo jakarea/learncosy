@@ -203,7 +203,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
@@ -215,7 +215,7 @@
   margin-right: 8px;
 }
 .create-form-head a:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 
 .form-group .form-control:focus-within {
@@ -305,14 +305,14 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   border-radius: 0.625rem;
   padding: 0.6rem 1.6rem;
 }
 .submit-bttns .btn-submit:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 
 .p_infos-group .col-md-4 span {

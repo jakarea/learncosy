@@ -72,10 +72,10 @@
         display: block;
         width: 100%;
         text-align: center;
-        @include m.button(1rem, v.$light, v.$primary);
+        @include m.button(1rem, v.$light, v.$gdbg);
 
         &:hover {
-            background: v.$orang;
+            background: v.$gdbg;
         }
     }
 
@@ -213,7 +213,7 @@
                 width: 80%;
                 margin: 0 auto;
                 text-align: center;
-                border: 2px solid v.$primary;
+                border: 2px solid v.$gdbg;
                 padding: .6rem 1rem;
                 border-radius: 2px;
                 @include m.para(0.9rem, 500, v.$primary);

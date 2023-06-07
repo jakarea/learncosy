@@ -113,7 +113,7 @@
   font-weight: 500;
   color: #ffffff;
   line-height: 140%;
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   display: inline-block;
   padding: 0.85rem 1.5rem;
   display: block;
@@ -121,7 +121,8 @@
   margin-top: 1rem;
 }
 .enroll__btn:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  color: #ffffff;
 }
 
 .course-txt-box-2 {

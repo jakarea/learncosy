@@ -970,10 +970,10 @@ main {
 }
 
 .form-grp-btn .btn {
-  background: #4c60ff;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 .form-grp-btn .btn:hover {
-  background: #2d3958;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

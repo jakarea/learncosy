@@ -155,7 +155,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{$course->title}}</td>
                                     <td>{{$course->price}}</td>
-                                    <td>{{ $course->short_description}}</td>
+                                    <td>{{ Str::limit($course->short_description, $limit = 125, $end = '...') }}</td>
                                     <td>
                                         <a href="{{url('instructor/courses/'.$course->slug)}}"><i class="fas fa-eye text-dark"></i></a>
                                     </td>

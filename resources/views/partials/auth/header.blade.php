@@ -35,12 +35,12 @@
               <!-- header right icon @S -->
               <div class="header-right-icon-wrap d-none d-sm-block">
                   <ul class="icon-nav">
-                      <li>
+                      {{-- <li>
                           <div class="dark-mode-bttn">
                               <i class="fa-solid fa-moon"></i>
                               <span>Dark</span>
                           </div>
-                      </li> 
+                      </li>  --}}
                   </ul>
               </div>
               <!-- header right icon @E -->
