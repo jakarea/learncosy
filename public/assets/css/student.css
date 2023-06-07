@@ -29,7 +29,9 @@
   padding: 0.85rem 1.5rem;
   border: 1px solid #dfe5f1;
   border-radius: 3rem;
-  margin-right: 1rem;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding: 0.4rem 0.9rem;
 }
 .student-head-bttn ul.nav li.nav-item button.nav-link:hover {
   background: #000000;
