@@ -53,52 +53,35 @@
                     <tr>
                         <th width="5%">No</th>
                         <th>Payment ID</th> 
-                        <th>Card No</th>
-                        <th>Status</th>
+                        <th>Course Name</th>
+                        <th>Course Instructor</th>
+                        <th>Payment Date</th>
+                        <th>Payment Amount</th>
+                        <th>Payment Status</th>
                         <th>Action</th>
-
                     </tr> 
                     
                    {{-- item @S --}} 
+                    @foreach($checkout as $key => $value)
                     <tr>
-                        <td>1</td> 
-                        <td>23456</td> 
-                        <td>12345674321</td>
+                        <td>{{$key+1}}</td>
+                        <td>{{$value->payment_id}}</td>
+                        <td>{{$value->course->title}}</td>
+                        <td>{{$value->course->user->name}}</td>
+                        <td>{{$value->created_at}}</td>
+                        <td>$ {{$value->amount}}</td>
                         <td>
-                            <span class="badge text-bg-success">Success</span>
+                            @if($value->status == 'completed')
+                            <span class="badge rounded-pill bg-success">Success</span>
+                            @else
+                            <span class="badge rounded-pill bg-danger">Failed</span>
+                            @endif
                         </td>
                         <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{{ route('students.show.courses', $value->course->slug)}}" class="btn btn-sm btn-primary">View Course</a>
                         </td>
-                    </tr> 
-                   {{-- item @E --}}
-                    
-                   {{-- item @S --}} 
-                    <tr>
-                        <td>1</td> 
-                        <td>23456</td> 
-                        <td>12345674321</td>
-                        <td>
-                            <span class="badge text-bg-warning">Pending</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                        </td>
-                    </tr> 
-                   {{-- item @E --}}
-                    
-                   {{-- item @S --}} 
-                    <tr>
-                        <td>1</td> 
-                        <td>23456</td> 
-                        <td>12345674321</td>
-                        <td>
-                            <span class="badge text-bg-danger">Cancel</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                        </td>
-                    </tr> 
+                    </tr>
+                    @endforeach
                    {{-- item @E --}}
                     
                 </table> 

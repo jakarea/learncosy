@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Auth; 
+use DataTables;
+use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\User;
-use Auth; 
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use DataTables;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class InstructorController extends Controller
 {
@@ -131,8 +132,10 @@ class InstructorController extends Controller
     public function show($id)
      {  
         $instructor = User::where('id', $id)->first();
+
+        $subscription = Subscription::where('instructor_id', $id)->get();
     
-        return view('instructor/admin/show',compact('instructor')); 
+        return view('instructor/admin/show',compact('instructor', 'subscription')); 
      }
 
       // show page 

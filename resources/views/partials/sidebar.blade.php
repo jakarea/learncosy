@@ -32,7 +32,7 @@
                     <span>Dashboard</span> 
                 </a>
             </li>
-            {{-- @can('subscription.check') --}}
+            @can('subscription.check')
             <li class="menu-item">
                 <a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
@@ -59,6 +59,7 @@
                 </a> 
                  @include('students/partials/sub-sidebar') 
             </li>  
+            
             <li class="menu-item">
                 <a href="{{ url('instructor/payments') }}" class="{{ Request::is('instructor/payments')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-euro-sign"></i>
@@ -66,16 +67,16 @@
                     
                 </a> 
                  @include('students/partials/sub-sidebar') 
-            </li>  
-            {{-- @endcan --}}
+            </li>
+            @endcan  
             <li class="menu-item">
                 <a href="{{ url('instructor/payments/platform-fee') }}" class="{{ Request::is('instructor/payments/platform-fee*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-euro-sign"></i>
                     <span>Platform Fee</span>
                     
                 </a> 
-                 @include('students/partials/sub-sidebar') 
-            </li>   
+                 {{-- @include('students/partials/sub-sidebar')  --}}
+            </li> 
             <li class="menu-item">
                 <a href="#" class="{{ Request::is('settings*')  ? ' active' : '' }} menu-link"> 
                    <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
@@ -141,6 +142,12 @@
                 </a>
             </li>
             <li class="menu-item">
+                <a href="{{ route('admin.subscription') }}" class="{{ Request::is('admin/manage/subscriptionpackage*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Package</span> 
+                </a>
+            </li>
+            <li class="menu-item">
                 <a href="#" class="menu-link">
                     <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="E-Learning" title="E-Learning" class="img-fluid" />
                     <span>E-Learning</span>
@@ -156,6 +163,16 @@
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
                     <span>{{ __('Logout') }}</span>
                 </a> 
+                @if(Auth::user()->user_role == 'instructor')
+                    @can('subscription.check')
+                        <span class="badge badge-success bg-success upgrade-text position-absolute left-0">Premium</span>
+                    @else
+                    <a href="{{ route('instructor.subscription') }}">
+                        <span class="badge badge-danger bg-danger upgrade-text position-absolute left-0" style="right: 30%;bottom: 45px;
+                    ">Upgrade</span>
+                    </a>
+                    @endcan
+                @endif
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

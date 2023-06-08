@@ -20,18 +20,21 @@ $i = 0;
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$course->title}}</h1>
                 <p>{{$course->sub_title}}</p>
+                @if ( !isEnrolled($course->id) )
                 <form action="{{route('students.checkout', $course->slug)}}" method="GET">
                     <input type="hidden" name="course_id" value="{{$course->id}}">
                     <input type="hidden" name="price" value="{{$course->price}}">
                     <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                     <button type="submit" class="btn btn-primary">Enroll Now</button>
                 </form>
+                @endif
             </div>
         </div>
     </div>
     <!-- suggested banner @E -->
 
     <div class="row">
+        @include('partials.session-message')
         <div class="col-12 col-sm-12 col-md-5 col-lg-4">
             <div class="mylearning-txt-box mt-4">
                 <h5>Course's Outline</h5>

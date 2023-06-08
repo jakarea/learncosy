@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\CourseReview;
+use Auth;
+use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\User;
-use Auth;
 use App\Models\Module;
+use App\Models\Checkout;
+use App\Models\CourseReview;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class StudentHomeController extends Controller
 {
@@ -63,7 +64,8 @@ class StudentHomeController extends Controller
 
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
-        return view('settings/students/account-management',compact('user')); 
+        $checkout = Checkout::where('user_id', $userId)->with('course')->get();
+        return view('settings/students/account-management',compact('user', 'checkout')); 
     }
 
     

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\User;
 use Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash; 
 use DataTables;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Checkout;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash; 
 
 class StudentManagementController extends Controller
 {
@@ -128,8 +129,8 @@ class StudentManagementController extends Controller
     public function show($id)
     {  
        $student = User::where('id', $id)->first();
-   
-       return view('students/admin/show',compact('student')); 
+       $checkout = Checkout::where('user_id', $id)->with('course')->get();
+       return view('students/admin/show',compact('student', 'checkout')); 
     }
 
     // show page 
