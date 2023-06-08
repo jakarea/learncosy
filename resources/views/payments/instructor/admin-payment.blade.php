@@ -15,20 +15,14 @@
 @section('content')
 <main class="profile-page-wrap">
     {{-- user profile header area @S --}}
-    <div class="product-filter-wrapper my-0">
-        <div class="product-filter-box mt-0 mb-4">
-            <div class="password-change-txt">
-                <h1 class="mb-1">Payment to Admin</h1>
-            </div>
-        </div>
-    </div>
+
     {{-- user profile header area @E --}}
 
     {{-- profile information @S --}}
     <div class="row"> 
         <div class="col-lg-12">
             <div class="productss-list-box payment-history-table">
-                <h5 class="p-3 pb-0">Payment Information :</h5>
+                <h5 class="p-3 pb-0">Platfrom Fee </h5>
                 <table>
                     <thead>
                         <th width="5%">No</th>
@@ -40,14 +34,6 @@
 
                     </thead>
                 </table>
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="payment-method-info-item">
-                            <span class="text-mute">Card Brand</span>
-                            <h6 class="text-success">No Payment Method</h6>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>

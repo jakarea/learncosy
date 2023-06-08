@@ -18,6 +18,18 @@
                 <p>{{Auth()->user()->user_role}}</p>
             </div>
         </div>
+
+        @if(Auth::user()->user_role == 'instructor')
+                    @can('subscription.check')
+                        <span class="badge badge-success bg-success upgrade-text position-absolute left-0">Premium</span>
+                    @else
+                    <a href="{{ route('instructor.subscription') }}">
+                        <span class="badge badge-danger bg-danger upgrade-text position-absolute left-0" style="right: 30%;bottom: 45px;
+                    ">Upgrade</span>
+                    </a>
+                    @endcan
+                @endif
+
     </div>
     {{-- header user @E --}}
 
@@ -63,29 +75,11 @@
             <li class="menu-item">
                 <a href="{{ url('instructor/payments') }}" class="{{ Request::is('instructor/payments')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-euro-sign"></i>
-                    <span>Payment</span>
-                    
+                    <span>Earning</span>
                 </a> 
-                 @include('students/partials/sub-sidebar') 
+                @include('students/partials/sub-sidebar') 
             </li>
             @endcan  
-            <li class="menu-item">
-                <a href="{{ url('instructor/payments/platform-fee') }}" class="{{ Request::is('instructor/payments/platform-fee*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-euro-sign"></i>
-                    <span>Platform Fee</span>
-                    
-                </a> 
-                 {{-- @include('students/partials/sub-sidebar')  --}}
-            </li> 
-            <li class="menu-item">
-                <a href="#" class="{{ Request::is('settings*')  ? ' active' : '' }} menu-link"> 
-                   <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
-                    <span>Settings</span>
-                    <i class="fa-solid fa-angles-right"></i>
-                </a> 
-                 @include('settings/partials/sub-sidebar') 
-            </li> 
-            {{-- instructor menu link @E --}}
 
             {{-- student menu link @S --}}
             @elseif(Auth::user()->user_role == 'student')
@@ -150,16 +144,7 @@
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
                     <span>{{ __('Logout') }}</span>
                 </a> 
-                @if(Auth::user()->user_role == 'instructor')
-                    @can('subscription.check')
-                        <span class="badge badge-success bg-success upgrade-text position-absolute left-0">Premium</span>
-                    @else
-                    <a href="{{ route('instructor.subscription') }}">
-                        <span class="badge badge-danger bg-danger upgrade-text position-absolute left-0" style="right: 30%;bottom: 45px;
-                    ">Upgrade</span>
-                    </a>
-                    @endcan
-                @endif
+        
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
