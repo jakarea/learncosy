@@ -43,7 +43,7 @@
                                         <div class="form-group form-error">
                                             <label for="user_role">User Role </label>
                                             <select name="user_role" id="user_role" class="form-control @error('user_role') is-invalid @enderror">
-                                                <option value="students" selected>Students</option>
+                                                <option value="student" selected>Student</option>
                                                 <option value="instructor">Instructor</option>
                                             </select> 
                                             <span class="invalid-feedback">@error('user_role'){{ $message }}

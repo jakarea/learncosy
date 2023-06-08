@@ -298,3 +298,8 @@ Route::middleware('auth')->prefix('admin/profile')->controller(AdminProfileContr
 
 // auth route 
 Auth::routes();
+Route::get('/logout', function () {
+    Auth::logout();
+    session()->flush();
+    return redirect('/login');
+});
