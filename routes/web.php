@@ -37,12 +37,12 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 */
 
 Route::get('/home', function () {
-    if(Auth::user()->user_role == 'student')
-        return redirect('/students/dashboard');
     return redirect('/');
 });
 
 Route::middleware('auth')->get('/', function () {
+    if(Auth::user()->user_role == 'student')
+        return redirect('/students/dashboard');
     return view('home');
 });
 
