@@ -107,19 +107,6 @@
                     <span>Home</span> 
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="{{ url('students/catalog/courses') }}" class="{{ Request::is('students/catalog/courses*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Catalog" title="Catalog" class="img-fluid" />
-                    <span>Course Catalog </span> 
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('students/account-management') }}" class="{{ Request::is('students/account-management*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
-                    <span>Account Management </span> 
-                </a>
-            </li>
-            {{-- student menu link @E --}}
 
             {{-- admin menu link @S --}}
             @elseif(Auth::user()->user_role == 'admin')

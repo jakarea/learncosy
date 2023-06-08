@@ -29,17 +29,17 @@
             {{-- featured course @S --}}
             <div class="row">
                 <!-- item @S -->
-                @foreach($courses as $course)
+                @foreach($enrolments as $enrolment)
  
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                     <div class="course-box-wrap">
                         <div class="course-content-box">
                             <div class="course-thumbnail">
-                                <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}"
-                                    alt="{{ $course->slug}}" class="img-fluid">
+                                <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}"
+                                    alt="{{ $enrolment->course->slug}}" class="img-fluid">
                             </div>
                             <div class="course-txt-box course-txt-box-2">
-                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>  </h3> 
+                                <h3> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title }} </a>  </h3> 
                                 <h6>25%</h6>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                 <div class="progress-bar" style="width: 25%"></div>
                               </div> 
-                            <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Go to Course Page</a> 
+                            <a href="{{url('students/courses/'.$enrolment->course->slug )}}" class="btn btn-exprec enroll__btn">Go to Course Page</a> 
                         </div>
                     </div>
                 </div>

@@ -37,6 +37,8 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 */
 
 Route::get('/home', function () {
+    if(Auth::user()->user_role == 'student')
+        return redirect('/students/dashboard');
     return redirect('/');
 });
 
@@ -168,7 +170,7 @@ Route::middleware('auth')->prefix('instructor/students')->controller(StudentCont
 Route::middleware('auth')->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
-    Route::get('/home', 'index')->name('students.all.courses');
+    Route::get('/home','catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
     Route::post('/courses/{slug}', 'review')->name('students.review.courses'); 

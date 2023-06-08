@@ -16,47 +16,66 @@ class StudentHomeController extends Controller
 {
     // dashboard
     public function dashboard(){ 
-        return view('e-learning/course/students/dashboard'); 
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return view('e-learning/course/students/dashboard', compact('enrolments')); 
     }
 
     // dashboard
     public function enrolled(){
-        $courses = Course::orderBy('id', 'desc')->get();
-        return view('e-learning/course/students/enrolled',compact('courses')); 
+        
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return view('e-learning/course/students/enrolled',compact('enrolments')); 
     }
 
     // all course list
     public function index(){
 
-        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $courses = Course::orderBy('id','desc');
-        if(!empty($name)){
-            $names = explode( ' ', $name);
-            $courses->where('title','like','%'.trim($names[0]).'%');
-            if(isset($names[1])){
-                $courses->where('title','like','%'.trim($names[1]).'%'); 
+        if(!empty($title)){
+            $titles = explode( ' ', $title);
+            $courses->where('title','like','%'.trim($titles[0]).'%');
+            if(isset($titles[1])){
+                $courses->where('title','like','%'.trim($titles[1]).'%'); 
             }
         }
         $courses = $courses->paginate(12);
-
+        
         return view('e-learning/course/students/home',compact('courses')); 
     }
 
     // catalog course list
     public function catalog(){
-
-        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
         $courses = Course::orderBy('id','desc');
-        if(!empty($name)){
-            $names = explode( ' ', $name);
-            $courses->where('title','like','%'.trim($names[0]).'%');
-            if(isset($names[1])){
-                $courses->where('title','like','%'.trim($names[1]).'%'); 
+        $mainCategories = $courses->pluck('categories'); 
+        if(!empty($title)){
+            $titles = explode( ' ', $title);
+            $courses->where('title','like','%'.trim($titles[0]).'%');
+            if(isset($titles[1])){
+                $courses->where('title','like','%'.trim($titles[1]).'%'); 
             }
         }
+        if(!empty($cat)){
+            $cats = explode( ' ', $cat);
+            $courses->where('categories','like','%'.trim($cats[0]).'%');
+            if(isset($cats[1])){
+                $courses->where('cat','like','%'.trim($cats[1]).'%'); 
+            }
+        }
+        $unique_array = [];
+        foreach($mainCategories as $category){ 
+            $cats = explode(",", $category);
+            foreach($cats as $cat){
+                $unique_array[] = strtolower($cat);
+            }
+        }
+        $categories = array_unique($unique_array);
         $courses = $courses->paginate(12);
 
-        return view('e-learning/course/students/catalog',compact('courses')); 
+        return view('e-learning/course/students/catalog',compact('courses','categories')); 
     }
 
     // account Management 

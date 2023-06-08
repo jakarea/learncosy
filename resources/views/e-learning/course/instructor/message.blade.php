@@ -48,11 +48,12 @@
                         <textarea name="message" placeholder="Write a message" id="" cols="30" rows="4" class="form-control"></textarea> 
                         <span class="invalid-feedback">@error('message'){{ $message }}
                                                 @enderror</span>
-
                     </div>
+                    <small style="color: #8C8FAE">You will get replay within 24 hours</small>
                     <div class="form-submit">
                         <button type="submit" class="btn btn-submit">Submit</button>
                     </div>
+                   
                 </form>
             </div>
             {{-- chat area @E --}}

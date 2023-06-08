@@ -78,7 +78,6 @@ class CheckoutController extends Controller
      */
     public function success($slug)
     {
-        
         // Find the course based on the slug
         $course = Course::where('slug', $slug)->first();
         Stripe::setApiKey( $course->user->stripe_secret_key);

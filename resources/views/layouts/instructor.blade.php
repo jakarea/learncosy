@@ -31,7 +31,7 @@
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
  
-
+  @yield('seo')
 </head>
 
 <body> 
