@@ -15,7 +15,7 @@ class CheckoutController extends Controller
      */
     public function __construct()
     {
-        Stripe::setApiKey(auth()->user()->stripe_secret_key ?? env('STRIPE_SECRET'));
+        // Stripe::setApiKey(auth()->user()->stripe_secret_key ?? env('STRIPE_SECRET'));
     }
     
     /**
@@ -27,6 +27,14 @@ class CheckoutController extends Controller
     {
         //
         $course = Course::where('slug', $slug)->first();
+
+        // configure stripe key
+        Stripe::setApiKey( $course->user->stripe_secret_key);
+
+        // check if stripe key is not null
+        if($course->user->stripe_secret_key == null){
+            return redirect()->route('students.show.courses', $course->slug)->with('error', 'Instructor has not connected with stripe yet');
+        }
 
         if($course->offer_price == 0){
             $course_price = $course->price;
@@ -70,9 +78,12 @@ class CheckoutController extends Controller
      */
     public function success($slug)
     {
-        $session_id = Session::all()['data'][0]['id'];
+        
         // Find the course based on the slug
         $course = Course::where('slug', $slug)->first();
+        Stripe::setApiKey( $course->user->stripe_secret_key);
+        // Get the session ID
+        $session_id = Session::all()['data'][0]['id'];
         $start_date = null;
         $end_date = null;
         // start_date end_date add based on course subscription_status

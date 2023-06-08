@@ -1,5 +1,7 @@
 <?php
 
+use Stripe\Stripe;
+
 /**
  * Helper function to get SubscriptionPackage
  */
@@ -69,5 +71,58 @@ if (!function_exists('isSubscribed')) {
 
         // User is subscribed and matches the package_id
         return true;
+    }
+}
+
+/**
+ * Helper function to check logged in user is connected with stripe or not if connected then show connected and store data in $account
+ */
+if (!function_exists('isConnectedWithStripe')) {
+    function isConnectedWithStripe()
+    {
+        $user = auth()->user();
+        $account = null;
+        $status = '';
+    
+        if ($user->stripe_secret_key && $user->stripe_public_key) {
+            Stripe::setApiKey($user->stripe_secret_key);
+            // Retrieve the user's stripe data based on user_id
+            $account = \Stripe\Account::retrieve($user->stripe_account_id);
+            $status = 'Connected';
+    
+            if (!$account) {
+                // Stripe account not found, show alert or redirect
+                $status = 'Not Connected';
+                return [$account, $status];
+            }
+        } else {
+            // User is not authenticated
+            $status = 'Not Connected';
+            return [$account, $status];
+        }
+    
+        return [$account, $status];
+    }    
+}
+
+/**
+ * Helper function to check logged in user role is student and check if user has enrolled in course or not
+ */
+if (!function_exists('isEnrolled')) {
+    function isEnrolled($course_id)
+    {
+        $user = auth()->user();
+        $enrolled = false;
+
+        if ($user) {
+            // Retrieve the user's checkout based on user_id and course_id
+            $checkout = \App\Models\Checkout::where('user_id', $user->id)->where('course_id', $course_id)->first();
+
+            if ($checkout) {
+                $enrolled = true;
+            }
+        }
+
+        return $enrolled;
     }
 }
