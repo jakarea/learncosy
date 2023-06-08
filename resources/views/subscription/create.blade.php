@@ -33,7 +33,7 @@
                                         <div class="form-group form-error">
                                             <label for="name">Name <sup class="text-danger">*</sup>
                                             </label>
-                                            <input type="text" placeholder="Enter student name" name="name"
+                                            <input type="text" placeholder="Enter name" name="name"
                                                 class="form-control @error('name') is-invalid @enderror"
                                                 value="{{ old('name') }}" id="name">
                                             <span class="invalid-feedback">@error('name'){{ $message }}
