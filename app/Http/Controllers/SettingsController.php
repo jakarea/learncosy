@@ -20,6 +20,11 @@ class SettingsController extends Controller
      {
         $connet = '';
          $user = auth()->user();
+         // stripe_secret_key and stripe_public_key is an valid stripe can access
+         if (!$request->stripe_secret_key || !$request->stripe_public_key) {
+             return back()->with('error', 'Please enter valid stripe keys');
+         }
+
          $user->stripe_secret_key = $request->stripe_secret_key ? $request->stripe_secret_key : $user->stripe_secret_key;
          $user->stripe_public_key = $request->stripe_public_key ? $request->stripe_public_key : $user->stripe_public_key;
          $user->save();

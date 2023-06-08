@@ -35,7 +35,7 @@ class RegisterController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function redirectTo()
     {
-        if (auth()->user()->user_role == 'students') {
+        if (auth()->user()->user_role == 'student') {
             return 'students/profile/edit';
 
         }elseif(auth()->user()->user_role == 'instructor'){

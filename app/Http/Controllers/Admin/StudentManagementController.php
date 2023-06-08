@@ -22,7 +22,7 @@ class StudentManagementController extends Controller
 
     // data table getData
     public function studentsDataTable()
-    {       $user_role = "students";
+    {       $user_role = "student";
             $user = User::where('user_role',$user_role)->get();
           
             return Datatables::of($user)

@@ -13,6 +13,23 @@
     <!-- <h1>Welcome To LearnCosy</h1> -->
     <div class="subscription-package col-12">
         @include('partials.session-message')
+        
+        @can('admin')
+            <!-- Content only visible to users with the 'admin' role -->
+            <p>Welcome, admin!</p>
+        @endcan
+
+        @can('instructor')
+            <!-- Content only visible to users with the 'instructor' role -->
+            <p>Welcome, instructor!</p>
+        @endcan
+
+        @can('student')
+            <!-- Content only visible to users with the 'user' role -->
+            <p>Welcome, Student!</p>
+        @endcan
+
+
         <div class="row">
             @foreach( getSubscriptionPackage() as $package )
             @php 

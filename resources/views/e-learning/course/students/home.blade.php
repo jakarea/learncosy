@@ -38,8 +38,8 @@
         <div class="student-search-wrap">
             <div class="student-search-box">
                 <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search icon" class="img-fluid">
-                <input type="text" name="name" class="form-control" placeholder="Search"
-                    value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
+                <input type="text" name="title" class="form-control" placeholder="Search"
+                    value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
             </div>
             <div class="student-bttn-box">
                 <button class="btn btn-search" type="submit">Search</button> 
@@ -191,13 +191,13 @@
                 </div>
                 <div class="col-12">
                     <div class="text-center mt-4">
-                      @if ($courses->hasPages())
-                        <div class="pagination-wrapper text-center">
-                            {{ $courses->links('pagination::bootstrap-5') }}
-                        </div>
-                     @endif
+                        @if ($courses->hasPages())
+                            <div class="pagination-wrapper text-center">
+                                {{ $courses->links('pagination::bootstrap-5') }}
+                            </div>
+                        @endif
                     </div>
-                 </div>
+                </div>
                 @endif
             </div>
             {{-- popular course @E --}}

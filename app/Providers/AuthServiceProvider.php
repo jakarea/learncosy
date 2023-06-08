@@ -29,5 +29,19 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('subscription.check', function ($user) {
             return $user->subscription != null;
         });
+
+        // User role management
+        Gate::define('admin', function ($user) {
+            return $user->user_role === 'admin';
+        });
+    
+        Gate::define('instructor', function ($user) {
+            return $user->user_role === 'instructor';
+        });
+    
+        Gate::define('student', function ($user) {
+            return $user->user_role === 'student' ;
+        });
+    
     }
 }

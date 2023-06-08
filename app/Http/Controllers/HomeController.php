@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
@@ -29,12 +30,15 @@ class HomeController extends Controller
 
     public function studentsPayment()
     {
-        return view('payments/instructor/students-payment');
+        // get all payments of the students who are enrolled in the courses of the instructor
+        $payments = Checkout::courseEnrolledByInstructor()->with('course')->get();
+        return view('payments/instructor/students-payment', compact('payments'));
     }
 
     public function adminPayment()
     {
-        return view('payments/instructor/admin-payment');
+        $payments = Subscription::where('instructor_id', auth()->user()->id)->get();
+        return view('payments/instructor/admin-payment', compact('payments'));
     }
 
     public function adminPaymentData( Request $request )

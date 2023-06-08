@@ -29,62 +29,27 @@
                 <table>
                     <tr>
                         <th width="5%">No</th>
-                        <th>Payment ID</th>
+                        <th>Payment Type</th>
                         <th>Student Name</th>
                         <th>Course Name</th>
+                        <th>Amount</th>
                         <th>Status</th>
                         <th>Action</th>
 
                     </tr>
-
-                    {{-- item @S --}}
+                    @foreach ($payments as $payment)
                     <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>Jhon Doe</td>
-                        <td>Next JS Course</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $payment->payment_method }}</td>
+                        <td>{{ $payment->user->name }}</td>
+                        <td>{{ $payment->course->title }}</td>
+                        <td>{{ $payment->amount }}</td>
+                        <td>{{ $payment->status }}</td>
                         <td>
-                            <span class="badge text-bg-success">Success</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-eye me-2"></i></a>
-                            
-                            <a href="#"><i class="fas fa-trash"></i></a>
+                            <a href="#" class="btn btn-primary">View</a>
                         </td>
                     </tr>
-                    {{-- item @E --}} 
-                    {{-- item @S --}}
-                    <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>Jhon Doe</td>
-                        <td>Next JS Course</td>
-                        <td>
-                            <span class="badge text-bg-success">Success</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-eye me-2"></i></a>
-                            
-                            <a href="#"><i class="fas fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    {{-- item @E --}} 
-                    {{-- item @S --}}
-                    <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>Jhon Doe</td>
-                        <td>Next JS Course</td>
-                        <td>
-                            <span class="badge text-bg-danger">Failed</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-eye me-2"></i></a>
-                            
-                            <a href="#"><i class="fas fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    {{-- item @E --}} 
+                    @endforeach
 
                 </table>
                 {{-- <div class="row">
@@ -106,6 +71,10 @@
 
 {{-- page script @S --}}
 @section('script')
-
+<script>
+    // $(document).ready(function() {
+    //     $('table').DataTable();
+    // });
+</script>
 @endsection
 {{-- page script @E --}}

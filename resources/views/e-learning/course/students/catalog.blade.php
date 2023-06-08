@@ -1,6 +1,8 @@
 @extends('layouts/instructor')
-@section('title') Catalog Course Page @endsection
-
+@section('title') Course Page @endsection
+@section('seo')
+<meta name="description" content="Explore a diverse course list on LearnCosy. Boost your skills with engaging lessons in technology, business, arts, and more. Begin your educational journey today and unlock your full potential. Discover now!" itemprop="description">
+@endsection
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
@@ -17,16 +19,14 @@
     {{-- page tab head area @S --}}
     <div class="student-head-bttn">
         <ul class="nav nav-pills">
-            @if($courses)
-                @foreach ($courses as $course) 
-                    @php $cateogires = explode(",",$course->categories)  @endphp
-                    @foreach($cateogires as $key => $category)
-                    <li class="nav-item">
-                        <button class="nav-link" type="button">{{$category}}</button>
-                    </li> 
-                    @endforeach
-                @endforeach 
-            @endif 
+           
+            @foreach($categories as $category)
+            <li class="nav-item">
+                <a href="{{ url('students/home?cat='.$category)}}" class="nav-link" type="button">{{$category}}</a>
+            </li> 
+            @endforeach
+                
+           
         </ul>
     </div>
     {{-- page tab head area @E --}}
@@ -36,8 +36,8 @@
         <div class="student-search-wrap">
             <div class="student-search-box">
                 <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search icon" class="img-fluid">
-                <input type="text" name="name" class="form-control" placeholder="Search"
-                    value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
+                <input type="text" name="title" class="form-control" placeholder="Search"
+                    value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
             </div>
             <div class="student-bttn-box">
                 <button class="btn btn-search" type="submit">Search</button> 
@@ -77,10 +77,10 @@
                             <div class="course-txt-box">
                                 <h3 class="mb-2"> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
                                 </h3>
-                                @php $features = explode(",",$course->features)  @endphp
+                                <!-- @php $features = explode(",",$course->features)  @endphp
                                 @foreach($features as $key => $feature)
                                 <span class="badge text-bg-primary">{{$feature}}</span> 
-                                @endforeach 
+                                @endforeach  -->
                                 <ul>   
                                     <li><a href="javascript:void(0)" class="text-dark"> <span class="badge text-bg-secondary"> Rating: <i class="fa-solid fa-star"></i> {{$course->price}} </span></a></li>     
                                     <li><a href="javascript:void(0)" class="text-dark"> <span class="badge text-bg-info"> Price: <i class="fa-solid fa-dollar-sign"></i> {{$course->price}} </span></a></li>   

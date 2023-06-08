@@ -85,6 +85,7 @@
                     <div class="form-submit">
                         <button type="submit" class="btn btn-submit">Submit</button>
                     </div>
+                    <small>You will get replay within 24 hours</small>
                 </form>
             </div>
             {{-- chat area @E --}}
