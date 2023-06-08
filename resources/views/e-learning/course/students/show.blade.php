@@ -7,6 +7,10 @@
 <link href="{{ asset('assets/css/student.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
+@section('seo')
+<meta name="keywords" content="{{ $course->categories .', '.$course->meta_keyword }}"/>
+<meta name="description" content="{{ $course->meta_description }}" itemprop="description">
+@endsection
 
 @section('content')
 @php
@@ -86,7 +90,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Message to Instructor</a>
+                        <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Get Support</a>
                     </div>
                     {!! $course->description !!}
                 </div>
@@ -140,11 +144,10 @@ $i = 0;
                     <div class="row">
                         <div class="col-lg-12">
                             {{-- review box @S --}}
-
                             @foreach($course_reviews as $course_review)
                                 <div class="attached-file-box review-box">
                                     <div class="d_flex">
-                                        <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
+                                    <h4><img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}" alt="{{$course_review->user->name}}"
                                                 class="img-fluid me-1"> {{$course_review->user->name}}</h4>
                                         <ul class="review-box-icon">
                                             @for ($i = 0; $i < $course_review->star; $i++)

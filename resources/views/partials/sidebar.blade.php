@@ -3,7 +3,7 @@
     <div class="header-user-box">
         <div class="media"> 
             @if(Auth()->user()->avatar)
-                @if(Auth()->user()->user_role == 'students')
+                @if(Auth()->user()->user_role == 'student')
                 <img src="{{ asset('assets/images/students/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
                 @elseif(Auth()->user()->user_role == 'instructor')
                 <img src="{{ asset('assets/images/instructor/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
@@ -88,7 +88,7 @@
             {{-- instructor menu link @E --}}
 
             {{-- student menu link @S --}}
-            @elseif(Auth::user()->user_role == 'students')
+            @elseif(Auth::user()->user_role == 'student')
             <li class="menu-item">
                 <a href="{{ url('students/dashboard') }}" class="{{ Request::is('/')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home" class="img-fluid" />
@@ -107,19 +107,6 @@
                     <span>Home</span> 
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="{{ url('students/catalog/courses') }}" class="{{ Request::is('students/catalog/courses*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Catalog" title="Catalog" class="img-fluid" />
-                    <span>Course Catalog </span> 
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('students/account-management') }}" class="{{ Request::is('students/account-management*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/settings-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
-                    <span>Account Management </span> 
-                </a>
-            </li>
-            {{-- student menu link @E --}}
 
             {{-- admin menu link @S --}}
             @elseif(Auth::user()->user_role == 'admin')

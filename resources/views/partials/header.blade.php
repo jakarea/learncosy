@@ -50,9 +50,8 @@
                             <i class="fa-solid fa-volleyball"></i>
                           </a>  
                           <ul class="dropdown-menu settings-dropdown">   
-                            @if (Auth::user()->user_role == 'students')
+                            @if (Auth::user()->user_role == 'student')
                                 <li><a href="{{url('/students/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
-                                <li><a href="{{ url('/students/account-management') }}"><i class="fa-solid fa-headset"></i> Support</a></li> 
                                 <li><a href="{{ url('/students/account-management') }}"><i class="fas fa-gear"></i> Settings</a></li> 
                             @elseif(Auth::user()->user_role == 'instructor')
                                 <li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>

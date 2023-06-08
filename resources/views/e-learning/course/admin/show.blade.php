@@ -91,8 +91,8 @@
                             {{-- review box @S --}}
                             <div class="attached-file-box review-box">
                                 <div class="d_flex">
-                                    <h4><img src="{{asset('assets/images/avatar.png')}}" alt="Place"
-                                            class="img-fluid me-1"> Jhon Doe</h4>
+                                <h4><img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}" alt="{{$course_review->user->name}}"
+                                                class="img-fluid me-1"> {{$course_review->user->name}}</h4>
                                     <ul class="review-box-icon">
                                         <li><i class="fas fa-star"></i></li>
                                         <li><i class="fas fa-star"></i></li>
