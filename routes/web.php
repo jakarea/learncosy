@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CourseBundleController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Student\CheckoutController;
@@ -18,10 +19,11 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
-use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagementController;
+use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,7 @@ Route::middleware('auth')->get('/', function () {
 Route::middleware('auth')->prefix('instructor/payments')->controller(HomeController::class)->group(function () {  
     Route::get('/', 'studentsPayment');  
     Route::get('/platform-fee', 'adminPayment');  
+    Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
 });
 
 // message pages routes
@@ -59,7 +62,7 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 });
 
 // course page routes
-// Route::group(['middleware' => ['subscription.check']], function () {
+Route::group(['middleware' => ['subscription.check']], function () {
     // course page routes
     Route::middleware('auth')->prefix('instructor/courses')->controller(CourseController::class)->group(function () {
         Route::get('/', 'index')->name('instructor.courses'); 
@@ -72,8 +75,8 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
         Route::post('/{slug}/edit', 'update')->name('course.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
     });
-// });
-// Route::group(['middleware' => ['subscription.check']], function () {
+});
+Route::group(['middleware' => ['subscription.check']], function () {
     // module page routes
     Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
         Route::get('/', 'index');
@@ -118,7 +121,7 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
         Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
-// });
+});
 // profile management page routes
 Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManagementController::class)->group(function () {
     Route::get('/myprofile', 'show')->name('instructor.profile'); 
@@ -126,6 +129,14 @@ Route::middleware('auth')->prefix('instructor/profile')->controller(ProfileManag
     Route::post('/edit', 'update')->name('instructor.profile.update'); 
     Route::get('/change-password', 'passwordUpdate');
     Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
+});
+
+// SubscriptionController
+Route::middleware('auth')->prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
+    Route::get('/', 'index')->name('instructor.subscription'); 
+    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    Route::get('success', 'success')->name('instructor.subscription.success');
+    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
 });
 
 // settings page routes

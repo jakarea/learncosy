@@ -29,7 +29,9 @@
                 @csrf
                 <div class="stripe-settings-form-wrap">
                     <div class="form-group mb-3">
-                        <label for="stripe_public_key">STRIPE KEY</label>
+                        <label for="stripe_public_key">STRIPE KEY 
+                            <sup><small class="badge badge-success bg-success">{{ isConnectedWithStripe()[1] }}</small></sup>
+                        </label>
                         <input type="text" class="form-control" name="stripe_public_key" placeholder="Enter Secret Key" value="{{ $user->stripe_public_key }}">
                     </div>
                     <div class="form-group mb-3">
@@ -53,54 +55,22 @@
                 <table>
                     <tr>
                         <th width="5%">No</th>
-                        <th>Payment ID</th>
-                        <th>Card No</th>
-                        <th>Status</th>
-                        <th>Action</th>
-
+                        <th>Account ID</th>
+                        <th>Account Type</th>
+                        <th>Account Status</th>
                     </tr>
-
-                    {{-- item @S --}}
-                    <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>12345674321</td>
-                        <td>
-                            <span class="badge text-bg-success">Success</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                        </td>
-                    </tr>
-                    {{-- item @E --}}
-
-                    {{-- item @S --}}
-                    <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>12345674321</td>
-                        <td>
-                            <span class="badge text-bg-warning">Pending</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                        </td>
-                    </tr>
-                    {{-- item @E --}}
-
-                    {{-- item @S --}}
-                    <tr>
-                        <td>1</td>
-                        <td>23456</td>
-                        <td>12345674321</td>
-                        <td>
-                            <span class="badge text-bg-danger">Cancel</span>
-                        </td>
-                        <td>
-                            <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                        </td>
-                    </tr>
-                    {{-- item @E --}}
+                    @if (isConnectedWithStripe()[0])
+                        <tr>
+                            <td>1</td>
+                            <td>{{ isConnectedWithStripe()[0]->id }}</td>
+                            <td>{{ isConnectedWithStripe()[0]->type }}</td>
+                            <td>{{ isConnectedWithStripe()[0]->charges_enabled ? 'Active' : 'Inactive' }}</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td colspan="4">No Stripe Account Connected</td>
+                        </tr>
+                    @endif
 
                 </table>
                 {{-- <div class="row">

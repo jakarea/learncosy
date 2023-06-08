@@ -18,10 +18,18 @@ class SettingsController extends Controller
      // Update stripe data
      public function stripeUpdate(Request $request)
      {
+        $connet = '';
          $user = auth()->user();
          $user->stripe_secret_key = $request->stripe_secret_key ? $request->stripe_secret_key : $user->stripe_secret_key;
          $user->stripe_public_key = $request->stripe_public_key ? $request->stripe_public_key : $user->stripe_public_key;
          $user->save();
+
+         // check stripe connected or not
+        if( !$user->stripe_secret_key || !$user->stripe_public_key ){
+            $connet = 'not';
+        }else{
+            $connet = 'yes';
+        }
          return back()->with('success', 'Stripe data updated successfully');
      }
 

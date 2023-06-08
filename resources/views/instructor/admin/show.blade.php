@@ -87,6 +87,46 @@
                         {!! $instructor->description !!}
                     </div>
                 </div>  
+                <div class="col-12">
+                    <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
+                        <h5>Payment Log :</h5>
+                        <table class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <th width="5%">No</th>
+                                <th>Payment ID</th>
+                                <th>Instructor Email</th> 
+                                <th>Start At</th>
+                                <th>End At</th>
+                                <th>Duration</th>
+
+                            </thead>
+                            <tbody>
+                                @if (count($subscription) > 0)
+                                @foreach($subscription as $key => $payment)
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$payment->stripe_plan}}</td>
+                                    <td>{{$payment->instructor->email}}</td>
+                                    <td>{{ date('M d, y', strtotime($payment->start_at)) }}</td>
+                                    <td>{{$payment->end_at ? date('M d, y', strtotime($payment->end_at)) : 'N/A'}}</td>
+                                    <td>
+                                        @if($payment->end_at)
+                                        {{\Carbon\Carbon::parse($payment->start_at)->diffInDays(\Carbon\Carbon::parse($payment->end_at))}} Days
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6" class="text-center">No Data Found</td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>  
             </div>
         </div>
     </div>

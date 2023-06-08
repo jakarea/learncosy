@@ -27,6 +27,12 @@ class SubscriptionController extends Controller
     public function index()
     {
         //
+        return view('package.index', [
+            'packages' => SubscriptionPackage::all(),
+            'courses' => Course::all(),
+            'subscriptions' => Subscription::where('instructor_id', auth()->user()->id)->get(),
+        ])
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -36,6 +42,10 @@ class SubscriptionController extends Controller
      */
     public function create($id)
     {
+        // before redirect to stripe checkout page, check if .env file has STRIPE_KEY and STRIPE_SECRET
+        if(!env('STRIPE_KEY') || !env('STRIPE_SECRET')) {
+            return redirect()->back()->with('error', 'Please provide stripe key and secret in .env file');
+        }
         // redirect to stripe checkout page
         $package = SubscriptionPackage::findorfail($id);
         if(!$package) {
@@ -56,8 +66,8 @@ class SubscriptionController extends Controller
                 ],
             ],
             'mode' => 'payment',
-            'success_url' => route('subscription.success') . '?session_id={CHECKOUT_SESSION_ID}' . '&package_id=' . $package->id,
-            'cancel_url' => route('subscription.cancel'),
+            'success_url' => route('instructor.subscription.success') . '?session_id={CHECKOUT_SESSION_ID}' . '&package_id=' . $package->id,
+            'cancel_url' => route('instructor.subscription.cancel'),
         ]);
 
         return redirect($checkout->url);
@@ -80,7 +90,7 @@ class SubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function success_url( Request $request )
+    public function success( Request $request )
     {
         //
         $session_id = request()->session_id;
@@ -88,6 +98,15 @@ class SubscriptionController extends Controller
         $session = Session::retrieve($session_id);
 
         $package = SubscriptionPackage::findorfail($request->package_id);
+
+        // monthly or yearly
+        $type = $package->type;
+        // if type is monthly, then add 30 days to current date else add 365 days
+        if ($type == 'monthly') {
+            $ends_at = date('Y-m-d H:i:s', strtotime('+30 days'));
+        } else {
+            $ends_at = date('Y-m-d H:i:s', strtotime('+365 days'));
+        }
 
         // Subscription store in database
 
@@ -97,7 +116,7 @@ class SubscriptionController extends Controller
             'stripe_plan' => $session->payment_intent,
             'quantity' => 1,
             'start_at' => date('Y-m-d H:i:s'),
-            'ends_at' => date('Y-m-d H:i:s', strtotime('+60 days')),
+            'end_at' => $ends_at,
         ]);
 
         // return back with success message
@@ -112,9 +131,10 @@ class SubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cancel_url()
+    public function cancel()
     {
         //
+        return redirect()->route('admin.dashboard')->with('error', 'Subscription cancelled');
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Home Page @endsection
+@section('title') Pacakge Page @endsection
 
 {{-- page style @S --}}
 @section('style')

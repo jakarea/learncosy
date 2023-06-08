@@ -94,33 +94,35 @@
                         <table>
                             <tr>
                                 <th width="5%">No</th>
+                                <th>Payment ID</th> 
                                 <th>Course Name</th>
-                                <th>Course Review</th>
-                                <th>Course Progress</th>
-                                <th>View Course</th>
-
-                            </tr>
+                                <th>Course Instructor</th>
+                                <th>Payment Date</th>
+                                <th>Payment Amount</th>
+                                <th>Payment Status</th>
+                                <th>Action</th>
+                            </tr> 
                             {{-- item @S --}}
+                            @foreach($checkout as $key => $value)
                             <tr>
-                                <td>1</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>50%</td>
+                                <td>{{$key+1}}</td>
+                                <td>{{$value->payment_id}}</td>
+                                <td>{{$value->course->title}}</td>
+                                <td>{{$value->course->user->name}}</td>
+                                <td>{{$value->created_at}}</td>
+                                <td>$ {{$value->amount}}</td>
                                 <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
+                                    @if($value->status == 'completed')
+                                    <span class="badge rounded-pill bg-success">Success</span>
+                                    @else
+                                    <span class="badge rounded-pill bg-danger">Failed</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('students.show.courses', $value->course->slug)}}" class="btn btn-sm btn-primary">View Course</a>
                                 </td>
                             </tr>
-                            {{-- item @E --}}
-                            {{-- item @S --}}
-                            <tr>
-                                <td>2</td>
-                                <td>React Redux</td>
-                                <td>345</td>
-                                <td>40%</td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
+                            @endforeach
                             {{-- item @E --}}
                         </table>
                         {{-- <div class="row">
