@@ -61,5 +61,14 @@ class Checkout extends Model
     {
         return Checkout::where('course_id', $course_id)->get();
     }
+
+    public static function courseEnrolledByInstructor()
+    {
+        return Checkout::whereHas('course', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        });
+    }
+
+    // get student payment by course user id is equal to auth user id and course id is equal to course id
     
 }
