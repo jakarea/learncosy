@@ -35,6 +35,11 @@
   background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   color: #ffffff;
 }
+.card .btn-donez {
+  background: #8C8FAE;
+  color: #ffffff;
+  cursor: auto;
+}
 .card .card-footer {
   padding: 1rem 2rem;
   background-color: #DEE3EB;
