@@ -37,13 +37,15 @@ class HomeController extends Controller
 
     public function adminPayment()
     {
-        $payments = Subscription::where('instructor_id', auth()->user()->id)->get();
+        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', auth()->user()->id)->get();
+        // dd($payments);
         return view('payments/instructor/admin-payment', compact('payments'));
     }
 
     public function adminPaymentData( Request $request )
     {
-        $payments = Subscription::where('instructor_id', auth()->user()->id)->get();
+        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', auth()->user()->id)->get();
+        // dd($payments);
         return datatables()->of($payments)
             ->addColumn('action', function ($payment) {
                 $action = '<a href="' . route('admin.subscription.edit', $payment->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
@@ -53,6 +55,9 @@ class HomeController extends Controller
             // instructor name from instructor_id
             ->editColumn('instructor_id', function ($payment) {
                 return $payment->instructor->email;
+            })
+            ->editColumn('amount', function ($payment) {
+                return $payment->subscriptionPakage->amount;
             })
             ->rawColumns(['action', 'status', 'features'])
             ->make(true);

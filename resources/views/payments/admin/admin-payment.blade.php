@@ -51,7 +51,7 @@
         var table = $('table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('instructor.admin-payment') }}",
+            ajax: "{{ route('admin.admin-payment') }}",
             columns: [
                 // id and index
                 {data: 'id', name: 'id'},

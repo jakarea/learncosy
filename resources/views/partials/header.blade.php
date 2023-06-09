@@ -61,6 +61,7 @@
 									
 									@elseif(Auth::user()->user_role == 'admin')
 									<li><a href="{{url('/admin/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
+									<li><a href="{{ url('/admin/profile/platform-fee') }}"><i class="fas fa-euro-sign"></i> Platform Fee</a></li>
 									@endif 
 									<li>
 										<a href="{{ route('logout') }}" onclick="event.preventDefault();
