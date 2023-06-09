@@ -32,12 +32,16 @@
         <div class="row justify-content-center">
             @foreach( getSubscriptionPackage() as $package )
             @php 
-                $package_featurelist = json_decode($package->features);
+                $package_featurelist = json_decode($package->features); 
             @endphp
+          
             <div class="col-md-4">
                 <div class="card ">
                     <div class="card-header text-center">
                         <h3>{{ $package->name }}</h3>
+                        @if (isSubscribed($package->id))
+                        <span class="badge text-bg-success" style="font-size: .7rem">Current Package</span>
+                        @endif
                     </div>
                     <div class="card-body text-center">
                         <h2>{{ $package->amount }}<small><sup>$</sup></small></h2>
@@ -51,7 +55,7 @@
                     @if (!isSubscribed($package->id))
                         <a href="{{ route('instructor.subscription.create', $package->id) }}" class="btn btn-block">Subscribe</a>
                     @else
-                    <a href="#" class="btn btn-secondary btn-block" disabled>Subscribed</a>
+                    <a href="#" class="btn btn-donez btn-block">Subscribed</a>
                     @endif
 
                     </div>

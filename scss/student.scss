@@ -249,7 +249,12 @@
         object-fit: cover;
     }
 }
+ 
 
-.promo-video-box{
-
+.lesson-wrap{
+    li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

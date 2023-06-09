@@ -65,7 +65,11 @@
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapse_{{$module->id}}" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="d-flex">
-                                    <p>{{ $module->title }}</p>
+                                    <p>{{ $module->title }}
+                                        @can('instructor') 
+                                            <a href="{{url('instructor/modules/'.$module->slug.'/edit')}}" class="ms-2"><i class="fa-regular fa-pen-to-square text-info"></i></a>
+                                        @endcan
+                                    </p>
                                     <i class="fas fa-caret-down"></i>
                                 </div>
                             </button>
@@ -73,12 +77,15 @@
                         <div id="collapse_{{$module->id}}" class="accordion-collapse collapse " aria-labelledby="heading_{{$module->id}}"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body"> 
-                                <ul>
+                                <ul class="lesson-wrap">
                                     @foreach($module->lessons as $lesson)
                                     <li>
                                         <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block" data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}" data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
                                             <img src="{{ url('assets/images/course/small-book.svg') }}" alt="Lesson Icon" class="img-fluid"> {{ $lesson->title }}
                                         </a>
+                                        @can('instructor') 
+                                            <a href="{{url('instructor/lessons/'.$lesson->slug.'/edit')}}"><i class="fa-regular fa-pen-to-square text-info"></i></a>
+                                        @endcan
                                     </li>
                                     @endforeach
                                 </ul>
