@@ -53,6 +53,7 @@ class MessageController extends Controller
             if($chat_user == $userId){
                 $sender_id = $chat_user; 
             }else{
+                $sender_id = $userId; 
                 $reciver_id = $chat_user;
             }
         }
