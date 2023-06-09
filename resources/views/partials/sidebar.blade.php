@@ -76,8 +76,7 @@
                 <a href="{{ url('instructor/payments') }}" class="{{ Request::is('instructor/payments')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-euro-sign"></i>
                     <span>Earning</span>
-                </a> 
-                @include('students/partials/sub-sidebar') 
+                </a>  
             </li>
             @endcan  
 
