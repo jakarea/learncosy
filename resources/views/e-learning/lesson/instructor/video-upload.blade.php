@@ -23,7 +23,7 @@
                             <i class="fa-solid fa-list"></i> All Lesson </a>
                     </div>
                     <!-- Lesson create form @S -->
-                    <form action="" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form id="uploadForm" action="/instructor/lessons/upload-vimeo-submit" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -71,9 +71,9 @@
                                             {{-- <div id="preview"></div> --}}
                                             <div class="upload-progress">
                                                 <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                    <div class="progress-bar" style="width: 25%"></div>
+                                                    <div class="progress-bar" style="width: 0%"></div>
                                                   </div>
-                                                  <h3>25%</h3>
+                                                  <h3>0%</h3>
                                                   <p>Please, while uploading the video. don't close the window or dont't change the URL *</p>
                                             </div>
                                         </div>
@@ -105,6 +105,8 @@
 
 {{-- page script @S --}}
 @section('script')
+<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script>
     function dragNdrop(event) {
     var fileName = URL.createObjectURL(event.target.files[0]);
@@ -120,6 +122,77 @@ function drag() {
 function drop() {
     document.getElementById('uploadFile').parentNode.className = 'dragBox';
 }
+
+$(document).ready(function() {
+    $('#uploadForm').submit(function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        var urlParams = new URLSearchParams(window.location.search);
+        var lesson_id = urlParams.get('lesson_id');
+        // get lesson id from browser and add to form data
+        formData.append('lesson_id', lesson_id);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                // set button state to loading and disable with spinner
+                $('.btn-submit').attr('disabled', true).html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
+                );
+            },
+            success: function(response) {
+                // reset button state
+                $('.btn-submit').attr('disabled', false).text('Upload');
+                var uri = response.uri;
+                checkProgress(uri);
+            }
+        });
+    });
+
+    function checkProgress(uri) {
+        var interval = setInterval(function() {
+            $.ajax({
+                url: '/instructor/lessons/progress',
+                type: 'GET',
+                data: { uri: uri },
+                dataType: 'json',
+                success: function(response) {
+                    var progress = response.progress;
+                    $('.progress-bar').css('width', progress + '%');
+                    $('.upload-progress h3').text(progress + '%');
+                    if (progress === 100) {
+                        clearInterval(interval);
+                    }
+                    // redirect to lesson page
+                    if (progress === 100) {
+                        setTimeout(function() {
+                            window.location.href = '/instructor/courses';
+                            // redirect to course single page
+                            // var urlParams = new URLSearchParams(window.location.search);
+                            // var lesson_slug = urlParams.get('lesson_slug');
+                            // window.location.href = '{{ route('course.show', ':lesson_slug') }}'.replace(
+                            //     ':lesson_slug', lesson_slug);
+
+                        }, 3000);
+                    }
+                },
+                error: function(error) {
+                    // get all errors and display
+                    var errors = error.responseJSON.errors;
+                    // alert(errors);
+                    alert('Something went wrong. Please try again.');
+                }
+            });
+        }, 1000);
+    }
+});
 </script>
 @endsection
 

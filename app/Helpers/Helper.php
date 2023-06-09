@@ -126,3 +126,14 @@ if (!function_exists('isEnrolled')) {
         return $enrolled;
     }
 }
+
+/**
+ * Helper function to Get first lesson by course id
+ */
+if (!function_exists('getFirstLesson')) {
+    function getFirstLesson($courseId)
+    {
+        $lesson = \App\Models\Lesson::where('course_id', $courseId)->orderBy('id', 'asc')->first();
+        return $lesson;
+    }
+}
