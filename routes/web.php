@@ -98,8 +98,8 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table'); 
         Route::get('/create', 'create'); 
 
-        Route::get('/create/video-upload', 'videoUpload'); 
-        Route::get('/upload-vimeo', 'uploadVimeoPage'); 
+        Route::get('/create/video-upload', 'videoUpload')->name('lesson.upload.video');
+        Route::get('/upload-vimeo', 'uploadVimeoPage')->name('lesson.upload.vimeo');
         Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
         Route::get('/progress', 'getProgress')->name('upload.progress'); 
         Route::get('/upload', function() {

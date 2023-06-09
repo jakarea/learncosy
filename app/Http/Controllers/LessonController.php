@@ -96,7 +96,7 @@ class LessonController extends Controller
     public function store(Request $request)
     {  
         // return $request->all(); 
-
+        // return "Working";
         $request->validate([
             'course_id' => 'required',
             'module_id' => 'required',
@@ -144,8 +144,10 @@ class LessonController extends Controller
         }
           
         $lesson->save();
-        // return redirect('instructor/lessons')->with('success', 'Lesson saved!');
-        return redirect('instructor/lessons/upload-vimeo')->with('success', 'Lesson saved!');
+
+        // return redirect()->route('lesson.upload.video')->with('success', 'Lesson saved!');
+        // pass lesson data
+        return redirect()->route('lesson.upload.video', ['lesson_id' => $lesson->id, 'lesson_slug' => $lesson->slug])->with('success', 'Lesson saved!');
 
 
     }
@@ -160,7 +162,16 @@ class LessonController extends Controller
 
     public function uploadViewToVimeo(Request $request)
     {   
-        $file = $request->file('video');
+        $request->validate([
+            'lesson_id' => 'required',
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
+        ],
+        [ 
+            'video_link.required' => 'Video file is required!',
+            'video_link' => 'Max file size is 1 GB!',
+        ]);
+
+        $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
 
         $vimeo = Vimeo::connection();
@@ -171,6 +182,12 @@ class LessonController extends Controller
             'approach' => 'tus',
             'size' => $file->getSize(),
         ]);
+
+        if ($uri) {
+            $lesson = Lesson::find($request->lesson_id);
+            $lesson->video_link = $uri;
+            $lesson->save();
+        }
        
         return response()->json(['uri' => $uri]);
         
