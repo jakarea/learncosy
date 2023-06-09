@@ -22,7 +22,7 @@
 
         .media {
             align-items: center;
-            span{
+            span.avatar-user{
                 width: 2.1rem;
                 height: 2.1rem;
                 background: v.$gdbg;
@@ -77,7 +77,7 @@
                         color: v.$fourth;
                     }
                    
-                    
+                    .fa-box,
                     .fa-file-invoice-dollar, 
                     .fa-users,
                     .fa-euro-sign,

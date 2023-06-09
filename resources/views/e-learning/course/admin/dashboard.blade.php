@@ -3,43 +3,55 @@
 
 {{-- page style @S --}}
 @section('style')
-<style type="text/css">
-    .my-card
-    {
-        position:absolute;
-        left:40%;
-        top:-20px;
-        border-radius:50%;
-    }
-    </style>
+<link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-<main class="d-flex justify-content-center">
+<main>
     <div class="jumbotron">
-        <div class="row" style="margin-top: 50px">
-        
-            <div class="col-md-3">
-                <div class="card border-info mx-sm-1 p-3">
-                    <div class="card border-info shadow text-info p-3 my-card" ><span class="fa fa-car" aria-hidden="true"></span></div>
-                    <div class="text-info text-center mt-3"><h4>Instructors</h4></div>
-                    <div class="text-info text-center mt-2"><h1>{{ $instructors }}</h1></div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="heading-title">Welcome to Dashboard</h1>
+            </div>
+            <div class="col-md-4">
+                <div class="card my-card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Total Instructors</h6>
+                                <h4>{{$instructors}}</h4>
+                            </div>
+                            <i class="fas fa-user-group"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card border-success mx-sm-1 p-3">
-                    <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye" aria-hidden="true"></span></div>
-                    <div class="text-success text-center mt-3"><h4>Courses</h4></div>
-                    <div class="text-success text-center mt-2"><h1>{{ $courses }}</h1></div>
+            <div class="col-md-4">
+                <div class="card my-card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Total Courses</h6>
+                                <h4>{{$courses}}</h4>
+                            </div>
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div> 
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card border-danger mx-sm-1 p-3">
-                    <div class="card border-danger shadow text-danger p-3 my-card" ><span class="fa fa-heart" aria-hidden="true"></span></div>
-                    <div class="text-danger text-center mt-3"><h4>Students</h4></div>
-                    <div class="text-danger text-center mt-2"><h1>{{ $students }}</h1></div>
+            <div class="col-md-4">
+                <div class="card my-card">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6>Total Students</h6>
+                                <h4>{{$students}}</h4>
+                            </div>
+                            <i class="fas fa-users"></i>
+                        </div>  
+                    </div>
                 </div>
             </div>
         </div>

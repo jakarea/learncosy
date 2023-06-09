@@ -380,3 +380,34 @@
 .paginate_button {
   color: #ffffff !important;
 }
+
+.heading-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 140%;
+  margin-bottom: 1.5rem;
+}
+
+.my-card {
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+}
+.my-card h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 140%;
+}
+.my-card h4 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 140%;
+}
+.my-card .media {
+  align-items: center;
+}
+.my-card .media i {
+  font-size: 3rem;
+  color: #ffffff;
+}

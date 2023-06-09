@@ -389,3 +389,25 @@
 .paginate_button {
     color: v.$light!important;
 }
+
+.heading-title{
+    @include m.para(1.6rem,600,v.$dark);
+    margin-bottom: 1.5rem;
+}
+
+.my-card{
+    background: v.$gdbg;
+    h6{
+        @include m.para(1rem,600,v.$light);
+    }
+    h4{
+        @include m.para(2.5rem,600,v.$light);
+    }
+    .media{
+        align-items: center;
+        i{
+            font-size: 3rem;
+            color: v.$light;
+        }
+    }
+}

@@ -11,24 +11,24 @@
                 <img src="{{ asset('assets/images/admin/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}" class="img-fluid">
                 @endif
                 @else
-                <span>{!! strtoupper(Auth()->user()->name[0]) !!}</span>
+                <span class="avatar-user">{!! strtoupper(Auth()->user()->name[0]) !!}</span>
             @endif 
             <div class="media-body">
                 <h5>{{Auth()->user()->name}}</h5>
-                <p>{{Auth()->user()->user_role}}</p>
+                <p>{{Auth()->user()->user_role}} &nbsp;
+                    @if(Auth::user()->user_role == 'instructor')
+                        @can('subscription.check')
+                            <span class="badge badge-success bg-success upgrade-text position-absolute left-0">Premium</span>
+                        @else
+                        <a href="{{ route('instructor.subscription') }}">
+                            <span class="badge badge-danger bg-danger upgrade-text position-absolute left-0" style="right: 30%;bottom: 45px;
+                        ">Upgrade</span>
+                        </a>
+                        @endcan
+                    @endif
+                </p>
             </div>
         </div>
-
-        @if(Auth::user()->user_role == 'instructor')
-                    @can('subscription.check')
-                        <span class="badge badge-success bg-success upgrade-text position-absolute left-0">Premium</span>
-                    @else
-                    <a href="{{ route('instructor.subscription') }}">
-                        <span class="badge badge-danger bg-danger upgrade-text position-absolute left-0" style="right: 30%;bottom: 45px;
-                    ">Upgrade</span>
-                    </a>
-                    @endcan
-                @endif
 
     </div>
     {{-- header user @E --}}

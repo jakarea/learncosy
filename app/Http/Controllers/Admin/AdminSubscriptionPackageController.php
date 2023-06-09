@@ -15,7 +15,7 @@ class AdminSubscriptionPackageController extends Controller
      */
     public function index()
     {
-        //
+        //  
         return view("subscription.index");
     }
 
@@ -28,8 +28,8 @@ class AdminSubscriptionPackageController extends Controller
         $subscription_packages = SubscriptionPackage::select('*');
         return datatables()->of($subscription_packages)
             ->addColumn('action', function ($subscription_package) {
-                $action = '<a href="' . route('admin.subscription.edit', $subscription_package->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
-                $action .= '<a href="' . route('admin.subscription.destroy', $subscription_package->id) . '" class="btn btn-sm btn-danger delete_data" data-id="'.$subscription_package->id.'"><i class="fas fa-trash"></i></a>';
+                $action = '<a href="' . route('admin.subscription.edit', $subscription_package->id) . '" class="btn  "><i class="fas fa-edit"></i></a>';
+                $action .= '<a href="' . route('admin.subscription.destroy', $subscription_package->id) . '" class="btn  delete_data" data-id="'.$subscription_package->id.'"><i class="fas fa-trash text-danger"></i></a>';
                 return $action;
             })
             ->addColumn('status', function ($subscription_package) {

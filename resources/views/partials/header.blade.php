@@ -47,7 +47,7 @@
 							--}}
 							<li class="dropdown">
 								<a href="#"data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fa-solid fa-cog"></i>
+									<i class="fa-solid fa-cog text-white"></i>
 								</a>  
 								<ul class="dropdown-menu settings-dropdown">
 									@if (Auth::user()->user_role == 'student')
