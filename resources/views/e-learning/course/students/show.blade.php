@@ -5,6 +5,32 @@
 @section('style')
 <link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/student.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .vimeo-player {
+        position:relative;
+        padding-bottom:56.25%;
+        height:0;
+        overflow:hidden;
+        width:100%;
+    }
+    .vimeo-player iframe {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+    }
+    span.finsihLesson {
+        float: right;
+        font-size: 12px;
+        color: #111;
+        margin-top: 12px;
+        cursor: pointer;
+    }
+    .course-outline-box .accordion .accordion-item ul li a.active {
+        font-weight: 700;
+    }
+</style>
 @endsection
 {{-- style section @E --}}
 @section('seo')
@@ -65,10 +91,18 @@ $i = 0;
                                 <ul>
                                     @foreach($module->lessons as $lesson)
                                     <li>
-                                        <a href="#">
-                                            <img src="http://localhost:8000/assets/images/course/small-book.svg"
-                                                alt="Lesson Icon" class="img-fluid"> {{ $lesson->title }}
+                                        @if ( !isEnrolled($course->id) )
+                                        <a href="{{route('students.checkout', $course->slug)}}"
+                                            class="disabled-link">
+                                            <i class="fas fa-lock"></i>
+                                            {{$lesson->title}}
                                         </a>
+                                        @else
+                                        <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block" data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}" data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
+                                        <i class="fas fa-play-circle"></i>
+                                        {{ $lesson->title }}
+                                        </a>
+                                        @endif
                                     </li>
                                     @endforeach
                                 </ul>
@@ -81,16 +115,32 @@ $i = 0;
         </div>
         <div class="col-12 col-sm-12 col-md-7 col-lg-8">
             <div class="mylearning-video-content-box custom-margin-top">
-                <div class="video-iframe-vox">
-                    <a href="#">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course"
-                            class="img-fluid">
+                @if( isEnrolled($course->id) )
+                    @if( getFirstLesson($course->id) )
+                        <div class="video-iframe-vox">
+                            <div class="vimeo-player w-100" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-vimeo-width="1000" data-vimeo-height="360"></div>
+                        </div> 
+                    @else
+                        <div class="video-iframe-vox">
+                            <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069" data-vimeo-width="1000" data-vimeo-height="360"></div>
+                        </div>
+                    @endif
+                @else
+                <a href="#">
+                    <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" height="400px" width="100%">
                     </a>
-                </div>
+                @endif
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
+                        @if( isEnrolled($course->id) )
                         <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Get Support</a>
+                        @else
+                        <a href="#" class="min_width">
+                            <i class="fas fa-lock"></i>
+                            Get Support
+                        </a>
+                        @endif
                     </div>
                     {!! $course->description !!}
                 </div>
@@ -225,6 +275,42 @@ $i = 0;
 
 {{-- script section @S --}}
 @section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+    $(document).ready(function () {
 
+        var options = {
+            id: '{{ 305108069 }}',
+            // access_token: '{{ "64ac29221733a4e2943345bf6c079948" }}',
+            autoplay: true,
+            loop: true,
+            width:  500,
+        };
+        var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
+        // play video on load
+        player.on('ended', function() {
+            player.setCurrentTime(0); // Set current time to 0 seconds
+            player.play();
+        });
+
+
+        $('a.video_list_play').click(function(e){
+            e.preventDefault();
+            @if( isEnrolled($course->id) )
+                var videoId = $(this).data('video-id');
+                var videoUrl = $(this).attr('href');
+                videoUrl = videoUrl.replace('/videos/', '');
+                player.loadVideo(videoUrl);
+                // add bold class to current lesson
+                $('a.video_list_play').removeClass('active');
+                $(this).addClass('active');
+            @else
+                alert('Please enroll the course');
+            @endif
+        });
+        
+    });
+</script>
 @endsection
 {{-- script section @E --}}
