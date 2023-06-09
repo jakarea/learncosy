@@ -19,7 +19,7 @@
 .sidebar-wrapper .header-user-box .media {
   align-items: center;
 }
-.sidebar-wrapper .header-user-box .media span {
+.sidebar-wrapper .header-user-box .media span.avatar-user {
   width: 2.1rem;
   height: 2.1rem;
   background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
@@ -73,6 +73,7 @@
   font-size: 0.8rem;
   color: #8C8FAE;
 }
+.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-box,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-file-invoice-dollar,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-users,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-euro-sign,

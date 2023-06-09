@@ -21,9 +21,9 @@
     {{-- profile information @S --}}
     <div class="row"> 
         <div class="col-lg-12">
-            <div class="productss-list-box payment-history-table">
-                <h5 class="p-3 pb-0">Platfrom Fee </h5>
-                <table>
+            <div class="productss-list-box payment-history-table p-4">
+                <h5 class="p-3 pb-3">Platfrom Fee </h5>
+                <table class="table">
                     <thead>
                         <th width="5%">No</th>
                         <th>Payment ID</th>

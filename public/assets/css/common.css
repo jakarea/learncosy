@@ -380,3 +380,59 @@
 .paginate_button {
   color: #ffffff !important;
 }
+
+.heading-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 140%;
+  margin-bottom: 1.5rem;
+}
+
+.my-card {
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+}
+.my-card h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 140%;
+}
+.my-card h4 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 140%;
+}
+.my-card .media {
+  align-items: center;
+}
+.my-card .media i {
+  font-size: 3rem;
+  color: #ffffff;
+}
+
+.coursse-list-table .my-course {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 140%;
+}
+
+.productss-list-box table.my-tabl tr th {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #8C8FAE;
+  line-height: 140%;
+}
+
+.productss-list-box table.my-tabl tr td a.contact_bttn {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 140%;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  border-radius: 3rem;
+}

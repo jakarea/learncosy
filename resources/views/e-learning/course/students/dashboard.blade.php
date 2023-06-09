@@ -3,7 +3,7 @@
 
 {{-- page style @S --}}
 @section('style')
-
+<link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -12,9 +12,9 @@
 <main class="d-flex">
     <div class="col-12">
         <div class="row">
-            <div class="productss-list-box payment-history-table mt-4">
-                <h5 class="p-3 pb-0">My Courses</h5>
-                <table>
+            <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
+                <h5 class="p-3 pb-0 my-course">My Courses</h5>
+                <table class="my-tabl">
                     <tr>
                         <th width="5%"><i class="fa-solid fa-bars-staggered"></i> No</th>
                         <th><i class="fa-solid fa-book-open"></i> Course Name</th>
@@ -37,7 +37,7 @@
                         <td> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title}} </a> </td>
                         <td>{{ $enrolment->amount}}</td>
                         <td>{{ $enrolment->created_at->format('F j, Y')}}</td>
-                        <td><a href="{{ url('course/messages/send',$enrolment->course->id)}}" target="_blank" rel="noopener noreferrer"> Contact </td>
+                        <td><a class="contact_bttn" href="{{ url('course/messages/send',$enrolment->course->id)}}" target="_blank" rel="noopener noreferrer"> Contact </td>
                     </tr>
                     @endforeach
                     

@@ -133,7 +133,7 @@
       node.setAttribute("class", "form-control @error('feature_list') is-invalid @enderror");
       node.setAttribute("multiple", ""); 
       node.setAttribute("type", "text"); 
-      node.setAttribute("placeholder", "Enter Social Link"); 
+      node.setAttribute("placeholder", "Add Feature"); 
       node.setAttribute("name", "feature_list[]");    
       let linkk = document.createElement("a");
       linkk.innerHTML = "<i class='fas fa-minus'></i>";

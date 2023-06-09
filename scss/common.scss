@@ -389,3 +389,40 @@
 .paginate_button {
     color: v.$light!important;
 }
+
+.heading-title{
+    @include m.para(1.6rem,600,v.$dark);
+    margin-bottom: 1.5rem;
+}
+
+.my-card{
+    background: v.$gdbg;
+    h6{
+        @include m.para(1rem,600,v.$light);
+    }
+    h4{
+        @include m.para(2.5rem,600,v.$light);
+    }
+    .media{
+        align-items: center;
+        i{
+            font-size: 3rem;
+            color: v.$light;
+        }
+    }
+}
+
+.coursse-list-table{
+    .my-course{
+        @include m.para(2rem,600,v.$dark);
+    }
+}
+ 
+.productss-list-box table.my-tabl tr th{
+    @include m.para(1rem,500,v.$fourth);
+}
+
+.productss-list-box table.my-tabl tr td a.contact_bttn{
+    @include m.button(1rem,v.$light,v.$gdbg);
+    border-radius: 3rem;
+}

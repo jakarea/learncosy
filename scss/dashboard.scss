@@ -1,0 +1,40 @@
+@use './util/index' as m;
+@use './util/variabls' as v;
+@use './util/media-query' as q;
+
+.header-title{
+    h2{
+        @include m.para(2rem,600,v.$dark);
+        margin-bottom: 1rem;
+    }
+}
+
+.card{
+    background-color: v.$light;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    .card-header{
+        padding: 1rem 2rem;
+        background-color: v.$third;
+        h3{
+            @include m.para(1.3rem,600,v.$dark);
+        }
+    }
+    .card-body{
+        h2{
+            @include m.para(2.5rem,600,v.$dark);
+        }
+        p{
+            margin-bottom: 0.5rem;
+        }
+    }
+    .btn{
+        border-radius: 2rem;
+        background: v.$gdbg;
+        color: v.$light;
+    }
+    .card-footer{
+        padding: 1rem 2rem;
+        background-color: v.$third;
+    }
+}
