@@ -17,6 +17,7 @@ class StudentHomeController extends Controller
     // dashboard
     public function dashboard(){ 
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+
         return view('e-learning/course/students/dashboard', compact('enrolments')); 
     }
 

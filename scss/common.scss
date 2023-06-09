@@ -411,3 +411,18 @@
         }
     }
 }
+
+.coursse-list-table{
+    .my-course{
+        @include m.para(2rem,600,v.$dark);
+    }
+}
+ 
+.productss-list-box table.my-tabl tr th{
+    @include m.para(1rem,500,v.$fourth);
+}
+
+.productss-list-box table.my-tabl tr td a.contact_bttn{
+    @include m.button(1rem,v.$light,v.$gdbg);
+    border-radius: 3rem;
+}
