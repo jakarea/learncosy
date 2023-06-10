@@ -294,6 +294,9 @@ Route::middleware('auth')->prefix('admin/profile')->controller(AdminProfileContr
     Route::post('/edit', 'update')->name('admin.profile.update'); 
     Route::get('/change-password', 'passwordUpdate');
     Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
+
+    Route::get('/platform-fee', 'adminPayment');  
+    Route::get('/platform-fee/data', 'adminPaymentData')->name('admin.admin-payment');
 });
 
 // auth route 

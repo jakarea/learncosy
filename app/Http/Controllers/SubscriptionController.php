@@ -111,6 +111,7 @@ class SubscriptionController extends Controller
         // Subscription store in database
 
         $subscription = Subscription::create([
+            'subscription_packages_id' => $request->package_id,
             'instructor_id' => auth()->user()->id,
             'name' => $package->id,
             'stripe_plan' => $session->payment_intent,

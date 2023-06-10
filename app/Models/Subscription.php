@@ -11,6 +11,7 @@ class Subscription extends Model
 
     protected $fillable = [
         'instructor_id',
+        'subscription_packages_id',
         'name',
         'stripe_plan',
         'quantity',
@@ -28,6 +29,11 @@ class Subscription extends Model
     public function instructor()
     {
         return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function subscriptionPakage()
+    {
+        return $this->belongsTo(SubscriptionPackage::class, 'subscription_packages_id');
     }
 
     // attach instructor to subscription

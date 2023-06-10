@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str; 
@@ -98,5 +99,34 @@ class AdminProfileController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->route('admin.profile')->with('success', 'Your password has been changed successfully!');
+    }
+
+    public function adminPayment()
+    {   
+        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->get();
+        return view('payments/admin/admin-payment', compact('payments'));
+    }
+
+    public function adminPaymentData( Request $request )
+    {
+        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->get();
+        // dd($payments);
+        return datatables()->of($payments)
+            // ->addColumn('action', function ($payment) {
+            //     $action = '<a href="' . route('admin.subscription.edit', $payment->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
+            //     $action .= '<a href="' . route('admin.subscription.destroy', $payment->id) . '" class="btn btn-sm btn-danger delete_data" data-id="'.$payment->id.'"><i class="fas fa-trash"></i></a>';
+            //     return $action;
+            // })
+            // instructor name from instructor_id
+            ->editColumn('instructor_id', function ($payment) {
+                return $payment->instructor->email;
+            })
+            ->editColumn('amount', function ($payment) {
+                return $payment->subscriptionPakage->amount;
+            })
+            ->rawColumns(['action', 'status', 'features'])
+            ->make(true);
+        
+        
     }
 }
