@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\VimeoData;
 use Illuminate\Http\Request;
 use Stripe\Exception\AuthenticationException;
 
@@ -59,5 +60,40 @@ class SettingsController extends Controller
      public function vimeoIndex()
      {  
          return view('settings/instructor/vimeo'); 
+     }
+
+     public function vimeoUpdate(Request $request)
+     {
+         $user = auth()->user();
+     
+         // Define custom error messages
+         $messages = [
+             'client_id.required' => 'Please enter a valid Vimeo client id.',
+             'client_secret.required' => 'Please enter a valid Vimeo client secret.',
+             'access_key.required' => 'Please enter a valid Vimeo access key.',
+         ];
+     
+         // Validate the Vimeo keys using the Vimeo package's validation feature
+         $request->validate([
+             'client_id' => [
+                 'required'
+             ],
+             'client_secret' => 'required',
+             'access_key' => 'required',
+         ], $messages);
+     
+         $vimeo = VimeoData::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+             'client_id' => $request->client_id,
+             'client_secret' => $request->client_secret,
+             'access_key' => $request->access_key,
+            ]
+        );
+     
+         // Check if all keys are present
+         $connected = ($user->client_id && $user->client_secret && $user->access_key) ? 'yes' : 'not';
+     
+         return back()->with('success', 'Vimeo data updated successfully');
      }
 }

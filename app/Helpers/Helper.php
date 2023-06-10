@@ -1,7 +1,8 @@
 <?php
 
 use Stripe\Stripe;
-
+use Vimeo\Laravel\Facades\Vimeo;
+use Vimeo\Vimeo as VimeoSDK;
 /**
  * Helper function to get SubscriptionPackage
  */
@@ -135,5 +136,49 @@ if (!function_exists('getFirstLesson')) {
     {
         $lesson = \App\Models\Lesson::where('course_id', $courseId)->orderBy('id', 'asc')->first();
         return $lesson;
+    }
+}
+
+/**
+ * Helper function to check vimeo data is connected or not
+ */
+if (!function_exists('isVimeoConnected')) {
+    function isVimeoConnected()
+    {
+        $user = auth()->user();
+        $vimeoData = null;
+        $status = '';
+    
+        if ($user) {
+            $vimeoData = \App\Models\VimeoData::where('user_id', $user->id)->first();
+    
+            if (!$vimeoData) {
+                // Vimeo data not found, show alert or redirect
+                $status = 'Not Connected';
+                return [$vimeoData, $status];
+            } else {
+                // Check vimeo data is connected or not to Vimeo API in real-time
+                $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
+                
+                try {
+                    $response = $vimeo->request('/me');
+                    $accountName = $response['body']['name'];
+                    $status = 'Connected';
+                } catch (\Vimeo\Exceptions\VimeoUploadException $e) {
+                    $status = 'Invalid Credentials';
+                    return [$vimeoData, $status];
+                } catch (\Exception $e) {
+                    // Handle any other exceptions or errors that occurred during the request
+                    $status = 'Connection Failed';
+                    return [$vimeoData, $status];
+                }
+            }
+        } else {
+            // User is not authenticated
+            $status = 'Not Connected';
+            return [$vimeoData, $status];
+        }
+    
+        return [$vimeoData, $status, $accountName];
     }
 }

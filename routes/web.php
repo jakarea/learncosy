@@ -36,9 +36,11 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 |
 */
 
-Route::get('/home', function () {
-    return redirect('/');
+Route::group(['prefix' => 'home'], function () {
+    Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
+    Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
 });
+
 
 Route::middleware('auth')->get('/', function () {
     if(Auth::user()->user_role == 'student')
@@ -146,6 +148,7 @@ Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsCon
     Route::get('/stripe', 'stripeIndex');
     Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
     Route::get('/vimeo', 'vimeoIndex');
+    Route::post('/vimeo/request', 'vimeoUpdate')->name('instructor.vimeo.update');
 });
 
 // review page routes

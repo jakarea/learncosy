@@ -28,13 +28,13 @@
                 <h2>Welcome, Student!</h2>
             @endcan
         </div>
+        @can('instructor')
 
         <div class="row justify-content-center">
             @foreach( getSubscriptionPackage() as $package )
             @php 
                 $package_featurelist = json_decode($package->features); 
             @endphp
-          
             <div class="col-md-4">
                 <div class="card ">
                     <div class="card-header text-center">
@@ -62,8 +62,9 @@
                 </div>
             </div>
             @endforeach
-            
         </div>
+        @endcan
+
     </div>
 </main>
 @endsection
