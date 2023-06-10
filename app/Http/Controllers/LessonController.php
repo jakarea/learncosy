@@ -173,9 +173,9 @@ class LessonController extends Controller
     
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
-    
+        
         [$vimeoData, $status, $accountName] = isVimeoConnected();
-    
+            
         if ($status === 'Connected') {
             $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
     

@@ -36,9 +36,11 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 |
 */
 
-Route::get('/home', function () {
-    return redirect('/');
+Route::group(['prefix' => 'home'], function () {
+    Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
+    Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
 });
+
 
 Route::middleware('auth')->get('/', function () {
     if(Auth::user()->user_role == 'student')

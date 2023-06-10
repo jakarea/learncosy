@@ -63,12 +63,13 @@
                                             <div class="uploadOuter">
                                                 <span class="dragBox">
                                                     <i class="fas fa-plus"></i>
+                                                    <span class="file-name"></span>
                                                     Darg and Drop Video here or <br> click to upload
                                                     <input type="file" onChange="dragNdrop(event)" name="video_link"
                                                         ondragover="drag()" ondrop="drop()" id="uploadFile" />
                                                 </span>
                                             </div>
-                                            {{-- <div id="preview"></div> --}}
+                                            <div id="preview"></div> 
                                             <div class="upload-progress">
                                                 <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                                     <div class="progress-bar" style="width: 0%"></div>
@@ -109,12 +110,24 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script>
     function dragNdrop(event) {
-    var fileName = URL.createObjectURL(event.target.files[0]);
-    var preview = document.getElementById("preview");
-    var previewImg = document.createElement("img");
-    previewImg.setAttribute("src", fileName);
-    preview.innerHTML = "";
-    preview.appendChild(previewImg);
+        // While selecting file, only allow video file
+        var fileInput = document.getElementById('uploadFile');
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.mp4|\.mov|\.avi|\.wmv|\.flv|\.mkv)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        
+    var fileName = event.target.files[0].name;
+    document.querySelector('.file-name').innerHTML = fileName;
+    document.querySelector('.file-name').style.display = 'block';
+    document.querySelector('.file-name').style.border = '1px solid #ccc';
+    document.querySelector('.file-name').style.padding = '10px';
+    document.querySelector('.file-name').style.borderRadius = '5px';
+    document.querySelector('.file-name').style.marginTop = '10px';
+    document.querySelector('.dragBox').firstElementChild.className = 'fas fa-times';
 }
 function drag() {
     document.getElementById('uploadFile').parentNode.className = 'draging dragBox';
@@ -141,17 +154,53 @@ $(document).ready(function() {
             cache: false,
             contentType: false,
             processData: false,
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                // Upload progress
+                xhr.upload.addEventListener('progress', function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = (evt.loaded / evt.total) * 100;
+                        $('.progress-bar').css('width', percentComplete + '%');
+                        $('.upload-progress h3').text(percentComplete + '%');
+                    }
+                }, false);
+                return xhr;
+            },
             beforeSend: function() {
                 // set button state to loading and disable with spinner
                 $('.btn-submit').attr('disabled', true).html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
                 );
+                // check if file is not empty
+                var fileInput = document.getElementById('uploadFile');
+                var filePath = fileInput.value;
+                if (filePath === '') {
+                    alert('Please select a file');
+                    $('.btn-submit').attr('disabled', false).text('Upload');
+                    return false;
+                }
+
+                // upload-progress p tag add style as warning
+                $('.upload-progress p').css('color', '#fff');
+                // $('.upload-progress p').css('background-color', '#ffc107');
+                $('.upload-progress p').css('background-color', '#ff0000');
+                $('.upload-progress p').css('padding', '10px');
+                $('.upload-progress p').css('border-radius', '5px');
+                $('.upload-progress p').css('margin-top', '10px');
             },
             success: function(response) {
                 // reset button state
                 $('.btn-submit').attr('disabled', false).text('Upload');
                 var uri = response.uri;
                 checkProgress(uri);
+            },
+            // handle all types of errors
+            error: function(xhr) {
+                var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
+                alert(errors);
+                cosnole.log(errors);
+                // reset button state
+                $('.btn-submit').attr('disabled', false).text('Upload');
             }
         });
     });
@@ -169,9 +218,7 @@ $(document).ready(function() {
                     $('.upload-progress h3').text(progress + '%');
                     if (progress === 100) {
                         clearInterval(interval);
-                    }
-                    // redirect to lesson page
-                    if (progress === 100) {
+                        // redirect to lesson page
                         setTimeout(function() {
                             window.location.href = '/instructor/courses';
                             // redirect to course single page
@@ -193,6 +240,7 @@ $(document).ready(function() {
         }, 1000);
     }
 });
+
 </script>
 @endsection
 
