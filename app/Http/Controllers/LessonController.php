@@ -161,7 +161,7 @@ class LessonController extends Controller
     }
 
     public function uploadViewToVimeo(Request $request)
-    {   
+    {
         $request->validate([
             'lesson_id' => 'required',
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
@@ -170,28 +170,35 @@ class LessonController extends Controller
             'video_link.required' => 'Video file is required!',
             'video_link' => 'Max file size is 1 GB!',
         ]);
-
+    
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
-
-        $vimeo = Vimeo::connection();
-        // $vimeo = new VimeoSDK(config('vimeo.client_id'), config('vimeo.client_secret'), config('vimeo.access_token'));
-
-        $uri = $vimeo->upload($file->getPathname(), [
-            'name' => $videoName,
-            'approach' => 'tus',
-            'size' => $file->getSize(),
-        ]);
-
-        if ($uri) {
-            $lesson = Lesson::find($request->lesson_id);
-            $lesson->video_link = $uri;
-            $lesson->save();
+    
+        [$vimeoData, $status, $accountName] = isVimeoConnected();
+    
+        if ($status === 'Connected') {
+            $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
+    
+            $uri = $vimeo->upload($file->getPathname(), [
+                'name' => $videoName,
+                'approach' => 'tus',
+                'size' => $file->getSize(),
+            ]);
+    
+            if ($uri) {
+                $lesson = Lesson::find($request->lesson_id);
+                $lesson->video_link = $uri;
+                $lesson->save();
+            }
+    
+            return response()->json(['uri' => $uri]);
+        } elseif ($status === 'Invalid Credentials') {
+            return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
+        } else {
+            return response()->json(['error' => 'Vimeo account is not connected.']);
         }
-       
-        return response()->json(['uri' => $uri]);
-        
     }
+    
 
     public function getProgress(Request $request)
     {

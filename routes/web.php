@@ -146,6 +146,7 @@ Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsCon
     Route::get('/stripe', 'stripeIndex');
     Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
     Route::get('/vimeo', 'vimeoIndex');
+    Route::post('/vimeo/request', 'vimeoUpdate')->name('instructor.vimeo.update');
 });
 
 // review page routes
