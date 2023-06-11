@@ -183,6 +183,7 @@ Route::middleware('auth')->prefix('students')->controller(StudentHomeController:
     Route::get('/home','catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
+    Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses'); 
     Route::post('/courses/{slug}', 'review')->name('students.review.courses'); 
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message'); 
     Route::get('/account-management', 'accountManagement')->name('students.account.management');

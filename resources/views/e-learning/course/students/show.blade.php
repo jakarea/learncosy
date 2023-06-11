@@ -118,7 +118,7 @@ $i = 0;
                 @if( isEnrolled($course->id) )
                     @if( getFirstLesson($course->id) )
                         <div class="video-iframe-vox">
-                            <div class="vimeo-player w-100" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-vimeo-width="1000" data-vimeo-height="360"></div>
+                            <div class="vimeo-player w-100" id="firstLesson" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-first-lesson-id="{{ getFirstLesson($course->id)->id}}" data-first-course-id="{{ getFirstLesson($course->id)->course_id}}" data-first-modules-id="{{ getFirstLesson($course->id)->module_id}}" data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div> 
                     @else
                         <div class="video-iframe-vox">
@@ -279,6 +279,25 @@ $i = 0;
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
     $(document).ready(function () {
+        var firstLessonId = $('#firstLesson').data('first-lesson-id');
+        var firstCourseId = $('#firstLesson').data('first-course-id');
+        var firstModuleId = $('#firstLesson').data('first-modules-id');
+        var data = {
+            courseId:firstCourseId,
+            lessonId:firstLessonId,
+            moduleId:firstModuleId
+        };
+        $.ajax({
+            url: '{{ route('students.log.courses') }}',
+            method: 'GET',
+            data: data,
+            success: function(response) {
+                console.log('response',response)
+            },
+            error: function(xhr, status, error) {
+                // Handle errors, if any
+            }
+        });
 
         var options = {
             id: '{{ 305108069 }}',
@@ -294,11 +313,13 @@ $i = 0;
             player.play();
         });
 
-
         $('a.video_list_play').click(function(e){
             e.preventDefault();
             @if( isEnrolled($course->id) )
                 var videoId = $(this).data('video-id');
+                var courseId = $(this).data('course-id');
+                var lessonId = $(this).data('lesson-id');
+                var moduleId = $(this).data('modules-id');
                 var videoUrl = $(this).attr('href');
                 videoUrl = videoUrl.replace('/videos/', '');
                 player.loadVideo(videoUrl);
@@ -308,6 +329,23 @@ $i = 0;
             @else
                 alert('Please enroll the course');
             @endif
+
+            var data = {
+                courseId:courseId,
+                lessonId:lessonId,
+                moduleId:moduleId
+            };
+            $.ajax({
+                url: '{{ route('students.log.courses') }}',
+                method: 'GET',
+                data: data,
+                success: function(response) {
+                    console.log('response',response)
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors, if any
+                }
+            });
         });
         
     });
