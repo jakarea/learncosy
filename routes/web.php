@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Student\CheckoutController;
@@ -35,10 +36,18 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/{username}', [HomepageController::class, 'instructorDetails']);
+Route::get('/{username}/courses', [HomepageController::class, 'instructorDetails']);
+Route::get('/{username}/courses/{slug}', [HomepageController::class, 'homeInstructorCourseDetails']);
+
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
     Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
+    Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorDetails')->name('home.instructor.details');
+    Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
+    Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
+
 });
 
 
