@@ -34,13 +34,17 @@ class HomepageController extends Controller
         $instructors = User::with(['courses'])->where('id', $id)->first();
         $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
         $courses_review = CourseReview::with(['course'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
-        $bundle_course = BundleCourse::where('user_id',$id)->get();
-
+        $bundle_courses = BundleCourse::where('user_id',$id)->get();
+        foreach ($bundle_courses as $course) {
+            $courses_id = explode(",", $course->selected_course);
+            $course_info = Course::whereIn('id',$courses_id)->get();
+            $course['courses'] =  $course_info;
+        }
         // return view('frontend.course', compact(['instructors', 'courses'));
         return response()->json([
             'instructors'    => $instructors,
             'courses_review' => $courses_review,
-            'bundle_course'  => $bundle_course
+            'bundle_courses'  => $bundle_courses
 
         ]);
     }
