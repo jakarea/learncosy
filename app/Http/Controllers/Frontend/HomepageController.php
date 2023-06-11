@@ -29,12 +29,12 @@ class HomepageController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function instructorDetails($id)
+    public function instructorDetails($username)
     {
-        $instructors = User::with(['courses'])->where('id', $id)->first();
+        $instructors = User::with(['courses'])->where('username', $username)->first();
         $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
         $courses_review = CourseReview::with(['course'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
-        $bundle_courses = BundleCourse::where('user_id',$id)->get();
+        $bundle_courses = BundleCourse::where('user_id',$instructors->id)->get();
         foreach ($bundle_courses as $course) {
             $courses_id = explode(",", $course->selected_course);
             $course_info = Course::whereIn('id',$courses_id)->get();
@@ -54,6 +54,7 @@ class HomepageController extends Controller
         //
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *
