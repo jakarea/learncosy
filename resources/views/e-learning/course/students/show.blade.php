@@ -133,7 +133,7 @@ $i = 0;
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        @if( isEnrolled($course->id) )
+                        @if( isEnrolled($course->id) && $course->user->recivingMessage)
                         <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Get Support</a>
                         @else
                         <a href="#" class="min_width">
