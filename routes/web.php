@@ -39,6 +39,8 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
     Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
+    Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorDetails')->name('home.instructor.details');
+
 });
 
 

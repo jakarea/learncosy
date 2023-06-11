@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\CourseReview;
+use App\Models\BundleCourse;
 use App\Models\User;
 class HomepageController extends Controller
 {
@@ -26,6 +28,23 @@ class HomepageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function instructorDetails($id)
+    {
+        $instructors = User::with(['courses'])->where('id', $id)->first();
+        $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
+        $courses_review = CourseReview::with(['course'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
+        $bundle_course = BundleCourse::where('user_id',$id)->get();
+
+        // return view('frontend.course', compact(['instructors', 'courses'));
+        return response()->json([
+            'instructors'    => $instructors,
+            'courses_review' => $courses_review,
+            'bundle_course'  => $bundle_course
+
+        ]);
+    }
+
     public function create()
     {
         //
