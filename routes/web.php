@@ -36,9 +36,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/{username}', [HomepageController::class, 'instructorDetails']);
-Route::get('/{username}/courses', [HomepageController::class, 'instructorDetails']);
-Route::get('/{username}/courses/{slug}', [HomepageController::class, 'homeInstructorCourseDetails']);
+
 
 
 Route::group(['prefix' => 'home'], function () {
@@ -318,3 +316,7 @@ Route::get('/logout', function () {
     session()->flush();
     return redirect('/login');
 });
+
+Route::get('/{username}', [HomepageController::class, 'instructorDetails']);
+Route::get('/{username}/courses', [HomepageController::class, 'instructorDetails']);
+Route::get('/{username}/courses/{slug}', [HomepageController::class, 'homeInstructorCourseDetails']);
