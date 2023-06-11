@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/home') }}">
+        <a class="navbar-brand" href="{{url('/students/dashboard')}}">
             <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" class="-img-fluid">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -8,18 +8,18 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto custom_nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{url('/students/dashboard')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Courses</a>
+                    <a class="nav-link" href="#course_sec">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Bundle Courses</a>
+                    <a class="nav-link" href="#b_course_sec">Bundle Courses</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Feedback</a>
+                    <a class="nav-link" href="#feedback_sec">Feedback</a>
                 </li> 
             </ul>
             <div class="d-flex">

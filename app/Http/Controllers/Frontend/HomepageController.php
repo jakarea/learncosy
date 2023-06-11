@@ -19,8 +19,7 @@ class HomepageController extends Controller
     {
         // get all user who are instructor use auth service provider
         $instructors = User::where('user_role', 'instructor')->get();
-        
-        return view('frontend.homepage', compact('instructors'));
+        return "Hello test"; 
     }
 
     /**
@@ -29,38 +28,62 @@ class HomepageController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function instructorDetails($username)
+    public function instructorHome($username)
     {
-        $instructors = User::with(['courses'])->where('username', $username)->first();
+
+        // filter course 
+        // $title = isset($_GET['title']) ? $_GET['title'] : ''; 
+        // $categories = isset($_GET['categories']) ? $_GET['categories'] : ''; 
+        // $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : ''; 
+        // $price = isset($_GET['price']) ? $_GET['price'] : ''; 
+        
+        // if(!empty($title)){
+        //    $instructors->courses->where('title','like','%'.trim($title).'%');
+        // }
+
+        // if(!empty($categories)){
+        //    $instructors->courses->where('categories','like','%'.trim($categories).'%');
+        // }
+        // if(!empty($subscription_status)){
+        //    $instructors->courses->where('subscription_status','like','%'.trim($subscription_status).'%');
+        // }
+        // if(!empty($price)){
+        //    $instructors->courses->where('price','like','%'.trim($price).'%');
+        // } 
+        // filter end
+
+        // $instructors = User::with(['courses'])->where('username', $username)->first();
+        $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
         $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
         $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
-        $bundle_courses = BundleCourse::where('user_id',$instructors->id)->get();
+        $students = User::where('user_role','student')->get();
+        $bundle_courses = BundleCourse::where('user_id',$instructors->id)->get(); 
+
         foreach ($bundle_courses as $course) {
             $courses_id = explode(",", $course->selected_course);
             $course_info = Course::whereIn('id',$courses_id)->get();
             $course['courses'] =  $course_info;
         }
-        // return view('frontend.course', compact(['instructors', 'courses'));
-        return response()->json([
-            'instructors'    => $instructors,
-            'courses_review' => $courses_review,
-            'bundle_courses'  => $bundle_courses
 
-        ]);
+        // return $courses_review;
+
+        return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students'));
     }
 
     public function homeInstructorCourseDetails($username,$slug){
         $instructor = User::with(['courses'])->where('username', $username)->first();
-        $course = Course::with(['user'])->where('user_id',$instructor->id)->where('slug',$slug)->first();
+        $course = Course::with(['modules.lessons','user'])->where('user_id',$instructor->id)->where('slug',$slug)->first();
         $courses_review = CourseReview::with(['course','user'])->where('course_id',$course->id)->inRandomOrder()->take(5)->get();
 
         // return view('frontend.course', compact(['instructors', 'courses'));
-        return response()->json([
-            'instructor'    => $instructor,
-            'course'        => $course,
-            'courses_review' => $courses_review,
+        // return response()->json([
+        //     'instructor'    => $instructor,
+        //     'course'        => $course,
+        //     'courses_review' => $courses_review,
 
-        ]);
+        // ]);
+
+        return view('frontend.course', compact('instructor', 'course','courses_review'));
     }
 
     public function create()
@@ -91,7 +114,7 @@ class HomepageController extends Controller
         //
         $instructors = User::where('user_role', 'instructor')->where('id', $id)->first();
         $courses = Course::where('user_id', $id)->get();
-        return view('frontend.course', compact('instructors', 'courses'));
+        // return view('frontend.course', compact('instructors', 'courses'));
     }
 
     /**

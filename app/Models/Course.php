@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
+use App\Models\CourseReview;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -73,6 +74,10 @@ class Course extends Model
     public function checkouts()
     {
         return $this->hasMany(Checkout::class);
+    }
+   
+    public function reviews(){
+        return $this->hasMany(CourseReview::class,'course_id','id');
     }
 
     // get purchased students list based on instructor id

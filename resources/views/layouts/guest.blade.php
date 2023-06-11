@@ -25,6 +25,7 @@
     <!-- App css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
     <link href="{{ asset('assets/css/homepage.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/slick.css') }}" rel="stylesheet" type="text/css" />
     @yield('style')
     <!-- all css end -->
 </head>
@@ -41,7 +42,14 @@
     </section>
     {{-- landing page wrap @e --}}
 
+    <!-- back to top button @S -->
+    <a href="#" id="back-to-top">&#8593;</a>
+    <!-- back to top button @E -->
+
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/home/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/home/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/js/home/config.js') }}"></script>
     <script src="{{ asset('assets/js/home/smooth-navigate.js') }}"></script>
     <script src="{{ asset('assets/js/home/back-to-top.js') }}"></script>
     @yield('script')

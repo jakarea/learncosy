@@ -42,7 +42,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
     Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
-    Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorDetails')->name('home.instructor.details');
+    Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
 
@@ -317,6 +317,6 @@ Route::get('/logout', function () {
     return redirect('/login');
 });
 
-Route::get('/{username}', [HomepageController::class, 'instructorDetails']);
-Route::get('/{username}/courses', [HomepageController::class, 'instructorDetails']);
+Route::get('/{username}', [HomepageController::class, 'instructorHome']);
+Route::get('/{username}/courses', [HomepageController::class, 'instructorHome']);
 Route::get('/{username}/courses/{slug}', [HomepageController::class, 'homeInstructorCourseDetails']);
