@@ -33,7 +33,7 @@ class HomepageController extends Controller
     {
         $instructors = User::with(['courses'])->where('username', $username)->first();
         $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
-        $courses_review = CourseReview::with(['course'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
+        $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
         $bundle_courses = BundleCourse::where('user_id',$instructors->id)->get();
         foreach ($bundle_courses as $course) {
             $courses_id = explode(",", $course->selected_course);
@@ -45,6 +45,20 @@ class HomepageController extends Controller
             'instructors'    => $instructors,
             'courses_review' => $courses_review,
             'bundle_courses'  => $bundle_courses
+
+        ]);
+    }
+
+    public function homeInstructorCourseDetails($username,$slug){
+        $instructor = User::with(['courses'])->where('username', $username)->first();
+        $course = Course::with(['user'])->where('user_id',$instructor->id)->where('slug',$slug)->first();
+        $courses_review = CourseReview::with(['course','user'])->where('course_id',$course->id)->inRandomOrder()->take(5)->get();
+
+        // return view('frontend.course', compact(['instructors', 'courses'));
+        return response()->json([
+            'instructor'    => $instructor,
+            'course'        => $course,
+            'courses_review' => $courses_review,
 
         ]);
     }
