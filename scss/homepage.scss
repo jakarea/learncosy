@@ -808,6 +808,18 @@
     .mylearning-txt-box h5{
         margin-top: 1rem!important;
     }
+    .course-filter-wrap .course-filter-box{
+        grid-template-columns: 1fr;
+    }
+    .course-filter-wrap .course-filter-box .filter-bttn{
+        width: 100%;
+    }
+    .course-item-box{
+        padding-right: 1rem;
+    }
+    .course-item-box .media .course-thumbnail{
+        width: 100%;
+    }
 }
 
 @include q.responsive(landphone) {
@@ -1056,6 +1068,7 @@
     .mylearning-txt-box h5{
         margin-top: 1rem!important;
     }
+
 }
 
 @include q.responsive(landtablet) {

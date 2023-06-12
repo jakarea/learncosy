@@ -9,55 +9,60 @@
 
 {{-- page content @S --}}
 @section('content')
-<main class=""> 
+<main class="">
     <div class="subscription-package col-12">
         @include('partials.session-message')
         <div class="header-title">
             @can('admin')
-            <!-- Content only visible to users with the 'admin' role -->
             <h2>Welcome, admin!</h2>
             @endcan
-
             @can('instructor')
-                <!-- Content only visible to users with the 'instructor' role -->
-                <h2>Welcome, instructor!</h2>
+            <h2>Welcome, instructor!</h2>
             @endcan
-
             @can('student')
-                <!-- Content only visible to users with the 'user' role -->
-                <h2>Welcome, Student!</h2>
+            <h2>Welcome, Student!</h2>
             @endcan
         </div>
         @can('instructor')
-
         <div class="row justify-content-center">
             @foreach( getSubscriptionPackage() as $package )
-            @php 
-                $package_featurelist = json_decode($package->features); 
-            @endphp
-            <div class="col-md-4">
-                <div class="card ">
-                    <div class="card-header text-center">
-                        <h3>{{ $package->name }}</h3>
-                        @if (isSubscribed($package->id))
-                        <span class="badge text-bg-success" style="font-size: .7rem">Current Package</span>
-                        @endif
+            @php
+            $package_featurelist = json_decode($package->features);
+            @endphp 
+            <div class="col-lg-5 col-xl-4 col-12 col-sm-9 col-md-6">
+                <div class="price-package-box">
+                    @if (isSubscribed($package->id))
+                    <div class="current-package">
+                        <span>Current Package</span>
                     </div>
-                    <div class="card-body text-center">
-                        <h2>{{ $package->amount }}<small><sup>$</sup></small></h2>
-                        @if($package_featurelist)
-                            @foreach($package_featurelist as $feature)
-                                <p>{{ $feature }}</p>
-                            @endforeach
-                        @endif
-                    </div>
-                    <div class="card-footer text-center">
-                    @if (!isSubscribed($package->id))
-                        <a href="{{ route('instructor.subscription.create', $package->id) }}" class="btn btn-block">Subscribe</a>
-                    @else
-                    <a href="#" class="btn btn-donez btn-block">Subscribed</a>
                     @endif
-
+                    <div class="package-title">
+                        <h4><i class="fa-regular fa-star"></i> {{ $package->name }}</h4>
+                        <p>This is a lite package</p>
+                    </div>
+                    <div class="package-price">
+                        <h3><span>€</span>{{ $package->amount }}<u> /per month</u></h3>
+                        @if (!isSubscribed($package->id))
+                        <a href="{{ route('instructor.subscription.create', $package->id) }}" class="will-subscribe">Get
+                            started</a>
+                        @else
+                        <a href="#" class="subscribed">Subscribed</a>
+                        @endif
+                    </div>
+                    <div class="package-features">
+                        <h6>Features includes:</h6>
+                        @if($package_featurelist)
+                        <ul>
+                            @foreach($package_featurelist as $feature)
+                            <li><i class="fas fa-check"></i>
+                                <p> {{ $feature }}</p>
+                            </li>
+                            @endforeach  
+                        </ul>
+                        @endif
+                    </div>
+                    <div class="package-ftr">
+                        <a href="https://stripe.com/en-gb-us/payments/features">See all features</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +115,6 @@
                 </div>
             </div>
         </section>
-
     </div>
 </main>
 @endsection

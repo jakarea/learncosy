@@ -72,6 +72,10 @@
                     </p>
                 </div> 
                 <div class="form-group mb-0">
+                    <label for="" class="mb-0"><i class="fa-solid fa-anchor"></i> Subdomain: </label>
+                    <p>{{$user->username ? $user->username : '--'}}</p>
+                </div> 
+                <div class="form-group mb-0">
                     <label for="" class="mb-0"><i class="fa-solid fa-phone"></i> Phone: </label>
                     <p>{{$user->phone ? $user->phone : '--'}}</p>
                 </div> 
@@ -91,51 +95,7 @@
                         <h5>Details :</h5>
                         {!! $user->description !!} 
                     </div>
-                </div>
-                <div class="col-12">
-                    <div class="productss-list-box payment-history-table">
-                        <h5 class="p-3 pb-0">Message from students:</h5>
-                        <table>
-                            <tr>
-                                <th width="5%">No</th>
-                                <th>Student Name</th>
-                                <th>Email</th>
-                                <th>Subject</th>
-                                <th>Status</th>
-                                <th>View</th>
-
-                            </tr>
-                            {{-- item @S --}}
-                            <tr>
-                                <td>1</td>
-                                <td>Jhon Doe</td>
-                                <td>doe@yopmail.com</td>
-                                <td>All</td>
-                                <td>
-                                    <span class="badge text-bg-danger">Unread</span>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
-                            {{-- item @S --}}
-                            <tr>
-                                <td>1</td>
-                                <td>Nayan Akram</td>
-                                <td>nayan@yopmail.com</td>
-                                <td>English</td>
-                                <td>
-                                    <span class="badge text-bg-success">Read</span>
-                                </td>
-                                <td>
-                                    <a href="#"><i class="fas fa-eye text-dark"></i></a>
-                                </td>
-                            </tr>
-                            {{-- item @E --}}
-                        </table> 
-                    </div>
-                </div>
+                </div> 
                 <div class="col-12">
                     <div class="productss-list-box payment-history-table mt-4">
                         <h5 class="p-3 pb-0">My Course List :</h5>
@@ -155,9 +115,9 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{$course->title}}</td>
                                     <td>{{$course->price}}</td>
-                                    <td>{{ Str::limit($course->short_description, $limit = 125, $end = '...') }}</td>
+                                    <td>{{ Str::limit($course->short_description, $limit = 20, $end = '...') }}</td>
                                     <td>
-                                        <a href="{{url('instructor/courses/'.$course->slug)}}"><i class="fas fa-eye text-dark"></i></a>
+                                        <a href="{{url('instructor/courses/'.$course->slug)}}"><i class="fas fa-eye text-info"></i></a>
                                     </td>
                                 </tr>
                                 {{-- item @E --}}
