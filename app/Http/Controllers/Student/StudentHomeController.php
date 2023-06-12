@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
 use App\Models\CourseReview;
+use App\Models\CourseLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -100,6 +101,44 @@ class StudentHomeController extends Controller
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
+    }
+
+    public function storeCourseLog(Request $request){
+        $courseId = (int)$request->input('courseId');
+        $lessonId = (int)$request->input('lessonId');
+        $moduleId = (int)$request->input('moduleId');
+        $userId = Auth()->user()->id;  
+
+        $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
+        if(!$courseLog){
+            $courseLogInfo = new CourseLog([
+                'course_id' => $courseId,  
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId,  
+            ]);  
+            $courseLogInfo->save();
+            return response()->json([
+                'message' => 'course log save successfully',
+                'course_id' => $courseId,  
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId, 
+            ]);
+        }else{
+            $courseLog->course_id = $courseId;
+            $courseLog->module_id = $moduleId;
+            $courseLog->lesson_id = $lessonId;
+            $courseLog->update();
+            return response()->json([
+                'message' => 'course log updated',
+                'course_id' => $courseId,  
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId, 
+            ]);
+        }
+       
     }
 
     public function review(Request $request,$slug){
