@@ -81,7 +81,7 @@
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="form-group me-0">
-                            <label for="price">Review</label>
+                            <label for="price">Price</label>
                             <input type="number" placeholder="Enter your budget" name="price" id="price" class="form-control" min="1">
                         </div>
                         <div class="filter-bttn">
