@@ -23,8 +23,73 @@
             <h2>Welcome, Student!</h2>
             @endcan
         </div>
+
+        <!-- Instructor Part -->
         @can('instructor')
-        <div class="row justify-content-center">
+        <section class="instructor-section">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0 text-center">Courses</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ totalCourseByInstructor(auth()->user()->id) }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0 text-center">Enrolled Student</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ totalEnrolledOfStudentByInstructor(auth()->user()->id) }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0 text-center">Earning</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ '$ ' . totalEarningByInstructor(auth()->user()->id) }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0 text-center">Expending</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ '$ ' . subscriptionCostByInstructor(auth()->user()->id) }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div id="teacher_chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- <div class="row justify-content-center">
             @foreach( getSubscriptionPackage() as $package )
             @php
             $package_featurelist = json_decode($package->features);
@@ -77,54 +142,79 @@
                 </div>
             </div>
             @endforeach
-        </div>
+        </div> -->
         @endcan
+        <!-- Instructor Part -->
 
+        @can('student')
         <!-- Student Part -->
         <section class="student-section">
             <div class="row">
-                <div class="col-3">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6>My Courses</h6>
+                            <h6 class="card-title mb-0 text-center">Enrolled Courses</h6>
                         </div>
-                        <div class="card-body">
-                            <h4>52</h4>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ totalEnrolledByStudent(auth()->user()->id) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6>My Courses</h6>
+                            <h6 class="card-title mb-0 text-center">Complete Lessons</h6>
                         </div>
-                        <div class="card-body">
-                            <h4>52</h4>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ totalCompleteLessonsByStudent(auth()->user()->id) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6>My Courses</h6>
+                            <h6 class="card-title mb-0 text-center">Total Reviews</h6>
                         </div>
-                        <div class="card-body">
-                            <h4>52</h4>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ totalCompleteCourseReviewsByStudent(auth()->user()->id) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 mb-4">
                     <div class="card">
                         <div class="card-header">
-                            <h6>My Courses</h6>
+                            <h6 class="card-title mb-0 text-center">Total Paid</h6>
                         </div>
-                        <div class="card-body">
-                            <h4>52</h4>
+                        <div class="card-body text-center">
+                            <h4>
+                                {{ '$ ' . totalAmountPaidByStudent(auth()->user()->id) }}
+                            </h4>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div id="student_chart"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
+        <!-- Student Part -->
+        @endcan
+        
     </div>
 </main>
 @endsection
@@ -132,6 +222,131 @@
 
 {{-- page script @S --}}
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+@can('instructor')
+<script>
+    function TeacherChart()
+    {
+        var options = {
+            series: [{
+                name: 'Total Courses',
+                data: [{{ totalCourseByInstructor(auth()->user()->id) }}]
+            }, {
+                name: 'Total Lessons',
+                data: [{{ totalEnrolledOfStudentByInstructor(auth()->user()->id) }}]
+            }, {
+                name: 'Total Enrolled',
+                data: [{{ totalEarningByInstructor(auth()->user()->id) }}]
+            }, {
+                name: 'Total Reviews',
+                data: [{{ subscriptionCostByInstructor(auth()->user()->id) }}]
+            }],
+            chart: {
+                height: 500,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '100%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['Total Courses', 'Total Lessons', 'Total Enrolled', 'Total Reviews'],
+            },
+            yaxis: {
+                title: {
+                    text: 'Total Instructor'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val
+                    }
+                }
+            }
+        };
+        var chart = new ApexCharts(document.querySelector("#teacher_chart"), options);
+        chart.render();
+    }
+    TeacherChart();
+</script>
+@endcan
 
+@can('student')
+<script>
+    function StudentChart() {
+        var options = {
+            series: [{
+                name: 'Enrolled Courses',
+                data: [{{ totalEnrolledByStudent(auth()->user()->id) }}]
+            }, {
+                name: 'Complete Lessons',
+                data: [{{ totalCompleteLessonsByStudent(auth()->user()->id) }}]
+            }, {
+                name: 'Total Reviews',
+                data: [{{ totalCompleteCourseReviewsByStudent(auth()->user()->id) }}]
+            }, {
+                name: 'Total Paid',
+                data: [{{ totalAmountPaidByStudent(auth()->user()->id) }}]
+            }],
+            chart: {
+                height: 500,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '100%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['Student Overview'],
+            },
+            yaxis: {
+                title: {
+                    text: 'Student Overview'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val
+                    }
+                }
+            }
+        };
+
+        var student_chart = new ApexCharts(document.querySelector("#student_chart"), options);
+        student_chart.render();
+    }
+    StudentChart();
+</script>
+@endcan
 @endsection
 {{-- page script @E --}}
