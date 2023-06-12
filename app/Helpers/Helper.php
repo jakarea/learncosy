@@ -182,3 +182,25 @@ if (!function_exists('isVimeoConnected')) {
         return [$vimeoData, $status, $accountName];
     }
 }
+
+/**
+ * Helper function to check if user has completed lesson or not
+ */
+if (!function_exists('isLessonCompleted')) {
+    function isLessonCompleted($lesson_id)
+    {
+        $user = auth()->user();
+        $completed = false;
+
+        if ($user) {
+            // Retrieve the user's lesson based on user_id and lesson_id
+            $lesson = \App\Models\CourseActivity::where('user_id', $user->id)->where('lesson_id', $lesson_id)->first();
+
+            if ($lesson) {
+                $completed = true;
+            }
+        }
+
+        return $completed;
+    }
+}

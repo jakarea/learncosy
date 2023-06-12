@@ -65,6 +65,52 @@
         </div>
         @endcan
 
+        <!-- Student Part -->
+        <section class="student-section">
+            <div class="row">
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>My Courses</h6>
+                        </div>
+                        <div class="card-body">
+                            <h4>52</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>My Courses</h6>
+                        </div>
+                        <div class="card-body">
+                            <h4>52</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>My Courses</h6>
+                        </div>
+                        <div class="card-body">
+                            <h4>52</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>My Courses</h6>
+                        </div>
+                        <div class="card-body">
+                            <h4>52</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 </main>
 @endsection
