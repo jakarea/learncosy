@@ -32,7 +32,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="hero-img-box">
-                    <img src="{{asset('assets/images/desk-vector.png') }}" alt="desk-vector" class="img-fluid">
+                    <img src="{{asset('assets/images/home-page-banner.png') }}" alt="home-page-banner" class="img-fluid">
                 </div>
             </div>
         </div>
