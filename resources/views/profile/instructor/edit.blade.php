@@ -15,6 +15,11 @@
 <main class="product-research-form">
     <div class="product-research-create-wrap">
         <div class="row">
+            <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                {{-- session message @E --}}
+            </div>
             <div class="col-lg-12">
                 <div class="create-form-wrap">
                     <div class="create-form-head">

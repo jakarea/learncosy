@@ -985,6 +985,16 @@ h6 {
   .course-item-box .media .course-thumbnail {
     width: 100%;
   }
+  .feedback-slider {
+    width: 100%;
+  }
+  .student-feeback-box .media {
+    text-align: center;
+  }
+  .student-feeback-box .media img {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .navbar-toggler {
@@ -1106,6 +1116,22 @@ h6 {
   }
   .mylearning-txt-box h5 {
     margin-top: 1rem !important;
+  }
+  .course-item-box {
+    padding-right: 1rem;
+  }
+  .course-item-box .media .course-thumbnail {
+    width: 100%;
+  }
+  .feedback-slider {
+    width: 100%;
+  }
+  .student-feeback-box .media {
+    text-align: center;
+  }
+  .student-feeback-box .media img {
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 }
 @media (min-width: 767px) and (max-width: 992px) {

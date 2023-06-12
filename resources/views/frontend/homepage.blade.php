@@ -57,7 +57,7 @@
                                 $categoriesg = isset($_GET['categories']) ? $_GET['categories'] : '';
                             @endphp
                             <select name="categories" id="categories" class="form-control">
-                                <option value="" disabled>Select Below</option> 
+                                <option value="">Select Below</option> 
                                 @foreach ($instructors->courses as $course)   
                                     @foreach (explode(",",$course->categories) as $categ)
                                         <option value="{{$categ}}" {{ $categoriesg == $categ ? 'selected' : ''}}>{{$categ}}</option> 
@@ -72,7 +72,7 @@
                                 $subscriptionStatus = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
                             @endphp 
                             <select name="subscription_status" id="subscription_status" class="form-control">
-                                <option value="" disabled>Select Below</option> 
+                                <option value="">Select Below</option> 
                                 <option value="one_time" {{ $subscriptionStatus == 'one_time' ? 'selected' : ''}}>One Time</option>
                                 <option value="monthly" {{ $subscriptionStatus == 'monthly' ? 'selected' : ''}}>Monthly</option>
                                 <option value="anully" {{ $subscriptionStatus == 'anully' ? 'selected' : ''}}>Anully</option>
@@ -81,8 +81,8 @@
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="form-group me-0">
-                            <label for="price">Price Range</label>
-                            <input type="number" placeholder="Enter your budget" name="price" id="price" class="form-control">
+                            <label for="price">Review</label>
+                            <input type="number" placeholder="Enter your budget" name="price" id="price" class="form-control" min="1">
                         </div>
                         <div class="filter-bttn">
                             <button type="reset" class="btn btn-reset">Clear</button>
@@ -144,10 +144,10 @@
                                             @endif
                                         </p> 
                                     </div>
-                                    <div class="bttns">
-                                        <a href="{{url('/students/dashboard/enrolled')}}">Enroll Now!</a>
+                                    <div class="bttns"> 
                                         <a href="{{url($instructors->username.'/courses/'.$course->slug) }}">More
                                             Details</a>
+                                        <a href="{{url('/students/dashboard/enrolled')}}">Enroll Now!</a>
                                     </div>
                                 </div>
                             </div>

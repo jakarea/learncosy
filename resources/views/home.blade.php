@@ -37,8 +37,18 @@
                     </div>
                     @endif
                     <div class="package-title">
-                        <h4><i class="fa-regular fa-star"></i> {{ $package->name }}</h4>
-                        <p>This is a lite package</p>
+                        @if ($package->id == 1)
+                        <h4><i class="fa-regular fa-star"></i> Lite </h4>
+                        @elseif ($package->id == 2)
+                        <h4><i class="fas fa-star"></i> Premium </h4>
+                        @endif
+
+                        @if ($package->id == 2)
+                            <p>This is a large package</p>
+                        @else
+                            <p>This is a lite package</p>
+                        @endif
+                        
                     </div>
                     <div class="package-price">
                         <h3><span>€</span>{{ $package->amount }}<u> /per month</u></h3>
@@ -61,9 +71,9 @@
                         </ul>
                         @endif
                     </div>
-                    <div class="package-ftr">
+                    {{-- <div class="package-ftr">
                         <a href="https://stripe.com/en-gb-us/payments/features">See all features</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             @endforeach

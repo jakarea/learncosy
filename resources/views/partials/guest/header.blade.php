@@ -22,10 +22,16 @@
                     <a class="nav-link" href="#feedback_sec">Feedback</a>
                 </li> 
             </ul>
-            <div class="d-flex">
-                <a href="{{url('/login')}}">Login</a>
-                <a href="{{url('/register')}}">Register</a>
-            </div>
+            @if (auth()->user())
+                <div class="d-flex">  
+                    <a href="{{url('/students/dashboard')}}">Dashboard</a> 
+                </div>
+            @else  
+                <div class="d-flex">  
+                    <a href="{{url('/login')}}">Login</a>
+                    <a href="{{url('/register')}}">Register</a> 
+                </div>
+            @endif
         </div>
     </div>
 </nav>
