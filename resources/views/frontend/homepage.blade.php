@@ -196,7 +196,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="bundle-course-box">
                     <div class="thumbnail">
-                        <img src="{{asset('assets/images/courses/'.$bundle_course->thumbnail) }}" alt="a"
+                        <img src="{{asset('assets/images/bundle-courses/'.$bundle_course->thumbnail) }}" alt="a"
                             class="img-fluid">
                     </div>
                     <div class="txt">
