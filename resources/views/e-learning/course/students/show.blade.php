@@ -90,7 +90,7 @@ $i = 0;
                             <div class="accordion-body">
                                 <ul>
                                     @foreach($module->lessons as $lesson)
-                                    <li>
+                                    <li class="border-bottom">
                                         @if ( !isEnrolled($course->id) )
                                         <a href="{{route('students.checkout', $course->slug)}}"
                                             class="disabled-link">
@@ -102,6 +102,15 @@ $i = 0;
                                         <i class="fas fa-play-circle"></i>
                                         {{ $lesson->title }}
                                         </a>
+                                        
+                                        <!-- course complete checkmark -->
+                                        <span class="float-end mt-2" style="cursor:pointer;">
+                                            @if( isLessonCompleted($lesson->id) )
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            @else
+                                            <i class="fas fa-check-circle is_complete_lesson" data-course="{{ $course->id }}" data-module="{{ $module->id }}" data-lesson="{{ $lesson->id }}" data-user="{{ Auth::user()->id }}"></i>
+                                            @endif
+                                        </span>
                                         @endif
                                     </li>
                                     @endforeach
@@ -347,6 +356,43 @@ $i = 0;
                 }
             });
         });
+
+        // is_complete_lesson on click check course is purchased or not and then check lesson video is completed or not after send to ajax
+        $('.is_complete_lesson').click(function(e){
+            e.preventDefault();
+            @if( isEnrolled($course->id) )
+                var lessonId = $(this).data('lesson');
+                var courseId = $(this).data('course');
+                var moduleId = $(this).data('module');
+                var data = {
+                    courseId: courseId,
+                    lessonId: lessonId,
+                    moduleId: moduleId
+                };
+                var $element = $(this); // Store reference to $(this) in a variable
+            
+                $.ajax({
+                    url: '{{ route('students.complete.lesson') }}',
+                    method: 'GET',
+                    data: data,
+                    beforeSend: function() {
+                        // Change class to spinner
+                        $element.removeClass('fas fa-check-circle').addClass('spinner-border spinner-border-sm');
+                    },
+                    success: function(response) {
+                        console.log('response', response);
+                        // Change icon to success checkmark
+                        $element.removeClass('spinner-border spinner-border-sm').addClass('fas fa-check-circle text-success');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors, if any
+                    }
+                });
+            @else
+                alert('Please enroll in the course');
+            @endif
+        });
+
         
     });
 </script>
