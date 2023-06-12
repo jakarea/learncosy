@@ -820,6 +820,16 @@
     .course-item-box .media .course-thumbnail{
         width: 100%;
     }
+    .feedback-slider{
+        width: 100%;
+    }
+    .student-feeback-box .media {
+        text-align: center;
+        img{
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+    }
 }
 
 @include q.responsive(landphone) {
@@ -950,6 +960,22 @@
     }
     .mylearning-txt-box h5{
         margin-top: 1rem!important;
+    }
+    .course-item-box{
+        padding-right: 1rem;
+    }
+    .course-item-box .media .course-thumbnail{
+        width: 100%;
+    }
+    .feedback-slider{
+        width: 100%;
+    }
+    .student-feeback-box .media {
+        text-align: center;
+        img{
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
     }
 }
 

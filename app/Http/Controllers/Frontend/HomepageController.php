@@ -32,13 +32,17 @@ class HomepageController extends Controller
     {
 
         // filter course 
-        // $title = isset($_GET['title']) ? $_GET['title'] : ''; 
-        // $categories = isset($_GET['categories']) ? $_GET['categories'] : ''; 
-        // $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : ''; 
-        // $price = isset($_GET['price']) ? $_GET['price'] : ''; 
+        $title = isset($_GET['title']) ? $_GET['title'] : ''; 
+        $categories = isset($_GET['categories']) ? $_GET['categories'] : ''; 
+        $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : ''; 
+        $price = isset($_GET['price']) ? $_GET['price'] : ''; 
+
+        $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
         
         // if(!empty($title)){
-        //    $instructors->courses->where('title','like','%'.trim($title).'%');
+        //     $instructors = User::with(['courses.reviews'])->whereHas('courses', function($q){
+        //         $q->where('title','like','%'.trim($title).'%');
+        //     })->first();
         // }
 
         // if(!empty($categories)){
@@ -53,7 +57,7 @@ class HomepageController extends Controller
         // filter end
 
         // $instructors = User::with(['courses'])->where('username', $username)->first();
-        $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
+        
         $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
         $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
         $students = User::where('user_role','student')->get();
