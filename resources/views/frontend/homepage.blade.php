@@ -3,6 +3,7 @@
 
 {{-- page style @S --}}
 @section('style') 
+
 @endsection
 {{-- page style @S --}}
 
