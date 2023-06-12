@@ -3,9 +3,10 @@
 @use './util/media-query' as q;
 
 .header-title {
+    margin: 1.5rem 0;
+    margin-top: 1rem;
     h2 {
-        @include m.para(2rem, 600, v.$dark);
-        margin-bottom: 1rem;
+        @include m.para(2rem, 600, v.$dark); 
     }
 }
 

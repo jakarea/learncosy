@@ -95,7 +95,14 @@ class CourseController extends Controller
 
         $categories = array_unique($unique_array);
 
-        return view('e-learning/course/instructor/create',compact('categories')); 
+        // if user has useraname then redirect to course create page
+        $username = Auth::user()->username;
+        if ($username) {
+            return view('e-learning/course/instructor/create',compact('categories'));
+        }else{
+            return redirect('instructor/profile/edit')->with('error', 'You have to set the Subdomain First!');
+        }
+
     }
 
     // course store

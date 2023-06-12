@@ -37,6 +37,7 @@ class ProfileManagementController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'short_bio' => 'required|string',
+            'username' => 'required|string', 
             'phone' => 'required|string', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
