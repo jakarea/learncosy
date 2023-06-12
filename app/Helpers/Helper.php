@@ -204,3 +204,101 @@ if (!function_exists('isLessonCompleted')) {
         return $completed;
     }
 }
+
+/**
+ * Helper function to total course count by instructor
+ */
+if (!function_exists('totalCourseByInstructor')) {
+    function totalCourseByInstructor($user_id)
+    {
+        $totalCourse = \App\Models\Course::where('user_id', $user_id)->count();
+        return $totalCourse;
+    }
+}
+
+/**
+ * Helper function to total student enrolled course of logged in instructor and count by instructor
+ */
+if (!function_exists('totalEnrolledOfStudentByInstructor')) {
+    function totalEnrolledOfStudentByInstructor($user_id)
+    {
+        $course = \App\Models\Course::where('user_id', $user_id)->get();
+
+        $enrolled = \App\Models\Checkout::whereIn('course_id', $course->pluck('id'))->count();
+        return $enrolled;
+    }
+}
+
+/**
+ * Helper function to total earning of logged in instructor
+ */
+if (!function_exists('totalEarningByInstructor')) {
+    function totalEarningByInstructor($user_id)
+    {
+        $course = \App\Models\Course::where('user_id', $user_id)->get();
+
+        $earning = \App\Models\Checkout::whereIn('course_id', $course->pluck('id'))->sum('amount');
+        return $earning;
+    }
+}
+
+/**
+ * Helper function to subscription cost of logged in instructor
+ */
+if (!function_exists('subscriptionCostByInstructor')) {
+    function subscriptionCostByInstructor($user_id)
+    {
+        $subscriptionCost = \App\Models\Subscription::where('instructor_id', $user_id)->get();
+
+        $amount = 0;
+
+        if( $subscriptionCost->count() > 0 ) { 
+            $amount = \App\Models\SubscriptionPackage::where('id', $subscriptionCost->pluck('name'))->sum('amount');
+        }
+        return $amount;
+    }
+}
+
+/**
+ * Helper function to count total enrolled of course by student
+ */
+if (!function_exists('totalEnrolledByStudent')) {
+    function totalEnrolledByStudent($user_id)
+    {
+        $totalEnrolled = \App\Models\Checkout::where('user_id', $user_id)->count();
+        return $totalEnrolled;
+    }
+}
+
+/**
+ * Helper function to count total complete lessons by student
+ */
+if (!function_exists('totalCompleteLessonsByStudent')) {
+    function totalCompleteLessonsByStudent($user_id)
+    {
+        $totalCompleteLessons = \App\Models\CourseActivity::where('user_id', $user_id)->count();
+        return $totalCompleteLessons;
+    }
+}
+
+/**
+ * Helper function to count total complete CourseReviews by student
+ */
+if (!function_exists('totalCompleteCourseReviewsByStudent')) {
+    function totalCompleteCourseReviewsByStudent($user_id)
+    {
+        $totalCompleteCourseReviews = \App\Models\CourseReview::where('user_id', $user_id)->count();
+        return $totalCompleteCourseReviews;
+    }
+}
+
+/**
+ * Helper function to count total amount paid by student
+ */
+if (!function_exists('totalAmountPaidByStudent')) {
+    function totalAmountPaidByStudent($user_id)
+    {
+        $totalAmountPaid = \App\Models\Checkout::where('user_id', $user_id)->sum('amount');
+        return $totalAmountPaid;
+    }
+}
