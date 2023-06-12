@@ -90,7 +90,7 @@ $i = 0;
                             <div class="accordion-body">
                                 <ul>
                                     @foreach($module->lessons as $lesson)
-                                    <li>
+                                    <li class="border-bottom">
                                         @if ( !isEnrolled($course->id) )
                                         <a href="{{route('students.checkout', $course->slug)}}"
                                             class="disabled-link">
@@ -102,6 +102,15 @@ $i = 0;
                                         <i class="fas fa-play-circle"></i>
                                         {{ $lesson->title }}
                                         </a>
+                                        
+                                        <!-- course complete checkmark -->
+                                        <span class="float-end mt-2" style="cursor:pointer;">
+                                            @if( isLessonCompleted($lesson->id) )
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            @else
+                                            <i class="fas fa-check-circle is_complete_lesson" data-course="{{ $course->id }}" data-module="{{ $module->id }}" data-lesson="{{ $lesson->id }}" data-user="{{ Auth::user()->id }}"></i>
+                                            @endif
+                                        </span>
                                         @endif
                                     </li>
                                     @endforeach
@@ -118,7 +127,7 @@ $i = 0;
                 @if( isEnrolled($course->id) )
                     @if( getFirstLesson($course->id) )
                         <div class="video-iframe-vox">
-                            <div class="vimeo-player w-100" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-vimeo-width="1000" data-vimeo-height="360"></div>
+                            <div class="vimeo-player w-100" id="firstLesson" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-first-lesson-id="{{ getFirstLesson($course->id)->id}}" data-first-course-id="{{ getFirstLesson($course->id)->course_id}}" data-first-modules-id="{{ getFirstLesson($course->id)->module_id}}" data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div> 
                     @else
                         <div class="video-iframe-vox">
@@ -279,6 +288,25 @@ $i = 0;
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
     $(document).ready(function () {
+        var firstLessonId = $('#firstLesson').data('first-lesson-id');
+        var firstCourseId = $('#firstLesson').data('first-course-id');
+        var firstModuleId = $('#firstLesson').data('first-modules-id');
+        var data = {
+            courseId:firstCourseId,
+            lessonId:firstLessonId,
+            moduleId:firstModuleId
+        };
+        $.ajax({
+            url: '{{ route('students.log.courses') }}',
+            method: 'GET',
+            data: data,
+            success: function(response) {
+                console.log('response',response)
+            },
+            error: function(xhr, status, error) {
+                // Handle errors, if any
+            }
+        });
 
         var options = {
             id: '{{ 305108069 }}',
@@ -294,11 +322,13 @@ $i = 0;
             player.play();
         });
 
-
         $('a.video_list_play').click(function(e){
             e.preventDefault();
             @if( isEnrolled($course->id) )
                 var videoId = $(this).data('video-id');
+                var courseId = $(this).data('course-id');
+                var lessonId = $(this).data('lesson-id');
+                var moduleId = $(this).data('modules-id');
                 var videoUrl = $(this).attr('href');
                 videoUrl = videoUrl.replace('/videos/', '');
                 player.loadVideo(videoUrl);
@@ -308,7 +338,61 @@ $i = 0;
             @else
                 alert('Please enroll the course');
             @endif
+
+            var data = {
+                courseId:courseId,
+                lessonId:lessonId,
+                moduleId:moduleId
+            };
+            $.ajax({
+                url: '{{ route('students.log.courses') }}',
+                method: 'GET',
+                data: data,
+                success: function(response) {
+                    console.log('response',response)
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors, if any
+                }
+            });
         });
+
+        // is_complete_lesson on click check course is purchased or not and then check lesson video is completed or not after send to ajax
+        $('.is_complete_lesson').click(function(e){
+            e.preventDefault();
+            @if( isEnrolled($course->id) )
+                var lessonId = $(this).data('lesson');
+                var courseId = $(this).data('course');
+                var moduleId = $(this).data('module');
+                var data = {
+                    courseId: courseId,
+                    lessonId: lessonId,
+                    moduleId: moduleId
+                };
+                var $element = $(this); // Store reference to $(this) in a variable
+            
+                $.ajax({
+                    url: '{{ route('students.complete.lesson') }}',
+                    method: 'GET',
+                    data: data,
+                    beforeSend: function() {
+                        // Change class to spinner
+                        $element.removeClass('fas fa-check-circle').addClass('spinner-border spinner-border-sm');
+                    },
+                    success: function(response) {
+                        console.log('response', response);
+                        // Change icon to success checkmark
+                        $element.removeClass('spinner-border spinner-border-sm').addClass('fas fa-check-circle text-success');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors, if any
+                    }
+                });
+            @else
+                alert('Please enroll in the course');
+            @endif
+        });
+
         
     });
 </script>
