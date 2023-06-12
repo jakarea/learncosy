@@ -973,6 +973,18 @@ h6 {
   .mylearning-txt-box h5 {
     margin-top: 1rem !important;
   }
+  .course-filter-wrap .course-filter-box {
+    grid-template-columns: 1fr;
+  }
+  .course-filter-wrap .course-filter-box .filter-bttn {
+    width: 100%;
+  }
+  .course-item-box {
+    padding-right: 1rem;
+  }
+  .course-item-box .media .course-thumbnail {
+    width: 100%;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .navbar-toggler {

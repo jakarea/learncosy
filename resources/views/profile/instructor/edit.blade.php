@@ -42,8 +42,8 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="username">Username <span class="warning-txt">(after you set
-                                                    the username, it's not changeable.)</span><sup
+                                            <label for="username">Subdomain  <span class="warning-txt">(after you set
+                                                    the Subdomain, it's not changeable.)</span><sup
                                                     class="text-danger">*</sup>
                                             </label>
                                             <input type="text" placeholder="Enter username" name="username"
