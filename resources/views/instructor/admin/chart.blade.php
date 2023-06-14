@@ -3,48 +3,258 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('assets/css/chart/styles.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/chart.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 <!-- === Instructor add page @S === -->
-<main class="d-flex">
-    
+<main class="instructor-chart-page-wrap">
     <div class="col-12">
         <div class="row">
-            <div class="col-md-3">
-                <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                    <i class="fa fa-calendar"></i>&nbsp;
-                    <span></span> <i class="fa fa-caret-down"></i>
+            <div class="col-md-12">
+                <div class="top-date-box">
+                    <div id="reportrange" class="date-box">
+                        <i class="fa fa-calendar"></i> 
+                        <span></span> <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row sparkboxes mt-4 mb-4">
+            <div class="col-md-4">
+                <div class="box box1">
+                    <div id="spark1"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box2">
+                    <div id="spark2"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box box3">
+                    <div id="spark3"></div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="row sparkboxes mt-4 mb-4">
-                <div class="col-md-4">
-                    <div class="box box1">
-                        <div id="spark1"></div>
-                    </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="stat-card course-card">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4>Total Course</h4>
+                            <h3>45</h3>
+                        </div>
+                        <i class="fa-solid fa-tv"></i>
+                    </div> 
                 </div>
-                <div class="col-md-4">
-                    <div class="box box2">
-                        <div id="spark2"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="box box3">
-                        <div id="spark3"></div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="stat-card">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4>Total Student</h4>
+                            <h3>34</h3> 
+                        </div>
+                        <i class="fa-solid fa-users"></i>
                     </div>
                 </div>
             </div>
-            <div class="row mt-5 mb-4">
-                <div class="col-md-6">
-                    <div class="box">
-                        <div id="bar"></div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="stat-card">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4>Total Earning</h4>
+                            <h3>€ 534</h3> 
+                        </div>
+                        <i class="fa-solid fa-money-bill-trend-up"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="box">
-                        <div id="donut"></div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3"> 
+                <div class="stat-card">
+                    <div class="media">
+                        <div class="media-body">
+                            <h4>Total Expense</h4>
+                            <h3> €104</h3>
+                        </div>
+                        <i class="fa-solid fa-chart-pie"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <div id="bar"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box">
+                    <div id="donut"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="dashboard-table">
+                    <h5> Recent Enrolment</h5>
+                    <table>
+                        <tr>
+                            <th>
+                                Course title
+                            </th>
+                            <th>
+                                Student name
+                            </th>
+                            <th>
+                                Student email
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                Jhon Doe
+                            </td>
+                            <td>
+                                student@demomail.com
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                Jhon Doe
+                            </td>
+                            <td>
+                                student@demomail.com
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                Jhon Doe
+                            </td>
+                            <td>
+                                student@demomail.com
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                Jhon Doe
+                            </td>
+                            <td>
+                                student@demomail.com
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                Jhon Doe
+                            </td>
+                            <td>
+                                student@demomail.com
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="dashboard-table">
+                    <h5>Course-wise summary</h5>
+                    <table>
+                        <tr>
+                            <th>
+                                Course title
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Student
+                            </th>
+                            <th>
+                                Earning
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                € 533
+                            </td>
+                            <td>
+                               Jhon Doe
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                € 533
+                            </td>
+                            <td>
+                               Jhon Doe
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                € 533
+                            </td>
+                            <td>
+                               Jhon Doe
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                € 533
+                            </td>
+                            <td>
+                               Jhon Doe
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Test Course title demo</td>
+                            <td>
+                                € 533
+                            </td>
+                            <td>
+                               Jhon Doe
+                            </td>
+                            <td>
+                                € 1234
+                            </td>
+                        </tr> 
+                    </table>
                 </div>
             </div>
         </div>

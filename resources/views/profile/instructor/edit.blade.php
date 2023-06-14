@@ -33,7 +33,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="row">
+                                <div class="row"> 
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="name">Name <sup class="text-danger">*</sup>
@@ -96,9 +96,14 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="features">Social Media </label>
+                                            @php 
+                                            $socialLinks = explode(",",$user->social_links); 
+                                            @endphp 
+                                            @foreach ($socialLinks as $social) 
                                             <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                                class="form-control @error('social_links') is-invalid @enderror"
-                                                id="features" multiple value="{{ $user->social_links }}">
+                                                class="form-control mb-2 @error('social_links') is-invalid @enderror"
+                                                id="features" multiple value="{{ $social }}">
+                                            @endforeach
                                             <div class="url-extra-field">
                                             </div>
                                             <span class="invalid-feedback">@error('social_links'){{ $message }}
@@ -178,8 +183,7 @@
                                         </div> 
                                         
                                         @endif
-                                    </div>
-
+                                    </div> 
                                 </div> <!-- row end -->
                             </div>
                         </div>

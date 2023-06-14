@@ -42,7 +42,7 @@ Route::get('/test', function(){
     return 'Hello';
 });
 
-Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
+Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
 
 Route::group(['prefix' => 'home'], function () {
