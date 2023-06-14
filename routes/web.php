@@ -38,6 +38,12 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 */
 
 
+Route::get('/test', function(){
+    return 'Hello';
+});
+
+Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
+
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
