@@ -33,7 +33,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="row">
+                                <div class="row"> 
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="name">Name <sup class="text-danger">*</sup>
@@ -178,8 +178,7 @@
                                         </div> 
                                         
                                         @endif
-                                    </div>
-
+                                    </div> 
                                 </div> <!-- row end -->
                             </div>
                         </div>

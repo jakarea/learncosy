@@ -16,9 +16,8 @@
         <div class="row align-items-center">
             <div class="col-lg-6  ">
                 <div class="hero-txt-wrap">
-                    <h1>Online Instructor for Computer Courses</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima accusamus doloremque et hic sed
-                        alias, accusantium quod cum aspernatur eligendi!</p>
+                    <h1>Deep drive into captivating lessons and hands-on exercises.</h1>
+                    <p>Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today's ever-evolving world.</p>
                     <div class="hero-bttn">
                         <a href="{{url('/login')}}">Get Started</a>
                     </div>
@@ -32,7 +31,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="hero-img-box">
-                    <img src="{{asset('assets/images/home-page-banner.png') }}" alt="home-page-banner" class="img-fluid">
+                    <img src="{{asset('assets/images/home-page-hero.png') }}" alt="home-page-hero" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -182,7 +181,7 @@
             <div class="col-lg-6">
                 <div class="bundle-course-head">
                     <h2>Bundle Courses</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt, similique.</p>
+                    <p>At KnowledgeQuest, we believe that learning should be an immersive and engaging experience. That's why our courses are crafted by industry experts and thought leaders, ensuring the highest quality of content and up-to-date information. </p>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -235,8 +234,8 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="bundle-course-head">
-                    <h2>Our Student Feedback</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt, similique.</p>
+                    <h2> A Testimonial Showcase</h2>
+                    <p>Explore a compilation of inspiring testimonials that highlight the impact our platform has had on their lives and careers. Join our community and be a part of the success stories.</p>
                 </div>
             </div>
             <div class="col-lg-6">

@@ -52,6 +52,8 @@ Route::group(['prefix' => 'home'], function () {
 Route::middleware('auth')->get('/', function () {
     if(Auth::user()->user_role == 'student')
         return redirect('/students/dashboard');
+    if(Auth::user()->user_role == 'admin')
+        return redirect('/admin/dashboard');
     return view('home');
 });
 
