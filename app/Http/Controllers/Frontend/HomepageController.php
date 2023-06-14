@@ -18,8 +18,8 @@ class HomepageController extends Controller
     public function index()
     {
         // get all user who are instructor use auth service provider
-        $instructors = User::where('user_role', 'instructor')->get();
-        return "Hello test"; 
+        
+        return view('instructor/admin/chart');
     }
 
     /**
