@@ -16,10 +16,10 @@
 					</div>
 					{{--  header logo @E --}}
 					{{-- header search @S --}}
-					<div class="header-search-wrap">
+					{{-- <div class="header-search-wrap">
 						<img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search Icon" class="img-fluid" />
 						<input type="text" placeholder="Search" />
-					</div>
+					</div> --}}
 					{{-- header search @E --}}
 				</div>
 			</div>

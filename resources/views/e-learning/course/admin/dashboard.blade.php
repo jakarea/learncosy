@@ -20,10 +20,10 @@
                     <div class="card-body">
                         <div class="media">
                             <div class="media-body">
-                                <h6>Total Instructors</h6>
-                                <h4>{{$instructors}}</h4>
+                                <h6>Total Users</h6>
+                                <h4>{{$instructors + $students}}</h4>
                             </div>
-                            <i class="fas fa-user-group"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="card-body">
                         <div class="media">
                             <div class="media-body">
-                                <h6>Total Students</h6>
+                                <h6>Active Users</h6>
                                 <h4>{{$students}}</h4>
                             </div>
                             <i class="fas fa-users"></i>
