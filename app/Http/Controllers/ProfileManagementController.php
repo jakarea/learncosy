@@ -36,8 +36,7 @@ class ProfileManagementController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'short_bio' => 'required|string',
-            'username' => 'string', 
+            'short_bio' => 'required|string', 
             'phone' => 'required|string', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
@@ -46,14 +45,10 @@ class ProfileManagementController extends Controller
         $user->name = $request->name;
 
         if ($user->username) {
-            return "Found User Name";
+            $user->username = $user->username;
         }else{
-            return "Not Found User Name";
-        }
-
-        if ($request->username) {
             $user->username =  Str::slug($request->username);
-        }
+        } 
         $user->short_bio = $request->short_bio;
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
