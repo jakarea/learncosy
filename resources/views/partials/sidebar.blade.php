@@ -124,7 +124,7 @@
             <li class="menu-item">
                 <a href="{{ route('admin.subscription') }}" class="{{ Request::is('admin/manage/subscriptionpackage*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-box"></i>
-                    <span>Package</span> 
+                    <span>Memberships</span> 
                 </a>
             </li>
             <li class="menu-item">
@@ -138,7 +138,7 @@
             {{-- admin menu link @E --}}
             @endif
             <li class="menu-item">
-                <a class="menu-link bg-white" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                     <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout" class="img-fluid" />
                     <span>{{ __('Logout') }}</span>

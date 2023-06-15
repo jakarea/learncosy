@@ -238,6 +238,13 @@
   color: #ffffff;
 }
 
+.password-page-wrapper {
+  width: 100%;
+}
+.password-page-wrapper .card {
+  margin-top: 9rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .login-section {
     padding-top: 6rem;

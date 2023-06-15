@@ -16,7 +16,11 @@ class CourseController extends Controller
 {
     // course list
     public function index(){
-        return view('e-learning/course/instructor/index');  
+
+        $courses = Course::orderBy('id', 'desc')->paginate(6);
+
+        // return view('e-learning/course/instructor/index');  
+        return view('e-learning/course/instructor/list',compact('courses'));  
     }
 
     // data table getData

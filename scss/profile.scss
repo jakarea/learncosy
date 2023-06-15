@@ -405,35 +405,41 @@
     }
 }
 
-.main-chat-wrapper{
+.main-chat-wrapper {
     margin-top: 1rem;
-    @include m.box(1rem 1.5rem,7px,v.$light);
-    .d-flex{
+    @include m.box(1rem 1.5rem, 7px, v.$light);
+
+    .d-flex {
         @include m.df(space-between);
         margin-bottom: 1rem;
-        h5{
-            @include m.para(1.2rem,600,v.$btnbg);
+
+        h5 {
+            @include m.para(1.2rem, 600, v.$btnbg);
         }
-        .media{
+
+        .media {
             align-items: center;
-            img{
+
+            img {
                 width: 2rem;
                 height: 2rem;
                 border-radius: 50%;
                 margin-right: .5rem;
             }
-            h5{
-                @include m.para(.9rem,700,v.$btnbg);
+
+            h5 {
+                @include m.para(.9rem, 700, v.$btnbg);
             }
-            p{
-                @include m.para(.8rem,500,v.$fourth);
+
+            p {
+                @include m.para(.8rem, 500, v.$fourth);
             }
         }
     }
 }
- 
-.chat-box-wrap{
-    .message-list-wrap{
+
+.chat-box-wrap {
+    .message-list-wrap {
         // max-height: 450px;
         border: 1px solid v.$third;
         border-radius: 8px;
@@ -441,49 +447,60 @@
         padding: 1.5rem;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; 
+        align-items: flex-start;
         background-color: rgba(0, 0, 0, 0.01);
-        .message-item{
+
+        .message-item {
             display: inline-block;
             padding: .4rem 1rem;
             border-radius: 8px;
             background: v.$third;
-            @include m.para(.9rem,500,v.$btnbg);
+            @include m.para(.9rem, 500, v.$btnbg);
             margin-bottom: 1rem;
             max-width: 90%;
-            span{
+
+            span {
                 display: block;
                 text-align: right;
-                @include m.para(.65rem,400,v.$btnbg);
+                @include m.para(.65rem, 400, v.$btnbg);
                 margin-top: 0.4rem;
             }
         }
-        .sender{
+
+        .sender {
             background: v.$gdbg;
-            @include m.para(.9rem,500,v.$light);
-            span{
+            @include m.para(.9rem, 500, v.$light);
+
+            span {
                 color: v.$light;
             }
         }
-        .reciver{
+
+        .reciver {
             // margin-left: auto;
         }
     }
-    form{
+
+    form {
         margin-top: 1rem;
-        .form-group{
+
+        .form-group {
             position: relative;
-            .form-control{
-                @include m.para(1rem,500,v.$btnbg);
+
+            .form-control {
+                @include m.para(1rem, 500, v.$btnbg);
                 resize: none;
             }
         }
-        .form-submit{ 
+
+        .form-submit {
             margin-top: 1rem;
             text-align: right;
-            .btn-submit{
-                @include m.button(1rem,v.$light,v.$primary);
-                &:hover{
+
+            .btn-submit {
+                @include m.button(1rem, v.$light, v.$primary);
+
+                &:hover {
                     background: v.$orang;
                 }
             }
@@ -491,24 +508,142 @@
     }
 }
 
-.instructor-details-box{
-    h1{
-        @include m.para(3rem,700,v.$btnbg);
+.instructor-details-box {
+    h1 {
+        @include m.para(3rem, 700, v.$btnbg);
     }
-    h2{
-        @include m.para(2.5rem,700,v.$btnbg);
+
+    h2 {
+        @include m.para(2.5rem, 700, v.$btnbg);
     }
+
     h4,
-    h3{
-        @include m.para(2rem,700,v.$btnbg);
-    } 
-    h6{
-        @include m.para(1.2rem,700,v.$btnbg);
+    h3 {
+        @include m.para(2rem, 700, v.$btnbg);
     }
-    p{
-        @include m.para; 
+
+    h6 {
+        @include m.para(1.2rem, 700, v.$btnbg);
+    }
+
+    p {
+        @include m.para;
     }
 }
+
+// latest profile design @s
+.profile-update-page {
+    .profile-form {
+        .form-group {
+            .form-flex {
+                @include m.df;
+
+                label {
+                    @include m.para(1rem, 400, v.$fourth);
+                    text-transform: capitalize;
+                    min-width: 20%;
+                    margin-bottom: 0;
+                    margin-right: 0.5rem;
+                }
+
+                .form-control {
+                    width: 80%;
+                    display: block;
+                    box-shadow: v.$bxs2;
+                }
+            }
+
+            .warning-txt {
+                display: block;
+            }
+
+            #url_increment {
+                top: 0.5rem !important;
+            }
+        }
+    }
+
+    .custom-hr {
+        hr {
+            border: none;
+            height: 1px;
+            width: 100%;
+            background: v.$fourth;
+        }
+
+        h5 {
+            @include m.para(1rem, 600, v.$btnbg);
+            text-transform: uppercase;
+        }
+    }
+
+
+    #file-upload {
+        opacity: 0;
+        height: 0;
+    }
+
+    #image-input {
+        display: none;
+    }
+
+    #uploaded-image {
+        position: relative;
+        display: none;
+    }
+
+    #uploaded-image-name {
+        @include m.para(1rem, 500, v.$btnbg);
+        margin-left: 1rem;
+    }
+
+    #close-icon {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 20px;
+        color: red;
+        cursor: pointer;
+    }
+
+
+    #uploaded-image-preview,
+    .static-image {
+        width: 7rem;
+        height: 7rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+
+    #image-container {
+        position: relative;
+        display: inline-block;
+        margin-top: 1rem;
+
+        #upload-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.4rem;
+            height: 2.5rem;
+            border-radius: 4rem;
+            background: v.$gdbg;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            z-index: 99;
+
+            i {
+                color: v.$light;
+                font-size: 1.4rem;
+            }
+        }
+    }
+}
+
+// latest profile design @e
 
 
 @include q.responsive(phone) {
@@ -538,26 +673,67 @@
     }
 
     .message-item {
-        p{
+        p {
             font-size: 13px;
         }
     }
-    .main-chat-wrapper{
+
+    .main-chat-wrapper {
         padding: 1rem;
     }
-    .chat-box-wrap .message-list-wrap{
+
+    .chat-box-wrap .message-list-wrap {
         padding: 1rem;
     }
-    .chat-box-wrap .message-list-wrap .message-item{
+
+    .chat-box-wrap .message-list-wrap .message-item {
         max-width: 96%;
     }
-    .sidebar-custom-width .header-user-box .media span, .sidebar-custom-width .header-user-box .media span{
+
+    .sidebar-custom-width .header-user-box .media span,
+    .sidebar-custom-width .header-user-box .media span {
         margin-right: 1rem;
     }
-    .productss-list-box table{
+
+    .productss-list-box table {
         display: block;
         width: 100%;
         overflow-x: scroll;
+    }
+
+    .profile-update-page .profile-form .form-group .form-flex {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .form-control {
+            width: 100%;
+        }
+
+        label {
+            margin-right: 0;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .profile-update-page .profile-form .form-group #url_increment {
+        top: 2rem !important;
+    }
+
+    .profile-update-page #uploaded-image-preview,
+    .profile-update-page .static-image {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .profile-update-page #uploaded-image-name {
+        display: block;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-update-page .form-check {
+        margin-left: 0!important;
     }
 
 }
@@ -587,7 +763,8 @@
     .user-password-chnage .change-password-form h3 {
         font-size: 1.1rem;
     }
-    .productss-list-box table{
+
+    .productss-list-box table {
         display: block;
         width: 100%;
         overflow-x: scroll;

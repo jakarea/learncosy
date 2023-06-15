@@ -551,6 +551,103 @@
   line-height: 140%;
 }
 
+.profile-update-page .profile-form .form-group .form-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.profile-update-page .profile-form .form-group .form-flex label {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #8C8FAE;
+  line-height: 140%;
+  text-transform: capitalize;
+  min-width: 20%;
+  margin-bottom: 0;
+  margin-right: 0.5rem;
+}
+.profile-update-page .profile-form .form-group .form-flex .form-control {
+  width: 80%;
+  display: block;
+  box-shadow: 2px 9px 7px -1px #DEE3EB;
+}
+.profile-update-page .profile-form .form-group .warning-txt {
+  display: block;
+}
+.profile-update-page .profile-form .form-group #url_increment {
+  top: 0.5rem !important;
+}
+.profile-update-page .custom-hr hr {
+  border: none;
+  height: 1px;
+  width: 100%;
+  background: #8C8FAE;
+}
+.profile-update-page .custom-hr h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3958;
+  line-height: 140%;
+  text-transform: uppercase;
+}
+.profile-update-page #file-upload {
+  opacity: 0;
+  height: 0;
+}
+.profile-update-page #image-input {
+  display: none;
+}
+.profile-update-page #uploaded-image {
+  position: relative;
+  display: none;
+}
+.profile-update-page #uploaded-image-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2d3958;
+  line-height: 140%;
+  margin-left: 1rem;
+}
+.profile-update-page #close-icon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+.profile-update-page #uploaded-image-preview,
+.profile-update-page .static-image {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.profile-update-page #image-container {
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+}
+.profile-update-page #image-container #upload-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.5rem;
+  border-radius: 4rem;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  z-index: 99;
+}
+.profile-update-page #image-container #upload-label i {
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-password-chnage .password-change-txt h1 {
     font-size: 1.4rem;
@@ -582,13 +679,42 @@
   .chat-box-wrap .message-list-wrap .message-item {
     max-width: 96%;
   }
-  .sidebar-custom-width .header-user-box .media span, .sidebar-custom-width .header-user-box .media span {
+  .sidebar-custom-width .header-user-box .media span,
+  .sidebar-custom-width .header-user-box .media span {
     margin-right: 1rem;
   }
   .productss-list-box table {
     display: block;
     width: 100%;
     overflow-x: scroll;
+  }
+  .profile-update-page .profile-form .form-group .form-flex {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .profile-update-page .profile-form .form-group .form-flex .form-control {
+    width: 100%;
+  }
+  .profile-update-page .profile-form .form-group .form-flex label {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .profile-update-page .profile-form .form-group #url_increment {
+    top: 2rem !important;
+  }
+  .profile-update-page #uploaded-image-preview,
+  .profile-update-page .static-image {
+    width: 5rem;
+    height: 5rem;
+  }
+  .profile-update-page #uploaded-image-name {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .profile-update-page .form-check {
+    margin-left: 0 !important;
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {

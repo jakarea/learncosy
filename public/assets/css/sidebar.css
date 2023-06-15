@@ -72,6 +72,9 @@
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-angles-right {
   font-size: 0.8rem;
   color: #8C8FAE;
+  position: absolute;
+  right: 10px;
+  z-index: 9;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-box,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-file-invoice-dollar,

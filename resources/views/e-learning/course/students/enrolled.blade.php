@@ -14,13 +14,7 @@
     <div class="email-camping-head">
         <h1>Enrolled Courses</h1>
     </div> 
- 
-    {{-- notification @S --}}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-       A New Course Available from Today
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {{-- notification @E --}}
+  
 
     {{-- course listing @S --}}
     <div class="tab-content" id="pills-tabContent">
