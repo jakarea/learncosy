@@ -541,13 +541,13 @@
                 label {
                     @include m.para(1rem, 400, v.$fourth);
                     text-transform: capitalize;
-                    min-width: 14%;
+                    min-width: 20%;
                     margin-bottom: 0;
                     margin-right: 0.5rem;
                 }
 
                 .form-control {
-                    width: 86%;
+                    width: 80%;
                     display: block;
                     box-shadow: v.$bxs2;
                 }
@@ -577,46 +577,46 @@
         }
     }
 
-   
-    #file-upload{
+
+    #file-upload {
         opacity: 0;
         height: 0;
-    }  
-      
-      #image-input {
+    }
+
+    #image-input {
         display: none;
-      }
-      
-      #uploaded-image {
+    }
+
+    #uploaded-image {
         position: relative;
-        display: none; 
-      } 
-      
-      #uploaded-image-name {
-        @include m.para(1rem,500,v.$btnbg);
+        display: none;
+    }
+
+    #uploaded-image-name {
+        @include m.para(1rem, 500, v.$btnbg);
         margin-left: 1rem;
-      }
-      
-      #close-icon {
+    }
+
+    #close-icon {
         position: absolute;
         top: -10px;
         right: -10px;
         font-size: 20px;
         color: red;
         cursor: pointer;
-      }
-       
+    }
 
-      #uploaded-image-preview,
-      .static-image{
+
+    #uploaded-image-preview,
+    .static-image {
         width: 7rem;
         height: 7rem;
         border-radius: 50%;
         object-fit: cover;
-    } 
+    }
 
 
-      #image-container {
+    #image-container {
         position: relative;
         display: inline-block;
         margin-top: 1rem;
@@ -699,6 +699,41 @@
         display: block;
         width: 100%;
         overflow-x: scroll;
+    }
+
+    .profile-update-page .profile-form .form-group .form-flex {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .form-control {
+            width: 100%;
+        }
+
+        label {
+            margin-right: 0;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .profile-update-page .profile-form .form-group #url_increment {
+        top: 2rem !important;
+    }
+
+    .profile-update-page #uploaded-image-preview,
+    .profile-update-page .static-image {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .profile-update-page #uploaded-image-name {
+        display: block;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-update-page .form-check {
+        margin-left: 0!important;
     }
 
 }

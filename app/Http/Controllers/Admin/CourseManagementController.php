@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
 use Illuminate\Support\Str; 
+use App\Models\CourseReview;
 use DataTables;
 use Auth;
 use File;
@@ -16,7 +17,11 @@ class CourseManagementController extends Controller
 {
     // course list
     public function index(){
-        return view('e-learning/course/admin/index');  
+        // return view('e-learning/course/admin/index');  
+
+        $courses = Course::orderBy('id', 'desc')->paginate(6);
+
+        return view('e-learning/course/admin/list',compact('courses'));  
     }
 
      // data table getData
@@ -182,15 +187,28 @@ class CourseManagementController extends Controller
     // course show
     public function show($slug)
     {   
-        $lessons = Lesson::orderby('id', 'desc')->paginate(10);
-        $modules = Module::orderby('id', 'desc')->paginate(10);
-        $course = Course::where('slug', $slug)->first();
+        // $lessons = Lesson::orderby('id', 'desc')->paginate(10);
+        // $modules = Module::orderby('id', 'desc')->paginate(10);
+        // $course = Course::where('slug', $slug)->first(); 
+ 
+
+        // if ($course) {
+        //     return view('e-learning/course/admin/show', compact('course','modules','lessons'));
+        // } else {
+        //     return redirect('admin/courses')->with('error', 'Course not found!');
+        // }
+
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+
         if ($course) {
-            return view('e-learning/course/admin/show', compact('course','modules','lessons'));
+            return view('e-learning/course/admin/show', compact('course','course_reviews'));
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
     }
+
+    
 
      // course edit
      public function edit($slug)
@@ -209,6 +227,8 @@ class CourseManagementController extends Controller
         }
 
         $categories = array_unique($unique_array);
+
+        
 
          if ($course) {
              return view('e-learning/course/admin/edit', compact('course','categories'));

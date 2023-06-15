@@ -21,7 +21,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h6>Total Users</h6>
-                                <h4>{{$instructors + $students}}</h4>
+                                <h4>{{$users}}</h4>
                             </div>
                             <i class="fas fa-users"></i>
                         </div>
@@ -47,9 +47,9 @@
                         <div class="media">
                             <div class="media-body">
                                 <h6>Active Users</h6>
-                                <h4>{{$students}}</h4>
+                                <h4>{{$enrolmentStudents}}</h4>
                             </div>
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-user-group"></i>
                         </div>  
                     </div>
                 </div>

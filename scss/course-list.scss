@@ -1,0 +1,374 @@
+@use './util/media-query' as q;
+
+.course-lists-pages {
+    padding-top: 8rem;
+}
+
+.table-filter-sort-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.client-single-box-wrap {
+    background-color: #fff;
+    // padding: 1rem;
+    border-radius: 10px;
+    transition: all linear .3s;
+    box-shadow: 0 14px 26px rgb(0 0 0 / 4%);
+    /* margin-bottom: 1.5rem; */
+    position: relative;
+    width: 97%;
+    height: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.client-single-box-wrap .badge {
+    position: absolute;
+    right: -12px;
+    top: 21px;
+    border-radius: 0px;
+    transition: all linear .3s;
+}
+
+.client-single-box-wrap .badge:before {
+    position: absolute;
+    content: "";
+    bottom: -13px;
+    right: -16px;
+    border-bottom: 14px solid transparent;
+    border-right: 16px solid transparent;
+    border-left: 12px solid #000;
+}
+
+.client-single-box-wrap .text-bg-success.badge:before {
+    border-left: 12px solid #085a34 !important;
+}
+
+.client-single-box-wrap .text-bg-warning.badge:before {
+    border-left: 12px solid #bb8d05 !important;
+}
+
+.client-single-box-wrap .text-bg-danger.badge:before {
+    border-left: 12px solid #980c1a !important;
+}
+
+.client-single-box-wrap .text-bg-info.badge:before {
+    border-left: 12px solid #048da9 !important;
+}
+
+.client-thumb-box {
+    transition: all linear .3s;
+}
+
+.client-thumb-box img {
+    max-width: 100%;
+    width: 100%;
+    height: 220px;
+    border-radius: 10px 10px 0 0;
+    transition: all linear .3s;
+}
+
+.client-txt-box {
+    transition: all linear .3s;
+}
+
+.client-name-box {
+    padding: 1rem;
+    padding-bottom: 0;
+    transition: all linear .3s;
+}
+
+.client-name-box h4 {
+    font-size: 17px;
+    line-height: 140%;
+    font-weight: 600;
+    color: #2f2f2f;
+    transition: all linear .3s;
+    margin-bottom: 0.4rem;
+}
+
+.client-name-box h6 {
+    font-size: 14px;
+    line-height: 140%;
+    font-weight: 400;
+    color: #7E84A3;
+    margin-bottom: 0.5rem;
+    transition: all linear .3s;
+}
+
+.client-single-box-wrap p {
+    font-size: 12px;
+    line-height: 150%;
+    font-weight: 400;
+    color: rgba(46, 46, 46, 0.733);
+    transition: all linear .3s;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.client-txt-box .d-flex {
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+.client-txt-box .d-flex .btn,
+.client-txt-box .d-flex a {
+    display: inline-flex;
+    align-items: center;
+    i{
+        margin-left: 0.2rem;
+    }
+}
+
+.client-txt-box .d-flex .btn,
+.client-txt-box .d-flex a,
+.client-txt-box .d-flex span {
+    font-size: 13px;
+    line-height: 150%;
+    font-weight: 400;
+    color: rgba(46, 46, 46, 0.5);
+    display: inline-block;
+    transition: all linear .3s;
+}
+
+.client-txt-box .d-flex i {
+    margin-right: 6px;
+    transition: all linear .3s;
+}
+
+.client-txt-box hr {
+    border: none;
+    background-color: #7E84A3;
+    height: 5px;
+    width: 100%;
+    margin: 1rem 0;
+    transition: all linear .3s;
+}
+
+.table-layout-bttn {
+    margin-right: 1rem;
+}
+
+.table-layout-bttn ul li {
+    display: inline-block;
+}
+
+.table-layout-bttn ul li a {
+    padding: 5px 12px;
+    border-radius: 5px;
+    border: none;
+    display: block;
+    border: 1px solid #048da9;
+    margin: 0 2px;
+    background-color: #fff;
+}
+
+.table-layout-bttn ul li a i {
+    font-size: 14px;
+    color: #7E84A3;
+}
+
+.table-layout-bttn ul li a.active {
+    background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+    color: #fff;
+}
+
+.table-layout-bttn ul li a.active i:hover,
+.table-layout-bttn ul li a.active i {
+    color: #fff;
+}
+
+.table-layout-bttn ul li a i:hover {
+    color: #2F3349;
+}
+
+.clint-list-page .table-sort-box {
+    overflow-x: hidden;
+}
+
+/* css for client single medium view start */
+
+.single-client-medium-view {
+    transition: all linear .3s;
+    min-height: auto;
+    height: 90%;
+
+}
+
+.single-client-small-view p,
+.single-client-medium-view p {
+    display: none;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-thumb-box {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    transition: all linear .3s;
+}
+
+.single-client-small-view.client-single-box-wrap .badge {
+    display: none;
+}
+
+.single-client-medium-view .client-thumb-box img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    transition: all linear .3s;
+}
+
+
+.single-client-medium-view .client-name-box h4 {
+    font-size: 18px;
+    transition: all linear .3s;
+}
+
+.single-client-medium-view .client-name-box h6 {
+    font-size: 14px;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-txt-box p,
+.single-client-medium-view .client-txt-box p {
+    font-size: 0px;
+    display: none;
+    height: 0;
+    transition: all linear .3s;
+}
+
+.single-client-medium-view .client-txt-box hr {
+    margin: 1rem 0;
+    transition: all linear .3s;
+}
+
+.single-client-medium-view {
+    height: 90%;
+
+    h4 {
+        margin-bottom: 0;
+    }
+
+    h6 {
+        display: none;
+    }
+}
+
+
+/* css for client single medium view end */
+
+
+/* css for client single small view start */
+.single-client-small-view {
+    padding: 12px 10px !important;
+    transition: all linear .3s;
+    height: 90%;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.single-client-small-view .client-txt-box .d-flex,
+.single-client-small-view .client-txt-box hr {
+    display: none !important;
+    margin: 0;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-thumb-box {
+    margin-bottom: 0;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-name-box {
+    padding: 0;
+    padding-left: 1rem;
+}
+
+.single-client-small-view .client-name-box h4 {
+    font-size: 13px !important;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-name-box h6 {
+    font-size: 12px !important;
+    transition: all linear .3s;
+}
+
+.single-client-small-view .client-thumb-box img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: all linear .3s;
+}
+
+/* css for client single small view end */
+
+
+.table-paggination {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+
+.table-paggination .pagination .page-item .page-link {
+    font-size: 14px;
+    color: #2F3349;
+    font-weight: 500;
+    line-height: 160%;
+}
+
+.table-paggination .pagination .page-item.active .page-link {
+    color: #fff;
+    background-color: #000;
+    border: none;
+}
+
+
+.create-bttn-wraps {
+    margin-left: 1rem;
+}
+
+.create-bttn-wraps a {
+    background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+    color: #fff;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 150%;
+    font-weight: 600;
+    padding: .7rem 1.6rem;
+    transition: all linear .3s;
+    display: inline-block;
+}
+
+.create-bttn-wraps a i {
+    margin-right: 6px;
+}
+
+.create-bttn-wraps a:hover {
+    opacity: .7;
+}
+
+// mobile responsive device css
+@include q.responsive(phone) {
+    .table-filter-sort-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .create-bttn-wraps {
+            margin-left: 0 !important;
+            margin-top: 1rem;
+        }
+
+        .table-layout-bttn {
+            margin-left: 0 !important;
+        }
+    }
+}

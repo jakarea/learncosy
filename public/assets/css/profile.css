@@ -562,12 +562,12 @@
   color: #8C8FAE;
   line-height: 140%;
   text-transform: capitalize;
-  min-width: 14%;
+  min-width: 20%;
   margin-bottom: 0;
   margin-right: 0.5rem;
 }
 .profile-update-page .profile-form .form-group .form-flex .form-control {
-  width: 86%;
+  width: 80%;
   display: block;
   box-shadow: 2px 9px 7px -1px #DEE3EB;
 }
@@ -687,6 +687,34 @@
     display: block;
     width: 100%;
     overflow-x: scroll;
+  }
+  .profile-update-page .profile-form .form-group .form-flex {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .profile-update-page .profile-form .form-group .form-flex .form-control {
+    width: 100%;
+  }
+  .profile-update-page .profile-form .form-group .form-flex label {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .profile-update-page .profile-form .form-group #url_increment {
+    top: 2rem !important;
+  }
+  .profile-update-page #uploaded-image-preview,
+  .profile-update-page .static-image {
+    width: 5rem;
+    height: 5rem;
+  }
+  .profile-update-page #uploaded-image-name {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .profile-update-page .form-check {
+    margin-left: 0 !important;
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {
