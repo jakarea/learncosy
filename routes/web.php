@@ -42,6 +42,28 @@ Route::get('/test', function(){
     return 'Hello';
 });
 
+// new dashboard route
+Route::get('/new-dashboard', function(){
+    return view('dashboard/index');
+});
+
+Route::get('/new-dashboard/projects', function(){
+    return view('dashboard/projects');
+});
+Route::get('/new-dashboard/contacts', function(){
+    return view('dashboard/contacts');
+});
+Route::get('/new-dashboard/kanban', function(){
+    return view('dashboard/kanban');
+});
+Route::get('/new-dashboard/calendar', function(){
+    return view('dashboard/calendar');
+});
+
+Route::get('/new-dashboard/messages', function(){
+    return view('dashboard/messages');
+});
+
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
 
