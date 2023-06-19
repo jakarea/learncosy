@@ -291,7 +291,7 @@
             <!-- todo box @s -->
             <div class="card-box empty-box">
                 <div class="move-heare-box">
-                    <p><img src="./assets/images/move-icon.svg" alt="Icon" class="img-fluid"> Move card here</p>
+                    <p><img src="{{asset('dashboard-assets/images/move-icon.svg')}}" alt="Icon" class="img-fluid"> Move card here</p>
                 </div>
             </div>
             <!-- todo box @e -->
