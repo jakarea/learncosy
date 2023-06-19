@@ -1,5 +1,5 @@
 @extends('layouts/guest')
-@section('title') {{ $course->title }} @endsection
+@section('title') {{ $course->title }} - Details @endsection
 
 {{-- page style @S --}}
 @section('style')
