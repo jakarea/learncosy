@@ -1,5 +1,5 @@
 @extends('layouts/guest')
-@section('title') Guest Home Page @endsection
+@section('title') Guest Home - Page @endsection
 
 {{-- page style @S --}}
 @section('style') 
