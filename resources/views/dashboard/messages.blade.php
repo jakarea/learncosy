@@ -412,9 +412,13 @@
                     </div>
                     <!-- item @e -->
                     <!-- item @s -->
+                    <div class="message-item reciver mb-1">
+                        <p>Remember that dude</p> 
+                    </div>
+                    <!-- item @e -->
+                    <!-- item @s -->
                     <div class="message-item reciver">
-                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p>
-                        <p>Remember that dude</p>
+                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p> 
                         <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
                     </div>
                     <!-- item @e -->
@@ -429,11 +433,15 @@
                             ea</p>
                         <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
                     </div>
+                    <!-- item @e --> 
+                    <!-- item @s -->
+                    <div class="message-item reciver mb-1">
+                        <p>Remember that dude</p> 
+                    </div>
                     <!-- item @e -->
                     <!-- item @s -->
                     <div class="message-item reciver">
-                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p>
-                        <p>Remember that dude</p>
+                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p> 
                         <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
                     </div>
                     <!-- item @e -->
@@ -448,14 +456,7 @@
                             ea</p>
                         <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
                     </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item reciver">
-                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p>
-                        <p>Remember that dude</p>
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e -->
+                    <!-- item @e --> 
                 </div>
                 <!-- messages @e -->
             </div>
