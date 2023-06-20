@@ -18,19 +18,20 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Update Bundle Course</h6>
+                    <a href="{{url('admin/bundle/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Bundle Courses </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Update Bundle Course</h6>
-                        <a href="{{url('admin/bundle/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Bundle Courses </a>
-                    </div>
+                    
                     <!-- course create form @S -->
                     <form action="{{route('admin.course.bundle.update',$bundleCourse->slug)}}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row align-items-center">
-                                    <div class="col-md-12">
+                                    <div class="col-md-10">
                                         <div class="form-group form-error">
                                             <label for="title">Title <sup class="text-danger">*</sup>
                                             </label>
@@ -38,21 +39,6 @@
                                                 class="form-control @error('title') is-invalid @enderror"
                                                 value="{{ $bundleCourse->title }}" id="title">
                                             <span class="invalid-feedback">@error('title'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="form-group form-error">
-                                            @php $selectedCourses = explode(",", $bundleCourse->selected_course)  @endphp
-                                            <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
-                                            </label>
-                                            <select multiple aria-label="Default select example"
-                                                data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror" name="selected_course[]">
-                                                @foreach($courses as $course)
-                                                    <option value="{{$course->id}}" {{ $course->id == in_array($course->id, $selectedCourses) ? 'selected' : '' }}>{{$course->title}}</option>
-                                                @endforeach 
-                                            </select>
-                                            <span class="invalid-feedback">@error('selected_course'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -67,6 +53,21 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group form-error">
+                                            @php $selectedCourses = explode(",", $bundleCourse->selected_course)  @endphp
+                                            <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
+                                            </label>
+                                            <select multiple aria-label="Default select example"
+                                                data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror" name="selected_course[]">
+                                                @foreach($courses as $course)
+                                                    <option value="{{$course->id}}" {{ $course->id == in_array($course->id, $selectedCourses) ? 'selected' : '' }}>{{$course->title}}</option>
+                                                @endforeach 
+                                            </select>
+                                            <span class="invalid-feedback">@error('selected_course'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>

@@ -569,7 +569,7 @@
 .profile-update-page .profile-form .form-group .form-flex .form-control {
   width: 80%;
   display: block;
-  box-shadow: 2px 9px 7px -1px #DEE3EB;
+  box-shadow: 2px 2px 10px #f0eded;
 }
 .profile-update-page .profile-form .form-group .warning-txt {
   display: block;

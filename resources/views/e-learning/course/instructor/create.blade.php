@@ -16,12 +16,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Create a new Course</h6>
+                    <a href="{{url('instructor/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Courses </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Create a new Course</h6>
-                        <a href="{{url('instructor/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Courses </a>
-                    </div>
+
                     <!-- course create form @S -->
                     <form action="{{route('course.store')}}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
@@ -120,18 +121,22 @@
                                             <span class="invalid-feedback">@error('offer_price'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-12">
-                                        <div class="form-group"> 
-                                            <label for="categories">Categories  <sup class="text-danger">*</sup></label>
-                                            <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
-                                                <option disabled hidden>Select or Create categories</option>  
-                                                    @foreach ($categories as $category)
-                                                    <option value="{{ $category }}" {{ (collect(old('categories'))->contains($category)) ? 'selected':'' }}>{{ ucfirst($category) }}</option> 
-                                                    @endforeach
-                                              </select>
-                                              <i class="fas fa-angle-down arrw-down"></i>
-                                              <span class="invalid-feedback">@error('categories'){{ $message }}
+                                        <div class="form-group">
+                                            <label for="categories">Categories <sup class="text-danger">*</sup></label>
+                                            <select id="categoriess" data-tags="true"
+                                                class="form-select @error('categories') is-invalid @enderror"
+                                                multiple="multiple" name="categories[]">
+                                                <option disabled hidden>Select or Create categories</option>
+                                                @foreach ($categories as $category)
+                                                <option value="{{ $category }}" {{ (collect(old('categories'))->
+                                                    contains($category)) ? 'selected':'' }}>{{ ucfirst($category) }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fas fa-angle-down arrw-down"></i>
+                                            <span class="invalid-feedback">@error('categories'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -255,7 +260,8 @@
                                             <input type="number" placeholder="Enter total attachment length"
                                                 name="number_of_attachment"
                                                 class="form-control @error('number_of_attachment') is-invalid @enderror"
-                                                value="{{ old('number_of_attachment')}}" id="number_of_attachment" min="0">
+                                                value="{{ old('number_of_attachment')}}" id="number_of_attachment"
+                                                min="0">
                                             <span class="invalid-feedback">@error('number_of_attachment'){{ $message }}
                                                 @enderror</span>
                                         </div>

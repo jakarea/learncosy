@@ -16,12 +16,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Update Profile</h6>
+                    <a href="{{url('admin/instructor')}}">
+                        <i class="fa-solid fa-user-group"></i> All Instructor </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Update Profile</h6>
-                        <a href="{{url('admin/instructor')}}">
-                            <i class="fa-solid fa-user-group"></i> All Instructor </a>
-                    </div>
+                    
                     <!-- course create form @S -->
                     <form action="{{route('updateInstructorProfile',$instructor->id)}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf

@@ -18,19 +18,21 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Create a new Bundle Course</h6>
+                    <a href="{{url('admin/bundle/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Bundle Courses </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Create a new Bundle Course</h6>
-                        <a href="{{url('admin/bundle/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Bundle Courses </a>
-                    </div>
+
                     <!-- course create form @S -->
-                    <form action="{{route('admin.course.bundle.store')}}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
+                    <form action="{{route('admin.course.bundle.store')}}" method="POST"
+                        class="create-form-box custom-select" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-10">
                                         <div class="form-group form-error">
                                             <label for="title">Title <sup class="text-danger">*</sup>
                                             </label>
@@ -38,20 +40,6 @@
                                                 class="form-control @error('title') is-invalid @enderror"
                                                 value="{{ old('title')}}" id="title">
                                             <span class="invalid-feedback">@error('title'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <div class="form-group form-error">
-                                            <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
-                                            </label>
-                                            <select multiple aria-label="Default select example"
-                                                data-live-search="true" class="form-control selectpicker @error('selected_course') is-invalid @enderror" name="selected_course[]">
-                                                @foreach($courses as $course)
-                                                    <option value="{{$course->id}}">{{$course->title}}</option>
-                                                @endforeach 
-                                            </select>
-                                            <span class="invalid-feedback">@error('selected_course'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -66,6 +54,21 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group form-error">
+                                            <label for="selected_course">Select Courses <sup class="text-danger">*</sup>
+                                            </label>
+                                            <select multiple aria-label="Default select example" data-live-search="true"
+                                                class="form-control selectpicker @error('selected_course') is-invalid @enderror"
+                                                name="selected_course[]">
+                                                @foreach($courses as $course)
+                                                <option value="{{$course->id}}">{{$course->title}}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="invalid-feedback">@error('selected_course'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
@@ -73,7 +76,7 @@
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
                                         {{-- img preview @S --}}
@@ -86,13 +89,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file-upload-2">Banner  </label>
+                                            <label for="file-upload-2">Banner </label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
                                                 @enderror</span>
-                                        </div> 
-                                    </div> 
+                                        </div>
+                                    </div>
                                     <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
@@ -104,7 +107,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="short_description">Short Description  </label>
+                                            <label for="short_description">Short Description </label>
                                             <textarea name="short_description" id="short_description"
                                                 class="form-control @error('short_description') is-invalid @enderror"
                                                 placeholder="Enter Short Description">{{ old('short_description')}}</textarea>

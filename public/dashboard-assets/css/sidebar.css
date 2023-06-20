@@ -6,10 +6,10 @@
   background: #FBFBFB;
   min-height: 100vh;
   height: 100%;
-  padding: 1rem 1.2rem;
-  width: 18rem;
+  padding: 1rem .2rem;
+  width: 16.25rem;
   overflow-y: scroll;
-  transition: all linear 0.2s;
+  transition: all linear 0.2s; 
 }
 .sidebar-wrapper .logo-box {
   text-align: center;
@@ -169,12 +169,14 @@
   margin-top: 0.3rem;
 }
 
+.sidebar-wrapper.sidebar-custom-width,
 .sidebar-wrapper.expanded-menu {
   width: 5rem;
   transition: all linear 0.2s;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.sidebar-wrapper.sidebar-custom-width .logo-box ,
 .sidebar-wrapper.expanded-menu .logo-box {
   text-align: center;
 }
@@ -185,30 +187,38 @@
 .sidebar-wrapper.expanded-menu .logo-box a img.main-logo {
   display: none !important;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu h5 ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu h5 {
   display: none;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu ul li a ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu ul li a {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0.75rem;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu ul li a .menu-text ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu ul li a .menu-text {
   display: none;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu ul li a img ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu ul li a img {
   margin-right: 0rem;
   display: block;
   width: 70%;
   margin: 0 auto;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu ul li a span ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu ul li a span {
   display: none !important;
 }
+.sidebar-wrapper.sidebar-custom-width .main-sidebar-menu ul li a i ,
 .sidebar-wrapper.expanded-menu .main-sidebar-menu ul li a i {
   display: none;
 }
+.sidebar-wrapper.sidebar-custom-width .sidebar-ftr-txt,
+.sidebar-wrapper.sidebar-custom-width .learn-more-box ,
 .sidebar-wrapper.expanded-menu .sidebar-ftr-txt,
 .sidebar-wrapper.expanded-menu .learn-more-box {
   display: none;

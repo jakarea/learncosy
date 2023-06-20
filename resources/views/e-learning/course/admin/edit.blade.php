@@ -16,12 +16,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Update Course</h6>
+                    <a href="{{url('admin/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Courses </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Update Course</h6>
-                        <a href="{{url('admin/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Courses </a>
-                    </div>
+                    
                     <!-- course create form @S -->
                     <form action="{{route('admin.course.update',$course->slug)}}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
