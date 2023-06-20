@@ -17,12 +17,13 @@
         <div class="row">
             <div class="col-lg-12">
                 @include('partials.session-message')
+                <div class="create-form-head">
+                    <h6>Package Add</h6>
+                    <a href="{{ route('admin.subscription') }}">
+                        <i class="fa-solid fa-user-group"></i> All Package </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Package Add</h6>
-                        <a href="{{ route('admin.subscription') }}">
-                            <i class="fa-solid fa-user-group"></i> All Package </a>
-                    </div>
+                    
                     <!-- Student Add form @S -->
                     <form action="{{route('admin.subscription.store')}}" method="POST" class="create-form-box">
                         @csrf

@@ -21,12 +21,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Create a new Module</h6>
+                    <a href="{{url('instructor/modules')}}">
+                        <i class="fa-solid fa-list"></i> All Module </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Create a new Module</h6>
-                        <a href="{{url('instructor/modules')}}">
-                            <i class="fa-solid fa-list"></i> All Module </a>
-                    </div>
+                    
                     <!-- course create form @S -->
                     <form action="{{route('module.store')}}" method="POST" class="create-form-box">
                         @csrf

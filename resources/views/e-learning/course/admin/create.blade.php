@@ -16,12 +16,12 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
-                <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Create a new Course</h6>
-                        <a href="{{url('admin/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Courses </a>
-                    </div>
+                <div class="create-form-head mt-3">
+                    <h6>Create a new Course</h6>
+                    <a href="{{url('admin/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Courses </a>
+                </div>
+                <div class="create-form-wrap"> 
                     <!-- course create form @S -->
                     <form action="{{route('admin.course.store')}}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
@@ -29,34 +29,41 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row align-items-center">
-                                    <div class="col-md-12">
-                                        <div class="form-group form-error">
-                                            <label for="title">Title <sup class="text-danger">*</sup>
-                                            </label>
-                                            <input type="text" placeholder="Enter Course Title" name="title"
-                                                class="form-control @error('title') is-invalid @enderror"
-                                                value="{{ old('title')}}" id="title">
+                                    <div class="col-md-12"> 
+                                        <div class="form-group form-error mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <label for="title" style="min-width: 10rem" class="mb-0 me-3">Title <sup class="text-danger">*</sup>
+                                                </label>
+                                                <input type="text" placeholder="Enter Course Title" name="title"
+                                                    class="form-control @error('title') is-invalid @enderror"
+                                                    value="{{ old('title')}}" id="title">
+                                            </div>
                                             <span class="invalid-feedback">@error('title'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group form-error">
-                                            <label for="sub_title">Sub Title </label>
-                                            <input type="text" placeholder="Enter Sub Title" name="sub_title"
+                                            <div class="d-flex align-items-center">
+                                                <label for="sub_title" style="min-width: 10rem" class="mb-0 me-3">Sub Title </label>
+                                                <input type="text" placeholder="Enter Sub Title" name="sub_title"
                                                 class="form-control @error('sub_title') is-invalid @enderror"
                                                 value="{{ old('sub_title')}}" id="sub_title">
+                                            </div>
                                             <span class="invalid-feedback">@error('sub_title'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="features">Key Features
-                                            </label> 
-                                            <input type="text" placeholder="Enter Features" name="features[]"
-                                                class="form-control @error('features') is-invalid @enderror"
-                                                id="features" multiple>  
+                                            <div class="d-flex align-items-center">
+                                                <label for="features"  style="min-width: 10rem" class="mb-0 me-3">Key Features
+                                                </label> 
+                                                <input type="text" placeholder="Enter Features" name="features[]"
+                                                    class="form-control @error('features') is-invalid @enderror"
+                                                    id="features" multiple>  
+                                            </div>
+                                            
                                             <div class="url-extra-field">
                                             </div>
                                             <span class="invalid-feedback">@error('features'){{ $message }}

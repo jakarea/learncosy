@@ -19,12 +19,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Create a new Lesson</h6>
+                    <a href="{{url('instructor/lessons')}}">
+                        <i class="fa-solid fa-list"></i> All Lesson </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Create a new Lesson</h6>
-                        <a href="{{url('instructor/lessons')}}">
-                            <i class="fa-solid fa-list"></i> All Lesson </a>
-                    </div>
+                    
                     <!-- Lesson create form @S -->
                     <form action="{{route('lesson.store')}}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf

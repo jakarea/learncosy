@@ -25,8 +25,10 @@
     <!-- App css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('assets/css/header.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />  
+    <link href="{{ asset('assets/css/header.css') }}" rel="stylesheet" type="text/css" /> 
+    
+    <link href="{{ asset('dashboard-assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />  
+    <link href="{{ asset('assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />   
     @yield('style')
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->

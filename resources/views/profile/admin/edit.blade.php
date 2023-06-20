@@ -16,12 +16,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Update your Profile</h6>
+                    <a href="{{url('admin/profile/myprofile')}}">
+                        <i class="fa-solid fa-user"></i> My Profile </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Update your Profile</h6>
-                        <a href="{{url('admin/profile/myprofile')}}">
-                            <i class="fa-solid fa-user"></i> My Profile </a>
-                    </div>
+                    
                     <!-- course create form @S -->
                     <form action="{{ route('admin.profile.update',$user->id) }}" method="POST"
                         class="profile-form create-form-box" enctype="multipart/form-data">
@@ -124,7 +125,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group mt-3">
                                     <div class="form-flexs">
-                                        <label for="description" class="mb-2">Description: </label>
+                                        <label for="description" class="mb-2">About: </label>
                                         <textarea name="description" id="description"
                                             class="form-control @error('description') is-invalid @enderror"
                                             placeholder="Enter Full Description">{{ $user->description }}</textarea>

@@ -177,18 +177,20 @@
 .create-form-wrap {
     padding: 1rem 1.5rem;
     background: v.$light;
-    border-radius: 5px;
+    border-radius: 8px;
     position: relative;
 }
 
 .create-form-head {
     @include m.df(space-between);
-    border-bottom: 1px solid v.$border;
+    // border-bottom: 1px solid v.$border;
     margin-bottom: .8rem;
     padding-bottom: .8rem;
+    margin-top: 1rem;
 
     h6 {
-        @include m.para(1.2rem, 500, v.$primary);
+        @include m.para(1.8rem, 500, v.$primary);
+        text-transform: capitalize;
     }
 
     a {
@@ -214,16 +216,29 @@
 
 .create-form-box .form-group {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 
     label {
-        @include m.para(.9rem, 600, v.$fourth);
-        text-transform: uppercase;
-        margin-bottom: 12px;
+        @include m.para(1.25rem, 400, #1d1e27);
+        text-transform: capitalize;
+        margin-bottom: 14px;
     }
 
+    select,
     .form-control {
         @include m.para(1rem, 400, v.$dark);
+        border-radius: 8px;
+        box-shadow: 2px 2px 10px #f0eded;
+    } 
+    select,
+    input.form-control[type=number],
+    input.form-control[type=url],
+    input.form-control[type=text]{
+        height: 3rem;
+    } 
+
+    .form-control:focus-within {
+        border: 1px solid #636571;
     }
 
     .invalid-feedback {
@@ -238,11 +253,12 @@
         color: v.$dark;
         font-size: 1rem;
     }
+
     #features_increment,
     #url_increment {
         position: absolute;
         right: 1rem;
-        top: 2.5rem;
+        top: 0.9rem;
         color: v.$light;
         width: 1.5rem;
         height: 1.5rem;
@@ -254,7 +270,7 @@
         justify-content: center;
     }
 
-    .features-extra-field ,
+    .features-extra-field,
     .url-extra-field {
         .form-control {
             margin-top: 0.3rem;
@@ -263,19 +279,19 @@
 }
 
 .features-extra-field div a {
-	position: absolute;
-	right: 1rem;
-	top: 0.4rem;
-	width: 1.5rem;
-	height: 1.5rem;
-	background: #8C8FAE;
-	border-radius: 50%;
-	font-size: 0.9rem;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	color: #ffffff !important;
-	cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 0.4rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #8C8FAE;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff !important;
+    cursor: pointer;
 }
 
 .submit-bttns {
@@ -299,7 +315,7 @@
         padding: .6rem 1.6rem;
 
         &:hover {
-           background: v.$gdbg;
+            background: v.$gdbg;
         }
     }
 }
@@ -370,7 +386,7 @@
     }
 }
 
-#imgThumbnailPreview{
+#imgThumbnailPreview {
     display: flex;
     align-items: center;
 }
@@ -383,54 +399,56 @@
     border-radius: .625rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
+
     img {
         width: 100%;
         height: 100%;
     }
 }
- 
+
 .imgThumbContainer {
     width: 10rem;
-} 
-
-#mceu_36-body{
-    opacity: 0!important;
 }
 
-.mce-panel{
+#mceu_36-body {
+    opacity: 0 !important;
+}
+
+.mce-panel {
     border: 1px solid v.$border;
 }
 
 .p_infos-group {
-    .col-md-4{
-        span{
-            img{
+    .col-md-4 {
+        span {
+            img {
                 width: 1.3rem;
             }
         }
     }
 }
-.interest-boxss{
+
+.interest-boxss {
     min-width: 40%;
     max-width: 55%;
 }
 
 .info-details-wrap {
-    a{
-        img{
+    a {
+        img {
             border-radius: .625rem;
         }
     }
 }
 
-.product-filter-wrapper { 
+.product-filter-wrapper {
 
-    .product-filter-box { 
-        .form-grp{ 
-            .form-custom { 
-                border: 1px solid v.$border; 
+    .product-filter-box {
+        .form-grp {
+            .form-custom {
+                border: 1px solid v.$border;
                 border-radius: 7px;
-            } 
+            }
         }
     }
 }

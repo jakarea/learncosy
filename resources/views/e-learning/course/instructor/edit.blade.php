@@ -16,12 +16,12 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Update Course</h6>
+                    <a href="{{url('instructor/courses')}}">
+                        <i class="fa-solid fa-list"></i> All Courses </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Update Course</h6>
-                        <a href="{{url('instructor/courses')}}">
-                            <i class="fa-solid fa-list"></i> All Courses </a>
-                    </div>
                     <!-- course create form @S -->
                     <form action="{{route('course.update',$course->slug)}}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
@@ -55,11 +55,11 @@
                                         <div class="form-group">
                                             <label for="features">Key Features
                                             </label>
-                                            @php 
-                                                $selectedFeatures = explode(",",$course->features); 
-                                            @endphp 
+                                            @php
+                                            $selectedFeatures = explode(",",$course->features);
+                                            @endphp
                                             @foreach($selectedFeatures as $key => $feature)
-                                                <input type="text" placeholder="Enter Features" name="features[]"
+                                            <input type="text" placeholder="Enter Features" name="features[]"
                                                 class="form-control @error('features') is-invalid @enderror"
                                                 id="features" value="{{$feature}}" multiple>
                                             @endforeach
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="prerequisites">Prerequisites  
+                                            <label for="prerequisites">Prerequisites
                                             </label>
                                             <input type="text" placeholder="Enter Prerequisites" name="prerequisites"
                                                 class="form-control @error('prerequisites') is-invalid @enderror"
@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group form-error">
-                                            <label for="outcome">Outcome  
+                                            <label for="outcome">Outcome
                                             </label>
                                             <input type="text" placeholder="Enter Outcome" name="outcome"
                                                 class="form-control @error('outcome') is-invalid @enderror"
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="promo_video">Promo Video  
+                                            <label for="promo_video">Promo Video
                                             </label>
                                             <input type="text" placeholder="Enter Promo Video URL" name="promo_video"
                                                 class="form-control @error('promo_video') is-invalid @enderror"
@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-error">
-                                            <label for="offer_price">Offer Price  
+                                            <label for="offer_price">Offer Price
                                             </label>
                                             <input type="text" placeholder="Enter Offer Price" name="offer_price"
                                                 class="form-control @error('offer_price') is-invalid @enderror"
@@ -125,18 +125,21 @@
                                             <span class="invalid-feedback">@error('offer_price'){{ $message }}
                                                 @enderror</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-12">
-                                        <div class="form-group"> 
-                                            <label for="categories">Categories  <sup class="text-danger">*</sup></label>
-                                            <select id="categoriess" data-tags="true" class="form-select @error('categories') is-invalid @enderror" multiple="multiple" name="categories[]">
-                                                <option disabled hidden>Select or Create categories</option>  
-                                                    @foreach ($categories as $category)
-                                                    <option value="{{$category}}" {{ in_array($category,$categories) ? "selected" : ''}} >{{ ucfirst($category) }}</option> 
-                                                    @endforeach  
-                                              </select>
-                                              <i class="fas fa-angle-down arrw-down"></i>
-                                              <span class="invalid-feedback">@error('categories'){{ $message }}
+                                        <div class="form-group">
+                                            <label for="categories">Categories <sup class="text-danger">*</sup></label>
+                                            <select id="categoriess" data-tags="true"
+                                                class="form-select @error('categories') is-invalid @enderror"
+                                                multiple="multiple" name="categories[]">
+                                                <option disabled hidden>Select or Create categories</option>
+                                                @foreach ($categories as $category)
+                                                <option value="{{$category}}" {{ in_array($category,$categories)
+                                                    ? "selected" : '' }}>{{ ucfirst($category) }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fas fa-angle-down arrw-down"></i>
+                                            <span class="invalid-feedback">@error('categories'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div>
@@ -147,7 +150,7 @@
                                                 class="form-control  @error('thumbnail') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                                 @enderror</span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
@@ -161,26 +164,28 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Thumbnail: </label>
-                                        <div class="file-prev">
-                                            @if ($course->thumbnail) 
-                                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="a" class="img-fluid">
-                                            @else 
-                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
-                                            @endif 
-                                        </div>
+                                            <label for="file-upload">Current Thumbnail: </label>
+                                            <div class="file-prev">
+                                                @if ($course->thumbnail)
+                                                <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}"
+                                                    alt="a" class="img-fluid">
+                                                @else
+                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
+                                                    class="img-fluid">
+                                                @endif
+                                            </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="file-upload-2">Banner  </label>
+                                            <label for="file-upload-2">Banner </label>
                                             <input type="file" name="banner" id="file-upload-2"
                                                 class="form-control  @error('banner') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('banner'){{ $message }}
                                                 @enderror</span>
-                                        </div> 
-                                    </div> 
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
@@ -193,14 +198,16 @@
                                     <div class="col-md-4">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Banner: </label>
-                                        <div class="file-prev"> 
-                                            @if ($course->banner) 
-                                            <img src="{{asset('assets/images/courses/'.$course->banner)}}" alt="a" class="img-fluid">
-                                            @else 
-                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
-                                            @endif
-                                        </div>
+                                            <label for="file-upload">Current Banner: </label>
+                                            <div class="file-prev">
+                                                @if ($course->banner)
+                                                <img src="{{asset('assets/images/courses/'.$course->banner)}}" alt="a"
+                                                    class="img-fluid">
+                                                @else
+                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
+                                                    class="img-fluid">
+                                                @endif
+                                            </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
@@ -233,19 +240,22 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            @php 
-                                                $selectedMetaKey = explode(",",$course->meta_keyword); 
+                                            @php
+                                            $selectedMetaKey = explode(",",$course->meta_keyword);
                                             @endphp
-                                            <label for="meta_keyword">Meta Keyboard <sup class="text-danger">*</sup></label>
+                                            <label for="meta_keyword">Meta Keyboard <sup
+                                                    class="text-danger">*</sup></label>
                                             <modular-behaviour name="Keyword"
                                                 src="https://cdn.jsdelivr.net/npm/bootstrap5-tags@1.4/tags.min.js" lazy>
                                                 <select class="form-select @error('meta_keyword') is-invalid @enderror"
                                                     id="meta_keyword" name="meta_keyword[]" multiple
                                                     data-allow-clear="1" data-allow-new="true" data-separator="|,|">
-                                                    <option selected="selected" disabled hidden value="">Add meta keyword</option>
+                                                    <option selected="selected" disabled hidden value="">Add meta
+                                                        keyword</option>
 
                                                     @foreach($selectedMetaKey as $key => $metakey)
-                                                        <option value="{{$metakey}}" {{ in_array($metakey,$selectedMetaKey) ? "selected" : ''}} >{{$metakey}}</option> 
+                                                    <option value="{{$metakey}}" {{ in_array($metakey,$selectedMetaKey)
+                                                        ? "selected" : '' }}>{{$metakey}}</option>
                                                     @endforeach
 
                                                 </select>
@@ -309,7 +319,8 @@
                                             <input type="number" placeholder="Enter total attachment length"
                                                 name="number_of_attachment"
                                                 class="form-control @error('number_of_attachment') is-invalid @enderror"
-                                                value="{{ $course->number_of_attachment }}" id="number_of_attachment" min="0">
+                                                value="{{ $course->number_of_attachment }}" id="number_of_attachment"
+                                                min="0">
                                             <span class="invalid-feedback">@error('number_of_attachment'){{ $message }}
                                                 @enderror</span>
                                         </div>
@@ -349,14 +360,16 @@
                                             <div class="d-flex">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="hascertificate"
-                                                        id="flexRadioDefault1" value="yes" {{ $course->hascertificate == 'yes' ? 'checked' : ''}}>
+                                                        id="flexRadioDefault1" value="yes" {{ $course->hascertificate ==
+                                                    'yes' ? 'checked' : ''}}>
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Yes
                                                     </label>
                                                 </div>
                                                 <div class="form-check ms-4">
                                                     <input class="form-check-input" type="radio" name="hascertificate"
-                                                        id="flexRadioDefault2" value="no" {{ $course->hascertificate == 'no' ? 'checked' : ''}}>
+                                                        id="flexRadioDefault2" value="no" {{ $course->hascertificate ==
+                                                    'no' ? 'checked' : ''}}>
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         No
                                                     </label>
@@ -375,7 +388,7 @@
                                                 class="form-control  @error('sample_certificates') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('sample_certificates'){{ $message }}
                                                 @enderror</span>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
                                         {{-- img preview @S --}}
@@ -389,14 +402,16 @@
                                     <div class="col-md-3">
                                         {{-- img preview @S --}}
                                         <div class="form-group">
-                                        <label for="file-upload">Current Certificates: </label>
-                                        <div class="file-prev"> 
-                                            @if ($course->sample_certificates) 
-                                            <img src="{{asset('assets/images/courses/'.$course->sample_certificates)}}" alt="a" class="img-fluid">
-                                            @else 
-                                            <img src="{{asset('assets/images/thumbnail.png')}}" alt="a" class="img-fluid">
-                                            @endif
-                                        </div>
+                                            <label for="file-upload">Current Certificates: </label>
+                                            <div class="file-prev">
+                                                @if ($course->sample_certificates)
+                                                <img src="{{asset('assets/images/courses/'.$course->sample_certificates)}}"
+                                                    alt="a" class="img-fluid">
+                                                @else
+                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
+                                                    class="img-fluid">
+                                                @endif
+                                            </div>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div>
@@ -406,10 +421,14 @@
                                             <select name="subscription_status" id="subscription_status"
                                                 class="form-control @error('subscription_status') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="one_time" {{ $course->subscription_status == 'one_time' ? 'selected' : ''}}>One Time</option>
-                                                <option value="monthly" {{ $course->subscription_status == 'monthly' ? 'selected' : ''}}>Monthly</option>
-                                                <option value="anully" {{ $course->subscription_status == 'anully' ? 'selected' : ''}}>Anully</option>
-                                                <option value="free" {{ $course->subscription_status == 'free' ? 'selected' : ''}}>Free</option>
+                                                <option value="one_time" {{ $course->subscription_status == 'one_time' ?
+                                                    'selected' : ''}}>One Time</option>
+                                                <option value="monthly" {{ $course->subscription_status == 'monthly' ?
+                                                    'selected' : ''}}>Monthly</option>
+                                                <option value="anully" {{ $course->subscription_status == 'anully' ?
+                                                    'selected' : ''}}>Anully</option>
+                                                <option value="free" {{ $course->subscription_status == 'free' ?
+                                                    'selected' : ''}}>Free</option>
                                             </select>
                                             <i class="fa-solid fa-angle-down"></i>
                                             <span class="invalid-feedback">@error('subscription_status'){{ $message }}
@@ -427,9 +446,12 @@
                                             <select name="status" id="status"
                                                 class="form-control @error('status') is-invalid @enderror">
                                                 <option value="" disabled>Select Below</option>
-                                                <option value="draft" {{ $course->status == 'draft' ? 'selected' : ''}}>Draft</option>
-                                                <option value="pending" {{ $course->status == 'pending' ? 'selected' : ''}}>Pending</option>
-                                                <option value="published" {{ $course->status == 'published' ? 'selected' : ''}}>Published</option>
+                                                <option value="draft" {{ $course->status == 'draft' ? 'selected' :
+                                                    ''}}>Draft</option>
+                                                <option value="pending" {{ $course->status == 'pending' ? 'selected' :
+                                                    ''}}>Pending</option>
+                                                <option value="published" {{ $course->status == 'published' ? 'selected'
+                                                    : ''}}>Published</option>
                                             </select>
                                             <i class="fa-solid fa-angle-down"></i>
                                             <span class="invalid-feedback">@error('status'){{ $message }}

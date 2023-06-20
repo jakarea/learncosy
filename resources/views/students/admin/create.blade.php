@@ -16,12 +16,13 @@
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
+                <div class="create-form-head">
+                    <h6>Student Add</h6>
+                    <a href="{{url('admin/students')}}">
+                        <i class="fa-solid fa-user-group"></i> All Students </a>
+                </div>
                 <div class="create-form-wrap">
-                    <div class="create-form-head">
-                        <h6>Student Add</h6>
-                        <a href="{{url('admin/students')}}">
-                            <i class="fa-solid fa-user-group"></i> All Students </a>
-                    </div>
+                    
                     <!-- Student Add form @S -->
                     <form action="{{route('admin.student.add')}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf
