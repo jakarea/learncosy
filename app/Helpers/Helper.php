@@ -324,6 +324,9 @@ if (!function_exists('modulesetting')) {
             elseif ( $key == 'image' ) {
                 return $setting->image ?? null;
             }
+            elseif ( $key == 'lp_bg_image' ) {
+                return $setting->lp_bg_image ?? null;
+            }
             else {
                 return $setting->value->$key ?? null;
             }

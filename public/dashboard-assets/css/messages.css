@@ -238,7 +238,7 @@
   padding-right: 1rem;
 }
 .messages-page-wrap .messages-box .chat-main-body-box .main-chat-room .chat-messages-box .message-item {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   max-width: 95%;
 }
 .messages-page-wrap .messages-box .chat-main-body-box .main-chat-room .chat-messages-box .message-item p {
@@ -292,6 +292,7 @@
   margin-top: 1rem;
   text-align: right;
 }
+.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns button,
 .messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns a {
   display: inline-block;
   margin-left: 1rem;
@@ -300,7 +301,7 @@
   font-size: 1.4rem;
   color: #1D3573;
 }
-.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns a.bttn {
+.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns button.bttn {
   font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
@@ -315,17 +316,17 @@
   padding: 1rem 2rem;
   margin-left: 0;
 }
-.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns a.bttn i {
+.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns button.bttn i {
   margin-right: 0.5rem;
   color: #ffffff;
   font-size: 1.1rem;
   transition: all linear 0.2s;
 }
-.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns a.bttn:hover {
+.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns button.bttn:hover {
   background-color: #FFAB2D;
   color: #171B1E;
 }
-.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns a.bttn:hover i {
+.messages-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns button.bttn:hover i {
   color: #171B1E;
 }
 

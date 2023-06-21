@@ -47,7 +47,7 @@ class ModuleSettingController extends Controller
         );
 
         // Check if image or logo has been uploaded
-        if ($request->hasFile('image') || $request->hasFile('logo')) {
+        if ($request->hasFile('image') || $request->hasFile('logo') || $request->hasFile('lp_bg_image')) {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $image_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -62,6 +62,14 @@ class ModuleSettingController extends Controller
                 $destinationPath = public_path('/assets/images/setting');
                 $logo->move($destinationPath, $logo_name);
                 $module_settings->logo = $logo_name;
+            }
+
+            if ($request->hasFile('lp_bg_image')) {
+                $lp_bg_image = $request->file('lp_bg_image');
+                $lp_bg_image_name = rand() . '.' . $lp_bg_image->getClientOriginalExtension();
+                $destinationPath = public_path('/assets/images/setting');
+                $lp_bg_image->move($destinationPath, $lp_bg_image_name);
+                $module_settings->lp_bg_image = $lp_bg_image_name;
             }
         } else {
             // If no image or logo is uploaded, retain the existing values
