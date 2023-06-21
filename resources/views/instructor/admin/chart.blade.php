@@ -41,7 +41,7 @@
                 <div class="stat-card course-card">
                     <div class="media">
                         <div class="media-body">
-                            <h4>Total Course</h4>
+                            <h4> Course</h4>
                             <h3>45</h3>
                         </div>
                         <i class="fa-solid fa-tv"></i>
@@ -52,7 +52,7 @@
                 <div class="stat-card">
                     <div class="media">
                         <div class="media-body">
-                            <h4>Total Student</h4>
+                            <h4> Student</h4>
                             <h3>34</h3> 
                         </div>
                         <i class="fa-solid fa-users"></i>
@@ -63,7 +63,7 @@
                 <div class="stat-card">
                     <div class="media">
                         <div class="media-body">
-                            <h4>Total Earning</h4>
+                            <h4> Earning</h4>
                             <h3>€ 534</h3> 
                         </div>
                         <i class="fa-solid fa-money-bill-trend-up"></i>
@@ -74,7 +74,7 @@
                 <div class="stat-card">
                     <div class="media">
                         <div class="media-body">
-                            <h4>Total Expense</h4>
+                            <h4> Expense</h4>
                             <h3> €104</h3>
                         </div>
                         <i class="fa-solid fa-chart-pie"></i>
@@ -110,7 +110,7 @@
                                 Student email
                             </th>
                             <th>
-                                Amount
+                                Payment
                             </th>
                         </tr>
                         <tr>
@@ -122,7 +122,7 @@
                                 student@demomail.com
                             </td>
                             <td>
-                                € 1234
+                                € 123
                             </td>
                         </tr>
                         <tr>
@@ -134,7 +134,7 @@
                                 student@demomail.com
                             </td>
                             <td>
-                                € 1234
+                                € 12
                             </td>
                         </tr>
                         <tr>
@@ -146,7 +146,7 @@
                                 student@demomail.com
                             </td>
                             <td>
-                                € 1234
+                                € 234
                             </td>
                         </tr>
                         <tr>
@@ -158,7 +158,7 @@
                                 student@demomail.com
                             </td>
                             <td>
-                                € 1234
+                                € 34
                             </td>
                         </tr>
                         <tr>
@@ -170,7 +170,7 @@
                                 student@demomail.com
                             </td>
                             <td>
-                                € 1234
+                                € 1035
                             </td>
                         </tr>
                     </table>
@@ -195,63 +195,63 @@
                             </th>
                         </tr>
                         <tr>
-                            <td>Test Course title demo</td>
+                            <td>Test Course title demo 2</td>
+                            <td>
+                                € 53
+                            </td>
+                            <td>
+                               8
+                            </td>
+                            <td>
+                                € 424
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Title of Test Course demo</td>
+                            <td>
+                                € 33
+                            </td>
+                            <td>
+                                12
+                            </td>
+                            <td>
+                                € 420
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Course Title for test demo</td>
                             <td>
                                 € 533
                             </td>
                             <td>
-                               Jhon Doe
+                               2
                             </td>
                             <td>
-                                € 1234
+                                € 1066
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td>Demo Course title here</td>
+                            <td>
+                                € 20
+                            </td>
+                            <td>
+                               39
+                            </td>
+                            <td>
+                                € 780
                             </td>
                         </tr> 
                         <tr>
                             <td>Test Course title demo</td>
                             <td>
-                                € 533
+                                € 100
                             </td>
                             <td>
-                               Jhon Doe
+                               9
                             </td>
                             <td>
-                                € 1234
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>Test Course title demo</td>
-                            <td>
-                                € 533
-                            </td>
-                            <td>
-                               Jhon Doe
-                            </td>
-                            <td>
-                                € 1234
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>Test Course title demo</td>
-                            <td>
-                                € 533
-                            </td>
-                            <td>
-                               Jhon Doe
-                            </td>
-                            <td>
-                                € 1234
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>Test Course title demo</td>
-                            <td>
-                                € 533
-                            </td>
-                            <td>
-                               Jhon Doe
-                            </td>
-                            <td>
-                                € 1234
+                                € 900
                             </td>
                         </tr> 
                     </table>
