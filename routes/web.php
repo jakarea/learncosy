@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 
+use App\Http\Controllers\Instructor\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,7 +90,7 @@ Route::middleware('auth')->get('/', function () {
         return redirect('/students/dashboard');
     if(Auth::user()->user_role == 'admin')
         return redirect('/admin/dashboard');
-    return view('home');
+    return redirect('/instructor/dashboard');
 });
 
 // instructor payment history static pages
@@ -124,6 +125,11 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
     });
 });
+
+Route::middleware('auth')->prefix('instructor')->group(function () {
+    Route::get('dashboard', [DashboardController::class,'index'])->name('instructor.dashboard.index');
+});
+
 Route::group(['middleware' => ['subscription.check']], function () {
     // module page routes
     Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
