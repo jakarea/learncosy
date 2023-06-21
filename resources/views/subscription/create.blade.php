@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group feat-mt">
                                             <label for="feature_list">Feature Available </label>
                                             <input type="text" placeholder="Add Feature" name="feature_list[]"
                                                 class="form-control @error('feature_list') is-invalid @enderror"

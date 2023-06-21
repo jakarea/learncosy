@@ -554,14 +554,18 @@
             }
 
             .warning-txt {
-                display: block;
+                display: inline-block;
+                color: orange!important;
+                margin-left: 8rem;
             }
 
             #url_increment {
-                top: 0.5rem !important;
+                top: 0.8rem !important;
             }
+            
         }
     }
+ 
 
     .custom-hr {
         hr {
@@ -641,6 +645,12 @@
             }
         }
     }
+}
+
+.feat-mt{
+    #url_increment {
+        top: 3.4rem !important;
+    } 
 }
 
 // latest profile design @e

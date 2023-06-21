@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Message Page @endsection
+@section('title') Student Message Page @endsection
 
 {{-- page style @S --}}
 @section('style')
