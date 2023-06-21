@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') Bundle Course List Page @endsection
 
 {{-- style section @S --}}

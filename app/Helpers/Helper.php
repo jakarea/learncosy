@@ -318,6 +318,7 @@ if (!function_exists('modulesetting')) {
         $request = app('request');
         $username = request()->segments()[0];
         $user = \App\Models\User::where('username', $username)->first();
+
         $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
             $setting->value = json_decode($setting->value);

@@ -3,7 +3,25 @@
 
 {{-- page style @S --}}
 @section('style') 
-
+<style>
+    .bundle-course-head h2{
+        color: {{ modulesetting('primary_color') }}
+    } 
+    .course-item-box .course-actions .bttns a:first-child{
+        color: {{ modulesetting('primary_color') }};
+        border-color:  {{ modulesetting('primary_color') }}
+    }
+    .course-item-box .course-actions .review h5 i{
+        color: {{ modulesetting('primary_color') }};
+    }
+    .course-item-box .course-actions .bttns a:first-child:hover{
+        background: {{ modulesetting('secondary_color') }};
+        border-color:  {{ modulesetting('secondary_color') }}
+    }
+    .browse-all a{
+        color: {{ modulesetting('secondary_color') }};
+    }
+</style>
 @endsection
 {{-- page style @S --}}
 
@@ -20,7 +38,7 @@
                     <h1> {{ modulesetting('banner_title') ?? 'Deep drive into captivating lessons and hands-on exercises.' }} </h1>
                     <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }} </p>
                     <div class="hero-bttn">
-                        <a href="{{url('/login')}}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                        <a href="{{url('/login')}}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                     </div>
                     @php 
                         $request = app('request');
@@ -30,9 +48,9 @@
                     @endphp
 
                     @if ($countStudent)
-                    <h6>Already {{ $countStudent }} Students are joined!</h6>
+                    <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ $countStudent }} Students are joined!</h6>
                     @else
-                    <h6>Join Now!</h6>
+                    <h6 style="color: {{ modulesetting('secondary_color') }}">Join Now!</h6>
                     @endif
                 </div>
             </div>
@@ -96,7 +114,7 @@
                         </div>
                         <div class="filter-bttn">
                             <button type="reset" class="btn btn-reset">Clear</button>
-                            <button type="submit" class="btn btn-submit">Filter</button>
+                            <button type="submit" class="btn btn-submit" style="background: {{ modulesetting('secondary_color') }}">Filter</button>
                         </div>
                     </div>
                 </form>
@@ -157,7 +175,7 @@
                                     <div class="bttns"> 
                                         <a href="{{url($instructors->username.'/courses/'.$course->slug) }}">More
                                             Details</a>
-                                        <a href="{{url('/students/dashboard/enrolled')}}">Enroll Now!</a>
+                                        <a href="{{url('/students/dashboard/enrolled')}}" style="background: {{ modulesetting('secondary_color') }}">Enroll Now!</a>
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +247,7 @@
                     <div class="bttns">
                         <h6>€ {{$bundle_course->price}}/ <span>included {{count($bundle_course->courses)}}
                                 courses</span></h6>
-                        <a href="{{url('/students/dashboard/enrolled')}}">Buy now</a>
+                        <a href="{{url('/students/dashboard/enrolled')}}" style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                     </div>
                 </div>
             </div>
