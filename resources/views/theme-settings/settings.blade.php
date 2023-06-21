@@ -158,8 +158,92 @@
                                 </div> <!-- row end -->
                             </div>
                         </div>
+                    <!-- Theme Settings form @E -->
+                </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+                <div class="create-form-wrap">
+                    <!-- Theme Settings form @S -->
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="row">  
+                                    <div class="col-md-12">
+                                        <div class="custom-hr">
+                                            <h5>Login Page Customization </h5>
+                                            <hr>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-3">
+                                                <label for="lp_layout">Login Page Layout <sup class="text-danger">*</sup>
+                                                </label>
+                                                <select name="lp_layout" id="lp_layout"
+                                                    class="form-control @error('lp_layout') is-invalid @enderror">
+                                                    <option value="">Select Layout</option>
+                                                    <option value="default" {{ old('lp_layout', $module_settings->value->lp_layout ?? '') == 'default' ? 'selected' : ''}}>Default</option>
+                                                    <option value="fullwidth" {{ old('lp_layout', $module_settings->value->lp_layout ?? '') == 'fullwidth' ? 'selected' : ''}}>Full Width</option>
+                                                    <option value="leftsidebar" {{ old('lp_layout', $module_settings->value->lp_layout ?? '') == 'leftsidebar' ? 'selected' : ''}}>Left Sidebar</option>
+                                                    <option value="rightsidebar" {{ old('lp_layout', $module_settings->value->lp_layout ?? '') == 'rightsidebar' ? 'selected' : ''}}>Right Sidebar</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-error mb-3">
+                                            <label for="lp_title"> Login Page Title <sup class="text-danger">*</sup>
+                                            </label>
+                                            <input type="text" placeholder="Login Page Title" name="lp_title"
+                                                class="form-control @error('lp_title') is-invalid @enderror"
+                                                value="{{ old('lp_title', $module_settings->value->lp_title ?? '')}}" id="lp_title">
+                                            <span class="invalid-feedback">@error('lp_title'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-3">
+                                                <label for="lp_banner_text">Login Title Text </label>
+                                                <input type="text" placeholder="Login Text" name="lp_banner_text"
+                                                    class="form-control @error('lp_banner_text') is-invalid @enderror"
+                                                    value="{{ old('lp_banner_text', $module_settings->value->lp_banner_text ?? '')}}" id="lp_banner_text">
+                                                <span class="invalid-feedback">@error('lp_banner_text'){{ $message }}
+                                                    @enderror</span>
+                                            </div>
+                                        </div> 
+                                    </div> 
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-3">
+                                            <label for="lp_button_text">Button Text </label>
+                                            <input type="text" placeholder="Button Text" name="lp_button_text"
+                                                class="form-control @error('lp_button_text') is-invalid @enderror"
+                                                value="{{ old('lp_button_text', $module_settings->value->lp_button_text ?? '')}}" id="lp_button_text">
+                                            <span class="invalid-feedback">@error('lp_button_text'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-10">
+                                        <div class="form-group mb-3">
+                                            <label for="file-upload-2">Background Image </label>
+                                            <input type="file" name="lp_bg_image" id="file-upload-2" 
+                                                class="form-control  @error('lp_bg_image') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('lp_bg_image'){{ $message }}
+                                                @enderror</span>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{-- img preview @S --}}
+                                        <div class="file-prev">
+                                            <div id="file-previews-2">
+                                                @if(isset($module_settings->lp_bg_image))
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->lp_bg_image) }}" alt="">
+                                                @endif
+                                            </div>
+                                            <button type="button" class="btn" id="close-button-2"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                        {{-- img preview @E --}}
+                                    </div> 
+                                    
+                                </div> <!-- row end -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-5">
                                 <div class="submit-bttns">
                                     <button type="reset" class="btn btn-reset">Clear</button>
                                     <button type="submit" class="btn btn-submit">Submit</button>
