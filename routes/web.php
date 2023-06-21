@@ -94,6 +94,10 @@ Route::middleware('auth')->get('/', function () {
 
 Route::middleware('auth')->prefix('instructor/dashboard')->group(function () {
     Route::get('/', 'App\Http\Controllers\Instructor\DashboardController@index')->name('instructor.dashboard.index');
+
+    Route::get('/new', function(){
+        return view('dashboard/instructor/dashboard');
+    });
 });
 
 
