@@ -21,32 +21,31 @@
                         <i class="fa-solid fa-list"></i> Dashboard </a>
                 </div>
                 <div class="create-form-wrap">
-                   
+                   @include('partials.session-message')
                     <!-- Theme Settings form @S -->
-                    <form action="" method="POST" class="create-form-box" enctype="multipart/form-data">
+                    <form action="{{ route('module.setting.update') }}" method="POST" class="create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row">  
-                                    <div class="col-md-10">
+                                    <div class="col-md-12">
                                         <div class="form-group form-error">
                                             <label for="banner_title">Banner title <sup class="text-danger">*</sup>
                                             </label>
                                             <input type="text" placeholder="Enter Banner title" name="banner_title"
                                                 class="form-control @error('banner_title') is-invalid @enderror"
-                                                value="{{ old('banner_title')}}" id="banner_title">
+                                                value="{{ old('banner_title', $module_settings->value->banner_title ?? '')}}" id="banner_title">
                                             <span class="invalid-feedback">@error('banner_title'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div> 
-                                    <div class="col-md-2">
-                                        <div class="form-group form-error">
-                                            <label for="button_text">Button text <sup class="text-danger">*</sup>
-                                            </label>
-                                            <input type="text" placeholder="Button text" name="button_text"
-                                                class="form-control @error('button_text') is-invalid @enderror"
-                                                value="{{ old('button_text')}}" id="button_text">
-                                            <span class="invalid-feedback">@error('button_text'){{ $message }}
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="banner_text">Banner text  </label>
+                                            <textarea name="banner_text" id="banner_text"
+                                                class="form-control @error('banner_text') is-invalid @enderror"
+                                                placeholder="Enter Banner text">{{ old('banner_text', $module_settings->value->banner_text ?? '')}}</textarea>
+                                            <span class="invalid-feedback">@error('banner_text'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div> 
@@ -62,7 +61,11 @@
                                     <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
-                                            <div id="file-previews"></div>
+                                            <div id="file-previews">
+                                                @if(isset($module_settings->value->logo))
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->value->logo) }}" alt="">
+                                                @endif
+                                            </div>
                                             <button type="button" class="btn" id="close-button"><i
                                                     class="fas fa-close"></i></button>
                                         </div>
@@ -71,7 +74,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="file-upload-2">Image </label>
-                                            <input type="file" name="image" id="file-upload-2"
+                                            <input type="file" name="image" id="file-upload-2" 
                                                 class="form-control  @error('image') is-invalid @enderror">
                                             <span class="invalid-feedback">@error('image'){{ $message }}
                                                 @enderror</span>
@@ -80,19 +83,35 @@
                                     <div class="col-md-2">
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
-                                            <div id="file-previews-2"></div>
+                                            <div id="file-previews-2">
+                                                @if(isset($module_settings->value->image))
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->value->image) }}" alt="">
+                                                @endif
+                                            </div>
                                             <button type="button" class="btn" id="close-button-2"><i
                                                     class="fas fa-close"></i></button>
                                         </div>
                                         {{-- img preview @E --}}
                                     </div> 
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="banner_text">Banner text  </label>
-                                            <textarea name="banner_text" id="banner_text"
-                                                class="form-control @error('banner_text') is-invalid @enderror"
-                                                placeholder="Enter Banner text">{{ old('banner_text')}}</textarea>
-                                            <span class="invalid-feedback">@error('banner_text'){{ $message }}
+                                    <div class="col-md-6">
+                                        <div class="form-group form-error">
+                                            <label for="button_text">Button text <sup class="text-danger">*</sup>
+                                            </label>
+                                            <input type="text" placeholder="Button text" name="button_text"
+                                                class="form-control @error('button_text') is-invalid @enderror"
+                                                value="{{ old('button_text', $module_settings->value->button_text ?? '')}}" id="button_text">
+                                            <span class="invalid-feedback">@error('button_text'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-6">
+                                        <div class="form-group form-error">
+                                            <label for="button_link">Button link <sup class="text-danger">*</sup>
+                                            </label>
+                                            <input type="text" placeholder="Button link" name="button_link"
+                                                class="form-control @error('button_link') is-invalid @enderror"
+                                                value="{{ old('button_link', $module_settings->value->button_link ?? '')}}" id="button_link">
+                                            <span class="invalid-feedback">@error('button_link'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div> 
@@ -102,22 +121,22 @@
                                             <h5>Colors </h5>
                                         </div>
                                     </div>  
-                                    <div class="col-lg-2 col-sm-6 col-md-4">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label for="primary_color">Primary Color</label>
 
-                                            <input type="color" class="form-control"  name="primary_color" id="primary_color"
+                                            <input type="color" class="form-control"  name="primary_color" id="primary_color" value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}"
                                             class="form-control @error('primary_color') is-invalid @enderror">
                                          
                                             <span class="invalid-feedback">@error('primary_color'){{ $message }}
                                                 @enderror</span>
                                         </div>
                                     </div> 
-                                    <div class="col-lg-2 col-sm-6 col-md-4">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label for="secondary_color">Secondary Color</label>
 
-                                            <input type="color" class="form-control"  name="secondary_color" id="secondary_color"
+                                            <input type="color" class="form-control"  name="secondary_color" id="secondary_color" value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}"
                                             class="form-control @error('secondary_color') is-invalid @enderror">
                                          
                                             <span class="invalid-feedback">@error('secondary_color'){{ $message }}
