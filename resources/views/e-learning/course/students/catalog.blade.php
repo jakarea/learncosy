@@ -36,7 +36,7 @@
         <div class="student-search-wrap">
             <div class="student-search-box">
                 <img src="{{ asset('assets/images/search-icon.svg') }}" alt="Search icon" class="img-fluid">
-                <input type="text" name="title" class="form-control" placeholder="Search"
+                <input type="text" name="title" class="form-control" placeholder="Enter course title.."
                     value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
             </div>
             <div class="student-bttn-box">

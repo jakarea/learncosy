@@ -59,8 +59,12 @@ class MessageController extends Controller
         }
         $sender_info = User::where('id',$sender_id)->first();
         $reciver_info = User::where('id',$reciver_id)->first();
-        $courseId =  $messages[0]->course_id;
-        return view('e-learning/course/instructor/message_chat_room',compact('messages','userId','chat_room','sender_info','reciver_info')); 
+        $courseId =  $messages[0]->course_id; 
+
+          
+       
+
+        return view('e-learning/course/instructor/message_chat_room-2',compact('messages','userId','chat_room','sender_info','reciver_info')); 
 
      }
 
