@@ -13,15 +13,15 @@ function custmBorder() {
 const settingToggle = document.querySelector("#settings-toggle");
 const settingBox = document.querySelector(".search-settings-main-wrap");
 
-if(settingBox){
-    settingBox.addEventListener("click", function(event) {
+if (settingBox) {
+    settingBox.addEventListener("click", function (event) {
         if (event.target == settingBox) {
             settingBox.style.display = "none";
-        } 
+        }
     });
 }
 
-if(settingToggle){
+if (settingToggle) {
     settingToggle.addEventListener("click", expandFunction)
 }
 
@@ -63,7 +63,7 @@ clearCopy.addEventListener("click", clearCopyFunction);
 const tableChecks = document.querySelectorAll("table .form-check-input");
 
 const copyFunction = (e) => {
-   
+
     if (e.target.checked == true) {
         if (!textArea.value.match(e.target.value + ',')) {
             textArea.value += e.target.value + ",";
@@ -78,10 +78,10 @@ const copyFunction = (e) => {
             return parsedItem.id !== selectedItem.id
         })
     }
-    if(project_details){
+    if (project_details) {
         project_details.value = JSON.stringify(selectedData)
     }
-   
+
 }
 
 tableChecks.forEach((tableCheck) => {
@@ -98,21 +98,21 @@ const copyAllFunction = (e) => {
         const newValues = [].slice.call(labelValues);
         let newValue = newValues.map((newValue) => newValue.outerText);
         textArea.value = newValue + ',';
-        tableChecks.checked = true; 
+        tableChecks.checked = true;
         mainselects(true);
         var trs = document.getElementsByClassName("checkAndHide");
         for (var i = 0; i < trs.length; i++) {
             selectedData.push(trs[i].getAttribute('data-rs'))
         }
     } else {
-        textArea.value = ""; 
+        textArea.value = "";
         mainselects(false);
         selectedData = [];
     }
-    if(project_details){
+    if (project_details) {
         project_details.value = JSON.stringify(selectedData)
     }
-    
+
 }
 
 function mainselects(value) {
@@ -121,14 +121,14 @@ function mainselects(value) {
         if (chks[i].type == 'checkbox')
             chks[i].checked = value;
     }
-} 
+}
 
 selectAll.addEventListener('change', copyAllFunction);
 // select all checkbox
 
 // save project modal js
 const openModal = document.getElementById("save-modal");
-if(openModal)  {
+if (openModal) {
     const openModalFunction = () => {
         projectModal.style.display = "block";
     }
@@ -137,25 +137,25 @@ if(openModal)  {
 
 }
 const projectModal = document.querySelector(".save-to-project-modal");
-if(projectModal){
+if (projectModal) {
     const modalClose = projectModal.querySelector(".btn-closes");
     const closeModalFunction = () => {
         projectModal.style.display = "none";
     }
     modalClose.addEventListener("click", closeModalFunction);
-    
 
-projectModal.addEventListener("click", function(event) {
-    if (event.target == projectModal) {
-        projectModal.style.display = "none";
-    } 
-});
+
+    projectModal.addEventListener("click", function (event) {
+        if (event.target == projectModal) {
+            projectModal.style.display = "none";
+        }
+    });
 }
 
 
 
 
- 
+
 
 
 
@@ -231,10 +231,10 @@ function reWordSelection() {
 function reTopicSelection() {
     var wcs = document.getElementsByClassName("topicClass");
     for (var i = 0; i < wcs.length; i++) {
-        if(wcs.item(i).checked){
+        if (wcs.item(i).checked) {
             var trs = document.getElementsByClassName("checkAndHideTopic");
             for (var j = 0; j < trs.length; j++) {
-                if(trs.item(j).value.includes(wcs.item(i).value)){
+                if (trs.item(j).value.includes(wcs.item(i).value)) {
                     trs.item(j).parentElement.parentElement.parentElement.style.display = "none";
                 }
             }
@@ -242,51 +242,51 @@ function reTopicSelection() {
     }
 }
 
-function createCSV(csvData){
+function createCSV(csvData) {
 
-    var keys = ["id","name","audience_size_upper_bound","topic"]
-    var name = ["id","Interest","Audience","Topic"]
-    var result = ''; 
-    result += name.join(','); 
-    result += '\n'; 
-    
-    csvData.forEach(function(item){ 
-      keys.forEach(function(key){ 
-        result += item[key] + ','; 
-      })
-      result += '\n';
+    var keys = ["id", "name", "audience_size_upper_bound", "topic"]
+    var name = ["id", "Interest", "Audience", "Topic"]
+    var result = '';
+    result += name.join(',');
+    result += '\n';
+
+    csvData.forEach(function (item) {
+        keys.forEach(function (key) {
+            result += item[key] + ',';
+        })
+        result += '\n';
     })
-    
+
     return result;
-  }
-  
-  
-  function downloadCSV() {
+}
+
+
+function downloadCSV() {
     csvData = [];
     selectedData.forEach((data) => {
         csvData.push(JSON.parse(data))
     })
     csv = 'data:text/csv;charset=utf-8,' + createCSV(csvData); //Creates CSV File Format
     excel = encodeURI(csv); //Links to CSV 
-  
+
     link = document.createElement('a');
     link.setAttribute('href', excel); //Links to CSV File 
     var file_name = document.getElementById('search_by').innerText
-    link.setAttribute('download', file_name+'.csv'); //Filename that CSV is saved as
+    link.setAttribute('download', file_name + '.csv'); //Filename that CSV is saved as
     link.click();
-  }
+}
 
 
 const submitExplorer = document.getElementById("SubmitExplore")
 
-if(submitExplorer){
-    submitExplorer.addEventListener("click", function(event){
+if (submitExplorer) {
+    submitExplorer.addEventListener("click", function (event) {
         event.preventDefault()
         document.getElementById('spiner').style.display = 'block'
         document.getElementById("searchForm").submit();
     });
-    
-    submitExplorer.addEventListener("click", function(event){
+
+    submitExplorer.addEventListener("click", function (event) {
         event.preventDefault()
         document.getElementById('spiner').style.display = 'block'
         document.getElementById("searchForm").submit();
