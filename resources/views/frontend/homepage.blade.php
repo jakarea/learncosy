@@ -16,6 +16,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6  ">
                 <div class="hero-txt-wrap">
+                {{ modulesetting('banner_title') }} 
                     <h1> {{ modulesetting('banner_title') ?? 'Deep drive into captivating lessons and hands-on exercises.' }} </h1>
                     <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }} </p>
                     <div class="hero-bttn">
