@@ -34,18 +34,24 @@
         <div class="row align-items-center">
             <div class="col-lg-6  ">
                 <div class="hero-txt-wrap">
+                {{ modulesetting('banner_title') }} 
                     <h1> {{ modulesetting('banner_title') ?? 'Deep drive into captivating lessons and hands-on exercises.' }} </h1>
                     <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }} </p>
                     <div class="hero-bttn">
                         <a href="{{url('/login')}}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                     </div>
- 
-                    @if (count($students) > 1)
-                    <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ count($students) }} Students are joined!</h6>
-                    @elseif(count($students) == 1)
-                    <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ count($students) }} Student are joined!</h6>
-                    @elseif(count($students) <= 0) <h6>Join Now!</h6>
-                        @endif
+                    @php 
+                        $request = app('request');
+                        $username = request()->segments()[0];
+                        $user = \App\Models\User::where('username', $username)->first();
+                        $countStudent = \App\Models\Checkout::where('instructor_id', $user->id)->count();
+                    @endphp
+
+                    @if ($countStudent)
+                    <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ $countStudent }} Students are joined!</h6>
+                    @else
+                    <h6 style="color: {{ modulesetting('secondary_color') }}">Join Now!</h6>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-6">

@@ -23,9 +23,9 @@ class MessageController extends Controller
         $chat_rooms = Message::with('user','course')->whereIn('course_id',$search_course_id)->orderBy('created_at')->get()->groupBy(function($data) {
             return $data->receiver_id;
         });
-         return view('e-learning/course/instructor/message-list',compact('chat_rooms','courses')); 
-     }
- 
+        return view('e-learning/course/instructor/message-list',compact('chat_rooms','courses')); 
+    }
+
      // instructor message list
      public function send($courseId)
      {    

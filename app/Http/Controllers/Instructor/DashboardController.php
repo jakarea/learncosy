@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\Lesson;
 use App\Models\Checkout;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\Course;
 use Auth;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $categories = [];
         $courses = 0;
         $students = [];
@@ -24,24 +22,25 @@ class DashboardController extends Controller
         $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
         $courses = Course::where('user_id', Auth::user()->id)->get();
-        $allCategories = $courses->pluck('categories'); 
-
-        foreach($allCategories as $category){ 
+        $allCategories = $courses->pluck('categories');
+        $unique_array = [];
+        foreach ($allCategories as $category) {
             $cats = explode(",", $category);
-            foreach($cats as $cat){
+            foreach ($cats as $cat) {
                 $unique_array[] = strtolower($cat);
             }
         }
 
-        foreach($enrolments as $enrolment){
+        foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->created_at;
         }
 
         $categories = array_unique($unique_array);
-        return view('dashboard/instructor/dashboard',compact('categories','courses','students','enrolments','course_wise_payments','activeInActiveStudents','earningByDates')); 
+        return view('dashboard/instructor/dashboard', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates'));
     }
 
-    private function getActiveInActiveStudents($data){
+    private function getActiveInActiveStudents($data)
+    {
         $activeCountByDate = [];
         $inactiveCountByDate = [];
 
@@ -61,11 +60,11 @@ class DashboardController extends Controller
             }
 
             $createdDate = $createdAt->format('Y-m-d');
-            $dates[] =  $createdDate;
+            $dates[] = $createdDate;
             if (!isset($activeCountByDate[$createdDate])) {
                 $activeCountByDate[$createdDate] = 0;
             }
-            
+
             if (!isset($inactiveCountByDate[$createdDate])) {
                 $inactiveCountByDate[$createdDate] = 0;
             }
@@ -81,7 +80,8 @@ class DashboardController extends Controller
         return ['dates' => $dates, 'active_students' => $active_students, 'inactive_students' => $inactive_students];
     }
 
-    private function getEarningByDates($data){
+    private function getEarningByDates($data)
+    {
         $earningsByDate = [];
 
         foreach ($data as $record) {
@@ -100,18 +100,19 @@ class DashboardController extends Controller
         return $earningsByDate;
     }
 
-    private function getCourseWisePayments($enrolments){
+    private function getCourseWisePayments($enrolments)
+    {
         $course_wise_payments = [];
-        foreach($enrolments as $enrolment){
+        foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->user;
-            $title = substr($enrolment->course->title,0,30);
+            $title = substr($enrolment->course->title, 0, 30);
             if (strlen($enrolment->course->title) > 30) {
                 $title .= "...";
             }
-            if(isset($course_wise_payments[$title])){
+            if (isset($course_wise_payments[$title])) {
                 $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
-            }else{
-                $course_wise_payments[$title] =  $enrolment->amount;
+            } else {
+                $course_wise_payments[$title] = $enrolment->amount;
             }
         }
         return $course_wise_payments;
