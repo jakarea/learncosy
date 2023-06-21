@@ -49,7 +49,7 @@
                 <a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning" class="img-fluid" />
                     <span>Courses</span>
-                    <i class="fa-solid fa-angles-right"></i>
+                    <i class="fa-solid fa-caret-right"></i>
                 </a>
                 {{-- inner submenu @S --}}
                  @include('e-learning/course/partials/sub-sidebar')
@@ -59,7 +59,7 @@
                 <a href="{{ url('instructor/bundle/courses') }}" class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} menu-link">
                     <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Adspy" title="Adspy" class="img-fluid" />
                     <span>Bundle Course</span>
-                    <i class="fa-solid fa-angles-right"></i>
+                    <i class="fa-solid fa-caret-right"></i>
                 </a> 
                  @include('bundle/partials/sub-sidebar') 
             </li>   
@@ -67,7 +67,7 @@
                 <a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-user-group"></i>
                     <span>Students</span>
-                    <i class="fa-solid fa-angles-right"></i>
+                    <i class="fa-solid fa-caret-right"></i>
                 </a> 
                  @include('students/partials/sub-sidebar') 
             </li>  
@@ -131,7 +131,7 @@
                 <a href="#" class="menu-link">
                     <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="E-Learning" title="E-Learning" class="img-fluid" />
                     <span>E-Learning</span>
-                    <i class="fa-solid fa-angles-right"></i>
+                    <i class="fa-solid fa-caret-right"></i>
                 </a> 
                  @include('e-learning/course/admin/partials/sub-sidebar') 
             </li> 

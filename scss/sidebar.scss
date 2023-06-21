@@ -5,14 +5,16 @@
 .sidebar-wrapper {
     background: v.$light;
     box-shadow: inset -1px 0px 0px v.$border;
-    padding: 1.5rem 0;
+    padding: 1.5rem 0rem; 
     position: fixed;
     left: 0;
     top: 83px;
     height: 100vh;
     width: 16.25rem;
     padding-top: 0;
+    border-right: 1px solid #EEEEEE;
     z-index: 99;
+    background: #FBFBFB;
 
     .header-user-box {
         margin: 1rem 1.5rem;
@@ -62,22 +64,28 @@
     .sidebar-nav-area {
         position: relative;
         min-height: 76vh;
-
+        padding-left: 1rem;
+        padding-right: 1rem;
         .menubar {
 
             // position: relative;
             .menu-item {
                 .menu-link {
-                    @include m.df;
-                    font-size: 0.9rem;
-                    font-weight: 400;
-                    padding: 0.625rem 1.5rem;
-                    margin-bottom: 0.7rem;
+                    @include m.df;    
                     position: relative;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: #717579;
+                    letter-spacing: -0.02em;
+                    line-height: 140%;
+                    padding: 0.9rem 1.6rem;
+                    height: 3.5rem;
+                    margin-bottom: 0.6rem;
+                    border-radius: 0.675rem;
                     transition: all linear .3s;
 
-                    .fa-angles-right {
-                        font-size: 0.8rem;
+                    .fa-caret-right {
+                        font-size:1rem;
                         color: v.$fourth;
                         position: absolute;
                         right: 10px;
@@ -89,7 +97,7 @@
                     .fa-users,
                     .fa-euro-sign,
                     .fa-user {
-                        font-size: 1.1rem;
+                        font-size: 1.3rem;
                         color: v.$fourth;
                     }
 
@@ -101,14 +109,14 @@
                     }
 
                     .fa-user-group {
-                        font-size: 1rem;
+                        font-size: 1.2rem;
                         color: v.$fourth;
                     }
 
                     i.fa-superpowers,
                     i.fa-plug {
                         color: v.$fourth;
-                        font-size: 1.6rem;
+                        font-size: 1.8rem;
                     }
 
                     span {
@@ -125,7 +133,7 @@
                     &::before {
                         position: absolute;
                         content: "";
-                        left: 0;
+                        left: -1rem;
                         top: 0;
                         width: 4px;
                         height: 0%;
@@ -139,14 +147,11 @@
                             height: 100%;
                         }
 
-                        background: v.$gdbg;
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        background-clip: text;
-                        text-shadow: v.$bxs;
+                        background: v.$gdbg; 
+                        color: v.$light;
 
                         img {
-                            filter: invert(65%) sepia(82%) saturate(5223%) hue-rotate(194deg) brightness(102%) contrast(99%);
+                            filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
                         }
                     }
                 }
@@ -167,18 +172,18 @@
                 }
 
                 a.active {
-                    background: v.$primary;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    text-shadow: v.$bxs;
+                    background: v.$gdbg; 
+                    color: v.$light;
 
                     &::before {
                         height: 100%;
                     }
+                    i{
+                        color: v.$light;
+                    }
 
                     img {
-                        filter: invert(65%) sepia(82%) saturate(5223%) hue-rotate(194deg) brightness(102%) contrast(99%);
+                        filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
                     }
                 }
 
@@ -198,14 +203,16 @@
 // toggle sidebar css @S
 .sidebar-custom-width {
     width: 6rem;
-    transition: all linear .2s;
-
+    transition: all linear .2s; 
     .header-user-box {
         .media {
             justify-content: center;
 
             span,
             img {
+                margin-right: 0;
+            }
+            span.avatar-user{
                 margin-right: 0;
             }
 
@@ -215,14 +222,15 @@
                 display: none;
             }
         }
-    }
+    } 
 
     .sidebar-nav-area {
+        padding-left: .2rem;
+        padding-right: .2rem;
         .menubar {
             .menu-item {
                 .menu-link {
-                    justify-content: center;
-
+                    justify-content: center; 
                     .fa-angles-right {
                         font-size: .75rem;
                         margin-left: 0.5rem;
