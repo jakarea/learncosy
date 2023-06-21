@@ -59,8 +59,6 @@
 .sidebar-wrapper .sidebar-nav-area {
   position: relative;
   min-height: 76vh;
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link {
   display: flex;
@@ -122,7 +120,7 @@
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link::before {
   position: absolute;
   content: "";
-  left: -1rem;
+  left: 0rem;
   top: 0;
   width: 4px;
   height: 0%;
@@ -189,10 +187,6 @@
   width: 0;
   height: 0;
   display: none;
-}
-.sidebar-custom-width .sidebar-nav-area {
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
 }
 .sidebar-custom-width .sidebar-nav-area .menubar .menu-item .menu-link {
   justify-content: center;
