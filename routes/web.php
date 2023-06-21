@@ -64,6 +64,12 @@ Route::get('/new-dashboard/messages', function(){
     return view('dashboard/messages');
 });
 
+// theme settings route
+Route::get('/theme-settings', function(){
+    return view('theme-settings/settings');
+});
+
+
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
 
