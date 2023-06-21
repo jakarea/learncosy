@@ -40,7 +40,7 @@ Register
                     <select name="user_role" id="" class="form-control @error('user_role') is-invalid @enderror">
                         <option value="admin">Admin</option>
                         <option value="instructor">Instructor</option>
-                        <option value="students">StudentS</option> 
+                        <option value="student">Student</option> 
                     </select>  
                         {{-- <i class="fas fa-angle-down"></i>  --}}
                     @error('user_role')

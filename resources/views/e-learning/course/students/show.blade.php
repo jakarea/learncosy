@@ -55,7 +55,7 @@ $i = 0;
                     <input type="hidden" name="course_id" value="{{$course->id}}">
                     <input type="hidden" name="price" value="{{$course->price}}">
                     <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                    <button type="submit" class="btn btn-primary">Enroll Now</button>
+                    <button type="submit" class="btn enrol-bttn">Enroll Now <i class="fas fa-angle-right ms-2"></i></button>
                 </form>
                 @endif
             </div>

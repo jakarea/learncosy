@@ -387,6 +387,10 @@
     @include m.bgi('../images/course/suggested-banner.png');
     .media {
         align-items: center;
+        .enrol-bttn{
+            @include m.button(1rem, v.$light, v.$primary);
+            border-radius: 3rem;
+        }
 
         .media-body {
             .addspy-main-title {
