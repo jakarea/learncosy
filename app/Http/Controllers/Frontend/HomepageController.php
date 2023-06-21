@@ -31,6 +31,10 @@ class HomepageController extends Controller
     public function instructorHome($username)
     {
 
+        $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
+        if(!$instructors){
+            return redirect('/');
+        }
         // filter course 
         $title = isset($_GET['title']) ? $_GET['title'] : ''; 
         $categories = isset($_GET['categories']) ? $_GET['categories'] : ''; 
