@@ -315,7 +315,9 @@ if (!function_exists('modulesetting')) {
      */
     function modulesetting($key)
     {
-        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+        $get_user = request()->segment(2);
+        $user = \App\Models\User::where('username', $get_user)->first();
+        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
             $setting->value = json_decode($setting->value);
             if ( $key == 'logo' ) {
