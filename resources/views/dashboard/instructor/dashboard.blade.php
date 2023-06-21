@@ -61,7 +61,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4> 432</h4>
+                            <h4> {{ count($earningByDates) }}</h4>
                         </div>
                         <img src="{{ asset('assets/images/graph-8.svg') }}" alt="Chart" class="img-fluid">
                     </div>
