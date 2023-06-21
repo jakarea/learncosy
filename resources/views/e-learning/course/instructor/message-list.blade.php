@@ -68,7 +68,7 @@
                     </div>
                     
                     <p> <b>Course Name:</b>  {{$chat_room[0]->course->title}}</p>  
-                    <a href="{{url('/course/messages/chat_room',$chat_room[0]->chat_id)}}" class="chat-bttn">send message</a>
+                    <a href="{{url('/course/messages/chat_room',$chat_room[0]->receiver_id)}}" class="chat-bttn">send message</a>
                 </div>
             </div>
         @endforeach
