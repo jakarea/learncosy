@@ -127,7 +127,7 @@ class AdminSubscriptionPackageController extends Controller
         //
             // validate request
             $request->validate([
-                'name' => 'required',
+                'name' => 'required|unique:subscription_packages,name,'.$id.',id',
                 'price' => 'required',
                 'type' => 'required',
                 'status' => 'required',
@@ -135,14 +135,13 @@ class AdminSubscriptionPackageController extends Controller
             ]);
 
             // update subscription package and store feature_list as json array
-            $subscription_package = SubscriptionPackage::findorfail($id);
-            $subscription_package->update([
-                'name' => $request->name,
-                'amount' => $request->price,
-                'type' => $request->type,
-                'status' => $request->status,
-                'features' => json_encode($request->feature_list),
-            ]);
+            $subscription_package = SubscriptionPackage::findOrFail($id);
+            $subscription_package->name = $request->name;
+            $subscription_package->amount = $request->price;
+            $subscription_package->type = $request->type;
+            $subscription_package->status = $request->status;
+            $subscription_package->features = json_encode($request->feature_list);
+            $subscription_package->save();
 
             // return back with success message
             return redirect()->back()->with('success', 'Subscription Package updated successfully');

@@ -26,6 +26,10 @@
 <main class="common-page-wrap dashboard-page-wrap">
     <!-- dashboard chart box @s -->
     <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 col-xxl-12">
+            <!-- Check if not purchase subscription then show alert with subscription link -->
+            {!! isInstructorSubscribed(auth()->user()->id) !!}
+        </div>
         <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
             <!-- total client @s -->
             <div class="card-box total-client-box">

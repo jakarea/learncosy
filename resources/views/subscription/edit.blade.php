@@ -25,7 +25,7 @@
                 <div class="create-form-wrap">
                     
                     <!-- Student Add form @S -->
-                    <form action="{{route('admin.subscription.store')}}" method="POST" class="create-form-box">
+                    <form action="{{route('admin.subscription.update', $package->id)}}" method="POST" class="create-form-box">
                         @csrf
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
