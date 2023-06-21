@@ -315,8 +315,9 @@ if (!function_exists('modulesetting')) {
      */
     function modulesetting($key)
     {
-        $get_user = request()->segment(2);
-        $user = \App\Models\User::where('username', $get_user)->first();
+        $request = app('request');
+        $username = request()->segments()[0];
+        $user = \App\Models\User::where('username', $username)->first();
         $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
             $setting->value = json_decode($setting->value);
