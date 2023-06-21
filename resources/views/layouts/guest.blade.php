@@ -43,7 +43,7 @@
     {{-- landing page wrap @e --}}
 
     <!-- back to top button @S -->
-    <a href="#" id="back-to-top">&#8593;</a>
+    <a href="#" id="back-to-top" style="background: {{ modulesetting('primary_color') }}">&#8593;</a>
     <!-- back to top button @E -->
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>

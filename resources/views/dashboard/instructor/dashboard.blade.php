@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
 
 <style>
-   
     .blink {
         animation: blink-animation 1s steps(2, start) infinite;
     }
@@ -26,11 +25,11 @@
 <main class="common-page-wrap dashboard-page-wrap">
     <!-- dashboard chart box @s -->
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 col-xxl-12">
+        <div class="col-12">
             <!-- Check if not purchase subscription then show alert with subscription link -->
             {!! isInstructorSubscribed(auth()->user()->id) !!}
         </div>
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
             <!-- total client @s -->
             <div class="card-box total-client-box">
                 <div class="media">
@@ -43,7 +42,7 @@
             </div> 
             <!-- total client @e -->
         </div>
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
             <!-- total client @s -->
             <div class="card-box total-client-box">
                 <div class="media">
@@ -56,7 +55,7 @@
             </div> 
             <!-- total client @e -->
         </div> 
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
             <!-- total client @s -->
             <div class="card-box total-client-box">
                 <div class="media">
@@ -69,9 +68,9 @@
             </div> 
             <!-- total client @e -->
         </div> 
-        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
             <!-- total client @s -->
-            <div class="card-box digital-clock-box"> 
+            <div class="card-box digital-clock-box total-client-box"> 
                 <div id="clock">0:00 </div>
             </div> 
             <!-- total client @e -->

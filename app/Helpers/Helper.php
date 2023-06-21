@@ -315,7 +315,8 @@ if (!function_exists('modulesetting')) {
      */
     function modulesetting($key)
     {
-        $get_user = request()->segment(2);
+        $get_user = "instructor1";
+        // $get_user = request()->segment(2);
         $user = \App\Models\User::where('username', $get_user)->first();
         $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
