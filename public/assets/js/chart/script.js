@@ -256,7 +256,7 @@ var optionsBar = {
         stacked: true,
     },
     dataLabels: {
-        enabled: true,
+        enabled: false,
     },
     plotOptions: {
         bar: {
@@ -317,7 +317,7 @@ var optionDonut = {
         height: 400
     },
     dataLabels: {
-        enabled: true,
+        enabled: false,
     },
     plotOptions: {
         pie: {

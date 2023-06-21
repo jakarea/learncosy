@@ -82,8 +82,14 @@ Route::middleware('auth')->get('/', function () {
         return redirect('/students/dashboard');
     if(Auth::user()->user_role == 'admin')
         return redirect('/admin/dashboard');
-    return view('home');
+    return redirect('/instructor/dashboard');
 });
+
+
+Route::middleware('auth')->prefix('instructor/dashboard')->group(function () {
+    Route::get('/', 'App\Http\Controllers\Instructor\DashboardController@index')->name('instructor.dashboard.index');
+});
+
 
 // instructor payment history static pages
 Route::middleware('auth')->prefix('instructor/payments')->controller(HomeController::class)->group(function () {  
