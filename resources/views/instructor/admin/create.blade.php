@@ -49,6 +49,8 @@
                                             class="form-control @error('username') is-invalid @enderror"
                                             value="{{ old('username') }}" id="username">
                                     </div>
+                                    <span class="warning-txt text-end">After set the username, it's not
+                                        changeable.</span>
                                     <span class="invalid-feedback">@error('username'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -102,13 +104,17 @@
                                 <div class="form-group">
                                     <div class="form-flex  ">
                                         <label for="features" class="mb-1">Social Media: </label>  
-                                        <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                            class="form-control me-2 @error('social_links') is-invalid @enderror"
+                                        <div class="w-100">
+                                            <input type="text" placeholder="Enter Social Link" name="social_links[]"
+                                            class="form-control w-100 @error('social_links') is-invalid @enderror"
                                             id="features" multiple value="{{ old('social_links') }}">
+
+                                            <div class="url-extra-field">
+                                            </div>
+                                        </div>
                                       
                                     </div>
-                                    <div class="url-extra-field">
-                                    </div>
+                                   
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
                                         <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
@@ -210,7 +216,7 @@
     const createFiled = () => { 
       let div = document.createElement("div");
       let node = document.createElement("input"); 
-      node.setAttribute("class", "form-control @error('social_links') is-invalid @enderror");
+      node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
       node.setAttribute("multiple", ""); 
       node.setAttribute("type", "url"); 
       node.setAttribute("placeholder", "Enter Social Link"); 

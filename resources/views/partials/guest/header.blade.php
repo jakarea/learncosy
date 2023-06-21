@@ -1,11 +1,15 @@
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="{{url('/students/dashboard')}}">
+            @if ( modulesetting('logo') )
+                <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
+            @else
             <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" class="-img-fluid">
+            @endif
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
+            <i class="fa-solid fa-bars-staggered"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto custom_nav">

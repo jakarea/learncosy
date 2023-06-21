@@ -246,6 +246,7 @@
 }
 .create-form-box .form-group select,
 .create-form-box .form-group input.form-control[type=number],
+.create-form-box .form-group input.form-control[type=email],
 .create-form-box .form-group input.form-control[type=url],
 .create-form-box .form-group input.form-control[type=text] {
   height: 3rem;
