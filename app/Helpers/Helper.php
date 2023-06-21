@@ -316,7 +316,11 @@ if (!function_exists('modulesetting')) {
     function modulesetting($key)
     {
         $request = app('request');
-        $username = request()->segments()[0];
+        if (Auth::check()) {
+            $username = Auth::user()->username;
+        }else{
+            $username = request()->segments()[0];
+        }
         $user = \App\Models\User::where('username', $username)->first();
 
         $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
