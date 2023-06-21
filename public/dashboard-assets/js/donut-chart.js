@@ -1,7 +1,7 @@
 var options = {
     series: [27, 11, 22, 15,25],
     chart: {
-    type: 'donut',
+    type: 'donut', 
     width: '100%'
   },
   plotOptions: {

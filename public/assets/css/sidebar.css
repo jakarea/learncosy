@@ -1,14 +1,16 @@
 .sidebar-wrapper {
   background: #ffffff;
   box-shadow: inset -1px 0px 0px #dfe5f1;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0rem;
   position: fixed;
   left: 0;
   top: 83px;
   height: 100vh;
   width: 16.25rem;
   padding-top: 0;
+  border-right: 1px solid #EEEEEE;
   z-index: 99;
+  background: #FBFBFB;
 }
 .sidebar-wrapper .header-user-box {
   margin: 1rem 1.5rem;
@@ -57,20 +59,27 @@
 .sidebar-wrapper .sidebar-nav-area {
   position: relative;
   min-height: 76vh;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: 0.9rem;
-  font-weight: 400;
-  padding: 0.625rem 1.5rem;
-  margin-bottom: 0.7rem;
   position: relative;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #717579;
+  letter-spacing: -0.02em;
+  line-height: 140%;
+  padding: 0.9rem 1.6rem;
+  height: 3.5rem;
+  margin-bottom: 0.6rem;
+  border-radius: 0.675rem;
   transition: all linear 0.3s;
 }
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-angles-right {
-  font-size: 0.8rem;
+.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-caret-right {
+  font-size: 1rem;
   color: #8C8FAE;
   position: absolute;
   right: 10px;
@@ -81,7 +90,7 @@
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-users,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-euro-sign,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-user {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #8C8FAE;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-right-lef,
@@ -91,13 +100,13 @@
   margin-right: 0.4rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-user-group {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #8C8FAE;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link i.fa-superpowers,
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link i.fa-plug {
   color: #8C8FAE;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link span {
   display: flex;
@@ -113,7 +122,7 @@
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link::before {
   position: absolute;
   content: "";
-  left: 0;
+  left: -1rem;
   top: 0;
   width: 4px;
   height: 0%;
@@ -123,16 +132,13 @@
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover {
   background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 3px 22px 50px -2px #DEE3EB;
+  color: #ffffff;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover::before {
   height: 100%;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover img {
-  filter: invert(65%) sepia(82%) saturate(5223%) hue-rotate(194deg) brightness(102%) contrast(99%);
+  filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .submenu-itm a {
   margin-bottom: 0.2rem;
@@ -146,17 +152,17 @@
   width: 1rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active {
-  background: #4c60ff;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 3px 22px 50px -2px #DEE3EB;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  color: #ffffff;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active::before {
   height: 100%;
 }
+.sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active i {
+  color: #ffffff;
+}
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active img {
-  filter: invert(65%) sepia(82%) saturate(5223%) hue-rotate(194deg) brightness(102%) contrast(99%);
+  filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item:last-child a {
   position: absolute;
@@ -176,10 +182,17 @@
 .sidebar-custom-width .header-user-box .media img {
   margin-right: 0;
 }
+.sidebar-custom-width .header-user-box .media span.avatar-user {
+  margin-right: 0;
+}
 .sidebar-custom-width .header-user-box .media .media-body {
   width: 0;
   height: 0;
   display: none;
+}
+.sidebar-custom-width .sidebar-nav-area {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
 }
 .sidebar-custom-width .sidebar-nav-area .menubar .menu-item .menu-link {
   justify-content: center;
