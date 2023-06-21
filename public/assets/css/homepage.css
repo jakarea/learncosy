@@ -212,6 +212,9 @@ h6 {
   width: 85%;
   display: block;
   margin: 0 auto;
+  max-height: 360px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .course-filter-wrap .course-filter-box {
