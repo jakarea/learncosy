@@ -74,7 +74,7 @@
         </div>  
     </div>
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-22">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
             <!-- project statistic @s -->
             <div class="card-box project-statistic-wrap">
                 <div class="statics-head">
@@ -84,6 +84,8 @@
             </div>
             <!-- project statistic @e -->
         </div>
+        
+
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-8">
             <!-- project statistic @s -->
             <div class="card-box project-statistic-wrap">
@@ -92,20 +94,18 @@
                 </div>
                 <div id="chart"></div>
             </div>
-
-            <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 col-xxl-4">
-                <!-- project statistic @s -->
-                <div class="card-box project-statistic-wrap pb-4">
-                    <div class="statics-head mb-4">
-                        <h5>Course Earning</h5>
-                        <a href="#"><i class="fas fa-bars"></i></a>
-                    </div>
-                    <div id="course_earning"></div>
-                </div>
-                <div id="categories"></div>
-            </div>
-            <!-- project statistic @e -->
         </div> 
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-4">
+            <!-- project statistic @s -->
+            <div class="card-box project-statistic-wrap">
+                <div class="statics-head">
+                    <h5>Statistics</h5> 
+                </div>
+                <div id="course_earning"></div>
+            </div>
+        </div> 
+
     </div>
     <!-- dashboard chart box @e -->
 
@@ -210,8 +210,6 @@
 @endsection
 @section('script')
 
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
@@ -283,16 +281,6 @@
     chart.render();
 </script>
 
-<script>
-    const data = @json($categories)
-        console.log(data)
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> 
-<script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
-<script src="{{ asset('dashboard-assets/js/donut-chart.js') }}"></script> 
-<script src="{{ asset('dashboard-assets/js/line-chart.js') }}"></script>
-<script src="{{ asset('dashboard-assets/js/line-chart-2.js') }}"></script> 
 
 <script>
     function updateClock() {
