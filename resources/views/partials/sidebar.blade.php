@@ -14,7 +14,13 @@
                 <span class="avatar-user">{!! strtoupper(Auth()->user()->name[0]) !!}</span>
             @endif 
             <div class="media-body">
-                <h5>{{Auth()->user()->name}}</h5>
+                @if(Auth()->user()->user_role == 'student')
+                <a href="{{ url('students/profile/myprofile') }}"><h5>{{Auth()->user()->name}}</h5></a>
+                @elseif(Auth()->user()->user_role == 'instructor')
+                <a href="{{ url('instructor/profile/myprofile') }}"><h5>{{Auth()->user()->name}}</h5></a>
+                @elseif(Auth()->user()->user_role == 'admin')
+                <a href="{{ url('admin/profile/myprofile') }}"><h5>{{Auth()->user()->name}}</h5></a>
+               @endif
                 <p>{{Auth()->user()->user_role}} &nbsp;
                     @if(Auth::user()->user_role == 'instructor')
                         @can('subscription.check')
