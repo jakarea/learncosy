@@ -92,13 +92,15 @@
                 </div>
                 <div id="chart"></div>
             </div>
-            <!-- project statistic @e -->
-        </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 col-xxl-4">
-            <!-- project statistic @s -->
-            <div class="card-box project-statistic-wrap pb-4">
-                <div class="statics-head mb-4">
-                    <h5>Categories</h5> 
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 col-xxl-4">
+                <!-- project statistic @s -->
+                <div class="card-box project-statistic-wrap pb-4">
+                    <div class="statics-head mb-4">
+                        <h5>Course Earning</h5>
+                        <a href="#"><i class="fas fa-bars"></i></a>
+                    </div>
+                    <div id="course_earning"></div>
                 </div>
                 <div id="categories"></div>
             </div>
@@ -207,6 +209,80 @@
 <!-- dashboard page wrapper @e -->
 @endsection
 @section('script')
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
+   
+    <script src="{{ asset('dashboard-assets/js/box-chart.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/js/line-chart.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/js/line-chart-2.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
+
+    <script>
+    // donut Chart
+    const course_data = @json($course_wise_payments);
+        
+    const indexes = [];
+    const values = [];
+
+    for (const [index, value] of Object.entries(course_data)) {
+    indexes.push(index);
+    values.push(value);
+    }
+        
+
+    var options = {
+    series: values,
+    labels: indexes,
+    chart: {
+        type: 'donut',
+        dropShadow: {
+        enabled: true,
+        color: '#111',
+        top: -1,
+        left: 3,
+        blur: 3,
+        opacity: 0.2
+        }
+    },
+    stroke: {
+        width: 0,
+    },
+    plotOptions: {
+        pie: {
+        donut: {
+            labels: {
+            show: true,
+            total: {
+                showAlways: true,
+                show: true
+            }
+            }
+        }
+        }
+    },
+    responsive: [{
+        breakpoint: 480,
+        options: {
+        chart: {
+            width: 200
+        },
+        legend: {
+            position: 'bottom'
+        }
+        }
+    }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#course_earning"), options);
+    chart.render();
+</script>
+
 <script>
     const data = @json($categories)
         console.log(data)
@@ -241,3 +317,4 @@ setInterval(updateClock, 1000);
 
 </script>
 @endsection
+

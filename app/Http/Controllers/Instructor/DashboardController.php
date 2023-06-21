@@ -104,10 +104,14 @@ class DashboardController extends Controller
         $course_wise_payments = [];
         foreach($enrolments as $enrolment){
             $students[$enrolment->user_id] = $enrolment->user;
-            if(isset($course_wise_payments[$enrolment->course->title])){
-                $course_wise_payments[$enrolment->course->title] = $course_wise_payments[$enrolment->course->title] + $enrolment->amount;
+            $title = substr($enrolment->course->title,0,30);
+            if (strlen($enrolment->course->title) > 30) {
+                $title .= "...";
+            }
+            if(isset($course_wise_payments[$title])){
+                $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
             }else{
-                $course_wise_payments[$enrolment->course->title] =  $enrolment->amount;
+                $course_wise_payments[$title] =  $enrolment->amount;
             }
         }
         return $course_wise_payments;
