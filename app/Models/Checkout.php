@@ -16,6 +16,7 @@ class Checkout extends Model
     protected $fillable = [
         'user_id',
         'course_id',
+        'instructor_id',
         'payment_method',
         'payment_status',
         'payment_id',
