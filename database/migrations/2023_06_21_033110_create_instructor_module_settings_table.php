@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('instructor_id')->constrainted('users')->onDelete('cascade');
             $table->longText('value')->nullable();
+            $table->string('image')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

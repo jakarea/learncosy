@@ -40,39 +40,34 @@ class ModuleSettingController extends Controller
      */
     public function store(Request $request)
     {
-        // Store the InstructorModuleSetting in the database
+        // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
-            ['value' => json_encode($request->except('_token'))]
+            ['value' => json_encode($request->except('_token', 'image', 'logo'))]
         );
+
         // Check if image or logo has been uploaded
         if ($request->hasFile('image') || $request->hasFile('logo')) {
-            $value = json_decode($module_settings->value, true);
-            
-            // Handle image upload
-            if ($request->hasFile('image') && !empty($request->file('image'))) {
+            if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $image_name = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('assets/images/setting'), $image_name);
-                $value['image'] = $image_name;
+                $destinationPath = public_path('/assets/images/setting');
+                $image->move($destinationPath, $image_name);
+                $module_settings->image = $image_name;
             }
-            
-            // Handle logo upload
-            if ($request->hasFile('logo') && !empty($request->file('logo'))) {
+
+            if ($request->hasFile('logo')) {
                 $logo = $request->file('logo');
                 $logo_name = rand() . '.' . $logo->getClientOriginalExtension();
-                $logo->move(public_path('assets/images/setting'), $logo_name);
-                $value['logo'] = $logo_name;
+                $destinationPath = public_path('/assets/images/setting');
+                $logo->move($destinationPath, $logo_name);
+                $module_settings->logo = $logo_name;
             }
-            
-            // Update the value with the modified image and logo
-            $module_settings->value = json_encode($value);
         } else {
             // If no image or logo is uploaded, retain the existing values
             $value = json_decode($module_settings->value, true);
             $module_settings->value = json_encode($value);
         }
-
 
         $module_settings->save();
 

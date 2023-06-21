@@ -302,3 +302,32 @@ if (!function_exists('totalAmountPaidByStudent')) {
         return $totalAmountPaid;
     }
 }
+
+/*
+* Helper function to get the instructor's module setting value by key.
+*/
+if (!function_exists('modulesetting')) {
+    /**
+     * Get the module setting value by key.
+     *
+     * @param string $key
+     * @return mixed|null
+     */
+    function modulesetting($key)
+    {
+        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+        if ($setting) {
+            $setting->value = json_decode($setting->value);
+            if ( $key == 'logo' ) {
+                return $setting->logo ?? null;
+            }
+            elseif ( $key == 'image' ) {
+                return $setting->image ?? null;
+            }
+            else {
+                return $setting->value->$key ?? null;
+            }
+        }
+        return null;
+    }
+}

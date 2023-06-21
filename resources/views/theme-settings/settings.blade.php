@@ -29,6 +29,10 @@
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row">  
                                     <div class="col-md-12">
+                                        <div class="custom-hr">
+                                            <h5>Theme Hero Settings </h5>
+                                            <hr>
+                                        </div>
                                         <div class="form-group form-error">
                                             <label for="banner_title">Banner title <sup class="text-danger">*</sup>
                                             </label>
@@ -38,6 +42,17 @@
                                             <span class="invalid-feedback">@error('banner_title'){{ $message }}
                                                 @enderror</span>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group form-error">
+                                                <label for="button_text">Button text <sup class="text-danger">*</sup>
+                                                </label>
+                                                <input type="text" placeholder="Button text" name="button_text"
+                                                    class="form-control @error('button_text') is-invalid @enderror"
+                                                    value="{{ old('button_text', $module_settings->value->button_text ?? '')}}" id="button_text">
+                                                <span class="invalid-feedback">@error('button_text'){{ $message }}
+                                                    @enderror</span>
+                                            </div>
+                                        </div> 
                                     </div> 
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -62,8 +77,8 @@
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews">
-                                                @if(isset($module_settings->value->logo))
-                                                <img src="{{ asset('assets/images/setting/'.$module_settings->value->logo) }}" alt="">
+                                                @if(isset($module_settings->logo))
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}" alt="">
                                                 @endif
                                             </div>
                                             <button type="button" class="btn" id="close-button"><i
@@ -84,8 +99,8 @@
                                         {{-- img preview @S --}}
                                         <div class="file-prev">
                                             <div id="file-previews-2">
-                                                @if(isset($module_settings->value->image))
-                                                <img src="{{ asset('assets/images/setting/'.$module_settings->value->image) }}" alt="">
+                                                @if(isset($module_settings->image))
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->image) }}" alt="">
                                                 @endif
                                             </div>
                                             <button type="button" class="btn" id="close-button-2"><i
@@ -93,32 +108,10 @@
                                         </div>
                                         {{-- img preview @E --}}
                                     </div> 
-                                    <div class="col-md-6">
-                                        <div class="form-group form-error">
-                                            <label for="button_text">Button text <sup class="text-danger">*</sup>
-                                            </label>
-                                            <input type="text" placeholder="Button text" name="button_text"
-                                                class="form-control @error('button_text') is-invalid @enderror"
-                                                value="{{ old('button_text', $module_settings->value->button_text ?? '')}}" id="button_text">
-                                            <span class="invalid-feedback">@error('button_text'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div> 
-                                    <div class="col-md-6">
-                                        <div class="form-group form-error">
-                                            <label for="button_link">Button link <sup class="text-danger">*</sup>
-                                            </label>
-                                            <input type="text" placeholder="Button link" name="button_link"
-                                                class="form-control @error('button_link') is-invalid @enderror"
-                                                value="{{ old('button_link', $module_settings->value->button_link ?? '')}}" id="button_link">
-                                            <span class="invalid-feedback">@error('button_link'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div> 
                                     <div class="col-12">
                                         <div class="custom-hr">
                                             <hr>
-                                            <h5>Colors </h5>
+                                            <h5>Theme Colors Settings</h5>
                                         </div>
                                     </div>  
                                     <div class="col-lg-6 col-sm-6 col-md-6">
@@ -143,6 +136,25 @@
                                                 @enderror</span>
                                         </div>
                                     </div> 
+
+                                    <div class="col-12">
+                                        <div class="custom-hr">
+                                            <hr>
+                                            <h5>Theme Footer Settings </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="footer_promote_text">Footer Promote Text</label>
+                                            <input type="text" class="form-control"  name="footer_promote_text" id="footer_promote_text" placeholder="Enter Text here" value="{{ old('footer_promote_text', $module_settings->value->footer_promote_text ?? '')}}" class="form-control @error('footer_promote_text') is-invalid @enderror">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="footer_promote_btn_text">Footer Promote Button Text</label>
+                                            <input type="text" class="form-control"  name="footer_promote_btn_text" id="footer_promote_btn_text" placeholder="Enter Text here" value="{{ old('footer_promote_btn_text', $module_settings->value->footer_promote_btn_text ?? '')}}" class="form-control @error('footer_promote_btn_text') is-invalid @enderror">
+                                        </div>
+                                    </div>
                                 </div> <!-- row end -->
                             </div>
                         </div>

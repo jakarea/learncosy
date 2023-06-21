@@ -12,7 +12,9 @@ class InstructorModuleSetting extends Model
 
     protected $fillable = [
         'instructor_id',
-        'value'
+        'value',
+        'logo',
+        'image',
     ];
 
     public function instructor()
@@ -20,12 +22,14 @@ class InstructorModuleSetting extends Model
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
-    // {"banner_title":"New banner title","banner_text":"Welcome to your amazing app. Feel free to login and start managing your projects and clients.","button_text":"Get Started","button_link":"#","primary_color":"#47c2ff","secondary_color":"#5a5858","logo":{},"image":{}}
-
-    // I want to access them based on the key on the blade file
-    // {{ $module_settings->banner_title }}
-    public function value()
+    // get the value of the setting for use blade file globally
+    public static function modulesetting($key)
     {
-        return json_decode($this->value);
+        $setting = InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+        if ($setting) {
+            $setting->value = json_decode($setting->value);
+            return $setting->value->$key;
+        }
+        return null;
     }
 }
