@@ -41,8 +41,8 @@ Register
                         <option value="admin">Admin</option>
                         <option value="instructor">Instructor</option>
                         <option value="students">StudentS</option> 
-                    </select> 
-                    <i class="fas fa-angle-down"></i>
+                    </select>  
+                        {{-- <i class="fas fa-angle-down"></i>  --}}
                     @error('user_role')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

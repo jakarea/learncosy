@@ -10,7 +10,7 @@
 						</a>
 						<div class="d-flex align-items-center">
 							<a href="javascript:void(0)" id="toggle-bar">
-							<i class="fas fa-bars text-white"></i>
+								<i class="fa-solid fa-bars-staggered text-white"></i>
 							</a> 
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 									<i class="fa-solid fa-cog text-white"></i>
 								</a>  
 								<ul class="dropdown-menu settings-dropdown">
-									@if (Auth::user()->user_role == 'student')
+									@if (Auth::user()->user_role == 'students')
 									<li><a href="{{url('/students/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
 									<li><a href="{{ url('/students/account-management') }}"><i class="fas fa-gear"></i> Settings</a></li>
 									@elseif(Auth::user()->user_role == 'instructor')

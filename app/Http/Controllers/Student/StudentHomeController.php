@@ -195,4 +195,9 @@ class StudentHomeController extends Controller
     {    
         return view('e-learning/course/students/message'); 
     }
+
+    public function message2()
+    {    
+        return view('e-learning/course/students/message-2'); 
+    }
 }

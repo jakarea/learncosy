@@ -232,6 +232,7 @@
     } 
     select,
     input.form-control[type=number],
+    input.form-control[type=email],
     input.form-control[type=url],
     input.form-control[type=text]{
         height: 3rem;
