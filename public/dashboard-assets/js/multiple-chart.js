@@ -9,7 +9,7 @@ var options = {
     data: [4, 3.6, 4.1, 4.5, 4.1]
   }],
     chart: {
-    height: 350,
+    height: 290,
     type: 'line',
     stacked: false
   },
