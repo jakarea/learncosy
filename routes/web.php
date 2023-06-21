@@ -201,9 +201,9 @@ Route::middleware('auth')->prefix('instructor/subscription')->controller(Subscri
 
 // settings page routes
 Route::middleware('auth')->prefix('instructor/settings')->controller(SettingsController::class)->group(function () {
-    Route::get('/stripe', 'stripeIndex');
+    Route::get('/stripe', 'stripeIndex')->name('instructor.stripe');
     Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
-    Route::get('/vimeo', 'vimeoIndex');
+    Route::get('/vimeo', 'vimeoIndex')->name('instructor.vimeo');
     Route::post('/vimeo/request', 'vimeoUpdate')->name('instructor.vimeo.update');
 });
 

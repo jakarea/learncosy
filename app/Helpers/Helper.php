@@ -334,3 +334,43 @@ if (!function_exists('modulesetting')) {
         return null;
     }
 }
+
+/**
+ * Helper function to check instructor is subscribed or not after check logged in user is add stripe_secret_key, stripe_public_key after check logged in user vimeo_data add or not
+ */
+if (!function_exists('isInstructorSubscribed')) {
+    function isInstructorSubscribed($user_id)
+    {
+        $instructor = \App\Models\User::where('id', $user_id)->first();
+        $subscription = \App\Models\Subscription::where('instructor_id', $user_id)->first();
+
+        // Check if the instructor is subscribed
+        if ($instructor->stripe_secret_key && $instructor->stripe_public_key && $instructor->vimeo_data) {
+            return '';
+        }
+
+        // Build the alert message based on missing data
+        $html = '';
+        if( !$subscription ) {
+            $html .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Warning!</strong> You are not subscribe to any plan. Please <a href="'.route('instructor.subscription').'" class="text-success">Subscribed</a> to a plan to continue.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+        }
+        if (!$instructor->stripe_secret_key || !$instructor->stripe_public_key) {
+            $html .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Warning!</strong> Please provide your <a href="'.route('instructor.stripe').'" class="text-success">Stripe</a> data.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+        }
+        if (!$instructor->vimeo_data) {
+            $html .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Warning!</strong> Please provide your <a href="'.route('instructor.vimeo').'" class="text-success">Vimeo</a> data.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+        }
+
+        // show alert one by one
+        return $html;
+    }
+}

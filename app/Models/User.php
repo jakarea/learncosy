@@ -3,8 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Subscription;
 use App\Models\Course;
+use App\Models\VimeoData;
+use App\Models\Subscription;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,5 +63,13 @@ class User extends Authenticatable
 
     public function courses(){
         return $this->hasMany(Course::class,'user_id');
+    }
+
+    /**
+     * vimeo_data 
+     */
+    public function vimeo_data()
+    {
+        return $this->hasOne(VimeoData::class, 'user_id');
     }
 }
