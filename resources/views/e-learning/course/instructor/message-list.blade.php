@@ -34,273 +34,29 @@
                             </a>
                         </div>
                         <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Rayna Carder </h5>
-                                    <span>2m ago</span>
+                        
+                        @foreach ($recentMessages as $message)
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
+                                    <i class="fas fa-circle"></i>
                                 </div>
-                                <p>I remember that project due is tomorrow.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Skylar Dorwart </h5>
-                                    <span>2m ago</span>
+                                <div class="media-body">
+                                    <div class="name">
+                                        <h5>{{$message[0]->user->name}}</h5>
+                                        <span>2m ago</span>
+                                    </div>
+                                    <p>{{$message[0]->message}}.</p>
                                 </div>
-                                <p>Hei, dont forget to clear server cache!</p>
                             </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Kierra Curtis</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>I dont't know where that files saved dude.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Bella Siregar</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Ok sir. I will fix it as soon as possible</p>
-                            </div>
-                        </div>
+                        @endforeach
+                        
+                       
                         <!-- person @e -->
                     </div>
                     <!-- all chat person @e -->
                 </div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
-                    tabindex="0">
-                    <!-- social chat person @s -->
-                    <div class="person-tab-body">
-                        <div class="d-flex">
-                            <h6>SOCIAL</h6>
-                        </div>
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/c-logo.svg')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Codebytes Sutudios </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Guys, remember for weekly meeting at 8PM tonight!</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/grid-icon.svg')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>World Designer </h5>
-                                    <span>12m ago</span>
-                                </div>
-                                <p>I think you should put that component more lower th..</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <div class="d-flex">
-                            <h6>RECENT MESSAGE</h6>
-                            <a href="#">
-                                <i class="fas fa-ellipsis-vertical"></i>
-                            </a>
-                        </div>
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Rayna Carder </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>I remember that project due is tomorrow.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Skylar Dorwart </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Hei, dont forget to clear server cache!</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Kierra Curtis</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>I dont't know where that files saved dude.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Bella Siregar</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Ok sir. I will fix it as soon as possible</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                    </div>
-                    <!-- social chat person @e -->
-                </div>
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"
-                    tabindex="0">
-                    <!-- updates chat person @s -->
-                    <div class="person-tab-body">
-                        <div class="d-flex">
-                            <h6>UPDATE</h6>
-                        </div>
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/c-logo.svg')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Codebytes Sutudios </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Guys, remember for weekly meeting at 8PM tonight!</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/grid-icon.svg')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>World Designer </h5>
-                                    <span>12m ago</span>
-                                </div>
-                                <p>I think you should put that component more lower th..</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <div class="d-flex">
-                            <h6>RECENT MESSAGE</h6>
-                            <a href="#">
-                                <i class="fas fa-ellipsis-vertical"></i>
-                            </a>
-                        </div>
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Rayna Carder </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>I remember that project due is tomorrow.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Skylar Dorwart </h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Hei, dont forget to clear server cache!</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Kierra Curtis</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>I dont't know where that files saved dude.</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                        <!-- person @s -->
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <div class="name">
-                                    <h5>Bella Siregar</h5>
-                                    <span>2m ago</span>
-                                </div>
-                                <p>Ok sir. I will fix it as soon as possible</p>
-                            </div>
-                        </div>
-                        <!-- person @e -->
-                    </div>
-                    <!-- updates chat person @e -->
-                </div>
+               
             </div>
             <!-- person tab body @e -->
         </div>

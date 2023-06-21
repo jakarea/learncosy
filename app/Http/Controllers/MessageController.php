@@ -14,16 +14,18 @@ class MessageController extends Controller
      {    
         $course_id = $request->query('course');
         
-        // $param2 = $request->query('param2');
+        // // $param2 = $request->query('param2');
         $userId = Auth::user()->id;
-        $courses = Course::where('user_id', $userId)->get();
-        $course_ids = Course::where('user_id', $userId)->pluck('id')->toArray();
-        $search_course_id = $course_id ? [(int)$course_id] : $course_ids;
+        
+        // $courses = Course::where('user_id', $userId)->get();
+        // $course_ids = Course::where('user_id', $userId)->pluck('id')->toArray();
+        // $search_course_id = $course_id ? [(int)$course_id] : $course_ids;
 
-        $chat_rooms = Message::with('user','course')->whereIn('course_id',$search_course_id)->orderBy('created_at')->get()->groupBy(function($data) {
-            return $data->receiver_id;
+        $recentMessages = Message::with(['user','course'])->where('course_id',$course_id)->where('receiver_id',$userId)->orderBy('created_at','desc')->get()->groupBy(function($data) {
+            return $data->user_id;
         });
-         return view('e-learning/course/instructor/message-list',compact('chat_rooms','courses')); 
+
+        return view('e-learning/course/instructor/message-list',compact('recentMessages')); 
      }
  
      // instructor message list
