@@ -11,10 +11,11 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 
+use App\Http\Controllers\Instructor\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,9 +67,9 @@ Route::get('/new-dashboard/messages', function(){
 });
 
 // theme settings route
-Route::get('/theme-settings', function(){
-    return view('theme-settings/settings');
-});
+// Route::get('/theme-settings', function(){
+//     return view('theme-settings/settings');
+// });
 
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
@@ -90,16 +92,6 @@ Route::middleware('auth')->get('/', function () {
         return redirect('/admin/dashboard');
     return redirect('/instructor/dashboard');
 });
-
-
-Route::middleware('auth')->prefix('instructor/dashboard')->group(function () {
-    Route::get('/', 'App\Http\Controllers\Instructor\DashboardController@index')->name('instructor.dashboard.index');
-
-    Route::get('/new', function(){
-        return view('dashboard/instructor/dashboard');
-    });
-});
-
 
 // instructor payment history static pages
 Route::middleware('auth')->prefix('instructor/payments')->controller(HomeController::class)->group(function () {  
@@ -133,6 +125,11 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
     });
 });
+
+Route::middleware('auth')->prefix('instructor')->group(function () {
+    Route::get('dashboard', [DashboardController::class,'index'])->name('instructor.dashboard.index');
+});
+
 Route::group(['middleware' => ['subscription.check']], function () {
     // module page routes
     Route::middleware('auth')->prefix('instructor/modules')->controller(ModuleController::class)->group(function () {
@@ -177,6 +174,12 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit'); 
         Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
+    });
+    // course bundle page routes
+    Route::middleware('auth')->prefix('instructor/moudle/setting')->controller(ModuleSettingController::class)->group(function() {
+        Route::get('/{id}', 'index')->name('module.setting');
+        Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
+        Route::post('/updateorinsert', 'store')->name('module.setting.update');
     });
 });
 // profile management page routes
