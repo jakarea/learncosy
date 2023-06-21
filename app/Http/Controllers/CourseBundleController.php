@@ -16,7 +16,7 @@ class CourseBundleController extends Controller
      {  
         $userId = Auth::user()->id;
         $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
-         return view('bundle/instructor/index',compact('bundleCourses')); 
+         return view('bundle/instructor/list',compact('bundleCourses')); 
      }
 
      // data table getData

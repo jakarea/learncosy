@@ -164,7 +164,7 @@
             <div class="col-lg-12 mt-3">
                 <div class="create-form-wrap">
                     <!-- Theme Settings form @S -->
-                        <div class="row">
+                        <div class="row create-form-box">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="row">  
                                     <div class="col-md-12">
