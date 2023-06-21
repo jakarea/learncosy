@@ -27,8 +27,9 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />  
     <link href="{{ asset('assets/css/header.css') }}" rel="stylesheet" type="text/css" /> 
     
-    <link href="{{ asset('dashboard-assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />  
+   
     <link href="{{ asset('assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />   
+    <link href="{{ asset('dashboard-assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />  
     @yield('style')
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
@@ -41,7 +42,7 @@
     <!-- ========= Main Root Wrapper @S ========= -->
     <div class="main-body-wrapper">
     <!-- === Sidebar area @S -->
-    @include('partials/sidebar')
+    @include('partials/sidebar-2')
     <!-- === Sidebar area @E -->
 
     <!-- ==== Main Body Content @S ==== -->
