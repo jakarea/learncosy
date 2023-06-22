@@ -13,19 +13,19 @@ class MessageController extends Controller
      public function index(Request $request)
      {    
         $course_id = $request->query('course');
-        
-        // // $param2 = $request->query('param2');
+        $senderId = $request->query('sender');
         $userId = Auth::user()->id;
-        
-        // $courses = Course::where('user_id', $userId)->get();
-        // $course_ids = Course::where('user_id', $userId)->pluck('id')->toArray();
-        // $search_course_id = $course_id ? [(int)$course_id] : $course_ids;
 
-        $recentMessages = Message::with(['user','course'])->where('course_id',$course_id)->where('receiver_id',$userId)->orderBy('created_at','desc')->get()->groupBy(function($data) {
+        $highLightMessages = Message::with(['user','course'])->where('receiver_id',$userId)->orWhere('user_id',$userId)->orderBy('created_at','desc')->get()->groupBy(function($data) {
             return $data->user_id;
         });
-
-        return view('e-learning/course/instructor/message-list',compact('recentMessages')); 
+   
+        if($senderId){
+            $messages = Message::where('receiver_id',$senderId)->orWhere('user_id',$senderId)->orderBy('created_at','desc')->get();
+        }else{
+            $messages = $highLightMessages->first() ? $highLightMessages->first() : [];
+        }
+        return view('e-learning/course/instructor/message-list',compact('highLightMessages','messages','userId','course_id')); 
      }
  
      // instructor message list
