@@ -28,6 +28,55 @@
     <link href="{{ asset('assets/css/header.css') }}" rel="stylesheet" type="text/css" /> 
     <link href="{{ asset('assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />    
     @yield('style')
+    <style>
+      .change-password-form .form-submit .btn-submit,
+      .stripe-settings-form-wrap .form-submit .btn-submit,
+     .productss-list-box table tr td:last-child a,
+      .submit-bttns .btn-submit,
+      .create-form-head a,
+      .table-layout-bttn ul li a.active,
+      .create-bttn-wraps a,
+      .common-bttn,
+      .form-grp-btn .btn{
+        background: {{ modulesetting('secondary_color') }}!important;
+      }
+      .customer-profile-info .set-profile-picture .media img,
+      .productss-list-box table tr td:last-child a,
+      .submit-bttns .btn-reset,
+      .table-layout-bttn ul li a{
+        border-color: {{ modulesetting('secondary_color') }}!important;
+      }
+      .customer-profile-info .set-profile-picture .role-label .badge,
+      .change-password-form .form-submit .btn-submit:hover,
+      .stripe-settings-form-wrap .form-submit .btn-submit:hover,
+      .submit-bttns .btn-submit:hover,
+      .create-form-head a:hover,
+      .create-bttn-wraps a:hover,
+      .common-bttn:hover,
+      .form-grp-btn .btn:hover{
+        background: {{ modulesetting('primary_color') }}!important;
+      }
+      .change-password-form h3 span,
+      .create-form-head h6{
+        color: {{ modulesetting('primary_color') }}!important;
+      }
+      .submit-bttns .btn-reset{
+        color: {{ modulesetting('secondary_color') }}!important;
+      }
+      .submit-bttns .btn-reset:hover{
+        background: {{ modulesetting('secondary_color') }}!important;
+      }
+      .productss-list-box table tr td .fas{
+        color: #fff!important
+      }
+
+      .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a:hover,
+      .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active,
+      .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a:hover i,
+      .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active i{
+        color: {{ modulesetting('primary_color') }}!important;
+      }
+    </style>
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
  
@@ -46,7 +95,7 @@
     <div class="main-page-wrapper">
 
       <!-- == main header @S == -->
-      @include('partials/header')
+      @include('partials/instructor/header')
       <!-- == main header @E == -->
 
       <!-- main pages @S -->

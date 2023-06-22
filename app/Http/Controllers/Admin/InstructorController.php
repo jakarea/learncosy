@@ -17,8 +17,10 @@ class InstructorController extends Controller
 {
      // list page 
      public function index()
-     {   
-         return view('instructor/admin/index'); 
+     {    
+        $user_role = "instructor";
+        $users = User::where('user_role',$user_role)->get();
+        return view('instructor/admin/grid',compact('users')); 
      }
 
      // data table getData
@@ -104,6 +106,7 @@ class InstructorController extends Controller
        $instructor = new User([
            'name' => $request->name,
            'username' => $request->username,
+           'user_role' => 'instructor',
            'email' => $request->email,
            'phone' => $request->phone,
            'short_bio' => $request->short_bio,
@@ -168,6 +171,9 @@ class InstructorController extends Controller
         $user->name = $request->name;
         if ($request->username) {
            $user->username =  Str::slug($request->username);
+        }
+        if ($request->user_role) {
+           $user->user_role =  $user->user_role;
         }
         $user->short_bio = $request->short_bio;
         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;

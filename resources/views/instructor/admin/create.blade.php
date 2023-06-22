@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') Instructor Add Page @endsection
 
 {{-- page style @S --}}
@@ -107,7 +107,7 @@
                                         <div class="w-100">
                                             <input type="text" placeholder="Enter Social Link" name="social_links[]"
                                             class="form-control w-100 @error('social_links') is-invalid @enderror"
-                                            id="features" multiple value="{{ old('social_links') }}">
+                                            id="features" multiple value="">
 
                                             <div class="url-extra-field">
                                             </div>

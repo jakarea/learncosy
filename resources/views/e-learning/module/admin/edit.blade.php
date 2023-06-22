@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') {{$module->title}} Update Page @endsection
 
 {{-- page style @S --}}

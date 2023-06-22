@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" style="background: {{modulesetting('primary_color')}}">
     <div class="container">
         <a class="navbar-brand" href="{{url('/students/dashboard')}}">
             @if ( modulesetting('logo') )

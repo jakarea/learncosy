@@ -132,8 +132,10 @@ class CourseBundleController extends Controller
     public function show($slug)
     {    
         $bundleCourse = BundleCourse::where('slug', $slug)->first();
+        $slectedCourses = explode(",",$bundleCourse->selected_course);
+        $courses = Course::whereIn('id', $slectedCourses)->get();
         if ($bundleCourse) {
-            return view('bundle/instructor/show', compact('bundleCourse'));
+            return view('bundle/instructor/show', compact('bundleCourse', 'courses'));
         } else {
             return redirect('instructor/bundle/courses')->with('error', 'Course not found!');
         }

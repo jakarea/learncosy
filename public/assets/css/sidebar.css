@@ -4,7 +4,7 @@
   padding: 1.5rem 0rem;
   position: fixed;
   left: 0;
-  top: 83px;
+  top: 5rem;
   height: 100vh;
   width: 16.25rem;
   padding-top: 0;
@@ -71,10 +71,12 @@
   letter-spacing: -0.02em;
   line-height: 140%;
   padding: 0.9rem 1.6rem;
-  height: 3.5rem;
-  margin-bottom: 0.6rem;
-  border-radius: 0.675rem;
+  margin-bottom: 0.3rem;
   transition: all linear 0.3s;
+}
+.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link i {
+  font-size: 1.2rem;
+  color: #8C8FAE;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-caret-right {
   font-size: 1rem;
@@ -82,29 +84,6 @@
   position: absolute;
   right: 10px;
   z-index: 9;
-}
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-box,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-file-invoice-dollar,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-users,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-euro-sign,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-user {
-  font-size: 1.3rem;
-  color: #8C8FAE;
-}
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-right-lef,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-clock-rotate-left {
-  font-size: 0.5rem !important;
-  color: #8C8FAE;
-  margin-right: 0.4rem;
-}
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link .fa-user-group {
-  font-size: 1.2rem;
-  color: #8C8FAE;
-}
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link i.fa-superpowers,
-.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link i.fa-plug {
-  color: #8C8FAE;
-  font-size: 1.8rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link span {
   display: flex;
@@ -129,14 +108,16 @@
   transition: all linear 0.3s;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover {
-  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
-  color: #ffffff;
+  color: #4c60ff;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover::before {
   height: 100%;
 }
+.sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover i {
+  color: #4c60ff;
+}
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link:hover img {
-  filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
+  filter: invert(48%) sepia(62%) saturate(3031%) hue-rotate(193deg) brightness(101%) contrast(99%);
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .submenu-itm a {
   margin-bottom: 0.2rem;
@@ -150,17 +131,16 @@
   width: 1rem;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active {
-  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
-  color: #ffffff;
+  color: #4c60ff;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active::before {
   height: 100%;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active i {
-  color: #ffffff;
+  color: #4c60ff;
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item a.active img {
-  filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
+  filter: invert(48%) sepia(62%) saturate(3031%) hue-rotate(193deg) brightness(101%) contrast(99%);
 }
 .sidebar-wrapper .sidebar-nav-area .menubar .menu-item:last-child a {
   position: absolute;

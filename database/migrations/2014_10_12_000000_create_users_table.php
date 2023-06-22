@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('username')->nullable();
             $table->string('email')->unique();
-            $table->string('user_role')->default('students');
+            $table->string('user_role')->default('student');
             $table->text('short_bio')->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();

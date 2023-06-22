@@ -13,21 +13,23 @@ use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagementController;
+
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
-
-use App\Http\Controllers\Instructor\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,14 +68,13 @@ Route::get('/new-dashboard/messages', function(){
     return view('dashboard/messages');
 });
 
-// theme settings route
-// Route::get('/theme-settings', function(){
-//     return view('theme-settings/settings');
-// });
+// login scrren route
+Route::get('/{username}/login', function(){
+    return view('login/login');
+}); 
 
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
-
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
@@ -81,7 +82,17 @@ Route::group(['prefix' => 'home'], function () {
     Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
+});
 
+// all admin profile manage routes for admin
+Route::middleware('auth')->prefix('admin/alladmin')->controller(AdminManagementController::class)->group(function () {
+    Route::get('/', 'index')->name('allAdmin'); 
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('allAdmin.add');
+    Route::get('/profile/{id}', 'show')->name('allAdmin.profile'); 
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('updateAllAdminProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('allAdmin.destroy');
 });
 
 
@@ -107,7 +118,6 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
     Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
     Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
     Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
-
 });
 
 // course page routes
@@ -175,8 +185,8 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
-    // course bundle page routes
-    Route::middleware('auth')->prefix('instructor/moudle/setting')->controller(ModuleSettingController::class)->group(function() {
+    // theme settings page routes
+    Route::middleware('auth')->prefix('instructor/theme/setting')->controller(ModuleSettingController::class)->group(function() {
         Route::get('/{id}', 'index')->name('module.setting');
         Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
         Route::post('/updateorinsert', 'store')->name('module.setting.update');
@@ -245,6 +255,14 @@ Route::middleware('auth')->prefix('students/checkout')->controller(CheckoutContr
     Route::post('/{slug}', 'store')->name('students.checkout.store'); 
     Route::get('/{slug}/success', 'success')->name('checkout.success'); 
     Route::get('/{slug}/cancel', 'cancel')->name('checkout.cancel'); 
+});
+
+// student bundle course checkout
+Route::middleware('auth')->prefix('students/bundle/checkout')->controller(CheckoutBundleController::class)->group(function () {
+    Route::get('/{slug}', 'index')->name('students.bundle.checkout'); 
+    Route::post('/{slug}', 'store')->name('students.bundle.checkout.store'); 
+    Route::get('/{slug}/success', 'success')->name('bundle.checkout.success'); 
+    Route::get('/{slug}/cancel', 'cancel')->name('bundle.checkout.cancel'); 
 });
 
 // student own profile management page routes

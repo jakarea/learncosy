@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title','Dashboard')
 {{-- page style @S --}}
 @section('style')

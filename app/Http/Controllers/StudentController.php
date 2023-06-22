@@ -20,10 +20,12 @@ class StudentController extends Controller
         $course = Course::where('user_id', auth()->user()->id)->get();
 
         // get student who purchase course based on course user_id and logged in user_id
-        $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+       $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+
+       $users = User::whereIn('id', $checkout->pluck('user_id'))->get();
 
         // return dd($checkout);
-         return view('students/instructor/index'); 
+         return view('students/instructor/grid',compact('users')); 
      }
 
      // data table getData
@@ -94,8 +96,7 @@ class StudentController extends Controller
         // return $request->all();
 
         $request->validate([
-            'name' => 'required|string',
-            'user_role' => 'required|string',
+            'name' => 'required|string', 
             'short_bio' => 'string',
             'phone' => 'string',
             'email' => 'required|email|unique:users,email', 
@@ -111,7 +112,7 @@ class StudentController extends Controller
         // add student
         $student = new User([
             'name' => $request->name,
-            'user_role' => $request->user_role,
+            'user_role' => 'student',
             'email' => $request->email,
             'phone' => $request->phone,
             'short_bio' => $request->short_bio,
@@ -163,8 +164,7 @@ class StudentController extends Controller
          $userId = $id;  
  
          $this->validate($request, [
-             'name' => 'required|string',
-             'user_role' => 'required|string',
+             'name' => 'required|string', 
              'short_bio' => 'required|string',
              'phone' => 'required|string',  
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
@@ -181,9 +181,12 @@ class StudentController extends Controller
          }else{
             $user->username = $user->username;
         } 
+         if ($request->user_role) {
+            $user->user_role = $user->user_role;
+         }
+
          $user->short_bio = $request->short_bio;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-         $user->user_role = $request->user_role;
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;  

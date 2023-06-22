@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') Subscription Add @endsection
 
 {{-- page style @S --}}

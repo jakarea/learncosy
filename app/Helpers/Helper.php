@@ -9,6 +9,8 @@ use Vimeo\Vimeo as VimeoSDK;
 if (!function_exists('getSubscriptionPackage')) {
     function getSubscriptionPackage()
     {
+        // subscription package
+        
         return \App\Models\SubscriptionPackage::where('status', 'active')->get();
     }
 }
@@ -315,9 +317,19 @@ if (!function_exists('modulesetting')) {
      */
     function modulesetting($key)
     {
-        $get_user = request()->segment(2);
-        $user = \App\Models\User::where('username', $get_user)->first();
-        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+        $request = app('request');
+        $username = request()->segments()[0];
+        if (Auth::check() && Auth::user()->user_role == 'instructor') {
+            $username = Auth::user()->username;
+        }
+
+        if (Auth::check() && Auth::user()->user_role == 'admin') {
+            return null;
+        }
+
+        $user = \App\Models\User::where('username', $username)->first();
+
+       $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
             $setting->value = json_decode($setting->value);
             if ( $key == 'logo' ) {
@@ -336,6 +348,7 @@ if (!function_exists('modulesetting')) {
         return null;
     }
 }
+
 
 /**
  * Helper function to check instructor is subscribed or not after check logged in user is add stripe_secret_key, stripe_public_key after check logged in user vimeo_data add or not
@@ -374,5 +387,33 @@ if (!function_exists('isInstructorSubscribed')) {
 
         // show alert one by one
         return $html;
+    }
+}
+
+
+
+/**
+ * Helper function to check student CourseLog and count total complete lessons by student
+ */
+if (!function_exists('StudentActitviesProgress')) {
+    function StudentActitviesProgress($user_id, $course_id)
+    {
+        // Get the total number of lessons in the course
+        $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->count();
+        // dd($totalLessons );
+        // exit();
+        // Get the total number of completed lessons by the student for the specific course
+        $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
+            ->where('user_id', $user_id)
+            ->whereNotNull('is_completed')
+            ->count();
+
+        // Calculate the course progress percentage
+        $progress = ($totalCompleteLessons / $totalLessons) * 100;
+
+        // format the progress percentage
+        $progress = number_format($progress, 0);
+
+        return $progress;
     }
 }
