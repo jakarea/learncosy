@@ -46,7 +46,7 @@
     <div class="main-page-wrapper">
 
       <!-- == main header @S == -->
-      @include('partials/instructor/header')
+      @include('partials/header')
       <!-- == main header @E == -->
 
       <!-- main pages @S -->

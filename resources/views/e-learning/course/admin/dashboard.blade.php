@@ -1,7 +1,9 @@
+
 @extends('layouts/instructor')
 @section('title')
     Home Page
 @endsection
+
 
 {{-- page style @S --}}
 @section('style')

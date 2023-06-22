@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/student')
 @section('title') User password chnage @endsection
 
 {{-- page style @S --}}
