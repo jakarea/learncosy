@@ -56,8 +56,7 @@
             <li class="menu-item">
                 <a href="{{ url('/instructor/dashboard') }}"
                     class="{{ Request::is('instructor/dashboard')  ? ' active' : '' }} menu-link">
-                    <img src="{{asset('dashboard-assets/images/sidebar-icon/dashboard.svg')}}" alt="Dashboard"
-                        class="img-fluid">
+                    <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -65,8 +64,7 @@
             <li class="menu-item">
                 <a href="{{ url('instructor/courses') }}"
                     class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/elearning-icon.svg') }}" alt="E Learning" title="E Learning"
-                        class="img-fluid" />
+                    <i class="fa-solid fa-graduation-cap"></i>
                     <span>Courses</span>
                     <i class="fa-solid fa-caret-right"></i>
                 </a>
@@ -77,8 +75,7 @@
             <li class="menu-item">
                 <a href="{{ url('instructor/bundle/courses') }}"
                     class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="Adspy" title="Adspy"
-                        class="img-fluid" />
+                    <i class="fa-solid fa-cubes"></i>
                     <span>Bundle Course</span>
                     <i class="fa-solid fa-caret-right"></i>
                 </a>
@@ -103,15 +100,15 @@
             @endcan
             <li class="menu-item">
                 <a href="{{ url('instructor/settings/stripe') }}"
-                    class="{{ Request::is('instructor/settings/stripe')  ? ' active' : '' }} menu-link"><i
-                        class="fa-brands fa-cc-stripe me-2"></i>
+                    class="{{ Request::is('instructor/settings/stripe')  ? ' active' : '' }} menu-link">
+                    <i class="fa-brands fa-stripe-s"></i>
                     <span>Stripe</span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{url('instructor/settings/vimeo')}}"
-                    class="{{ Request::is('instructor/settings/vimeo')  ? ' active' : '' }} menu-link"><i
-                        class="fa-brands fa-vimeo me-2"></i>
+                    class="{{ Request::is('instructor/settings/vimeo')  ? ' active' : '' }} menu-link">
+                    <i class="fa-brands fa-vimeo-v"></i>
                     <span>Vimeo</span>
                 </a>
             </li>
@@ -124,8 +121,8 @@
             </li>
             <li class="menu-item">
                 <a href="{{ route('module.setting', auth()->user()->id) }}"
-                    class="{{ Request::is('instructor/theme/setting*')  ? ' active' : '' }} menu-link"><i
-                        class="fas fa-cog"></i>
+                    class="{{ Request::is('instructor/theme/setting*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <span>Theme Setting</span>
                 </a>
             </li>
@@ -134,24 +131,21 @@
             <li class="menu-item">
                 <a href="{{ url('students/dashboard') }}"
                     class="{{ Request::is('students/dashboard')  ? ' active' : '' }} menu-link"> 
-                    <img src="{{asset('dashboard-assets/images/sidebar-icon/dashboard.svg')}}" alt="Dashboard"
-                        class="img-fluid">
+                    <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{ url('students/home') }}"
                     class="{{ Request::is('students/home*') || Request::is('students/courses*')  ? ' active' : '' }} menu-link">
-                    <img src="{{ asset('assets/images/dashboard-icon.svg') }}" alt="Home" title="Home"
-                    class="img-fluid" />
+                    <i class="fa-solid fa-house-circle-check"></i>
                     <span>Home</span>
                 </a>
             </li> 
             <li class="menu-item">
                 <a href="{{ url('students/dashboard/enrolled') }}"
                     class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} menu-link">
-                    <img src="{{asset('dashboard-assets/images/sidebar-icon/project.svg')}}" alt="project"
-                        class="img-fluid">
+                    <i class="fa-solid fa-handshake"></i>
                     <span>Enrolled</span>
                 </a>
             </li>
@@ -166,8 +160,7 @@
             <li class="menu-item">
                 <a href="{{ url('admin/dashboard') }}"
                     class="{{ Request::is('admin/dashboard*')  ? ' active' : '' }} menu-link">
-                    <img src="{{asset('dashboard-assets/images/sidebar-icon/dashboard.svg')}}" alt="Dashboard"
-                        class="img-fluid">
+                    <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
@@ -181,21 +174,20 @@
             <li class="menu-item">
                 <a href="{{ url('admin/students') }}"
                     class="{{ Request::is('admin/students*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-user-group"></i>
+                    <i class="fa-solid fa-users"></i>
                     <span>Students</span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{ route('admin.subscription') }}"
                     class="{{ Request::is('admin/manage/subscriptionpackage*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-box"></i>
+                    <i class="fa-solid fa-cube"></i>
                     <span>Memberships</span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="#" class="menu-link">
-                    <img src="{{ asset('assets/images/adspy-icon.svg') }}" alt="E-Learning" title="E-Learning"
-                        class="img-fluid" />
+                    <i class="fa-solid fa-graduation-cap"></i>
                     <span>E-Learning</span>
                     <i class="fa-solid fa-caret-right"></i>
                 </a>
@@ -212,8 +204,7 @@
             <li class="menu-item">
                 <a class="menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
-                    <img src="{{ asset('assets/images/logout-icon.svg') }}" alt="Logout" title="Logout"
-                        class="img-fluid" />
+                   <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>{{ __('Logout') }}</span>
                 </a>
 

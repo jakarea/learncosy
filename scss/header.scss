@@ -22,9 +22,10 @@
     a{
         display: inline-block;
         img{
-            width: 12rem;
+            max-width: 12rem;
             min-height: 3rem;
-            object-fit: cover
+            object-fit: cover;
+            max-height: 3.4rem
         }
     }
     
