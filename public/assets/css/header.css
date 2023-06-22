@@ -22,7 +22,7 @@
   display: inline-block;
 }
 .header-logo-wrap a img {
-  width: 10rem;
+  width: 12rem;
   min-height: 3rem;
   -o-object-fit: cover;
      object-fit: cover;

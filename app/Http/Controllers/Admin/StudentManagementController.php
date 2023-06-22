@@ -17,7 +17,10 @@ class StudentManagementController extends Controller
     // list page 
     public function index()
     {   
-        return view('students/admin/index'); 
+        $user_role = "student";
+        $users = User::where('user_role',$user_role)->get();
+
+         return view('students/admin/grid',compact('users'));  
     }
 
     // data table getData

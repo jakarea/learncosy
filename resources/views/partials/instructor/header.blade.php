@@ -54,9 +54,7 @@
 									<i class="fa-solid fa-cog text-white"></i>
 								</a>  
 								<ul class="dropdown-menu settings-dropdown">
-									<li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
-									 
-									<li><a href="{{ route('module.setting', auth()->user()->id) }}"><i class="fas fa-cog"></i> Module Setting</a></li>
+									<li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li> 
 									<li>
 										<a href="{{ route('logout') }}" onclick="event.preventDefault();
 											document.getElementById('logout-form').submit();">
