@@ -136,7 +136,7 @@ class StudentManagementController extends Controller
        return view('students/admin/show',compact('student', 'checkout')); 
     }
 
-    // show page 
+    // edit page 
     public function edit($id)
      {  
         $student = User::where('id', $id)->first();

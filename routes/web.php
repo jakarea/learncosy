@@ -13,6 +13,7 @@ use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Frontend\HomepageController;
@@ -74,14 +75,23 @@ Route::get('/{username}/login', function(){
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
-
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
     Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
     Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
+});
 
+// all admin profile manage routes for admin
+Route::middleware('auth')->prefix('admin/alladmin')->controller(AdminManagementController::class)->group(function () {
+    Route::get('/', 'index')->name('allAdmin'); 
+    Route::get('/create', 'create'); 
+    Route::post('/create', 'store')->name('allAdmin.add');
+    Route::get('/profile/{id}', 'show')->name('allAdmin.profile'); 
+    Route::get('/{id}/edit', 'edit'); 
+    Route::post('/{id}/edit', 'update')->name('updateAllAdminProfile');
+    Route::delete('/{id}/destroy', 'destroy')->name('allAdmin.destroy');
 });
 
 
@@ -107,7 +117,6 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
     Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
     Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
     Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
-
 });
 
 // course page routes

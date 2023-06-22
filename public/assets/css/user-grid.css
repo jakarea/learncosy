@@ -3,6 +3,7 @@
   border-radius: 0.675rem;
   background-color: #ffffff;
   margin-bottom: 1.2rem;
+  box-shadow: 3px 22px 50px -2px #DEE3EB;
 }
 .user-grid-box .header-action ul {
   display: flex;

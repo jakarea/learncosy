@@ -1,5 +1,5 @@
-@extends('layouts/instructor')
-@section('title') Student Add Page @endsection
+@extends('layouts/admin')
+@section('title') Admin Add Page @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -11,32 +11,47 @@
 
 {{-- page content @S --}}
 @section('content')
-<!-- === Instructor update page @S === -->
+<!-- === Instructor add page @S === -->
 <main class="profile-update-page">
     <div class="product-research-create-wrap">
         <div class="row">
             <div class="col-lg-12">
                 <div class="create-form-head">
-                    <h6>Student Add</h6>
-                    <a href="{{url('instructor/students')}}">
-                        <i class="fa-solid fa-user-group"></i> All Students </a>
+                    <h6>Add an Admin</h6>
+                    <a href="{{url('admin/alladmin')}}">
+                        <i class="fa-solid fa-user-group"></i> All Admin </a>
                 </div>
                 <div class="create-form-wrap">
-                   
-                    <!-- Student Add form @S -->
-                    <form action="{{route('student.add')}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
+                    
+                    <!-- Instructor Add form @S -->
+                    <form action="{{route('allAdmin.add')}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row align-items-center">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <div class="form-flex">
-                                        <label for="name"  style="min-width: 10%">Name: <sup class="text-danger">*</sup>
+                                        <label for="name" >Name: <sup class="text-danger">*</sup>
                                         </label>
                                         <input type="text" placeholder="Enter Name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ old('name') }}" id="name" style="width: 90%">
+                                            value="{{ old('name') }}" id="name">
                                     </div>
                                     <span class="invalid-feedback">@error('name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div> 
+                            <div class="col-lg-6">
+                                <div class="form-group form-error">
+                                    <div class="form-flex">
+                                        <label for="username" >Username: <sup class="text-danger">*</sup>
+                                        </label>
+                                        <input type="text" placeholder="Enter username" name="username"
+                                            class="form-control @error('username') is-invalid @enderror"
+                                            value="{{ old('username') }}" id="username">
+                                    </div>
+                                    <span class="warning-txt text-end">After set the username, it's not
+                                        changeable.</span>
+                                    <span class="invalid-feedback">@error('username'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div> 
@@ -93,12 +108,13 @@
                                             <input type="text" placeholder="Enter Social Link" name="social_links[]"
                                             class="form-control w-100 @error('social_links') is-invalid @enderror"
                                             id="features" multiple value="">
+
                                             <div class="url-extra-field">
                                             </div>
                                         </div>
                                       
                                     </div>
-                                    
+                                   
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
                                         <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
@@ -164,13 +180,13 @@
                             </div> 
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="">Initial Password for this User : <code class="bg-danger text-white p-1">1234567890</code> </label>
+                                    <label for="">Initial Password for this Admin : <code class="bg-danger text-white p-1">1234567890</code> </label>
                                     <sup>*Can be Change it Later</sup>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="submit-bttns"> 
                                     <button type="submit" class="btn btn-submit">Submit</button>
                                 </div>
@@ -183,7 +199,7 @@
         </div>
     </div>
 </main>
-<!-- === Instructor update page @E === -->
+<!-- === Instructor add page @E === -->
 @endsection
 {{-- page content @E --}}
 
@@ -215,7 +231,6 @@
   
     urlBttn.addEventListener('click',createFiled,true);
   
-   
 </script>
 @endsection
 

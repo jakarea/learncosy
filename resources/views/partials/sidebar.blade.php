@@ -97,28 +97,7 @@
                     <span>Earning</span>
                 </a>
             </li>
-            @endcan
-            <li class="menu-item">
-                <a href="{{ url('instructor/settings/stripe') }}"
-                    class="{{ Request::is('instructor/settings/stripe')  ? ' active' : '' }} menu-link">
-                    <i class="fa-brands fa-stripe-s"></i>
-                    <span>Stripe</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{url('instructor/settings/vimeo')}}"
-                    class="{{ Request::is('instructor/settings/vimeo')  ? ' active' : '' }} menu-link">
-                    <i class="fa-brands fa-vimeo-v"></i>
-                    <span>Vimeo</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="{{ url('instructor/payments/platform-fee') }}"
-                    class="{{ Request::is('instructor/payments/platform-fee')  ? ' active' : '' }} menu-link"><i
-                        class="fas fa-euro-sign"></i>
-                    <span>Platform Fee</span>
-                </a>
-            </li>
+            @endcan 
             <li class="menu-item">
                 <a href="{{ route('module.setting', auth()->user()->id) }}"
                     class="{{ Request::is('instructor/theme/setting*')  ? ' active' : '' }} menu-link">
@@ -162,6 +141,13 @@
                     class="{{ Request::is('admin/dashboard*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url('admin/alladmin') }}"
+                    class="{{ Request::is('admin/alladmin*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <span>Admin</span>
                 </a>
             </li>
             <li class="menu-item">
