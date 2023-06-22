@@ -15,9 +15,10 @@
         @include('partials.session-message')
         <div class="row">
             @foreach( getSubscriptionPackage() as $package )
-            @php 
-                $package_featurelist = json_decode($package->features);
-            @endphp
+                @php 
+                    <!-- // convert json to array -->
+                    $package_featurelist = json_decode($package->features);
+                @endphp
             <div class="col-md-4">
                 <div class="card bg-light">
                     <div class="card-header text-center">
@@ -32,10 +33,13 @@
                         @endif
                     </div>
                     <div class="card-footer text-center">
+
                     @if (!isSubscribed($package->id))
                         <a href="{{ route('instructor.subscription.create', $package->id) }}" class="btn btn-primary btn-block">Subscribe</a>
                     @else
+
                     <a href="#" class="btn btn-secondary btn-block" disabled>Subscribed</a>
+
                     @endif
 
                     </div>
