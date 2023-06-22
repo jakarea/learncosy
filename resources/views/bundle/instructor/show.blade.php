@@ -38,15 +38,18 @@
                 <div class="course-content-box">
                     <div class="d-flex">
                         <h5>All Course’s in this Bundle</h5>
-                        <p>Last Updated : 2 hours ago</p>
+                        <p>Last Updated : {{$bundleCourse->updated_at}}</p>
                     </div>
                     <div class="row border-right-custom"> 
-                        @php $selected_courses = explode(",",$bundleCourse->selected_course) @endphp 
-
-                        @foreach($selected_courses as $key => $selected_course)
+                        @foreach($courses as $key => $selected_course)
                         <div class="col-lg-12">
                             <div class="attached-file-box me-lg-2">
-                                <h4>{{$selected_course}} Course Name</h4>
+                                <h4>
+                                    <a href="{{route('course.show', $selected_course->slug)}}">
+                                        <img src="{{asset('assets/images/courses/'.$selected_course->thumbnail)}}" alt="Course" class="img-fluid" width="100px">
+                                        {{$selected_course->title }}
+                                    </a>
+                                </h4>
                                 <a href="#"> <i class="fas fa-link"></i> </a>
                             </div>
                         </div>

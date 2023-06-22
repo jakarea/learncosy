@@ -117,6 +117,50 @@
                     </div>
                 </div>
                 @endforeach
+
+                @if( count($bundleCourse) > 0 )
+                    @foreach($bundleCourse as $course)
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="course-box-wrap"> 
+                            <div class="course-content-box">
+                                <div class="course-thumbnail">
+                                    <img src="{{asset('assets/images/bundle-courses/'. $course->thumbnail)}}"
+                                        alt="{{ $course->slug}}" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="course-txt-box">
+                                <h3 class="mb-2"> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                </h3>
+                                <!-- @php $features = explode(",",$course->features)  @endphp
+                                @foreach($features as $key => $feature)
+                                <span class="badge text-bg-primary">{{$feature}}</span> 
+                                @endforeach  -->
+                                <ul class="d-flex justify-content-between">   
+                                    <li><a href="javascript:void(0)" class="text-dark"> <span class="badge text-bg-info"> Price: <i class="fa-solid fa-dollar-sign"></i> {{$course->price}} </span></a></li>   
+                                    <li><a href="javascript:void(0)" class="text-dark"> <span class="badge text-bg-warning"> Bundle Course </span></a></li>   
+                                </ul>
+                                 <!--All course under bundle -->
+                                 @php 
+                                    $selected_courses = explode(",",$course->selected_course);
+                                    $courses = App\Models\Course::whereIn('id', $selected_courses)->get();
+                                @endphp
+                                <ul class="mt-3">   
+                                    @foreach($courses as $key => $inner_course)
+                                    <li><a href="{{url('students/courses/'.$inner_course->slug )}}" class="text-dark"> <span class="badge text-bg-secondary"> {{$inner_course->title}} </span></a></li>   
+                                    @endforeach
+                                </ul>
+                            </div> 
+                            <div class="course-ftr"> 
+                                @if ( !isEnrolled($courses->pluck('id')->toArray()) )
+                                <a href="{{ route('students.bundle.checkout', $course->id)}}" class="btn btn-exprec enroll__btn">Purchase Now ${{$course->price}}</a> 
+                                @else
+                                <a href="#" class="btn btn-exprec enroll__btn">Purchased Bundle</a>
+                                @endif
+                            </div>   
+                        </div> 
+                    </div>
+                    @endforeach
+                @endif
                 <!-- item @E -->
             </div>
             <div class="row">

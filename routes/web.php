@@ -19,15 +19,16 @@ use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagementController;
+
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
-
-use App\Http\Controllers\Instructor\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -253,6 +254,14 @@ Route::middleware('auth')->prefix('students/checkout')->controller(CheckoutContr
     Route::post('/{slug}', 'store')->name('students.checkout.store'); 
     Route::get('/{slug}/success', 'success')->name('checkout.success'); 
     Route::get('/{slug}/cancel', 'cancel')->name('checkout.cancel'); 
+});
+
+// student bundle course checkout
+Route::middleware('auth')->prefix('students/bundle/checkout')->controller(CheckoutBundleController::class)->group(function () {
+    Route::get('/{slug}', 'index')->name('students.bundle.checkout'); 
+    Route::post('/{slug}', 'store')->name('students.bundle.checkout.store'); 
+    Route::get('/{slug}/success', 'success')->name('bundle.checkout.success'); 
+    Route::get('/{slug}/cancel', 'cancel')->name('bundle.checkout.cancel'); 
 });
 
 // student own profile management page routes
