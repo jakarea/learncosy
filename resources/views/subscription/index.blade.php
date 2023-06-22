@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') Package List Page @endsection
 
 {{-- page style @S --}}

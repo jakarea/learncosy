@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/admin')
 @section('title') Module Create Page @endsection
 
 {{-- page style @S --}}

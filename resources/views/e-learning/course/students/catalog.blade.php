@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/student')
 @section('title') Course Page @endsection
 @section('seo')
 <meta name="description" content="Explore a diverse course list on LearnCosy. Boost your skills with engaging lessons in technology, business, arts, and more. Begin your educational journey today and unlock your full potential. Discover now!" itemprop="description">

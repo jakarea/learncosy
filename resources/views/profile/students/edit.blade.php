@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/student')
 @section('title') Profile Update Page @endsection
 
 {{-- page style @S --}}

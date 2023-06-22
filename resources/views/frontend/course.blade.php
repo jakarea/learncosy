@@ -4,6 +4,18 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .enroll-bttns a{
+        background: {{ modulesetting('secondary_color') }};
+    }
+    .course-details-banner-box .course-title h6{
+        color: {{ modulesetting('primary_color') }};
+    }
+    .course-outline-box .accordion .accordion-item span.numbering.active {
+        border-color: {{ modulesetting('primary_color') }};
+        color: {{ modulesetting('primary_color') }};
+    }
+</style>
 @endsection
 {{-- page style @S --}}
 

@@ -1,4 +1,4 @@
-@extends('layouts/instructor')
+@extends('layouts/student')
 @section('title') Account Management Page @endsection
 
 {{-- page style @S --}}

@@ -8,6 +8,7 @@
 /public/assets/images/students/*
 /public/assets/images/lessons/*
 /public/assets/images/modules/*
+/public/assets/images/setting/*
 /storage/*.key
 /vendor
 .env
