@@ -16,8 +16,14 @@
   align-items: center;
   justify-content: space-between;
 }
-.header-logo-wrap img.logo-width {
+.header-logo-wrap a {
+  display: inline-block;
+}
+.header-logo-wrap a img {
   width: 10rem;
+  min-height: 2rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .header-search-wrap {

@@ -19,9 +19,15 @@
 
 .header-logo-wrap {
     @include m.df(space-between);
-    img.logo-width{
-        width: 10rem;
+    a{
+        display: inline-block;
+        img{
+            width: 10rem;
+            min-height: 2rem;
+            object-fit: cover
+        }
     }
+    
 }
 
 .header-search-wrap {

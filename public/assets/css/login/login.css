@@ -1496,3 +1496,13 @@ h6 {
     z-index: 999;
 }
  
+.form--group{
+    position: relative;
+}
+
+.form--group i{
+    position: absolute;
+    right: 1rem;
+    top: 3.2rem;
+    cursor: pointer;
+}

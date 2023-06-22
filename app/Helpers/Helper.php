@@ -323,7 +323,7 @@ if (!function_exists('modulesetting')) {
         }
         $user = \App\Models\User::where('username', $username)->first();
 
-        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+       $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if ($setting) {
             $setting->value = json_decode($setting->value);
             if ( $key == 'logo' ) {
