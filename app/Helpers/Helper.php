@@ -9,6 +9,8 @@ use Vimeo\Vimeo as VimeoSDK;
 if (!function_exists('getSubscriptionPackage')) {
     function getSubscriptionPackage()
     {
+        // subscription package
+        
         return \App\Models\SubscriptionPackage::where('status', 'active')->get();
     }
 }
