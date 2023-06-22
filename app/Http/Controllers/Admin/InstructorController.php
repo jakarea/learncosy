@@ -17,8 +17,10 @@ class InstructorController extends Controller
 {
      // list page 
      public function index()
-     {   
-         return view('instructor/admin/index'); 
+     {    
+        $user_role = "instructor";
+        $users = User::where('user_role',$user_role)->get();
+        return view('instructor/admin/grid',compact('users')); 
      }
 
      // data table getData

@@ -175,8 +175,8 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::post('/{slug}/edit', 'update')->name('course.bundle.update'); 
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
-    // course bundle page routes
-    Route::middleware('auth')->prefix('instructor/module/setting')->controller(ModuleSettingController::class)->group(function() {
+    // theme settings page routes
+    Route::middleware('auth')->prefix('instructor/theme/setting')->controller(ModuleSettingController::class)->group(function() {
         Route::get('/{id}', 'index')->name('module.setting');
         Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
         Route::post('/updateorinsert', 'store')->name('module.setting.update');

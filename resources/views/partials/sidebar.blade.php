@@ -124,9 +124,9 @@
             </li>
             <li class="menu-item">
                 <a href="{{ route('module.setting', auth()->user()->id) }}"
-                    class="{{ Request::is('instructor/module/setting*')  ? ' active' : '' }} menu-link"><i
+                    class="{{ Request::is('instructor/theme/setting*')  ? ' active' : '' }} menu-link"><i
                         class="fas fa-cog"></i>
-                    <span>Module Setting</span>
+                    <span>Theme Setting</span>
                 </a>
             </li>
             {{-- student menu link @S --}}

@@ -28,6 +28,11 @@
     <link href="{{ asset('assets/css/header.css') }}" rel="stylesheet" type="text/css" /> 
     <link href="{{ asset('assets/css/sidebar.css') }}" rel="stylesheet" type="text/css" />    
     @yield('style')
+    <style>
+      .form-grp-btn .btn{
+        background: {{ modulesetting('primary_color') }}
+      }
+    </style>
     <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
  
