@@ -3,13 +3,13 @@
 @use './util/media-query' as q;
 
 .header-section {
-    padding: 1rem 1.5rem;
-    // box-shadow: v.$mbxs;
-    background: v.$gdbg;
-    // background-image: url('../images/header-bg.png');
+    padding: 0.5rem 1.2rem;
+    padding-top: 0.8rem; 
+    background: v.$gdbg; 
     position: fixed;
     width: 100%;
     z-index: 9999!important;
+    height: 5rem;
 }
 
 .header-left-part {
@@ -19,9 +19,15 @@
 
 .header-logo-wrap {
     @include m.df(space-between);
-    img.logo-width{
-        width: 10rem;
+    a{
+        display: inline-block;
+        img{
+            width: 10rem;
+            min-height: 3rem;
+            object-fit: cover
+        }
     }
+    
 }
 
 .header-search-wrap {

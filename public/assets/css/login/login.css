@@ -1458,7 +1458,7 @@ h6 {
     color: #4c60ff;
 } 
 
-.cosy-login-page .btn{
+.login-2-option .cosy-login-page .btn{
     background-color:  #fff!important;
     color: #4c60ff!important;
 }
@@ -1475,8 +1475,34 @@ h6 {
 
 .login-bg-img{
     background-size: cover!important;
+    background-position: center center!important;
+    position: relative;
 }
 
-.bg-ol{
-    background-color: rgba(0, 0, 0, 0.553);
+.login-bg-img:before{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0090f4;
+    opacity: .6; 
+}
+
+.third-bg-primary{
+    background-color: #F4F8FC!important; 
+    position: relative;
+    z-index: 999;
+}
+ 
+.form--group{
+    position: relative;
+}
+
+.form--group i{
+    position: absolute;
+    right: 1rem;
+    top: 3.2rem;
+    cursor: pointer;
 }

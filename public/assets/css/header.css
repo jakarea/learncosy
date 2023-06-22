@@ -1,9 +1,11 @@
 .header-section {
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1.2rem;
+  padding-top: 0.8rem;
   background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
   position: fixed;
   width: 100%;
   z-index: 9999 !important;
+  height: 5rem;
 }
 
 .header-left-part {
@@ -16,8 +18,14 @@
   align-items: center;
   justify-content: space-between;
 }
-.header-logo-wrap img.logo-width {
+.header-logo-wrap a {
+  display: inline-block;
+}
+.header-logo-wrap a img {
   width: 10rem;
+  min-height: 3rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .header-search-wrap {

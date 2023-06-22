@@ -68,17 +68,9 @@ Route::get('/new-dashboard/messages', function(){
 });
 
 // login scrren route
-Route::get('/login-option-1', function(){
-    return view('login/login-1');
-});
-
-Route::get('/login-option-2', function(){
-    return view('login/login-2');
-});
-
-Route::get('/login-option-3', function(){
-    return view('login/login-3');
-});
+Route::get('/{username}/login', function(){
+    return view('login/login');
+}); 
 
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
@@ -185,7 +177,7 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
     // course bundle page routes
-    Route::middleware('auth')->prefix('instructor/moudle/setting')->controller(ModuleSettingController::class)->group(function() {
+    Route::middleware('auth')->prefix('instructor/module/setting')->controller(ModuleSettingController::class)->group(function() {
         Route::get('/{id}', 'index')->name('module.setting');
         Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
         Route::post('/updateorinsert', 'store')->name('module.setting.update');
