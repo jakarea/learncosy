@@ -387,3 +387,31 @@ if (!function_exists('isInstructorSubscribed')) {
         return $html;
     }
 }
+
+
+
+/**
+ * Helper function to check student CourseLog and count total complete lessons by student
+ */
+if (!function_exists('StudentActitviesProgress')) {
+    function StudentActitviesProgress($user_id, $course_id)
+    {
+        // Get the total number of lessons in the course
+        $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->count();
+        // dd($totalLessons );
+        // exit();
+        // Get the total number of completed lessons by the student for the specific course
+        $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
+            ->where('user_id', $user_id)
+            ->whereNotNull('is_completed')
+            ->count();
+
+        // Calculate the course progress percentage
+        $progress = ($totalCompleteLessons / $totalLessons) * 100;
+
+        // format the progress percentage
+        $progress = number_format($progress, 0);
+
+        return $progress;
+    }
+}
