@@ -316,11 +316,15 @@ if (!function_exists('modulesetting')) {
     function modulesetting($key)
     {
         $request = app('request');
-        if (Auth::check()) {
+        $username = request()->segments()[0];
+        if (Auth::check() && Auth::user()->user_role == 'instructor') {
             $username = Auth::user()->username;
-        }else{
-            $username = request()->segments()[0];
         }
+
+        if (Auth::check() && Auth::user()->user_role == 'admin') {
+            return null;
+        }
+
         $user = \App\Models\User::where('username', $username)->first();
 
         $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
@@ -342,6 +346,7 @@ if (!function_exists('modulesetting')) {
         return null;
     }
 }
+
 
 /**
  * Helper function to check instructor is subscribed or not after check logged in user is add stripe_secret_key, stripe_public_key after check logged in user vimeo_data add or not
