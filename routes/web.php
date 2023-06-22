@@ -176,7 +176,7 @@ Route::group(['middleware' => ['subscription.check']], function () {
         Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
     });
     // course bundle page routes
-    Route::middleware('auth')->prefix('instructor/moudle/setting')->controller(ModuleSettingController::class)->group(function() {
+    Route::middleware('auth')->prefix('instructor/module/setting')->controller(ModuleSettingController::class)->group(function() {
         Route::get('/{id}', 'index')->name('module.setting');
         Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
         Route::post('/updateorinsert', 'store')->name('module.setting.update');

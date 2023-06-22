@@ -55,9 +55,7 @@
 								</a>  
 								<ul class="dropdown-menu settings-dropdown">
 									<li><a href="{{url('/instructor/profile/myprofile')}}"><i class="fas fa-user"></i> My Profile</a></li>
-									<li><a href="{{ url('instructor/settings/stripe') }}"><i class="fa-brands fa-cc-stripe me-2"></i> Stripe</a></li>
-									<li><a href="{{url('instructor/settings/vimeo')}}"><i class="fa-brands fa-vimeo me-2"></i>Vimeo</a></li>
-									<li><a href="{{ url('instructor/payments/platform-fee') }}"><i class="fas fa-euro-sign"></i> Platform Fee</a></li> 
+									 
 									<li><a href="{{ route('module.setting', auth()->user()->id) }}"><i class="fas fa-cog"></i> Module Setting</a></li>
 									<li>
 										<a href="{{ route('logout') }}" onclick="event.preventDefault();

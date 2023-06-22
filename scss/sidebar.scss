@@ -8,7 +8,7 @@
     padding: 1.5rem 0rem; 
     position: fixed;
     left: 0;
-    top: 83px;
+    top: 5rem;
     height: 100vh;
     width: 16.25rem;
     padding-top: 0;
@@ -65,8 +65,7 @@
         position: relative;
         min-height: 76vh;  
         .menubar {
-
-            // position: relative;
+ 
             .menu-item {
                 .menu-link {
                     @include m.df;    
@@ -76,46 +75,22 @@
                     color: #717579;
                     letter-spacing: -0.02em;
                     line-height: 140%;
-                    padding: 0.9rem 1.6rem;
-                    height: 3.5rem;
-                    margin-bottom: 0.6rem;
-                    border-radius: 0.675rem;
+                    padding: 0.9rem 1.6rem;   
+                    margin-bottom: 0.1rem;
                     transition: all linear .3s;
 
+                    i{
+                        font-size: 1.2rem;
+                        color: v.$fourth;
+                    }
                     .fa-caret-right {
                         font-size:1rem;
                         color: v.$fourth;
                         position: absolute;
                         right: 10px;
                         z-index: 9;
-                    }
+                    } 
 
-                    .fa-box,
-                    .fa-file-invoice-dollar,
-                    .fa-users,
-                    .fa-euro-sign,
-                    .fa-user {
-                        font-size: 1.3rem;
-                        color: v.$fourth;
-                    }
-
-                    .fa-right-lef,
-                    .fa-clock-rotate-left {
-                        font-size: .5rem !important;
-                        color: v.$fourth;
-                        margin-right: 0.4rem;
-                    }
-
-                    .fa-user-group {
-                        font-size: 1.2rem;
-                        color: v.$fourth;
-                    }
-
-                    i.fa-superpowers,
-                    i.fa-plug {
-                        color: v.$fourth;
-                        font-size: 1.8rem;
-                    }
 
                     span {
                         @include m.df(space-between);
@@ -144,12 +119,14 @@
                         &::before {
                             height: 100%;
                         }
-
-                        background: v.$gdbg; 
-                        color: v.$light;
+ 
+                        color: v.$primary;
+                        i{
+                            color: v.$primary;
+                        }
 
                         img {
-                            filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
+                            filter: invert(48%) sepia(62%) saturate(3031%) hue-rotate(193deg) brightness(101%) contrast(99%);
                         }
                     }
                 }
@@ -169,19 +146,18 @@
                     }
                 }
 
-                a.active {
-                    background: v.$gdbg; 
-                    color: v.$light;
+                a.active { 
+                    color: v.$primary;
 
                     &::before {
                         height: 100%;
                     }
                     i{
-                        color: v.$light;
+                        color: v.$primary;
                     }
 
                     img {
-                        filter: invert(0%) sepia(2%) saturate(9%) hue-rotate(351deg) brightness(94%) contrast(102%);
+                        filter: invert(48%) sepia(62%) saturate(3031%) hue-rotate(193deg) brightness(101%) contrast(99%);
                     }
                 }
 

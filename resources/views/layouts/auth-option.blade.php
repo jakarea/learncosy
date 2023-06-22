@@ -41,13 +41,8 @@
   <!-- ========= Main Root Wrapper @S ========= -->
   <div class="main-body-wrapper">
 
-
     <!-- ==== Main Body Content @S ==== -->
     <div class="main-page-wrapper">
-
-      <!-- == main header @S == -->
-      {{-- @include('partials/auth/optional/header') --}}
-      <!-- == main header @E == -->
 
       <!-- main pages @S -->
       @yield('content')
