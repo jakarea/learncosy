@@ -34,12 +34,13 @@
                             </div>
                             <div class="course-txt-box course-txt-box-2">
                                 <h3> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title }} </a>  </h3> 
-                                <h6>25%</h6>
+                                
+                                <h6>{{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}%</h6>
                             </div>
                         </div>
                         <div class="course-ftr">   
-                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 25%"></div>
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: {{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}%"></div>
                               </div> 
                             <a href="{{url('students/courses/'.$enrolment->course->slug )}}" class="btn btn-exprec enroll__btn">Go to Course Page</a> 
                         </div>
