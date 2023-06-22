@@ -66,10 +66,18 @@ Route::get('/new-dashboard/messages', function(){
     return view('dashboard/messages');
 });
 
-// theme settings route
-// Route::get('/theme-settings', function(){
-//     return view('theme-settings/settings');
-// });
+// login scrren route
+Route::get('/login-option-1', function(){
+    return view('login/login-1');
+});
+
+Route::get('/login-option-2', function(){
+    return view('login/login-2');
+});
+
+Route::get('/login-option-3', function(){
+    return view('login/login-3');
+});
 
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
