@@ -9,6 +9,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
 use App\Models\CourseLog;
+use App\Models\BundleCourse;
 use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
@@ -53,12 +54,15 @@ class StudentHomeController extends Controller
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $courses = Course::orderBy('id','desc');
+        $bundleCourse = BundleCourse::orderBy('id','desc')->get();
         $mainCategories = $courses->pluck('categories'); 
         if(!empty($title)){
             $titles = explode( ' ', $title);
             $courses->where('title','like','%'.trim($titles[0]).'%');
+            $bundleCourse->where('title','like','%'.trim($titles[0]).'%');
             if(isset($titles[1])){
                 $courses->where('title','like','%'.trim($titles[1]).'%'); 
+                $bundleCourse->where('title','like','%'.trim($titles[1]).'%');
             }
         }
         if(!empty($cat)){
@@ -78,7 +82,7 @@ class StudentHomeController extends Controller
         $categories = array_unique($unique_array);
         $courses = $courses->paginate(12);
 
-        return view('e-learning/course/students/catalog',compact('courses','categories')); 
+        return view('e-learning/course/students/catalog',compact('courses','categories', 'bundleCourse')); 
     }
 
     // account Management 
