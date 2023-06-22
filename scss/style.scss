@@ -3,6 +3,14 @@
 @use './util/variabls' as v;
 @use './util/media-query' as q;
 
+.invalid-feedback,
+.form-group .invalid-feedback,
+.create-form-box .form-group .invalid-feedback{
+    display: none!important;
+    margin-top: 0!important;
+    opacity: 0!important;
+}
+
 // main body css @S
 .main-body-wrapper {
     width: 100%;

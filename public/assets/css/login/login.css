@@ -1494,6 +1494,15 @@ h6 {
     background-color: #F4F8FC!important; 
     position: relative;
     z-index: 999;
+    border-radius: 1rem!important; 
+}
+
+.took-top{
+    position: relative;
+    z-index: 999;
+}
+.bg-white{
+    background-color: #fff!important; 
 }
  
 .form--group{

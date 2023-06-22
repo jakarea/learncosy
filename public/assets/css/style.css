@@ -108,6 +108,14 @@ h6 {
   color: #000000;
 }
 
+.invalid-feedback,
+.form-group .invalid-feedback,
+.create-form-box .form-group .invalid-feedback {
+  display: none !important;
+  margin-top: 0 !important;
+  opacity: 0 !important;
+}
+
 .main-body-wrapper {
   width: 100%;
   display: block;

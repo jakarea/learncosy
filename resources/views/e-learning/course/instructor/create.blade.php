@@ -6,6 +6,12 @@
 <link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<style>
+    .mt-custm{
+        top: 3.4rem!important;
+    }
+</style>
 @endsection
 {{-- page style @S --}}
 
@@ -63,7 +69,7 @@
                                             </div>
                                             <span class="invalid-feedback">@error('features'){{ $message }}
                                                 @enderror</span>
-                                            <a href="javascript:void(0)" id="url_increment"><i
+                                            <a href="javascript:void(0)" class="mt-custm" id="url_increment"><i
                                                     class="fas fa-plus"></i></a>
                                         </div>
                                     </div>

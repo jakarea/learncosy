@@ -5,6 +5,7 @@
 .user-grid-box{
     @include m.box(1rem,0.675rem,v.$light);
     margin-bottom: 1.2rem;
+    box-shadow: v.$bxs;
     .header-action{
         ul{
             @include m.df(flex-end);

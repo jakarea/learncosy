@@ -21,10 +21,10 @@ Login Page
     <div class="cosy-login-page">
         <div class="container-fluid px-0">
             <div class="row g-0 min-vh-100 {{ modulesetting('lp_layout') == 'fullwidth' || modulesetting('lp_layout') == 'default' ? 'justify-content-center' : '' }}">
-                <div class="col-md-6 d-flex {{ modulesetting('lp_layout') == 'fullwidth' ? 'third-bg-primary ' : '' }} {{ modulesetting('lp_layout') == 'leftsidebar' ? 'order-2' : 'order-1' }}">
+                <div class="col-md-6 d-flex {{ modulesetting('lp_layout') == 'leftsidebar' ? 'order-2' : 'order-1' }}">
                     <div class="container my-auto py-5">
                         @if ( modulesetting('lp_layout') == 'fullwidth' || modulesetting('lp_layout') == 'default' )
-                        <div class="row g-0">
+                        <div class="row g-0 took-top">
                             <div class="col-12 mb-5">
                                 <div class="logo mb-5 mb-md-0 text-center">
                                     <a class="d-flex justify-content-center" href="#"  title="Cosy">
@@ -39,7 +39,7 @@ Login Page
                         </div>
                         @endif
                         <div class="row g-0">
-                            <div class="col-10 col-lg-9 col-xl-8 mx-auto">
+                            <div class="col-10 col-lg-9 col-xl-8 mx-auto {{ modulesetting('lp_layout') == 'fullwidth' || modulesetting('lp_layout') == 'default' ? 'third-bg-primary px-5 py-4' : '' }} {{ modulesetting('lp_layout') == 'default' ? 'bg-white' : '' }}">
                                 <h3 class="fw-600 mb-4">Log In</h3>
                                {{-- ============ main form start ========= --}}
                                <form method="POST" action="{{ route('login') }}">
