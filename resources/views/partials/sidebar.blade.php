@@ -97,6 +97,13 @@
                     <span>Earning</span>
                 </a>
             </li>
+            <li class="menu-item">
+                <a href="{{ url('course/messages') }}"
+                    class="{{ Request::is('course/messages')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-euro-sign"></i>
+                    <span>Messaging</span>
+                </a>
+            </li>
             @endcan 
             <li class="menu-item">
                 <a href="{{ route('module.setting', auth()->user()->id) }}"

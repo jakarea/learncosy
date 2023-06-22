@@ -46,8 +46,6 @@
                                     <div class="media-body">
                                         <div class="name">
                                             <h5>{{$message[0]->user->name}}</h5> 
-                                            
-
                                             <span>2m ago</span>
                                         </div>
                                         <p>{{$message[0]->message}}.</p>
