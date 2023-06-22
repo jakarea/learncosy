@@ -35,19 +35,22 @@
                         </div>
                         <!-- person @s -->
                         
-                        @foreach ($recentMessages as $message)
+                        @foreach ($highLightMessages as $message)
                             <div class="media">
                                 <div class="avatar">
                                     <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
                                     <i class="fas fa-circle"></i>
                                 </div>
-                                <div class="media-body">
-                                    <div class="name">
-                                        <h5>{{$message[0]->user->name}}</h5>
-                                        <span>2m ago</span>
+
+                                <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
+                                    <div class="media-body">
+                                        <div class="name">
+                                            <h5>{{$message[0]->user->name}}</h5> 
+                                            <span>2m ago</span>
+                                        </div>
+                                        <p>{{$message[0]->message}}.</p>
                                     </div>
-                                    <p>{{$message[0]->message}}.</p>
-                                </div>
+                                </a> 
                             </div>
                         @endforeach
                         
@@ -93,74 +96,27 @@
                 </div>
                 <!-- chat date @s -->
                 <!-- messages @s -->
+
+                
                 <div class="chat-messages-box">
                     <!-- item @s -->
-                    <div class="message-item reciver">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto b</p>
 
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item sender mb-1">
-                        <p>sed quia consequuntur magni dolores</p>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
+                    @foreach ($messages as $message)
+                        <div class="message-item reciver">
+                            <p>{{$message->message}}</p>
+
+                            <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
+                        </div>
+                    @endforeach
+                   
+                  
                     <div class="message-item sender">
                         <p>nisi ut aliquid ex ea commodi consequatur? <br> Quis autem vel eum iure reprehenderit qui in
                             ea</p>
                         <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
                     </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item reciver mb-1">
-                        <p>Remember that dude</p> 
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item reciver">
-                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p> 
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item sender mb-1">
-                        <p>sed quia consequuntur magni dolores</p>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item sender">
-                        <p>nisi ut aliquid ex ea commodi consequatur? <br> Quis autem vel eum iure reprehenderit qui in
-                            ea</p>
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e --> 
-                    <!-- item @s -->
-                    <div class="message-item reciver mb-1">
-                        <p>Remember that dude</p> 
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item reciver">
-                        <p>Hey, check my design update last night. Tell me what you think and if that is OK</p> 
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item sender mb-1">
-                        <p>sed quia consequuntur magni dolores</p>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="message-item sender">
-                        <p>nisi ut aliquid ex ea commodi consequatur? <br> Quis autem vel eum iure reprehenderit qui in
-                            ea</p>
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    <!-- item @e --> 
+                    
+                     
                 </div>
                 <!-- messages @e -->
             </div>
