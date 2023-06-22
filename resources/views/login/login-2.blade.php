@@ -10,21 +10,38 @@ Login
 
 @section('content')
 <!-- ====== login page content start ====== -->
-<section class="login-option-wrap login-2-option">
+<section class="login-option-wrap">
     <div class="cosy-login-page">
         <div class="container-fluid px-0">
-            <div class="row g-0 min-vh-100 justify-content-center">
-                <div class="col-md-4 d-flex bg-secondary">
-                    <div class="container my-auto py-5">
-                        <div class="row g-0">
-                            <div class="col-12 mb-5">
-                                <div class="logo mb-5 mb-md-0"> <a class="d-flex" href="index.html"
-                                        title="Oxyy"><img src="{{asset('assets/images/learncosy-logo.png')}}"
-                                            alt="Logo" width="150"></a> </div>
+            <div class="row g-0 min-vh-100">
+                <div class="col-md-6">
+                    <div class="hero-wrap d-flex align-items-center h-100">
+                        <div class="hero-mask opacity-8 bg-primary"></div>
+                        <div class="hero-bg hero-bg-scroll"
+                            style="background-image:url({{asset('assets/images/girls-model.jpg')}});">
+                        </div>
+                        <div class="hero-content w-100 min-vh-100 d-flex flex-column">
+                            <div class="row g-0">
+                                <div class="col-10 col-lg-9 mx-auto">
+                                    <div class="logo mt-5 mb-5 mb-md-0"> <a class="d-flex" href="index.html"
+                                            title="Cosy"><img src="{{asset('assets/images/learncosy-logo.png')}}"
+                                                alt="Logo" width="180"></a> </div>
+                                </div>
+                            </div>
+                            <div class="row g-0 my-auto">
+                                <div class="col-10 col-lg-9 mx-auto">
+                                    <h1 class="text-11 text-white mb-4">Welcome back!</h1>
+                                    <p class="text-4 text-white lh-base mb-5">We are glad to see you again! Get access
+                                        to your Orders, Wishlist and Recommendations.</p>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="container my-auto py-5">
                         <div class="row g-0">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-11 mx-auto">
+                            <div class="col-10 col-lg-9 col-xl-8 mx-auto">
                                 <h3 class="fw-600 mb-4">Log In</h3>
                                 <form method="post">
                                     <div class="mb-3">
@@ -57,15 +74,7 @@ Login
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="hero-wrap d-flex align-items-center h-100">
-                        <div class="hero-mask opacity-6 bg-white"></div>
-                        <div class="hero-bg hero-bg-scroll"
-                            style="background-image:url('');">
-                        </div> 
-                    </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -74,21 +83,5 @@ Login
 @endsection
 
 @section('script')
-<script>
-    function changeType() {
-      var field = document.getElementById("password-field");
-      var clickk = document.getElementById("eye-click");
 
-      if (field.type === "password") {
-        field.type = "text";
-        clickk.classList.add('fa-eye-slash');
-        clickk.classList.remove('fa-eye');
-      } else {
-        field.type = "password";
-        clickk.classList.remove('fa-eye-slash');
-        clickk.classList.add('fa-eye');
-      }
-
-    }
-</script>
 @endsection

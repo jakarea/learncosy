@@ -10,19 +10,18 @@ Login
 
 @section('content')
 <!-- ====== login page content start ====== -->
-<section class="login-option-wrap login-2-option login-bg-img"
-    style="background: url({{asset('assets/images/boat-bg.jpg')}});">
+<section class="login-option-wrap login-bg-img" style="background: url({{asset('assets/images/girls-model.jpg')}}); ">
     <div class="bg-ol">
         <div class="cosy-login-page">
             <div class="container-fluid px-0">
                 <div class="row g-0 min-vh-100 justify-content-center">
-                    <div class="col-md-4 d-flex bg-primary">
+                    <div class="col-md-4 d-flex third-bg-primary">
                         <div class="container my-auto py-5">
                             <div class="row g-0">
                                 <div class="col-12 mb-5">
-                                    <div class="logo mb-5 mb-md-0"> <a class="d-flex" href="index.html"
-                                            title="Oxyy"><img src="{{asset('assets/images/learncosy-logo.png')}}"
-                                                alt="Logo" width="150"></a> </div>
+                                    <div class="logo mb-5 mb-md-0 text-center"> <a class="d-flex justify-content-center" href="index.html"
+                                            title="Cosy"><img src="{{asset('assets/images/learncosy-logo.png')}}"
+                                                alt="Logo" width="180"></a> </div>
                                 </div>
                             </div>
                             <div class="row g-0">
