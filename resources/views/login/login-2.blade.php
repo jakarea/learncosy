@@ -13,8 +13,8 @@ Login
 <section class="login-option-wrap login-2-option">
     <div class="cosy-login-page">
         <div class="container-fluid px-0">
-            <div class="row g-0 min-vh-100">
-                <div class="col-md-4 d-flex bg-primary">
+            <div class="row g-0 min-vh-100 justify-content-center">
+                <div class="col-md-4 d-flex bg-secondary">
                     <div class="container my-auto py-5">
                         <div class="row g-0">
                             <div class="col-12 mb-5">

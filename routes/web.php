@@ -75,6 +75,10 @@ Route::get('/login-option-2', function(){
     return view('login/login-2');
 });
 
+Route::get('/login-option-3', function(){
+    return view('login/login-3');
+});
+
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 

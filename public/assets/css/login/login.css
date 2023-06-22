@@ -1462,6 +1462,7 @@ h6 {
     background-color:  #fff!important;
     color: #4c60ff!important;
 }
+.login-2-option a, a:focus,
 .login-2-option .text-muted a,
 .login-2-option .text-muted{
     color: #fff!important;
@@ -1470,4 +1471,12 @@ h6 {
 .login-2-option .form-label,
 .login-2-option .cosy-login-page .fw-600{
     color: #fff!important;
+}
+
+.login-bg-img{
+    background-size: cover!important;
+}
+
+.bg-ol{
+    background-color: rgba(0, 0, 0, 0.553);
 }
