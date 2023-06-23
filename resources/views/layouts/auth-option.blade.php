@@ -16,7 +16,7 @@
   <meta name="theme-color" content="#fafafa">
 
   <!-- App favicon -->
-  <link rel="shortcut icon" href="{{ asset('assets/images/fav.svg') }}">
+  <link rel="shortcut icon" href="{{ asset('assets/images/fav.png') }}">
 
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900'
     type='text/css'>

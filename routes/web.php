@@ -68,9 +68,13 @@ Route::get('/new-dashboard/messages', function(){
     return view('dashboard/messages');
 });
 
-// login scrren route
+// custom auth screen route
 Route::get('/{username}/login', function(){
-    return view('login/login');
+    return view('custom-auth/login');
+}); 
+
+Route::get('/{username}/register', function(){
+    return view('custom-auth/register');
 }); 
 
 
