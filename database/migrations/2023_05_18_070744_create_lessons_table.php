@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('slug'); 
             $table->string('video_link')->nullable(); 
             $table->string('thumbnail'); 
-            $table->string('lesson_file')->nullable()->default('thumbnail.png'); 
+            $table->string('lesson_file')->nullable()->default(''); 
             $table->text('short_description')->nullable(); 
             $table->text('meta_keyword')->nullable(); 
             $table->string('meta_description', 160)->nullable(); 

@@ -10,7 +10,7 @@
 <style>
     .mt-custm{
         top: 3.4rem!important;
-    }
+    } 
 </style>
 @endsection
 {{-- page style @S --}}
@@ -146,44 +146,46 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="file-upload"
-                                                class="form-control  @error('thumbnail') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('thumbnail'){{ $message }}
-                                                @enderror</span>
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Thumbnail</label>
                                         </div>
+                                        <div id="image-container" class="mt-0">
+                                            <label for="image-input" id="upload-label">
+                                              <i   class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="thumbnail" id="image-input" style="display: none;">
+                                            <div id="uploaded-image" style="display: none;">
+                                              <img id="uploaded-image-preview" alt="Uploaded Image">
+                                              <i id="close-icon" class="fas fa-times"></i>
+                                            </div> 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="thumbnail" class="img-fluid static-image">
+                                          </div>  
+                                          <div class="text-start mt-2">
+                                            <span id="uploaded-image-name"></span>
+                                          </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews"></div>
-                                            <button type="button" class="btn" id="close-button"><i
-                                                    class="fas fa-close"></i></button>
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Banner</label>
                                         </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="file-upload-2">Banner </label>
-                                            <input type="file" name="banner" id="file-upload-2"
-                                                class="form-control  @error('banner') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('banner'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews-2"></div>
-                                            <button type="button" class="btn" id="close-button-2"><i
-                                                    class="fas fa-close"></i></button>
-                                        </div>
-                                        {{-- img preview @E --}}
+                                        <div id="image-container2" class="mt-0">
+                                            <label for="image-input2" id="upload-label2">
+                                              <i  class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="banner" id="image-input2" style="display: none;">
+                                            <div id="uploaded-image2" style="display: none;">
+                                              <img id="uploaded-image-preview2" alt="Uploaded Image">
+                                              <i id="close-icon2" class="fas fa-times"></i>
+                                            </div> 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="banner" class="img-fluid static-image2">
+                                          </div> 
+                                          <div class="text-start mt-2">
+                                            <span id="uploaded-image-name2"></span>
+                                          </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group  mt-4">
                                             <label for="short_description">Short Description <sup
                                                     class="text-danger">*</sup></label>
                                             <textarea name="short_description" id="short_description"
@@ -336,32 +338,30 @@
                                                         No
                                                     </label>
                                                 </div>
-                                            </div>
-
+                                            </div> 
                                             <span class="invalid-feedback">@error('hascertificate'){{ $message }}
-                                                @enderror</span>
-
+                                                @enderror</span> 
                                         </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <label for="file-upload-3">Sample Certificates </label>
-                                            <input type="file" name="sample_certificates" id="file-upload-3"
-                                                class="form-control  @error('sample_certificates') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('sample_certificates'){{ $message }}
-                                                @enderror</span>
+                                    </div>  
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Sample Certificates</label>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews-3"></div>
-                                            <button type="button" class="btn" id="close-button-3"><i
-                                                    class="fas fa-close"></i></button>
-                                        </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-
+                                        <div id="image-container3" class="mt-0">
+                                            <label for="image-input3" id="upload-label3">
+                                              <i  class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="sample_certificates" id="image-input3" style="display: none;">
+                                            <div id="uploaded-image3" style="display: none;">
+                                              <img id="uploaded-image-preview3" alt="Uploaded Image">
+                                              <i id="close-icon3" class="fas fa-times"></i>
+                                            </div> 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="sample_certificates" class="img-fluid static-image3">
+                                          </div> 
+                                          <div class="text-start mt-3">
+                                            <span id="uploaded-image-name3"></span>
+                                          </div>
+                                    </div> 
                                     <div class="col-12">
                                         <div class="custom-hr">
                                             <hr>
@@ -414,7 +414,10 @@
     type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/image-upload.js')}}"></script>
+<script src="{{asset('assets/js/image-upload-2.js')}}"></script>
+<script src="{{asset('assets/js/image-upload-3.js')}}"></script>
+
 <script>
     $('#categoriess').select2();
 </script>

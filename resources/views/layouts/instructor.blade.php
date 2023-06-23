@@ -40,12 +40,14 @@
       .form-grp-btn .btn{
         background: {{ modulesetting('secondary_color') }}!important;
       }
+      .user-grid-box .avatar img,
       .customer-profile-info .set-profile-picture .media img,
       .productss-list-box table tr td:last-child a,
       .submit-bttns .btn-reset,
       .table-layout-bttn ul li a{
         border-color: {{ modulesetting('secondary_color') }}!important;
       }
+      .sidebar-wrapper .sidebar-nav-area .menubar .menu-item .menu-link::before,
       .customer-profile-info .set-profile-picture .role-label .badge,
       .change-password-form .form-submit .btn-submit:hover,
       .stripe-settings-form-wrap .form-submit .btn-submit:hover,
