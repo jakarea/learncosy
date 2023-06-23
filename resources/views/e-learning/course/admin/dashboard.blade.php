@@ -105,23 +105,13 @@
             </div>
 
 
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-8">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                 <!-- project statistic @s -->
                 <div class="card-box project-statistic-wrap">
                     <div class="statics-head">
                         <h5>Statistics</h5>
                     </div>
-                    <div id="chart"></div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-4">
-                <!-- project statistic @s -->
-                <div class="card-box project-statistic-wrap">
-                    <div class="statics-head">
-                        <h5>Categories</h5>
-                    </div>
-                    <div id="course_earning"></div>
+                    <div id="monthly_earning"></div>
                 </div>
             </div>
 
@@ -233,9 +223,6 @@
     <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
 
-    <script src="{{ asset('dashboard-assets/js/box-chart.js') }}"></script>
-    {{-- <script src="{{ asset('dashboard-assets/js/line-chart.js') }}"></script> --}}
-    <script src="{{ asset('dashboard-assets/js/line-chart-2.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
 
@@ -354,6 +341,7 @@
         var chart = new ApexCharts(document.querySelector("#lineChart"), options);
         chart.render();
     </script>
+    
     <script>
         // chart for Earnings
         const earnings = @json($earningByDates);
@@ -451,4 +439,92 @@
         var chart = new ApexCharts(document.querySelector("#earningChart"), options);
         chart.render();
     </script>
+
+<script>
+// Earning by month
+var earningByMonths = @json($earningByMonth);
+
+var options = {
+          series: [{
+          name: 'Earning',
+          data: earningByMonths
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return "€" + val ;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ["#304758"]
+          }
+        },
+        
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          position: 'top',
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+          }
+        },
+        yaxis: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter: function (val) {
+              return val + "%";
+            }
+          }
+        
+        },
+        title: {
+          floating: true,
+          offsetY: 330,
+          align: 'center',
+          style: {
+            color: '#444'
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#monthly_earning"), options);
+        chart.render();
+    </script>
+
 @endsection

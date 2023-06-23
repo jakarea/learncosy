@@ -93,9 +93,9 @@
                 <!-- project statistic @s -->
                 <div class="card-box project-statistic-wrap">
                     <div class="statics-head">
-                        <h5>Statistics</h5>
+                        <h5>Monthly Earning </h5>
                     </div>
-                    <div id="chart"></div>
+                    <div id="monthly_earning"></div>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@
                 <!-- project statistic @s -->
                 <div class="card-box project-statistic-wrap">
                     <div class="statics-head">
-                        <h5>Statistics</h5>
+                        <h5>Course Earning</h5>
                     </div>
                     <div id="course_earning"></div>
                 </div>
@@ -216,11 +216,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
-    <script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
 
-    <script src="{{ asset('dashboard-assets/js/box-chart.js') }}"></script>
-    {{-- <script src="{{ asset('dashboard-assets/js/line-chart.js') }}"></script> --}}
-    <script src="{{ asset('dashboard-assets/js/line-chart-2.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
 
@@ -455,5 +451,92 @@
 
         // Update the clock every second
         setInterval(updateClock, 1000);
+    </script>
+
+    <script>
+// Earning by month
+var earningByMonths = @json($earningByMonth);
+
+var options = {
+          series: [{
+          name: 'Earning',
+          data: earningByMonths
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            dataLabels: {
+              position: 'top', // top, center, bottom
+            },
+          }
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return "€" + val ;
+          },
+          offsetY: -20,
+          style: {
+            fontSize: '12px',
+            colors: ["#304758"]
+          }
+        },
+        
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          position: 'top',
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            fill: {
+              type: 'gradient',
+              gradient: {
+                colorFrom: '#D8E3F0',
+                colorTo: '#BED1E6',
+                stops: [0, 100],
+                opacityFrom: 0.4,
+                opacityTo: 0.5,
+              }
+            }
+          },
+          tooltip: {
+            enabled: true,
+          }
+        },
+        yaxis: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            formatter: function (val) {
+              return val + "%";
+            }
+          }
+        
+        },
+        title: {
+          floating: true,
+          offsetY: 330,
+          align: 'center',
+          style: {
+            color: '#444'
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#monthly_earning"), options);
+        chart.render();
     </script>
 @endsection
