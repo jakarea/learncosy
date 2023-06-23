@@ -72,11 +72,12 @@ Route::get('/new-dashboard/messages', function(){
 Route::get('/{username}/login', function(){
     return view('custom-auth/login');
 }); 
-
 Route::get('/{username}/register', function(){
     return view('custom-auth/register');
-}); 
-
+});  
+Route::get('/{username}/password/reset', function(){
+    return view('custom-auth/passwords/email');
+});  
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
