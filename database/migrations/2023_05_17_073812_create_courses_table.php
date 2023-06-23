@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('number_of_video')->nullable();
             $table->string('duration')->nullable();
             $table->string('hascertificate')->nullable()->default(0);
-            $table->string('sample_certificates')->nullable()->default("thumbnail.png"); 
+            $table->string('sample_certificates')->nullable()->default(""); 
             $table->string('subscription_status')->default('one_time');
             $table->string('status')->default('draft');
             $table->timestamps();

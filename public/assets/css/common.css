@@ -436,3 +436,99 @@
   padding: 0.85rem 1.5rem;
   border-radius: 3rem;
 }
+
+#file-upload3,
+#file-upload2,
+#file-upload {
+  opacity: 0;
+  height: 0;
+}
+
+#image-input3,
+#image-input2,
+#image-input {
+  display: none;
+}
+
+#uploaded-image3,
+#uploaded-image2,
+#uploaded-image {
+  position: relative;
+  display: none;
+}
+
+#uploaded-image-name3,
+#uploaded-image-name2,
+#uploaded-image-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2d3958;
+  line-height: 140%;
+  margin-left: 1rem;
+}
+
+#close-icon3,
+#close-icon2,
+#close-icon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+#uploaded-image-preview3,
+#uploaded-image-preview2,
+.static-image3,
+.static-image2,
+#uploaded-image-preview,
+.static-image {
+  width: 22rem;
+  height: 8rem;
+  border-radius: 2%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+#image-container3,
+#image-container2,
+#image-container {
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+}
+#image-container3 #upload-label3,
+#image-container3 #upload-label2,
+#image-container3 #upload-label,
+#image-container2 #upload-label3,
+#image-container2 #upload-label2,
+#image-container2 #upload-label,
+#image-container #upload-label3,
+#image-container #upload-label2,
+#image-container #upload-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.5rem;
+  border-radius: 4rem;
+  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  z-index: 99;
+}
+#image-container3 #upload-label3 i,
+#image-container3 #upload-label2 i,
+#image-container3 #upload-label i,
+#image-container2 #upload-label3 i,
+#image-container2 #upload-label2 i,
+#image-container2 #upload-label i,
+#image-container #upload-label3 i,
+#image-container #upload-label2 i,
+#image-container #upload-label i {
+  color: #ffffff;
+  font-size: 1.4rem;
+}

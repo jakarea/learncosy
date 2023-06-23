@@ -143,76 +143,54 @@
                                                 @enderror</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="file-upload">Thumbnail <sup class="text-danger">*</sup></label>
-                                            <input type="file" name="thumbnail" id="file-upload"
-                                                class="form-control  @error('thumbnail') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('thumbnail'){{ $message }}
-                                                @enderror</span>
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Thumbnail</label>
                                         </div>
+                                        <div id="image-container" class="mt-0">
+                                            <label for="image-input" id="upload-label">
+                                              <i   class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="thumbnail" id="image-input" style="display: none;">
+                                            <div id="uploaded-image" style="display: none;">
+                                              <img id="uploaded-image-preview" alt="Uploaded Image">
+                                              <i id="close-icon" class="fas fa-times"></i>
+                                            </div> 
+                                            @if ($course->thumbnail)
+                                                <img  src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="thumbnail" class="img-fluid static-image">
+                                                @else 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="thumbnail" class="img-fluid static-image">
+                                            @endif 
+                                          </div>  
+                                          <div class="text-start mt-2">
+                                            <span id="uploaded-image-name"></span>
+                                          </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews"></div>
-                                            <button type="button" class="btn" id="close-button"><i
-                                                    class="fas fa-close"></i></button>
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Banner</label>
                                         </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{-- img preview @S --}}
-                                        <div class="form-group">
-                                            <label for="file-upload">Current Thumbnail: </label>
-                                            <div class="file-prev">
-                                                @if ($course->thumbnail)
-                                                <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}"
-                                                    alt="a" class="img-fluid">
-                                                @else
-                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
-                                                    class="img-fluid">
-                                                @endif
-                                            </div>
-                                        </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="file-upload-2">Banner </label>
-                                            <input type="file" name="banner" id="file-upload-2"
-                                                class="form-control  @error('banner') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('banner'){{ $message }}
-                                                @enderror</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews-2"></div>
-                                            <button type="button" class="btn" id="close-button-2"><i
-                                                    class="fas fa-close"></i></button>
-                                        </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{-- img preview @S --}}
-                                        <div class="form-group">
-                                            <label for="file-upload">Current Banner: </label>
-                                            <div class="file-prev">
-                                                @if ($course->banner)
-                                                <img src="{{asset('assets/images/courses/'.$course->banner)}}" alt="a"
-                                                    class="img-fluid">
-                                                @else
-                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
-                                                    class="img-fluid">
-                                                @endif
-                                            </div>
-                                        </div>
-                                        {{-- img preview @E --}}
+                                        <div id="image-container2" class="mt-0">
+                                            <label for="image-input2" id="upload-label2">
+                                              <i  class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="banner" id="image-input2" style="display: none;">
+                                            <div id="uploaded-image2" style="display: none;">
+                                              <img id="uploaded-image-preview2" alt="Uploaded Image">
+                                              <i id="close-icon2" class="fas fa-times"></i>
+                                            </div> 
+                                            @if ($course->banner)
+                                                <img  src="{{asset('assets/images/courses/'.$course->banner)}}" alt="thumbnail" class="img-fluid static-image2">
+                                                @else 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="thumbnail" class="img-fluid static-image2">
+                                            @endif 
+                                          </div> 
+                                          <div class="text-start mt-2">
+                                            <span id="uploaded-image-name2"></span>
+                                          </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group mt-4">
                                             <label for="short_description">Short Description <sup
                                                     class="text-danger">*</sup></label>
                                             <textarea name="short_description" id="short_description"
@@ -381,42 +359,32 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="file-upload-3">Sample Certificates </label>
-                                            <input type="file" name="sample_certificates" id="file-upload-3"
-                                                class="form-control  @error('sample_certificates') is-invalid @enderror">
-                                            <span class="invalid-feedback">@error('sample_certificates'){{ $message }}
-                                                @enderror</span>
+                                    <div class="col-lg-6"> 
+                                        <div class="form-group mb-0">
+                                            <label for="">Sample Certificates</label>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        {{-- img preview @S --}}
-                                        <div class="file-prev">
-                                            <div id="file-previews-3"></div>
-                                            <button type="button" class="btn" id="close-button-3"><i
-                                                    class="fas fa-close"></i></button>
-                                        </div>
-                                        {{-- img preview @E --}}
-                                    </div>
-                                    <div class="col-md-3">
-                                        {{-- img preview @S --}}
-                                        <div class="form-group">
-                                            <label for="file-upload">Current Certificates: </label>
-                                            <div class="file-prev">
-                                                @if ($course->sample_certificates)
-                                                <img src="{{asset('assets/images/courses/'.$course->sample_certificates)}}"
-                                                    alt="a" class="img-fluid">
-                                                @else
-                                                <img src="{{asset('assets/images/thumbnail.png')}}" alt="a"
-                                                    class="img-fluid">
-                                                @endif
-                                            </div>
-                                        </div>
-                                        {{-- img preview @E --}}
+                                        <div id="image-container3" class="mt-0">
+                                            <label for="image-input3" id="upload-label3">
+                                              <i  class="fas fa-plus"></i>
+                                            </label>
+                                            <input type="file" name="sample_certificates" id="image-input3" style="display: none;">
+                                            <div id="uploaded-image3" style="display: none;">
+                                              <img id="uploaded-image-preview3" alt="Uploaded Image">
+                                              <i id="close-icon3" class="fas fa-times"></i>
+                                            </div> 
+                                            @if ($course->sample_certificates)
+                                                <img  src="{{asset('assets/images/courses/'.$course->sample_certificates)}}" alt="thumbnail" class="img-fluid static-image3">
+                                                @else 
+                                                <img  src="{{asset('assets/images/thumbnail.png')}}" alt="sample_certificates" class="img-fluid static-image3">
+                                            @endif 
+                                               
+                                          </div> 
+                                          <div class="text-start mt-3">
+                                            <span id="uploaded-image-name3"></span>
+                                          </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group mt-4">
                                             <label for="subscription_status">Subscription Status</label>
                                             <select name="subscription_status" id="subscription_status"
                                                 class="form-control @error('subscription_status') is-invalid @enderror">
@@ -490,7 +458,9 @@
     type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/js/tag-handler.js')}}" type="text/javascript"></script>
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/js/image-upload.js')}}"></script>
+<script src="{{asset('assets/js/image-upload-2.js')}}"></script>
+<script src="{{asset('assets/js/image-upload-3.js')}}"></script>
 
 <script>
     $('#categoriess').select2();
