@@ -70,6 +70,7 @@ class MessageController extends Controller
         $reciver_info = Course::with('user')->where('id',$courseId)->first();
         $sender_info = Auth::user();
 
+
         return view('e-learning/course/instructor/message',compact('userId','courseId','reciver_info','sender_info')); 
      } 
 
@@ -133,7 +134,8 @@ class MessageController extends Controller
         ]); 
         $message->save();
        
-        return redirect()->route('get.message',$course_id)->with('message', 'Form submitted successfully!');
+        return redirect()->route('message')->with('message', 'Form submitted successfully!');
+
 
      }
 
