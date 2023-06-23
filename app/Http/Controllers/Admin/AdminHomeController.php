@@ -20,8 +20,6 @@ class AdminHomeController extends Controller
         $users = 0;
         $enrolmentStudents = 0;
 
-
-
         $studentsCount = User::where('user_role', 'student')->count();
         $instructorsCount = User::where('user_role', 'instructor')->count();
         $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
@@ -29,7 +27,7 @@ class AdminHomeController extends Controller
         $enrolments = Checkout::orderBy('id', 'desc')->get();
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates();
-
+        $earningByMonth = $this->getEarningByMonth();
         $courses = Course::get();
         $courseCount = count($courses);
         $allCategories = $courses->pluck('categories');
@@ -63,8 +61,29 @@ class AdminHomeController extends Controller
                 'users',
                 'earningByDates',
                 'totalEarnings',
+                'earningByMonth'
             )
         );
+    }
+
+    private function getEarningByMonth()
+    {
+        $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+        ->get(['subscriptions.start_at', 'subscription_packages.amount']);
+        $monthlySums = array_fill(0, 12, 0);
+
+  // Iterate through the data array
+  foreach ($data as $item) {
+    // Extract the month from the created_at value
+    $createdAt = Carbon::parse($item['created_at']);
+    $month = intval($createdAt->format('m'));
+
+    // Add the amount to the corresponding month's sum
+    $monthlySums[$month - 1] += $item['amount'];
+  }
+
+  return $monthlySums;
+        
     }
 
     private function getTotalEarningViaSubscription()

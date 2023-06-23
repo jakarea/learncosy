@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $enrolments = Checkout::where('instructor_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates($enrolments);
+        $earningByMonth = $this->getEarningByMonth($enrolments);
         $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
         $courses = Course::where('user_id', Auth::user()->id)->get();
@@ -36,7 +37,7 @@ class DashboardController extends Controller
         }
 
         $categories = array_unique($unique_array);
-        return view('dashboard/instructor/dashboard', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates'));
+        return view('dashboard/instructor/dashboard', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
     }
 
     private function getActiveInActiveStudents($data)
@@ -99,14 +100,32 @@ class DashboardController extends Controller
 
         return $earningsByDate;
     }
+   
+    private function getEarningByMonth($data)
+    {
+        $monthlySums = array_fill(0, 12, 0);
+
+  // Iterate through the data array
+  foreach ($data as $item) {
+    // Extract the month from the created_at value
+    $createdAt = Carbon::parse($item['created_at']);
+    $month = intval($createdAt->format('m'));
+
+    // Add the amount to the corresponding month's sum
+    $monthlySums[$month - 1] += $item['amount'];
+  }
+
+  return $monthlySums;
+        
+    }
 
     private function getCourseWisePayments($enrolments)
     {
         $course_wise_payments = [];
         foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->user;
-            $title = substr($enrolment->course->title, 0, 30);
-            if (strlen($enrolment->course->title) > 30) {
+            $title = substr($enrolment->course->title, 0, 20);
+            if (strlen($enrolment->course->title) > 20) {
                 $title .= "...";
             }
             if (isset($course_wise_payments[$title])) {
