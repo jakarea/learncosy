@@ -508,3 +508,11 @@
         }
     }
 }
+
+@include q.responsive(phone) {
+    #uploaded-image-preview3, 
+    #uploaded-image-preview2,
+    .static-image3, .static-image2, #uploaded-image-preview, .static-image{
+        width: 17rem!important;
+    }
+}
