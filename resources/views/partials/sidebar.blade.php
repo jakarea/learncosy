@@ -100,7 +100,7 @@
             <li class="menu-item">
                 <a href="{{ url('course/messages') }}"
                     class="{{ Request::is('course/messages')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-euro-sign"></i>
+                    <i class="fa-regular fa-comments"></i>
                     <span>Messaging</span>
                 </a>
             </li>
@@ -113,7 +113,7 @@
                 </a>
             </li>
             {{-- student menu link @S --}}
-            @elseif(Auth::user()->user_role == 'students' || Auth::user()->user_role == 'student')
+            @elseif(Auth::user()->user_role == 'student' || Auth::user()->user_role == 'students')
             <li class="menu-item">
                 <a href="{{ url('students/dashboard') }}"
                     class="{{ Request::is('students/dashboard')  ? ' active' : '' }} menu-link"> 
@@ -124,14 +124,14 @@
             <li class="menu-item">
                 <a href="{{ url('students/home') }}"
                     class="{{ Request::is('students/home*') || Request::is('students/courses*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-house-circle-check"></i>
+                    <i class="fa-solid fa-house-chimney"></i>
                     <span>Home</span>
                 </a>
             </li> 
             <li class="menu-item">
                 <a href="{{ url('students/dashboard/enrolled') }}"
                     class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} menu-link">
-                    <i class="fa-solid fa-handshake"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span>Enrolled</span>
                 </a>
             </li>

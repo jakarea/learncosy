@@ -169,7 +169,7 @@
                                 <div class="row">  
                                     <div class="col-md-12">
                                         <div class="custom-hr">
-                                            <h5>Login Page Customization </h5>
+                                            <h5>Auth Pages Customization </h5>
                                             <hr>
                                         </div>
                                         <div class="col-md-12">

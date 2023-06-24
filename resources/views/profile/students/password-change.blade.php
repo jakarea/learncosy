@@ -20,7 +20,7 @@
                 <h3> <span>Update </span> your password!</h3>
                 <p>Click the "Save Changes" button to update your password.</p>
                 <!-- change pass form @S -->
-                <form action="{{ route('instructor.password.update',$user->id) }}" method="POST"> 
+                <form action="{{ route('students.password.update',$user->id) }}" method="POST"> 
                  @csrf
                  <div class="form-group">
                     <label for="">Email</label>
