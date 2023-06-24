@@ -136,6 +136,13 @@
                 </a>
             </li>
             <li class="menu-item">
+                <a href="{{ url('/course/messages') }}"
+                    class="{{ Request::is('/course/messages*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-handshake"></i>
+                    <span>Messaging</span>
+                </a>
+            </li>
+            <li class="menu-item">
                 <a href="{{ url('/students/account-management') }}" class="{{ Request::is('students/account-management*')  ? ' active' : '' }} menu-link">
                     <i class="fas fa-gear"></i>
                     <span>Settings</span>
