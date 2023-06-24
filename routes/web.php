@@ -120,6 +120,7 @@ Route::middleware('auth')->prefix('instructor/payments')->controller(HomeControl
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index')->name('message'); 
+    Route::post('/', 'sendMessage')->name('message-send'); 
     Route::get('/send/{id}', 'send')->name('get.message');
     Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
     Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
