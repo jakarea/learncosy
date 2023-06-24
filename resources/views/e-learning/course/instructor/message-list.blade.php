@@ -17,7 +17,9 @@
         <!-- person list @s -->
         <div class="chat-person-list-box">
             <div class="title">
-                <h1>Inbox <span>(2,456)</span></h1>
+                <!-- <h1>Inbox <span>(2,456)</span></h1> -->
+                <h1>Inbox </h1>
+
                 <a href="#"><i class="fas fa-plus"></i></a>
             </div>
 
@@ -71,68 +73,64 @@
                 <div class="media">
                     <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
                     <div class="media-body">
-                        <h5>Rayna Carder</h5>
-                        <p>Last online at 04:45 AM</p>
+                        <h5>{{$senderInfo?  $senderInfo->name:""}}</h5>
+                        <!-- <p>Last online at 04:45 AM</p> -->
                     </div>
                 </div>
                 <!-- chat person -->
 
                 <!-- chat room head icons @s -->
-                <div class="chat-room-head-icons">
+                <!-- <div class="chat-room-head-icons">
                     <ul>
                         <li><a href="#"><i class="fas fa-video"></i></a></li>
                         <li><a href="#"><i class="fas fa-search"></i></a></li>
                         <li><a href="#"><i class="fas fa-star"></i></a></li>
                         <li><a href="#"><i class="fas fa-ellipsis-vertical"></i></a></li>
                     </ul>
-                </div>
+                </div> -->
                 <!-- chat room head icons @e -->
             </div>
             <!-- main chart room @s -->
             <div class="main-chat-room">
                 <!-- chat date @s -->
-                <div class="chat-top-date">
+                <!-- <div class="chat-top-date">
                     <span>Yesterday</span>
-                </div>
+                </div> -->
                 <!-- chat date @s -->
                 <!-- messages @s -->
 
                 
                 <div class="chat-messages-box">
                     <!-- item @s -->
-
                     @foreach ($messages as $message)
-                        <div class="message-item reciver">
+                        <div class="{{ $message->user_id == $userId ? 'message-item  sender' : 'message-item reciver'}}">
                             <p>{{$message->message}}</p>
-
-                            <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
+                            <span>{{$message->created_at}}</span>
                         </div>
                     @endforeach
-                   
-                  
-                    <div class="message-item sender">
-                        <p>nisi ut aliquid ex ea commodi consequatur? <br> Quis autem vel eum iure reprehenderit qui in
-                            ea</p>
-                        <span>Wednesday, December 23th, 2020 at 4.30 AM</span>
-                    </div>
-                    
-                     
                 </div>
                 <!-- messages @e -->
             </div>
             <!-- main chart room @e -->
 
             <!-- message send box @s -->
-            <div class="message-send-box">
-                <div class="form-group">
-                    <textarea rows="3" placeholder="type here..." class="form-control"></textarea>
+            <form id="send" method="POST" action="{{ route('message-send',['sender' => isset($senderInfo)?$senderInfo->id :'']) }}">
+              @csrf
+
+              <div class="message-send-box">
+                    <div class="form-group">
+                        <textarea rows="3" placeholder="type here..." class="form-control"  name="message"></textarea>
+                    </div>
+                    <div class="file-attach-bttns">
+                        <button type="submit" style="display: none;"></button>
+                        <button class="btn btn-primary">
+                           <i class="bi bi-envelope"></i> Send
+                        </button>
+                    </div>
                 </div>
-                <div class="file-attach-bttns">
-                    <a href="#" class="bttn"><i class="fas fa-paper-plane"></i> SEND</a>
-                    <a href="#"><i class="fa-solid fa-face-smile"></i></a>
-                    <a href="#"><i class="fa-solid fa-paperclip"></i></a>
-                </div>
-            </div>
+            </form>
+            <!-- <a href="" onclick="document.getElementById('send').submit();" class="bttn"><i class="fas fa-paper-plane"></i> SEND</a> -->
+
             <!-- message send box @e -->
         </div>
         <!-- chat-main-body box @e -->
