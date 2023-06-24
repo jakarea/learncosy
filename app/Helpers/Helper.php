@@ -417,3 +417,32 @@ if (!function_exists('StudentActitviesProgress')) {
         return $progress;
     }
 }
+
+
+/**
+ * Helper function to studentRadarChart for student with label and progress
+ */
+if (!function_exists('studentRadarChart')) {
+    function studentRadarChart($user_id)
+    {
+        $checkout = \App\Models\Checkout::where('user_id', $user_id)->get();
+        $courseIds = $checkout->pluck('course_id')->toArray();
+        $courses = \App\Models\Course::whereIn('id', $courseIds)->get();
+        $labels = [];
+        $progress = [];
+        $lesson = [];
+        $modules = [];
+        foreach ($courses as $course) {
+            $labels[] = $course->title;
+            $progress[] = intval(StudentActitviesProgress($user_id, $course->id));
+            $lesson[] = \App\Models\Lesson::where('course_id', $course->id)->count();
+            $modules[] = \App\Models\Module::where('course_id', $course->id)->count();
+        }
+        return [
+            'labels' => $labels,
+            'progress' => $progress,
+            'lesson' => $lesson,
+            'modules' => $modules,
+        ];
+    }
+}
