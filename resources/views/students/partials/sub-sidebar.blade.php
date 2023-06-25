@@ -1,7 +1,7 @@
 <ul class="pages-submenu-wrap e-learn-pages-submenu-wrap "> 
     <li>
         <a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students')  ? ' active' : '' }}">
-            <img src="{{ asset('assets/images/course/book.svg') }}" alt="Dash" class="img-fluid me-2"> All Students </a>
+            <i class="fa-solid fa-users me-2"></i> All Students </a>
     </li>
     <li>
         <a href="{{ url('instructor/students/create') }}" class="{{ Request::is('instructor/students/create')  ? ' active' : '' }}">

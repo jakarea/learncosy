@@ -23,7 +23,7 @@
                 <p>Update profile info to see more details.</p>
             </div>
             <div class="form-grp-btn mt-0 ms-auto">
-                <a href="{{ url('/admin/profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
+                <a href="{{ url('admin/profile/change-password') }}" class="btn me-3"><i class="fas fa-key"></i> Change Password</a>
             </div>
         </div>
     </div>
