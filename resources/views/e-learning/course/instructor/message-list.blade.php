@@ -56,10 +56,9 @@
                             </a> 
                         @endforeach
                         
-                       
-                        <!-- person @e -->
+                       {{-- person @e --}}
                     </div>
-                    <!-- all chat person @e -->
+                   {{-- all chat person @e --}}
                 </div>
                
             </div>
