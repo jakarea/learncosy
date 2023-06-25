@@ -116,7 +116,6 @@ Route::middleware('auth')->prefix('instructor/payments')->controller(HomeControl
     Route::get('/platform-fee', 'adminPayment');  
     Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
 });
-
 // message pages routes
 Route::middleware('auth')->prefix('instructor1/course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index')->name('message'); 
