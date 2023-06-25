@@ -118,7 +118,7 @@ Route::middleware('auth')->prefix('instructor/payments')->controller(HomeControl
 });
 
 // message pages routes
-Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
+Route::middleware('auth')->prefix('instructor1/course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index')->name('message'); 
     Route::post('/', 'sendMessage')->name('message-send'); 
     Route::get('/send/{id}', 'send')->name('get.message');
