@@ -35,9 +35,9 @@
                                 <i class="fas fa-ellipsis-vertical"></i>
                             </a>
                         </div>
-                        <!-- person @s -->
-                        
-                        @foreach ($highLightMessages as $message)
+                       {{-- person @s --}}
+                       
+                        @foreach ($highLightMessages as $message) 
                             <div class="media">
                                 <div class="avatar">
                                     <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
@@ -53,13 +53,12 @@
                                         <p>{{$message[0]->message}}.</p>
                                     </div>
                                 </a> 
-                            </div>
-                        @endforeach
+                            </div> 
+                        @endforeach 
                         
-                       
-                        <!-- person @e -->
+                       {{-- person @e --}}
                     </div>
-                    <!-- all chat person @e -->
+                   {{-- all chat person @e --}}
                 </div>
                
             </div>
