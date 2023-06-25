@@ -28,17 +28,7 @@
 
             {{-- chat area @S --}}
             <div class="chat-box-wrap">
-                <div class="message-list-wrap">
-                    {{-- item @S --}}
-
-                    @foreach($messages as $message)
-                        <div class="{{$message->user_id == $userId ? 'message-item sender' : 'message-item reciver'}}">
-                            <p>{{$message->message}}</p>
-                            <span>{{ \Carbon\Carbon::parse($message->created_at)->format('Y-m-d h:i A') }} <i class="fa-regular fa-clock"></i></span>
-                        </div>
-                    @endforeach
-                   
-                </div>
+                
                 <form action="{{route('post.message',$courseId)}}" method="POST"
                     enctype="multipart/form-data">
                     @csrf

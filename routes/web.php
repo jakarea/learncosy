@@ -68,11 +68,16 @@ Route::get('/new-dashboard/messages', function(){
     return view('dashboard/messages');
 });
 
-// login scrren route
+// custom auth screen route
 Route::get('/{username}/login', function(){
-    return view('login/login');
+    return view('custom-auth/login');
 }); 
-
+Route::get('/{username}/register', function(){
+    return view('custom-auth/register');
+});  
+Route::get('/{username}/password/reset', function(){
+    return view('custom-auth/passwords/email');
+});  
 
 Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
@@ -114,6 +119,7 @@ Route::middleware('auth')->prefix('instructor/payments')->controller(HomeControl
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {  
     Route::get('/', 'index')->name('message'); 
+    Route::post('/', 'sendMessage')->name('message-send'); 
     Route::get('/send/{id}', 'send')->name('get.message');
     Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
     Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
