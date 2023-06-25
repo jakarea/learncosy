@@ -32,13 +32,13 @@
 			<div class="col-12 col-md-12 col-lg-6 px-0">
 				<div class="header-start-menu-wrapper">
 					{{-- header navbar @S --}}
-					<div class="header-navbar-wrap">
+					{{-- <div class="header-navbar-wrap">
 						<ul class="head-navbar">
 							<li class="link-item">
 								<a href="{{ url('/') }}" class="link-click">Dashboard</a>
 							</li>
 						</ul>
-					</div>
+					</div> --}}
 					{{-- header navbar @E --}}
 					{{-- header right menu @S --}}
 					<div class="header-right-icon-wrap d-none d-sm-block">
