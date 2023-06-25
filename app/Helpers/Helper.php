@@ -319,6 +319,7 @@ if (!function_exists('modulesetting')) {
     {
         $request = app('request');
         $username = request()->segments()[0];
+
         if (Auth::check() && Auth::user()->user_role == 'instructor') {
             $username = Auth::user()->username;
         }
@@ -327,23 +328,35 @@ if (!function_exists('modulesetting')) {
             return null;
         }
 
-        $user = \App\Models\User::where('username', $username)->first();
-
-       $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
-        if ($setting) {
-            $setting->value = json_decode($setting->value);
-            if ( $key == 'logo' ) {
-                return $setting->logo ?? null;
-            }
-            elseif ( $key == 'image' ) {
-                return $setting->image ?? null;
-            }
-            elseif ( $key == 'lp_bg_image' ) {
-                return $setting->lp_bg_image ?? null;
+        if ( $username ){
+            $user = \App\Models\User::where('username', $username)->first();
+            if( $user ) {
+                $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+                if ($setting) {
+                    $setting->value = json_decode($setting->value);
+                    if ( $key == 'logo' ) {
+                        return $setting->logo ?? null;
+                    }
+                    elseif ( $key == 'image' ) {
+                        return $setting->image ?? null;
+                    }
+                    elseif ( $key == 'lp_bg_image' ) {
+                        return $setting->lp_bg_image ?? null;
+                    }
+                    else {
+                        return $setting->value->$key ?? null;
+                    }
+                }
+                else {
+                    return back()->with('error', 'Instructor module setting not found!');
+                }
             }
             else {
-                return $setting->value->$key ?? null;
+                return back()->with('error', 'Instructor not found!');
             }
+        }
+        else {
+            return back()->with('error', 'Instructor not found!');
         }
         return null;
     }
