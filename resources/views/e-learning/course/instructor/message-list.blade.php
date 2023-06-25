@@ -35,26 +35,26 @@
                                 <i class="fas fa-ellipsis-vertical"></i>
                             </a>
                         </div>
-                       {{-- person @s --}}
-                       
-                        @foreach ($highLightMessages as $message) 
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
-                                    <i class="fas fa-circle"></i>
-                                </div>
-
-                                <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <h5>{{$message[0]->user->name}}</h5> 
-                                            <span>2m ago</span>
-                                        </div>
-                                        <p>{{$message[0]->message}}.</p>
+                        <!-- person @s -->
+                        
+                        @foreach ($highLightMessages as $message)
+                           <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
+                                        <i class="fas fa-circle"></i>
                                     </div>
-                                </a> 
-                            </div> 
-                        @endforeach 
+
+                                        <div class="media-body">
+                                            <div class="name">
+                                                <h5>{{$message[0]->user->name}}</h5> 
+                                                <span>2m ago</span>
+                                            </div>
+                                            <p>{{$message[0]->message}}.</p>
+                                        </div>
+                                </div>
+                            </a> 
+                        @endforeach
                         
                        {{-- person @e --}}
                     </div>

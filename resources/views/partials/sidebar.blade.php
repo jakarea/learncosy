@@ -98,8 +98,8 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('course/messages') }}"
-                    class="{{ Request::is('course/messages')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('instructor1/course/messages') }}"
+                    class="{{ Request::is('instructor1/course/messages')  ? ' active' : '' }} menu-link">
                     <i class="fa-regular fa-comments"></i>
                     <span>Messaging</span>
                 </a>
@@ -133,6 +133,13 @@
                     class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Enrolled</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url('/instructor1/course/messages') }}"
+                    class="{{ Request::is('/instructor1/course/messages*')  ? ' active' : '' }} menu-link">
+                    <i class="fa-solid fa-handshake"></i>
+                    <span>Messaging</span>
                 </a>
             </li>
             <li class="menu-item">
