@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Instructor;
 use App\Http\Controllers\Controller;
 use App\Models\Checkout;
 use App\Models\Course;
+use App\Models\User;
 use Auth;
+use App\Models\Message;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -37,7 +39,30 @@ class DashboardController extends Controller
         }
 
         $categories = array_unique($unique_array);
-        return view('dashboard/instructor/dashboard', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
+
+
+       
+        $userId = Auth::user()->id;
+        $highLightMessages = Message::where('receiver_id',$userId)->orWhere('user_id',$userId)->get()->groupBy(function($data) use ($userId){
+            if( $data->receiver_id == $userId){
+                return $data->user_id;
+            }
+            if( $data->user_id == $userId){
+                return $data->receiver_id;
+            }
+        });
+        foreach ($highLightMessages as $messages) {
+            foreach( $messages as $message){
+                if($message->receiver_id == $userId ){
+                    $message['user'] = User::find($message->user_id );
+                }else{
+                    $message['user'] = User::find($message->receiver_id );
+                }
+            }
+        }
+        $messages = $highLightMessages->first() ? $highLightMessages->first() : [];
+
+        return view('dashboard/instructor/dashboard', compact('categories', 'highLightMessages','courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
     }
 
     private function getActiveInActiveStudents($data)

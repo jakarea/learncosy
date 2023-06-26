@@ -113,6 +113,53 @@
                     @endif
                 </div>
             </div>
+            <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6">
+                <!-- message box @s -->
+                <div class="card-box message-main-box">
+                    <!-- header @s -->
+                    <div class="media headers">
+                        <div class="media-body">
+                            <h5>Messages</h5>
+                            <p>New messages</p>
+                        </div>
+                        <!-- <a href="#" class="common-bttn">+New Messages</a> -->
+                    </div>
+                    <!-- header @e -->
+
+                    <!-- messages list box @s -->
+                    <div class="messages-items-wrap">
+                        @foreach ($highLightMessages as $message)
+                          <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
+                            <div class="messages-item">
+                                
+                                <div class="media">
+                                    <div class="avatar">
+                                        @if($message[0]->user->avatar == null)
+                                           <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
+                                        @else
+                                            @if($message[0]->user->user_role == 'student')
+                                                <img src="{{ asset('assets/images/students/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @else
+                                                <img src="{{ asset('assets/images/instructor/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @endif
+                                        @endif
+                                        
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{$message[0]->user->name}} <i class="fa-solid fa-check-double"></i></h5>
+                                        <p>{{$message[0]->message}}</p>
+                                    </div>
+                                </div>
+                                <h6>  {{ Carbon\Carbon::parse($message[0]->created_at)->diffForHumans() }}</h6>
+                            </div>
+                          </a>
+                        @endforeach
+                    </div>
+                    <!-- messages list box @e -->
+                </div>
+                <!-- message box @e -->
+            </div>
         </div>
     </div>
 </main>

@@ -131,76 +131,41 @@
                     <div class="media headers">
                         <div class="media-body">
                             <h5>Messages</h5>
-                            <p>Lorem ipsum dolor sit amet</p>
+                            <p>New messages</p>
                         </div>
-                        <a href="#" class="common-bttn">+New Messages</a>
+                        <!-- <a href="#" class="common-bttn">+New Messages</a> -->
                     </div>
                     <!-- header @e -->
 
                     <!-- messages list box @s -->
                     <div class="messages-items-wrap">
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle"></i>
+                        @foreach ($highLightMessages as $message)
+                          <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
+                            <div class="messages-item">
+                                
+                                <div class="media">
+                                    <div class="avatar">
+                                        @if($message[0]->user->avatar == null)
+                                           <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
+                                        @else
+                                            @if($message[0]->user->user_role == 'student')
+                                                <img src="{{ asset('assets/images/students/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @else
+                                                <img src="{{ asset('assets/images/instructor/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @endif
+                                        @endif
+                                        
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{$message[0]->user->name}} <i class="fa-solid fa-check-double"></i></h5>
+                                        <p>{{$message[0]->message}}</p>
+                                    </div>
                                 </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
+                                <h6>  {{ Carbon\Carbon::parse($message[0]->created_at)->diffForHumans() }}</h6>
                             </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
-                            </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser </h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
-                            </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
+                          </a>
+                        @endforeach
                     </div>
                     <!-- messages list box @e -->
                 </div>
