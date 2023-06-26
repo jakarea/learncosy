@@ -41,14 +41,24 @@
                            <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
                                 <div class="media">
                                     <div class="avatar">
-                                        <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
+                                        @if($message[0]->user->avatar == null)
+                                           <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
+                                        @else
+                                            @if($message[0]->user->user_role == 'student')
+                                                <img src="{{ asset('assets/images/students/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @else
+                                                <img src="{{ asset('assets/images/instructor/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                                            @endif
+                                        @endif
+                                        
                                         <i class="fas fa-circle"></i>
                                     </div>
 
                                         <div class="media-body">
-                                            <div class="name">
+                                            <div class="name"> 
                                                 <h5>{{$message[0]->user->name}}</h5> 
-                                                <span>2m ago</span>
+                                                <span> {{ Carbon\Carbon::parse($message[0]->created_at)->diffForHumans() }} </span>
+
                                             </div>
                                             <p>{{$message[0]->message}}.</p>
                                         </div>
@@ -70,7 +80,15 @@
             <div class="chat-room-head">
                 <!-- chat person -->
                 <div class="media">
-                    <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
+                    @if($senderInfo->avatar == null)
+                        <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
+                    @else
+                        @if($senderInfo->user_role == 'student')
+                            <img src="{{ asset('assets/images/students/'.$senderInfo->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                        @else
+                            <img src="{{ asset('assets/images/instructor/'.$senderInfo->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                        @endif
+                    @endif
                     <div class="media-body">
                         <h5>{{$senderInfo?  $senderInfo->name:""}}</h5>
                         <!-- <p>Last online at 04:45 AM</p> -->
@@ -104,7 +122,7 @@
                     @foreach ($messages as $message)
                         <div class="{{ $message->user_id == $userId ? 'message-item  sender' : 'message-item reciver'}}">
                             <p>{{$message->message}}</p>
-                            <span>{{$message->created_at}}</span>
+                            <span> {{ Carbon\Carbon::parse($message->created_at)->diffForHumans() }} </span>
                         </div>
                     @endforeach
                 </div>

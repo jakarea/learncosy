@@ -16,7 +16,6 @@
         <div class="row">
             @foreach( getSubscriptionPackage() as $package )
                 @php 
-                    <!-- // convert json to array -->
                     $package_featurelist = json_decode($package->features);
                 @endphp
             <div class="col-md-4">
