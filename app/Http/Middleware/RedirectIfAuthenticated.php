@@ -23,7 +23,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::guard($guard)->user();
+
+                if ($user->user_role == 'student') {
+                    return redirect('/students/dashboard');
+                } elseif ($user->user_role == 'admin') {
+                    return redirect('/admin/dashboard');
+                } elseif ($user->user_role == 'instructor') {
+                    // for live domain $user->username
+                    return redirect()->to('http://teacher1.' . env('APP_DOMAIN') . '/instructor/dashboard');
+                }
             }
         }
 

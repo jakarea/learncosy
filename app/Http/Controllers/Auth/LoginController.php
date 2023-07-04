@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Auth;
+use Hash;
 class LoginController extends Controller
 {
     /*
@@ -36,5 +39,51 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Override the authenticated method from AuthenticatesUsers trait
+     */
+    // protected function redirectTo()
+    // {
+    //     $user = $this->guard()->user();
+
+    //     if ($user->user_role == 'student') {
+    //         return redirect('/students/dashboard');
+    //     } elseif ($user->user_role == 'admin') {
+    //         return redirect('/admin/dashboard');
+    //     } elseif ($user->user_role == 'instructor') {
+    //         return redirect('/instructor/dashboard');
+    //     }
+
+    //     return $this->redirectTo;
+    // }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+
+                if ($user->user_role == 'admin') {
+                    return redirect('/admin/dashboard');
+                } elseif ($user->user_role == 'instructor') {
+                    // return redirect('/instructor/dashboard');
+                    // teacher1.learncosy.local
+                    // for live domain $user->username
+                    return redirect()->to('http://teacher1.' . env('APP_DOMAIN') . '/instructor/dashboard');
+                } elseif ($user->user_role == 'student') {
+                    return redirect('/students/dashboard');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Invalid password');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Invalid email');
+        }
     }
 }

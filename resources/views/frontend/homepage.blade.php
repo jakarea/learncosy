@@ -2,11 +2,11 @@
 @section('title') Guest Home - Page @endsection
 
 {{-- page style @S --}}
-@section('style') 
+@section('style')
 <style>
     .bundle-course-head h2{
         color: {{ modulesetting('primary_color') }}
-    } 
+    }
     .course-item-box .course-actions .bttns a:first-child{
         color: {{ modulesetting('primary_color') }};
         border-color:  {{ modulesetting('primary_color') }}
@@ -34,15 +34,15 @@
         <div class="row align-items-center">
             <div class="col-lg-6  ">
                 <div class="hero-txt-wrap">
-                {{ modulesetting('banner_title') }} 
+                {{ modulesetting('banner_title') }}
                     <h1> {{ modulesetting('banner_title') ?? 'Deep drive into captivating lessons and hands-on exercises.' }} </h1>
                     <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }} </p>
                     <div class="hero-bttn">
                         <a href="{{url('/login')}}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                     </div>
-                    @php 
+                    @php
                         $request = app('request');
-                        $username = request()->segments()[0];
+                        $username = 'instructor';//request()->segments()[0];
                         $user = \App\Models\User::where('username', $username)->first();
                         $countStudent = \App\Models\Checkout::where('instructor_id', $user->id)->count();
                     @endphp
@@ -80,27 +80,27 @@
                             <input type="text" placeholder="Search with title" name="title" id="title" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="categories">Category</label>  
-                            @php 
+                            <label for="categories">Category</label>
+                            @php
                                 $categoriesg = isset($_GET['categories']) ? $_GET['categories'] : '';
                             @endphp
                             <select name="categories" id="categories" class="form-control">
-                                <option value="">Select Below</option> 
-                                @foreach ($instructors->courses as $course)   
+                                <option value="">Select Below</option>
+                                @foreach ($instructors->courses as $course)
                                     @foreach (explode(",",$course->categories) as $categ)
-                                        <option value="{{$categ}}" {{ $categoriesg == $categ ? 'selected' : ''}}>{{$categ}}</option> 
+                                        <option value="{{$categ}}" {{ $categoriesg == $categ ? 'selected' : ''}}>{{$categ}}</option>
                                     @endforeach
                                 @endforeach
                             </select>
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="form-group">
-                            <label for="subscription_status">Subscription</label> 
-                            @php 
+                            <label for="subscription_status">Subscription</label>
+                            @php
                                 $subscriptionStatus = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
-                            @endphp 
+                            @endphp
                             <select name="subscription_status" id="subscription_status" class="form-control">
-                                <option value="">Select Below</option> 
+                                <option value="">Select Below</option>
                                 <option value="one_time" {{ $subscriptionStatus == 'one_time' ? 'selected' : ''}}>One Time</option>
                                 <option value="monthly" {{ $subscriptionStatus == 'monthly' ? 'selected' : ''}}>Monthly</option>
                                 <option value="anully" {{ $subscriptionStatus == 'anully' ? 'selected' : ''}}>Anully</option>
@@ -170,9 +170,9 @@
                                             @elseif(count($course->reviews) <= 0)
                                             No review yet!
                                             @endif
-                                        </p> 
+                                        </p>
                                     </div>
-                                    <div class="bttns"> 
+                                    <div class="bttns">
                                         <a href="{{url($instructors->username.'/courses/'.$course->slug) }}">More
                                             Details</a>
                                         <a href="{{url('/students/dashboard/enrolled')}}" style="background: {{ modulesetting('secondary_color') }}">Enroll Now!</a>
@@ -308,6 +308,6 @@
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script') 
+@section('script')
 @endsection
 {{-- page script @E --}}

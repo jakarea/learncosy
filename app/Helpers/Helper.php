@@ -318,7 +318,9 @@ if (!function_exists('modulesetting')) {
     function modulesetting($key)
     {
         $request = app('request');
-        $username = request()->segments()[0];
+        $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
+        $segments = explode('.', $subdomain); // Split the host into segments
+        $username = 'instructor';//$segments[0]; // Get the first segment as the subdomain
 
         if (Auth::check() && Auth::user()->user_role == 'instructor') {
             $username = Auth::user()->username;
