@@ -29,7 +29,7 @@
         <div class="col-lg-4">
             <div class="change-password-form w-100 customer-profile-info">
                 <div class="text-end">
-                    <a href="{{url('instructor/students/'.$student->id.'/edit')}}">
+                    <a href="{{url('admin/students/'.$student->id.'/edit')}}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </a>
                 </div> 
