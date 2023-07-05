@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Learncosy</title>
+    <title>New Bundle Course Enrollemnt</title>
     <style>
         /* Reset styles */
         body, body * {
@@ -24,7 +24,7 @@
             text-align: center;
             padding: 1rem;
             width: 100%;
-            background-color: #5a4b4b;  /* primary_color variable */
+            background-color: #5a4b4b; 
           }
           .main-table tr th h1{
             font-size: 2rem;
@@ -106,11 +106,8 @@
                             </a>
                         </th>
                         <th>
-                            <h1>Welcomr Mr. {{ $user->name }}</h1>
-                        </th>
-                        <th>
-                            <p>{{$user->created_at->diffForHumans()}}</p>
-                        </th>
+                            <h1>New Bundle Course Enrollment!</h1>
+                        </th> 
                     </tr>
                 </table>
             </th>
@@ -120,17 +117,16 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="body-table">
                     <tr>
                         <td>
-                            <h4><span>Thank you for joining Learncosy. We're excited to have you as a new member.Here are some important details and instructions for getting started:</span></h4>
+                            <h4><span>Thank you for purchasing a new Bundle course at Learncosy. We're excited to have you as a new student.Here are some important details and instructions for getting started to your course:</span></h4>
                         </td>
                     </tr> 
                     <tr>
                         <td>
-                            <h3>Account Information:</h3> 
+                            <h3>Course Information:</h3> 
                             <ul>
-                                <li><strong>Email:</strong> {{ $user->email }}</li> 
-                                <li><strong>Phone:</strong> {{ $user->phone }}</li> 
-                                <li><strong>Registered as:</strong> {{ $user->user_role }}</li> 
-                                
+                                <li><strong>Name:</strong> {{ $course->title }}</li> 
+                                <li><strong>Price:</strong> {{ $course->price }}</li>  
+                                <li><strong>Short Description:</strong> {{ $course->short_description }}</li>   
                             </ul>
                         </td>
                     </tr>
@@ -138,12 +134,7 @@
                         <td>
                             <p style="margin-top: 1rem">Thank you again for choosing Learncosy. We hope you have a great experience!</p>
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center">
-                            <h5>Joined at: {{$user->created_at}}</h5>
-                        </td>
-                    </tr>
+                    </tr> 
                 </table>
             </td>
         </tr>

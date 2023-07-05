@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Learncosy</title>
+    <title>New Meesage</title>
     <style>
         /* Reset styles */
         body, body * {
@@ -24,7 +24,7 @@
             text-align: center;
             padding: 1rem;
             width: 100%;
-            background-color: #5a4b4b;  /* primary_color variable */
+            background-color: #5a4b4b; 
           }
           .main-table tr th h1{
             font-size: 2rem;
@@ -106,11 +106,8 @@
                             </a>
                         </th>
                         <th>
-                            <h1>Welcomr Mr. {{ $user->name }}</h1>
-                        </th>
-                        <th>
-                            <p>{{$user->created_at->diffForHumans()}}</p>
-                        </th>
+                            <h1>You Have a new message!</h1>
+                        </th> 
                     </tr>
                 </table>
             </th>
@@ -120,30 +117,9 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="body-table">
                     <tr>
                         <td>
-                            <h4><span>Thank you for joining Learncosy. We're excited to have you as a new member.Here are some important details and instructions for getting started:</span></h4>
+                            <h4><span>You have recived a new message!</span></h4>
                         </td>
-                    </tr> 
-                    <tr>
-                        <td>
-                            <h3>Account Information:</h3> 
-                            <ul>
-                                <li><strong>Email:</strong> {{ $user->email }}</li> 
-                                <li><strong>Phone:</strong> {{ $user->phone }}</li> 
-                                <li><strong>Registered as:</strong> {{ $user->user_role }}</li> 
-                                
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="margin-top: 1rem">Thank you again for choosing Learncosy. We hope you have a great experience!</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center">
-                            <h5>Joined at: {{$user->created_at}}</h5>
-                        </td>
-                    </tr>
+                    </tr>   
                 </table>
             </td>
         </tr>

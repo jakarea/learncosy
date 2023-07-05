@@ -120,6 +120,8 @@ class SubscriptionController extends Controller
             'end_at' => $ends_at,
         ]);
 
+        // instructor packge subscribe mail
+
         // return back with success message
         return redirect()->route('admin.dashboard')->with('success', 'Subscription created successfully');
 

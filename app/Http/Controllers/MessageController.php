@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Course;
 use App\Models\User;
+use App\Mail\MessageSent;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -125,7 +127,7 @@ class MessageController extends Controller
         ]);
 
         $userId = Auth::user()->id;
-        $receiverId = Course::with('user')->where('id',$course_id)->first();
+        $receiverId = Course::with('user')->where('id',$course_id)->first(); 
         $message = new Message([
             'receiver_id' => $receiverId->user->id, 
             'course_id'   => $course_id,
@@ -133,6 +135,9 @@ class MessageController extends Controller
             'message'     => $request->message
         ]); 
         $message->save();
+
+         // Send email
+         Mail::to($receiverId->user->email)->send(new MessageSent($message));
        
         return redirect()->route('message')->with('message', 'Form submitted successfully!');
 

@@ -8,6 +8,8 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Course;
 use App\Models\Checkout;
+use App\Mail\BundleCourseEnroll;
+use Illuminate\Support\Facades\Mail;
 use App\Models\BundleCourse;
 class CheckoutBundleController extends Controller
 {
@@ -127,6 +129,10 @@ class CheckoutBundleController extends Controller
             }
 
             if ($checkout) {
+
+                // Send email
+                Mail::to(auth()->user()->email)->send(new BundleCourseEnroll($bundle));
+
                 return redirect()->route('students.show.courses', $selectedcourse[0]->slug)->with('success', 'You have successfully enrolled in this course');
             } else {
                 return redirect()->route('students.show.courses', $selectedcourse[0]->slug)->with('error', 'Something went wrong');
