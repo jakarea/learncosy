@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Providers\RouteServiceProvider; 
 use App\Models\User;
 use Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str; 
+use App\Mail\UserCreated;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -83,22 +84,14 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
-        ]);
-
-        // email info
-        $email_data = array(
-            'name' => $data['name'],
-            'user_role' => $data['user_role'],
-            'email' => $data['email'],
-        );
+        ]); 
  
-        // Mail::send('emails/welcome', $email_data, function ($message) use ($email_data) {
-        //     $message->to($email_data['email'], $email_data['name'])
-        //         ->subject('Welcome to LearnCosy')
-        //         ->from('learncosy@edu.net', 'Learncosy');
-        // });
+        
+        
+         // Send the registration email
+        Mail::to($user->email)->send(new UserCreated($user));
    
         return $user;
-
     }
+
 }

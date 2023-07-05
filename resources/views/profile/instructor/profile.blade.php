@@ -79,6 +79,7 @@
                     <label for="" class="mb-0"><i class="fa-solid fa-phone"></i> Phone: </label>
                     <p>{{$user->phone ? $user->phone : '--'}}</p>
                 </div> 
+               
                 @php $social_links = explode(",",$user->social_links) @endphp
                 @foreach($social_links as $key => $social_link)
                 <div class="form-group my-0">
@@ -86,6 +87,9 @@
                     <p>{{$social_link ? $social_link : '--'}}</p>
                 </div>
                 @endforeach 
+                <div class="form-group mb-0"> 
+                    <p><a href="{{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}" target="_blank"> {{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}</a></p>
+                </div> 
             </div>
         </div>
         <div class="col-lg-8">

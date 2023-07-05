@@ -79,16 +79,18 @@
         <div class="chat-main-body-box">
             <div class="chat-room-head">
                 <!-- chat person -->
-                <div class="media">
-                    @if($senderInfo->avatar == null)
+                <div class="media"> 
+                   @if ($senderInfo)
+                        @if($senderInfo->avatar == null)
                         <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
                     @else
                         @if($senderInfo->user_role == 'student')
                             <img src="{{ asset('assets/images/students/'.$senderInfo->avatar) }}" alt="{{Auth()->user()->name}}"/>
                         @else
-                            <img src="{{ asset('assets/images/instructor/'.$senderInfo->avatar) }}" alt="{{Auth()->user()->name}}"/>
-                        @endif
-                    @endif
+                       <img src="{{ asset('assets/images/instructor/'.$senderInfo->avatar) }}" alt="{{Auth()->user()->name}}"/>
+                   @endif
+               @endif
+                   @endif
                     <div class="media-body">
                         <h5>{{$senderInfo?  $senderInfo->name:""}}</h5>
                         <!-- <p>Last online at 04:45 AM</p> -->

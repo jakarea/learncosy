@@ -8,6 +8,9 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Mail\ProfileUpdated;
+use App\Mail\PasswordChanged;
+use Illuminate\Support\Facades\Mail;
 class ProfileManagementController extends Controller
 {
 
@@ -78,6 +81,10 @@ class ProfileManagementController extends Controller
        }
 
         $user->save();
+
+        // Send email
+        Mail::to($user->email)->send(new ProfileUpdated($user));
+
         return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
@@ -86,6 +93,7 @@ class ProfileManagementController extends Controller
     {    
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
+
         return view('profile/instructor/password-change',compact('user'));  
     }
 
@@ -102,6 +110,10 @@ class ProfileManagementController extends Controller
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
         $user->save();
+
+        // Send email
+        Mail::to($user->email)->send(new PasswordChanged($user));
+
         return redirect()->route('instructor.profile')->with('success', 'Your password has been changed successfully!');
     }
 }
