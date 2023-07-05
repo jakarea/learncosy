@@ -746,6 +746,10 @@
         margin-left: 0!important;
     }
 
+    .profile-update-page .profile-form .form-group .warning-txt{
+        margin-left: 0;
+    }
+
 }
 
 @include q.responsive(landphone) {

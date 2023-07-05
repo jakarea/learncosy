@@ -66,8 +66,9 @@
         color: {{ modulesetting('secondary_color') }}!important;
       }
       .submit-bttns .btn-reset:hover{
-        background: {{ modulesetting('secondary_color') }}!important;
+        background: {{ modulesetting('secondary_color') }}!important; 
       }
+      .submit-bttns .btn-reset:hover,
       .productss-list-box table tr td .fas{
         color: #fff!important
       }

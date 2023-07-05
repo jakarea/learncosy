@@ -722,6 +722,9 @@
   .profile-update-page .form-check {
     margin-left: 0 !important;
   }
+  .profile-update-page .profile-form .form-group .warning-txt {
+    margin-left: 0;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .user-password-chnage .password-change-txt h1 {

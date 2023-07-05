@@ -202,13 +202,16 @@ class StudentHomeController extends Controller
             $course_reviews->star = $request->star;
             $course_reviews->save();
         }else{
-            $review = new CourseReview([
-                'user_id'   => $userId,  
-                'course_id' => $course->id,
-                'star'      => $request->star,
-                'comment'   => $request->comment,  
-            ]);  
-            $review->save();
+            if ($request->comment) {
+                $review = new CourseReview([
+                    'user_id'   => $userId,  
+                    'course_id' => $course->id,
+                    'star'      => $request->star,
+                    'comment'   => $request->comment,  
+                ]);  
+                $review->save();
+            }
+            
         }
         
         return redirect()->route('students.show.courses',$slug)->with('message', 'comment submitted successfully!');
