@@ -88,7 +88,10 @@
                 </div>
                 @endforeach 
                 <div class="form-group mb-0"> 
-                    <p><a href="{{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}" target="_blank"> {{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}</a></p>
+                    @if ($user->username)
+                        <p><a href="{{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}" target="_blank"> {{ 'https://'.$user->username.'.'.env('APP_DOMAIN') }}</a></p>
+                    @endif
+                   
                 </div> 
             </div>
         </div>

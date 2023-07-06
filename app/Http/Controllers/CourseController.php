@@ -8,6 +8,8 @@ use App\Models\CourseReview;
 use App\Models\Module;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\CourseUpdated;
+use Illuminate\Support\Facades\Mail;
 use DataTables;
 use Auth;
 use File;
@@ -321,6 +323,10 @@ class CourseController extends Controller
         }
 
         $course->save();
+
+        // Send email
+        // Mail::to('email-here')->send(new CourseUpdated($course));
+        // students email who are enrolled with this course
 
         return redirect('instructor/courses')->with('success', 'Course Updated!');
     }

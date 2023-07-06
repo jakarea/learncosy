@@ -7,6 +7,9 @@ use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
+use App\Mail\PackageSubscribe;
+use App\Mail\PackageSubscribeCancle;
+use Illuminate\Support\Facades\Mail;
 use App\Models\SubscriptionPackage;
 
 class SubscriptionController extends Controller
@@ -121,6 +124,7 @@ class SubscriptionController extends Controller
         ]);
 
         // instructor packge subscribe mail
+        Mail::to(auth()->user()->email)->send(new PackageSubscribe($package));
 
         // return back with success message
         return redirect()->route('admin.dashboard')->with('success', 'Subscription created successfully');
@@ -136,7 +140,10 @@ class SubscriptionController extends Controller
      */
     public function cancel()
     {
-        //
+     
+        // instructor packge cancel mail
+        Mail::to(auth()->user()->email)->send(new PackageSubscribeCancle());
+
         return redirect()->route('admin.dashboard')->with('error', 'Subscription cancelled');
     }
 
