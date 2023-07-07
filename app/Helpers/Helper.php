@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\User;
 use Stripe\Stripe;
-use Vimeo\Laravel\Facades\Vimeo;
 use Vimeo\Vimeo as VimeoSDK;
+use Vimeo\Laravel\Facades\Vimeo;
 /**
  * Helper function to get SubscriptionPackage
  */
@@ -10,7 +11,7 @@ if (!function_exists('getSubscriptionPackage')) {
     function getSubscriptionPackage()
     {
         // subscription package
-
+        
         return \App\Models\SubscriptionPackage::where('status', 'active')->get();
     }
 }
@@ -53,7 +54,7 @@ if (!function_exists('isSubscribed')) {
     function isSubscribed($package_id)
     {
         $user = auth()->user();
-
+        
         if ($user) {
             // Retrieve the user's subscription based on instructor_id
             $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->first();
@@ -86,13 +87,13 @@ if (!function_exists('isConnectedWithStripe')) {
         $user = auth()->user();
         $account = null;
         $status = '';
-
+    
         if ($user->stripe_secret_key && $user->stripe_public_key) {
             Stripe::setApiKey($user->stripe_secret_key);
             // Retrieve the user's stripe data based on user_id
             $account = \Stripe\Account::retrieve($user->stripe_account_id);
             $status = 'Connected';
-
+    
             if (!$account) {
                 // Stripe account not found, show alert or redirect
                 $status = 'Not Connected';
@@ -103,9 +104,9 @@ if (!function_exists('isConnectedWithStripe')) {
             $status = 'Not Connected';
             return [$account, $status];
         }
-
+    
         return [$account, $status];
-    }
+    }    
 }
 
 /**
@@ -150,10 +151,10 @@ if (!function_exists('isVimeoConnected')) {
         $user = auth()->user();
         $vimeoData = null;
         $status = '';
-
+    
         if ($user) {
             $vimeoData = \App\Models\VimeoData::where('user_id', $user->id)->first();
-
+    
             if (!$vimeoData) {
                 // Vimeo data not found, show alert or redirect
                 $status = 'Not Connected';
@@ -161,7 +162,7 @@ if (!function_exists('isVimeoConnected')) {
             } else {
                 // Check vimeo data is connected or not to Vimeo API in real-time
                 $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
-
+                
                 try {
                     $response = $vimeo->request('/me');
                     $accountName = $response['body']['name'];
@@ -180,7 +181,7 @@ if (!function_exists('isVimeoConnected')) {
             $status = 'Not Connected';
             return [$vimeoData, $status];
         }
-
+    
         return [$vimeoData, $status, $accountName];
     }
 }
@@ -254,7 +255,7 @@ if (!function_exists('subscriptionCostByInstructor')) {
 
         $amount = 0;
 
-        if( $subscriptionCost->count() > 0 ) {
+        if( $subscriptionCost->count() > 0 ) { 
             $amount = \App\Models\SubscriptionPackage::where('id', $subscriptionCost->pluck('name'))->sum('amount');
         }
         return $amount;
@@ -320,48 +321,38 @@ if (!function_exists('modulesetting')) {
         $request = app('request');
         $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
         $segments = explode('.', $subdomain); // Split the host into segments
-        $username = 'instructor';//$segments[0]; // Get the first segment as the subdomain
+        $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
         if (Auth::check() && Auth::user()->user_role == 'instructor') {
-            $username = Auth::user()->username;
-        }
+            $user = User::where('username', $sub_domain)->first();
 
-        if (Auth::check() && Auth::user()->user_role == 'admin') {
+            if (!$user) {
+                // Redirect the user to set up their username
+                return redirect()->route('instructor.dashboard.index');
+            }
+
+            $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+
+            if ($setting) {
+                $setting->value = json_decode($setting->value);
+
+                if ($key == 'logo') {
+                    return $setting->logo ?? null;
+                } elseif ($key == 'image') {
+                    return $setting->image ?? null;
+                } elseif ($key == 'lp_bg_image') {
+                    return $setting->lp_bg_image ?? null;
+                } else {
+                    return $setting->value->$key ?? null;
+                }
+            }
+        } elseif (Auth::check() && Auth::user()->user_role == 'admin') {
             return null;
         }
 
-        if ( $username ){
-            $user = \App\Models\User::where('username', $username)->first();
-            if( $user ) {
-                $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
-                if ($setting) {
-                    $setting->value = json_decode($setting->value);
-                    if ( $key == 'logo' ) {
-                        return $setting->logo ?? null;
-                    }
-                    elseif ( $key == 'image' ) {
-                        return $setting->image ?? null;
-                    }
-                    elseif ( $key == 'lp_bg_image' ) {
-                        return $setting->lp_bg_image ?? null;
-                    }
-                    else {
-                        return $setting->value->$key ?? null;
-                    }
-                }
-                else {
-                    return back()->with('error', 'Instructor module setting not found!');
-                }
-            }
-            else {
-                return back()->with('error', 'Instructor not found!');
-            }
-        }
-        else {
-            return back()->with('error', 'Instructor not found!');
-        }
         return null;
     }
+
 }
 
 
