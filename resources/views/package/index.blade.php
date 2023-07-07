@@ -11,12 +11,12 @@
 @section('content')
 <main class="subscription page">
     <div class="subscription-package col-12">
-        @include('partials.session-message')
+        @include('partials.session-message') 
         <div class="row justify-content-center">
             @foreach( getSubscriptionPackage() as $package )
             @php
             $package_featurelist = json_decode($package->features);
-            @endphp
+            @endphp 
             <div class="col-lg-5 col-xl-4 col-12 col-sm-9 col-md-6">
                 <div class="price-package-box">
                     @if (isSubscribed($package->id))
@@ -32,14 +32,19 @@
                         @endif
 
                         @if ($package->id == 2)
-                        <p>This is a large package</p>
+                            <p>This is a large package</p>
                         @else
-                        <p>This is a lite package</p>
+                            <p>This is a lite package</p>
                         @endif
-
+                        
                     </div>
-                    <div class="package-price pb-0">
-                        <h3><span>€</span>{{ $package->amount }}<u> /per month</u></h3>
+                    <div class="package-price">
+                        <h3><span>€</span>{{ $package->amount }}<u> /per month</u></h3> 
+                        @if (!isSubscribed($package->id))
+                        <a href="{{ route('instructor.subscription.create', $package->id) }}" class="will-subscribe">Subscribe</a> 
+                        @else
+                        <a href="#" class="subscribed">Subscribed</a>
+                        @endif
                     </div>
                     <div class="package-features">
                         <h6>Features includes:</h6>
@@ -49,22 +54,14 @@
                             <li><i class="fas fa-check"></i>
                                 <p> {{ $feature }}</p>
                             </li>
-                            @endforeach
+                            @endforeach  
                         </ul>
                         @endif
-                    </div>
-                    <div class="package-price">
-                        @if (!isSubscribed($package->id))
-                        <a href="{{ route('instructor.subscription.create', $package->id) }}" class="will-subscribe">Get
-                            started</a>
-                        @else
-                        <a href="#" class="subscribed">Subscribed</a>
-                        @endif
-                    </div>
+                    </div> 
                 </div>
             </div>
             @endforeach
-        </div>
+        </div> 
     </div>
 </main>
 @endsection
