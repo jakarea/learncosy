@@ -12,6 +12,13 @@ Login
         <div class="col-12 col-sm-10 col-md-8 col-lg-6">
         <div class="login-form-wrap">
             <h1>Login</h1> 
+            <!-- Show all success -->
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group">

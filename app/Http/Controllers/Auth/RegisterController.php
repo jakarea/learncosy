@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider; 
 use App\Models\User;
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str; 
 use App\Mail\UserCreated;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -33,17 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
-    protected function redirectTo()
-    {
-        if (auth()->user()->user_role == 'student') {
-            return 'students/profile/edit';
-
-        }elseif(auth()->user()->user_role == 'instructor'){
-            return redirect()->route('instructor.subscription');
-        }
-        return '/';
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -87,9 +78,28 @@ class RegisterController extends Controller
         ]); 
 
          // Send the registration email
-        //  Mail::to($user)->send(new UserCreated($user));
+         Mail::to($user)->send(new UserCreated($user));
 
+        // if user is instructor, create a subdomain for them
+        // if ($user->user_role == 'instructor') {
+        //     if (!empty($user->username)) {
+        //         return redirect()->to('http://' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard');
+        //     }
+        //     else {
+        //         // return login with success message
+        //         return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue.');
+        //     }
+        // }
+
+        // Show the success message
+        session()->flash('success', 'Your account has been created. Please login to continue!');
         return $user;
     }
+
+    protected function registered(Request $request, $user)
+    {
+        return redirect()->route('login')->with('success', 'Registration successful!');
+    }
+
 
 }

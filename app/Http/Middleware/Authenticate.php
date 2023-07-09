@@ -16,13 +16,11 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             $host = $request->getHost();
-
-            // Check if the subdomain is equal to "app" and the domain is equal to "domainname.com"
             if (strpos($host, 'app.learncosy.com') !== false) {
-                return route('login');
+                return redirect()->route('login');
             } else {
-                return route('tlogin');
+                return redirect()->route('tlogin');
             }
-        }
+        }        
     }
 }

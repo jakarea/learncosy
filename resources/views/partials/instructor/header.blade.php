@@ -6,7 +6,7 @@
 					{{-- header logo @S --}}
 					<div class="header-logo-wrap">
 						<a href="{{url('/')}}">
-							@if ( modulesetting('logo') )
+							@if ( !modulesetting('logo') )
 							<img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="home-page-hero"
 								class="img-fluid">
 							@else

@@ -6,9 +6,11 @@ use Stripe\Stripe;
 use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use App\Mail\PackageSubscribe;
 use Stripe\Checkout\Session;
 use App\Models\SubscriptionPackage;
-
+use Illuminate\Support\Facades\Mail;
+use PDF;
 class SubscriptionController extends Controller
 {
     /**
@@ -119,6 +121,18 @@ class SubscriptionController extends Controller
             'start_at' => date('Y-m-d H:i:s'),
             'end_at' => $ends_at,
         ]);
+
+        // send email to instructor
+        Mail::to(auth()->user()->email)->send(new PackageSubscribe($package));
+
+        // Generate and save the PDF file
+        $pdf = PDF::loadView('pdf.package', ['data' => $package]);
+        $pdfContent = $pdf->output();
+
+        // Attach the PDF file to the email
+        Mail::to(auth()->user()->email)
+            ->send(new PackageSubscribe($package, $pdfContent));
+
 
         // return back with success message
         return redirect()->route('instructor.dashboard.index')->with('success', 'Subscription created successfully');

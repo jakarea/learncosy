@@ -55,12 +55,11 @@ class LoginController extends Controller
                 Auth::login($user);
                 
                 if ($user->user_role == 'admin') {
-                    return redirect('/admin/dashboard');
+                    return redirect()->route('admin.dashboard');
                 } elseif ($user->user_role == 'instructor') {
-                    // return redirect('/instructor/dashboard');
                     // for live domain $user->username
-                    if ($user->username && !$request->is('instructor/dashboard')) {
-                        return redirect()->to('http://' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard'); 
+                    if ($user->username && !$request->is('//app.learncosy.com')) {
+                        return redirect()->to('//' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard'); 
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');
