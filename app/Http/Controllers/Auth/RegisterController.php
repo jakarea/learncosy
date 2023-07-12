@@ -76,30 +76,21 @@ class RegisterController extends Controller
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
         ]); 
-
-         // Send the registration email
-         Mail::to($user)->send(new UserCreated($user));
-
-        // if user is instructor, create a subdomain for them
-        // if ($user->user_role == 'instructor') {
-        //     if (!empty($user->username)) {
-        //         return redirect()->to('http://' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard');
-        //     }
-        //     else {
-        //         // return login with success message
-        //         return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue.');
-        //     }
-        // }
-
-        // Show the success message
-        session()->flash('success', 'Your account has been created. Please login to continue!');
+        
         return $user;
     }
 
     protected function registered(Request $request, $user)
     {
-        return redirect()->route('login')->with('success', 'Registration successful!');
-    }
+        // Send the registration email
+        Mail::to($user)->send(new UserCreated($user));
 
+        // Show the success message
+        session()->flash('success', 'Your account has been created. Please login to continue!');
+
+        auth()->logout();
+
+        return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
+    }
 
 }

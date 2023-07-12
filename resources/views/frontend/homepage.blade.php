@@ -38,7 +38,11 @@
                     <h1> {{ modulesetting('banner_title') ?? 'Deep drive into captivating lessons and hands-on exercises.' }} </h1>
                     <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }} </p>
                     <div class="hero-bttn">
-                        <a href="{{url('/login')}}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                        @if ( Auth::check() )
+                        <a href="{{ route('instructor.dashboard.index') }}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                        @else
+                        <a href="{{ route('tregister') }}" style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                        @endif
                     </div>
                     @php 
                         $request = app('request');
@@ -196,7 +200,15 @@
                     <div class="txt">
                         <h4>{{$instructors->name}}</h4>
                         <h5>{{ Str::limit($instructors->short_bio, $limit = 58, $end = '...') }}</h5>
-                        <a href="{{url('/students/dashboard')}}">Get more details!</a>
+                        @if ( Auth::check() )
+                            @can('student')
+                            <a href="{{ route('students.dashboard') }}">Get more details!</a>
+                            @else
+                            <a href="{{ route('instructor.dashboard.index') }}">Get more details!</a>
+                            @endcan
+                        @else
+                            <a href="{{ route('tlogin') }}">Get more details!</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -217,7 +229,15 @@
             </div>
             <div class="col-lg-6">
                 <div class="browse-all">
-                    <a href="{{url('/students/dashboard')}}">Browse all <i class="fas fa-angle-right"></i></a>
+                    @if ( Auth::check() )
+                        @can('student')
+                        <a href="{{ route('students.dashboard') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                        @else
+                        <a href="{{ route('instructor.dashboard.index') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                        @endcan
+                    @else
+                        <a href="{{ route('tlogin') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -249,7 +269,15 @@
                     <div class="bttns">
                         <h6>€ {{$bundle_course->price}}/ <span>included {{count($bundle_course->courses)}}
                                 courses</span></h6>
-                        <a href="{{url('/students/dashboard/enrolled')}}" style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
+                        @if ( Auth::check() )
+                            @can('student')
+                            <a href="{{ route('students.dashboard') }}" style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
+                            @else
+                            <a href="{{ route('instructor.dashboard.index') }}" style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
+                            @endcan
+                        @else
+                            <a href="{{ route('tlogin') }}" style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -271,7 +299,15 @@
             </div>
             <div class="col-lg-6">
                 <div class="browse-all">
-                    <a href="{{url('/students/dashboard')}}">Browse all <i class="fas fa-angle-right"></i></a>
+                    @if ( Auth::check() )
+                        @can('student')
+                        <a href="{{ route('students.dashboard') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                        @else
+                        <a href="{{ route('instructor.dashboard.index') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                        @endcan
+                    @else
+                        <a href="{{ route('tlogin') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                    @endif
                 </div>
             </div>
         </div>

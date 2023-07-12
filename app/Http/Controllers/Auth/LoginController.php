@@ -52,8 +52,12 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
+                // Auth::login($user);
+                // check if already logged in then logout
+                if (Auth::check()) {
+                    Auth::logout();
+                }
                 Auth::login($user);
-                
                 if ($user->user_role == 'admin') {
                     return redirect()->route('admin.dashboard');
                 } elseif ($user->user_role == 'instructor') {

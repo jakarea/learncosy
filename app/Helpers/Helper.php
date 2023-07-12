@@ -323,7 +323,7 @@ if (!function_exists('modulesetting')) {
         $segments = explode('.', $subdomain); // Split the host into segments
         $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
-        if (Auth::check() && Auth::user()->user_role == 'instructor') {
+        if ($sub_domain) {
             $user = User::where('username', $sub_domain)->first();
 
             if (!$user) {

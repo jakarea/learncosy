@@ -16,7 +16,7 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-        if (!Auth::check() || Auth::user()->user_role !== $role) {
+        if (Auth::check() && Auth::user()->user_role !== $role) {
             abort(403, 'Access denied.');
         }
 

@@ -42,7 +42,11 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 */
 
 
-Route::get('/', function () { return view('auth/login'); })->middleware('guest');
+Route::get('/')->middleware('auth');
+
+Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
+    return view('auth.verified');
+});
 
 
 // custom auth screen route
@@ -352,4 +356,11 @@ Route::get('/logout', function () {
     Auth::logout();
     session()->flush();
     return redirect('/login');
+});
+
+/**
+ * if page not found then redirect to 404 page
+ */
+Route::fallback(function () {
+    return redirect()->route('tlogin');
 });

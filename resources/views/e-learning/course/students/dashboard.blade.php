@@ -66,7 +66,7 @@
                         <td> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title}} </a> </td>
                         <td>{{ $enrolment->amount}}</td>
                         <td>{{ $enrolment->created_at->format('F j, Y')}}</td>
-                        <td><a class="contact_bttn" href="{{ url('instructor1/course/messages/send',$enrolment->course->id)}}" target="_blank" rel="noopener noreferrer"> Contact </td>
+                        <td><a class="contact_bttn" href="{{ url('course/messages/send',$enrolment->course->id)}}" target="_blank" rel="noopener noreferrer"> Contact </td>
                     </tr>
                     @endforeach
                     
