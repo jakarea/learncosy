@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider; 
 use App\Models\User;
 use Auth;
-<<<<<<< HEAD
-=======
 use Illuminate\Http\Request;
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
 use Illuminate\Support\Str; 
 use App\Mail\UserCreated;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -79,18 +76,6 @@ class RegisterController extends Controller
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
         ]); 
-<<<<<<< HEAD
- 
-        
-        
-         // Send the registration email
-        Mail::to($user->email)->send(new UserCreated($user));
-   
-        return $user;
-    }
-
-}
-=======
         
         return $user;
     }
@@ -109,4 +94,3 @@ class RegisterController extends Controller
     }
 
 }
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e

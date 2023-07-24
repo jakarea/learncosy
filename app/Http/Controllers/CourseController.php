@@ -2,18 +2,6 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-use App\Models\Course;
-use App\Models\Lesson;
-use App\Models\CourseReview;
-use App\Models\Module;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Mail\CourseUpdated;
-use Illuminate\Support\Facades\Mail;
-use DataTables;
-=======
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
 use Auth;
 use File;
 use DataTables;
@@ -342,10 +330,6 @@ class CourseController extends Controller
 
         $course->save();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
         // Send email
         // Mail::to('email-here')->send(new CourseUpdated($course));
         // students email who are enrolled with this course

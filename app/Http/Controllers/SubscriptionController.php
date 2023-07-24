@@ -7,12 +7,10 @@ use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Mail\PackageSubscribe;
-use Stripe\Checkout\Session;
-use App\Mail\PackageSubscribe;
+use Stripe\Checkout\Session; 
 use App\Mail\PackageSubscribeCancle;
 use Illuminate\Support\Facades\Mail;
-use App\Models\SubscriptionPackage;
-use Illuminate\Support\Facades\Mail;
+use App\Models\SubscriptionPackage; 
 use PDF;
 class SubscriptionController extends Controller
 {
@@ -125,10 +123,6 @@ class SubscriptionController extends Controller
             'end_at' => $ends_at,
         ]);
 
-<<<<<<< HEAD
-        // instructor packge subscribe mail
-        Mail::to(auth()->user()->email)->send(new PackageSubscribe($package));
-=======
         // Generate and save the PDF file
         $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
         $pdfContent = $pdf->output();
@@ -139,7 +133,6 @@ class SubscriptionController extends Controller
                     ->subject('Invoice')
                     ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
         });
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
 
         // return back with success message
         return redirect()->route('instructor.dashboard.index')->with('success', 'Subscription created successfully');
@@ -155,16 +148,8 @@ class SubscriptionController extends Controller
      */
     public function cancel()
     {
-<<<<<<< HEAD
-     
-        // instructor packge cancel mail
-        Mail::to(auth()->user()->email)->send(new PackageSubscribeCancle());
-
-        return redirect()->route('admin.dashboard')->with('error', 'Subscription cancelled');
-=======
         //
         return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
->>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
     }
 
     /**
