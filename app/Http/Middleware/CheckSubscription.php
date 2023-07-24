@@ -25,12 +25,12 @@ class CheckSubscription
     
             if ($subscription && $subscription->ends_at && now() > $subscription->ends_at) {
                 // Subscription expired, show alert or redirect
-                return redirect('/')->with('error', 'Your subscription has expired. Please renew your subscription to access this feature.');
+                return back()->with('error', 'Your subscription has expired. Please renew your subscription to access this feature.');
             }
     
             if (!$subscription) {
                 // Subscription not found, show alert or redirect
-                return redirect('/')->with('error', 'You are not subscribed. Please subscribe to access this feature.');
+                return back()->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
             }
         }
     

@@ -28,6 +28,7 @@ class ProfileManagementController extends Controller
     {     
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
+        // dd($user);
         return view('profile/instructor/edit',compact('user'));  
     }
 

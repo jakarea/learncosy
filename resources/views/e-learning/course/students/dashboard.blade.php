@@ -8,43 +8,39 @@
     .student_summery_chart {
         margin-right: 40px;
     }
-
     .student_summery_content ul li {
         line-height: 30px;
     }
-
     .student_summery .student_summery_chart .chart {
-        position: relative;
-        width: 120px;
-        height: 120px;
+        position:relative;
+        width:120px;
+        height:120px;
         margin: 0 auto;
     }
-
     .student_summery .student_summery_chart canvas {
         display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
+        position:absolute;
+        top:0;
+        left:0;
     }
-
     .student_summery .student_summery_chart span {
-        color: #555;
-        display: block;
-        line-height: 120px;
-        text-align: center;
-        width: 120px;
-        font-size: 30px;
-        margin-left: 5px;
+        color:#555;
+        display:block;
+        line-height:120px;
+        text-align:center;
+        width:120px;
+        font-size:30px;
+        margin-left:5px;
     }
-</style>
+    </style>
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-<main class="main-stu-dashboard">
-    <div class="row">
-        <div class="col-12">
+<main class="d-flex">
+    <div class="col-12">
+        <div class="row">
             <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
                 <h5 class="p-3 pb-0 my-course">My Courses</h5>
                 <table class="my-tabl">
@@ -54,28 +50,26 @@
                         <th><i class="fa-solid fa-money-bill"></i> Paid</th>
                         <th><i class="fa-solid fa-calendar-day"></i> Start Date</th>
                         <th><i class="fa-solid fa-headset"></i> Support</a></th>
- 
+                       
+
                     </tr>
                     {{-- item @S --}}
-                    @php
+                    @php 
                     $i = 0;
                     @endphp
                     @foreach($enrolments as $enrolment)
-                    @php
+                    @php 
                     $i++
                     @endphp
                     <tr>
                         <td>{{ $i }}</td>
-                        <td> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{
-                                $enrolment->course->title}} </a> </td>
+                        <td> <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title}} </a> </td>
                         <td>{{ $enrolment->amount}}</td>
                         <td>{{ $enrolment->created_at->format('F j, Y')}}</td>
-                        <td><a class="contact_bttn"
-                                href="{{ url('instructor1/course/messages/send',$enrolment->course->id)}}"
-                                target="_blank" rel="noopener noreferrer"> Contact </td>
+                        <td><a class="contact_bttn" href="{{ url('course/messages/send',$enrolment->course->id)}}" target="_blank" rel="noopener noreferrer"> Contact </td>
                     </tr>
                     @endforeach
-
+                    
                 </table>
                 {{-- <div class="row">
                     <div class="col-12">
@@ -86,92 +80,40 @@
                     </div>
                 </div> --}}
             </div>
-        </div>
-    </div>
-    <div class="row">
-        @if ( count(studentRadarChart(auth()->user()->id)['labels'] ) > 0 )
-        @foreach(studentRadarChart(auth()->user()->id)['labels'] as $key => $label)
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
-                <h6 class="p-3 pb-0 my-course"> {{ \Str::limit($label, 20) }}</h6>
-                <div class="student_summery d-flex justify-content-between align-items-center">
-                    <div class="student_summery_content p-3">
-                        <ul>
-                            <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> Lesson</span> <span>{{
-                                    studentRadarChart(auth()->user()->id)['lesson'][$key] }}</span></li>
-                            <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> Module</span> <span>{{
-                                    studentRadarChart(auth()->user()->id)['modules'][$key] }}</span></li>
-                            <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> In Progress</span>
-                                <span>{{ studentRadarChart(auth()->user()->id)['progress'][$key] }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="student_summery_chart">
-                        <figure class="text-center">
-                            <div class="chart" id="graph{{ $key+1 }}"
-                                data-percent="{{ studentRadarChart(auth()->user()->id)['progress'][$key] }}"
-                                data-color="#4C60FF"></div>
-                            <!-- <figcaption><h3>Web design</h3></figcaption> -->
-                        </figure>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6">
-                <!-- message box @s -->
-                <div class="card-box message-main-box">
-                    <!-- header @s -->
-                    <div class="media headers">
-                        <div class="media-body">
-                            <h5>Messages</h5>
-                            <p>New messages</p>
-                        </div>
-                        <!-- <a href="#" class="common-bttn">+New Messages</a> -->
-                    </div>
-                    <!-- header @e -->
-
-                    <!-- messages list box @s -->
-                    <div class="messages-items-wrap">
-                        @foreach ($highLightMessages as $message)
-                          <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
-                            <div class="messages-item">
-                                
-                                <div class="media">
-                                    <div class="avatar">
-                                        @if($message[0]->user->avatar == null)
-                                           <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="{{Auth()->user()->name}}"/>
-                                        @else
-                                            @if($message[0]->user->user_role == 'student')
-                                                <img src="{{ asset('assets/images/students/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
-                                            @else
-                                                <img src="{{ asset('assets/images/instructor/'.$message[0]->user->avatar) }}" alt="{{Auth()->user()->name}}"/>
-                                            @endif
-                                        @endif
-                                        
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>{{$message[0]->user->name}} <i class="fa-solid fa-check-double"></i></h5>
-                                        <p>{{$message[0]->message}}</p>
-                                    </div>
+                <div class="row">
+                    @if ( count(studentRadarChart(auth()->user()->id)['labels'] ) > 0 )
+                    @foreach(studentRadarChart(auth()->user()->id)['labels'] as $key => $label)
+                    <div class="col-4">
+                        <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
+                            <h6 class="p-3 pb-0 my-course"> {{ \Str::limit($label, 20) }}</h6>
+                            <div class="student_summery d-flex justify-content-between align-items-center">
+                                <div class="student_summery_content p-3">
+                                    <ul>
+                                        <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> Lesson</span> <span>{{ studentRadarChart(auth()->user()->id)['lesson'][$key] }}</span></li>
+                                        <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> Module</span> <span>{{ studentRadarChart(auth()->user()->id)['modules'][$key] }}</span></li>
+                                        <li><span><i class="fa-solid fa-thumbs-up text-primary"></i> In Progress</span> <span>{{ studentRadarChart(auth()->user()->id)['progress'][$key] }}</span></li>
+                                    </ul>
                                 </div>
-                                <h6>  {{ Carbon\Carbon::parse($message[0]->created_at)->diffForHumans() }}</h6>
+                                <div class="student_summery_chart">
+                                    <figure class="text-center">
+                                        <div class="chart" id="graph{{ $key+1 }}" data-percent="{{ studentRadarChart(auth()->user()->id)['progress'][$key] }}" data-color="#4C60FF"></div>
+                                        <!-- <figcaption><h3>Web design</h3></figcaption> -->
+                                    </figure>
+                                </div>
                             </div>
-                          </a>
-                        @endforeach
+                        </div>
                     </div>
-                    <!-- messages list box @e -->
+                    @endforeach
+                    @else
+                    <div class="col-12">
+                        <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
+                            <h6 class="p-3 pb-0 my-course"> No Course Found</h6>
+                        </div>
+                    </div>
+                    @endif
                 </div>
-                <!-- message box @e -->
             </div>
         </div>
-        @endforeach
-        @else
-        <div class="col-12">
-            <div class="productss-list-box payment-history-table mt-4 coursse-list-table ps-0">
-                <h6 class="p-3 pb-0 my-course"> No Course Found</h6>
-            </div>
-        </div>
-        @endif
     </div>
 </main>
 @endsection
@@ -182,7 +124,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 
 <script>
-    jQuery(document).ready(function	(){
+jQuery(document).ready(function	(){
 
     var el;
     var options;

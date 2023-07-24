@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider; 
 use App\Models\User;
 use Auth;
+<<<<<<< HEAD
+=======
+use Illuminate\Http\Request;
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
 use Illuminate\Support\Str; 
 use App\Mail\UserCreated;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -33,17 +37,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = RouteServiceProvider::HOME;
-    protected function redirectTo()
-    {
-        if (auth()->user()->user_role == 'student') {
-            return 'students/profile/edit';
-
-        }elseif(auth()->user()->user_role == 'instructor'){
-            return 'instructor/profile/edit';
-        }
-        return '/';
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -85,6 +79,7 @@ class RegisterController extends Controller
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
         ]); 
+<<<<<<< HEAD
  
         
         
@@ -95,3 +90,23 @@ class RegisterController extends Controller
     }
 
 }
+=======
+        
+        return $user;
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        // Send the registration email
+        Mail::to($user)->send(new UserCreated($user));
+
+        // Show the success message
+        session()->flash('success', 'Your account has been created. Please login to continue!');
+
+        auth()->logout();
+
+        return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
+    }
+
+}
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e

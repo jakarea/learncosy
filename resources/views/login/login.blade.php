@@ -1,5 +1,8 @@
 @extends('layouts.auth-option')
-@section('title') Register Page @endsection
+
+@section('title')
+Login Page
+@endsection
 
 @section('style')
 <link href="{{ asset('assets/css/login/login.css') }}" rel="stylesheet" type="text/css" />
@@ -37,57 +40,57 @@
                         @endif
                         <div class="row g-0">
                             <div class="col-10 col-lg-9 col-xl-8 mx-auto {{ modulesetting('lp_layout') == 'fullwidth' || modulesetting('lp_layout') == 'default' ? 'third-bg-primary px-5 py-4' : '' }} {{ modulesetting('lp_layout') == 'default' ? 'bg-white' : '' }}">
-                                <h3 class="fw-600 mb-4">Register</h3>
+                                <h3 class="fw-600 mb-4">Log In</h3>
                                {{-- ============ main form start ========= --}}
-                               <form method="POST" action="{{ route('register') }}">
+                               <form method="POST" action="{{ route('login') }}">
                                 @csrf
-                                <div class="form--group mb-3">
-                                    <label for="email" class="form-label">{{ __('Name') }}</label>
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter your Name" autocomplete="name" autofocus>
-                    
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form--group mb-3">
-                                        <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                        <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-                    
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                        <input type="hidden" name="user_role" value="student">
-                                    <div class="form--group mb-3">
-                                        <label for="password-field" class="form-label">{{ __('Password') }}</label> 
-                                        <input id="password-field" placeholder="********" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror    
-                                        <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                <div class="mb-3">
+                                    <label for="emailAddress" class="form-label">Email Address</label>  
+                                    <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 form--group">
+                                    <label for="password-field" class="form-label">Password</label> 
+                                    <input id="password-field" placeholder="*******" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror 
+                                    <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col"> 
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        
+                                            <label class="form-check-label" for="remember">
+                                                {{ __('Remember Me') }}
+                                            </label>
+                                        </div>
 
                                     </div>
-                                    
-                                    <div class="form-group mb-3">
-                                        <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                    
-                                        <input id="password-confirm" type="password" placeholder="********" class="form-control" name="password_confirmation" autocomplete="new-password">
-                                       
-                                    </div> 
+                                    <div class="col text-end">
+                                        @if (Route::has('password.request'))
+                                            <a href="{{ route('password.request') }}" style="color: {{ modulesetting('secondary_color') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif  
+                                    </div>
+                                </div>
                                 <div class="d-grid my-4">
                                     <button class="btn btn-primary" style="background: {{ modulesetting('secondary_color') }}; border-color: {{ modulesetting('secondary_color') }};" type="submit">{{ modulesetting('lp_button_text')
                                         ?? 'login!' }}</button>
                                 </div>
                             </form>
                                {{-- ============ main form end ========= --}}
-                                <p class="text-center text-muted mb-0">Already have an account? <a class="link-primary"
-                                        href="{{ route('tlogin') }}" style="color: {{ modulesetting('secondary_color') }}!important">Log in</a></p>
+                                <p class="text-center text-muted mb-0">Don't have an account? <a class="link-primary"
+                                        href="{{url('register')}}" style="color: {{ modulesetting('secondary_color') }}!important">Sign Up</a></p>
                             </div>
                         </div>
                     </div>

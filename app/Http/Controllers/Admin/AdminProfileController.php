@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Mail\PasswordChanged;
+use App\Mail\ProfileUpdated;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\PasswordChanged;
 use App\Mail\ProfileUpdated;
@@ -80,7 +83,10 @@ class AdminProfileController extends Controller
 
         // Send email
         Mail::to($user->email)->send(new ProfileUpdated($user));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
         return redirect()->route('admin.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
@@ -104,11 +110,18 @@ class AdminProfileController extends Controller
         $userId = Auth()->user()->id; 
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
+
         $user->save();
+<<<<<<< HEAD
 
          // Send email
          Mail::to($user->email)->send(new PasswordChanged($user));
 
+=======
+        
+        // Send email
+        Mail::to($user->email)->send(new PasswordChanged($user));
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
         return redirect()->route('admin.profile')->with('success', 'Your password has been changed successfully!');
     }
 

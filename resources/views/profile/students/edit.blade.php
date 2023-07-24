@@ -135,7 +135,7 @@
                                       <i id="close-icon" class="fas fa-times"></i>
                                     </div>
                                     @if ($user->avatar) 
-                                    <img src="{{asset('assets/images/students/'.$user->avatar)}}" alt="Avatar"
+                                    <img src="{{asset('assets/images/instructor/'.$user->avatar)}}" alt="Avatar"
                                         class="img-fluid static-image"> 
                                     @else 
                                         <img  src="{{asset('assets/images/avtar-place.png')}}" alt="Avatar" class="img-fluid static-image">

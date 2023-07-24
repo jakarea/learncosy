@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\CourseReview;
@@ -11,15 +12,25 @@ use Illuminate\Http\Request;
 use App\Mail\CourseUpdated;
 use Illuminate\Support\Facades\Mail;
 use DataTables;
+=======
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
 use Auth;
 use File;
+use DataTables;
+use DB;
+use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\Module;
+use Illuminate\Support\Str;
+use App\Models\CourseReview;
+use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     // course list
     public function index(){
 
-        $courses = Course::orderBy('id', 'desc')->paginate(6);
+        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
 
         // return view('e-learning/course/instructor/index');  
         return view('e-learning/course/instructor/list',compact('courses'));  
@@ -115,6 +126,13 @@ class CourseController extends Controller
     public function store(Request $request)
     {  
         // return $request->all();
+
+        $vimeoFData = DB::table('vimeo_data')->where('user_id', Auth::user()->id)->first();
+
+        // if vimeo data is not set then redirect to vimeo setting page
+        if (!$vimeoFData) {
+            return redirect('instructor/settings/vimeo')->with('error', 'You have to set the Vimeo Setting First!');
+        }
  
         $request->validate([
             'title' => 'required',
@@ -324,6 +342,10 @@ class CourseController extends Controller
 
         $course->save();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 23902a78a3679af5b8b1afe7e3c961a5059d961e
         // Send email
         // Mail::to('email-here')->send(new CourseUpdated($course));
         // students email who are enrolled with this course

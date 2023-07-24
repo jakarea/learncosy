@@ -117,7 +117,7 @@
                 <div class="content-txt-box">
                     <div class="d-flex">
                         <h3>{{$course->title}}</h3>
-                        <a href="{{url('instructor1/course/messages')}}" class="min_width">Message</a>
+                        <a href="{{url('course/messages')}}" class="min_width">Message</a>
                     </div>
                     <div class="course-dessc-txt">
                         {!! $course->description !!} 

@@ -98,13 +98,12 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('instructor1/course/messages') }}"
-                    class="{{ Request::is('instructor1/course/messages')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('course/messages') }}"
+                    class="{{ Request::is('course/messages')  ? ' active' : '' }} menu-link">
                     <i class="fa-regular fa-comments"></i>
                     <span>Messaging</span>
                 </a>
             </li>
-            @endcan 
             <li class="menu-item">
                 <a href="{{ route('module.setting', auth()->user()->id) }}"
                     class="{{ Request::is('instructor/theme/setting*')  ? ' active' : '' }} menu-link">
@@ -112,6 +111,7 @@
                     <span>Theme Setting</span>
                 </a>
             </li>
+            @endcan 
             {{-- student menu link @S --}}
             @elseif(Auth::user()->user_role == 'student' || Auth::user()->user_role == 'students')
             <li class="menu-item">
@@ -136,8 +136,8 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ url('/instructor1/course/messages') }}"
-                    class="{{ Request::is('/instructor1/course/messages*')  ? ' active' : '' }} menu-link">
+                <a href="{{ url('/course/messages') }}"
+                    class="{{ Request::is('/course/messages*')  ? ' active' : '' }} menu-link">
                     <i class="fa-solid fa-handshake"></i>
                     <span>Messaging</span>
                 </a>
