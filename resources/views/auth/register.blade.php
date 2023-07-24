@@ -35,20 +35,7 @@ Register
                         </span>
                     @enderror
                 </div>
-                <div class="form-group">
-                    <label for="user_role">{{ __('User Role') }}</label>
-                    <select name="user_role" id="" class="form-control @error('user_role') is-invalid @enderror">
-                        <option value="admin">Admin</option>
-                        <option value="instructor">Instructor</option>
-                        <option value="student">Student</option> 
-                    </select>  
-                        {{-- <i class="fas fa-angle-down"></i>  --}}
-                    @error('user_role')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
+                <input type="hidden" name="user_role" value="instructor">
                 <div class="form-group">
                     <label for="password-field">{{ __('Password') }}</label> 
                     <input id="password-field" placeholder="********" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">

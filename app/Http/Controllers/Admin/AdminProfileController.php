@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Mail\PasswordChanged;
+use App\Mail\ProfileUpdated;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str; 
 
@@ -74,6 +77,9 @@ class AdminProfileController extends Controller
        }
 
         $user->save();
+
+        // Send email
+        Mail::to($user->email)->send(new ProfileUpdated($user));
         return redirect()->route('admin.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
@@ -97,7 +103,11 @@ class AdminProfileController extends Controller
         $userId = Auth()->user()->id; 
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
+
         $user->save();
+        
+        // Send email
+        Mail::to($user->email)->send(new PasswordChanged($user));
         return redirect()->route('admin.profile')->with('success', 'Your password has been changed successfully!');
     }
 

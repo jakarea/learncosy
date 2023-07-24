@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\User;
 use Stripe\Stripe;
-use Vimeo\Laravel\Facades\Vimeo;
 use Vimeo\Vimeo as VimeoSDK;
+use Vimeo\Laravel\Facades\Vimeo;
 /**
  * Helper function to get SubscriptionPackage
  */
@@ -318,36 +319,40 @@ if (!function_exists('modulesetting')) {
     function modulesetting($key)
     {
         $request = app('request');
-        $username = request()->segments()[0];
-        if (Auth::check() && Auth::user()->user_role == 'instructor') {
-            $username = Auth::user()->username;
-        }
+        $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
+        $segments = explode('.', $subdomain); // Split the host into segments
+        $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
-        if (Auth::check() && Auth::user()->user_role == 'admin') {
+        if ($sub_domain) {
+            $user = User::where('username', $sub_domain)->first();
+
+            if (!$user) {
+                // Redirect the user to set up their username
+                return redirect()->route('instructor.dashboard.index');
+            }
+
+            $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+
+            if ($setting) {
+                $setting->value = json_decode($setting->value);
+
+                if ($key == 'logo') {
+                    return $setting->logo ?? null;
+                } elseif ($key == 'image') {
+                    return $setting->image ?? null;
+                } elseif ($key == 'lp_bg_image') {
+                    return $setting->lp_bg_image ?? null;
+                } else {
+                    return $setting->value->$key ?? null;
+                }
+            }
+        } elseif (Auth::check() && Auth::user()->user_role == 'admin') {
             return null;
         }
 
-        $user = \App\Models\User::where('username', $username)->first();
-
-        $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
-
-        if ($setting) {
-            $setting->value = json_decode($setting->value);
-            if ( $key == 'logo' ) {
-                return $setting->logo ?? null;
-            }
-            elseif ( $key == 'image' ) {
-                return $setting->image ?? null;
-            }
-            elseif ( $key == 'lp_bg_image' ) {
-                return $setting->lp_bg_image ?? null;
-            }
-            else {
-                return $setting->value->$key ?? null;
-            }
-        }
         return null;
     }
+
 }
 
 

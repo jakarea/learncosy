@@ -7,7 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/';
+    public const HOME = '/home';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -29,9 +29,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
+
+            Route::domain('{instructor}.' . env('APP_DOMAIN'))
+                ->middleware('web')
+                ->namespace('App\Http\Controllers\Instructor')
+                ->group(base_path('routes/instructor.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));

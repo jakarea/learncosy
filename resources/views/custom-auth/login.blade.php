@@ -77,7 +77,7 @@ Login Page
                                     </div>
                                     <div class="col text-end">
                                         @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}" style="color: {{ modulesetting('secondary_color') }}">
+                                            <a href="{{ route('auth.password.request') }}" style="color: {{ modulesetting('secondary_color') }}">
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
                                         @endif  
@@ -90,7 +90,7 @@ Login Page
                             </form>
                                {{-- ============ main form end ========= --}}
                                 <p class="text-center text-muted mb-0">Don't have an account? <a class="link-primary"
-                                        href="{{url('register')}}" style="color: {{ modulesetting('secondary_color') }}!important">Sign Up</a></p>
+                                        href="{{ route('tregister') }}" style="color: {{ modulesetting('secondary_color') }}!important">Sign Up</a></p>
                             </div>
                         </div>
                     </div>

@@ -215,7 +215,17 @@ class InstructorController extends Controller
          $instructorOldThumbnail = public_path('/assets/images/instructor/'.$instructor->avatar);
          if (file_exists($instructorOldThumbnail)) {
              @unlink($instructorOldThumbnail);
-         } 
+         }
+         
+         \App\Models\BundleCourse::where('user_id', $id)->delete();
+         \App\Models\Checkout::where('instructor_id', $id)->delete();
+         \App\Models\Course::where('user_id', $id)->delete();
+         \App\Models\CourseActivity::where('user_id', $id)->delete();
+         \App\Models\InstructorModuleSetting::where('instructor_id', $id)->delete();
+         \App\Models\Message::where('user_id', $id)->delete();
+         \App\Models\Module::where('user_id', $id)->delete();
+         \App\Models\Subscription::where('instructor_id', $id)->delete();
+         \App\Models\VimeoData::where('user_id', $id)->delete();
         $instructor->delete();
 
         return redirect('admin/instructor')->with('success', 'Instructor Successfully deleted!');

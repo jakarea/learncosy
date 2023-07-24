@@ -6,9 +6,11 @@ use Stripe\Stripe;
 use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use App\Mail\PackageSubscribe;
 use Stripe\Checkout\Session;
 use App\Models\SubscriptionPackage;
-
+use Illuminate\Support\Facades\Mail;
+use PDF;
 class SubscriptionController extends Controller
 {
     /**
@@ -120,8 +122,19 @@ class SubscriptionController extends Controller
             'end_at' => $ends_at,
         ]);
 
+        // Generate and save the PDF file
+        $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
+        $pdfContent = $pdf->output();
+
+        // Send the email with the PDF attachment
+        Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+            $message->to(auth()->user()->email)
+                    ->subject('Invoice')
+                    ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+        });
+
         // return back with success message
-        return redirect()->route('admin.dashboard')->with('success', 'Subscription created successfully');
+        return redirect()->route('instructor.dashboard.index')->with('success', 'Subscription created successfully');
 
 
     }
@@ -135,7 +148,7 @@ class SubscriptionController extends Controller
     public function cancel()
     {
         //
-        return redirect()->route('admin.dashboard')->with('error', 'Subscription cancelled');
+        return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
     }
 
     /**

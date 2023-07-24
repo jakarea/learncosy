@@ -7,6 +7,9 @@ use Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Mail\PasswordChanged;
+use App\Mail\ProfileUpdated;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class StudentProfileController extends Controller
@@ -73,6 +76,10 @@ class StudentProfileController extends Controller
        }
 
         $user->save();
+
+        // Send email
+        Mail::to($user->email)->send(new ProfileUpdated($user));
+
         return redirect()->route('students.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 
@@ -80,7 +87,7 @@ class StudentProfileController extends Controller
     public function passwordUpdate()
     {    
         $userId = Auth()->user()->id;  
-        $user = User::find($userId);
+        $user = User::find($userId); 
         return view('profile/students/password-change',compact('user'));  
     }
 
@@ -97,6 +104,10 @@ class StudentProfileController extends Controller
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
         $user->save();
+
+         // Send email
+         Mail::to($user->email)->send(new PasswordChanged($user));
+
         return redirect()->route('students.profile')->with('success', 'Your password has been changed successfully!');
     }
 }

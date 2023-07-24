@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Student;
 
+use Mail;
 use Stripe\Stripe;
-use Stripe\Checkout\Session;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Stripe\Checkout\Session;
 use App\Http\Controllers\Controller;
+use App\Mail\CourseEnroll;
 
 class CheckoutController extends Controller
 {
@@ -134,6 +136,10 @@ class CheckoutController extends Controller
             ]);
     
             if ($checkout) {
+
+                 // Send email
+                 Mail::to(auth()->user()->email)->send(new CourseEnroll($course));
+                 
                 return redirect()->route('students.show.courses', $course->slug)->with('success', 'You have successfully enrolled in this course');
             } else {
                 return redirect()->route('students.show.courses', $course->slug)->with('error', 'Something went wrong');

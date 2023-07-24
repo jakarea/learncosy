@@ -61,18 +61,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form--group mb-3">
-                                        <label for="user_role" class="form-label">{{ __('Role') }}</label>
-                                        <select name="user_role" id="" class="form-control @error('user_role') is-invalid @enderror"> 
-                                            <option value="student">Student</option> 
-                                        </select>  
-                                            {{-- <i class="fas fa-angle-down"></i>  --}}
-                                        @error('user_role')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                        <input type="hidden" name="user_role" value="student">
                                     <div class="form--group mb-3">
                                         <label for="password-field" class="form-label">{{ __('Password') }}</label> 
                                         <input id="password-field" placeholder="********" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
@@ -98,7 +87,7 @@
                             </form>
                                {{-- ============ main form end ========= --}}
                                 <p class="text-center text-muted mb-0">Already have an account? <a class="link-primary"
-                                        href="{{url('login')}}" style="color: {{ modulesetting('secondary_color') }}!important">Log in</a></p>
+                                        href="{{ route('tlogin') }}" style="color: {{ modulesetting('secondary_color') }}!important">Log in</a></p>
                             </div>
                         </div>
                     </div>

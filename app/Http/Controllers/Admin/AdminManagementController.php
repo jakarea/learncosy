@@ -15,9 +15,7 @@ class AdminManagementController extends Controller
     public function index()
     {    
         $user_role = "admin";
-        $users = User::where('id', '!=', auth()->user()->id)
-        ->where('user_role',$user_role)
-        ->get(); 
+        $users = User::where('user_role',$user_role)->get();
 
         return view('admin/grid',compact('users'));  
     }
