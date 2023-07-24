@@ -397,3 +397,12 @@ Route::get('/logout', function () {
 Route::fallback(function () {
     return redirect()->route('tlogin');
 });
+
+
+// demo test route
+Route::get('/custom/verify', function(){
+    return view('auth.verify');
+});
+Route::get('/custom/price', function(){
+    return view('latest-auth.price');
+});
