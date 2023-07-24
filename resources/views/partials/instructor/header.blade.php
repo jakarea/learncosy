@@ -35,7 +35,7 @@
 					<div class="header-navbar-wrap">
 						<ul class="head-navbar">
 							<li class="link-item">
-								<a href="{{ url('/') }}" class="link-click">Dashboard</a>
+								<a href="{{ url('/') }}" class="link-click">Visit Site</a>
 							</li>
 						</ul>
 					</div>

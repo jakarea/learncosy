@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
@@ -12,24 +12,27 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
-use App\Http\Controllers\Admin\AdminHomeController;
-use App\Http\Controllers\Admin\AdminManagementController;
-use App\Http\Controllers\Admin\InstructorController;
-use App\Http\Controllers\Student\CheckoutController;
-use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
-use App\Http\Controllers\Admin\AdminProfileController;
+
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Student\CheckoutBundleController;
+use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Student\StudentProfileController;
+
 use App\Http\Controllers\Instructor\DashboardController;
+
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
-use App\Http\Controllers\Admin\ModuleManagementController;
-use App\Http\Controllers\Student\CheckoutBundleController;
-use App\Http\Controllers\Student\StudentProfileController;
 use App\Http\Controllers\Admin\StudentManagementController;
-
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\ModuleManagementController;
+
+use App\Http\Controllers\Frontend\HomepageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +45,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 */
 
 
-Route::get('/')->middleware('auth');
+// Route::get('/')->middleware('auth');
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
@@ -61,17 +64,41 @@ Route::get('/auth-register', function(){
 Route::get('/auth/password/reset', function(){
     return view('custom-auth/passwords/email');
 })->name('auth.password.request')->middleware('guest');
-  
 
-Route::get('/chart', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home')->middleware('auth');
 
-Route::group(['prefix' => 'home'], function () {
-    Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
-    Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
-    Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
-    Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
-    Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
-});
+Route::get('/home', function(Request $request){
+    $role = Auth::user()->user_role;
+    $username = Auth::user()->username;
+    $subdomain = explode('.', request()->getHost())[0];
+    if($subdomain == 'app' && $role == 'admin'){
+        return redirect('/admin/dashboard');
+    }
+
+    if($subdomain != 'app' &&  $role == 'student'){
+        return redirect('/students/dashboard');
+    }
+
+    if($subdomain != 'app' &&  $role == 'instructor'){
+        return redirect('/instructor/dashboard');
+    }
+
+    Auth::logout();
+
+    $request->session()->invalidate();
+
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+
+})->name('home')->middleware('auth');
+
+// Route::group(['prefix' => 'home'], function () {
+//     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
+//      Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
+//     Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
+//     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
+//     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
+// });
 // auth route 
 Auth::routes(['verify' => true]);
 
@@ -201,12 +228,18 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
     Route::get('/', 'index'); 
 });
- 
+
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
 /* ========================================================== */
+Route::get('/dashboard1', function(){
+    return 'Student dashboard!';
+});
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes
+    Route::get('/dashboard1', function(){
+        return 'Student dashboard from auth!';
+    });
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home','catalog')->name('students.catalog.courses');

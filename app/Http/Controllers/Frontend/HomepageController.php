@@ -32,14 +32,14 @@ class HomepageController extends Controller
      {
          // get username from subdomain
          $request = app('request');
-         $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
+         $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.localhost.local")
          $segments = explode('.', $subdomain); // Split the host into segments
          $username = $segments[0]; // Get the first segment as the subdomain
          
-         if ( request()->getHost() != 'app.learncosy.com' && $username != 'app' && !empty($username) ) {
+         if ( request()->getHost() != 'app.localhost' && $username != 'app' && !empty($username) ) {
              $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
              if(!$instructors){
-                 return redirect('//app.learncosy.com/login');
+                 return redirect('//app.localhost/login');
              }
              // filter course
              $title = isset($_GET['title']) ? $_GET['title'] : '';
@@ -88,7 +88,7 @@ class HomepageController extends Controller
  
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students'));
             }else{
-             return redirect('//app.learncosy.com/login');
+             return redirect('//app.localhost/login');
          }
      }
 
@@ -136,7 +136,7 @@ class HomepageController extends Controller
         //
         $instructors = User::where('user_role', 'instructor')->where('id', $id)->first();
         $courses = Course::where('user_id', $id)->get();
-        // return view('frontend.course', compact('instructors', 'courses'));
+        return view('frontend.course', compact('instructors', 'courses'));
     }
 
     /**

@@ -34,9 +34,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto custom_nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{url('/students/dashboard')}}">Home</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#course_sec">Courses</a>
                 </li>
                 <li class="nav-item">

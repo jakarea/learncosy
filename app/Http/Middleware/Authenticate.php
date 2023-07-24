@@ -16,12 +16,15 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             $host = $request->getHost();
-            if (strpos($host, 'app.learncosy.com') !== false) {
-                auth()->logout();
-                return redirect()->route('login');
+            if (strpos($host, 'app.localhost') !== false) {
+                return route('login');
             } else {
-                return redirect()->route('tlogin');
+                return route('tlogin');
             }
-        }        
+        }    
+        
+        // if (! $request->expectsJson()) {
+        //     return route('login');
+        // }
     }
 }

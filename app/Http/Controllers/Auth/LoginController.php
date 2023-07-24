@@ -45,6 +45,7 @@ class LoginController extends Controller
     /*
     * Login
     */
+    
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -54,15 +55,12 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 // Auth::login($user);
                 // check if already logged in then logout
-                if (Auth::check()) {
-                    Auth::logout();
-                }
                 Auth::login($user);
                 if ($user->user_role == 'admin') {
                     return redirect()->route('admin.dashboard');
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->username
-                    if ($user->username && !$request->is('//app.learncosy.com')) {
+                    if ($user->username && !$request->is('//app.localhost')) {
                         return redirect()->to('//' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard'); 
                     } else {
                         // return redirect('/instructor/dashboard');
@@ -72,10 +70,10 @@ class LoginController extends Controller
                     return redirect('/students/dashboard');
                 }
             } else {
-                return redirect()->back()->with('error', 'Invalid password');
+                return redirect()->back()->with('error', 'Invalid Credentials');
             }
         } else {
-            return redirect()->back()->with('error', 'Invalid email');
+            return redirect()->back()->with('error', 'Invalid Credentials');
         }
     }
 }
