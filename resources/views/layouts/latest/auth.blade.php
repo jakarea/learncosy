@@ -23,12 +23,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- all css start --> 
     <!-- App css -->
-    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('latest/assets/css/style.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('latest/assets/css/header.css') }}" rel="stylesheet" type="text/css" />   
-    <link href="{{ asset('latest/assets/css/auth.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('latest/assets/auth-css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
+    <link href="{{ asset('latest/assets/auth-css/style.css') }}" rel="stylesheet" type="text/css" />  
+    <link href="{{ asset('latest/assets/auth-css/header.css') }}" rel="stylesheet" type="text/css" />   
+    <link href="{{ asset('latest/assets/auth-css/auth.css') }}" rel="stylesheet" type="text/css" /> 
     @yield('style')
-    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">  
+    <link href="{{ asset('assets/auth-css/responsive.css') }}" rel="stylesheet">  
     <!-- all css end -->
 
 </head>

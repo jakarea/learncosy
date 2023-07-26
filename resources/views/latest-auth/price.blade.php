@@ -5,7 +5,7 @@ Verify Email
 @endsection
 
 @section('style')
-<link rel="stylesheet" href="{{asset('latest/assets/css/pricing.css')}}">
+<link rel="stylesheet" href="{{asset('latest/assets/auth-css/pricing.css')}}">
 @endsection
 
 @section('content')

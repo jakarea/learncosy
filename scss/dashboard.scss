@@ -2,157 +2,138 @@
 @use './util/variabls' as v;
 @use './util/media-query' as q;
 
-.header-title {
-    margin: 1.5rem 0;
-    margin-top: 1rem;
-    h2 {
-        @include m.para(2rem, 600, v.$dark); 
+main {
+    padding-top: 2rem;
+
+    .container-fluid {
+        padding: 0 6.5rem;
     }
 }
 
-.price-package-box {
-    background-color: v.$light;
-    border-radius: .9rem;
-    position: relative;
-    overflow: hidden;
-    // border: 2px solid v.$primary; 
-    padding-bottom: 2rem;
+.mt-15 {
+    margin-top: 1.5rem;
+}
+
+.total-client-box {
+    border-radius: 0.5rem;
+    border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+    background: var(--neutral-color-white, #FFF);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+    padding: 1.5rem 1.25rem;
     height: 100%;
-    .current-package {
+    position: relative;
+
+    img {
         position: absolute;
-        right: -35px;
-        top: 32px;
-        transform: rotate(49deg);
-
-        span {
-            display: inline-block;
-            background: v.$gdbg;
-            @include m.para(0.8rem, 500, v.$light);
-            padding: .2rem 1.2rem;
-        }
+        right: 1.25rem;
+        bottom: 1.25rem;
     }
 
-    .package-title {
-        padding: 1.5rem;
-        padding-bottom: 0;
-
-        h4 {
-            @include m.para(1.6rem, 600, v.$dark);
-
-            i {
-                color: v.$secondary;
-                margin-right: 0.5rem;
-            }
-        }
-
-        p {
-            @include m.para(0.9rem, 500, v.$fourth);
-            margin-top: 0.4rem;
-        }
+    h5 {
+        color: var(--neutral-color-neutral-90, #101C2D);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.5rem;
+        /* 150% */
     }
 
-    .package-price {
-        padding: 1.5rem;
-
-        h3 {
-            @include m.para(3rem, 400, v.$dark);
-
-            span {
-                color: v.$third;
-            }
-
-            u {
-                font-size: .9rem;
-                color: v.$fourth;
-                text-decoration: none;
-            }
-        }
-
-        a.subscribed {
-            @include m.button(1rem, v.$light, v.$fourth);
-            display: block;
-            width: 100%;
-            text-align: center;
-            border-radius: .4rem;
-            cursor: inherit
-        }
-
-        a.will-subscribe {
-            @include m.button(1rem, v.$light, v.$gdbg);
-            display: block;
-            width: 100%;
-            text-align: center;
-            border-radius: .4rem;
-
-            &:hover {
-                background: v.$blu;
-            }
-        }
+    h4 {
+        color: var(--neutral-color-neutral-90, #101C2D);
+        font-size: 2.25rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 2.75rem;
+        /* 122.222% */
+        letter-spacing: -0.045rem;
+        margin-top: 1.5rem;
     }
 
-    .package-features {
-        padding: 1.5rem;
-        padding-top: 0.5rem;
+    p {
+        color: var(--neutral-color-neutral-60, #66768E);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.25rem;
+        margin-top: 1rem;
+    }
+}
 
-        h6 {
-            @include m.para(1.1rem, 600, v.$dark);
-        }
+.earnings-chart-wrap {
+    padding: 1.5rem 1.25rem 2.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--neutral-gray-gray-50, #F0F1F3);
+    background: var(--neutral-white, #FFF);
+    box-shadow: 0px 4px 30px 0px rgba(46, 45, 116, 0.05);
 
-        ul {
-            li {
-                @include m.df;
-                margin-top: 0.8rem;
-                margin-bottom: 0.2rem;
-
-                i {
-                    font-size: .9rem;
-                    color: v.$secondary;
-                    margin-right: 0.4rem;
-                }
-
-                p {
-                    @include m.para(0.9rem, 500, v.$fourth);
-                }
-            }
-        }
+    h5 {
+        color: var(--neutral-black-black-500, #1D1F2C);
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.875rem;
+        /* 150% */
+        letter-spacing: 0.0125rem;
     }
 
-    .package-ftr {
-        padding: 1.2rem 1.5rem;
-        background-color: v.$third;
-        border-radius: 0 0 .9rem .9rem;
-        text-align: center;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
+    p {
+        color: var(--gray-500, #667085);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.25rem;
+        /* 142.857% */
+    }
+}
+
+.top-performing-course {
+    border-radius: 0.5rem;
+    background: var(--background-light-paper, #FFF);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
+    padding: 1rem 1.5rem;
+
+    .d-flex {
+        align-items: center;
+        justify-content: space-between;
+
+        h5 {
+            color: var(--neutral-color-neutral-90, #101C2D);
+            font-size: 1.125rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.75rem;
+            /* 155.556% */
+        }
+
         a {
-            display: block;
-            @include m.para(1rem, 600, v.$dark);
-
-            &:hover {
-                color: v.$secondary;
-            }
+            border-radius: 0.375rem;
+            background: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
+            color: var(--neutral-color-neutral-90, #101C2D); 
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1.25rem;
+            /* 166.667% */
+            display: inline-block;
+            padding: .3rem .5rem;
         }
     }
 }
 
-// price-package-box
-
+// responsive css start
 @include q.responsive(phone) {
-    .price-package-box{
-        margin-bottom: 1rem;
+    main .container-fluid {
+        padding: 0 1rem;
+    }
+
+    .total-client-box {
         height: auto;
+        margin-bottom: 1.5rem;
     }
 }
-@include q.responsive(landphone) {
-    .price-package-box{
-        margin-bottom: 1rem;
-        height: auto;
-    }
-}
-@include q.responsive(regular) {
-    .price-package-box .package-price h3{
-       font-size: 2rem;
-    }
-}
+
+@include q.responsive(landphone) {}
+
+@include q.responsive(tablet) {}
+
+@include q.responsive(landtablet) {}
