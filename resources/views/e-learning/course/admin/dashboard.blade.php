@@ -96,120 +96,94 @@ Home Page
                         <h5>Top Performing Courses</h5>
                         <a href="#">View All</a>
                     </div>
+                    <div class="course-lists">
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <div class="media-body">
+                                <h5>Figma Course Part 1</h5>
+                                <p>UI/UX Design</p>
+                            </div>
+                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
+                        </div>
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <div class="media-body">
+                                <h5>Figma Course Part 1</h5>
+                                <p>UI/UX Design</p>
+                            </div>
+                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
+                        </div>
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <div class="media-body">
+                                <h5>Figma Course Part 1</h5>
+                                <p>UI/UX Design</p>
+                            </div>
+                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
+                        </div>
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <div class="media-body">
+                                <h5>Figma Course Part 1</h5>
+                                <p>UI/UX Design</p>
+                            </div>
+                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row"> 
-            {{-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12"> 
-                <div class="card-box project-statistic-wrap">
-                    <div class="statics-head">
-                        <h5>Statistics</h5>
+        </div> 
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Students</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
                     </div>
-                    <div id="monthly_earning"></div>
+                    <div id="lineChart"></div>
                 </div>
-            </div>  --}}
+            </div>  
+            <div class="col-xl-4">
+                <div class="top-performing-course mt-15"> 
+                    <div class="d-flex">
+                        <h5>Message</h5>
+                        <a href="#">View All</a>
+                    </div> 
+     
+                    <div class="messages-items-wrap"> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
         </div>
     </div>
-    
-    
-    <!-- dashboard chart box @e -->
-
-    <!-- dashboard projects and messages box @s -->
-    {{-- <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-            <!-- project statistic @s -->
+     
+    <div class="row"> 
+        {{-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12"> 
             <div class="card-box project-statistic-wrap">
                 <div class="statics-head">
-                    <h5>Students</h5>
+                    <h5>Statistics</h5>
                 </div>
-                <div id="lineChart"></div>
+                <div id="monthly_earning"></div>
             </div>
-            <!-- project statistic @e -->
-        </div>
-        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6">
-            <!-- message box @s -->
-            <div class="card-box message-main-box">
-                <!-- header @s -->
-                <div class="media headers">
-                    <div class="media-body">
-                        <h5>Messages</h5>
-                        <p>Lorem ipsum dolor sit amet</p>
-                    </div>
-                    <a href="#" class="common-bttn">+New Messages</a>
-                </div>
-                <!-- header @e -->
-
-                <!-- messages list box @s -->
-                <div class="messages-items-wrap">
-                    <!-- item @s -->
-                    <div class="messages-item">
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                    class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                <p>Hei, dont forget to clear server cache!</p>
-                            </div>
-                        </div>
-                        <h6>25min ago</h6>
-                        <div class="action">
-                            <a href="#">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="messages-item">
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                    class="img-fluid">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="media-body">
-                                <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                <p>Hei, dont forget to clear server cache!</p>
-                            </div>
-                        </div>
-                        <h6>25min ago</h6>
-                        <div class="action">
-                            <a href="#">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- item @e -->
-                    <!-- item @s -->
-                    <div class="messages-item">
-                        <div class="media">
-                            <div class="avatar">
-                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                    class="img-fluid">
-                            </div>
-                            <div class="media-body">
-                                <h5>Maren Rosser </h5>
-                                <p>Hei, dont forget to clear server cache!</p>
-                            </div>
-                        </div>
-                        <h6>25min ago</h6>
-                        <div class="action">
-                            <a href="#">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- item @e -->
-                </div>
-                <!-- messages list box @e -->
-            </div>
-            <!-- message box @e -->
-        </div>
-    </div> --}}
-    <!-- dashboard projects and messages box @e -->
+        </div>  --}}
+    </div> 
 </main>
 @endsection
 
