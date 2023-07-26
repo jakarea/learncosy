@@ -1,8 +1,13 @@
 main {
   padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 main .container-fluid {
   padding: 0 6.5rem;
+}
+
+.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {
+  border-color: transparent !important;
 }
 
 .mt-15 {
@@ -138,6 +143,9 @@ main .container-fluid {
 }
 
 .messages-items-wrap {
+  margin-top: 1rem;
+}
+.messages-items-wrap .messages-item {
   margin-top: 1rem;
 }
 .messages-items-wrap .messages-item .media {

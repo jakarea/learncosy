@@ -168,21 +168,38 @@ Home Page
                                 </div>
                             </div> 
                         </div> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle text-success"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
                     </div> 
                 </div>
             </div>
         </div>
-    </div>
-     
-    <div class="row"> 
-        {{-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12"> 
-            <div class="card-box project-statistic-wrap">
-                <div class="statics-head">
-                    <h5>Statistics</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Statistics</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
+                    </div>
+                    <div id="monthly_earning"></div>
                 </div>
-                <div id="monthly_earning"></div>
             </div>
-        </div>  --}}
+        </div>
     </div> 
 </main>
 @endsection

@@ -4,10 +4,15 @@
 
 main {
     padding-top: 2rem;
+    padding-bottom: 2rem;
 
     .container-fluid {
         padding: 0 6.5rem;
     }
+}
+
+.btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active{
+    border-color: transparent!important;
 }
 
 .mt-15 {
@@ -160,6 +165,7 @@ main {
     margin-top: 1rem;
 
     .messages-item {
+        margin-top: 1rem;
         .media {
             align-items: center;
 
