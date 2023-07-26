@@ -1,0 +1,30 @@
+.header-section {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #E5ECF6;
+  background: #FFF;
+  z-index: 9999;
+}
+
+.top-bttn a {
+  border-radius: 6px;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: var(--white, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  display: inline-block;
+  color: var(--gray-700, #344054);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  display: inline-block;
+  padding: 8px 16px;
+  transition: all linear 0.2s;
+}
+.top-bttn a:hover {
+  background-color: #294CFF;
+  color: #ffffff;
+}

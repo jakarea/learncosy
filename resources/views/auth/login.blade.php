@@ -1,84 +1,101 @@
-@extends('layouts.auth')
+@extends('layouts.latest.auth')
 
 @section('title')
-Login
+Login Page
 @endsection
 
 @section('content')
-<!-- ====== login page content start ====== -->
-<section class="login-section">
-    <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-        <div class="login-form-wrap">
-            <h1>Login</h1> 
-            <!-- Show all success -->
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success!</strong> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error!</strong> {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <div class="form-group">
-                    <label for="email">{{ __('Email Address') }}</label>
-                    <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" autofocus>
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="password-field">{{ __('Password') }}</label> 
-                    <input id="password-field" placeholder="*******" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror 
-                    <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+<!-- ====== login page content start ====== --> 
+<section class="auth-part-sec">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 px-0">
+                <!-- login form start -->
+                <div class="auth-form-wrap">
 
-                    <label class="form-check-label" for="remember">
-                        {{ __('Remember Me') }}
-                    </label>
-                </div>
-    
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
+                    <a href="#">
+                        <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
                     </a>
-                @endif 
+                    <h1>Welcome back</h1>
+                    <p>Welcome back! Please enter your details.</p>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="email">{{ __('Email') }}</label>
+                            <input type="email" placeholder="Enter Email"
+                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                autocomplete="email" autofocus>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="password-field">{{ __('Password') }}</label>
+                            <input id="password-field" placeholder="••••••••" type="password"
+                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                autocomplete="current-password">
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{
+                                    old('remember') ? 'checked' : '' }}> 
+                                <label class="form-check-label" for="remember">
+                                    Remember for 30 days
+                                </label>
+                            </div>
+                            <div class="forgot">
+                                @if (Route::has('password.request'))
+                                    <a href="{{ route('password.request') }}">
+                                        {{ __('Forgot Password?') }}
+                                    </a>
+                                    @endif 
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <button class="btn btn-submit" type="submit">Next</button>
+                        </div>
+                        <div class="optional-txt">
+                            <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-bttn">
-                    <button type="submit" class="btn btn-submit"> {{ __('LOGIN') }}</button>
-                </div>
-                </form>
-                <div class="login-logo-wrap text-center mt-3"> 
-                    <p>Don't have an account? <a href="{{ url('/register') }}" class="registerr">Register</a></p>
+                <!-- login form end -->
+            </div>
+            <div class="col-lg-6 px-0">
+                <div class="auth-side-img d-none d-lg-block">
+                    <img src="{{ asset('latest/assets/images/auth/auth.png') }}" alt="Image" class="img-fluid">
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section>
 <!-- ====== login page content end ====== -->
+
 @endsection
 
 @section('script')
 <script>
-
     function changeType() {
       var field = document.getElementById("password-field");
       var clickk = document.getElementById("eye-click");
@@ -94,5 +111,5 @@ Login
       }
 
     }
-  </script>
+</script>
 @endsection

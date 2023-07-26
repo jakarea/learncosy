@@ -49,13 +49,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <div class="form-flex mb-2">
-                                        <label for="username">Username: </label>
-                                        <input type="text" placeholder="Enter username" name="username"
+                                        <label for="username">Subdomain: </label>
+                                        <input type="text" placeholder="Enter Subdomain" name="username"
                                             class="form-control @error('username') is-invalid @enderror"
                                             value="{{ $user->username }}" id="username" {{ $user->username ?
                                         'disabled' : ''}}>
                                     </div>
-                                    <span class="warning-txt text-end">After set the username, it's not
+                                    <span class="warning-txt text-end">After set the Subdomain, it's not
                                         changeable.</span>
                                     <span class="invalid-feedback">@error('username'){{ $message }}
                                         @enderror</span>

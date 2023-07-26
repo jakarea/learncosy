@@ -7,9 +7,10 @@ use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Mail\PackageSubscribe;
-use Stripe\Checkout\Session;
-use App\Models\SubscriptionPackage;
+use Stripe\Checkout\Session; 
+use App\Mail\PackageSubscribeCancle;
 use Illuminate\Support\Facades\Mail;
+use App\Models\SubscriptionPackage; 
 use PDF;
 class SubscriptionController extends Controller
 {

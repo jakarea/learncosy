@@ -330,7 +330,6 @@ class CourseController extends Controller
 
         $course->save();
 
-
         // Send email
         // Mail::to('email-here')->send(new CourseUpdated($course));
         // students email who are enrolled with this course

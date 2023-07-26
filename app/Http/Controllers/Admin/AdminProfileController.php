@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Mail\PasswordChanged;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;   
 use Illuminate\Support\Str; 
 
 class AdminProfileController extends Controller
