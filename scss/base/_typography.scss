@@ -1,5 +1,5 @@
 // font import  
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap");
 
 h1,
 h2 {
@@ -25,17 +25,6 @@ p {
 }
 
 body {
-    background-color: #F4F8FC;
-    // font-family: Gilroy-Medium;
-    font-family: 'Poppins', sans-serif;
-}
- 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #000000;
-    // font-family: Gilroy-SemiBold;
+    background-color: #F9FAFB;  
+    font-family: "Inter", sans-serif;
 }

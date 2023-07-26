@@ -1,233 +1,229 @@
-@extends('layouts/admin')
+@extends('layouts.latest.admin')
 @section('title')
-    Home Page
+Home Page
 @endsection
-
-
 {{-- page style @S --}}
 @section('style')
-    <link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('dashboard-assets/css/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashboard-assets/css/dashboard.css') }}">
-    <link href="{{ asset('dashboard-assets/css/responsive.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
 
-    <style>
-        .blink {
-            animation: blink-animation 1s steps(2, start) infinite;
-        }
-
-        @keyframes blink-animation {
-            to {
-                visibility: hidden;
-            }
-        }
-    </style>
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-    <main class="common-page-wrap dashboard-page-wrap">
-
-        <!-- dashboard chart box @s -->
-        <div class="row mt-4">
+<main class="dashboard-page-wrap">
+    <div class="container-fluid">
+        <div class="row">
             @can('instructor')
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-12 col-xxl-12">
+            <div class="col-12 mb-4">
                 <!-- Check if not purchase subscription then show alert with subscription link -->
                 {!! isInstructorSubscribed(auth()->user()->id) !!}
             </div>
             @endcan
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
-                <div class="card-box total-client-box">
+                <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
                             <h5>Students</h5>
                             <h4> {{ $studentsCount }}</h4>
-                        </div>
-                        <img src="{{ asset('dashboard-assets/images/chart-1.svg') }}" alt="Chart" class="img-fluid">
+                        </div> 
                     </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
-                <div class="card-box total-client-box">
+                <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
                             <h5>Instructors</h5>
                             <h4> {{ $instructorsCount }}</h4>
-                        </div>
-                        <img src="{{ asset('assets/images/graph-8.svg') }}" alt="Chart" class="img-fluid">
+                        </div> 
                     </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
-                <div class="card-box total-client-box">
+                <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
                             <h5>Course</h5>
                             <h4> {{ $courseCount }}</h4>
-                        </div>
-                        <img src="{{ asset('assets/images/graph-8.svg') }}" alt="Chart" class="img-fluid">
+                        </div> 
                     </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
-                <div class="card-box total-client-box">
+                <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4> {{ $totalEarnings }}</h4>
-                        </div>
-                        <img src="{{ asset('assets/images/graph-8.svg') }}" alt="Chart" class="img-fluid">
+                            <h4>{{ $totalEarnings }}</h4>
+                        </div> 
                     </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
-            </div>
-
+            </div> 
         </div>
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <!-- project statistic @s -->
-                <div class="card-box project-statistic-wrap">
-                    <div class="statics-head">
-                        <h5>Earnings</h5>
+            <div class="col-xl-8">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Revenue</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
                     </div>
                     <div id="earningChart"></div>
                 </div>
-                <!-- project statistic @e -->
             </div>
-
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <!-- project statistic @s -->
+            <div class="col-xl-4">
+                <div class="top-performing-course mt-15">
+                    <div class="d-flex">
+                        <h5>Top Performing Courses</h5>
+                        <a href="#">View All</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"> 
+            {{-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12"> 
                 <div class="card-box project-statistic-wrap">
                     <div class="statics-head">
                         <h5>Statistics</h5>
                     </div>
                     <div id="monthly_earning"></div>
                 </div>
-            </div>
-
+            </div>  --}}
         </div>
-        <!-- dashboard chart box @e -->
+    </div>
+    
+    
+    <!-- dashboard chart box @e -->
 
-        <!-- dashboard projects and messages box @s -->
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-                <!-- project statistic @s -->
-                <div class="card-box project-statistic-wrap">
-                    <div class="statics-head">
-                        <h5>Students</h5>
-                    </div>
-                    <div id="lineChart"></div>
+    <!-- dashboard projects and messages box @s -->
+    {{-- <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+            <!-- project statistic @s -->
+            <div class="card-box project-statistic-wrap">
+                <div class="statics-head">
+                    <h5>Students</h5>
                 </div>
-                <!-- project statistic @e -->
+                <div id="lineChart"></div>
             </div>
-            <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6">
-                <!-- message box @s -->
-                <div class="card-box message-main-box">
-                    <!-- header @s -->
-                    <div class="media headers">
-                        <div class="media-body">
-                            <h5>Messages</h5>
-                            <p>Lorem ipsum dolor sit amet</p>
-                        </div>
-                        <a href="#" class="common-bttn">+New Messages</a>
-                    </div>
-                    <!-- header @e -->
-
-                    <!-- messages list box @s -->
-                    <div class="messages-items-wrap">
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
-                            </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
-                            </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
-                        <!-- item @s -->
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                </div>
-                                <div class="media-body">
-                                    <h5>Maren Rosser </h5>
-                                    <p>Hei, dont forget to clear server cache!</p>
-                                </div>
-                            </div>
-                            <h6>25min ago</h6>
-                            <div class="action">
-                                <a href="#">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- item @e -->
-                    </div>
-                    <!-- messages list box @e -->
-                </div>
-                <!-- message box @e -->
-            </div>
+            <!-- project statistic @e -->
         </div>
-        <!-- dashboard projects and messages box @e -->
-    </main>
+        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-6">
+            <!-- message box @s -->
+            <div class="card-box message-main-box">
+                <!-- header @s -->
+                <div class="media headers">
+                    <div class="media-body">
+                        <h5>Messages</h5>
+                        <p>Lorem ipsum dolor sit amet</p>
+                    </div>
+                    <a href="#" class="common-bttn">+New Messages</a>
+                </div>
+                <!-- header @e -->
+
+                <!-- messages list box @s -->
+                <div class="messages-items-wrap">
+                    <!-- item @s -->
+                    <div class="messages-item">
+                        <div class="media">
+                            <div class="avatar">
+                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
+                                    class="img-fluid">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <div class="media-body">
+                                <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
+                                <p>Hei, dont forget to clear server cache!</p>
+                            </div>
+                        </div>
+                        <h6>25min ago</h6>
+                        <div class="action">
+                            <a href="#">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- item @e -->
+                    <!-- item @s -->
+                    <div class="messages-item">
+                        <div class="media">
+                            <div class="avatar">
+                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
+                                    class="img-fluid">
+                                <i class="fas fa-circle"></i>
+                            </div>
+                            <div class="media-body">
+                                <h5>Maren Rosser <i class="fa-solid fa-check-double"></i></h5>
+                                <p>Hei, dont forget to clear server cache!</p>
+                            </div>
+                        </div>
+                        <h6>25min ago</h6>
+                        <div class="action">
+                            <a href="#">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- item @e -->
+                    <!-- item @s -->
+                    <div class="messages-item">
+                        <div class="media">
+                            <div class="avatar">
+                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
+                                    class="img-fluid">
+                            </div>
+                            <div class="media-body">
+                                <h5>Maren Rosser </h5>
+                                <p>Hei, dont forget to clear server cache!</p>
+                            </div>
+                        </div>
+                        <h6>25min ago</h6>
+                        <div class="action">
+                            <a href="#">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- item @e -->
+                </div>
+                <!-- messages list box @e -->
+            </div>
+            <!-- message box @e -->
+        </div>
+    </div> --}}
+    <!-- dashboard projects and messages box @e -->
+</main>
 @endsection
 
 @section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
-    <script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
+<script src="{{ asset('dashboard-assets/js/multiple-chart.js') }}"></script>
 
-    <script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
-    <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
+<script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
+<script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
 
-    <script>
-        // donut Chart
+<script>
+    // donut Chart
         // const course_data = json($course_wise_payments);
         const course_data = {};
 
@@ -285,10 +281,10 @@
 
         var chart = new ApexCharts(document.querySelector("#course_earning"), options);
         chart.render();
-    </script>
+</script>
 
-    <script>
-        // line chart for active and inactive students
+<script>
+    // line chart for active and inactive students
         const data = @json($activeInActiveStudents);
 
         var options = {
@@ -340,10 +336,10 @@
 
         var chart = new ApexCharts(document.querySelector("#lineChart"), options);
         chart.render();
-    </script>
-    
-    <script>
-        // chart for Earnings
+</script>
+
+<script>
+    // chart for Earnings
         const earnings = @json($earningByDates);
         const earningsKeys = Object.keys(earnings)
         const minDateForThisChart = earningsKeys.reduce((acc, current) => current < acc ? current : acc, earningsKeys[0])
@@ -438,10 +434,10 @@
 
         var chart = new ApexCharts(document.querySelector("#earningChart"), options);
         chart.render();
-    </script>
+</script>
 
 <script>
-// Earning by month
+    // Earning by month
 var earningByMonths = @json($earningByMonth);
 
 var options = {
@@ -525,6 +521,6 @@ var options = {
 
         var chart = new ApexCharts(document.querySelector("#monthly_earning"), options);
         chart.render();
-    </script>
+</script>
 
 @endsection

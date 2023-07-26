@@ -2,219 +2,209 @@
 @use './util/variabls' as v;
 @use './util/media-query' as q;
 
-.header-section {
-    padding: 0.5rem 1.2rem;
-    padding-top: 0.8rem; 
-    background: v.$gdbg; 
-    position: fixed;
-    width: 100%;
-    z-index: 9999!important;
-    height: 5rem;
-}
 
-.header-left-part {
-    display: grid;
-    grid-template-columns: 14.7rem 1fr;
-}
+.header-area {
+    border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+    background: var(--neutral-color-white, #FFF);
+    padding: 0rem 1rem;
 
-.header-logo-wrap {
-    @include m.df(space-between);
-    a{
-        display: inline-block;
-        img{
-            max-width: 12rem;
-            min-height: 3rem;
-            object-fit: cover;
-            max-height: 3.4rem
-        }
-    }
-    
-}
+    .navbar-nav {
+        .nav-item {
+            position: relative;
 
-.header-search-wrap {
-    @include m.df;
-    margin-left: 2rem;
+            .nav-link {
+                color: #66768E;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.5rem;
+                padding: 1.5rem 1.25rem;
+                display: flex;
+                transition: all linear .3s;
+                align-items: center;
 
-    input {
-        border: none;
-        background-color: transparent;
-        @include m.para;
-        padding-left: 0.8rem;
-        width: 100%;
-        display: block;
-        color: v.$light;
-    }
-}
-
-.header-start-menu-wrapper {
-    @include m.df(flex-end);
-
-    .header-navbar-wrap {
-        text-align: end;
-
-        .head-navbar {
-            @include m.df;
-
-            .link-item {
-                .link-click {
-                    @include m.para;
-                    margin-right: 1.6rem;
-                    color: v.$light;
+                i {
+                    margin-left: 0.3rem;
+                    font-size: 14px;
                 }
             }
-        }
-    }
 
-    .header-right-icon-wrap {
-        .icon-nav {
-            @include m.df(flex-end);
+            .submenu-box {
+                position: absolute;
+                left: -25px;
+                bottom: -200px;
+                z-index: 99;
+                background-color: #fff;
+                min-width: 220px;
+                padding: .8rem;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                transform: translateY(-15%);
+                visibility: hidden;
+                transition: all linear .3s;
 
-            .dark-mode-bttn {
-                @include m.df;
-                background: v.$third;
-                padding: .3rem .8rem;
-                border-radius: 200px;
-                margin-right: 0.6rem;
-                cursor: pointer;
-                transition: all linear .3;
+                li {
+                    a {
+                        display: block;
+                        padding: .5rem 1rem;
+                        color: #66768E;
+                        font-size: 1rem;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.5rem;
+                        background-color: #f1f1f1;
+                        border-radius: 6px;
+                        margin-bottom: 5px;
+                        transition: all linear .3s;
 
-                .fa-solid {
-                    color: v.$fourth;
-                    margin-right: 0.4rem;
-                }
+                        &:hover {
+                            transform: translateX(5%);
+                            background-color: #294CFF;
+                            color: #fff;
+                        }
+                    }
 
-                span {
-                    @include m.para(.8rem, 600, v.$dark)
-                }
-
-                &:hover {
-                    background-color: v.$dark;
-
-                    span {
-                        color: v.$light;
+                    &:last-child {
+                        a {
+                            margin-bottom: 0;
+                        }
                     }
                 }
             }
-        }
-    }
-}
 
-// collapse menu css @S 
-
-// settings toggle css @S
-.settings-dropdown{
-    border-radius: .2rem;
-    padding: .20rem 0;
-    li{
-        a{
-            display: block;
-            @include m.para(.9rem,400,v.$fourth);
-            padding: .4rem .6rem;
-            i{
-                margin-right: 0.4rem;
-                color: v.$btnbg;
+            .nav-link.active {
+                color: v.$dark;
             }
-            &:hover{
-                background: v.$bga;
-            }
-        }
-    }
-}
-// settings toggle css @E
 
-.header-right-icon-wrap{
-    .dropdown{
-        a{
-            i.fa-volleyball{
-                font-size: 1.5rem;
-                color: v.$light;
-            }
-        }
-    }
-}
-
-.header-search-wrap input::placeholder {
-    color: v.$light;
-    opacity: 1; /* Firefox */
-  }
-  
-  .header-search-wrap input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: v.$light;
-  }
-  
-  .header-search-wrap input::-ms-input-placeholder { /* Microsoft Edge */
-   color: v.$light;
-  }
-
-
-// responsive css start
-@include q.responsive(phone) { 
-    .header-left-part { 
-        grid-template-columns: 100%;
-    }
-    .header-search-wrap{
-        margin: 0;
-        display: none;
-    }  
-    .header-section {
-        padding: 0.4rem 1rem;
-
-        .header-start-menu-wrapper {
-            justify-content: space-between;
-
-            .header-navbar-wrap {
-                width: 100%;
-                display: block;
-                justify-content: space-between;
-                margin-top: 1rem;
-                .head-navbar{
-                    justify-content: space-between;
+            &:hover {
+                .submenu-box {
+                    visibility: visible;
+                    transform: translateY(0);
                 }
             }
         }
     }
-    .header-start-menu-wrapper .header-navbar-wrap .head-navbar .link-item .link-click{
-        margin-right: 0;
-        font-size: .86rem;
+
+    .d-flex {
+        align-items: center;
+
+        a.bttn {
+            border-radius: 0.75rem;
+            border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+            background: var(--neutral-white, #FFF);
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1.5rem;
+            position: relative;
+
+            span {
+                position: absolute;
+                right: -6px;
+                top: -6px;
+                border-radius: 2.6875rem;
+                border: 3px solid var(--neutral-color-white, #FFF);
+                background: var(--error-red, #E43242);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 1.25rem;
+                height: 1.25rem;
+                color: var(--neutral-color-white, #FFF);
+                font-size: 0.6875rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.25rem;
+                /* 181.818% */
+            } 
+        }
+        a.avatar{
+            width: 2.75rem;
+            height: 2.75rem;
+            border: 2px solid #294CFF;
+            border-radius: 0.75rem;  
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-left: 1.5rem;
+        }
+        .dropdown{
+            .btn{
+                border-radius: 0.75rem;
+                border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+                background: var(--neutral-white, #FFF);
+                display: inline-block;
+                width: 2.5rem;
+                height: 2.5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+            }
+        }
+    }
+}
+
+// responsive css start
+@include q.responsive(phone) {
+    .header-area{
+        padding: 0;
+    }
+
+    .navbar-toggler{
+        border: 0;
+        padding: 0;
+        i{
+            color: #294CFF;
+            font-size: 1.2rem;
+        }
+    }
+    .header-area .navbar-nav .nav-item .nav-link{
+        padding: 0;
+        margin: 1rem 0;
+        text-align: center;
+        justify-content: center;
+    }
+    .header-area .navbar-nav .nav-item .submenu-box{
+        left: 24%;
+    }
+    .header-area .d-flex{
+        margin: 1rem 0;
+        justify-content: center;
     }
 }
 
 @include q.responsive(landphone) {
-    .header-left-part { 
-        grid-template-columns: 100%;
+    .header-area{
+        padding: 0;
     }
-    .header-search-wrap{
-        margin: 0;
-        display: none;
+
+    .navbar-toggler{
+        border: 0;
+        padding: 0;
+        i{
+            color: #294CFF;
+            font-size: 1.2rem;
+        }
     }
-    .header-start-menu-wrapper{
-        justify-content: flex-start;
-        margin-top: 1rem;
+    .header-area .navbar-nav .nav-item .nav-link{
+        padding: 0;
+        margin: 1rem 0;
+        text-align: center;
+        justify-content: center;
+    }
+    .header-area .navbar-nav .nav-item .submenu-box{
+        left: 24%;
+    }
+    .header-area .d-flex{
+        margin: 1rem 0;
+        justify-content: center;
     }
 }
 
-@include q.responsive(tablet) {
-    .header-left-part { 
-        grid-template-columns: 100%;
-    }
-    .header-search-wrap{
-        margin: 0;
-        display: none;
-    }
-    .header-start-menu-wrapper{
-        justify-content: flex-start;
-        margin-top: 1rem;
-    }
-}
-@include q.responsive(landtablet) {
-    .header-left-part { 
-        grid-template-columns: 70% 30%;
-    }
-    .header-search-wrap{
-        margin: 0;
-        display: none;
-    }
-    .header-start-menu-wrapper{
-        justify-content: flex-start; 
-    }
-}
+@include q.responsive(tablet) {}
+
+@include q.responsive(landtablet) {}

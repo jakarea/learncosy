@@ -1,0 +1,175 @@
+.header-area {
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--neutral-color-white, #FFF);
+  padding: 0rem 1rem;
+}
+.header-area .navbar-nav .nav-item {
+  position: relative;
+}
+.header-area .navbar-nav .nav-item .nav-link {
+  color: #66768E;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  transition: all linear 0.3s;
+  align-items: center;
+}
+.header-area .navbar-nav .nav-item .nav-link i {
+  margin-left: 0.3rem;
+  font-size: 14px;
+}
+.header-area .navbar-nav .nav-item .submenu-box {
+  position: absolute;
+  left: -25px;
+  bottom: -200px;
+  z-index: 99;
+  background-color: #fff;
+  min-width: 220px;
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transform: translateY(-15%);
+  visibility: hidden;
+  transition: all linear 0.3s;
+}
+.header-area .navbar-nav .nav-item .submenu-box li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #66768E;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  transition: all linear 0.3s;
+}
+.header-area .navbar-nav .nav-item .submenu-box li a:hover {
+  transform: translateX(5%);
+  background-color: #294CFF;
+  color: #fff;
+}
+.header-area .navbar-nav .nav-item .submenu-box li:last-child a {
+  margin-bottom: 0;
+}
+.header-area .navbar-nav .nav-item .nav-link.active {
+  color: #000000;
+}
+.header-area .navbar-nav .nav-item:hover .submenu-box {
+  visibility: visible;
+  transform: translateY(0);
+}
+.header-area .d-flex {
+  align-items: center;
+}
+.header-area .d-flex a.bttn {
+  border-radius: 0.75rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--neutral-white, #FFF);
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1.5rem;
+  position: relative;
+}
+.header-area .d-flex a.bttn span {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  border-radius: 2.6875rem;
+  border: 3px solid var(--neutral-color-white, #FFF);
+  background: var(--error-red, #E43242);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--neutral-color-white, #FFF);
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  /* 181.818% */
+}
+.header-area .d-flex a.avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid #294CFF;
+  border-radius: 0.75rem;
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 1.5rem;
+}
+.header-area .d-flex .dropdown .btn {
+  border-radius: 0.75rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--neutral-white, #FFF);
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 320px) and (max-width: 574px) {
+  .header-area {
+    padding: 0;
+  }
+  .navbar-toggler {
+    border: 0;
+    padding: 0;
+  }
+  .navbar-toggler i {
+    color: #294CFF;
+    font-size: 1.2rem;
+  }
+  .header-area .navbar-nav .nav-item .nav-link {
+    padding: 0;
+    margin: 1rem 0;
+    text-align: center;
+    justify-content: center;
+  }
+  .header-area .navbar-nav .nav-item .submenu-box {
+    left: 24%;
+  }
+  .header-area .d-flex {
+    margin: 1rem 0;
+    justify-content: center;
+  }
+}
+@media (min-width: 574px) and (max-width: 767px) {
+  .header-area {
+    padding: 0;
+  }
+  .navbar-toggler {
+    border: 0;
+    padding: 0;
+  }
+  .navbar-toggler i {
+    color: #294CFF;
+    font-size: 1.2rem;
+  }
+  .header-area .navbar-nav .nav-item .nav-link {
+    padding: 0;
+    margin: 1rem 0;
+    text-align: center;
+    justify-content: center;
+  }
+  .header-area .navbar-nav .nav-item .submenu-box {
+    left: 24%;
+  }
+  .header-area .d-flex {
+    margin: 1rem 0;
+    justify-content: center;
+  }
+}
