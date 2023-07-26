@@ -23,7 +23,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- all css start --> 
     <!-- App css -->
-    <link href="{{ asset('latest/assets/auth-css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
+    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
     <link href="{{ asset('latest/assets/auth-css/style.css') }}" rel="stylesheet" type="text/css" />  
     <link href="{{ asset('latest/assets/auth-css/header.css') }}" rel="stylesheet" type="text/css" />   
     <link href="{{ asset('latest/assets/auth-css/auth.css') }}" rel="stylesheet" type="text/css" /> 
