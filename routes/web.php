@@ -400,9 +400,21 @@ Route::fallback(function () {
 
 
 // demo test route
-Route::get('/custom/verify', function(){
+Route::get('/custom/1', function(){
     return view('auth.verify');
 });
-Route::get('/custom/price', function(){
+Route::get('/custom/2', function(){
     return view('latest-auth.price');
+});
+Route::get('/custom/3', function(){
+    return view('latest-auth.subdomain');
+});
+Route::get('/custom/4', function(){
+    return view('latest-auth.connect');
+});
+Route::get('/custom/5', function(){
+    return view('latest-auth.theme-settings');
+});
+Route::get('/custom/6', function(){
+    return view('latest-auth.make-course');
 });

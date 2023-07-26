@@ -4,8 +4,9 @@
   top: 0;
   width: 100%;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
-  background: var(--neutral-color-white, #FFF);
+  border-bottom: 1px solid #E5ECF6;
+  background: #FFF;
+  z-index: 9999;
 }
 
 .top-bttn a {
