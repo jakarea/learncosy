@@ -90,35 +90,40 @@ Verify Email
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <div class="row justify-content-center">
+                @foreach( getSubscriptionPackage() as $package )
+                    @php
+                        $package_featurelist = json_decode($package->features);
+                    @endphp 
                     <div class="col-xl-4 col-sm-10 col-md-6">
                         <div class="pricing-box">
                             <div class="pricing-icon">
                                 <img src="{{asset('latest/assets/images/icons/pricing-01.svg')}}" alt="Prici" class="img-fluid">
                             </div>
                             <div class="txt">
-                                <h5>Basic plan</h5>
-                                <h3>$10/mth</h3>
-                                <h6>Billed annually.</h6>
+                                <h5>{{$package->name}}</h5>
+                                <h3>${{ str_replace('.00', '', $package->amount) }}<span>/{{ $package->type[0] }}</span></h3>
+                                <h6>Billed {{ $package->type }}</h6>
 
                                 <ul>
+                                    @foreach($package_featurelist as $feature)
                                     <li><img src="{{asset('latest/assets/images/icons/check-circle.svg')}}" alt="Prici" class="img-fluid">
-                                        <span>Access to all basic features</span></li>
-                                    <li><img src="{{asset('latest/assets/images/icons/check-circle.svg')}}" alt="Prici" class="img-fluid">
-                                        <span>Basic reporting and analytics</span></li>
-                                    <li><img src="{{asset('latest/assets/images/icons/check-circle.svg')}}" alt="Prici" class="img-fluid">
-                                        <span>Up to 10 individual users</span></li>
-                                    <li><img src="{{asset('latest/assets/images/icons/check-circle.svg')}}" alt="Prici" class="img-fluid">
-                                        <span>20GB individual data each user</span></li>
-                                    <li><img src="{{asset('latest/assets/images/icons/check-circle.svg')}}" alt="Prici" class="img-fluid">
-                                        <span>Basic chat and email support</span></li>
+                                        <span>{{ $feature }}</span></li>
+                                    @endforeach
                                 </ul>
                             </div>
+                            @if (!isSubscribed($package->id))
                             <div class="bttn">
-                                <a href="#">Get started</a>
+                                <a href="{{ route('instructor.subscription.create', $package->id) }}" class="will-subscribe">Subscribe Now</a> 
                             </div>
+                            @else
+                            <div class="bttn">
+                                <a href="#" class="will-subscribe bg-secondary">Subscribed</a>
+                            </div>
+                            @endif
                         </div>
                     </div>
-                    <div class="col-xl-4 col-sm-10 col-md-6">
+                @endforeach
+                    <!-- <div class="col-xl-4 col-sm-10 col-md-6">
                         <div class="pricing-box">
                             <div class="pricing-icon">
                                 <img src="{{asset('latest/assets/images/icons/pricing-02.svg')}}" alt="Prici" class="img-fluid">
@@ -173,7 +178,7 @@ Verify Email
                                 <a href="#">Get started</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"

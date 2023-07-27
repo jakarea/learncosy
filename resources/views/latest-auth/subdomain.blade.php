@@ -58,14 +58,26 @@ Verify Email
                     </a>
                     <h1>Choose Subdomain</h1>
                     <p>Choose your subdomain.</p>
-                    <form action="" class="ms-0 username-form">
+                    <form action="{{ route('instructor.profile.update', Auth::user()->id) }}" method="POST" class="profile-form create-form-box ms-0 username-form"enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label for="subdomain">Subdomain URL</label>
                         </div>
                         <div class="input-group">
-                            <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
-                                placeholder="write your subdomain" id="subdomain" name="subdomain" aria-describedby="subdomain" autocomplete="subdomain"
+                            @if (Auth::user()->username)
+                            <input type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
+                                placeholder="write your subdomain" id="subdomain" name="username" aria-describedby="subdomain"
+                                value="{{ old('username') ?? Auth::user()->username }}"
+                                autocomplete="subdomain"
+                                readonly
                                 autofocus>
+                            @else
+                            <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
+                                placeholder="write your subdomain" id="subdomain" name="username" aria-describedby="subdomain"
+                                value="{{ old('username') }}"
+                                autocomplete="subdomain"
+                                autofocus>
+                            @endif
                             <span class="input-group-text bg-white" id="subdomain">.learncosy.com</span>
                         </div> 
                         <div class="form-group">
@@ -79,7 +91,7 @@ Verify Email
                             @enderror
                         </div>
                         <div class="form-submit">
-                            <button class="btn btn-submit mx-auto" type="submit">Next</button>
+                            <button type="submit" class="btn btn-submit mx-auto">Save Changes</button>
                         </div>
                     </form>
                 </div>
