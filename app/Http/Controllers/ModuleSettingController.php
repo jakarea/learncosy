@@ -43,11 +43,11 @@ class ModuleSettingController extends Controller
         // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
-            ['value' => json_encode($request->except('_token', 'image', 'logo'))]
+            ['value' => json_encode($request->except('_token', 'image', 'logo', 'lp_bg_image', 'favicon', 'apple_icon'))]
         );
 
         // Check if image or logo has been uploaded
-        if ($request->hasFile('image') || $request->hasFile('logo') || $request->hasFile('lp_bg_image')) {
+        if ($request->hasFile('image') || $request->hasFile('logo') || $request->hasFile('lp_bg_image') || $request->hasFile('favicon') || $request->hasFile('apple_icon')) {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $image_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -62,6 +62,22 @@ class ModuleSettingController extends Controller
                 $destinationPath = public_path('/assets/images/setting');
                 $logo->move($destinationPath, $logo_name);
                 $module_settings->logo = $logo_name;
+            }
+
+            if ($request->hasFile('favicon')) {
+                $favicon = $request->file('favicon');
+                $f_name = rand() . '.' . $favicon->getClientOriginalExtension();
+                $destinationPath = public_path('/assets/images/setting');
+                $favicon->move($destinationPath, $f_name);
+                $module_settings->favicon = $f_name;
+            }
+
+            if ($request->hasFile('apple_icon')) {
+                $apple_icon = $request->file('apple_icon');
+                $apple_icon_name = rand() . '.' . $apple_icon->getClientOriginalExtension();
+                $destinationPath = public_path('/assets/images/setting');
+                $apple_icon->move($destinationPath, $apple_icon_name);
+                $module_settings->apple_icon = $apple_icon_name;
             }
 
             if ($request->hasFile('lp_bg_image')) {
