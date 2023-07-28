@@ -21,7 +21,7 @@ Verify Email
             </div> 
             <div class="col-6">
                 <div class="top-bttn text-end">
-                    <a href="#">Skip</a>
+                    <a href="#" class="skipp_btn">Skip</a>
                 </div>
             </div>
         </div>
@@ -277,5 +277,12 @@ Verify Email
 @endsection
 
 @section('script')
-
+<script>
+    // $(document).ready(function(){
+    //     $('.skipp_btn').on('click', function() {
+    //         alert('ok');
+    //     });
+    // });
+    
+</script>
 @endsection

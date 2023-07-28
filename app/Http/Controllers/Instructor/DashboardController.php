@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Instructor;
 
-use App\Http\Controllers\Controller;
-use App\Models\Checkout;
-use App\Models\Course;
 use Auth;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Checkout;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -106,17 +108,17 @@ class DashboardController extends Controller
     {
         $monthlySums = array_fill(0, 12, 0);
 
-  // Iterate through the data array
-  foreach ($data as $item) {
-    // Extract the month from the created_at value
-    $createdAt = Carbon::parse($item['created_at']);
-    $month = intval($createdAt->format('m'));
+        // Iterate through the data array
+        foreach ($data as $item) {
+            // Extract the month from the created_at value
+            $createdAt = Carbon::parse($item['created_at']);
+            $month = intval($createdAt->format('m'));
 
-    // Add the amount to the corresponding month's sum
-    $monthlySums[$month - 1] += $item['amount'];
-  }
+            // Add the amount to the corresponding month's sum
+            $monthlySums[$month - 1] += $item['amount'];
+        }
 
-  return $monthlySums;
+        return $monthlySums;
         
     }
 
@@ -136,5 +138,13 @@ class DashboardController extends Controller
             }
         }
         return $course_wise_payments;
+    }
+
+    public function username($user_id, Request $request)
+    {
+        $user = User::find($user_id);
+        $user->username = $request->username;
+        $user->save();
+        return redirect('instructor/profile/step-4/complete');
     }
 }
