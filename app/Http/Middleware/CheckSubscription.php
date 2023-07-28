@@ -6,6 +6,7 @@ use Closure;
 use App\Models\Module;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use App\Models\InstructorModuleSetting;
 
 class CheckSubscription
 {
@@ -46,15 +47,10 @@ class CheckSubscription
 
             // Check Module data for instructor
             $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
+            // if modules data found with logged in user id then redirect to dashboard
             if (!$modules) {
-                return redirect('custom/5')->with('error', 'Please create a course to access this feature.');
-            }
-
-            //Check Course data for instructor
-            $courses = Course::where('user_id', $user->id)->first();
-            if (!$courses) {
-                return redirect('custom/6')->with('error', 'Please create a course to access this feature.');
-            }
+                return redirect('custom/5')->with('error', 'Please complete your profile to access this feature.');
+            }            
         }
     
         return $next($request);

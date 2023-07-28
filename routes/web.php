@@ -121,6 +121,9 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
         Route::post('/vimeo/request', 'vimeoUpdate')->name('instructor.vimeo.update');
     });
+    Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
+        Route::post('/updateorinsert', 'store')->name('module.setting.update');
+    });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('dashboard', [DashboardController::class,'index'])->name('instructor.dashboard.index');
@@ -190,7 +193,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
             Route::get('/{id}', 'index')->name('module.setting');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
-            Route::post('/updateorinsert', 'store')->name('module.setting.update');
+            // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {

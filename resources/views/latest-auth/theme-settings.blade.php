@@ -13,7 +13,12 @@ Theme Settings
 @endsection
 
 @section('content')
-
+@php
+$module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+if ( $module_settings ) {
+    $module_settings->value = json_decode($module_settings->value);
+}
+@endphp
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
@@ -114,10 +119,135 @@ Theme Settings
                                         </div>
                                     </div>
                                 </div>
-                                <div class="save-bttns">
-                                    <button type="button" class="btn btn-cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-submit">Save</button>
-                                </div>
+                                <form action="{{ route('module.setting.update') }}" method="POST" class="create-form-box mt-3" enctype="multipart/form-data">
+                                    @csrf
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="meta_title">Meta Title</label>
+
+                                            <input type="text" class="form-control"  name="meta_title" id="meta_title" value="{{ old('meta_title', $module_settings->value->meta_title ?? '')}}"
+                                            class="form-control @error('meta_title') is-invalid @enderror">
+                                         
+                                            <span class="invalid-feedback">@error('meta_title'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="col-lg-12 col-sm-12 col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="meta_title">Meta Description</label>
+
+                                            <textarea name="meta_desc" id="meta_desc" cols="5" rows="3" class="form-control @error('meta_desc') is-invalid @enderror">{{ old('meta_desc', $module_settings->value->meta_desc ?? '')}}</textarea>
+                                         
+                                            <span class="invalid-feedback">@error('meta_desc'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="send_message_by_enter">Send Messages on Enter</label>
+
+                                            <select name="send_message_by_enter" id="send_message_by_enter" class="form-control @error('send_message_by_enter') is-invalid @enderror">
+                                                <option value="1" {{ old('send_message_by_enter', $module_settings->value->send_message_by_enter ?? '') == 1 ? 'selected' : '' }}>Yes</option>
+                                                <option value="0" {{ old('send_message_by_enter', $module_settings->value->send_message_by_enter ?? '') == 0 ? 'selected' : '' }}>No</option>
+                                            </select>                                                                                     
+                                            <span class="invalid-feedback">@error('send_message_by_enter'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="col-lg-12 col-sm-12 col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="primary_color">Primary Color</label>
+
+                                            <input type="color" class="form-control"  name="primary_color" id="primary_color" value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}"
+                                            class="form-control @error('primary_color') is-invalid @enderror">
+                                         
+                                            <span class="invalid-feedback">@error('primary_color'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="secondary_color">Secondary Color</label>
+
+                                            <input type="color" class="form-control"  name="secondary_color" id="secondary_color" value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}"
+                                            class="form-control @error('secondary_color') is-invalid @enderror">
+                                         
+                                            <span class="invalid-feedback">@error('secondary_color'){{ $message }}
+                                                @enderror</span>
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="file-upload">Logo <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="logo" id="file-upload"
+                                                class="form-control  @error('logo') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('logo'){{ $message }}
+                                                @enderror</span>
+                                        </div> 
+                                    </div>
+                                    @if(isset($module_settings->logo))
+                                    <div class="col-md-12">
+                                        <div class="file-prev">
+                                            <div id="file-previews">
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}" alt="">
+                                            </div>
+                                            <button type="button" class="btn" id="close-button"><i
+                                                    class="fas fa-close"></i></button>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    
+                                    <div class="col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="file-upload">Favicon <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="favicon" id="file-upload"
+                                                class="form-control  @error('favicon') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('favicon'){{ $message }}
+                                                @enderror</span>
+                                        </div> 
+                                    </div>
+                                    @if(isset($module_settings->favicon))
+                                    <div class="col-md-12">
+                                        <div class="file-prev">
+                                            <div id="file-previews">
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->favicon) }}" alt="">
+                                            </div>
+                                            <button type="button" class="btn" id="close-button"><i class="fas fa-close"></i></button>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    <div class="col-md-12 mt-3">
+                                        <div class="form-group">
+                                            <label for="file-upload">Apple Icon <sup class="text-danger">*</sup></label>
+                                            <input type="file" name="apple_icon" id="file-upload"
+                                                class="form-control  @error('apple_icon') is-invalid @enderror">
+                                            <span class="invalid-feedback">@error('apple_icon'){{ $message }}
+                                                @enderror</span>
+                                        </div> 
+                                    </div>
+                                    @if(isset($module_settings->apple_icon))
+                                    <div class="col-md-12">
+                                        <div class="file-prev">
+                                            <div id="file-previews">
+                                                <img src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}" alt="">
+                                            </div>
+                                            <button type="button" class="btn" id="close-button"><i class="fas fa-close"></i></button>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    <div class="save-bttns">
+                                        <button type="button" class="btn btn-cancel">Cancel</button>
+                                        <button type="submit" class="btn btn-submit">Save</button>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-lg-12 col-12 col-xl-4">
                                 <div class="meta-box">
