@@ -230,8 +230,20 @@ main {
     }
 }
 
-@include q.responsive(landphone) {}
+@include q.responsive(landphone) {
+    main .container-fluid {
+        padding: 0 1rem;
+    }
+}
 
-@include q.responsive(tablet) {}
+@include q.responsive(tablet) {
+    main .container-fluid {
+        padding: 0 1rem;
+    }
+}
 
-@include q.responsive(landtablet) {}
+@include q.responsive(landtablet) {
+    main .container-fluid {
+        padding: 0 1rem;
+    }
+}

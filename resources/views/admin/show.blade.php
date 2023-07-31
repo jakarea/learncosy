@@ -1,91 +1,114 @@
-@extends('layouts/admin')
+@extends('layouts.latest.admin')
 @section('title') Admin Profile Details Page @endsection
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-<main class="profile-page-wrap">
+<main class="user-profile-view-page">
 
-    {{-- session message @S --}}
-    @include('partials/session-message')
-    {{-- session message @E --}}
-
-    {{-- user profile header area @S --}}
-    <div class="product-filter-wrapper my-0">
-        <div class="product-filter-box mt-0">
-            <div class="password-change-txt">
-                <h1 class="mb-1">Admin Profile</h1>
-                <p><span class="text-info"> {{ $user->name }}</span> profile details.</p>
-            </div>
-            <div class="form-grp-btn mt-0 ms-auto">
-                <a href="{{ url('admin/alladmin') }}" class="btn me-3"><i class="fas fa-list me-2"></i> All Admin</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                {{-- session message @E --}}
             </div>
         </div>
-    </div>
-    {{-- user profile header area @E --}}
-
-    {{-- profile information @S --}}
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="change-password-form w-100 customer-profile-info">
-                <div class="text-end">
-                    <a href="{{url('admin/alladmin/'.$user->id.'/edit')}}">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </a>
-                </div>
-                <div class="set-profile-picture">
-                    <div class="media justify-content-center">
+        {{-- profile information @S --}}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="user-profile-picture">
+                    <div class="cover-img">
+                        <img src="{{ asset('latest/assets/images/cover.png') }}" alt="Cover" class="img-fluid">
+                    </div>
+                    <div class="media">
                         @if($user->avatar)
-                        <img src="{{ asset('assets/images/admin/'.$user->avatar) }}" alt="{{$user->name}}" class="img-fluid">
+                        <img src="{{ asset('assets/images/admin/'.$user->avatar) }}" alt="{{$user->name}}"
+                            class="img-fluid">
                         @else
-                        <span>{!! strtoupper($user->name[0]) !!}</span>
-                        @endif 
-                    </div>
-                    <div class="role-label">
-                        <span class="badge rounded-pill bg-dark">{{$user->user_role}}</span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <h3>{{$user->name}}</h3> 
-                    <p>{{ Str::limit($user->short_bio, $limit = 65, $end = '...') }}</p>
-                    <!-- details box @S -->
-                    <div class="form-group mt-3 mb-1 ">
-                        <label for="" class="mb-0"><i class="fa-solid fa-envelope"></i> Email: </label>
-                        <p>{{$user->email}}</p>
+                        <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
+                        @endif
+                        <div class="media-body">
+                            <h3>{{$user->name}}</h3>
+                            <p>{{$user->user_role}}</p>
+                        </div>
                     </div>
                 </div>
-                <!-- details box @E -->
-                <h6>Information :</h6> 
-                <div class="form-group mb-0">
-                    <label for="" class="mb-0"><i class="fa-solid fa-phone"></i> Phone: </label>
-                    <p>{{$user->phone ? $user->phone : '--'}}</p>
-                </div> 
-                @php $social_links = explode(",",$user->social_links) @endphp
-                @foreach($social_links as $key => $social_link)
-                <div class="form-group my-0"> 
-                    <label for="" class="mb-0"><i class="fas fa-link"></i>Social: </label>
-                    <p>{{$social_link ? $social_link : '--'}}</p>
+                <div class="user-details-box">
+                    <h5>About Me</h5>
+                    <p>{{ $user->short_bio }}</p>
+                    {!! $user->description !!}
                 </div>
-                @endforeach 
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-info-box">
+                    <h4>Contact</h4>
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/icons/email.svg') }}" alt="email" class="img-fluid">
+                        <div class="media-body">
+                            <h6>Email</h6>
+                            <a href="mailto:{{$user->email}}">{{$user->email}}</a>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/icons/phone.svg') }}" alt="email" class="img-fluid">
+                        <div class="media-body">
+                            <h6>Phone</h6>
+                            <a href="#">{{$user->phone ? $user->phone : '--'}}</a>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
+                        <div class="media-body">
+                            <h6>Company</h6>
+                            <a href="#">{{$user->company_name ? $user->company_name : '--'}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-info-box mt-4">
+                    <h4>Social Link</h4>
+                    @php
+                    $social_links = explode(",", $user->social_links);
+                    use Illuminate\Support\Str;
+                    @endphp
+
+                    @foreach ($social_links as $social_link)
+                    @php
+                    $url = $social_link;
+                    $host = parse_url($url, PHP_URL_HOST);
+                    $domain = Str::after($host, 'www.');
+                    $domain = Str::before($domain, '.');
+                    @endphp
+
+                    <div class="media">
+                        @if ($domain == 'linkedin')
+                        <img src="{{ asset('latest/assets/images/icons/linkedin.svg') }}" alt="linkedin" class="img-fluid">
+                        @elseif ($domain == 'instagram')
+                        <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
+                        @elseif ($domain == 'twitter')
+                        <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        @else
+                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
+                        @endif
+                        
+                        <div class="media-body">
+                            <h6>{{ $domain ? $domain : '--' }}</h6>
+                            <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
             </div>
         </div>
-        <div class="col-lg-8">
-            <div class="row">
-                <div class="col-12">
-                    <div class="productss-list-box payment-history-table instructor-details-box mt-0 mb-4">
-                        <h5>Details :</h5>
-                        {!! $user->description !!}
-                    </div>
-                </div> 
-            </div>
-        </div>
+        {{-- profile information @E --}}
     </div>
-    {{-- profile information @E --}}
+
 
 </main>
 @endsection

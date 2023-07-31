@@ -202,3 +202,18 @@ main .container-fluid {
     margin-bottom: 1.5rem;
   }
 }
+@media (min-width: 574px) and (max-width: 767px) {
+  main .container-fluid {
+    padding: 0 1rem;
+  }
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  main .container-fluid {
+    padding: 0 1rem;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  main .container-fluid {
+    padding: 0 1rem;
+  }
+}
