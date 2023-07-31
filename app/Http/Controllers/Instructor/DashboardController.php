@@ -142,6 +142,10 @@ class DashboardController extends Controller
 
     public function username($user_id, Request $request)
     {
+        $request->validate([
+            'username' => 'required|unique:users,username,' . $user_id,
+        ]);
+
         $user = User::find($user_id);
         $user->username = $request->username;
         $user->save();

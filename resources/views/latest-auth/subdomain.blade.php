@@ -77,6 +77,7 @@ Verify Email
                                 value="{{ old('username') }}"
                                 autocomplete="subdomain"
                                 autofocus>
+                                @error('username') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
                             @endif
                             <span class="input-group-text bg-white" id="subdomain">.learncosy.com</span>
                         </div> 
@@ -84,7 +85,7 @@ Verify Email
                             <span>Letter &amp; number only</span>
                         </div>
                         <div class="form-group">
-                            @error('subdomain')
+                            @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

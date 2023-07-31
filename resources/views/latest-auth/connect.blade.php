@@ -20,8 +20,8 @@ Connect
         <div class="row">
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
-                    <a href="#">Back</a>
-                    <a href="#">Do it later</a>
+                    <a href="profile/step-3/complete">Back</a>
+                    <a href="profile/step-5/complete">Do it later</a>
                   </div> 
             </div>
         </div>
