@@ -116,6 +116,24 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 /* ===================== Instructor Routes ===================== */
 /* ============================================================= */
 Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')->group(function () {
+    Route::get('/profile/step-1/complete', function(){
+        return view('auth.verify');
+    });
+    Route::get('/profile/step-2/complete', function(){
+        return view('latest-auth.price');
+    });
+    Route::get('/profile/step-3/complete', function(){
+        return view('latest-auth.subdomain');
+    });
+    Route::get('/profile/step-4/complete', function(){
+        return view('latest-auth.connect');
+    });
+    Route::get('/profile/step-5/complete', function(){
+        return view('latest-auth.theme-settings');
+    });
+    Route::get('/profile/step-6/complete', function(){
+        return view('latest-auth.make-course');
+    });
     // settings page routes
     Route::prefix('settings')->controller(SettingsController::class)->group(function () {
         Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
@@ -123,6 +141,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
     Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
         Route::post('/updateorinsert', 'store')->name('module.setting.update');
+    });
+    // profile management page routes
+    Route::prefix('profile')->controller(DashboardController::class)->group(function () {
+        Route::post('/edit/{id}', 'username')->name('instructor.username.update'); 
     });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {
@@ -402,25 +424,4 @@ Route::get('/logout', function () {
  */
 Route::fallback(function () {
     return redirect()->route('tlogin');
-});
-
-
-// demo test route
-Route::get('/custom/1', function(){
-    return view('auth.verify');
-});
-Route::get('/custom/2', function(){
-    return view('latest-auth.price');
-});
-Route::get('/custom/3', function(){
-    return view('latest-auth.subdomain');
-});
-Route::get('/custom/4', function(){
-    return view('latest-auth.connect');
-});
-Route::get('/custom/5', function(){
-    return view('latest-auth.theme-settings');
-});
-Route::get('/custom/6', function(){
-    return view('latest-auth.make-course');
 });

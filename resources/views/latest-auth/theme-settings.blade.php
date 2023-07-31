@@ -13,12 +13,14 @@ Theme Settings
 @endsection
 
 @section('content')
-@php
-$module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
-if ( $module_settings ) {
-$module_settings->value = json_decode($module_settings->value);
-}
-@endphp
+@if ( Auth::check() )
+    @php
+        $module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+        if ( $module_settings ) {
+            $module_settings->value = json_decode($module_settings->value);
+        }
+    @endphp
+@endif
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">

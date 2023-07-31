@@ -32,24 +32,24 @@ class CheckSubscription
     
             if (!$subscription) {
                 // Subscription not found, show alert or redirect
-                return redirect('custom/2')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
+                return redirect('instructor/profile/step-2/complete')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
             }
 
             // Check User have set username or not
             if (!$user->username) {
-                return redirect('custom/3')->with('error', 'Please set your username to access this feature.');
+                return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your username to access this feature.');
             }
 
             // Check Vimeo Data and Stripe Data
             if (!$user->vimeo_data && !$user->stripe_secret_key && !$user->stripe_public_key) {
-                return redirect('custom/4')->with('error', 'Please complete your profile to access this feature.');
+                return redirect('instructor/profile/step-4/complete')->with('error', 'Please complete your profile to access this feature.');
             }
 
             // Check Module data for instructor
             $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
             // if modules data found with logged in user id then redirect to dashboard
             if (!$modules) {
-                return redirect('custom/5')->with('error', 'Please complete your profile to access this feature.');
+                return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
             }            
         }
     
