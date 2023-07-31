@@ -129,7 +129,7 @@
                                         <img id="uploaded-image-preview" alt="Uploaded Image">
 
                                         <i id="close-icon" class="fas fa-times"></i>
-                                    </div>
+                                    </div> 
                                     
 
                                 </div>

@@ -13,7 +13,7 @@ Verify Email
 <!-- pricing plan page start -->
 <section class="pricing-plan-sec">
     <div class="container">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-6">
                 <div class="top-bttn">
                     <a href="#">Back</a>
@@ -24,7 +24,7 @@ Verify Email
                     <a href="#" class="skipp_btn">Skip</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-lg-12">
                 {{-- verify step start --}}
