@@ -27,8 +27,8 @@ Theme Settings
         {{-- <div class="row">
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
-                    <a href="#">Back</a>
-                    <a href="#">Do it later</a>
+                    <a href="profile/step-4/complete">Back</a>
+                    <a href="profile/step-6/complete">Do it later</a>
                 </div>
             </div>
         </div> --}}
