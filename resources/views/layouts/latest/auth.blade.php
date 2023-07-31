@@ -23,12 +23,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- all css start --> 
     <!-- App css -->
-    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('latest/assets/auth-css/style.css') }}" rel="stylesheet" type="text/css" />  
-    <link href="{{ asset('latest/assets/auth-css/header.css') }}" rel="stylesheet" type="text/css" />   
-    <link href="{{ asset('latest/assets/auth-css/auth.css') }}" rel="stylesheet" type="text/css" /> 
-    @yield('style')
-    <link href="{{ asset('assets/auth-css/responsive.css') }}" rel="stylesheet">  
+    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />    
+    <link href="{{ asset('latest/assets/auth-css/style.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/header.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/auth.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    @yield('style') 
+    <link href="{{ asset('latest/assets/auth-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
 </head>
@@ -43,7 +43,7 @@
         <div class="row">
           <div class="col-12">
             <div class="header-logo ps-md-3">
-              <a href="dashboard.html">
+              <a href="{{url('/')}}">
                 <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Main logo" class="img-fluid">
               </a>
             </div>

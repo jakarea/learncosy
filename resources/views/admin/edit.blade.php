@@ -1,11 +1,9 @@
-@extends('layouts/admin')
+@extends('layouts.latest.admin')
 @section('title') Admin Profile Update Page @endsection
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
