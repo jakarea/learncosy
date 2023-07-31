@@ -23,13 +23,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- all css start -->
     <!-- App css -->
-    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/header.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('latest/assets/admin-css/style.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/header.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     
-    @yield('style')
-    <link href="{{ asset('assets/admin-css/responsive.css') }}" rel="stylesheet">
+    @yield('style') 
+    <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
     @yield('seo')
