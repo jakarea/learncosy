@@ -24,14 +24,14 @@ Theme Settings
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
                     <a href="#">Back</a>
                     <a href="#">Do it later</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-lg-12">
                 {{-- verify step start --}}
@@ -80,15 +80,24 @@ Theme Settings
                                         <p>The logo visible within your Learn Cosy App.</p>
  
                                             <label for="favicon3" class="file-upload-area p-0" id="file-upload-area3">
-                                                @if(isset($module_settings->logo))
-                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
-                                                    alt="">
-                                                @else
+                                                @if(!isset($module_settings->logo))
                                                 <img src="{{asset('latest/assets/images/logo-view.svg')}}" alt="a"
-                                                    class="img-fluid">
+                                                class="img-fluid">
                                                 @endif
                                             </label>
-                                            <div id="uploadedFileContainer3" class="uploaded-file-container"></div>
+                                            <div id="uploadedFileContainer3" class="uploaded-file-container">
+                                                @if(isset($module_settings->logo))
+                                                <div class="uploaded-file"> 
+                                                    <label for="favicon3">
+                                                    <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
+                                                        alt="">
+                                                    </label>
+                                                        <span class="uploaded-file-close">×</span> 
+                                                </div>
+                                                @endif
+                                            </div>
+
+                                            
 
                                         <div class="view"> 
                                             <input type="file" name="logo" id="favicon3"

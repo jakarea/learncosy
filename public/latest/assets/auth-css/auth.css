@@ -642,6 +642,25 @@
 }
 /* gpt css */
 
+/* connect-modal-box */
+.connect-modal-box .modal-content{
+  padding: 1rem;
+  background-color: #fff; 
+}
+
+.connect-modal-box .modal-content .modal-title{
+  font-size: 1.5rem;
+}
+
+.connect-modal-box .modal-content form label{
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+/* connect-modal-box */
+
+
 @media (min-width: 320px) and (max-width: 575px) {
   .auth-form-wrap {
     justify-content: flex-start;
