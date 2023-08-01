@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg header-area">
+<nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
             <img src="{{asset('latest/assets/images/logo.svg')}}" alt="Logo" class="img-fluid">
@@ -8,7 +8,7 @@
             aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
             <ul class="navbar-nav m-auto"> 
                 <li class="nav-item">
                     <a href="{{ url('admin/dashboard') }}" class="{{ Request::is('admin/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
@@ -45,17 +45,38 @@
                             class="img-fluid">
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('/admin/profile/myprofile')}}">My Profile</a></li> 
-                        <li><a class="dropdown-item" href="#">Settings</a></li> 
+                        <li><a class="dropdown-item" href="{{url('/admin/profile/myprofile')}}">My Profile</a></li>  
+
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a> 
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                        </li>
+
                     </ul>
                 </div>
 
-                <a href="#" class="bttn">
+                {{-- <a href="#" class="bttn">
                     <span>5</span>
                     <img src="{{asset('latest/assets/images/icons/bell.svg')}}" alt="a" class="img-fluid">
-                </a>
+                </a> --}}
                 <a href="#" class="avatar">
-                    <img src="{{asset('latest/assets/images/avatar.png')}}" alt="a" class="img-fluid">
+                    @if(auth()->user()->avatar)
+                        @if(auth()->user()->user_role == 'student')
+                        <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
+                            class="img-fluid">
+                        @elseif(auth()->user()->user_role == 'instructor')
+                        <img src="{{ asset('assets/images/instructor/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
+                            class="img-fluid">
+                        @elseif(auth()->user()->user_role == 'admin')
+                        <img src="{{ asset('assets/images/admin/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
+                            class="img-fluid">
+                        @endif
+                    @else
+                        <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
+                    @endif 
                 </a>
             </div>
         </div>
