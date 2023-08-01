@@ -47,7 +47,6 @@ class CheckSubscription
 
             // Check Module data for instructor
             $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
-            // if modules data found with logged in user id then redirect to dashboard
             if (!$modules) {
                 return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
             }            
