@@ -32,8 +32,7 @@ class AdminManagementController extends Controller
     //    return $request->all();
 
        $request->validate([
-           'name' => 'required|string', 
-           'short_bio' => 'string',
+           'name' => 'required|string',
            'phone' => 'string',
            'email' => 'required|email|unique:users,email', 
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
@@ -47,8 +46,7 @@ class AdminManagementController extends Controller
 
        // add admin
        $admin = new User([
-           'name' => $request->name, 
-           'username' => $request->username,
+           'name' => $request->name,  
            'email' => $request->email,
            'user_role' => 'admin',
            'phone' => $request->phone,
@@ -96,8 +94,7 @@ class AdminManagementController extends Controller
          $userId = $id;  
  
          $this->validate($request, [
-             'name' => 'required|string', 
-             'short_bio' => 'string',
+             'name' => 'required|string',  
              'phone' => 'required|string', 
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
@@ -108,11 +105,7 @@ class AdminManagementController extends Controller
         
          $user = User::where('id', $userId)->first(); 
          $user->name = $request->name;
-         if ($request->username) {
-            $user->username =  Str::slug($request->username);
-         }else{
-            $user->username = $user->username;
-        } 
+         $user->username = $user->username;
          if ($request->email) {
             $user->email =  $user->email;
          }

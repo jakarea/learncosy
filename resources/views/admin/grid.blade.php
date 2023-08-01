@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="user-title-box">
-                <h1>Total: <span>20 Admin</span></h1>
+                <h1>Total: <span>{{ count($users) }} Admin</span></h1>
                 <a href="{{ url('admin/alladmin/create') }}"><img src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add Admin</a>
             </div>
         </div>
@@ -73,6 +73,6 @@
         </div> 
     </div>
 </main>
-{{-- ==== Students list page @E ==== --}}
+{{-- ==== user list page @E ==== --}}
 @endsection
 {{-- page content @E --}} 

@@ -7,6 +7,9 @@
     border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
     background: var(--neutral-color-white, #FFF);
     padding: 0rem 1rem;
+    .dropdown-menu[data-bs-popper]{
+        left: -55px;
+    }
 
     .navbar-nav {
         .nav-item {
@@ -119,20 +122,40 @@
                 font-weight: 400;
                 line-height: 1.25rem;
                 /* 181.818% */
-            } 
+            }
         }
-        a.avatar{
-            width: 2.75rem;
-            height: 2.75rem;
-            border: 2px solid #294CFF;
-            border-radius: 0.75rem;  
-            display: inline-block;
-            width: 2.5rem;
-            height: 2.5rem;
-            margin-left: 1.5rem;
+
+        a.avatar {
+            img {
+                width: 2.75rem;
+                height: 2.75rem;
+                border: 2px solid #294CFF;
+                border-radius: 0.75rem;
+                display: inline-block;
+                width: 2.5rem;
+                height: 2.5rem;
+                margin-left: 1.5rem;
+                object-fit: cover;
+            }
+            span.avatar-user{
+                width: 2.75rem;
+                height: 2.75rem;
+                border: 2px solid #294CFF;
+                border-radius: 0.75rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 2.5rem;
+                height: 2.5rem;
+                margin-left: 1.5rem;
+                background-color: #E5ECF6;
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
         }
-        .dropdown{
-            .btn{
+
+        .dropdown {
+            .btn {
                 border-radius: 0.75rem;
                 border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
                 background: var(--neutral-white, #FFF);
@@ -150,56 +173,64 @@
 
 // responsive css start
 @include q.responsive(phone) {
-    .header-area{
+    .header-area {
         padding: 0;
     }
 
-    .navbar-toggler{
+    .navbar-toggler {
         border: 0;
         padding: 0;
-        i{
+
+        i {
             color: #294CFF;
             font-size: 1.2rem;
         }
     }
-    .header-area .navbar-nav .nav-item .nav-link{
+
+    .header-area .navbar-nav .nav-item .nav-link {
         padding: 0;
         margin: 1rem 0;
         text-align: center;
         justify-content: center;
     }
-    .header-area .navbar-nav .nav-item .submenu-box{
+
+    .header-area .navbar-nav .nav-item .submenu-box {
         left: 24%;
     }
-    .header-area .d-flex{
+
+    .header-area .d-flex {
         margin: 1rem 0;
         justify-content: center;
     }
 }
 
 @include q.responsive(landphone) {
-    .header-area{
+    .header-area {
         padding: 0;
     }
 
-    .navbar-toggler{
+    .navbar-toggler {
         border: 0;
         padding: 0;
-        i{
+
+        i {
             color: #294CFF;
             font-size: 1.2rem;
         }
     }
-    .header-area .navbar-nav .nav-item .nav-link{
+
+    .header-area .navbar-nav .nav-item .nav-link {
         padding: 0;
         margin: 1rem 0;
         text-align: center;
         justify-content: center;
     }
-    .header-area .navbar-nav .nav-item .submenu-box{
+
+    .header-area .navbar-nav .nav-item .submenu-box {
         left: 24%;
     }
-    .header-area .d-flex{
+
+    .header-area .d-flex {
         margin: 1rem 0;
         justify-content: center;
     }
