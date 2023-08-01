@@ -14,12 +14,12 @@ Theme Settings
 
 @section('content')
 @if ( Auth::check() )
-    @php
-        $module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
-        if ( $module_settings ) {
-            $module_settings->value = json_decode($module_settings->value);
-        }
-    @endphp
+@php
+$module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+if ( $module_settings ) {
+$module_settings->value = json_decode($module_settings->value);
+}
+@endphp
 @endif
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
@@ -67,8 +67,7 @@ Theme Settings
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="theme-settings-wrap">
-                    <h4>Update theme Settings</h4>
-
+                    <h4>Update theme Settings</h4> 
                     <form action="{{ route('module.setting.update') }}" method="POST" class="create-form-box mt-3"
                         enctype="multipart/form-data">
                         @csrf
@@ -78,30 +77,22 @@ Theme Settings
                                     <div class="logo-box-view">
                                         <h6>Logo</h6>
                                         <p>The logo visible within your Learn Cosy App.</p>
- 
-                                            <label for="favicon3" class="file-upload-area p-0" id="file-upload-area3">
-                                                @if(!isset($module_settings->logo))
-                                                <img src="{{asset('latest/assets/images/logo-view.svg')}}" alt="a"
+
+                                        <label for="favicon3" class="file-upload-area p-0" id="file-upload-area3">
+                                            @if(!isset($module_settings->logo))
+                                            <img src="{{asset('latest/assets/images/logo-view.svg')}}" alt="a"
                                                 class="img-fluid">
-                                                @endif
-                                            </label>
-                                            <div id="uploadedFileContainer3" class="uploaded-file-container">
-                                                @if(isset($module_settings->logo))
-                                                <div class="uploaded-file"> 
-                                                    <label for="favicon3">
-                                                    <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
-                                                        alt="">
-                                                    </label>
-                                                        <span class="uploaded-file-close">×</span> 
-                                                </div>
-                                                @endif
-                                            </div>
+                                            @else
+                                            <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
+                                                alt="a" class="img-fluid">
+                                            @endif
+                                        </label>
 
-                                            
-
-                                        <div class="view"> 
+                                        <div id="uploadedFileContainer3" class="uploaded-file-container"></div>
+                                        <div class="view">
                                             <input type="file" name="logo" id="favicon3"
-                                                class="form-control d-none @error('logo') is-invalid @enderror" onchange="handleFileUpload(this, 'uploadedFileContainer3', 'file-upload-area3')">
+                                                class="form-control d-none @error('logo') is-invalid @enderror"
+                                                onchange="handleFileUpload(this, 'uploadedFileContainer3', 'file-upload-area3')">
                                             <span class="invalid-feedback">@error('logo'){{ $message }} @enderror</span>
                                         </div>
                                         <h6>App Logo</h6>
@@ -193,7 +184,7 @@ Theme Settings
                                         <h6>Favicon</h6>
                                         <p>Your favicon will be shown in browsers and in search results.</p>
 
-                                         
+
                                         <label for="favicon1" class="file-upload-area" id="file-upload-area1">
                                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="a"
                                                 class="img-fluid">
@@ -274,7 +265,7 @@ Theme Settings
 
 @section('script')
 <script>
-  function handleFileUpload(inputElement, containerId, labelId) {
+    function handleFileUpload(inputElement, containerId, labelId) {
   const containerElement = document.getElementById(containerId);
   const labelElement = document.getElementById(labelId);
 

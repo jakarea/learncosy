@@ -116,24 +116,27 @@
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-6"> 
-                                <div class="form-group m-0">
+                            <div class="col-lg-3"> 
+                                <div class="form-group">
                                     <label for="">Sample Certificates</label>
-                                </div>
+                                </div>  
                                 <div id="image-container">
-                                    <label for="image-input" id="upload-label">
-                                        <img src="{{asset('latest/assets/images/upload-img.svg')}}" alt="Upload" class="img-fluid">
-                                    </label> 
-                                    <input type="file" name="avatar" id="image-input" style="display: none;">
-                                    <div id="uploaded-image" style="display: none;">
-                                        <img id="uploaded-image-preview" alt="Uploaded Image">
-
-                                        <i id="close-icon" class="fas fa-times"></i>
-                                    </div> 
-                                    
-
+                                    <label for="imageInput" class="upload-box">
+                                        <span>
+                                            <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}" alt="Upload" class="img-fluid">
+                                            <p>Upload photo</p>
+                                        </span>
+                                    </label>  
+                                    <input type="file" name="avatar" id="imageInput" accept="image/*" onchange="displayImage(event)" class="d-none">
+                             
                                 </div>
                                 <span id="uploaded-image-name"></span>
+                            </div>
+                            <div class="col-lg-3">
+                                <div id="imageContainer">
+                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
+                                    <img id="uploadedImage" src="" alt="">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-0 mt-3">
@@ -191,7 +194,50 @@
 {{-- page script @S --}}
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="{{asset('assets/js/image-upload.js')}}"></script>
+{{-- <script src="{{asset('assets/js/image-upload.js')}}"></script> --}}
+
+<script>
+    function displayImage(event) {
+        const imageContainer = document.getElementById('imageContainer');
+        const closeIcon = document.getElementById('closeIcon');
+        const uploadedImage = document.getElementById('uploadedImage');
+
+        // Hide the close icon when a new image is uploaded
+        closeIcon.style.display = 'none';
+
+        // Check if an image is uploaded
+        if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Set the uploaded image as the source for the image element
+                uploadedImage.src = e.target.result;
+                // Show the close icon since an image is displayed
+                closeIcon.style.display = 'block';
+            };
+
+            // Read the uploaded file as a data URL
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            // If no image is uploaded, clear the image source
+            uploadedImage.src = '';
+        }
+    }
+
+    function removeImage() {
+        const imageInput = document.getElementById('imageInput');
+        const imageContainer = document.getElementById('imageContainer');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const closeIcon = document.getElementById('closeIcon');
+
+        // Clear the input path
+        imageInput.value = '';
+        // Remove the uploaded image
+        uploadedImage.src = '';
+        // Hide the close icon again
+        closeIcon.style.display = 'none';
+    }
+</script>
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
     type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
