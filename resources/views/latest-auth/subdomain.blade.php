@@ -95,6 +95,16 @@ Verify Email
                             <button type="submit" class="btn btn-submit mx-auto">Save Changes</button>
                         </div>
                     </form>
+                    <!-- Show validation error -->
+                    @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                            <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
                 <!-- login form end -->
             </div>

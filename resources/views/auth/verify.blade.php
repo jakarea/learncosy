@@ -63,7 +63,11 @@ Verify Email
                             <button class="btn btn-submit mx-auto" type="submit">Verify</button>
                         </div>
                         <div class="optional-txt">
-                            <p>Already have an account? <a href="{{url('/login') }}">Log in</a></p>
+                            <p>Wanna verifed later ? <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">Logout Now</a></p>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </div>
                     </form>
                 </div>
