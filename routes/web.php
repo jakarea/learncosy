@@ -117,7 +117,11 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 /* ============================================================= */
 Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')->group(function () {
     Route::get('/profile/step-1/complete', function(){
-        return view('auth.verify');
+        if (Auth::user()->email_verified_at == null) {
+            return view('auth.verify');
+        } else {
+            return redirect('/profile/step-2/complete');
+        }
     });
     Route::get('/profile/step-2/complete', function(){
         return view('latest-auth.price');

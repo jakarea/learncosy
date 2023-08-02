@@ -17,14 +17,16 @@ Connect
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
-                    <a href="#">Back</a>
-                    <a href="#">Do it later</a>
+                    <a href="{{ url('instructor/profile/step-3/complete') }}">Back</a>
+                    @if(isVimeoConnected()[1] == 'Connected' && isConnectedWithStripe()[1] == 'Connected')
+                        <a href="/instructor/profile/step-5/complete">Next Step</a>
+                    @endif
                   </div> 
             </div>
-        </div> --}}
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 {{-- verify step start --}}
@@ -62,11 +64,13 @@ Connect
                 <!-- login form start -->
                 <div class="connect-link-wrap mx-auto">
                     <div class="connect-box">
-                      <h6>Connect Vimeo</h6>
-                      <a href="#" class="bttn" data-bs-toggle="modal" data-bs-target="#connectModal"><img src="{{asset('latest/assets/images/auth/vimeo.svg')}}" alt="Vimeo" class="img-fluid"></a>
+                      <h6>Connect Vimeo <sup><small class="badge badge-success @if(isVimeoConnected()[1] == 'Connected') bg-success @else bg-danger @endif">{{ isVimeoConnected()[1] }}</small></sup></h6>
+                      <a href="#" class="bttn" data-bs-toggle="modal" data-bs-target="#connectModal">
+                        <img src="{{asset('latest/assets/images/auth/vimeo.svg')}}" alt="Vimeo" class="img-fluid">
+                    </a>
                     </div>
                     <div class="connect-box">
-                      <h6>Connect Stripe</h6>
+                      <h6>Connect Stripe <sup><small class="badge badge-success @if(isConnectedWithStripe()[1] == 'Connected') bg-success @else bg-danger @endif">{{ isConnectedWithStripe()[1] }}</small></sup> </h6>
                       <a href="#" class="bttn bttn-2" data-bs-toggle="modal" data-bs-target="#StripeconnectModal"><i class="fa-brands fa-stripe"></i></a>
                     </div>
                   </div>

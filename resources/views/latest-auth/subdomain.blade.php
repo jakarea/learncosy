@@ -77,6 +77,7 @@ Verify Email
                                 value="{{ old('username') }}"
                                 autocomplete="subdomain"
                                 autofocus>
+                                @error('username') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
                             @endif
                             <span class="input-group-text bg-white" id="subdomain">.learncosy.com</span>
                         </div> 
@@ -84,7 +85,7 @@ Verify Email
                             <span>Letter &amp; number only</span>
                         </div>
                         <div class="form-group">
-                            @error('subdomain')
+                            @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -94,6 +95,16 @@ Verify Email
                             <button type="submit" class="btn btn-submit mx-auto">Save Changes</button>
                         </div>
                     </form>
+                    <!-- Show validation error -->
+                    @if ($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                            <li><i class="fas fa-exclamation-circle"></i> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
                 <!-- login form end -->
             </div>

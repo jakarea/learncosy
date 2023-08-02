@@ -6,8 +6,8 @@
 					{{-- header logo @S --}}
 					<div class="header-logo-wrap">
 						<a href="{{url('/')}}">
-							@if ( modulesetting('logo') )
-							<img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="home-page-hero"
+							@if ( !modulesetting('logo') )
+							<img src="{{ asset('assets/images/setting/'.modulesetting('logo') ) }}" alt="home-page-hero"
 								class="img-fluid">
 							@else
 							<img src="{{ asset('assets/images/learncosy-logo.png') }}" alt="Logo" title="Giopio"

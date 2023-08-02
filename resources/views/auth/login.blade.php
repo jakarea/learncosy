@@ -73,7 +73,7 @@ Login Page
                             </div>
                         </div>
                         <div class="form-submit">
-                            <button class="btn btn-submit" type="submit">Next</button>
+                            <button class="btn btn-submit" type="submit">Login</button>
                         </div>
                         <div class="optional-txt">
                             <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>

@@ -142,6 +142,10 @@ class DashboardController extends Controller
 
     public function username($user_id, Request $request)
     {
+        $request->validate([
+            'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
+        ]);
+
         $user = User::find($user_id);
         $user->username = $request->username;
         $user->save();

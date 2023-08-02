@@ -9,6 +9,9 @@ Theme Settings
     .custom-margin-top {
         padding-top: 6rem !important;
     }
+    .feat-box .media input {
+        width: 100% !important;
+    }
 </style>
 @endsection
 
@@ -24,14 +27,16 @@ $module_settings->value = json_decode($module_settings->value);
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
-                    <a href="#">Back</a>
-                    <a href="#">Do it later</a>
+                    <a href="{{ url('instructor/profile/step-4/complete') }}">Back</a>
+                    @if ( $module_settings )
+                    <a href="/instructor/profile/step-6/complete">Final Step</a>
+                    @endif
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 {{-- verify step start --}}
@@ -207,7 +212,7 @@ $module_settings->value = json_decode($module_settings->value);
                                             <div class="file-prev">
                                                 <div id="file-previews">
                                                     <img src="{{ asset('assets/images/setting/'.$module_settings->favicon) }}"
-                                                        alt="" class="img-fluid">
+                                                        alt="" class="img-fluid w-100">
                                                 </div>
                                             </div>
                                         </div>
@@ -245,7 +250,7 @@ $module_settings->value = json_decode($module_settings->value);
                                             <div class="file-prev">
                                                 <div id="file-previews">
                                                     <img src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
-                                                        alt="">
+                                                        alt="" class="img-fluid w-100">
                                                 </div>
                                             </div>
                                         </div>
