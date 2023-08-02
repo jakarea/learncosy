@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="">Sample Certificates</label>
+                                    <label for="imageInput">Avatar</label>
                                 </div>
                                 <div id="image-container">
                                     <label for="imageInput" class="upload-box">

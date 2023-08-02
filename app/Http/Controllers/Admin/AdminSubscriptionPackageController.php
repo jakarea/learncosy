@@ -16,7 +16,8 @@ class AdminSubscriptionPackageController extends Controller
     public function index()
     {
         //  
-        return view("subscription.index");
+        $subscription_packages = SubscriptionPackage::orderby('id', 'desc')->paginate(12); 
+        return view('subscription/grid',compact('subscription_packages'));  
     }
 
     /**
@@ -24,7 +25,7 @@ class AdminSubscriptionPackageController extends Controller
      */
     public function subscriptionDataTable(Request $request)
     {
-        // return $request;
+        return $request;
         $subscription_packages = SubscriptionPackage::select('*');
         return datatables()->of($subscription_packages)
             ->addColumn('action', function ($subscription_package) {

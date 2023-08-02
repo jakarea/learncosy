@@ -507,6 +507,188 @@
   background-color: #252525;
 }
 
+.user-search-box-wrap {
+  display: grid;
+  grid-template-columns: 65% 19% 16%;
+  grid-gap: 1.19rem;
+}
+.user-search-box-wrap .form-group {
+  position: relative;
+}
+.user-search-box-wrap .form-group .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+  background: #FFF;
+  overflow: hidden;
+  color: var(--text-light-disabled, #919EAB);
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  height: 3rem;
+  padding: 1rem 0.875rem;
+  padding-left: 2.5rem;
+}
+.user-search-box-wrap .form-group i {
+  color: #919EAB;
+  font-size: 1rem;
+  position: absolute;
+  left: 12px;
+  top: 15px;
+}
+.user-search-box-wrap .form-filter {
+  position: relative;
+}
+.user-search-box-wrap .form-filter .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+  background: #FFF;
+  overflow: hidden;
+  color: #212B36;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+  height: 3rem;
+}
+.user-search-box-wrap .form-filter i {
+  color: #212B36;
+  font-size: 1rem;
+  position: absolute;
+  right: 12px;
+  top: 15px;
+}
+
+.color-para {
+  color: #66768E !important;
+}
+
+.user-expperience-box {
+  border-radius: 1rem;
+  border: 1px solid var(--neutrals-20, #D6DDEB);
+  background: var(--neutrals-0, #FFF);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+.user-expperience-box h4 {
+  color: var(--neutral-90, #252525);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  margin-bottom: 1.5rem;
+}
+.user-expperience-box .media {
+  align-items: flex-start;
+}
+.user-expperience-box .media img {
+  margin-right: 1.5rem;
+}
+.user-expperience-box .media h5 {
+  color: var(--neutral-90, #252525);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%;
+}
+.user-expperience-box .media h6 {
+  color: var(--neutral-70, #7C7C7C);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0 1rem;
+}
+.user-expperience-box .media h6 i {
+  font-size: 6px;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.user-expperience-box .media p {
+  color: var(--neutral-90, #252525);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  width: 90%;
+}
+.user-expperience-box .brdr-bttm {
+  border-bottom: 1px solid #E0E0E0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.enroll-course-list {
+  margin-top: 2.6rem;
+}
+.enroll-course-list h4 {
+  color: var(--neutral-90, #252525);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  margin-bottom: 1rem;
+}
+.enroll-course-list .list-wrap {
+  border-radius: 1rem;
+  border: 1px solid var(--neutral-color-neutral-40, #C5CCD8);
+  background: #FFF;
+  padding: 1.5rem;
+}
+.enroll-course-list .list-wrap table {
+  width: 100%;
+}
+.enroll-course-list .list-wrap table tr th {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-60, #66768E);
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--neutral-color-neutral-20, #F1F4F9);
+  padding: 1.12rem 1rem;
+}
+.enroll-course-list .list-wrap table tr th:first-child {
+  border-radius: 0.5rem 0rem 0rem 0rem;
+}
+.enroll-course-list .list-wrap table tr th:last-child {
+  border-radius: 0rem 0.5rem 0rem 0rem;
+}
+.enroll-course-list .list-wrap table tr td {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  padding: 1.12rem 1rem;
+}
+.enroll-course-list .list-wrap table tr td span {
+  border-radius: 0.125rem;
+  background: #E6F7EE;
+  display: inline-block;
+  color: #00AB55;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  padding: 0.42rem 0.62rem;
+}
+.enroll-course-list .list-wrap table tr td a {
+  display: inline-block;
+  color: #294CFF;
+}
+.enroll-course-list .list-wrap table tr td span.bg-danger {
+  color: #fff !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;
@@ -558,6 +740,34 @@
   .form-submit-bttns {
     text-align: center;
   }
+  .user-profile-picture .media span.avatar-box {
+    margin-right: 0;
+  }
+  .user-expperience-box {
+    padding: 1rem;
+  }
+  .user-expperience-box .media {
+    flex-direction: column;
+  }
+  .user-expperience-box .media img {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .user-search-box-wrap {
+    grid-template-columns: 100%;
+  }
+  .enroll-course-list .list-wrap {
+    padding: 1rem;
+  }
+  .enroll-course-list .list-wrap table {
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .enroll-course-list .list-wrap table tr th,
+  .enroll-course-list .list-wrap table tr td {
+    white-space: nowrap;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .contact-info-box {
@@ -566,9 +776,32 @@
   #image-container {
     margin-bottom: 1.5rem;
   }
+  .user-search-box-wrap {
+    grid-template-columns: 100%;
+  }
+  .enroll-course-list .list-wrap {
+    padding: 1rem;
+  }
+  .enroll-course-list .list-wrap table {
+    display: block;
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .enroll-course-list .list-wrap table tr th,
+  .enroll-course-list .list-wrap table tr td {
+    white-space: nowrap;
+  }
 }
 @media (min-width: 767px) and (max-width: 992px) {
   .contact-info-box {
     margin-top: 2rem;
+  }
+  .user-search-box-wrap {
+    grid-template-columns: 50% 25% 25%;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .user-search-box-wrap {
+    grid-template-columns: 50% 25% 25%;
   }
 }

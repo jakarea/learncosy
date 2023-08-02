@@ -10,7 +10,6 @@
 {{-- page content @S --}}
 @section('content')
 <main class="user-profile-view-page">
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -112,10 +111,4 @@
 
 </main>
 @endsection
-{{-- page content @E --}}
-
-{{-- page script @S --}}
-@section('script')
-
-@endsection
-{{-- page script @E --}}
+{{-- page content @E --}} 
