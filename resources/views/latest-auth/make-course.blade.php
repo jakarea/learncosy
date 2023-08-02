@@ -55,11 +55,7 @@ Make Course
                 <div class="username-box-wrap custom-margins"> 
                     <h1>Make your first course</h1>
                     <p>Start create your first course click next. </p>
-                    <form action="" class="ms-0 username-form">    
-                        <div class="form-submit">
-                            <button class="btn btn-submit mx-auto" type="submit">Create a new course</button>
-                        </div>
-                    </form>
+                    <a class="btn btn-submit btn-primary mt-3" role="button" href="{{ url('/instructor/courses/create') }}">Create a new course</a>
                 </div>
                 <!-- login form end -->
             </div>
