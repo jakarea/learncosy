@@ -18,8 +18,8 @@ class InstructorController extends Controller
      // list page 
      public function index()
      {    
-        $user_role = "instructor";
-        $users = User::where('user_role',$user_role)->get();
+        $user_role = "instructor"; 
+        $users = User::where('user_role',$user_role)->orderby('id', 'desc')->paginate(12); 
         return view('instructor/admin/grid',compact('users')); 
      }
 
@@ -88,9 +88,7 @@ class InstructorController extends Controller
     //    return $request->all();
 
        $request->validate([
-           'name' => 'required|string',
-           'username' => 'string',
-           'short_bio' => 'string',
+           'name' => 'required|string', 
            'phone' => 'string',
            'email' => 'required|email|unique:users,email', 
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
@@ -156,9 +154,7 @@ class InstructorController extends Controller
         $userId = $id;  
 
         $this->validate($request, [
-            'name' => 'required|string',
-            'username' => 'string',
-            'short_bio' => 'required|string',
+            'name' => 'required|string', 
             'phone' => 'required|string', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],

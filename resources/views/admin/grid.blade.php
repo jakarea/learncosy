@@ -71,6 +71,13 @@
             </div>
             @endforeach
         </div> 
+        <div class="row">
+            {{-- pagginate --}}
+            <div class="paggination-wrap">
+                {{ $users->links('pagination::bootstrap-5') }}
+            </div>
+            {{-- pagginate --}}
+        </div>
     </div>
 </main>
 {{-- ==== user list page @E ==== --}}

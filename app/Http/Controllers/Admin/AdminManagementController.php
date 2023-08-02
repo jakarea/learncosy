@@ -14,9 +14,8 @@ class AdminManagementController extends Controller
 {
     public function index()
     {    
-        $user_role = "admin";
-        $users = User::where('user_role',$user_role)->get();
-
+        $user_role = "admin"; 
+        $users = User::where('user_role',$user_role)->orderby('id', 'desc')->paginate(12); 
         return view('admin/grid',compact('users'));  
     }
 

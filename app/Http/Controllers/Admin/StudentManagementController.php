@@ -18,8 +18,7 @@ class StudentManagementController extends Controller
     public function index()
     {   
         $user_role = "student";
-        $users = User::where('user_role',$user_role)->get();
-
+        $users = User::where('user_role',$user_role)->orderby('id', 'desc')->paginate(12); 
          return view('students/admin/grid',compact('users'));  
     }
 
