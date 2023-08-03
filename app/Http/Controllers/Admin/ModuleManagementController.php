@@ -15,8 +15,9 @@ class ModuleManagementController extends Controller
 {
     // module list
     public function index()
-    {    
-        return view('e-learning/module/admin/index'); 
+    {     
+        $modules = Module::orderby('id', 'desc')->paginate(12); 
+        return view('e-learning/module/admin/grid',compact('modules')); 
     }
 
      // data table getData

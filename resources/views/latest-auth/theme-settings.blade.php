@@ -187,8 +187,7 @@ $module_settings->value = json_decode($module_settings->value);
                                     </div>
                                     <div class="favicon-box">
                                         <h6>Favicon</h6>
-                                        <p>Your favicon will be shown in browsers and in search results.</p>
-
+                                        <p>Your favicon will be shown in browsers and in search results.</p> 
 
                                         <label for="favicon1" class="file-upload-area" id="file-upload-area1">
                                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="a"

@@ -385,8 +385,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/datatable', 'modulesDataTable')->name('admin.modules.data.table'); 
+            Route::get('/', 'index');  
             Route::get('/create', 'create'); 
             Route::post('/create', 'store')->name('admin.module.store');
             Route::get('/{slug}/edit', 'edit')->name('admin.module.edit'); 

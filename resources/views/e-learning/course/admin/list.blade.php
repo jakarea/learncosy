@@ -40,31 +40,44 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            @foreach ($courses as $course)
+        <div class="row"> 
+            @foreach ($courses as $course) 
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
                     <div class="course-thumb-box">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="thumb" class="img-fluid"> 
+                        <div class="header-action">
+                            <div class="dropdown">
+                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="{{url('admin/courses/'.$course->slug)}}">View</a></li> 
+                                  <li> 
+                                    <form method="post" class="d-inline" action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
+                                        @csrf 
+                                        @method("DELETE")
+                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
+                                    </form>
+                                </li> 
+                                </ul>
+                              </div> 
+                        </div> 
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
                         <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
-                        <p>{{ Str::limit($course->short_description, $limit = 40, $end = '...') }}</p>
-
-                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                        {{-- <div class="d-flex">
-                            <span><i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($course->created_at)->diffForHumans() }} </span>
-                            <a href="{{url('admin/courses/'.$course->slug)}}">View <i class="fas fa-eye text-primary"></i></a>
-                            <a href="{{url('admin/courses/'.$course->slug.'/edit')}}">Edit <i class="fas fa-pen text-info"></i></a> 
-
-                            <form method="post" class="d-inline" action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
-                                @csrf 
-                                @method("DELETE")
-                                <button type="submit" class="btn p-0">Delete <i class="fas fa-trash text-danger"></i></button>
-                            </form>
-                            
-                        </div> --}}
+                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                        <ul>
+                            <li><span>4.0</span></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><span>(145)</span></li>
+                        </ul>
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
                     </div>
                 </div>
             </div>
@@ -83,9 +96,3 @@
     </div>
 </main>
 @endsection
-
-{{-- script section @S --}}
-@section('script')
-
-@endsection
-{{-- script section @E --}}
