@@ -19,7 +19,7 @@ class CheckSubscription
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user();
+        $user = auth()->user()->user_role('instructor')->first();
         
         if ($user) {
                         

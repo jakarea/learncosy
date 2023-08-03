@@ -9,6 +9,8 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+            <!-- Admin Header Defind -->
+            @can('admin')
             <ul class="navbar-nav m-auto"> 
                 <li class="nav-item">
                     <a href="{{ url('admin/dashboard') }}" class="{{ Request::is('admin/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
@@ -38,6 +40,30 @@
                     <a class="{{ Request::is('admin/profile/platform-fee*')  ? ' active' : '' }} nav-link" href="{{ url('/admin/profile/platform-fee') }}">Platform Fee</a>
                 </li>
             </ul>
+            @endcan
+            <!-- Teacher Header Defind -->
+            @can('instructor')
+            @endcan
+            <!-- Student Header Defind -->
+            @can('student')
+            <ul class="navbar-nav m-auto"> 
+                <li class="nav-item">
+                    <a href="{{ route('students.dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Request::is('students/home*')  ? ' active' : '' }} nav-link" href="{{ route('students.catalog.courses') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Request::is('students/enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('students.dashboard.enrolled') }}">My Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Request::is('students.dashboard.enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('admin.subscription') }}">Certificate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ Request::is('students/message*')  ? ' active' : '' }} nav-link" href="#">Message</a>
+                </li>
+            </ul>
+            @endcan
             <div class="d-flex"> 
                 <div class="dropdown">
                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
