@@ -23,7 +23,7 @@
                     <a class="{{ Request::is('admin/students*')  ? ' active' : '' }} nav-link" href="{{ url('admin/students') }}">Students</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('admin.subscription*')  ? ' active' : '' }} nav-link" href="{{ route('admin.subscription') }}">Memberships</a>
+                    <a class="{{ Request::is('admin/manage/subscriptionpackage*')  ? ' active' : '' }} nav-link" href="{{ route('admin.subscription') }}">Memberships</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">E-Learning <i class="fas fa-angle-down"></i></a>

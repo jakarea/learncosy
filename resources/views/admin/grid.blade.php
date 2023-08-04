@@ -45,12 +45,7 @@
                                 </form>
                             </li> 
                             </ul>
-                          </div>
-                        <ul> 
-                            <li>
-                                
-                            </li>
-                        </ul>
+                          </div> 
                     </div>
                     <div class="avatar">
                         @if ($user->avatar)

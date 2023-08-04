@@ -24,7 +24,7 @@
                 <div class="package-list-header package-header-2">
                     <h5>Add New Package</h5> 
                     <div class="bttn text-end">
-                        <a href="{{ route('admin.subscription') }}" class="common-bttn">Add Package</a>
+                        <a href="{{ route('admin.subscription') }}" class="common-bttn">All Package</a>
                     </div>
                 </div>
             </div>

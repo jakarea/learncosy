@@ -14,9 +14,9 @@ class LessonManagementController extends Controller
 {
      // lesson list
      public function index()
-     {  
-         $lessons = Lesson::orderby('id', 'desc')->paginate(1);
-         return view('e-learning/lesson/admin/index',compact('lessons')); 
+     {   
+         $lessons = Lesson::orderby('id', 'desc')->paginate(12); 
+         return view('e-learning/lesson/admin/grid',compact('lessons')); 
      }
 
      // data table getData
