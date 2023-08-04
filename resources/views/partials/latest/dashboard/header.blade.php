@@ -51,10 +51,10 @@
                     <a href="{{ route('students.dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/home*')  ? ' active' : '' }} nav-link" href="{{ route('students.catalog.courses') }}">Home</a>
+                    <a class="{{ Request::is('students/catalog/courses*')  ? ' active' : '' }} nav-link" href="{{ route('students.catalog.courses') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('students.dashboard.enrolled') }}">My Course</a>
+                    <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('students.dashboard.enrolled') }}">My Course</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('students.dashboard.enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('admin.subscription') }}">Certificate</a>
