@@ -20,7 +20,7 @@
                     <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ url('students/dashboard/enrolled') }}">My Course</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Certificate</a>
+                    <a class="nav-link" href="{{ url('students/courses-activies') }}">Certificate</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>
@@ -33,8 +33,8 @@
                             class="img-fluid">
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('/students/profile/myprofile')}}">My Profile</a></li>  
-                        <li><a class="dropdown-item" href="{{ url('/students/account-management') }}">Account Setting</a></li>  
+                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">My Profile</a></li>  
+                        <li><a class="dropdown-item" href="{{ url('students/profile/edit') }}">Account Setting</a></li>  
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">Logout

@@ -19,7 +19,7 @@ class StudentHomeController extends Controller
 {
     // dashboard
     public function dashboard(){ 
-        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
         
         return view('e-learning/course/students/dashboard', compact('enrolments')); 
     }
@@ -27,7 +27,8 @@ class StudentHomeController extends Controller
     // dashboard
     public function enrolled(){
         
-        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
+    
         return view('e-learning/course/students/enrolled',compact('enrolments')); 
     }
 
@@ -100,7 +101,7 @@ class StudentHomeController extends Controller
     {   
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-
+     
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews'));
         } else {

@@ -1,230 +1,242 @@
-@extends('layouts/student')
-@section('title') Profile Update Page @endsection
+@extends('layouts.latest.students')
+@section('title') My Profile Management @endsection
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('assets/css/product-researchs.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/common.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-<!-- === Instructor update page @S === -->
-<main class="profile-update-page">
-    <div class="product-research-create-wrap">
+{{-- student update page @S --}}
+<main class="student-profile-update-page">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="create-form-head">
-                    <h6>Update Profile</h6>
-                    <a href="{{url('students/profile/myprofile')}}">
-                        <i class="fa-solid fa-user"></i> My Profile </a>
-                </div>
-                <div class="create-form-wrap">
-                    
-                    <!-- course create form @S -->
-                    <form action="{{ route('students.profile.update',$user->id) }}" method="POST" class="profile-form create-form-box"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row align-items-center">
-                            <div class="col-lg-12">
-                                <div class="form-group form-error">
-                                    <div class="form-flex">
-                                        <label for="name" style="min-width: 10%">Name: <sup class="text-danger">*</sup>
-                                        </label>
-                                        <input type="text" placeholder="Enter your Name" name="name"
-                                            class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ $user->name }}" id="name" style="width: 90%">
-                                    </div>
-                                    <span class="invalid-feedback">@error('name'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div> 
-                            <div class="col-lg-6">
-                                <div class="form-group form-error">
-                                    <div class="form-flex">
-                                        <label for="phone">Phone <sup class="text-danger">*</sup>
-                                        </label>
-                                        <input type="text" placeholder="Enter Phone Number" name="phone"
-                                            class="form-control @error('phone') is-invalid @enderror"
-                                            value="{{ $user->phone }}" id="phone">
-                                    </div>
-                                    <span class="invalid-feedback">@error('phone'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group form-error">
-                                    <div class="form-flex">
-                                        <label for="email">Email <sup class="text-danger">*</sup>
-                                        </label>
-                                        <input type="email" placeholder="Enter email" name="email"
-                                            class="form-control @error('email') is-invalid @enderror"
-                                            value="{{ $user->email }}" id="email" disabled>
-                                    </div>
-                                    <span class="invalid-feedback">@error('email'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="custom-hr">
-                                    <hr>
-                                    <h5>Other Information </h5> 
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group form-error">
-                                    <div class="form-flex">
-                                        <label for="short_bio">Short Bio <sup class="text-danger">*</sup>
-                                        </label>
-                                        <textarea name="short_bio" id="short_bio"
-                                            class="form-control @error('short_bio') is-invalid @enderror"
-                                            placeholder="Enter short bio">{{ $user->short_bio }}</textarea>
-                                    </div>
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-flex">
-                                        <label for="features" class="mb-1">Social Media: </label>
-                                        <div class="w-100">
-                                            @php
-                                            $socialLinks = explode(",",$user->social_links);
-                                            @endphp
-                                            @foreach ($socialLinks as $social) 
-                                            <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                                class="form-control w-100 @error('social_links') is-invalid @enderror"
-                                                id="features" multiple value="{{ $social }}">
-                                            @endforeach 
-                                            <div class="url-extra-field">
+            <div class="col-12">
+                <div class="own-profile-box">
+                    <div class="header">
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    aria-selected="true">My Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                    aria-controls="pills-profile" aria-selected="false">Password</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab" tabindex="0">
+                            {{-- profile edit form start --}}
+                            <form action="{{ route('students.profile.update',$user->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="row custom-padding">
+                                    <div class="col-xl-3 col-lg-4">
+                                        <div class="profile-picture-box">
+                                            <input type="file" id="avatar" class="d-none" name="avatar">
+                                            <label for="avatar" class="img-upload">
+                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
+                                                    alt="a" class="img-fluid">
+                                                <p>Update photo</p>
+                                                <div class="ol">
+                                                    @if ($user->avatar)
+                                                    <img src="{{asset('assets/images/students/'.$user->avatar)}}"
+                                                        alt="Avatar" class="img-fluid static-image">
+                                                    @else
+                                                    <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
+                                                    @endif
+                                                </div>
+                                            </label>
+
+                                            <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
+                                                Max size of 3.1 MB</h6>
+
+                                            <div class="form-check form-switch">
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
+                                                    Messages</label>
+                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
+                                                    role="switch" id="flexSwitchCheckChecked"
+                                                    value="{{ $user->recivingMessage == 1 ? 'checked' : '' }}">
                                             </div>
                                         </div>
-                                        
                                     </div>
-                                    
-                                    <span class="invalid-feedback">@error('social_links'){{ $message }}
-                                        @enderror</span>
-                                        <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group mt-3">
-                                    <div class="form-flexs">
-                                        <label for="description" class="mb-2">About: </label>
-                                        <textarea name="description" id="description"
-                                            class="form-control @error('description') is-invalid @enderror"
-                                            placeholder="Enter Full Description">{{ $user->description }}</textarea>
-                                    </div>
-                                    <span class="invalid-feedback">@error('description'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
+                                    <div class="col-xl-9 col-lg-8">
+                                        <div class="profile-text-box">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="name"
+                                                            placeholder="name" name="name" value="{{ $user->name }}">
+                                                        <label for="name">Name</label>
+                                                        <span class="invalid-feedback">@error('name'){{ $message }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="email"
+                                                            placeholder="email" name="email" value="{{ $user->email }}">
+                                                        <label for="email">Email</label>
+                                                        <span class="invalid-feedback">@error('email'){{ $message }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="phone"
+                                                            placeholder="phone" name="phone" value="{{ $user->phone }}">
+                                                        <label for="phone">Phone Number</label>
+                                                        <span class="invalid-feedback">@error('phone'){{ $message }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="social_links"
+                                                            placeholder="social_links" name="social_links[]"
+                                                            value="{{ $user->social_links }}">
+                                                        <label for="social_links">Instagram</label>
+                                                        <span class="invalid-feedback">@error('social_links'){{ $message
+                                                            }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" id="short_bio"
+                                                            placeholder="short_bio" name="short_bio"
+                                                            value="{{ $user->short_bio }}">
+                                                        <label for="short_bio">Bio</label>
+                                                        <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-floating">
+                                                        <textarea name="description" id="description"
+                                                            class="form-control @error('description') is-invalid @enderror"
+                                                            placeholder="About Yourself">{{ $user->description }}</textarea>
 
-                                <div id="image-container">
-                                    <label for="image-input" id="upload-label">
-                                      <i   class="fas fa-plus"></i>
-                                    </label>
-                                    <input type="file" name="avatar" id="image-input" style="display: none;">
-                                    <div id="uploaded-image" style="display: none;">
-                                      <img id="uploaded-image-preview" alt="Uploaded Image">
-                                      
-                                      <i id="close-icon" class="fas fa-times"></i>
-                                    </div>
-                                    @if ($user->avatar) 
-                                    <img src="{{asset('assets/images/instructor/'.$user->avatar)}}" alt="Avatar"
-                                        class="img-fluid static-image"> 
-                                    @else 
-                                        <img  src="{{asset('assets/images/avtar-place.png')}}" alt="Avatar" class="img-fluid static-image">
-                                    @endif 
-                                    
-                                  </div> 
-                                  <span id="uploaded-image-name"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0 mt-3">
-                                   
-                                    <div class="form-flex">
-                                        <label for="recivingMessage">Receiving Messages: </label>
-                                        <div class="form-check ms-3">
-                                            <input class="form-check-input" type="radio" name="recivingMessage"
-                                                id="flexRadioDefault1" value="1" {{ $user->recivingMessage == 1
-                                            ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="flexRadioDefault1">
-                                                Enable
-                                            </label>
-                                        </div>
-                                        <div class="form-check ms-4">
-                                            <input class="form-check-input" type="radio" name="recivingMessage"
-                                                id="flexRadioDefault2" value="0" {{ $user->recivingMessage == 0
-                                            ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                Disable
-                                            </label>
+                                                        <label for="description">About</label>
+                                                        <span class="invalid-feedback">@error('description'){{ $message
+                                                            }}
+                                                            @enderror</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-submit-bttns">
+                                                        <button type="submit" class="btn btn-submit">Save
+                                                            Changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
-                                        @enderror</span>
                                 </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="custom-hr">
-                                    <hr> 
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="submit-bttns">
-                                    <button type="reset" class="btn btn-reset">Clear</button>
-                                    <button type="submit" class="btn btn-submit">Update</button>
-                                </div>
-                            </div>
+                                {{-- profile edit form end --}}
+                            </form>
                         </div>
-                    </form>
-                    <!-- course create form @E -->
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab" tabindex="0">
+                            {{-- password tab start --}}
+                            <div class="row  user-add-form-wrap user-add-form-wrap-2">
+                                <div class="col-12">
+                                    <form action="{{ route('students.password.update',$user->id) }}" method="POST">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">Email</label>
+                                                    <input type="text" placeholder="Email" class="form-control"
+                                                        value="{{ $user->email}}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">New Password<sup class="text-danger">*</sup></label>
+                                                    <input type="password" name="password" placeholder="*********"
+                                                        class="form-control @error('password') is-invalid @enderror"
+                                                        id="password">
+                                                    <span class="invalid-feedback">@error('password'){{ $message }}
+                                                        @enderror</span>
+                                                    <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="">Confirm New Password<sup class="text-danger">*</sup></label>
+                                                    <input type="password" name="password_confirmation" placeholder="*********"
+                                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                        id="password_confirmation">
+                                                    <span class="invalid-feedback">@error('password_confirmation'){{ $message }}
+                                                        @enderror</span>
+                                                    <i class="fa-regular fa-eye" onclick="changeType2()" id="eye-click2"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-submit-bttns">
+                                                    <button type="submit" class="btn btn-submit">Save Changes</button>
+                                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                            {{-- password tab end --}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<!-- === Instructor update page @E === -->
+{{-- student update page @e --}}
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="{{asset('assets/js/file-upload.js')}}"></script>
-
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-    <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
+@section('script') 
 <script>
-    const urlBttn = document.querySelector('#url_increment');
-    let extraFileds = document.querySelector('.url-extra-field'); 
-    const createFiled = () => { 
-      let div = document.createElement("div");
-      let node = document.createElement("input"); 
-      node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-      node.setAttribute("multiple", ""); 
-      node.setAttribute("type", "url"); 
-      node.setAttribute("placeholder", "Enter Social Link"); 
-      node.setAttribute("name", "social_links[]");    
-      let linkk = document.createElement("a");
-      linkk.innerHTML = "<i class='fas fa-minus'></i>";
-      linkk.setAttribute("onclick", "this.parentElement.style.display = 'none';");
-      let divNew = extraFileds.appendChild(div);
-      divNew.appendChild(node);
-      divNew.appendChild(linkk);
+
+  function changeType() {
+    let field = document.getElementById("password");
+    let clickk = document.getElementById("eye-click");
+
+    if (field.type === "password") {
+      field.type = "text";
+      clickk.classList.add('fa-eye-slash');
+      clickk.classList.remove('fa-eye');
+    } else {
+      field.type = "password";
+      clickk.classList.remove('fa-eye-slash');
+      clickk.classList.add('fa-eye');
     }
-  
-    urlBttn.addEventListener('click',createFiled,true);
-  
-   
+
+  }
+
+  function changeType2() {
+    let field = document.getElementById("password_confirmation");
+    let clickk = document.getElementById("eye-click2");
+
+    if (field.type === "password") {
+      field.type = "text";
+      clickk.classList.add('fa-eye-slash');
+      clickk.classList.remove('fa-eye');
+    } else {
+      field.type = "password";
+      clickk.classList.remove('fa-eye-slash');
+      clickk.classList.add('fa-eye');
+    }
+
+  }
 </script>
 @endsection
 

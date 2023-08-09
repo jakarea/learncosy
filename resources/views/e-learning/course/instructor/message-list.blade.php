@@ -1,5 +1,5 @@
 @extends('layouts/instructor')
-@section('title') Review List Page @endsection
+@section('title') Messsage Page @endsection
 
 {{-- page style @S --}}
 @section('style')

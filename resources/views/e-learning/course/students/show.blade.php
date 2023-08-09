@@ -1,40 +1,14 @@
-@extends('layouts/student')
-@section('title') Course Details Page @endsection
+@extends('layouts.latest.admin')
+@section('title') Course Details @endsection
 
 {{-- style section @S --}}
 @section('style')
-<link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/student.css') }}" rel="stylesheet" type="text/css" />
-<style>
-    .vimeo-player {
-        position:relative;
-        padding-bottom:56.25%;
-        height:0;
-        overflow:hidden;
-        width:100%;
-    }
-    .vimeo-player iframe {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-    }
-    span.finsihLesson {
-        float: right;
-        font-size: 12px;
-        color: #111;
-        margin-top: 12px;
-        cursor: pointer;
-    }
-    .course-outline-box .accordion .accordion-item ul li a.active {
-        font-weight: 700;
-    }
-</style>
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 @section('seo')
-<meta name="keywords" content="{{ $course->categories .', '.$course->meta_keyword }}"/>
+<meta name="keywords" content="{{ $course->categories .', '.$course->meta_keyword }}" />
 <meta name="description" content="{{ $course->meta_description }}" itemprop="description">
 @endsection
 
@@ -42,203 +16,103 @@
 @php
 $i = 0;
 @endphp
-<main class="course-page-wrap">
-    <!-- suggested banner @S -->
-    <div class="learning-banners-wrap" @if($course->banner) style="background-image:
-        url('{{asset("assets/images/courses/".$course->banner)}}');" @endif>
-        <div class="media">
-            <div class="media-body">
-                <h1 class="addspy-main-title">{{$course->title}}</h1>
-                <p>{{$course->sub_title}}</p>
-                @if ( !isEnrolled($course->id) )
-                <form action="{{route('students.checkout', $course->slug)}}" method="GET">
-                    <input type="hidden" name="course_id" value="{{$course->id}}">
-                    <input type="hidden" name="price" value="{{$course->price}}">
-                    <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                    <button type="submit" class="btn enrol-bttn">Enroll Now <i class="fas fa-angle-right ms-2"></i></button>
-                </form>
-                @endif
-            </div>
-        </div>
-    </div>
-    <!-- suggested banner @E -->
-
-    <div class="row">
-        @include('partials.session-message')
-        <div class="col-12 col-sm-12 col-md-5 col-lg-4">
-            <div class="mylearning-txt-box mt-4">
-                <h5>Course's Outline</h5>
-            </div>
-            <div class="course-outline-box">
-                <div class="accordion" id="accordionExample">
-                    @foreach($course->modules as $module)
-                    @php $i++; @endphp
-                    <div class="accordion-item">
-                        <span class="numbering active"> {{$i}} </span>
-                        <div class="accordion-header" id="heading_{{$module->id}}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
-                                aria-controls="collapseOne">
-                                <div class="d-flex">
-                                    <p>{{ $module->title }}</p>
-                                    <i class="fas fa-caret-down"></i>
-                                </div>
-                            </button>
-                        </div>
-                        <div id="collapse_{{$module->id}}" class="accordion-collapse collapse "
-                            aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <ul>
-                                    @foreach($module->lessons as $lesson)
-                                    <li class="border-bottom">
-                                        @if ( !isEnrolled($course->id) )
-                                        <a href="{{route('students.checkout', $course->slug)}}"
-                                            class="disabled-link">
-                                            <i class="fas fa-lock"></i>
-                                            {{$lesson->title}}
-                                        </a>
-                                        @else
-                                        <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block" data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}" data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
-                                        <i class="fas fa-play-circle"></i>
-                                        {{ $lesson->title }}
-                                        </a>
-                                        
-                                        <!-- course complete checkmark -->
-                                        <span class="float-end mt-2" style="cursor:pointer;">
-                                            @if( isLessonCompleted($lesson->id) )
-                                            <i class="fas fa-check-circle text-success"></i>
-                                            @else
-                                            <i class="fas fa-check-circle is_complete_lesson" data-course="{{ $course->id }}" data-module="{{ $module->id }}" data-lesson="{{ $lesson->id }}" data-user="{{ Auth::user()->id }}"></i>
-                                            @endif
-                                        </span>
-                                        @endif
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-7 col-lg-8">
-            <div class="mylearning-video-content-box custom-margin-top">
-                @if( isEnrolled($course->id) )
-                    @if( getFirstLesson($course->id) )
+<main class="course-show-page-wrap">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-9 col-lg-8 col-md-12 col-12">
+                <div class="course-left">
+                    {{-- video player --}}
+                    @if( isEnrolled($course->id) )
+                    <div class="video-iframe-vox">
+                        @if( getFirstLesson($course->id) )
                         <div class="video-iframe-vox">
-                            <div class="vimeo-player w-100" id="firstLesson" data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}" data-first-lesson-id="{{ getFirstLesson($course->id)->id}}" data-first-course-id="{{ getFirstLesson($course->id)->course_id}}" data-first-modules-id="{{ getFirstLesson($course->id)->module_id}}" data-vimeo-width="1000" data-vimeo-height="360"></div>
-                        </div> 
-                    @else
-                        <div class="video-iframe-vox">
-                            <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069" data-vimeo-width="1000" data-vimeo-height="360"></div>
+                            <div class="vimeo-player w-100" id="firstLesson"
+                                data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}"
+                                data-first-lesson-id="{{ getFirstLesson($course->id)->id}}"
+                                data-first-course-id="{{ getFirstLesson($course->id)->course_id}}"
+                                data-first-modules-id="{{ getFirstLesson($course->id)->module_id}}"
+                                data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
-                    @endif
-                @else
-                <a href="#">
-                    <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" height="400px" width="100%">
-                    </a>
-                @endif
-                <div class="content-txt-box">
-                    <div class="d-flex">
-                        <h3>{{$course->title}}</h3>
-                        @if( isEnrolled($course->id) && $course->user->recivingMessage)
-                        <a href="{{url('course/messages/send/'.$course->id)}}" class="min_width">Get Support</a>
                         @else
-                        <a href="#" class="min_width">
-                            <i class="fas fa-lock"></i>
+                        <div class="video-iframe-vox">
+                            <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069"
+                                data-vimeo-width="1000" data-vimeo-height="360"></div>
+                        </div>
+                        @endif 
+                    </div>
+                    @else
+                    <a href="#">
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" height="400px"
+                            width="100%">
+                    </a>
+                    {{-- video player --}}
+                    @endif
+
+                    {{-- course title --}}
+                    <div class="media course-title">
+                        <div class="media-body">
+                            <h1>{{$course->title}}</h1>
+                            <p>{{$course->sub_title}}</p>
+                        </div>
+                        @if( isEnrolled($course->id) && $course->user->recivingMessage)
+                        <a href="{{url('course/messages/send/'.$course->id)}}" class="common-bttn">Get Support</a>
+                        @else
+                        <a href="#" class="common-bttn">  <i class="fas fa-lock"></i>
                             Get Support
                         </a>
                         @endif
+                        @if ( !isEnrolled($course->id) )
+                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                            <input type="hidden" name="course_id" value="{{$course->id}}">
+                            <input type="hidden" name="price" value="{{$course->price}}">
+                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                            <button type="submit" class="btn enrol-bttn">Enroll Now <i
+                                    class="fas fa-angle-right ms-2"></i></button>
+                        </form>
+                        @endif
                     </div>
-                    {!! $course->description !!}
-                </div>
-                <div class="profile-box">
-                    <div class="media">
-                        @if($course->user->avatar)
-                            @if($course->user->user_role == 'instructor')
-                                <img src="{{asset('assets/images/instructor/'.$course->user->avatar)}}" alt="Place" class="img-fluid">
-                            @elseif($course->user->user_role == 'admin')
-                            <img src="{{asset('assets/images/admin/'.$course->user->avatar)}}" alt="Place" class="img-fluid">
+                    {{-- course title --}}
+                    <hr>
+                    <div class="content-txt-box">
+                        <h3>About Course</h3>
+                        <div class="course-desc-txt">
+                            {!! $course->description !!}
+                        </div>
+                    </div>
+                    <div class="download-files-box">
+                        <h4>Download Files</h4>
+                        <div class="files">
+                            <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
+                                    alt="clock" title="120MB" class="img-fluid"></a>
+                            <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
+                                    alt="clock" title="120MB" class="img-fluid"></a>
+                            <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
+                                    alt="clock" title="120MB" class="img-fluid"></a>
+                        </div>
+                    </div>
+                    {{-- course review --}}
+                    <div class="course-review-wrap">
+                        <h3>{{ count($course_reviews) }} Reviews</h3>
+
+                        <div class="media course-review-input-box">
+                            @if($course->user->avatar)
+                                @if($course->user->user_role == 'student')
+                                <img src="{{asset('assets/images/students/'.$course->user->avatar)}}" alt="Place"
+                                    class="img-fluid"> 
+                                @endif
+                            @else
+                            <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
                             @endif
-                        @else
-                        <span>{!! strtoupper($course->user->name[0]) !!}</span>
-                        @endif
-                        <div class="media-body">
-                            <h5>{{$course->user->name}}</h5>
-                            <p>{{$course->user->short_bio ? $course->user->short_bio : 'Instructor'}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-content-box">
-                    <div class="d-flex">
-                        <h5>Course’s content</h5>
-                        <p>Last Updated : 2 hours ago</p>
-                    </div>
-                    <div class="row border-right-custom">
-                        @if($course->number_of_attachment)
-                        <div class="col-lg-12">
-                            <div class="attached-file-box me-lg-2">
-                                <h4><img src="{{asset('assets/images/course/pdf-icon.svg')}}" alt="Place"
-                                        class="img-fluid me-1" width="40"> Attachment Name</h4>
-                                <a href="#">
-                                    <img src="{{asset('assets/images/course/download-icon.svg')}}" alt="Place"
-                                        class="img-fluid">
-                                </a>
-                            </div>
-                        </div>
-                        @else
-                        <div class="col-lg-12">
-                            <div class="attached-file-box me-lg-2">
-                                <p>No Resource Found</p>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="course-content-box">
-                    <div class="d-flex border-0">
-                        <h5>Course's reviews</h5> 
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{-- review box @S --}}
-                            @foreach($course_reviews as $course_review)
-                                <div class="attached-file-box review-box">
-                                    <div class="d_flex">
-                                    <h4><img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}" alt="{{$course_review->user->name}}"
-                                                class="img-fluid me-1"> {{$course_review->user->name}}</h4>
-                                        <ul class="review-box-icon">
-                                            @for ($i = 0; $i < $course_review->star; $i++)
-                                                <li><i class="fas fa-star"></i></li>
-                                            @endfor
-                                        </ul>
-                                    </div>
-
-                                    <p>{{$course_review->comment}}</p>
-                                </div>
-                            @endforeach
-
-
-                            
-                            {{-- review box @E --}}
-                            {{-- review box @S --}}
-                           
-                            {{-- review box @E --}}
-                        </div>
-                        <div class="col-12">
-                            <div class="write-review-box">
+                            <div class="media-body">
                                 <form action="{{route('students.review.courses',$course->slug)}}" method="POST"
-                                      enctype="multipart/form-data">
-                                      @csrf
-                                    <div class="form-group">
-                                        <label for="review">Write a review</label>
-                                        <textarea name="comment" id="review" cols="30" rows="5" class="form-control"
-                                            placeholder="Write a review"> </textarea>
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group"> 
+                                        <input type="text" name="comment" id="review" placeholder="Write a review"> 
                                     </div>
                                     <div class="form-rev"> 
                                         <div id="full-stars">
-                                            <div class="rating-group"> 
+                                            <div class="rating-group">
                                                 <label aria-label="1 star" class="rating__label" for="rating-1"><i
                                                         class="rating__icon rating__icon--star fa fa-star"></i></label>
                                                 <input class="rating__input" name="star" id="rating-1" value="1"
@@ -260,23 +134,155 @@ $i = 0;
                                                 <input class="rating__input" name="star" id="rating-5" value="5"
                                                     type="radio">
                                             </div>
-                                        </div> 
-                                        <button type="submit" class="btn btn-submit">Submit</button>
+                                        </div>
+                                        <button type="submit" class="btn common-bttn">Submit</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="attached-file-box">
-                                <p>No Review Found</p>
+ 
+                        @if(count($course_reviews) > 0)
+                        @foreach($course_reviews as $course_review)
+                        <div class="media">
+                            <img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}" alt="Avatar"
+                                class="img-fluid">
+                            <div class="media-body">
+                                <h5>{{$course_review->user->name}}</h5>
+                                <ul>
+                                    @for ($i = 0; $i < $course_review->star; $i++)
+                                        <li><i class="fas fa-star"></i></li>
+                                        @endfor
+                                </ul>
+                                <p>{{$course_review->comment}}</p>
                             </div>
                         </div>
+                        @endforeach
+                        @else
+                        <div class="media">
+                            <div class="media-body">
+                                <p>No Review Found!</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
+                    {{-- course review --}} 
                 </div>
             </div>
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                {{-- course outline --}}
+                <div class="course-outline-wrap">
+                    <div class="header">
+                        <h3>Modules</h3>
+                        <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
+                    </div>
+                    <div class="accordion" id="accordionExample">
+                        @foreach($course->modules as $module)
+                        <div class="accordion-item">
+                            <div class="accordion-header" id="heading_{{$module->id}}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    <div class="d-flex">
+                                        <p><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
+                                    </div>
+                                </button>
+                            </div>
+                            <div id="collapse_{{$module->id}}" class="accordion-collapse collapse "
+                                aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body p-0">
+                                    <ul class="lesson-wrap">
+                                        @foreach($module->lessons as $lesson)
+                                        <li>
+                                            @if ( !isEnrolled($course->id) )
+                                            <a href="{{route('students.checkout', $course->slug)}}"
+                                                class="video_list_play d-inline-block">
+                                                <i class="fas fa-lock"></i>
+                                                {{$lesson->title}}
+                                            </a>
+                                            @else
+                                            <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
+                                                data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}"
+                                                data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
+                                                <i class="fas fa-play-circle"></i>
+                                                {{ $lesson->title }}
+                                            </a>
+
+                                            <!-- course complete checkmark -->
+                                            <span class="float-end mt-2" style="cursor:pointer;">
+                                                @if( isLessonCompleted($lesson->id) )
+                                                <i class="fas fa-check-circle text-success"></i>
+                                                @else
+                                                <i class="fas fa-check-circle is_complete_lesson"
+                                                    data-course="{{ $course->id }}" data-module="{{ $module->id }}"
+                                                    data-lesson="{{ $lesson->id }}"
+                                                    data-user="{{ Auth::user()->id }}"></i>
+                                                @endif
+                                            </span>
+                                            @endif
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                {{-- course outline --}}
+
+                {{-- related course --}}
+                <div class="related-course-box">
+                    <h3>Related Courses</h3>
+
+                    {{-- item --}}
+                    <div class="course-single-item">
+                        <div class="course-thumb-box">
+                            <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil"
+                                class="img-fluid">
+                        </div>
+                        <div class="course-txt-box">
+                            <a href="#">Figma UI UX Design Essentials</a>
+                            <p>Chris Converse</p>
+                            <ul>
+                                <li><span>4.0</span></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><span>(145)</span></li>
+                            </ul>
+                            <h5>€ $17.99 <span>€ 20.13</span></h5>
+                        </div>
+                    </div>
+                    {{-- item --}}
+                    {{-- item --}}
+                    <div class="course-single-item mt-4">
+                        <div class="course-thumb-box">
+                            <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil"
+                                class="img-fluid">
+                        </div>
+                        <div class="course-txt-box">
+                            <a href="#">Figma UI UX Design Essentials</a>
+                            <p>Chris Converse</p>
+                            <ul>
+                                <li><span>4.0</span></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><span>(145)</span></li>
+                            </ul>
+                            <h5>€ $17.99 <span>€ 20.13</span></h5>
+                        </div>
+                    </div>
+                    {{-- item --}}
+                </div>
+                {{-- related course --}}
+            </div>
         </div>
-    </div>
-    <!-- my learning page @E -->
+    </div> 
 </main>
 <!-- course details page @E -->
 @endsection

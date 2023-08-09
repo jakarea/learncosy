@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Mail\PasswordChanged;
+use App\Models\Checkout;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class StudentProfileController extends Controller
     {  
         $id = Auth::user()->id;
         $user = User::find($id); 
-        return view('profile/students/profile',compact('user')); 
+        $checkout = Checkout::where('user_id', $id)->with('course')->get();
+        return view('profile/students/profile',compact('user','checkout')); 
     }
 
     // profile edit
