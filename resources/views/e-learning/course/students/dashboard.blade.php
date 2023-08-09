@@ -9,6 +9,7 @@
 
 {{-- page content @S --}}
 @section('content')
+
 <main class="student-dashboard-page">
     <div class="container-fluid">
         <div class="row">
@@ -94,7 +95,223 @@
             </div>
             @endif
         </div>
-    </div>
+    </div> -->
+
+    <div class="container-fluid">
+        <div class="row">
+            @can('instructor')
+            <div class="col-12 mb-4">
+                <!-- Check if not purchase subscription then show alert with subscription link -->
+                {!! isInstructorSubscribed(auth()->user()->id) !!}
+            </div>
+            @endcan
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                <!-- total client @s -->
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Course In Progress</h5>
+                            <h4> 0</h4>
+                        </div> 
+                    </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                </div>
+                <!-- total client @e -->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                <!-- total client @s -->
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Completed Courses</h5>
+                            <h4> 0</h4>
+                        </div> 
+                    </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                </div>
+                <!-- total client @e -->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                <!-- total client @s -->
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Watching Time</h5>
+                            <h4> 0</h4>
+                        </div> 
+                    </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                </div>
+                <!-- total client @e -->
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                <!-- total client @s -->
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Certificate Achivement</h5>
+                            <h4>0</h4>
+                        </div> 
+                    </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                </div>
+                <!-- total client @e -->
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-10">
+                            <h5>Time Spending</h5>
+                            <h3>10<sub class="text-muted">h</sub>
+                            6<sub class="text-muted">m</sub></h3>
+                        </div>
+                        <div class="col-lg-2 text-lg-end">
+                            <select class="form-select form-select-sm border-0">
+                                <option>Last 30 Days</option>
+                                <option>Last 20 Days</option>
+                                <option>Last 10 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="earningChart"></div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="top-performing-course mt-15">
+                    <div class="d-flex">
+                        <h5>My Profile</h5>
+                        <a href="#">View All</a>
+                    </div>
+                    <div class="profile-widget-wrapper py-4">
+                        <div class="profile-widget-inner text-center">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid" width="100">
+                            <div class="profile-widget-info mt-2">
+                                <h6 class="text-small">{{ auth()->user()->name }}</h6>
+                                <p>{{ auth()->user()->email }}</p>
+                            </div>
+                        </div>
+                        <div class="profile-widget-history mx-5 mt-4 text-center bg-light rounded p-3">
+                            <ul class="d-flex justify-content-between">
+                                <li>
+                                    <h6>10</h6>
+                                    <p class="text-muted">Rank</p>
+                                </li>
+                                <li>
+                                    <h6>2h</h6>
+                                    <p class="text-muted">Avr. hour</p>
+                                </li>
+                                <li>
+                                    <h6>12</h6>
+                                    <p class="text-muted">Enrolled</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Liked Courses</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
+                    </div>
+                    <!-- <div id="lineChart"></div> -->
+                    <div class="messages-items-wrap"> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle text-success"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>  
+            <div class="col-xl-4">
+                <div class="top-performing-course mt-15"> 
+                    <div class="d-flex">
+                        <h5>Course Statistics</h5>
+                        <a href="#">View All</a>
+                    </div> 
+     
+                    <div class="messages-items-wrap"> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                        class="img-fluid">
+                                    <i class="fas fa-circle text-success"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
+                                    <p>The More Important the Work, the More Rest</p>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Statistics</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
+                    </div>
+                    <div id="monthly_earning"></div>
+                </div>
+            </div>
+        </div>
+    </div> 
 </main>
 @endsection
 {{-- page content @E --}}
