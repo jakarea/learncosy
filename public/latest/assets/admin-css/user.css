@@ -14,6 +14,7 @@
 .user-title-box h1 span {
   color: #294CFF;
 }
+.user-title-box button,
 .user-title-box a {
   display: inline-flex;
   align-items: center;
@@ -28,9 +29,11 @@
   background: var(--primary-color-blue, #294CFF);
   transition: all linear 0.3s;
 }
+.user-title-box button img,
 .user-title-box a img {
   margin-right: 0.2rem;
 }
+.user-title-box button:hover,
 .user-title-box a:hover {
   background-color: #2F3A4C;
 }

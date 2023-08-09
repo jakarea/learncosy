@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') Payment to Admin @endsection
+@section('title') Payment From Student @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -23,11 +23,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="package-list-header" style="grid-template-columns: 15% 82%">
-                    <h5>Platfrom Fee</h5>
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search module" class="form-control">
-                    </div> 
+                    <h5>Payment Information:</h5> 
                 </div>
             </div>
         </div>
