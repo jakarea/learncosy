@@ -1,5 +1,7 @@
+
 @extends('layouts/latest/students')
 @section('title') Course Home Page @endsection
+
 @section('seo')
 <meta name="description"
     content="Explore a diverse course list on LearnCosy. Boost your skills with engaging lessons in technology, business, arts, and more. Begin your educational journey today and unlock your full potential. Discover now!"
@@ -7,7 +9,9 @@
 @endsection
 {{-- page style @S --}}
 @section('style')
+
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
@@ -15,6 +19,7 @@
 
 {{-- page content @S --}}
 @section('content')
+
 <main class="student-courses-lists-pages">
     <div class="container-fluid">
         <div class="row">
