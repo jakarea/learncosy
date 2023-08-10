@@ -19,7 +19,7 @@ class StudentHomeController extends Controller
 {
     // dashboard
     public function dashboard(){ 
-        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
         
         return view('e-learning/course/students/dashboard', compact('enrolments')); 
     }
@@ -27,7 +27,8 @@ class StudentHomeController extends Controller
     // dashboard
     public function enrolled(){
         
-        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
+    
         return view('e-learning/course/students/enrolled',compact('enrolments')); 
     }
 
@@ -81,7 +82,7 @@ class StudentHomeController extends Controller
         }
         $categories = array_unique($unique_array);
         $courses = $courses->paginate(12);
-
+        
         return view('e-learning/course/students/catalog',compact('courses','categories', 'bundleCourse')); 
     }
 
@@ -100,9 +101,21 @@ class StudentHomeController extends Controller
     {   
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-
+        
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews'));
+        } else {
+            return redirect('students/dashboard')->with('error', 'Course not found!');
+        }
+    }
+    // course overview
+    public function overview($slug)
+    {   
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+        
+        if ($course) {
+            return view('e-learning/course/students/overview', compact('course','course_reviews'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

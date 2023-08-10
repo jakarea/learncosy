@@ -408,18 +408,20 @@ span.finsihLesson {
   color: #F46D29 !important;
 }
 
+.profile-update-page .form-group,
 .lesson-create-page .form-group,
 .module-update-page .form-group,
 .module-create-page .form-group {
   position: relative;
 }
+.profile-update-page .form-group i,
 .lesson-create-page .form-group i,
 .module-update-page .form-group i,
 .module-create-page .form-group i {
   position: absolute;
   right: 1rem;
-  top: 2.7rem;
-  font-size: 1.5rem;
+  top: 3rem;
+  font-size: 1rem;
   color: #101828;
 }
 
