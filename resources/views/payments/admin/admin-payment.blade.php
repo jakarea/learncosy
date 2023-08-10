@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title') Payment to Admin Page @endsection
+@section('title') Payment to Admin @endsection
 
 {{-- page style @S --}}
 @section('style')

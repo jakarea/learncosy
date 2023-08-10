@@ -113,8 +113,9 @@ class AdminProfileController extends Controller
 
     public function adminPayment()
     {   
-        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->get();
-        return view('payments/admin/admin-payment', compact('payments'));
+        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
+ 
+        return view('payments/admin/grid-admin-payment', compact('payments'));
     }
 
     public function adminPaymentData( Request $request )

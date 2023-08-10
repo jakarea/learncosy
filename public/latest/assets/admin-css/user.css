@@ -14,6 +14,7 @@
 .user-title-box h1 span {
   color: #294CFF;
 }
+.user-title-box button,
 .user-title-box a {
   display: inline-flex;
   align-items: center;
@@ -28,9 +29,11 @@
   background: var(--primary-color-blue, #294CFF);
   transition: all linear 0.3s;
 }
+.user-title-box button img,
 .user-title-box a img {
   margin-right: 0.2rem;
 }
+.user-title-box button:hover,
 .user-title-box a:hover {
   background-color: #2F3A4C;
 }
@@ -393,6 +396,23 @@
   margin-bottom: 1rem;
 }
 
+.user-add-form-wrap-2 {
+  border-radius: 0.5rem;
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+.user-add-form-wrap-2 .form-group {
+  position: relative;
+}
+.user-add-form-wrap-2 .form-group i {
+  position: absolute;
+  right: 17px;
+  top: 50px;
+}
+
 #uploaded-image {
   display: block;
 }
@@ -688,6 +708,144 @@
 }
 .enroll-course-list .list-wrap table tr td span.bg-danger {
   color: #fff !important;
+}
+
+.student-profile-update-page .own-profile-box {
+  border-radius: 0.75rem;
+  border: 1px solid var(--stroke, #E6E6E6);
+  background: #FFF;
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+}
+.student-profile-update-page .own-profile-box .header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 1.25rem;
+}
+.student-profile-update-page .own-profile-box .header .nav .nav-item .nav-link {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+  border-radius: 0;
+  padding: 0;
+  padding-bottom: 0.2rem;
+  margin-right: 2.5rem;
+}
+.student-profile-update-page .own-profile-box .header .nav .nav-item .active.nav-link {
+  border-bottom: 2px solid var(--primary-color-blue, #294CFF);
+  color: #101C2D;
+  background-color: transparent;
+}
+.student-profile-update-page .own-profile-box .custom-padding {
+  padding: 1.5rem 1.25rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box {
+  border-radius: 1rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--background-light-paper, #FFF);
+  text-align: center;
+  padding: 5rem 1.5rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload {
+  border-radius: 6.25rem;
+  border: 1px dashed var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+  display: flex;
+  width: 9rem;
+  height: 9rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+  padding: 1rem;
+  z-index: 1;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload .ol {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  width: 90%;
+  height: 90%;
+  z-index: -1;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload .ol:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(22, 28, 36, 0.4);
+  z-index: 2;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload .ol span {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #101C2D;
+  font-size: 5rem;
+  font-weight: 600;
+  color: #00AB55;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload .ol img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .img-upload p {
+  color: var(--common-white, #FFF);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  margin-top: 0.3rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box h6 {
+  color: var(--text-light-secondary, #637381);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .form-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .form-check label {
+  color: var(--text-light-primary, #212B36);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .form-switch .form-check-input {
+  margin-left: 1rem;
+}
+.student-profile-update-page .own-profile-box .custom-padding .profile-picture-box .form-check-input:checked {
+  background-color: #00AB55;
+  border-color: #00AB55;
+}
+
+.profile-text-box .form-floating {
+  margin-bottom: 1.5rem;
+}
+.profile-text-box .form-floating .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+}
+.profile-text-box .form-floating textarea {
+  resize: none;
+  padding: 1rem 0.875rem;
+  height: 100px;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

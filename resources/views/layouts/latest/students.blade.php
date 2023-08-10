@@ -40,7 +40,7 @@
     <div class="main-page-wrapper">
 
         {{-- header start --}}
-        @include('partials/latest/dashboard/header')
+        @include('partials/latest/students/header')
         {{-- header end --}}
 
         @yield('content')
