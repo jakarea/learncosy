@@ -251,6 +251,7 @@
   height: 115%;
   visibility: hidden;
   transition: ease-in-out 0.3s;
+  z-index: 999;
 }
 .student-courses-lists-pages .course-ol-box h5 {
   color: var(--text-light-primary, #212B36);
@@ -439,6 +440,130 @@
 }
 .course-review-wrap .media.course-review-input-box .rating__input--none:hover + .rating__label .rating__icon--none {
   color: #4c60ff;
+}
+
+.course-overview-page {
+  padding-top: 0;
+}
+.course-overview-page .overview-banner-box {
+  background: var(--neutral-color-neutral-80, #1C2636);
+  padding: 5rem 0rem;
+}
+.course-overview-page .overview-banner-box .banner-title h1 {
+  color: var(--neutral-color-white, #FFF);
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+}
+.course-overview-page .overview-banner-box .banner-title p {
+  color: var(--neutral-color-neutral-30, #E5ECF6);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+.course-overview-page .overview-banner-box .banner-title .media {
+  align-items: center;
+  margin-top: 2rem;
+}
+.course-overview-page .overview-banner-box .banner-title .media img {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 6.25rem;
+  border: 1px solid var(--neutral-color-white, #FFF);
+  margin-right: 1rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.course-overview-page .overview-banner-box .banner-title .media h5 {
+  color: var(--neutral-color-neutral-30, #E5ECF6);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.375rem;
+}
+.course-overview-page .overview-banner-box .banner-title .media h6 {
+  color: var(--neutral-color-neutral-40, #C5CCD8);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+.course-overview-page .overview-banner-box .banner-title h4 {
+  color: var(--neutral-40, #E0E0E0);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: 0.5rem;
+}
+
+.what-you-learn-box {
+  margin: 3rem 0;
+}
+.what-you-learn-box h3 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  margin-bottom: 2rem;
+}
+.what-you-learn-box ul {
+  border-radius: 1rem;
+  border: 1px solid var(--neutral-40, #E0E0E0);
+  background: var(--neutral-10, #FFF);
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0.5rem;
+}
+.what-you-learn-box ul li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: var(--neutral-90, #252525);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.what-you-learn-box ul li i {
+  margin-right: 0.5rem;
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
+.course-content.course-outline-wrap {
+  max-height: auto;
+  overflow-y: auto;
+  margin-bottom: 3rem;
+}
+.course-content.course-outline-wrap .accordion .accordion-item:first-child {
+  border-top: 0 !important;
+}
+.course-content.course-outline-wrap .accordion .accordion-item .d-flex {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.common-header {
+  margin-bottom: 2rem;
+}
+.common-header h3 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  margin-bottom: 2rem;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

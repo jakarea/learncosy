@@ -1,4 +1,4 @@
-@extends('layouts.latest.admin')
+@extends('layouts.latest.students')
 @section('title') Course Details @endsection
 
 {{-- style section @S --}}

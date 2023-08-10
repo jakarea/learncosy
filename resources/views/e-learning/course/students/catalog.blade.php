@@ -27,13 +27,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="course-categories">
-                    <h5>Course Categories</h5> 
-                   <div class="d-flex">
-                    @foreach($categories as $category)
+                    <h5>Course Categories</h5>
+                    <div class="d-flex">
+                        @foreach($categories as $category)
                         <a href="{{ url('students/home?cat='.$category)}}">{{$category}}</a>
-                    @endforeach
-                   </div>
-                </div> 
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach($courses as $course) 
+            @foreach($courses as $course)
             @php
             $desc = $course->short_description;
             $max_length = 205;
@@ -72,20 +72,21 @@
             $short_description = substr($short_description, 0, $last_space) . " ...";
             } else {
             $short_description = $desc;
-            } 
+            }
             @endphp
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item">
                     <button class="btn btn-ellip" type="button">
                         <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button> 
-                    <div class="course-thumb-box"> 
-                        <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}" class="img-fluid">
+                    </button>
+                    <div class="course-thumb-box">
+                        <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
+                            class="img-fluid">
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
-                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                        <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                        <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>
                             <li><i class="fas fa-star"></i></li>
@@ -99,17 +100,20 @@
                     </div>
 
                     <div class="course-ol-box">
-                        <h5>{{ $course->title }}</h5>
+                        <h5>{{ Str::limit($course->title, 60) }}</h5>
                         <span>Updated June 2023</span>
                         <p>2 total hr • Beginner level • Subtitle </p>
-                        <h6>{{ Str::limit($course->short_description, $limit = 100, $end = '...') }}</h6>
+                        <h6>{{ Str::limit($course->short_description, $limit = 90, $end = '...') }}</h6>
 
-                        @php $features = explode(",", $course->features); @endphp
+                        @php
+                        $features = explode(",", $course->features);
+                        $limitedItems = array_slice($features, 0, 5);
+                        @endphp
 
                         <ul>
-                            @foreach ($features as $feature) 
-                             <li><i class="fas fa-check"></i> {{$feature}}</li>
-                            @endforeach 
+                            @foreach ($limitedItems as $feature)
+                            <li><i class="fas fa-check"></i> {{$feature}}</li>
+                            @endforeach
                         </ul>
 
                         <a href="#">Add to cart</a>
@@ -135,13 +139,23 @@
 
 @section('script')
 <script>
-    let cards = [...document.querySelectorAll(".btn-ellip")];
+    // Get all elements with the class "btn-ellip"
+let cards = document.querySelectorAll(".btn-ellip");
 
-    cards.forEach(card => {
-      card.addEventListener("click", function () { 
-
+// Attach a click event listener to each button
+cards.forEach(card => {
+    card.addEventListener("click", function () {
+        // Toggle "active-ol" class on the parent element of the clicked button
         this.parentNode.classList.toggle("active-ol");
-      })
+        
+        // Remove "active-ol" class from parent elements of other buttons
+        cards.forEach(ca => {
+            if (ca !== this) {
+                ca.parentNode.classList.remove("active-ol");
+            }
+        });
     });
-  </script>
+});
+
+</script>
 @endsection

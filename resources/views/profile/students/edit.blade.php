@@ -47,7 +47,7 @@
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img src="{{asset('assets/images/students/'.$user->avatar)}}"
+                                                    <img id="avatar-preview" src="{{asset('assets/images/students/'.$user->avatar)}}"
                                                         alt="Avatar" class="img-fluid static-image">
                                                     @else
                                                     <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
@@ -237,6 +237,25 @@
     }
 
   }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const avatarInput = document.getElementById("avatar");
+    const avatarPreview = document.getElementById("avatar-preview");
+
+    avatarInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                avatarPreview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+});
 </script>
 @endsection
 
