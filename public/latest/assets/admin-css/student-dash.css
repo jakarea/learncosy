@@ -446,8 +446,23 @@
   padding-top: 0;
 }
 .course-overview-page .overview-banner-box {
-  background: var(--neutral-color-neutral-80, #1C2636);
+  background-color: #1C2636;
   padding: 5rem 0rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  z-index: 1;
+}
+.course-overview-page .overview-banner-box:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 38, 54, 0.443);
+  z-index: -1;
 }
 .course-overview-page .overview-banner-box .banner-title h1 {
   color: var(--neutral-color-white, #FFF);
@@ -556,6 +571,9 @@
 
 .common-header {
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .common-header h3 {
   color: var(--neutral-color-neutral-80, #1C2636);
@@ -564,6 +582,217 @@
   font-weight: 500;
   line-height: 120%;
   margin-bottom: 2rem;
+}
+.common-header span {
+  color: var(--neutral-70, #7C7C7C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 155%;
+  display: inline-block;
+}
+
+.course-rev-box {
+  border-radius: 1rem;
+  border: 1px solid var(--neutral-40, #E0E0E0);
+  background: var(--neutral-10, #FFF);
+  padding: 1.5rem;
+  margin-bottom: 1.9rem;
+}
+.course-rev-box .media {
+  align-items: center;
+}
+.course-rev-box .media img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 1rem;
+}
+.course-rev-box .media h5 {
+  color: var(--neutral-90, #252525);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+.course-rev-box .media h6 {
+  color: var(--neutral-70, #7C7C7C);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 155%;
+}
+.course-rev-box p {
+  color: var(--neutral-90, #252525);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin: 1rem 0;
+}
+.course-rev-box ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.course-rev-box ul li {
+  margin-right: 0.4rem;
+}
+.course-rev-box ul li i {
+  font-size: 1rem;
+  color: #FFC761;
+}
+
+.course-overview-right-part {
+  border-radius: 1rem;
+  border: 1px solid var(--neutral-40, #E0E0E0);
+  background: var(--neutral-10, #FFF);
+  padding: 1.5rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: -21rem;
+  position: relative;
+  z-index: 99;
+}
+.course-overview-right-part .course-main-thumb img {
+  width: 100%;
+  max-height: 14rem;
+  border-radius: 1rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.course-overview-right-part .course-main-thumb h2 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  margin: 1.5rem 0;
+}
+.course-overview-right-part .course-main-thumb .enrol-bttn {
+  border-radius: 0.375rem;
+  color: var(--neutral-10, #FFF);
+  text-align: center;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 6.25rem;
+  border: 1px solid var(--primary-color-blue, #294CFF);
+  background: var(--primary-color-blue, #294CFF);
+  transition: ease-in-out 0.3s;
+}
+.course-overview-right-part .course-main-thumb .enrol-bttn:hover {
+  background-color: transparent;
+  color: #294CFF;
+}
+.course-overview-right-part .course-main-thumb .add-cart-bttn {
+  border-radius: 6.25rem;
+  border: 1px solid var(--primary-color-blue, #294CFF);
+  padding: 1rem 2rem;
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+  transition: ease-in-out 0.3s;
+}
+.course-overview-right-part .course-main-thumb .add-cart-bttn:hover {
+  background-color: #294CFF;
+  color: #fff;
+}
+.course-overview-right-part .course-desc-txt {
+  border-top: 1px solid #E0E0E0;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+.course-overview-right-part .course-desc-txt h4 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+  margin-bottom: 1rem;
+}
+.course-overview-right-part .course-desc-txt p {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.course-overview-right-part .course-details-txt {
+  margin-top: 1.5rem;
+}
+.course-overview-right-part .course-details-txt h4 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+  margin-bottom: 1rem;
+}
+.course-overview-right-part .course-details-txt p {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.75rem;
+}
+.course-overview-right-part .course-details-txt p img {
+  margin-right: 0.5rem;
+}
+
+.time-chart h5 {
+  color: var(--gray-900, #101828);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.75rem;
+}
+.time-chart h3 {
+  color: var(--gray-900, #101828);
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2.75rem;
+  letter-spacing: -0.045rem;
+}
+.time-chart h3 sub {
+  color: #989BA1;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.75rem;
+  letter-spacing: -0.025rem;
+}
+
+.time-chart-select {
+  border-radius: 0.375rem;
+  background: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.25rem;
+  display: inline-block;
+  padding: 0.3rem 0.5rem;
+  border: 0;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

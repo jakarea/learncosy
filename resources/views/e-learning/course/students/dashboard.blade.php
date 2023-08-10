@@ -1,5 +1,5 @@
 @extends('layouts/latest/students')
-@section('title') Students Dashboard Page @endsection
+@section('title') Students Dashboard @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -57,14 +57,14 @@
         <div class="row">
             <div class="col-xl-8">
                 <div class="earnings-chart-wrap mt-15">
-                    <div class="row align-items-center">
-                        <div class="col-lg-10">
+                    <div class="row align-items-start">
+                        <div class="col-lg-10 time-chart">
                             <h5>Time Spending</h5>
                             <h3>10<sub class="text-muted">h</sub>
                                 6<sub class="text-muted">m</sub></h3>
                         </div>
                         <div class="col-lg-2 text-lg-end">
-                            <select class="form-select form-select-sm border-0">
+                            <select class="time-chart-select">
                                 <option>Last 30 Days</option>
                                 <option>Last 20 Days</option>
                                 <option>Last 10 Days</option>
@@ -78,7 +78,7 @@
                 <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>My Profile</h5>
-                        <a href="#">View All</a>
+                        <a href="{{url('students/profile/myprofile')}}">View Profile</a>
                     </div>
                     <div class="profile-widget-wrapper">
                         <div class="profile-widget-inner">
