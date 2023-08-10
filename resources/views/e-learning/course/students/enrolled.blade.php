@@ -1,3 +1,4 @@
+
 @extends('layouts/latest/students')
 @section('title') My Courses @endsection
 
@@ -11,6 +12,7 @@
 
 {{-- page content @S --}}
 @section('content')
+
 <main class="student-courses-lists-pages">
     <div class="container-fluid">
         <div class="row">

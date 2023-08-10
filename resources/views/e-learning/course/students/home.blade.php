@@ -1,4 +1,4 @@
-@extends('layouts/student')
+@extends('layouts/latest/student')
 @section('title') Home Page @endsection
 
 {{-- page style @S --}}
