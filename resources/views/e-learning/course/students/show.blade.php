@@ -3,8 +3,8 @@
 
 {{-- style section @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 @section('seo')
@@ -42,8 +42,7 @@ $i = 0;
                     </div>
                     @else
                     <a href="#">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" height="400px"
-                            width="100%">
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" class="img-fluid">
                     </a>
                     {{-- video player --}}
                     @endif

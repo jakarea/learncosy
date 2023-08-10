@@ -20,7 +20,7 @@
                     <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ url('students/dashboard/enrolled') }}">My Course</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('students/courses-activies') }}">Certificate</a>
+                    <a class="{{ Request::is('students/courses-certificate*')  ? ' active' : '' }} nav-link" href="{{ url('students/courses-certificate') }}">Certificate</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>

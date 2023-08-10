@@ -9,11 +9,9 @@
 @endsection
 {{-- page style @S --}}
 @section('style')
-
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -80,7 +78,7 @@
             }
             @endphp
             {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-3">
                 <div class="course-single-item">
                     <button class="btn btn-ellip" type="button">
                         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -121,7 +119,17 @@
                             @endforeach
                         </ul>
 
-                        <a href="#">Add to cart</a>
+                        @if ( !isEnrolled($course->id) )
+                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                            <input type="hidden" name="course_id" value="{{$course->id}}">
+                            <input type="hidden" name="price" value="{{$course->price}}">
+                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                            <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
+                        </form>  
+                        @else 
+                        <a href="{{url('students/courses/overview/'.$course->slug )}}">Go to Course</a>
+                        @endif 
+ 
                     </div>
                 </div>
             </div>

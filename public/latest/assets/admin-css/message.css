@@ -209,4 +209,34 @@
   .message-list-page-wrap .messages-box .chat-person-list-box .title {
     padding: 0.8rem;
   }
+  .chat-room-head {
+    display: none !important;
+  }
+  .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room {
+    padding: 0.8rem;
+  }
+  .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .chat-messages-box .message-item {
+    margin-bottom: 0.2rem;
+    padding: 0.6rem;
+    font-size: 12px;
+  }
+}
+@media (min-width: 574px) and (max-width: 767px) {
+  .message-list-page-wrap .messages-box {
+    grid-template-columns: 100%;
+  }
+  .message-list-page-wrap .messages-box .chat-person-list-box .title {
+    padding: 0.8rem;
+  }
+  .chat-room-head {
+    display: none !important;
+  }
+  .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room {
+    padding: 0.8rem;
+  }
+  .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .chat-messages-box .message-item {
+    margin-bottom: 0.2rem;
+    padding: 0.6rem;
+    font-size: 12px;
+  }
 }
