@@ -3,8 +3,8 @@
 
 {{-- style section @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 
@@ -43,7 +43,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
                     @php $features = explode(",", $course->features); @endphp
@@ -138,7 +138,7 @@
                     <h3>Similar Course</h3>
                 </div> 
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 col-sm-6">
                         {{-- item --}}
                         <div class="course-single-item">
                             <div class="course-thumb-box">
@@ -162,7 +162,7 @@
                         </div>
                         {{-- item --}}
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 col-sm-6">
                         {{-- item --}}
                         <div class="course-single-item">
                             <div class="course-thumb-box">
@@ -186,7 +186,7 @@
                         </div>
                         {{-- item --}}
                     </div> 
-                    <div class="col-lg-5 mt-4">
+                    <div class="col-lg-5 mt-4 col-sm-6">
                         {{-- item --}}
                         <div class="course-single-item">
                             <div class="course-thumb-box">
@@ -210,7 +210,7 @@
                         </div>
                         {{-- item --}}
                     </div>
-                    <div class="col-lg-5 mt-4">
+                    <div class="col-lg-5 mt-4 col-sm-6">
                         {{-- item --}}
                         <div class="course-single-item">
                             <div class="course-thumb-box">
@@ -236,7 +236,7 @@
                     </div> 
                 </div> 
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" class="img-fluid">

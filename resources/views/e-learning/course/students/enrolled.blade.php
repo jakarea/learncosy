@@ -1,12 +1,11 @@
-
 @extends('layouts/latest/students')
 @section('title') My Courses @endsection
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/user.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -55,8 +54,8 @@
                         <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{ $enrolment->course->title }} </a>
-                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 26, $end = '...') }}</p>
+                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 65) }}</a>
+                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 36, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>
                             <li><i class="fas fa-star"></i></li>

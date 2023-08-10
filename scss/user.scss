@@ -1098,6 +1098,14 @@
             }
         }
     }
+    .student-profile-update-page .own-profile-box .custom-padding,
+    .student-profile-update-page .own-profile-box .header{
+        padding: 1rem;
+    }
+    .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box{
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 // landscape phone device 
@@ -1131,6 +1139,15 @@
             }
         }
     }
+
+    .student-profile-update-page .own-profile-box .custom-padding,
+    .student-profile-update-page .own-profile-box .header{
+        padding: 1rem;
+    }
+    .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box{
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 // tablet device 
@@ -1141,6 +1158,15 @@
 
     .user-search-box-wrap {
         grid-template-columns: 50% 25% 25%;
+    }
+
+    .student-profile-update-page .own-profile-box .custom-padding,
+    .student-profile-update-page .own-profile-box .header{
+        padding: 1rem;
+    }
+    .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box{
+        padding: 2rem 1rem;
+        margin-bottom: 1.5rem;
     }
 }
 

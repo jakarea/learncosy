@@ -24,11 +24,11 @@
     <!-- all css start --> 
     <!-- App css -->
     <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />    
-    <link href="{{ asset('latest/assets/auth-css/style.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/auth-css/header.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/auth-css/auth.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/style.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/header.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/auth.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     @yield('style') 
-    <link href="{{ asset('latest/assets/auth-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/auth-css/responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
 </head>

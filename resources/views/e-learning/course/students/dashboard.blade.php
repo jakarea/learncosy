@@ -2,7 +2,7 @@
 @section('title') Students Dashboard @endsection
 
 {{-- page style @S --}}
-@section('style')
+@section('style') 
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
@@ -13,7 +13,7 @@
 <main class="student-dashboard-page">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 col-xl-3">
+            <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
                 <div class="status-card-box">
                     <p>Course in Progress</p>
                     <div class="d-flex">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3">
+            <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
                 <div class="status-card-box">
                     <p>Completed Course</p>
                     <div class="d-flex">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3">
+            <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
                 <div class="status-card-box">
                     <p>Watching Time</p>
                     <div class="d-flex">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3">
+            <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
                 <div class="status-card-box">
                     <p>Certificate Achievement</p>
                     <div class="d-flex">
@@ -58,12 +58,12 @@
             <div class="col-xl-8">
                 <div class="earnings-chart-wrap mt-15">
                     <div class="row align-items-start">
-                        <div class="col-lg-10 time-chart">
+                        <div class="col-lg-10 time-chart col-7">
                             <h5>Time Spending</h5>
                             <h3>10<sub class="text-muted">h</sub>
                                 6<sub class="text-muted">m</sub></h3>
                         </div>
-                        <div class="col-lg-2 text-lg-end">
+                        <div class="col-lg-2 text-lg-end col-5">
                             <select class="time-chart-select">
                                 <option>Last 30 Days</option>
                                 <option>Last 20 Days</option>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="profile-widget-wrapper">
                         <div class="profile-widget-inner">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar"
+                            <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="Avatar"
                                 class="img-fluid" width="100">
                             <div class="profile-widget-info mt-2">
                                 <h6 class="text-small">{{ auth()->user()->name }}</h6>
@@ -179,7 +179,7 @@
             </div>
             @endif
         </div> 
-    </div> -->
+    </div>
 </main>
 @endsection
 {{-- page content @E --}}

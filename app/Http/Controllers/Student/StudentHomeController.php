@@ -181,7 +181,9 @@ class StudentHomeController extends Controller
             ]
         );
 
-        return true;
+        // return true;
+
+        return view('e-learning/course/students/activity', compact('courseActivities'));
     }
 
     public function review(Request $request,$slug){
@@ -208,9 +210,9 @@ class StudentHomeController extends Controller
 
     }
 
-    public function message()
+    public function certificate()
     {    
-        return view('e-learning/course/students/message'); 
+        return view('e-learning/course/students/certifiate');
     }
 
     public function message2()

@@ -927,6 +927,14 @@
   .enroll-course-list .list-wrap table tr td {
     white-space: nowrap;
   }
+  .student-profile-update-page .own-profile-box .custom-padding,
+  .student-profile-update-page .own-profile-box .header {
+    padding: 1rem;
+  }
+  .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .contact-info-box {
@@ -950,6 +958,14 @@
   .enroll-course-list .list-wrap table tr td {
     white-space: nowrap;
   }
+  .student-profile-update-page .own-profile-box .custom-padding,
+  .student-profile-update-page .own-profile-box .header {
+    padding: 1rem;
+  }
+  .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
 }
 @media (min-width: 767px) and (max-width: 992px) {
   .contact-info-box {
@@ -957,6 +973,14 @@
   }
   .user-search-box-wrap {
     grid-template-columns: 50% 25% 25%;
+  }
+  .student-profile-update-page .own-profile-box .custom-padding,
+  .student-profile-update-page .own-profile-box .header {
+    padding: 1rem;
+  }
+  .student-profile-update-page .own-profile-box .custom-padding .profile-picture-box {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {

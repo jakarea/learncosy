@@ -3,7 +3,7 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/message.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/message.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -107,9 +107,3 @@
 {{-- ==== message list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
-
-{{-- page script @S --}}
-@section('script')
-
-@endsection
-{{-- page script @E --}}

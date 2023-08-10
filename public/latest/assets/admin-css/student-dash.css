@@ -6,7 +6,6 @@
 }
 .status-card-box p {
   color: var(--neutral-color-neutral-60, #66768E);
-  font-family: Inter;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -245,8 +244,8 @@
   background: var(--background-light-paper, #FFF);
   padding: 1rem 0.75rem;
   position: absolute;
-  left: 102%;
-  top: -7.5%;
+  left: -5%;
+  top: 13.5%;
   width: 110%;
   height: 115%;
   visibility: hidden;
@@ -302,6 +301,7 @@
 .student-courses-lists-pages .course-ol-box ul li i {
   margin-right: 0.5rem;
 }
+.student-courses-lists-pages .course-ol-box .btn,
 .student-courses-lists-pages .course-ol-box a {
   border-radius: 0.375rem;
   background: var(--primary-color-blue, #294CFF);
@@ -321,6 +321,7 @@
   bottom: 1rem;
   width: 90%;
 }
+.student-courses-lists-pages .course-ol-box .btn:hover,
 .student-courses-lists-pages .course-ol-box a:hover {
   background-color: #212B36;
 }
@@ -795,6 +796,44 @@
   border: 0;
 }
 
+.play-bttn {
+  border-radius: 0.375rem;
+  background: rgba(15, 23, 81, 0.1);
+  color: #0F1751;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.375rem;
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+}
+
+.activity-table .media {
+  align-items: center;
+}
+.activity-table .media img {
+  margin-right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.activity-table .media h5 {
+  color: var(--text-light-primary, #212B36);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.375rem;
+}
+.activity-table .media h6 {
+  color: var(--text-light-secondary, #637381);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .student-courses-lists-pages .course-ol-box {
     left: 0%;
@@ -816,6 +855,104 @@
   }
   .media.course-title .common-bttn {
     margin-top: 0.5rem;
+  }
+  .status-card-box {
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .status-card-box p {
+    font-size: 0.7rem;
+  }
+  .status-card-box .d-flex span {
+    font-size: 11px;
+    padding: 0.2rem 0.5rem;
+  }
+  .status-card-box .d-flex h5 {
+    font-size: 1.8rem;
+  }
+  .time-chart h3 {
+    font-size: 1.8rem;
+  }
+  .profile-widget-history {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .my-course-box .media {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .my-course-box .media img {
+    margin-right: 0;
+    margin-bottom: 2rem;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+  .my-course-box .media span {
+    margin: 0.5rem 0;
+  }
+  .my-course-box .media p {
+    margin-top: 0.5rem;
+  }
+  .my-course-box .media a.bttn {
+    margin-top: 0.5rem;
+  }
+  .course-categories .d-flex a {
+    margin-bottom: 0.5rem;
+  }
+  .student-courses-lists-pages .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-page .overview-banner-box {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h1 {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title p {
+    font-size: 1rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h4 {
+    margin-top: 1rem;
+  }
+  .what-you-learn-box h3 {
+    font-size: 1.2rem;
+  }
+  .what-you-learn-box ul {
+    padding: 1rem;
+    grid-template-columns: 100%;
+  }
+  .what-you-learn-box ul li {
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+  }
+  .what-you-learn-box {
+    margin: 2rem 0;
+  }
+  .common-header {
+    margin-bottom: 0;
+  }
+  .common-header h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .course-content.course-outline-wrap {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-right-part {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .media.course-title .common-bttn {
+    display: block;
+    text-align: center;
+    width: 100%;
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {
@@ -839,5 +976,159 @@
   }
   .media.course-title .common-bttn {
     margin-top: 0.5rem;
+  }
+  .my-course-box .media {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .my-course-box .media img {
+    margin-right: 0;
+    margin-bottom: 2rem;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+  .my-course-box .media span {
+    margin: 0.5rem 0;
+  }
+  .my-course-box .media p {
+    margin-top: 0.5rem;
+  }
+  .my-course-box .media a.bttn {
+    margin-top: 0.5rem;
+  }
+  .status-card-box {
+    padding: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .status-card-box p {
+    font-size: 0.7rem;
+  }
+  .status-card-box .d-flex span {
+    font-size: 11px;
+    padding: 0.2rem 0.5rem;
+  }
+  .status-card-box .d-flex h5 {
+    font-size: 1.8rem;
+  }
+  .time-chart h3 {
+    font-size: 1.8rem;
+  }
+  .course-categories .d-flex a {
+    margin-bottom: 0.5rem;
+  }
+  .student-courses-lists-pages .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-page .overview-banner-box {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h1 {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title p {
+    font-size: 1rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h4 {
+    margin-top: 1rem;
+  }
+  .what-you-learn-box h3 {
+    font-size: 1.2rem;
+  }
+  .what-you-learn-box ul {
+    padding: 1rem;
+    grid-template-columns: 100%;
+  }
+  .what-you-learn-box ul li {
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+  }
+  .what-you-learn-box {
+    margin: 2rem 0;
+  }
+  .common-header {
+    margin-bottom: 0;
+  }
+  .common-header h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .course-content.course-outline-wrap {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-right-part {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .status-card-box {
+    margin-bottom: 1rem;
+  }
+  .student-courses-lists-pages .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-page .overview-banner-box {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h1 {
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title p {
+    font-size: 1rem;
+  }
+  .course-overview-page .overview-banner-box .banner-title h4 {
+    margin-top: 1rem;
+  }
+  .what-you-learn-box h3 {
+    font-size: 1.2rem;
+  }
+  .what-you-learn-box ul {
+    padding: 1rem;
+    grid-template-columns: 100%;
+  }
+  .what-you-learn-box ul li {
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+  }
+  .what-you-learn-box {
+    margin: 2rem 0;
+  }
+  .common-header {
+    margin-bottom: 0;
+  }
+  .common-header h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .course-content.course-outline-wrap {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .course-single-item {
+    margin-bottom: 1rem;
+  }
+  .course-overview-right-part {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .status-card-box {
+    margin-bottom: 1rem;
+  }
+}
+@media (min-width: 1199px) and (max-width: 1399px) {
+  .profile-widget-history {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
