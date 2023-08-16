@@ -12,13 +12,7 @@ Home Page
 @section('content')
 <main class="dashboard-page-wrap">
     <div class="container-fluid">
-        <div class="row">
-            @can('instructor')
-            <div class="col-12 mb-4">
-                <!-- Check if not purchase subscription then show alert with subscription link -->
-                {!! isInstructorSubscribed(auth()->user()->id) !!}
-            </div>
-            @endcan
+        <div class="row"> 
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
                 <div class="total-client-box">

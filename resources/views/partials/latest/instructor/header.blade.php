@@ -18,30 +18,31 @@
                     <a class="{{ Request::is('instructor/analytics*')  ? ' active' : '' }} nav-link" href="{{ url('instructor/analytics') }}">Analytics</a>
                 </li>  
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Courses <i class="fas fa-angle-down"></i></a>
+                    <a class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} nav-link" href="#">Courses <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
-                        <li><a href="{{ url('admin/courses') }}">All Courses</a></li>
-                        <li><a href="{{ url('admin/bundle/courses') }}">Add New Course</a></li> 
+                        <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses')  ? ' active' : '' }}">All Courses</a></li>
+                        <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">Add New Course</a></li> 
                     </ul>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Bundle Course <i class="fas fa-angle-down"></i></a>
+                    <a class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} nav-link" href="#">Bundle Course <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
-                        <li><a href="{{ url('admin/courses') }}">All Bundle Courses</a></li>
-                        <li><a href="{{ url('admin/bundle/courses') }}">Create Bundle</a></li> 
+                        <li><a href="{{ url('instructor/bundle/courses') }}" class="{{ Request::is('instructor/bundle/courses')  ? ' active' : '' }}">All Bundle Courses</a></li>
+                        <li><a href="{{ url('instructor/bundle/courses/create') }}" class="{{ Request::is('instructor/bundle/courses/create')  ? ' active' : '' }}">Create Bundle</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Students <i class="fas fa-angle-down"></i></a>
+                    <a class="{{ Request::is('instructor/students*')  ? ' active' : '' }} nav-link" href="#">Students <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
-                        <li><a href="{{ url('admin/courses') }}">All Students</a></li> 
+                        <li><a href="{{ url('instructor/students') }}">All Students</a></li> 
+                        <li><a href="{{ url('instructor/students/create') }}">Add Students</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('admin/profile/platform-fee*')  ? ' active' : '' }} nav-link" href="#">Earning</a>
+                    <a class="{{ Request::is('instructor/payments*')  ? ' active' : '' }} nav-link" href="{{ url('instructor/payments') }}">Earning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('admin/profile/platform-fee*')  ? ' active' : '' }} nav-link" href="#">Messaging</a>
+                    <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Messaging</a>
                 </li>
             </ul>
             @endcan

@@ -1,136 +1,99 @@
-@extends('layouts/instructor')
-@section('title') Course List Page @endsection
+@extends('layouts.latest.instructor')
+@section('title') All Courses @endsection
 
 {{-- style section @S --}}
 @section('style')
-<link href="{{ asset('assets/css/course.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/course-list.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 
-@section('content') 
-<main class="course-lists-pages">
-    {{-- course list page start --}}
-    <div class="create-client-wrap page-height-wrapper">
-        <div class="create-client-head table-filter-sort-wrap mb-4">
-            <!-- table layout chnage bttn start -->
-            <div class="table-layout-bttn ms-3">
-                <ul>
-                    <li><a href="javascript:void(0)" onclick="elementHide()" class="active">L</a></li>
-                    <li><a href="javascript:void(0)" onclick="elementShow()">M</a></li>
-                    <li><a href="javascript:void(0)" onclick="elementShowS()">S</a></li>
-                </ul>
+@section('content')
+<main class="courses-lists-pages">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                {{-- session message @E --}}
             </div>
-            <!-- table layout chnage bttn end -->
-
-
-            <!-- course create bttn start -->
-            <div class="create-bttn-wraps ms-auto">
-                <a href="{{url('instructor/courses/create')}}"><i class="fa-regular fa-square-plus"></i> Create New Course</a>
-            </div>
-            <!-- course create bttn end -->
-
-            <!-- course list table header end -->
         </div>
         <div class="row">
-            @foreach ($courses as $course)
+            <div class="col-12">
+                <div class="user-search-box-wrap">
+                    <div class="form-group">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search course" class="form-control">
+                    </div>
+                    <div class="form-filter">
+                        <select class="form-control">
+                            <option value="">All </option>
+                            <option value="">Best Rated</option>
+                            <option value="">Most Purchased</option>
+                            <option value="">Newest</option>
+                            <option value="">Oldest</option>
+                        </select>
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                    <div class="user-title-box">
+                        <a href="{{ url('instructor/courses/create') }}"><i class="fas fa-plus me-2"></i> Add New Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"> 
+            @foreach ($courses as $course) 
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="client-single-box-wrap">
-                    @if ($course->status == 'pending')
-                        <span class="badge text-bg-danger">Pending</span>
-                    @elseif ($course->status == 'draft')
-                        <span class="badge text-bg-warning">Draft</span>
-                    @elseif ($course->status == 'published')
-                        <span class="badge text-bg-info">Published</span>
-                    @endif 
-
-                    <div class="client-thumb-box">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}"
-                            alt="Avatar" class="img-fluid">
-                        <div class="client-name-box">
-                           <a href="{{url('instructor/courses/'.$course->slug)}}"><h4>{{ Str::limit($course->title, $limit = 45, $end = '..') }}</h4></a>
-                            <h6>{{ Str::limit($course->short_description, $limit = 55, $end = '...') }}</h6>
-                        </div>
+                <div class="course-single-item"> 
+                    <div class="course-thumb-box">
+                        <div class="header-action">
+                            <div class="dropdown">
+                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="{{url('instructor/courses/'.$course->slug)}}">View</a></li> 
+                                  <li> 
+                                    <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
+                                        @csrf 
+                                        @method("DELETE")
+                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
+                                    </form>
+                                </li> 
+                                </ul>
+                              </div> 
+                        </div> 
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
-                    <div class="client-txt-box">
-                        <hr>
-                        <div class="d-flex">
-                            {{-- <span><i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($course->created_at)->diffForHumans() }} </span> --}}
-                            <a href="{{url('instructor/courses/'.$course->slug)}}">View <i class="fas fa-eye text-primary"></i></a>
-                            <a href="{{url('instructor/courses/'.$course->slug.'/edit')}}">Edit <i class="fas fa-pen text-info"></i></a> 
-
-                            <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
-                                @csrf 
-                                @method("DELETE")
-                                <button type="submit" class="btn p-0">Delete <i class="fas fa-trash text-danger"></i></button>
-                            </form>
-                            
-                        </div>
+                    <div class="course-txt-box">
+                        <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
+                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                        <ul>
+                            <li><span>4.0</span></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><span>(145)</span></li>
+                        </ul>
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
                     </div>
                 </div>
             </div>
             {{-- course single box end --}}
-            @endforeach
-
+            @endforeach 
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{-- pagginate --}}
+                <div class="paggination-wrap">
+                    {{ $courses->links('pagination::bootstrap-5') }}
+                </div>
+                {{-- pagginate --}}
+            </div>
         </div>
     </div>
-    {{-- course list page end --}}
-
-    {{-- paggination start --}}
-    <div class="table-paggination">
-        <div class="pagination">
-            {{ $courses->links('pagination::bootstrap-5') }}
-        </div> 
-    </div>
-    {{-- paggination end --}}
 </main>
 @endsection
-
-{{-- script section @S --}}
-@section('script')
-<!-- client view changes script start -->
-<script>
-    function elementShow() {
-      var elements = [...document.querySelectorAll(".client-single-box-wrap")];
-
-      elements.forEach(items => {
-        items.classList.add("single-client-medium-view");
-        items.classList.remove("single-client-small-view");
-      });
-    }
-
-    function elementHide() {
-      var elements = [...document.querySelectorAll(".client-single-box-wrap")];
-
-      elements.forEach(items => {
-        items.classList.remove("single-client-medium-view","single-client-small-view");
-      });
-    }
-
-    function elementShowS() {
-      var elements = [...document.querySelectorAll(".client-single-box-wrap")];
-
-      elements.forEach(items => {
-        items.classList.add("single-client-small-view"); 
-      });
-    }
-
-</script>
-
-<!-- client view changes script end -->
-
-<!-- view button toggle script start -->
-<script>
-    let boxs = [...document.querySelectorAll(".table-layout-bttn ul li a")];
-
-  boxs.forEach(box => {
-    box.addEventListener("click", function () {
-      boxs.forEach(c => c.classList.remove("active"));
-      this.classList.add("active")
-    })
-  });
-</script>
-<!-- view button toggle script end -->
-@endsection
-{{-- script section @E --}}

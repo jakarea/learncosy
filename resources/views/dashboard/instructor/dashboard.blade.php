@@ -3,7 +3,6 @@
 {{-- page style @S --}}
 @section('style')
  
-
 @endsection
 @section('content')
    <main class="instructor-dashboard-page">
@@ -78,6 +77,14 @@
                 <div class="recent-payment-box mt-15">
                     <h3>Recent Payment</h3>
 
+                    <div class="payment-box"> 
+                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+
+                        <p>05 Aug 2023</p>
+                        <p>$10</p>
+
+                        <a href="#">View</a>
+                    </div>
                     <div class="payment-box"> 
                         <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
 

@@ -59,6 +59,10 @@
   background-color: #294CFF;
   color: #fff;
 }
+.header-area .navbar-nav .nav-item .submenu-box li a.active {
+  background-color: #294CFF;
+  color: #fff;
+}
 .header-area .navbar-nav .nav-item .submenu-box li:last-child a {
   margin-bottom: 0;
 }
