@@ -208,3 +208,44 @@
 .recent-update-box .media a img {
   width: 3.75rem;
 }
+
+@media (min-width: 320px) and (max-width: 574px) {
+  .recent-payment-box,
+  .my-courses-box,
+  .welcome-back-box {
+    padding: 1rem;
+  }
+  .welcome-back-box h1 {
+    font-size: 1.2rem;
+  }
+  .welcome-back-box .d_flex {
+    grid-template-columns: 90% 10%;
+  }
+  .my-courses-box .media {
+    flex-direction: column;
+  }
+  .my-courses-box {
+    text-align: center;
+  }
+  .my-courses-box img.me-3 {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .my-courses-box .media ul li {
+    justify-content: center;
+  }
+  .my-courses-box .media a {
+    margin-top: 1rem;
+  }
+  .recent-payment-box .payment-box {
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+  .recent-payment-box .payment-box a {
+    text-align: center;
+  }
+  main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}

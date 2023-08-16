@@ -77,7 +77,12 @@
                             class="img-fluid">
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                        @if ( isEnrolled($course->id) )
+                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                        @else 
+                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                        @endif
+                        
                         <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>

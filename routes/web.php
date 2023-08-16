@@ -279,6 +279,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses'); 
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses'); 
+    Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses'); 
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses'); 
     Route::get('/courses-activies', 'storeActivities')->name('students.complete.lesson'); 
     Route::get('/courses-certificate', 'certificate')->name('students.certificate.course'); 
