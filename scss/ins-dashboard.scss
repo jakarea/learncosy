@@ -192,11 +192,24 @@
     padding: 1.5rem 1.125rem;
 
     h5 {
-        color: var(--neutral-black-black-500, #1D1F2C); 
+        color: var(--neutral-black-black-500, #1D1F2C);
         font-size: 1.25rem;
         font-style: normal;
         font-weight: 600;
-        line-height: 1.875rem; 
+        line-height: 1.875rem;
         letter-spacing: 0.0125rem;
     }
+}
+
+.edit-profile {
+    border-radius: 62.5rem;
+    border: 1px solid var(--primary-color-blue, #294CFF);
+    display: inline-block;
+    padding: .75rem;
+    color: var(--primary-color-blue, #294CFF);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; 
+    margin-top: 2rem;
 }
