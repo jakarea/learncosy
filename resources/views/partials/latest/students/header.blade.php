@@ -9,6 +9,7 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+            @can('student')
             <ul class="navbar-nav m-auto"> 
                 <li class="nav-item">
                     <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
@@ -26,6 +27,7 @@
                     <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>
                 </li> 
             </ul>
+            @endcan
             <div class="d-flex"> 
                 <div class="dropdown">
                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,7 +47,6 @@
                         </li>
                     </ul>
                 </div>
- 
                 <a href="#" class="avatar">
                     @if(auth()->user()->avatar)
                         <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
