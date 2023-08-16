@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use App\Models\Module;
 use App\Models\Subscription;
@@ -19,7 +20,8 @@ class CheckSubscription
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user()->user_role('instructor')->first();
+    
+        $user = auth::user()->user_role('instructor')->first();
         
         if ($user) {
                         
