@@ -21,7 +21,7 @@ class CourseManagementController extends Controller
     public function index(){
         // return view('e-learning/course/admin/index');  
 
-        $courses = Course::orderBy('id', 'desc')->paginate(6);
+        $courses = Course::orderBy('id', 'desc')->paginate(12);
 
         return view('e-learning/course/admin/list',compact('courses'));  
     }

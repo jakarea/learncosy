@@ -35,9 +35,9 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="name">Name <sup class="text-danger">*</sup>
+                                    <label for="name">Admin Name <sup class="text-danger">*</sup>
                                     </label>
-                                    <input type="text" placeholder="Enter Name" name="name"
+                                    <input type="text" placeholder="Enter Admin Name" name="name"
                                         class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name') }}" id="name">
                                     <span class="invalid-feedback">@error('name'){{ $message }}
@@ -77,12 +77,12 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio
+                                    <label for="short_bio">Website
                                     </label>
 
-                                    <textarea name="short_bio" id="short_bio"
+                                    <input type="text" name="short_bio" id="short_bio" value="{{ old('short_bio') }}"
                                         class="form-control @error('short_bio') is-invalid @enderror"
-                                        placeholder="Enter short bio">{{ old('short_bio') }}</textarea>
+                                        placeholder="Enter Website "/>
 
                                     <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                         @enderror</span>

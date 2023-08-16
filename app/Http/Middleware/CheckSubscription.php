@@ -20,10 +20,9 @@ class CheckSubscription
      */
     public function handle(Request $request, Closure $next)
     {
-    
-        $user = auth::user()->user_role('instructor')->first();
-        
-        if ($user) {
+        // $user = auth::user()->user_role('instructor')->first();
+        $user = auth::user();
+        if (Auth::user()->user_role == 'instructor') {
                         
             // Retrieve the user's subscription based on instructor_id
             $subscription = Subscription::where('instructor_id', $user->id)->first();

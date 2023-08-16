@@ -79,6 +79,8 @@ $i = 0;
                                         @endfor
                                     </ul>
                                     <p>{{$course_review->comment}}</p>
+                                    <small>{{$course_review->created_at->diffForHumans()}}</small>
+                                    
                                 </div>
                             </div>
                             @endforeach
