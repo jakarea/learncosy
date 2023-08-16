@@ -40,7 +40,6 @@
                 </div>
                 <div class="user-details-box">
                     <h5>About Me</h5>
-                    <p>{{ $user->short_bio }}</p>
                     {!! $user->description !!}
                 </div>
             </div>
@@ -64,8 +63,8 @@
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
                         <div class="media-body">
-                            <h6>Company</h6>
-                            <a href="#">{{$user->company_name ? $user->company_name : '--'}}</a>
+                            <h6>Website</h6>
+                            <a href="{{$user->short_bio}}" target="_blank">{{$user->short_bio  ? $user->short_bio : '--'}}</a>
                         </div>
                     </div>
                 </div>

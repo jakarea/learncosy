@@ -27,18 +27,7 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="course-categories">
-                    <h5>Course Categories</h5>
-                    <div class="d-flex">
-                        @foreach($categories as $category)
-                        <a href="{{ url('students/home?cat='.$category)}}">{{$category}}</a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-12">
                 <form action="">

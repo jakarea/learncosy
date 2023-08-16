@@ -78,11 +78,11 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio 
+                                    <label for="short_bio">Website
                                     </label> 
-                                        <textarea name="short_bio" id="short_bio"
+                                        <input type="text" name="short_bio" id="short_bio" value="{{  $user->short_bio }}"
                                             class="form-control @error('short_bio') is-invalid @enderror"
-                                            placeholder="Enter short bio">{{ $user->short_bio }}</textarea>
+                                            placeholder="Enter Website">
                                      
                                     <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                         @enderror</span>
