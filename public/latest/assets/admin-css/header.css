@@ -6,6 +6,9 @@
 .header-area .dropdown-menu[data-bs-popper] {
   left: -55px;
 }
+.header-area .navbar-brand img {
+  max-width: 8.5rem;
+}
 .header-area .navbar-nav .nav-item {
   position: relative;
 }

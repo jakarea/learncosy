@@ -26,11 +26,11 @@
          </div>
          <div class="row">
             <div class="col-lg-6">
-                <div class="my-courses-box">
+                <div class="my-courses-box mt-15">
                     <h3>My Courses</h3>
 
                     <div class="media">
-                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
                         <div class="media-body">
                             <h5>UX Design Foundations</h5>
                             <p>Evelyn Gaylord</p>
@@ -41,9 +41,81 @@
                         </div>
                         <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
                     </div>
+
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
+                        <div class="media-body">
+                            <h5>UX Design Foundations</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> 40 modules</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                    </div>
+
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
+                        <div class="media-body">
+                            <h5>UX Design Foundations</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> 40 modules</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="#" class="common-bttn">Create New Course</a>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-lg-6"></div>
+            <div class="col-lg-6">
+                <div class="recent-payment-box mt-15">
+                    <h3>Recent Payment</h3>
+
+                    <div class="payment-box"> 
+                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+
+                        <p>05 Aug 2023</p>
+                        <p>$10</p>
+
+                        <a href="#">View</a>
+                    </div>
+                    <div class="payment-box"> 
+                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+
+                        <p>05 Aug 2023</p>
+                        <p>$10</p>
+
+                        <a href="#">View</a>
+                    </div>
+                    <div class="payment-box"> 
+                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+
+                        <p>05 Aug 2023</p>
+                        <p>$10</p>
+
+                        <a href="#">View</a>
+                    </div>
+                    <div class="payment-box"> 
+                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+
+                        <p>05 Aug 2023</p>
+                        <p>$10</p>
+
+                        <a href="#">View</a>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a href="#" class="common-bttn">View All Payment</a>
+                    </div>
+                </div>
+            </div>
          </div>
     </div>
    </main>

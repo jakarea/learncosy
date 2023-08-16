@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
-            <img src="{{asset('latest/assets/images/logo.svg')}}" alt="Logo" class="img-fluid">
+            <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
