@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
-            <img src="{{asset('latest/assets/images/logo.svg')}}" alt="Logo" class="img-fluid">
+            <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -9,7 +9,6 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
-            <!-- Admin Header Defind -->
             @can('admin')
             <ul class="navbar-nav m-auto"> 
                 <li class="nav-item">
@@ -40,30 +39,7 @@
                     <a class="{{ Request::is('admin/profile/platform-fee*')  ? ' active' : '' }} nav-link" href="{{ url('/admin/profile/platform-fee') }}">Platform Fee</a>
                 </li>
             </ul>
-            @endcan
-            <!-- Teacher Header Defind -->
-            @can('instructor')
-            @endcan
-            <!-- Student Header Defind -->
-            @can('student')
-            <ul class="navbar-nav m-auto"> 
-                <li class="nav-item">
-                    <a href="{{ route('students.dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ Request::is('students/catalog/courses*')  ? ' active' : '' }} nav-link" href="{{ route('students.catalog.courses') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('students.dashboard.enrolled') }}">My Course</a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ Request::is('students.dashboard.enrolled*')  ? ' active' : '' }} nav-link" href="{{ route('admin.subscription') }}">Certificate</a>
-                </li>
-                <li class="nav-item">
-                    <a class="{{ Request::is('students/message*')  ? ' active' : '' }} nav-link" href="#">Message</a>
-                </li>
-            </ul>
-            @endcan
+            @endcan 
             <div class="d-flex"> 
                 <div class="dropdown">
                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,22 +48,15 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{url('/admin/profile/myprofile')}}">My Profile</a></li>  
-
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a> 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                        </li>
-
+                        </li> 
                     </ul>
-                </div>
-
-                {{-- <a href="#" class="bttn">
-                    <span>5</span>
-                    <img src="{{asset('latest/assets/images/icons/bell.svg')}}" alt="a" class="img-fluid">
-                </a> --}}
+                </div> 
                 <a href="#" class="avatar">
                     @if(auth()->user()->avatar)
                         @if(auth()->user()->user_role == 'student')
