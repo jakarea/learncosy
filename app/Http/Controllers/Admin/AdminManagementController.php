@@ -42,7 +42,7 @@ class AdminManagementController extends Controller
 
        // initial password for admin if admin create profile
        $initialPass = 1234567890;
-
+       $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
        // add admin
        $admin = new User([
            'name' => $request->name,  
@@ -50,7 +50,7 @@ class AdminManagementController extends Controller
            'user_role' => 'admin',
            'phone' => $request->phone,
            'short_bio' => $request->short_bio,
-           'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
+           'social_links' => trim($social_links,','),
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
@@ -108,9 +108,9 @@ class AdminManagementController extends Controller
          if ($request->email) {
             $user->email =  $user->email;
          }
-
+         $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
          $user->short_bio = $request->short_bio;
-         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
+         $user->social_links = trim($social_links,',');
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
