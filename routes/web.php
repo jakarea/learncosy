@@ -152,7 +152,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {
-        Route::get('dashboard', [DashboardController::class,'index'])->name('instructor.dashboard.index');
+        Route::get('dashboard', [DashboardController::class,'analytics'])->name('instructor.dashboard.analytics');
+        Route::get('analytics', [DashboardController::class,'index'])->name('instructor.dashboard.index');
         // instructor payment history static pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {  
             Route::get('/', 'studentsPayment');  

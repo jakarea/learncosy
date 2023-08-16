@@ -40,7 +40,11 @@ class DashboardController extends Controller
         }
 
         $categories = array_unique($unique_array);
-        return view('dashboard/instructor/dashboard', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
+    }
+
+    public function analytics(){
+        return view('dashboard/instructor/dashboard');
     }
 
     private function getActiveInActiveStudents($data)

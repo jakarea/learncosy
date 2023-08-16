@@ -1,0 +1,53 @@
+.welcome-back-box {
+  border-radius: 0.75rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #F5FAFF;
+  padding: 1rem 1.5rem;
+}
+.welcome-back-box h1 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.875rem;
+  letter-spacing: 0.015rem;
+}
+.welcome-back-box h6 {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.875rem;
+  letter-spacing: 0.01rem;
+}
+.welcome-back-box h5 {
+  color: var(--primary, #0D5EF4);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.875rem;
+  letter-spacing: 0.01rem;
+}
+.welcome-back-box .d_flex {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  align-items: center;
+}
+.welcome-back-box .d_flex span {
+  color: var(--gray-700, #344054);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  display: block;
+  text-align: center;
+}
+.welcome-back-box .progress {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: var(--primary-color-blue-lightest, #E7EBFF);
+}
+.welcome-back-box .progress .progress-bar {
+  background-color: #0D5EF4;
+  border-radius: 0.25rem;
+}

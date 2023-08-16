@@ -12,10 +12,10 @@
             @can('instructor')
             <ul class="navbar-nav m-auto"> 
                 <li class="nav-item">
-                    <a href="{{ url('admin/dashboard') }}" class="{{ Request::is('admin/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
+                    <a href="{{ url('instructor/dashboard') }}" class="{{ Request::is('instructor/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('admin/alladmin*')  ? ' active' : '' }} nav-link" href="{{ url('admin/alladmin') }}">Analytics</a>
+                    <a class="{{ Request::is('instructor/analytics*')  ? ' active' : '' }} nav-link" href="{{ url('instructor/analytics') }}">Analytics</a>
                 </li>  
                 <li class="nav-item">
                     <a class="nav-link" href="#">Courses <i class="fas fa-angle-down"></i></a>
@@ -28,7 +28,7 @@
                     <a class="nav-link" href="#">Bundle Course <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
                         <li><a href="{{ url('admin/courses') }}">All Bundle Courses</a></li>
-                        <li><a href="{{ url('admin/bundle/courses') }}">Create Bundle Course</a></li> 
+                        <li><a href="{{ url('admin/bundle/courses') }}">Create Bundle</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -52,7 +52,7 @@
                             class="img-fluid">
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('/admin/profile/myprofile')}}">My Profile</a></li>  
+                        <li><a class="dropdown-item" href="{{url('/instructor/profile/myprofile')}}">My Profile</a></li>  
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a> 
@@ -64,15 +64,8 @@
                 </div> 
                 <a href="#" class="avatar">
                     @if(auth()->user()->avatar)
-                        @if(auth()->user()->user_role == 'student')
-                        <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
-                            class="img-fluid">
-                        @elseif(auth()->user()->user_role == 'instructor')
-                        <img src="{{ asset('assets/images/instructor/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
-                            class="img-fluid">
-                        @elseif(auth()->user()->user_role == 'admin')
-                        <img src="{{ asset('assets/images/admin/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
-                            class="img-fluid">
+                        @if(auth()->user()->user_role == 'instructor')
+                        <img src="{{ asset('assets/images/instructor/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}" class="img-fluid"> 
                         @endif
                     @else
                         <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>

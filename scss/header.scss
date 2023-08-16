@@ -2,7 +2,6 @@
 @use './util/variabls' as v;
 @use './util/media-query' as q;
 
-
 .header-area {
     border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
     background: var(--neutral-color-white, #FFF);
@@ -35,7 +34,7 @@
             .submenu-box {
                 position: absolute;
                 left: -25px;
-                bottom: -200px;
+                top: 60px;
                 z-index: 99;
                 background-color: #fff;
                 min-width: 220px;
@@ -43,7 +42,7 @@
                 border-radius: 6px;
                 border: 1px solid #ccc;
                 transform: translateY(-15%);
-                visibility: hidden;
+                display: none;
                 transition: all linear .3s;
 
                 li {
@@ -81,7 +80,7 @@
 
             &:hover {
                 .submenu-box {
-                    visibility: visible;
+                   display: block;
                     transform: translateY(0);
                 }
             }
