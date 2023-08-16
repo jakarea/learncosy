@@ -210,6 +210,30 @@
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 150%; 
+    line-height: 150%;
     margin-top: 2rem;
+}
+
+.recent-update-box {
+    .media {
+        border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+        padding: 1rem 0;
+        margin-top: 0;
+        img.user {
+            width: 3.75rem;
+            height: 3.75rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        a {
+            i {
+                color: #ED5763;
+            }
+            img{
+                width: 3.75rem;
+            }
+        }
+    }
 }

@@ -51,9 +51,10 @@
                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{asset('latest/assets/images/icons/settings.svg')}}" alt="a"
                             class="img-fluid">
-                    </button>
+                    </button> 
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{url('/instructor/profile/myprofile')}}">My Profile</a></li>  
+                        <li><a class="dropdown-item" href="{{url('/instructor/profile/edit')}}">Account Settings</a></li>  
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a> 

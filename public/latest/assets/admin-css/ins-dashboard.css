@@ -188,3 +188,23 @@
   line-height: 150%;
   margin-top: 2rem;
 }
+
+.recent-update-box .media {
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  padding: 1rem 0;
+  margin-top: 0;
+}
+.recent-update-box .media img.user {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 1rem;
+}
+.recent-update-box .media a i {
+  color: #ED5763;
+}
+.recent-update-box .media a img {
+  width: 3.75rem;
+}

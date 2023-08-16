@@ -40,7 +40,12 @@
     <div class="main-page-wrapper">
 
         {{-- header start --}}
-        @include('partials/latest/students/header')
+        @if (auth::user()->user_role == 'instructor')
+            @include('partials/latest/instructor/header')
+        @else 
+            @include('partials/latest/students/header')
+        @endif
+        
         {{-- header end --}}
 
         @yield('content')
