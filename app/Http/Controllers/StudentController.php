@@ -22,9 +22,8 @@ class StudentController extends Controller
         // get student who purchase course based on course user_id and logged in user_id
        $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
 
-       $users = User::whereIn('id', $checkout->pluck('user_id'))->get();
-
-        // return dd($checkout);
+       $users = User::whereIn('id', $checkout->pluck('user_id'))->paginate(12);
+ 
          return view('students/instructor/grid',compact('users')); 
      }
 
