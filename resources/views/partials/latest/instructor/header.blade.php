@@ -21,7 +21,7 @@
                     <a class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} nav-link" href="#">Courses <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
                         <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses')  ? ' active' : '' }}">All Courses</a></li>
-                        <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">Add New Course</a></li> 
+                        <li><a href="{{ url('instructor/courses/create/step-1') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">Add New Course</a></li> 
                     </ul>
                 </li> 
                 <li class="nav-item">

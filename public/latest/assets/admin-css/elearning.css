@@ -1234,6 +1234,37 @@ span.finsihLesson {
     margin-top: 2rem;
     width: 100%;
   }
+  .lesson-edit-form-wrap {
+    padding: 1rem;
+  }
+  .lesson-edit-form-wrap .course-page-edit-box {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .page-create-step .step-box:before {
+    left: 95px !important;
+  }
+  .share-on-social-wrap,
+  .top-image-upload-box,
+  .content-settings-form-wrap,
+  .highlighted-area-upload,
+  .lesson-edit-form-wrap {
+    margin-top: 2rem;
+  }
+  .highlighted-area-upload p {
+    margin-top: 0.8rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .share-on-social-wrap .d-flex a {
+    margin-right: 1rem;
+  }
+  .share-on-social-wrap .d-flex a img {
+    width: 4rem;
+  }
+  .share-on-social-wrap .copy-link {
+    grid-template-columns: 70% 30%;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .course-title {
