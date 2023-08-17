@@ -121,6 +121,20 @@ class StudentHomeController extends Controller
         }
     }
 
+      // my course details
+      public function courseDetails($slug){
+        
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+        
+        if ($course) {
+            return view('e-learning/course/students/myCourse',compact('course','course_reviews')); 
+        } else {
+            return redirect('students/dashboard')->with('error', 'Course not found!');
+        }
+    
+    }
+
     public function storeCourseLog(Request $request){
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');

@@ -175,3 +175,77 @@
   line-height: 1.875rem;
   letter-spacing: 0.0125rem;
 }
+
+.edit-profile {
+  border-radius: 62.5rem;
+  border: 1px solid var(--primary-color-blue, #294CFF);
+  display: inline-block;
+  padding: 0.75rem;
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  margin-top: 2rem;
+}
+
+.recent-update-box .media {
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  padding: 1rem 0;
+  margin-top: 0;
+}
+.recent-update-box .media img.user {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 1rem;
+}
+.recent-update-box .media a i {
+  color: #ED5763;
+}
+.recent-update-box .media a img {
+  width: 3.75rem;
+}
+
+@media (min-width: 320px) and (max-width: 574px) {
+  .recent-payment-box,
+  .my-courses-box,
+  .welcome-back-box {
+    padding: 1rem;
+  }
+  .welcome-back-box h1 {
+    font-size: 1.2rem;
+  }
+  .welcome-back-box .d_flex {
+    grid-template-columns: 90% 10%;
+  }
+  .my-courses-box .media {
+    flex-direction: column;
+  }
+  .my-courses-box {
+    text-align: center;
+  }
+  .my-courses-box img.me-3 {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .my-courses-box .media ul li {
+    justify-content: center;
+  }
+  .my-courses-box .media a {
+    margin-top: 1rem;
+  }
+  .recent-payment-box .payment-box {
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+  .recent-payment-box .payment-box a {
+    text-align: center;
+  }
+  main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}

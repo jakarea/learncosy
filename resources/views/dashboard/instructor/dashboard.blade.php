@@ -124,6 +124,137 @@
                 </div>
             </div>
          </div>
+         <div class="row">
+            <div class="col-lg-6">
+                <div class="my-courses-box mt-15 recent-update-box">
+                    <h3>Recent Updates</h3>
+
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/susmita-bahar.png') }}" alt="icon" class="img-fluid me-3 user">
+                        <div class="media-body">
+                            <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    </div> 
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/update-2.png') }}" alt="icon" class="img-fluid me-3 user">
+                        <div class="media-body">
+                            <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    </div> 
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="icon" class="img-fluid me-3 user">
+                        <div class="media-body">
+                            <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    </div> 
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="icon" class="img-fluid me-3 user">
+                        <div class="media-body">
+                            <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    </div> 
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="icon" class="img-fluid me-3 user">
+                        <div class="media-body">
+                            <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    </div> 
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="my-courses-box mt-15 recent-update-box">
+                    <h3>System Updates</h3>
+
+                    <div class="media"> 
+                        <div class="media-body">
+                            <h5>Complete your certificate for Ux design course </h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                    </div>   
+                    <div class="media"> 
+                        <div class="media-body">
+                            <h5>Complete your certificate for Ux design course </h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                    </div>   
+                    <div class="media"> 
+                        <div class="media-body">
+                            <h5>Complete your certificate for Ux design course </h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                    </div>   
+                    <div class="media"> 
+                        <div class="media-body">
+                            <h5>Complete your certificate for Ux design course </h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                    </div>   
+                    <div class="media"> 
+                        <div class="media-body">
+                            <h5>Complete your certificate for Ux design course </h5>
+                            <p>Evelyn Gaylord</p>
+
+                            <ul>
+                                <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
+                            </ul>
+                        </div>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                    </div>   
+
+                </div>
+            </div>
+         </div>
     </div>
    </main>
 @endsection

@@ -396,6 +396,54 @@
   margin-bottom: 1rem;
 }
 
+.user-edit-form .form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.user-edit-form .form-group #url_increment {
+  position: absolute;
+  right: 0.75rem;
+  top: 2.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #66768E;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  color: #66768E;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all linear 0.3s;
+}
+.user-edit-form .form-group #url_increment:hover {
+  background-color: #66768E;
+  color: #fff;
+}
+.user-edit-form .form-group .url-extra-field div {
+  position: relative;
+  margin-top: 0.5rem;
+}
+.user-edit-form .form-group .url-extra-field div a {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid #66768E;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  color: #66768E;
+  display: inline-flex;
+  align-items: center;
+  transition: all linear 0.3s;
+  cursor: pointer;
+  justify-content: center;
+}
+.user-edit-form .form-group .url-extra-field div a:hover {
+  background-color: #66768E;
+  color: #fff;
+}
+
 .user-add-form-wrap-2 {
   border-radius: 0.5rem;
   border: none;

@@ -348,6 +348,7 @@
     margin-top: 1.5rem;
 
     form {
+        
         .form-group {
             margin-bottom: 1.5rem;
             position: relative;
@@ -454,6 +455,62 @@
                 margin-bottom: 1rem;
             }
         }
+    }
+}
+
+.user-edit-form .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+
+    #url_increment {
+        position: absolute;
+        right: 0.75rem;
+        top: 2.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid #66768E;
+        border-radius: 50%;
+        font-size: .9rem;
+        color: #66768E;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all linear .3s;
+
+        &:hover {
+            background-color: #66768E;
+            color: #fff;
+        }
+    }
+
+    .url-extra-field {
+        div {
+            position: relative;
+            margin-top: 0.5rem;
+
+            a {
+                position: absolute;
+                right: 0.75rem;
+                top: .4rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                border: 1px solid #66768E;
+                border-radius: 50%;
+                font-size: .9rem;
+                color: #66768E;
+                display: inline-flex;
+                align-items: center;
+                transition: all linear .3s;
+                cursor: pointer;
+                justify-content: center;
+
+                &:hover {
+                    background-color: #66768E;
+                    color: #fff;
+                }
+            }
+        }
+
     }
 }
 
@@ -648,6 +705,7 @@
             line-height: 1.5rem;
             height: 3rem;
         }
+ 
 
         i {
             color: #212B36;

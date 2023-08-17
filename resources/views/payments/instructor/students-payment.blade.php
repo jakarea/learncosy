@@ -1,80 +1,101 @@
-@extends('layouts/instructor')
-@section('title') Payment from Students Page @endsection
+@extends('layouts.latest.instructor')
+@section('title') Payment From Student @endsection
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/settings.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-<main class="profile-page-wrap">
-    {{-- user profile header area @S --}}
-    <div class="product-filter-wrapper my-0">
-        <div class="product-filter-box mt-0 mb-4">
-            <div class="password-change-txt">
-                <h1 class="mb-1">Payment from Students</h1>
+{{-- ==== admin payment list page @S ==== --}}
+<main class="admin-payment-list-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                {{-- session message @E --}}
             </div>
         </div>
-    </div>
-    {{-- user profile header area @E --}}
-
-    {{-- profile information @S --}}
-    <div class="row"> 
-        <div class="col-lg-12">
-            <div class="productss-list-box payment-history-table">
-                <h5 class="p-3 pb-0">Payment Information :</h5>
-                <table>
-                    <tr>
-                        <th width="5%">No</th>
-                        <th>Payment Type</th>
-                        <th>Student Name</th>
-                        <th>Course Name</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-
-                    </tr>
-                    @foreach ($payments as $payment)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $payment->payment_method }}</td>
-                        <td>{{ $payment->user->name }}</td>
-                        <td>{{ $payment->course->title }}</td>
-                        <td>{{ $payment->amount }}</td>
-                        <td>{{ $payment->status }}</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </table>
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="payment-method-info-item">
-                            <span class="text-mute">Card Brand</span>
-                            <h6 class="text-success">No Payment Method</h6>
-                        </div>
-                    </div>
-                </div> --}}
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <div class="top-card-box">
+                    <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid">
+                    <h5>Total Earnings</h5>
+                    <h4>$40,832.00</h4>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <div class="top-card-box">
+                    <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid">
+                    <h5>Earnings Today</h5>
+                    <h4>$120.00</h4>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <div class="top-card-box">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
+                    <h5>Total Enrollments</h5>
+                    <h4>120 Students</h4>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <div class="top-card-box">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
+                    <h5>Enrolled Today</h5>
+                    <h4>10 Students</h4>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 mt-15">
+                <div class="package-list-header" style="grid-template-columns: 15% 82%">
+                    <h5>Payment Information:</h5> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="subscription-table-wrap earning-table">
+                    <table>
+                        <tr>
+                            <th width="5%">No</th>
+                            <th width="10%">Payment Type</th>
+                            <th width="15%">Student Name</th>
+                            <th>Course Name</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+    
+                        </tr>
+                        @foreach ($payments as $payment)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $payment->payment_method }}</td>
+                            <td>{{ $payment->user->name }}</td>
+                            <td>{{ $payment->course->title }}</td>
+                            <td>€ {{ $payment->amount }}</td>
+                            <td>
+                                @if ($payment->status == 'completed')
+                                   <span style="color: #2A920B;">{{ $payment->status }}</span>
+                                @else 
+                                    <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="#" class="btn-view">View</a>
+                            </td>
+                        </tr>
+                        @endforeach 
+                    </table>
+                </div>
+            </div>
+        </div> 
     </div>
-    {{-- profile information @E --}}
-
 </main>
+{{-- ==== admin payment list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
-
-{{-- page script @S --}}
-@section('script')
-<script>
-    // $(document).ready(function() {
-    //     $('table').DataTable();
-    // });
-</script>
-@endsection
-{{-- page script @E --}}

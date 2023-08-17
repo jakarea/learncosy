@@ -192,11 +192,115 @@
     padding: 1.5rem 1.125rem;
 
     h5 {
-        color: var(--neutral-black-black-500, #1D1F2C); 
+        color: var(--neutral-black-black-500, #1D1F2C);
         font-size: 1.25rem;
         font-style: normal;
         font-weight: 600;
-        line-height: 1.875rem; 
+        line-height: 1.875rem;
         letter-spacing: 0.0125rem;
     }
+}
+
+.edit-profile {
+    border-radius: 62.5rem;
+    border: 1px solid var(--primary-color-blue, #294CFF);
+    display: inline-block;
+    padding: .75rem;
+    color: var(--primary-color-blue, #294CFF);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+    margin-top: 2rem;
+}
+
+.recent-update-box {
+    .media {
+        border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+        padding: 1rem 0;
+        margin-top: 0;
+        img.user {
+            width: 3.75rem;
+            height: 3.75rem;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        a {
+            i {
+                color: #ED5763;
+            }
+            img{
+                width: 3.75rem;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// responsive css
+
+// small phone device
+@include q.responsive(phone) {
+    .recent-payment-box,
+    .my-courses-box,
+     .welcome-back-box{
+        padding: 1rem;
+     }
+     .welcome-back-box h1{
+        font-size: 1.2rem;
+     }
+     .welcome-back-box .d_flex { 
+        grid-template-columns: 90% 10%; 
+    }
+
+    .my-courses-box .media{
+        flex-direction: column;
+    }
+    .my-courses-box {
+        text-align: center;
+        img.me-3{
+            margin-right: 0!important;
+            margin-bottom: 1rem;
+        }
+    }
+    .my-courses-box .media ul li{
+        justify-content: center;
+    }
+
+    .my-courses-box .media a{
+        margin-top: 1rem;
+    }
+    .recent-payment-box .payment-box{
+        display: grid;
+        grid-template-columns: 70% 30%;
+        a{
+            text-align: center;
+        }
+    }
+
+    main{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+}
+
+// landscape phone device 
+@include q.responsive(landphone) {
+     
+}
+
+// tablet device 
+@include q.responsive(tablet) {
+     
 }
