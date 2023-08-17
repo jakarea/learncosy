@@ -454,3 +454,27 @@ Route::get('/instructor/courses/create/step-4', function () {
 Route::get('/instructor/courses/create/step-5', function () {
     return view('e-learning/course/instructor/create/step-5');
 });
+
+Route::get('/instructor/courses/create/step-6', function () {
+    return view('e-learning/course/instructor/create/step-6');
+});
+
+Route::get('/instructor/courses/create/step-7', function () {
+    return view('e-learning/course/instructor/create/step-7');
+});
+
+Route::get('/instructor/courses/create/step-8', function () {
+    return view('e-learning/course/instructor/create/step-8');
+});
+
+Route::get('/instructor/courses/create/step-9', function () {
+    return view('e-learning/course/instructor/create/step-9');
+});
+
+Route::get('/instructor/courses/create/step-10', function () {
+    return view('e-learning/course/instructor/create/step-10');
+});
+
+Route::get('/instructor/courses/create/step-11', function () {
+    return view('e-learning/course/instructor/create/step-11');
+});
