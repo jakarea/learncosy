@@ -47,7 +47,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h5>Earnings</h5>
-                                <h4> {{ count($earningByDates) }}</h4>
+                                <h4>{{ count($earningByDates) }} €</h4>
                             </div> 
                         </div>
                         <p>All time stats</p>

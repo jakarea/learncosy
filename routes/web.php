@@ -432,3 +432,13 @@ Route::get('/logout', function () {
 Route::fallback(function () {
     return redirect()->route('tlogin');
 });
+
+// add course static route
+
+Route::get('/instructor/courses/create/step-1', function () {
+    return view('e-learning/course/instructor/create/step-1');
+});
+
+Route::get('/instructor/courses/create/step-2', function () {
+    return view('e-learning/course/instructor/create/step-2');
+});
