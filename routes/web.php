@@ -442,3 +442,15 @@ Route::get('/instructor/courses/create/step-1', function () {
 Route::get('/instructor/courses/create/step-2', function () {
     return view('e-learning/course/instructor/create/step-2');
 });
+
+Route::get('/instructor/courses/create/step-3', function () {
+    return view('e-learning/course/instructor/create/step-3');
+});
+
+Route::get('/instructor/courses/create/step-4', function () {
+    return view('e-learning/course/instructor/create/step-4');
+});
+
+Route::get('/instructor/courses/create/step-5', function () {
+    return view('e-learning/course/instructor/create/step-5');
+});
