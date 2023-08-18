@@ -567,7 +567,7 @@ span.finsihLesson {
             &:before {
                 position: absolute;
                 content: "";
-                left: 58px;
+                left: 57px;
                 top: 8px;
                 background-color: #E7EBFF;
                 height: 0.125rem;
@@ -1037,7 +1037,7 @@ span.finsihLesson {
                 display: inline-block;
                 border-radius: 0.125rem;
                 border: 1px solid var(--grey-04, #CDD3D8);
-                color: var(--neutral-color-neutral-70, #2F3A4C); 
+                color: var(--neutral-color-neutral-70, #2F3A4C);
                 font-size: 0.75rem;
                 font-style: normal;
                 font-weight: 400;
@@ -1048,9 +1048,353 @@ span.finsihLesson {
     }
 }
 
+.content-settings-form-wrap {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--white, #FFF);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+    margin-top: 6rem;
+
+    h4 {
+        color: var(--gray-900, #101828);
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.75rem;
+    }
+
+    .form-group {
+        position: relative;
+        margin-top: 1.5rem;
+    }
+
+    img.euro {
+        position: absolute;
+        right: 1rem;
+        top: 1.2rem;
+    }
+
+    .form-control {
+        position: relative;
+        background-color: transparent;
+        outline: none !important;
+        color: var(--text-light-primary, #212B36);
+        text-overflow: ellipsis;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        transition: all .2s ease-in-out;
+        padding: 1rem 0.875rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+    }
+
+    h6 {
+        color: var(--neutral-color-neutral-90, #101C2D);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        margin-bottom: 0.5rem;
+
+    }
+
+    #mceu_16 {
+        border-radius: 10px;
+        border-left: 1px solid var(--colors-components-divider, rgba(145, 158, 171, 0.24));
+    }
+
+    label {
+        position: absolute;
+        top: 20px;
+        left: 12px;
+        text-align: left;
+        display: inline-block;
+        padding: 0 4px;
+        height: 14px;
+        color: var(--text-light-disabled, #919EAB);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.75rem;
+        margin: 0px auto;
+        cursor: text;
+        transition: all .15s ease-in-out;
+        background-color: #fff;
+    }
 
 
 
+    .form-control:hover,
+    .form-control:focus {
+        border: 1px solid #294CFF;
+    }
+
+
+    .form-control:valid+label,
+    .form-control:focus+label {
+        top: -6px;
+        color: var(--text-light-disabled, #919EAB);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.75rem;
+    }
+
+    .content-type {
+        @include m.df(space-between);
+        margin-top: 1.5rem;
+
+        h5 {
+            color: var(--gray-700, #344054);
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.25rem;
+        }
+
+        .d-flex {
+            justify-content: flex-end;
+            align-items: center;
+
+            a {
+                display: inline-flex;
+                align-items: center;
+                color: var(--neutral-color-neutral-60, #66768E);
+                font-size: 0.75rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.25rem;
+                margin-left: 1.2rem;
+
+                img {
+                    margin-right: 0.3rem;
+                }
+            }
+
+            a.active {
+                color: #294CFF;
+
+                img {
+                    filter: invert(19%) sepia(99%) saturate(2803%) hue-rotate(231deg) brightness(104%) contrast(107%);
+                }
+            }
+        }
+    }
+
+    .element-txt {
+        h6 {
+            color: var(--gray-900, #101828);
+            font-size: 1.125rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.75rem;
+        }
+
+        p {
+            color: var(--gray-500, #667085);
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.25rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    hr {
+        border: 0;
+        margin: 1.5rem 0;
+        background: #E4E7EC;
+    }
+
+    .auto-text {
+        align-items: center;
+        margin-top: 1.5rem;
+
+        h6 {
+            color: var(--gray-700, #344054);
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--gray-500, #667085);
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.25rem;
+        }
+    }
+
+    .btn-primary {
+        border-radius: 0.375rem;
+        background: var(--primary-color-blue, #294CFF);
+        color: var(--neutral-color-white, #FFF);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+}
+
+.highlighted-area-upload {
+    border-radius: 0.5rem;
+    border: 2px dashed var(--neutral-color-neutral-50, #A6B1C4);
+    background: #F1F3FE;
+    height: 14.0625rem;
+    padding: 3.5rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 6rem;
+
+    p {
+        margin-top: 1.5rem;
+        color: var(--neutral-color-neutral-70, #2F3A4C);
+        font-family: Inter;
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.75rem;
+
+        label {
+            color: #294CFF;
+            cursor: pointer;
+        }
+    }
+}
+
+.top-image-upload-box {
+    border-radius: 0.5rem;
+    background: var(--white, #FFF);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+    padding: 1.5rem;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+
+    h4 {
+        color: var(--gray-900, #101828);
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.75rem;
+        display: flex;
+        align-items: center;
+
+        img {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .file-up-box {
+        border-radius: 0.5rem;
+        border: 2px dashed var(--neutral-color-neutral-40, #C5CCD8);
+        background: var(--white, #FFF);
+        padding: 3rem 1.5rem;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 0.75rem;
+
+        p {
+            color: var(--gray-500, #667085);
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.125rem;
+            margin-top: 0.75rem;
+
+            label {
+                color: #294CFF;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.share-on-social-wrap {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--white, #FFF);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+    margin-top: 6em;
+
+    h4 {
+        color: var(--neutral-color-neutral-90, #101C2D);
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.75rem;
+    }
+
+    h6 {
+        color: var(--neutral-color-neutral-70, #2F3A4C);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.75rem;
+        margin-top: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .d-flex {
+        margin-bottom: 2rem;
+
+        a {
+            margin-right: 2rem;
+            text-align: center;
+            display: inline-block;
+
+            span {
+                color: #363636;
+                font-size: 0.75rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                display: block;
+                margin-top: 0.75rem;
+            }
+        }
+    }
+
+    .copy-link {
+        display: grid;
+        grid-template-columns: 85% 15%;
+
+        input {
+            border-radius: 0.375rem;
+            border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.5rem;
+            overflow: hidden;
+            color: var(--neutral-color-neutral-70, #2F3A4C);
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal; 
+        }
+
+        a {
+            border-radius: 0.375rem;
+            background: var(--primary-color-blue, #294CFF);
+            padding: 0.5625rem 1.0625rem;
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            color: var(--neutral-color-white, #FFF); 
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.25rem; 
+            margin-left: 1rem;
+            text-align: center;
+        }
+    }
+}
 
 
 
@@ -1097,6 +1441,44 @@ span.finsihLesson {
     .course-create-step-page-wrap .content-step-wrap {
         margin-top: 2rem;
         width: 100%;
+    }
+
+    .lesson-edit-form-wrap{
+        padding: 1rem;
+    }
+
+    .lesson-edit-form-wrap .course-page-edit-box{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .page-create-step{
+        .step-box {
+            &:before{
+                left: 95px!important;
+            }
+        }
+    }
+    .share-on-social-wrap,
+    .top-image-upload-box,
+    .content-settings-form-wrap,
+    .highlighted-area-upload,
+    .lesson-edit-form-wrap{
+        margin-top: 2rem;
+    }
+    .highlighted-area-upload p{
+        margin-top: 0.8rem;
+        font-size: 1rem;
+        text-align: center;
+    }
+    .share-on-social-wrap .d-flex a{
+        margin-right: 1rem;
+        img{
+            width: 4rem;
+        }
+    }
+
+    .share-on-social-wrap .copy-link{
+        grid-template-columns: 70% 30%;
     }
 }
 
