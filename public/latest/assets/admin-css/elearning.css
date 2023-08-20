@@ -37,7 +37,15 @@
   color: #fff;
 }
 .course-single-item .course-thumb-box .header-action .dropdown-menu {
-  transform: translate3d(-162.4px, -26.6px, 0px) !important;
+  transform: translate3d(-105.4px, -26.6px, 0px) !important;
+}
+.course-single-item .course-thumb-box .header-action .dropdown-menu.show {
+  display: inline-block !important;
+  min-width: 6.6875rem !important;
+}
+.course-single-item .course-thumb-box .header-action .dropdown-menu.show li .dropdown-item {
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 6px !important;
 }
 .course-single-item .course-txt-box {
   padding-top: 0.75rem;
@@ -390,6 +398,10 @@ span.finsihLesson {
 
 .user-search-box-wrap.bundle-search-grid {
   grid-template-columns: 62% 19% 19%;
+}
+
+.user-search-box-wrap.bundle-select-grid {
+  grid-template-columns: 80% 20%;
 }
 
 .module-status .text-bg-danger,
@@ -1202,6 +1214,329 @@ span.finsihLesson {
   line-height: 1.25rem;
   margin-left: 1rem;
   text-align: center;
+}
+
+.select-bundle-title {
+  margin: 2rem 0;
+}
+.select-bundle-title h1 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.75rem;
+  letter-spacing: -0.045rem;
+}
+.select-bundle-title .btn {
+  border-radius: 0.5rem;
+  background: var(--primary-color-blue-lightest, #E7EBFF);
+  display: flex;
+  padding: 0.625rem 0.75rem;
+  justify-content: center;
+  align-items: center;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.75rem;
+  margin-left: auto;
+  position: relative;
+}
+.select-bundle-title .btn img {
+  margin-right: 0.5rem;
+}
+.select-bundle-title .btn span {
+  display: inline-flex;
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0rem 0.25rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.6875rem;
+  border: 1px solid var(--neutral-color-white, #FFF);
+  background: var(--error-red, #E43242);
+  color: var(--neutral-color-white, #FFF);
+  font-size: 0.5625rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  left: 30px;
+  top: 5px;
+}
+
+.bundle-create-bttn {
+  text-align: center;
+}
+.bundle-create-bttn .btn {
+  display: block;
+  border-radius: 0.75rem;
+  background: var(--primary-color-blue, #294CFF);
+  display: flex;
+  height: 2.8125rem;
+  padding: 1rem 2rem;
+  justify-content: center;
+  align-items: center;
+  color: var(--neutral-10, #FFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  margin-top: 0.6rem;
+  width: 100%;
+  transition: ease-in-out;
+}
+.bundle-create-bttn .btn i {
+  margin-right: 0.5rem;
+}
+.bundle-create-bttn .btn:hover {
+  background-color: #02344F;
+}
+
+.selected-bundle-courses-wrap {
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+  background: #FFF;
+  padding: 2rem;
+}
+
+.bundle-create-form-wrap {
+  border-radius: 0rem 0rem 0.5rem 0.5rem;
+  border-top: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  padding: 3rem 2rem 2rem 2rem;
+}
+
+.basic-info-txt h5 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%;
+}
+.basic-info-txt p {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: 0.5rem;
+  width: 70%;
+}
+
+.bundle-create-inputs .input-group,
+.bundle-create-inputs .form-group {
+  margin-bottom: 1.5rem;
+}
+.bundle-create-inputs .input-group label,
+.bundle-create-inputs .form-group label {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+  display: block;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+.bundle-create-inputs .input-group .form-control,
+.bundle-create-inputs .form-group .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-40, #E0E0E0);
+  background: var(--neutral-10, #FFF);
+  padding: 0.75rem 1rem;
+  color: var(--neutral-color-neutral-60, #101C2D);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.bundle-create-inputs .input-group .input-group-text,
+.bundle-create-inputs .form-group .input-group-text {
+  display: flex;
+  padding: 0.75rem 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 1px solid #E0E0E0;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+  background-color: transparent;
+}
+
+.pay-title {
+  margin-top: 3rem;
+}
+.pay-title h4 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.25rem;
+  text-transform: capitalize;
+}
+
+.payment-details-title {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  padding: 1rem 1.5rem;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+}
+.payment-details-title h1 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.25rem;
+  text-transform: capitalize;
+}
+
+.payment-name-box {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+  padding: 0.62rem 1.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.payment-name-box h6 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  text-transform: capitalize;
+}
+.payment-name-box h5 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+  text-transform: capitalize;
+  margin-top: 0.5rem;
+}
+
+.pay-details-box-invoice {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+.pay-details-box-invoice table {
+  width: 100%;
+}
+.pay-details-box-invoice table tr th {
+  border-bottom: 1px solid #E4E7EC;
+  background: #F4F6F8;
+  padding: 0.8rem 1rem;
+  color: var(--text-light-secondary, #637381);
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.pay-details-box-invoice table tr td {
+  overflow: hidden;
+  color: var(--black, #212B36);
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  padding: 0.8rem 1rem;
+}
+.pay-details-box-invoice table tr:last-child td {
+  border-bottom: 1px solid var(--neutral-color-neutral-40, #C5CCD8);
+  border-top: 1px solid var(--neutral-color-neutral-40, #C5CCD8);
+  font-weight: 500;
+}
+.pay-details-box-invoice .download-inv-box {
+  margin-top: 2.6rem;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.pay-details-box-invoice .download-inv-box a {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-color-neutral-40, #C5CCD8);
+  background: var(--neutral-color-white, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  padding: 0.8rem 1.8rem;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+.pay-details-box-invoice .download-inv-box a:last-child {
+  margin-left: 1.3rem;
+  background: var(--primary-color-blue, #294CFF);
+  padding: 0.8rem 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+}
+.pay-details-box-invoice .download-inv-box a:last-child img {
+  margin-right: 0.5rem;
+}
+
+.paid-student-name {
+  fill: #FFF;
+  box-shadow: 5px 0px 30px rgba(185, 212, 208, 0.5);
+}
+.paid-student-name .avatar img {
+  display: block;
+  width: 100%;
+}
+.paid-student-name .txt {
+  padding: 1.3rem 1.5rem;
+  background-color: #fff;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+.paid-student-name .txt h5 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: -0.04769rem;
+}
+.paid-student-name .txt h6 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.00088rem;
+}
+.paid-student-name .txt hr {
+  background-color: #E5ECF6;
+}
+.paid-student-name .txt ul {
+  text-align: left;
+}
+.paid-student-name .txt ul li {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: 0.6rem;
+}
+.paid-student-name .txt ul li img {
+  margin-right: 0.5rem;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

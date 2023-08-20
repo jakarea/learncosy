@@ -18,56 +18,6 @@ class CourseBundleController extends Controller
         $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
          return view('bundle/instructor/list',compact('bundleCourses')); 
      }
-
-     // data table getData
-    public function bundleDataTable()
-    { 
-            $course = BundleCourse::select('id','title','slug','thumbnail','price','status')->get();
-          
-            return Datatables::of($course)
-                ->addColumn('action', function($course){ 
-                     
-                    $actions = '<div class="action-dropdown">
-                        <div class="dropdown">
-                            <a class="btn btn-drp" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="bttns-wrap">
-                                    <a class="dropdown-item" href="/instructor/bundle/courses/'.$course->slug.'"><i class="fas fa-eye"></i></a>
-                                    <a class="dropdown-item" href="/instructor/bundle/courses/'.$course->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/instructor/bundle/courses/'.$course->slug.'/destroy"> 
-                                    '.csrf_field().'
-                                    '.method_field("DELETE").' 
-                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                    </form>    
-                                </div>
-                            </div> 
-                        </div>
-                    </div>';
-
-                    return $actions;
-
-                })
-                ->editColumn('image', function ($course) {
-                return '<img src="/assets/images/bundle-courses/'.$course->thumbnail.'" width="50" />';
-            })
-            ->editColumn('status', function ($course) {
-                if($course->status == 'published'){
-                    return '<label class="badge bg-success">'.__('Published').'</label>';
-                }
-                if($course->status == 'draft'){
-                    return '<label class="badge bg-info">'.__('Draft').'</label>';
-                }
-                if($course->status == 'pending'){
-                    return '<label class="badge bg-danger">'.__('Pending').'</label>';
-                } 
-             })
-            ->addIndexColumn()
-            ->rawColumns(['action', 'image','status'])
-            ->make(true);
-    }
  
      // course bundle create
      public function create()
@@ -75,6 +25,21 @@ class CourseBundleController extends Controller
         $userId = Auth::user()->id;
         $courses = Course::where('user_id', $userId)->get();
         return view('bundle/instructor/create',compact('courses')); 
+     }
+
+     public function step1()
+     {
+        $userId = Auth::user()->id;
+        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
+
+        return view('bundle/instructor/step-1',compact('bundleCourses')); 
+     }
+     public function step2()
+     {
+        $userId = Auth::user()->id;
+        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
+
+        return view('bundle/instructor/step-2',compact('bundleCourses')); 
      }
 
      // course bundle store

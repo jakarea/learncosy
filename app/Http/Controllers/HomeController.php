@@ -35,6 +35,11 @@ class HomeController extends Controller
         return view('payments/instructor/students-payment', compact('payments'));
     }
 
+    public function details()
+    {
+        return view('payments/instructor/details');
+    }
+
     public function adminPayment()
     {
         $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', auth()->user()->id)->get();

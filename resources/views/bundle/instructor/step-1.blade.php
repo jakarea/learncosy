@@ -1,5 +1,5 @@
 @extends('layouts.latest.instructor')
-@section('title') Bundle Course List @endsection
+@section('title') Bundle Course Select @endsection
 
 {{-- style section @S --}}
 @section('style')
@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="user-search-box-wrap bundle-search-grid">
+                <div class="user-search-box-wrap bundle-select-grid">
                     <div class="form-group">
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search course" class="form-control">
@@ -34,10 +34,21 @@
                             <option value="">Oldest Bundle</option>
                         </select>
                         <i class="fas fa-angle-down"></i>
-                    </div>
-                    <div class="user-title-box">
-                        <a href="{{url('instructor/bundle/courses/create')}}"><i class="fas fa-plus me-2"></i> Add New Bundle Course</a>
-                    </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="select-bundle-title">
+                    <h1>Select courses to create a bundle</h1>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="select-bundle-title ">
+                    <button type="button" class="btn">
+                        <span>0</span>
+                        <img src="{{asset('latest/assets/images/icons/cart.svg')}}" alt="Course Thumbanil" class="img-fluid">  0 Course Selected</button>
                 </div>
             </div>
         </div>
@@ -46,33 +57,7 @@
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        @if ($course->status == 'pending')
-                        <span class="badge text-bg-danger">Pending</span>
-                        @elseif ($course->status == 'draft')
-                            <span class="badge text-bg-warning">Draft</span>
-                        @elseif ($course->status == 'published')
-                            <span class="badge text-bg-primary">Publish</span>
-                        @endif 
-
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug)}}">View</a></li> 
-                                  <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">Edit</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="{{ url('instructor/bundle/courses/'.$course->slug.'/destroy') }}">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form> 
-                                    </li> 
-                                </ul>
-                              </div> 
-                        </div> 
+                    <div class="course-thumb-box"> 
                         <img src="{{asset('assets/images/bundle-courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
@@ -88,6 +73,10 @@
                             <li><span>(145)</span></li>
                         </ul>
                         <h5>€ {{ $course->price }} </h5> 
+
+                        <div class="bundle-create-bttn">
+                            <button type="button" class="btn"><i class="fas fa-plus"></i> Add to bundle</button>
+                        </div>
                     </div>
                 </div>
             </div>
