@@ -20,8 +20,8 @@
                 <li class="nav-item">
                     <a class="{{ Request::is('instructor/courses*')  ? ' active' : '' }} nav-link" href="#">Courses <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
-                        <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses')  ? ' active' : '' }}">All Courses</a></li>
-                        <li><a href="{{ url('instructor/courses/create/step-1') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">Add New Course</a></li> 
+                        <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses')  ? ' active' : '' }}">All Bundle Courses</a></li>
+                        <li><a href="{{ url('instructor/courses/create/step-1') }}" class="{{ Request::is('instructor/courses/create')  ? ' active' : '' }}">Add New Bundle Course</a></li> 
                     </ul>
                 </li> 
                 <li class="nav-item">
@@ -35,7 +35,7 @@
                     <a class="{{ Request::is('instructor/students*')  ? ' active' : '' }} nav-link" href="#">Students <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
                         <li><a href="{{ url('instructor/students') }}">All Students</a></li> 
-                        <li><a href="{{ url('instructor/students/create') }}">Add Students</a></li> 
+                        <li><a href="{{ url('instructor/students/create') }}">Add New Students</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">

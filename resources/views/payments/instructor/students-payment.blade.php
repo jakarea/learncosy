@@ -51,8 +51,15 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12">
+                <div class="pay-title">
+                    <h4>Payment from student</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 mt-15">
-                <div class="package-list-header" style="grid-template-columns: 15% 82%">
+                <div class="package-list-header" style="grid-template-columns: 100%">
                     <h5>Payment Information:</h5> 
                 </div>
             </div>
