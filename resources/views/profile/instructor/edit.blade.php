@@ -69,7 +69,7 @@
                                             <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
                                                 Max size of 3.1 MB</h6>
 
-                                            <div class="form-check form-switch">
+                                            <div class="form-check form-switch ps-0">
                                                 <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
                                                     Messages</label>
                                                 <input class="form-check-input" type="checkbox" name="recivingMessage"
@@ -396,11 +396,17 @@
                                                                     <div class="col-lg-3">
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                            <input type="file" class="d-none" id="logo">
-                                                                            <label for="logo" class="upload-media-box">
+                                                                            <input type="file" name="favicon" id="favicon1"
+                                                    class="form-control d-none @error('favicon') is-invalid @enderror"
+                                                    onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
+                                                     
+                                                                            <label for="favicon1" class="upload-media-box" id="file-upload-area1">
                                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
                                                                                 <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
+ 
+                                                                            <div id="uploadedFileContainer1" class="uploaded-file-container"></div>
+
                                                                         </div>
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
@@ -752,58 +758,7 @@
 
 {{-- page script @S --}}
 @section('script')
-<script>
-    function changeType() {
-    let field = document.getElementById("password");
-    let clickk = document.getElementById("eye-click");
-
-    if (field.type === "password") {
-      field.type = "text";
-      clickk.classList.add('fa-eye-slash');
-      clickk.classList.remove('fa-eye');
-    } else {
-      field.type = "password";
-      clickk.classList.remove('fa-eye-slash');
-      clickk.classList.add('fa-eye');
-    }
-
-  }
-
-  function changeType2() {
-    let field = document.getElementById("password_confirmation");
-    let clickk = document.getElementById("eye-click2");
-
-    if (field.type === "password") {
-      field.type = "text";
-      clickk.classList.add('fa-eye-slash');
-      clickk.classList.remove('fa-eye');
-    } else {
-      field.type = "password";
-      clickk.classList.remove('fa-eye-slash');
-      clickk.classList.add('fa-eye');
-    }
-
-  }
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const avatarInput = document.getElementById("avatar");
-    const avatarPreview = document.getElementById("avatar-preview");
-
-    avatarInput.addEventListener("change", function(event) {
-        const file = event.target.files[0];
-        
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                avatarPreview.src = e.target.result;
-            }
-
-            reader.readAsDataURL(file);
-        }
-    });
-});
-</script>
+<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
 @endsection
 
 {{-- page script @E --}}

@@ -64,14 +64,15 @@ Course Create - Step 9
                 <form action="">
                     <div class="top-image-upload-box">
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Preview</h4>
-                        <input type="file" class="d-none" id="file">
-
-                        <label for="file" class="file-up-box">
+                        <input type="file" class="d-none" id="fileInput">
+                        <label for="fileInput" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid">
-                            <p><label for="file">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
+                            <p><label for="fileInput">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
-                         
                     </div>
+                    <div class="top-image-upload-box mt-2">
+                        <img id="previewImage" src="" alt="No Image Uploaded yet" class="img-fluid">
+                    </div> 
                     <div class="content-settings-form-wrap mt-0">
                         <h4>Certificate</h4>
                         <hr>
@@ -106,5 +107,23 @@ Course Create - Step 9
 {{-- page content @E --}}
 
 @section('script')
- 
+<script>
+    // Function to handle file input change
+document.getElementById('fileInput').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const previewImage = document.getElementById('previewImage');
+            previewImage.src = event.target.result;
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(file);
+    }
+});
+
+</script>
 @endsection

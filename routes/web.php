@@ -209,7 +209,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index'); 
             Route::get('/create', 'create'); 
-            Route::get('/select/course', 'step1'); 
+            Route::get('/select/course/1', 'step1'); 
             Route::get('/select/course/2', 'step2'); 
             Route::post('/create', 'store')->name('course.bundle.store');
             Route::get('/{slug}', 'show')->name('course.bundle.show'); 

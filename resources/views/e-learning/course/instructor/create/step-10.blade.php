@@ -64,11 +64,12 @@ Course Create - Step 10
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <form action=""> 
-                    <div class="content-settings-form-wrap">
+                    <div class="content-settings-form-wrap visibility-form-wrap">
                         <h4>Visibility</h4>
                         <hr>
                         <div class="form-group">
                             <h6>Status of the Course</h6>
+                            <i class="fas fa-circle"></i>
                              <select class="form-control">
                                 <option value="">Concept</option>
                                 <option value="">Concept 2</option>

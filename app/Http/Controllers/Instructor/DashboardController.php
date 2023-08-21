@@ -44,7 +44,8 @@ class DashboardController extends Controller
     }
 
     public function analytics(){
-        return view('dashboard/instructor/dashboard');
+        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
+        return view('dashboard/instructor/dashboard',compact('courses'));
     }
 
     private function getActiveInActiveStudents($data)

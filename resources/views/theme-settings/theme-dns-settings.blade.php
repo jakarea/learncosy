@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane active-bg fade " id="pills-home" role="tabpanel"
+                        <div class="tab-pane active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10 col-xl-9">
@@ -261,7 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="pills-experience" role="tabpanel"
+                        <div class="tab-pane fade " id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="dns-settings-box-wrapper">
                                 <div class="dns-left-sidebar">
@@ -301,7 +301,7 @@
                                 </div>
                                 <div class="dns-main-body">
                                     {{-- add domain start --}}
-                                    {{-- <div class="add-domain-box">
+                                    <div class="add-domain-box">
                                         <form action="">
                                             <h1>Add a domain</h1>
                                             <p>If you already own a domain like learncosy.com, you can add it to your
@@ -317,11 +317,11 @@
                                                 <button class="btn btn-submit" type="submit">Add Domain</button>
                                             </div>
                                         </form>
-                                    </div> --}}
+                                    </div>
                                     {{-- add domain end --}}
 
                                     {{-- verification domain start --}}
-                                    {{-- <div class="add-domain-box domain-verify-box">
+                                    <div class="add-domain-box domain-verify-box">
                                         <form action="">
                                             <h2>How do you want to verify your domain?</h2>
                                             <p>Before we can set up your domain, we need to verify that you are the
@@ -362,7 +362,7 @@
                                                 <button class="btn btn-submit" type="submit">Verify</button>
                                             </div>
                                         </form>
-                                    </div> --}}
+                                    </div>
                                     {{-- verification domain end --}}
 
                                     {{-- connect your domain start --}}
@@ -373,64 +373,74 @@
                                                 learncosy.com domain.</h3>
                                             <p>Don't worry, adding this record won’t affect your existing email or other
                                                 services and it can be safely removed at the end of setup.</p>
- 
-                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                    <button class="nav-link active" id="nav-home-tab"
-                                                        data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-                                                        role="tab" aria-controls="nav-home"
-                                                        aria-selected="true">TXT Record</button>
-                                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#nav-profile" type="button" role="tab"
-                                                        aria-controls="nav-profile"
-                                                        aria-selected="false">MX Record</button>
-                                                </div> 
+
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#nav-home" type="button" role="tab"
+                                                    aria-controls="nav-home" aria-selected="true">TXT Record</button>
+                                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#nav-profile" type="button" role="tab"
+                                                    aria-controls="nav-profile" aria-selected="false">MX Record</button>
+                                            </div>
 
                                             <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                                     {{-- tx record --}}
-                                                     <div class="media">
+                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                                    aria-labelledby="nav-home-tab" tabindex="0">
+                                                     
+                                                    <div class="media">
                                                         <div class="media-body">
                                                             <h5>TXT name</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> lab01 (or skip if not supported by provider)</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if not
+                                                                supported by provider)</h6>
                                                         </div>
-                                                     </div>
-                                                     <div class="media">
+                                                    </div>
+                                                    <div class="media">
                                                         <div class="media-body">
                                                             <h5>TXT value</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> MSem58456895</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid"> MSem58456895</h6>
                                                         </div>
-                                                     </div>
-                                                     <div class="media">
+                                                    </div>
+                                                    <div class="media">
                                                         <div class="media-body">
                                                             <h5>TTL</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> 3600 (or your provider default)</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid"> 3600 (or your
+                                                                provider default)</h6>
                                                         </div>
-                                                     </div>
-                                                     {{-- tx record --}}
+                                                    </div>
+                                                    
                                                 </div>
-                                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                                                    {{-- mx record --}}
+                                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                                    aria-labelledby="nav-profile-tab" tabindex="0">
+                                                    
                                                     <div class="media">
                                                         <div class="media-body">
                                                             <h5>MXT name</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> lab01 (or skip if not supported by provider)</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if not
+                                                                supported by provider)</h6>
                                                         </div>
-                                                     </div>
-                                                     <div class="media">
+                                                    </div>
+                                                    <div class="media">
                                                         <div class="media-body">
                                                             <h5>MXT value</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> MSem58456895</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid">MSem58456895</h6>
                                                         </div>
-                                                     </div>
-                                                     <div class="media">
+                                                    </div>
+                                                    <div class="media">
                                                         <div class="media-body">
                                                             <h5>MTL</h5>
-                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}" alt="copy-1" class="img-fuid"> 3600 (or your provider default)</h6>
+                                                            <h6><img src="{{asset('latest/assets/images/icons/copy-1.svg')}}"
+                                                                    alt="copy-1" class="img-fuid"> 3600 (or your
+                                                                provider default)</h6>
                                                         </div>
-                                                     </div>
-                                                    {{-- mx record --}}
+                                                    </div>
+                                                    
                                                 </div>
-                                              </div>
+                                            </div>
 
 
                                             <div class="form-submit-bttns">
@@ -440,6 +450,55 @@
                                         </form>
                                     </div>
                                     {{-- connect your domain end --}}
+
+                                    {{-- add dns record --}}
+                                    <div class="add-domain-box domain-verify-box">
+                                        <form action="">
+                                            <h2>Add DNS records</h2>
+                                            <h3>To add these records for learncosy.com, go to your DNS hosting provider.</h3>
+                                            <p>To start routing email through Learncosy, select Exchange and Exchange online Protection. Next, sign in to your domain host and new DNS record that match the record shown here. copy the values below and paste them into the new record at your domain host, or download or print the DNS record info to use as a reference. When you’re finished, select Continue.</p>
+
+                                            <div class="d-flex">
+                                                <a href="#"><img src="{{asset('latest/assets/images/icons/download-4.svg')}}" alt="download" class="img-fuid"> Download CSV file</a>
+                                                <a href="#"><img src="{{asset('latest/assets/images/icons/download-4.svg')}}" alt="download" class="img-fuid"> Download Zone file</a>
+                                                <a href="#"><img src="{{asset('latest/assets/images/icons/print.svg')}}" alt="download" class="img-fuid"> Print</a>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                                <label class="form-check-label form-check-label-2" for="flexCheckChecked">
+                                                    Exchange and Exchange online protection
+                                                </label>
+                                              </div>
+ 
+
+                                            <p>Email, contacts, and scheduling are all provided by Exchange. Set up this service to enable all the functionality of Outlook and other email clients. Exchange service need 3 records to work right: and MX record tells where to deliver email messages, a TXT to prevent someone from spoofing your domain to send spam and a CNAME record for client-side Auto discover, helping mail clients connect users to their respective mailboxes.</p>
+
+                                            <div class="form-submit-bttns">
+                                                <button class="btn btn-cancel" type="reset">Back</button>
+                                                <button class="btn btn-submit" type="submit">Add DNS Record</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {{-- add dns record --}}
+
+                                    {{-- domain setup finish --}}
+                                    <div class="add-domain-box finish-txt">
+                                        <form action="">
+                                            <h2><img src="{{asset('latest/assets/images/icons/gren-chehck.svg')}}" alt="gren-chehck" class="img-fluid"> Domain Setup is Complete</h2> 
+                                            <p>learncosly.com is all set up and you can now view and manage it from your domains list. <br>
+                                                You can now go to Active users to add new user and set up email addresses or aliases for everyone who needs to use learncosy.com for email.</p>
+
+                                                <h4>Next Steps</h4>
+
+                                            <div class="finish-bttns">
+                                                <a href="#">Go to Active users</a>
+                                                <a href="#">View all domains</a>
+                                            </div> 
+
+                                        </form>
+                                    </div>
+                                    {{-- domain setup finish --}}
                                 </div>
                             </div>
                         </div>

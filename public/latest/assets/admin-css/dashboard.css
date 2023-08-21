@@ -3,7 +3,7 @@ main {
   padding-bottom: 2rem;
 }
 main .container-fluid {
-  padding: 0 6.5rem;
+  max-width: 76rem !important;
 }
 
 .btn-check:checked + .btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check) + .btn:active {

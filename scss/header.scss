@@ -7,8 +7,13 @@
     background: var(--neutral-color-white, #FFF);
     padding: 0rem 1rem;
 
+    .container-fluid {
+        max-width: 86rem !important;
+    }
+
     .dropdown-menu[data-bs-popper] {
-        left: -55px;
+        left: -116px !important;
+        top: 47px !important;
     }
 
     .dropdown-menu {
@@ -16,6 +21,21 @@
         border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
         background: var(--background-light-paper, #FFF);
         box-shadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.24), 0px 0px 2px 0px rgba(145, 158, 171, 0.24);
+        padding: 0.5rem;
+
+        .dropdown-item {
+            color: var(--neutral-color-neutral-70, #2F3A4C) !important;
+            font-size: 0.875rem !important;
+            font-style: normal !important;
+            font-weight: 400 !important;
+            line-height: 1.375rem !important;
+            padding: .25rem .5rem !important;
+            border-radius: 0.375rem !important;
+
+            &:hover {
+                background: var(--neutral-color-neutral-20, #F1F4F9);
+            }
+        }
     }
 
     .navbar-brand {
@@ -53,7 +73,6 @@
                 padding: .5rem;
                 transform: translateY(-15%);
                 display: none;
-                transition: all linear .3s;
                 border-radius: 0.375rem;
                 background: var(--background-light-paper, #FFF);
                 box-shadow: -20px 20px 40px -4px rgba(145, 158, 171, 0.24), 0px 0px 2px 0px rgba(145, 158, 171, 0.24);
@@ -62,26 +81,27 @@
                 li {
                     a {
                         display: block;
-                        padding: .4rem .5rem;
+                        padding: .30rem .5rem;
                         overflow: hidden;
                         color: var(--neutral-color-neutral-90, #101C2D);
                         text-overflow: ellipsis;
                         whitespace: nowrap;
-                        font-family: Inter;
                         font-size: 0.875rem;
                         font-style: normal;
                         font-weight: 400;
                         line-height: 1.375rem;
                         transition: ease-in .3s;
+                        margin-bottom: 0.2rem;
+                        border-radius: 0.375rem!important;
 
                         &:hover {
-                            transform: translateX(3%);
-                            background-color: #F1F4F9;
+                            transform: translateX(1%);
+                            background: var(--neutral-color-neutral-20, #F1F4F9);
                         }
                     }
 
-                    a.active {
-                        background-color: #F1F4F9;
+                    a.active { 
+                        background: var(--neutral-color-neutral-20, #F1F4F9);
                     }
 
                     &:last-child {
@@ -94,6 +114,7 @@
 
             .nav-link.active {
                 color: v.$dark;
+                font-weight: 500;
             }
 
             &:hover {
@@ -118,7 +139,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-left: 1.5rem;
+            margin-right: 1.5rem;
             position: relative;
 
             span {
@@ -142,32 +163,30 @@
             }
         }
 
-        a.avatar {
+        .btn.avatar {
             img {
-                width: 2.75rem;
-                height: 2.75rem;
-                border: 2px solid #294CFF;
-                border-radius: 0.75rem;
-                display: inline-block;
                 width: 2.5rem;
                 height: 2.5rem;
-                margin-left: 1.5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0.75rem;
                 object-fit: cover;
+                border: 2px solid #FFF;
+                outline: #294CFF solid 2px;
             }
 
             span.avatar-user {
-                width: 2.75rem;
-                height: 2.75rem;
-                border: 2px solid #294CFF;
+                width: 2.5rem;
+                height: 2.5rem;
+                border: 2px solid #FFF;
+                outline: #294CFF solid 2px;
                 border-radius: 0.75rem;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                width: 2.5rem;
-                height: 2.5rem;
-                margin-left: 1.5rem;
                 background-color: #E5ECF6;
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 font-weight: 600;
             }
         }
