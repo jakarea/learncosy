@@ -1,5 +1,5 @@
 @extends('layouts.latest.instructor')
-@section('title') My Profile Edit @endsection
+@section('title') Account Management @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -41,11 +41,9 @@
                             </li>
                         </ul>
                     </div>
-
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade " id="pills-home" role="tabpanel"
-                            aria-labelledby="pills-home-tab" tabindex="0">
-                            {{-- profile edit form start --}}
+                        <div class="tab-pane active-bg fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab" tabindex="0"> 
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
                                 class="profile-form create-form-box" enctype="multipart/form-data">
                                 @csrf
@@ -320,7 +318,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" id="pills-certificate" role="tabpanel"
+                        <div class="tab-pane fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
@@ -592,7 +590,7 @@
                                                                     </div>
                                                                     <div class="col-lg-3 mt-3">
                                                                         <div class="certificate-asset-upload">
-                                                                            <h5>Logo </h5>
+                                                                            <h5>Logo</h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
                                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
@@ -688,10 +686,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-password" role="tabpanel"
+                        <div class="tab-pane fade active-bg" id="pills-password" role="tabpanel"
                             aria-labelledby="pills-password-tab" tabindex="0">
                             {{-- password tab start --}}
-                            <div class="row user-add-form-wrap user-add-form-wrap-2">
+                            <div class="row user-add-form-wrap user-add-form-wrap-2 mt-0">
                                 <div class="col-12">
                                     <form action="{{ route('instructor.password.update',$user->id) }}" method="POST">
                                         @csrf

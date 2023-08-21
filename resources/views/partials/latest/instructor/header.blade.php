@@ -55,7 +55,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{url('/instructor/profile/myprofile')}}">My Profile</a></li>  
                         <li><a class="dropdown-item" href="{{url('/instructor/profile/edit')}}">Account Settings</a></li>  
-                        <li><a class="dropdown-item" href="{{url('/instructor/theme/setting')}}">Theme Setting</a></li>  
+                        <li><a class="dropdown-item" href="{{ route('module.setting', auth()->user()->id) }}">Theme Setting</a></li>  
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a> 
