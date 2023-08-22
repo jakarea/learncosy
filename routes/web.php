@@ -220,7 +220,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index'); 
             Route::get('/create', 'create'); 
-            Route::get('/select/course', 'step1'); 
+            Route::get('/select/course/1', 'step1'); 
             Route::get('/select/course/2', 'step2'); 
             Route::post('/create', 'store')->name('course.bundle.store');
             Route::get('/{slug}', 'show')->name('course.bundle.show'); 
@@ -231,6 +231,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
             Route::get('/{id}', 'index')->name('module.setting');
+            Route::get('dns/{id}', 'dnsTheme')->name('module.dns.setting');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });

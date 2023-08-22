@@ -8,7 +8,7 @@
 }
 .course-single-item .course-thumb-box {
   position: relative;
-  min-height: 12rem;
+  min-height: 11rem;
 }
 .course-single-item .course-thumb-box img {
   flex: 1 0 0;
@@ -504,7 +504,7 @@ span.finsihLesson {
 .course-create-step-page-wrap .course-create-step-wrap .step-box:before {
   position: absolute;
   content: "";
-  left: 57px;
+  left: 51px;
   top: 8px;
   background-color: #E7EBFF;
   height: 0.125rem;
@@ -624,7 +624,7 @@ span.finsihLesson {
   grid-template-columns: 1fr 1fr;
 }
 .course-create-step-page-wrap .page-create-step .step-box:before {
-  left: 87px;
+  left: 79px;
 }
 
 .back-next-bttns {
@@ -1539,9 +1539,47 @@ span.finsihLesson {
   margin-right: 0.5rem;
 }
 
+.visibility-form-wrap .form-group {
+  position: relative;
+}
+.visibility-form-wrap .form-group .form-control {
+  padding-left: 2rem;
+}
+.visibility-form-wrap .form-group i {
+  position: absolute;
+  left: 11px;
+  top: 3.3rem;
+  color: #294CFF;
+  font-size: 10px;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
+  }
+  .course-single-item .course-thumb-box .header-action .dropdown-menu {
+    transform: translate3d(-30.4px, -26.6px, 0px) !important;
+  }
+  .payment-name-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .payment-name-box div {
+    margin-bottom: 1rem;
+  }
+  .pay-details-box-invoice {
+    padding: 1rem;
+  }
+  .pay-details-box-invoice table tr td,
+  .pay-details-box-invoice table tr th {
+    padding: 10px;
+  }
+  .pay-details-box-invoice .download-inv-box a:last-child {
+    margin-left: 0.5rem;
+    font-size: 15px;
+  }
+  .paid-student-name {
+    margin-top: 1rem;
   }
   .course-title h1 {
     font-size: 1.2rem;

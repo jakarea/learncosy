@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row">
                 @can('instructor')
-                <div class="col-12 mb-4"> 
+                <div class="col-12"> 
                     {!! isInstructorSubscribed(auth()->user()->id) !!}
                 </div>
                 @endcan

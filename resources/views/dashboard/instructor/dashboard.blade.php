@@ -10,7 +10,7 @@
          <div class="row">
             <div class="col-12">
                 <div class="welcome-back-box">
-                    <h1>Welcome back, John Smith</h1>
+                    <h1>Welcome back, {{auth::user()->name}}</h1>
                     <h6>Your progress this week is Awesome, let’s keep it up.</h6>
                     <h5>Complete your profile</h5>
 
@@ -28,44 +28,21 @@
                 <div class="my-courses-box mt-15">
                     <h3>My Courses</h3>
 
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
-                        <div class="media-body">
-                            <h5>UX Design Foundations</h5>
-                            <p>Evelyn Gaylord</p>
-
-                            <ul>
-                                <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> 40 modules</li>
-                            </ul>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                    </div>
-
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
-                        <div class="media-body">
-                            <h5>UX Design Foundations</h5>
-                            <p>Evelyn Gaylord</p>
-
-                            <ul>
-                                <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> 40 modules</li>
-                            </ul>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                    </div>
-
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
-                        <div class="media-body">
-                            <h5>UX Design Foundations</h5>
-                            <p>Evelyn Gaylord</p>
-
-                            <ul>
-                                <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> 40 modules</li>
-                            </ul>
-                        </div>
-                        <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                    </div>
+                    <div class="course-box-overflown">
+                        @foreach ($courses as $course)
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon" class="img-fluid me-3">
+                            <div class="media-body">
+                                <h5>{{$course->title}}</h5> 
+    
+                                <ul class="mt-1">
+                                    <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}" alt="icon" class="img-fluid"> {{$course->number_of_module}} modules</li>
+                                </ul>
+                            </div>
+                            <a href="{{url('instructor/courses/'.$course->slug)}}"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        </div> 
+                        @endforeach
+                    </div> 
 
                     <div class="text-center mt-4">
                         <a href="#" class="common-bttn">Create New Course</a>

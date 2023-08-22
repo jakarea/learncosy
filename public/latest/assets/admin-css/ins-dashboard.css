@@ -27,6 +27,7 @@
   font-weight: 500;
   line-height: 1.875rem;
   letter-spacing: 0.01rem;
+  margin-top: 0.75rem;
 }
 .welcome-back-box .d_flex {
   display: grid;
@@ -50,6 +51,33 @@
 .welcome-back-box .progress .progress-bar {
   background-color: #0D5EF4;
   border-radius: 0.25rem;
+}
+
+.course-box-overflown {
+  max-height: 19.4375rem;
+  overflow-y: scroll;
+}
+.course-box-overflown .media {
+  margin-right: 1rem;
+}
+
+.course-box-overflown::-webkit-scrollbar {
+  width: 0.31769rem;
+}
+
+/* Track */
+.course-box-overflown::-webkit-scrollbar-track {
+  background: #E5ECF6;
+}
+
+/* Handle */
+.course-box-overflown::-webkit-scrollbar-thumb {
+  background: #A6B1C4;
+}
+
+/* Handle on hover */
+.course-box-overflown::-webkit-scrollbar-thumb:hover {
+  background: #A6B1C4;
 }
 
 .my-courses-box {
