@@ -263,7 +263,52 @@
 
 {{-- page script @S --}}
 @section('script') 
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+<script>
+    function handleFileUpload(inputElement, containerId, labelId) {
+  const containerElement = document.getElementById(containerId);
+  const labelElement = document.getElementById(labelId);
+
+  const file = inputElement.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    const uploadedFileContainer = containerElement;
+
+    // Remove previously uploaded file (if any)
+    const existingUploadedFile = uploadedFileContainer.querySelector(".uploaded-file");
+    if (existingUploadedFile) {
+      uploadedFileContainer.removeChild(existingUploadedFile);
+    }
+
+    const uploadedFile = document.createElement("div");
+    uploadedFile.classList.add("uploaded-file");
+
+    const uploadedFileImg = document.createElement("img");
+    uploadedFileImg.src = reader.result;
+    uploadedFile.appendChild(uploadedFileImg);
+
+    const closeIcon = document.createElement("span");
+    closeIcon.innerHTML = "&times;";
+    closeIcon.classList.add("uploaded-file-close");
+    closeIcon.addEventListener("click", function () {
+      uploadedFileContainer.removeChild(uploadedFile);
+      inputElement.value = null; // Reset file input value
+      labelElement.style.display = "block"; // Show the label again after removing the uploaded image
+    });
+
+    uploadedFile.appendChild(closeIcon);
+    uploadedFileContainer.appendChild(uploadedFile);
+
+    // Hide the label after an image is uploaded
+    labelElement.style.display = "none";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+</script>
 @endsection
 
 {{-- page script @E --}}

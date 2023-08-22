@@ -21,6 +21,15 @@ class ModuleSettingController extends Controller
         }
         return view('theme-settings/settings', compact('module_settings'));
     }
+    public function dnsTheme()
+    {
+        //
+        $module_settings = InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
+        if ( $module_settings ) {
+        $module_settings->value = json_decode($module_settings->value);
+        }
+        return view('theme-settings/theme-dns-settings', compact('module_settings'));
+    }
 
     /**
      * Show the form for creating a new resource.

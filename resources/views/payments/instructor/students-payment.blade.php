@@ -93,7 +93,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="btn-view">View</a>
+                                <a href="{{url('instructor/payments/details/static-details')}}" class="btn-view">View</a>
                             </td>
                         </tr>
                         @endforeach 

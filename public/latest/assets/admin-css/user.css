@@ -606,6 +606,14 @@
   left: 12px;
   top: 15px;
 }
+.user-search-box-wrap .form-group option {
+  background-color: #101C2D;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
 .user-search-box-wrap .form-filter {
   position: relative;
 }
@@ -1160,6 +1168,320 @@
   border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
 }
 
+.account-settings-box {
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.account-settings-box .header {
+  background: #FFF;
+  border-radius: 0.5rem 0.5rem 0 0;
+  border: 1px solid rgba(16, 28, 45, 0.1);
+}
+.account-settings-box .tab-pane.active-bg {
+  background: #FFF;
+  border-radius: 0 0 0.5rem 0.5rem;
+  border: 1px solid rgba(16, 28, 45, 0.1);
+  border-top: 0;
+}
+.account-settings-box .profile-text-box-2 {
+  border-radius: 0 0 0.5rem 0.5rem !important;
+  border: 1px solid rgba(16, 28, 45, 0.1) !important;
+  border-top: 0 !important;
+}
+
+.theme-dns-settings-box {
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  margin-top: 3rem !important;
+}
+
+.login-page-theme-box {
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
+  background: #FFF !important;
+  padding: 1.5rem !important;
+}
+.login-page-theme-box .media img {
+  width: 10rem !important;
+  height: 6.25rem !important;
+}
+.login-page-theme-box .file-upload-2 {
+  width: 10rem !important;
+  height: 6.25rem !important;
+  border-radius: 0.5rem !important;
+  border: 1px dashed var(--neutral-color-neutral-40, #C5CCD8) !important;
+  background: #FFF !important;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16) !important;
+  margin-right: 1.5rem !important;
+  margin-top: 0rem !important;
+}
+.login-page-theme-box .file-upload-2 img {
+  width: 1.625rem !important;
+  height: 1.625rem !important;
+}
+
+.dns-settings-box-wrapper {
+  background: #FFF;
+  display: grid;
+  grid-template-columns: 22% 78%;
+}
+
+.dns-left-sidebar {
+  border-right: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  padding: 3.75rem 2.5rem 2rem 2rem;
+}
+.dns-left-sidebar .setup-step .step-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 1.62rem;
+  position: relative;
+}
+.dns-left-sidebar .setup-step .step-box:before {
+  position: absolute;
+  content: "";
+  left: 5.5px;
+  bottom: -6px;
+  width: 0.125rem;
+  height: 73%;
+  background-color: #E4E7EC;
+}
+.dns-left-sidebar .setup-step .step-box span {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  border: 4px solid #E5ECF6;
+  outline: #E5ECF6 solid 2px;
+}
+.dns-left-sidebar .setup-step .step-box p {
+  margin-left: 1.5rem;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+.dns-left-sidebar .setup-step .step-box.big:before {
+  height: 57%;
+}
+.dns-left-sidebar .setup-step .step-box.big span {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 7px solid #E5ECF6;
+  outline: #E5ECF6 solid 3px;
+  margin-left: -0.3rem;
+}
+.dns-left-sidebar .setup-step .step-box.big p {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.dns-left-sidebar .setup-step .step-box.active:before {
+  background-color: #294CFF;
+}
+.dns-left-sidebar .setup-step .step-box.active span {
+  border-color: #294CFF;
+}
+.dns-left-sidebar .setup-step .step-box.active p {
+  color: #294CFF;
+}
+.dns-left-sidebar .setup-step .step-box.done span {
+  border-width: 0;
+  background: #294CFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dns-left-sidebar .setup-step .step-box.current span {
+  border-color: #294CFF;
+}
+.dns-left-sidebar .setup-step .step-box.current p {
+  font-weight: 500;
+}
+.dns-left-sidebar .setup-step .step-box:last-child:before {
+  height: 0;
+  width: 0;
+}
+
+.dns-main-body {
+  padding: 3.75rem 2rem 2.5rem;
+}
+.dns-main-body .add-domain-box h2,
+.dns-main-body .add-domain-box h1 {
+  color: var(--neutral-90, #252525);
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 2.375rem;
+  margin-bottom: 0.75rem;
+}
+.dns-main-body .add-domain-box p {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+.dns-main-body .add-domain-box h5 {
+  color: var(--neutral-90, #252525);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.dns-main-body .add-domain-box .form-group {
+  width: 50%;
+}
+.dns-main-body .add-domain-box .form-control {
+  border-radius: 0.375rem;
+  border: 1px solid var(--primary-color-blue-light, #3D5CFF);
+  background: #F9FBFF;
+  padding: 1rem 0.75rem;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+.dns-main-body .add-domain-box .form-submit-bttns {
+  margin-top: 2rem;
+  text-align: left;
+}
+.dns-main-body .add-domain-box .form-submit-bttns .btn {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+.dns-main-body .domain-verify-box h3 {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  margin-bottom: 0.6rem;
+}
+.dns-main-body .domain-verify-box .form-check {
+  margin-top: 1.5rem;
+}
+.dns-main-body .domain-verify-box .form-check label {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%;
+}
+.dns-main-body .domain-verify-box .form-check h6 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 135%;
+  margin-top: 0.6rem;
+}
+.dns-main-body .domain-verify-box .media {
+  align-items: center;
+}
+.dns-main-body .domain-verify-box .media h5 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 135%;
+}
+.dns-main-body .domain-verify-box .media h6 {
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 135%;
+}
+.dns-main-body .domain-verify-box .nav {
+  margin-top: 2.75rem;
+  border: 0;
+}
+.dns-main-body .domain-verify-box .nav .nav-link {
+  color: var(--text-light-secondary, #637381) !important;
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1.375rem !important;
+  border: 0 !important;
+}
+.dns-main-body .domain-verify-box .nav .nav-link.active {
+  border: 0 !important;
+  color: #212B36 !important;
+  border-bottom: 2.5px solid #294CFF !important;
+}
+.dns-main-body .form-check-label-2 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem;
+  margin-bottom: 0.5rem;
+}
+.dns-main-body .d-flex {
+  align-items: center;
+  margin-top: 2rem;
+}
+.dns-main-body .d-flex a {
+  margin-right: 1.8rem;
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem;
+}
+.dns-main-body .d-flex a img {
+  margin-right: 0.5rem;
+}
+.dns-main-body .finish-txt h2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.dns-main-body .finish-txt h2 img {
+  margin-right: 0.8rem;
+}
+.dns-main-body .finish-txt h4 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem;
+  margin-top: 2rem;
+}
+.dns-main-body .finish-txt a {
+  display: block;
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1rem;
+  margin-top: 1rem;
+}
+
+.feat-box .media img {
+  margin-right: 0 !important;
+  margin-left: 1rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;
@@ -1181,6 +1503,68 @@
   }
   .user-profile-picture .media .media-body p {
     font-size: 0.9rem;
+  }
+  .student-profile-update-page .own-profile-box .header .nav .nav-item .nav-link {
+    margin-right: 0.5rem;
+    font-size: 13px;
+  }
+  .dns-settings-box-wrapper {
+    grid-template-columns: 100%;
+  }
+  .dns-main-body {
+    padding: 1.5rem;
+  }
+  .dns-main-body .add-domain-box h2, .dns-main-body .add-domain-box h1 {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+  }
+  .user-expperience-box .media p,
+  .user-expperience-box .media h6 {
+    font-size: 14px;
+  }
+  .certificate-header-tab .nav .nav-item .nav-link {
+    font-size: 13px;
+  }
+  .certificate-header-tab .nav .nav-item .nav-link i {
+    margin-right: 0.2rem;
+  }
+  .dns-main-body .add-domain-box .form-group {
+    width: 100%;
+  }
+  .dns-main-body .domain-verify-box .form-check label {
+    font-size: 1rem;
+  }
+  .dns-main-body .domain-verify-box .form-check h6 {
+    font-size: 0.875rem;
+  }
+  .dns-main-body .d-flex a {
+    font-size: 0.875rem;
+    margin-right: 0.4rem;
+  }
+  .create-certificate-form {
+    padding: 1rem;
+  }
+  .certificate-style-box .media,
+  .create-certificate-form .certificate-name .media {
+    flex-direction: column;
+  }
+  .certificate-style-box .media a,
+  .create-certificate-form .certificate-name .media a {
+    margin-top: 1rem;
+  }
+  .certificate-style-box .media p {
+    width: 100%;
+    margin-right: 0;
+  }
+  .certificate-style-box .media img {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .certificate-asset-upload {
+    margin-top: 1rem;
+  }
+  .certificate-header-tab .nav .nav-item:last-child .nav-link {
+    margin-left: 0.5rem;
   }
   .user-details-box {
     padding: 1rem;
@@ -1251,6 +1635,19 @@
 @media (min-width: 574px) and (max-width: 767px) {
   .contact-info-box {
     margin-top: 2rem;
+  }
+  .dns-main-body .add-domain-box .form-group {
+    width: 100%;
+  }
+  .dns-main-body .domain-verify-box .form-check label {
+    font-size: 1rem;
+  }
+  .dns-main-body .domain-verify-box .form-check h6 {
+    font-size: 0.875rem;
+  }
+  .dns-main-body .d-flex a {
+    font-size: 0.875rem;
+    margin-right: 0.4rem;
   }
   #image-container {
     margin-bottom: 1.5rem;

@@ -47,6 +47,13 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
                     <div class="course-thumb-box">
+                        @if ($course->status == 'pending')
+                        <span class="badge text-bg-danger">Pending</span>
+                        @elseif ($course->status == 'draft')
+                            <span class="badge text-bg-warning">Draft</span>
+                        @elseif ($course->status == 'published')
+                            <span class="badge text-bg-primary">Publish</span>
+                        @endif
                         <div class="header-action">
                             <div class="dropdown">
                                 <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,8 +75,8 @@
                         <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
-                        <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
-                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                        <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 30, $end = '..') }}</a>
+                        <p>{{ Str::limit($course->short_description, $limit = 26, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>
                             <li><i class="fas fa-star"></i></li>
