@@ -178,22 +178,7 @@ Home Page
                     </div> 
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="earnings-chart-wrap mt-15">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <h5>Statistics</h5>
-                        </div>
-                        <div class="col-lg-6 text-lg-end">
-                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
-                        </div>
-                    </div>
-                    <div id="monthly_earning"></div>
-                </div>
-            </div>
-        </div>
+        </div> 
     </div> 
 </main>
 @endsection

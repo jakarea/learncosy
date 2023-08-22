@@ -92,6 +92,32 @@
                                     <h5>Other Information </h5> 
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="form-group form-error">
+                                    <label for="company_name">Company Name 
+                                    </label>
+                                        
+                                        <input type="text" placeholder="Enter Company Name" name="company_name"
+                                            class="form-control @error('company_name') is-invalid @enderror"
+                                            value="{{ old('company_name') }}" id="company_name">
+                                     
+                                    <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group form-error">
+                                    <label for="company_website">Website 
+                                    </label>
+                                        
+                                        <input type="url" placeholder="Enter Website URL" name="company_website"
+                                            class="form-control @error('company_website') is-invalid @enderror"
+                                            value="{{ old('company_website') }}" id="company_website">
+                                     
+                                    <span class="invalid-feedback">@error('company_website'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="short_bio">Short Bio 

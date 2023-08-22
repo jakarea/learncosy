@@ -63,6 +63,13 @@
                             <a href="#">{{$user->phone ? $user->phone : '--'}}</a>
                         </div>
                     </div> 
+                    <div class="media">
+                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
+                        <div class="media-body">
+                            <h6>Bio</h6>
+                            <a href="#">{{$user->short_bio ? $user->short_bio : '--'}}</a>
+                        </div>
+                    </div> 
                 </div> 
                 <div class="contact-info-box mt-4">
                     <h4>Social Link</h4>
@@ -91,7 +98,7 @@
                         @endif
                         
                         <div class="media-body">
-                            <h6>{{ $domain ? $domain : 'No Social Account Found!' }}</h6>
+                            <h6>{{ $domain ? $domain : 'No Account Found!' }}</h6>
                             <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
                         </div>
                     </div>

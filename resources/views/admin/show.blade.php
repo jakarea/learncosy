@@ -61,10 +61,10 @@
                         </div>
                     </div>
                     <div class="media">
-                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         <div class="media-body">
-                            <h6>Website</h6>
-                            <a href="{{$user->short_bio}}" target="_blank">{{$user->short_bio  ? $user->short_bio : '--'}}</a>
+                            <h6>Bio</h6>
+                            <a href="#">{{$user->short_bio ? $user->short_bio : '--'}}</a>
                         </div>
                     </div>
                 </div>

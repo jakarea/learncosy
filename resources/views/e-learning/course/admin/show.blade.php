@@ -1,3 +1,4 @@
+
 @extends('layouts.latest.admin')
 @section('title') Course Details @endsection
 
@@ -37,7 +38,7 @@ $i = 0;
                     <div class="media course-title">
                         <div class="media-body">
                             <h1>{{$course->title}}</h1>
-                            <p>{{$course->sub_title}}</p>
+                            <p>{{$course->user->name}} . {{$course->user->user_role}}</p>
                         </div>
                         <a href="#">
                             <img src="{{ asset('latest/assets/images/icons/clock.svg') }}" alt="clock" title="12:00"

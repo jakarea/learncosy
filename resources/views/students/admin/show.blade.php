@@ -125,10 +125,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('students.show.courses', $value->course->slug)}}">View Course</a>
+                                    <a href="{{ url('admin/courses/'.$value->course->slug)}}" class="common-bttn text-white">View</a>
                                 </td>
-                            </tr>
-                            @endforeach 
+                            </tr> 
+                            @endforeach
                             {{-- item @E --}} 
                         </table>
                     </div>
