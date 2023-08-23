@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-error">
-                                    <label for="amount">Regular Price <sup class="text-danger">*</sup>
+                                    <label for="amount">Price <sup class="text-danger">*</sup>
                                     </label>
                                     <input type="number" placeholder="Enter Amount" name="price"
                                         class="form-control @error('price') is-invalid @enderror"

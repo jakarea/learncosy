@@ -74,15 +74,15 @@
                                     <hr>
                                     <h5>Other Information </h5>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Website
+                                    <label for="short_bio">Bio
                                     </label>
 
                                     <input type="text" name="short_bio" id="short_bio" value="{{ old('short_bio') }}"
                                         class="form-control @error('short_bio') is-invalid @enderror"
-                                        placeholder="Enter Website "/>
+                                        placeholder="Enter Bio "/>
 
                                     <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                         @enderror</span>

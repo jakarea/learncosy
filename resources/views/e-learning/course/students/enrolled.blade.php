@@ -54,8 +54,8 @@
                         <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 65) }}</a>
-                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 36, $end = '...') }}</p>
+                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 50) }}</a>
+                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 32, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>
                             <li><i class="fas fa-star"></i></li>

@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') All Admin List Page @endsection
+@section('title') All Admin List @endsection
 
 {{-- page style @S --}}
 @section('style') 
@@ -20,9 +20,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="user-title-box">
-                <h1>Total: <span>{{ count($users) }} Admin</span></h1>
-                <a href="{{ url('admin/alladmin/create') }}"><img src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add Admin</a>
+            <div class="col-12">
+                <div class="user-title-box">
+                    <h1>Total: <span>{{ count($users) }} Admin</span></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="user-search-box-wrap" style="grid-template-columns: 84% 16%">
+                    <div class="form-group">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search Admin" class="form-control">
+                    </div>
+                    <div class="user-title-box">
+                        <a href="{{ url('admin/alladmin/create') }}"><img src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add Admin</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
