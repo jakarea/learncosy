@@ -17,7 +17,6 @@
 
 {{-- page content @S --}}
 @section('content')
-
 <main class="student-courses-lists-pages">
     <div class="container-fluid">
         <div class="row">
@@ -78,9 +77,9 @@
                     </div>
                     <div class="course-txt-box">
                         @if ( isEnrolled($course->id) )
-                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
                         @else 
-                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 65) }}</a>
+                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
                         @endif
                         
                         <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
@@ -104,7 +103,7 @@
 
                         @php
                         $features = explode(",", $course->features);
-                        $limitedItems = array_slice($features, 0, 5);
+                        $limitedItems = array_slice($features, 0, 4);
                         @endphp
 
                         <ul>

@@ -1478,8 +1478,19 @@
 }
 
 .feat-box .media img {
+  margin-right: 1 !important;
+  margin-left: 0rem;
+}
+.feat-box .media a img {
   margin-right: 0 !important;
-  margin-left: 1rem;
+  margin-left: 1rem !important;
+}
+
+.paggination-wrap .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between {
+  justify-content: center !important;
+}
+.paggination-wrap .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between div:first-child {
+  display: none !important;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

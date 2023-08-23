@@ -66,8 +66,8 @@
                         <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
-                        <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
-                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                        <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                        <p>{{ Str::limit($course->short_description, $limit = 30, $end = '...') }}</p>
                         <ul>
                             <li><span>4.0</span></li>
                             <li><i class="fas fa-star"></i></li>

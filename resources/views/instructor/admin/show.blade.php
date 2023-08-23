@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') Instructor Profile Details Page @endsection
+@section('title') Instructor Profile Details @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -94,7 +94,7 @@
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
                         <div class="media-body">
-                            <h6>Company</h6>
+                            <h6>Website</h6>
                             <a href="#">{{$instructor->company_name ? $instructor->company_name : '--'}}</a>
                         </div>
                     </div>

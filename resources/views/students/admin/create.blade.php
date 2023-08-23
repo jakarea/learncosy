@@ -76,6 +76,19 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
+                                    <label for="comapny_website">Website <sup class="text-danger">*</sup>
+                                    </label>
+
+                                    <input type="url" placeholder="Enter Website URL" name="comapny_website"
+                                        class="form-control @error('comapny_website') is-invalid @enderror"
+                                        value="{{ old('comapny_website') }}" id="comapny_website">
+
+                                    <span class="invalid-feedback">@error('comapny_website'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group form-error">
                                     <label for="short_bio">Short Bio
                                     </label>
 

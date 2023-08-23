@@ -27,15 +27,29 @@
                     <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>
                 </li> 
             </ul>
-            @endcan
+            @endcan 
             <div class="d-flex"> 
+                <a href="#" class="bttn">
+                    <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
+                </a>
+                <a href="#" class="bttn">
+                    <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
+                    <span>5</span>
+                </a>
                 <div class="dropdown">
-                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{asset('latest/assets/images/icons/settings.svg')}}" alt="a"
-                            class="img-fluid">
-                    </button>
+                    <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(auth()->user()->avatar)
+                            @if(auth()->user()->user_role == 'student')
+                                <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
+                                class="img-fluid">
+                            @endif 
+                        @else
+                            <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
+                        @endif 
+
+                    </button> 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">My Profile</a></li>  
+                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">Profile</a></li>  
                         <li><a class="dropdown-item" href="{{ url('students/profile/edit') }}">Account Setting</a></li>  
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -46,16 +60,9 @@
                             </form>
                         </li>
                     </ul>
-                </div>
-                <a href="#" class="avatar">
-                    @if(auth()->user()->avatar)
-                        <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
-                        class="img-fluid">
-                    @else
-                        <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
-                    @endif 
-                </a>
+                </div>  
             </div>
+
         </div>
     </div>
 </nav>
