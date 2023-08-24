@@ -12,7 +12,7 @@ Home Page
 @section('content')
 <main class="dashboard-page-wrap">
     <div class="container-fluid">
-        <div class="row"> 
+        <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
                 <div class="total-client-box">
@@ -20,7 +20,7 @@ Home Page
                         <div class="media-body">
                             <h5>Students</h5>
                             <h4> {{ $studentsCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -34,7 +34,7 @@ Home Page
                         <div class="media-body">
                             <h5>Instructors</h5>
                             <h4> {{ $instructorsCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -48,7 +48,7 @@ Home Page
                         <div class="media-body">
                             <h5>Course</h5>
                             <h4> {{ $courseCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -62,13 +62,13 @@ Home Page
                         <div class="media-body">
                             <h5>Earnings</h5>
                             <h4>{{ $totalEarnings }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
-            </div> 
+            </div>
         </div>
         <div class="row">
             <div class="col-xl-8">
@@ -88,11 +88,12 @@ Home Page
                 <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>Top Performing Courses</h5>
-                        <a href="#">View All</a>
+                        <a href="{{ url('admin/dashboard/top-perform/courses') }}">View All</a>
                     </div>
                     <div class="course-lists">
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar"
+                                class="img-fluid">
                             <div class="media-body">
                                 <h5>Figma Course Part 1</h5>
                                 <p>UI/UX Design</p>
@@ -100,7 +101,8 @@ Home Page
                             <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
                         </div>
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar"
+                                class="img-fluid">
                             <div class="media-body">
                                 <h5>Figma Course Part 1</h5>
                                 <p>UI/UX Design</p>
@@ -108,7 +110,8 @@ Home Page
                             <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
                         </div>
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar"
+                                class="img-fluid">
                             <div class="media-body">
                                 <h5>Figma Course Part 1</h5>
                                 <p>UI/UX Design</p>
@@ -116,7 +119,8 @@ Home Page
                             <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
                         </div>
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar"
+                                class="img-fluid">
                             <div class="media-body">
                                 <h5>Figma Course Part 1</h5>
                                 <p>UI/UX Design</p>
@@ -126,29 +130,222 @@ Home Page
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-xl-8">
-                <div class="earnings-chart-wrap mt-15">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <h5>Students</h5>
-                        </div>
-                        <div class="col-lg-6 text-lg-end">
-                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                <div class="course-status-box mt-15">
+                    <div class="d-flex">
+                        <h4>Course Status</h4>
+
+                        <div>
+                            <a href="#">View All</a>
+                            <select name="" id="">
+                                <option value="">This month</option>
+                                <option value="">This week</option>
+                                <option value="">This year</option>
+                            </select>
                         </div>
                     </div>
-                    <div id="lineChart"></div>
+                    <table>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Earning</th>
+                            <th>Visitor</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset('latest/assets/images/c-status.png') }}" alt="Avatar"
+                                            class="img-fluid">
+                                        
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$60</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star"></i> 4.5</p>
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td>
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </div>  
+            </div>
             <div class="col-xl-4">
-                <div class="top-performing-course mt-15"> 
+                <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>Message</h5>
                         <a href="#">View All</a>
-                    </div> 
-     
-                    <div class="messages-items-wrap"> 
+                    </div>
+
+                    <div class="messages-items-wrap">
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
@@ -160,8 +357,8 @@ Home Page
                                     <h5>Ronald Richards <span>4:45 Pm</span></h5>
                                     <p>The More Important the Work, the More Rest</p>
                                 </div>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
@@ -173,13 +370,28 @@ Home Page
                                     <h5>Ronald Richards <span>4:45 Pm</span></h5>
                                     <p>The More Important the Work, the More Rest</p>
                                 </div>
-                            </div> 
-                        </div> 
-                    </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div> 
-    </div> 
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="earnings-chart-wrap mt-15">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h5>Students</h5>
+                        </div>
+                        <div class="col-lg-6 text-lg-end">
+                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                        </div>
+                    </div>
+                    <div id="lineChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 @endsection
 

@@ -112,7 +112,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('students.show.courses', $value->course->slug)}}">View Course</a>
+                                    <a href="{{ route('students.show.courses', $value->course->slug)}}">View</a>
                                 </td>
                             </tr>
                             @endforeach 

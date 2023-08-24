@@ -58,7 +58,7 @@
                                             <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
                                                 Max size of 3.1 MB</h6>
 
-                                            <div class="form-check form-switch">
+                                            <div class="form-check form-switch ps-0">
                                                 <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
                                                     Messages</label>
                                                 <input class="form-check-input" type="checkbox" name="recivingMessage"

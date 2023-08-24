@@ -2,14 +2,14 @@
 @section('title') Students Dashboard @endsection
 
 {{-- page style @S --}}
-@section('style') 
+@section('style')
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/ins-dashboard.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-
 <main class="student-dashboard-page">
     <div class="container-fluid">
         <div class="row">
@@ -109,30 +109,34 @@
         </div>
         <div class="row">
             <div class="col-lg-8">
-                <div class="my-course-box mt-15">
-                    <h5>Liked Courses</h5> 
-                    @php
-                    $i = 0;
-                    @endphp
-                    @foreach($enrolments as $enrolment)
-                    @php
-                    $i++
-                    @endphp 
-                    <div class="media">
-                       @if ($enrolment->course->thumbnail)
-                       <img src="{{asset('assets/images/courses/'.$enrolment->course->thumbnail)}}" alt="a" class="img-fluid">
-                        @else
-                        <img src="{{asset('latest/assets/images/course-small.svg')}}" alt="a" class="img-fluid">
-                       @endif
-                        <div class="media-body">
-                            <h6><a href="{{url('students/courses/'.$enrolment->course->slug )}}">{{
-                                $enrolment->course->title}} </a> </h6>
-                            <p><strong>Enrolled Fee:</strong> {{ $enrolment->amount}} €</p>
-                            <span><i class="fas fa-calendar me-2"></i> {{ $enrolment->created_at->format('F j, Y')}}</span>
+                <div class="my-courses-box mt-15">
+                    <h3>Liked Courses </h3>
+
+                    <div class="course-box-overflown">
+                        @foreach ($enrolments as $enrolment)
+                        <div class="media">
+                            @if ($enrolment->course->thumbnail)
+                            <img src="{{asset('assets/images/courses/'.$enrolment->course->thumbnail)}}" alt="a"
+                                class="img-fluid me-3" style="width: 100px; border-radius: 1rem">
+                            @else
+                            <img src="{{asset('latest/assets/images/course-small.svg')}}" alt="a"
+                                class="img-fluid me-3">
+                            @endif
+                            <div class="media-body">
+                                <h5>{{
+                                    $enrolment->course->title}}</h5>
+                                <p><strong>Enrolled Fee:</strong> {{ $enrolment->amount}} €</p>
+                                <ul class="mt-1">
+                                    <li><i class="fas fa-calendar me-2"></i> {{ $enrolment->created_at->format('F j,
+                                        Y')}}</li>
+                                </ul>
+                            </div>
+                            <a href="{{url('students/courses/'.$enrolment->course->slug )}}"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></a>
                         </div>
-                        <a href="{{ url('course/messages/send',$enrolment->course->id)}}" target="_blank" class="bttn"><i class="fa-solid fa-headset me-2"></i> Contact</a>
+                        @endforeach
                     </div>
-                    @endforeach 
+
                 </div>
             </div>
             <div class="col-lg-4">
@@ -149,7 +153,148 @@
                         </figure>
                     </div>
                     @endforeach
-                    @endif 
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="course-status-wrap mt-15">
+                    <div class="d-flex">
+                        <h4>Course Status</h4>
+                        <div>
+                            <a href="#">View All</a>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Paid</th>
+                            <th>Progress</th>
+                            <th>Start Date</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p>45</p>
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 25%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>13-07-2023</p>
+                            </td>
+                            <td class="text-end">
+                                <a href="#">Play</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p>45</p>
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 25%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>13-07-2023</p>
+                            </td>
+                            <td class="text-end">
+                                <a href="#">Play</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p>45</p>
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 25%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>13-07-2023</p>
+                            </td>
+                            <td class="text-end">
+                                <a href="#">Play</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p>45</p>
+                                <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 25%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>13-07-2023</p>
+                            </td>
+                            <td class="text-end">
+                                <a href="#">Play</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -174,11 +319,11 @@
             @else
             <div class="col-12">
                 <div class="text-center">
-                   <h6>No Course Found</h6>
+                    <h6>No Course Found</h6>
                 </div>
             </div>
             @endif
-        </div> 
+        </div>
     </div>
 </main>
 @endsection

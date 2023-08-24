@@ -47,6 +47,9 @@
   padding: 0.2rem 0.5rem !important;
   border-radius: 6px !important;
 }
+.course-single-item .course-thumb-box:hover + div {
+  display: block !important;
+}
 .course-single-item .course-txt-box {
   padding-top: 0.75rem;
   padding: 0.5rem;
@@ -397,7 +400,7 @@ span.finsihLesson {
 }
 
 .user-search-box-wrap.bundle-search-grid {
-  grid-template-columns: 62% 19% 19%;
+  grid-template-columns: 60% 19% 21%;
 }
 
 .user-search-box-wrap.bundle-select-grid {
@@ -1551,6 +1554,11 @@ span.finsihLesson {
   top: 3.3rem;
   color: #294CFF;
   font-size: 10px;
+}
+
+.top-perform-courses-lists-pages .course-single-item {
+  margin-bottom: 1.5rem;
+  height: auto;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

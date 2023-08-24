@@ -280,7 +280,7 @@
         top: 13.5%;
         width: 110%;
         height: 115%;
-        visibility: hidden;
+        display: none;
         transition: ease-in-out .3s;
         z-index: 999;
 
@@ -1082,15 +1082,151 @@
     }
 
     .text-center {
-        color: var(--neutral-color-neutral-70, #2F3A4C); 
+        color: var(--neutral-color-neutral-70, #2F3A4C);
         font-size: 1rem;
         font-style: normal;
         font-weight: 500;
-        line-height: 150%; 
+        line-height: 150%;
     }
 }
 
+.course-status-wrap {
+    border-radius: 0.5rem;
+    background: var(--background-light-paper, #FFF);
+    box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
 
+    .d-flex {
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.125rem 1.5rem;
+
+        h4 {
+            color: var(--neutral-color-neutral-90, #101C2D);
+            font-size: 1.25rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.75rem;
+        }
+
+        a {
+            border-radius: 0.375rem;
+            background: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
+            color: var(--neutral-color-neutral-90, #101C2D);
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1.25rem;
+            display: inline-block;
+            padding: 0.3rem 0.5rem;
+            margin-right: 1rem;
+        }
+    }
+
+    table {
+        width: 100%;
+
+        tr {
+            th {
+                padding: .7rem 1rem;
+                color: var(--neutral-color-neutral-60, #66768E);
+                font-size: 0.8125rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.5rem;
+                background: var(--background-light-neutral, #F4F6F8);
+            }
+
+
+            td {
+                padding: .6rem 1.5rem;
+                border-bottom: 1px solid var(--stroke, #E4E7EC);
+                background: var(--background-light-paper, #FFF);
+
+                p {
+                    overflow: hidden;
+                    color: var(--black, #212B36);
+                    text-overflow: ellipsis;
+                    whitespace: nowrap;
+                    font-size: 0.875rem;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1.375rem;
+
+                    i {
+                        color: #F8AA00;
+                    }
+                }
+
+                .media {
+                    align-items: center;
+
+                    .avatar {
+                        margin-right: 1rem;
+
+                        img {
+                            width: 0.2em 0.4rem;
+                            height: 2.4rem;
+                            object-fit: cover;
+                            border-radius: 50%;
+
+                        }
+                    }
+
+                    h5 {
+                        color: var(--neutral-color-neutral-90, #101C2D);
+                        font-size: 0.875rem;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 1.375rem;
+
+                        span {
+                            color: var(--neutral-color-neutral-60, #66768E);
+                            font-size: 12px;
+                            display: inline-block;
+                            margin-left: auto;
+                        }
+                    }
+
+                    p {
+                        overflow: hidden;
+                        color: var(--neutral-color-neutral-60, #66768E);
+                        text-overflow: ellipsis;
+                        font-size: 0.75rem;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.125rem;
+                    }
+                }
+
+                a {
+                    border-radius: 0.375rem;
+                    background: var(--transparent-grey-16, rgba(145, 158, 171, 0.16));
+                    color: var(--neutral-color-neutral-90, #101C2D);
+                    font-size: 0.75rem;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 1.25rem;
+                    display: inline-block;
+                    padding: 0.3rem 0.5rem;
+                }
+
+                .progress {
+                    border-radius: 3.125rem;
+                    background: rgba(75, 97, 255, 0.24);
+                    height: 0.25rem;
+                    margin-top: 0.4rem;
+
+                    .progress-bar {
+                        border-radius: 3.125rem;
+                        background: #171B3C;
+                    }
+                }
+            }
+
+
+        }
+    }
+}
 
 
 
@@ -1252,17 +1388,40 @@
         width: 100%;
     }
 
-    .overall-progress{
+    .overall-progress {
         margin-top: 2rem;
     }
 
-    .course-details{
+    .course-details {
         padding-left: 0;
         margin-left: 0;
         border-left: 0;
         border-top: 1px solid #E0E0E0;
         padding-top: 1.5rem;
         margin-top: 1.5rem;
+    }
+
+    .course-status-wrap table {
+        width: 100%;
+        display: block;
+        overflow-x: scroll;
+    }
+
+    .course-status-wrap .d-flex{
+        padding: 0.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+        div{
+            @include m.df;
+            margin-top: 0.5rem;
+        }
+        
+    }
+
+    .course-status-wrap table tr th,
+    .course-status-wrap table tr td{
+        padding: 0.5rem;
+        white-space: nowrap;
     }
 }
 
@@ -1408,6 +1567,29 @@
     .course-overview-right-part {
         width: 100%;
         margin-top: 1rem;
+    }
+
+    .course-status-wrap table {
+        width: 100%;
+        display: block;
+        overflow-x: scroll;
+    }
+
+    .course-status-wrap .d-flex{
+        padding: 0.8rem;
+        flex-direction: column;
+        align-items: flex-start;
+        div{
+            @include m.df;
+            margin-top: 0.5rem;
+        }
+        
+    }
+
+    .course-status-wrap table tr th,
+    .course-status-wrap table tr td{
+        padding: 0.5rem;
+        white-space: nowrap;
     }
 }
 

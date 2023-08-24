@@ -51,7 +51,7 @@ $i = 0;
                     <div class="media course-title">
                         <div class="media-body">
                             <h1>{{$course->title}}</h1>
-                            <p>{{$course->sub_title}}</p>
+                            <p>{{ $course->user->name }} . {{ $course->user->name }} </p>
                         </div>
                         @if( isEnrolled($course->id) && $course->user->recivingMessage)
                         <a href="{{url('course/messages/send/'.$course->id)}}" class="common-bttn">Get Support</a>
