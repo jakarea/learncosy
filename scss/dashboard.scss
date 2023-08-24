@@ -284,7 +284,7 @@ main {
                 line-height: 1.5rem;
                 background: var(--background-light-neutral, #F4F6F8);
             }
- 
+
 
             td {
                 padding: .6rem 1.5rem;
@@ -309,7 +309,7 @@ main {
                 .media {
                     align-items: center;
 
-                    .avatar { 
+                    .avatar {
                         margin-right: 1rem;
 
                         img {
@@ -318,7 +318,7 @@ main {
                             object-fit: cover;
                             border-radius: 50%;
 
-                        } 
+                        }
                     }
 
                     h5 {
@@ -353,6 +353,18 @@ main {
     }
 }
 
+.no-result-found {
+    text-align: center;
+
+    h6 {
+        color: #000; 
+        font-size: 1.3125rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+}
+
 // responsive css start
 @include q.responsive(phone) {
     main .container-fluid {
@@ -363,25 +375,27 @@ main {
         height: auto;
         margin-bottom: 1.5rem;
     }
+
     .course-status-box table {
         width: 100%;
         display: block;
         overflow-x: scroll;
     }
 
-    .course-status-box .d-flex{
+    .course-status-box .d-flex {
         padding: 0.8rem;
         flex-direction: column;
         align-items: flex-start;
-        div{
+
+        div {
             @include m.df;
             margin-top: 0.5rem;
         }
-        
+
     }
 
     .course-status-box table tr th,
-    .course-status-box table tr td{
+    .course-status-box table tr td {
         padding: 0.5rem;
         white-space: nowrap;
     }
@@ -391,25 +405,27 @@ main {
     main .container-fluid {
         padding: 0 1rem;
     }
+
     .course-status-box table {
         width: 100%;
         display: block;
         overflow-x: scroll;
     }
 
-    .course-status-box .d-flex{
+    .course-status-box .d-flex {
         padding: 0.8rem;
         flex-direction: column;
         align-items: flex-start;
-        div{
+
+        div {
             @include m.df;
             margin-top: 0.5rem;
         }
-        
+
     }
 
     .course-status-box table tr th,
-    .course-status-box table tr td{
+    .course-status-box table tr td {
         padding: 0.5rem;
         white-space: nowrap;
     }

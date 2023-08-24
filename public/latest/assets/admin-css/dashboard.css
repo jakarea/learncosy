@@ -304,6 +304,17 @@ main .container-fluid {
   line-height: 1.125rem;
 }
 
+.no-result-found {
+  text-align: center;
+}
+.no-result-found h6 {
+  color: #000;
+  font-size: 1.3125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   main .container-fluid {
     padding: 0 1rem;

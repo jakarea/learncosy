@@ -18,11 +18,15 @@ use File;
 class CourseManagementController extends Controller
 {
     // course list
-    public function index(){
-        // return view('e-learning/course/admin/index');  
+    public function index(){  
 
-        $courses = Course::orderBy('id', 'desc')->paginate(12);
-
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $courses = Course::orderBy('id', 'desc');
+        if (!empty($title)) {
+            $courses->where('title', 'like', '%' . trim($title) . '%');
+        }
+        $courses = $courses->paginate(12);
+ 
         return view('e-learning/course/admin/list',compact('courses'));  
     }
 

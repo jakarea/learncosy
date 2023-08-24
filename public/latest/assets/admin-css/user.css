@@ -584,6 +584,11 @@
 .user-search-box-wrap .form-group {
   position: relative;
 }
+.user-search-box-wrap .form-group .btn {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
 .user-search-box-wrap .form-group .form-control {
   border-radius: 0.5rem;
   border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
@@ -636,6 +641,23 @@
   position: absolute;
   right: 12px;
   top: 15px;
+}
+
+.btn-search {
+  display: inline-block;
+  background-color: #294CFF;
+  border-radius: 7px;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  transition: ease-in 0.3s;
+}
+.btn-search:hover {
+  background-color: #101828;
+  color: #fff;
 }
 
 .color-para {

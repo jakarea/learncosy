@@ -16,7 +16,13 @@ class BundleCourseManagementController extends Controller
     public function index()
     {  
         $userId = Auth::user()->id;
-        $bundleCourses = BundleCourse::orderby('id', 'desc')->paginate(12); 
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $bundleCourses = BundleCourse::orderBy('id', 'desc');
+        if (!empty($title)) {
+            $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
+        }
+        $bundleCourses = $bundleCourses->paginate(12);
+ 
         return view('bundle/admin/list',compact('bundleCourses')); 
     }
 
