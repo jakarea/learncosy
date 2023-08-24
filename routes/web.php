@@ -57,6 +57,17 @@ Route::get('/auth-login', function(){
     return view('custom-auth/login');
 })->name('tlogin')->middleware('guest');
 
+
+// custom auth screen route
+Route::get('/login2', function(){
+    return view('login/login2');
+})->middleware('guest');
+
+Route::get('/login3', function(){
+    return view('login/login3');
+})->middleware('guest');
+
+
 Route::get('/auth-register', function(){
     return view('custom-auth/register');
 })->name('tregister')->middleware('guest'); 
