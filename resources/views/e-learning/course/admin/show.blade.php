@@ -41,7 +41,7 @@ $i = 0;
                             <p>{{$course->user->name}} . {{$course->user->user_role}}</p>
                         </div>
                         <a href="#">
-                            <img src="{{ asset('latest/assets/images/icons/clock.svg') }}" alt="clock" title="12:00"
+                            <img src="{{ asset('latest/assets/images/icons/favorit.svg') }}" alt="clock" title="12:00"
                                 class="img-fluid">
                         </a>
                     </div>

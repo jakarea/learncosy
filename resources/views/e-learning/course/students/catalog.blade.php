@@ -75,6 +75,31 @@
                         <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
                             class="img-fluid">
                     </div>
+                    <div class="course-ol-box">
+                        <h5>{{ Str::limit($course->title, 60) }}</h5>
+                        <span>Updated June 2023</span>
+                        <p>2 total hr • Beginner level • Subtitle </p>
+                        <h6>{{ Str::limit($course->short_description, $limit = 90, $end = '...') }}</h6>
+                        @php
+                        $features = explode(",", $course->features);
+                        $limitedItems = array_slice($features, 0, 4);
+                        @endphp
+                        <ul>
+                            @foreach ($limitedItems as $feature)
+                            <li><i class="fas fa-check"></i> {{$feature}}</li>
+                            @endforeach
+                        </ul>
+                        @if ( !isEnrolled($course->id) )
+                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                            <input type="hidden" name="course_id" value="{{$course->id}}">
+                            <input type="hidden" name="price" value="{{$course->price}}">
+                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                            <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
+                        </form>  
+                        @else 
+                        <a href="{{url('students/courses/overview/'.$course->slug )}}">Go to Course</a>
+                        @endif 
+                    </div>
                     <div class="course-txt-box">
                         @if ( isEnrolled($course->id) )
                             <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
@@ -93,37 +118,7 @@
                             <li><span>(145)</span></li>
                         </ul>
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                    </div>
-
-                    <div class="course-ol-box">
-                        <h5>{{ Str::limit($course->title, 60) }}</h5>
-                        <span>Updated June 2023</span>
-                        <p>2 total hr • Beginner level • Subtitle </p>
-                        <h6>{{ Str::limit($course->short_description, $limit = 90, $end = '...') }}</h6>
-
-                        @php
-                        $features = explode(",", $course->features);
-                        $limitedItems = array_slice($features, 0, 4);
-                        @endphp
-
-                        <ul>
-                            @foreach ($limitedItems as $feature)
-                            <li><i class="fas fa-check"></i> {{$feature}}</li>
-                            @endforeach
-                        </ul>
-
-                        @if ( !isEnrolled($course->id) )
-                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
-                            <input type="hidden" name="course_id" value="{{$course->id}}">
-                            <input type="hidden" name="price" value="{{$course->price}}">
-                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                            <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
-                        </form>  
-                        @else 
-                        <a href="{{url('students/courses/overview/'.$course->slug )}}">Go to Course</a>
-                        @endif 
- 
-                    </div>
+                    </div> 
                 </div>
             </div>
             {{-- course single box end --}}
@@ -144,24 +139,5 @@
 {{-- page content @E --}}
 
 @section('script')
-<script>
-    // Get all elements with the class "btn-ellip"
-let cards = document.querySelectorAll(".btn-ellip");
 
-// Attach a click event listener to each button
-cards.forEach(card => {
-    card.addEventListener("click", function () {
-        // Toggle "active-ol" class on the parent element of the clicked button
-        this.parentNode.classList.toggle("active-ol");
-        
-        // Remove "active-ol" class from parent elements of other buttons
-        cards.forEach(ca => {
-            if (ca !== this) {
-                ca.parentNode.classList.remove("active-ol");
-            }
-        });
-    });
-});
-
-</script>
 @endsection

@@ -82,6 +82,10 @@ class AdminHomeController extends Controller
         );
     }
 
+    public function perform(){ 
+        return view('e-learning/course/admin/top-perform');
+    }
+
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
