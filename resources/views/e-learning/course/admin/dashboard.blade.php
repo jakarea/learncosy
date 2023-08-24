@@ -88,41 +88,32 @@ Home Page
                 <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>Top Performing Courses</h5>
-                        <a href="#">View All</a>
+                        <a href="{{ url('admin/courses')}}">View All</a>
                     </div>
                     <div class="course-lists">
+                    @php 
+                        $sale_count = $TopPerformingCourses[0]->sale_count;
+                        $sn = 1;
+                    @endphp
+                        @foreach ($TopPerformingCourses as $course)
+                        @php 
+                        if($course->sale_count < $sale_count && $sn < 3){
+                            $sale_count = $course->sale_count;
+                            $sn++;
+                        }
+                            
+                        @endphp
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('assets/images/courses/'.$course->thumbnail) }}" alt="Avatar" class="img-fluid">
                             <div class="media-body">
-                                <h5>Figma Course Part 1</h5>
-                                <p>UI/UX Design</p>
+                                <h5><a href="{{url('admin/courses',$course->slug) }}"> {{ substr($course->title,0,20).'...'  }}</a></h5>
+                                <p>{{ $course->categories}}</p>
                             </div>
-                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/tofy-'.$sn.'.svg')  }}" alt="Avatar" class="img-fluid">
                         </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5>Figma Course Part 1</h5>
-                                <p>UI/UX Design</p>
-                            </div>
-                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5>Figma Course Part 1</h5>
-                                <p>UI/UX Design</p>
-                            </div>
-                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/avatar-circle.png') }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5>Figma Course Part 1</h5>
-                                <p>UI/UX Design</p>
-                            </div>
-                            <img src="{{ asset('latest/assets/images/tofy.svg') }}" alt="Avatar" class="img-fluid">
-                        </div>
+                        @endforeach
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -147,34 +138,22 @@ Home Page
                         <h5>Message</h5>
                         <a href="#">View All</a>
                     </div> 
-     
                     <div class="messages-items-wrap"> 
+                        @foreach ($lastMessages as $message)
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
-                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
+                                    <img src="{{ asset('assets/images/users/'. $message->user->avatar) }}" alt="Avatar"
                                         class="img-fluid">
                                     <i class="fas fa-circle"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                    <p>The More Important the Work, the More Rest</p>
+                                    <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans() }}</span></h5>
+                                    <p>{{ substr($message->message,0,34) }}</p>
                                 </div>
                             </div> 
                         </div> 
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle text-success"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                    <p>The More Important the Work, the More Rest</p>
-                                </div>
-                            </div> 
-                        </div> 
+                        @endforeach
                     </div> 
                 </div>
             </div>

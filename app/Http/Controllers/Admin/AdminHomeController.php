@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Checkout;
-use App\Models\Course;
-use App\Models\Subscription;
-use App\Models\User;
 use Auth;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\Message;
+use App\Models\Checkout;
+use App\Models\Subscription;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class AdminHomeController extends Controller
+
 {
     // dashboard
     public function dashboard()
@@ -19,6 +22,17 @@ class AdminHomeController extends Controller
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
+
+
+        $TopPerformingCourses = Course::select('courses.id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+        ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+        ->groupBy('courses.id')
+        ->havingRaw('sale_count > 0')
+        ->orderByDesc('sale_count')
+        ->limit(5)
+        ->get();
+        
+        $lastMessages = Message::lastMessagePerUser()->with('user')->get();
 
         $studentsCount = User::where('user_role', 'student')->count();
         $instructorsCount = User::where('user_role', 'instructor')->count();
@@ -61,7 +75,9 @@ class AdminHomeController extends Controller
                 'users',
                 'earningByDates',
                 'totalEarnings',
-                'earningByMonth'
+                'earningByMonth',
+                'TopPerformingCourses',
+                'lastMessages'
             )
         );
     }
