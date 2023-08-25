@@ -83,7 +83,14 @@ class AdminHomeController extends Controller
     }
 
     public function perform(){ 
-        return view('e-learning/course/admin/top-perform');
+        $TopPerformingCourses = Course::select('courses.id','courses.price','courses.offer_price','courses.user_id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+            ->with('user')
+            ->with('reviews')
+            ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+            ->groupBy('courses.id')
+            ->orderByDesc('sale_count')
+            ->paginate(12);
+        return view('e-learning/course/admin/top-perform',compact('TopPerformingCourses'));
     }
 
     private function getEarningByMonth()
