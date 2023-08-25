@@ -29,10 +29,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="user-search-box-wrap">
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search Instructor" class="form-control">
-                    </div>
+                    <form action="" method="GET">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Instructor" class="form-control" name="name" value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}"> 
+                            <button type="submit" class="btn btn-search">Search</button>
+                        </div>
+                    </form> 
                     <div class="form-filter">
                         <select class="form-control">
                             <option value="">All Instructor</option>
@@ -48,6 +51,7 @@
             </div>
         </div> 
         <div class="row">
+            @if (count($users) > 0)
             @foreach ($users as $user)
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="user-grid-box">
@@ -94,6 +98,13 @@
                 </div>
             </div>
             @endforeach 
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Instructor Found!</h6>
+                </div>
+            </div>
+            @endif
         </div> 
         <div class="row">
            <div class="col-12">

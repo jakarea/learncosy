@@ -29,10 +29,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="user-search-box-wrap" style="grid-template-columns: 84% 16%">
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search Admin" class="form-control">
-                    </div>
+                    <form action="">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Admin" class="form-control" name="name" value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}"> 
+                            <button type="submit" class="btn btn-search">Search</button>
+                        </div>
+                    </form> 
                     <div class="user-title-box">
                         <a href="{{ url('admin/alladmin/create') }}"><img src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add Admin</a>
                     </div>
@@ -40,6 +43,7 @@
             </div>
         </div>
         <div class="row">
+            @if (count($users) > 0)
             @foreach ($users as $user)
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="user-grid-box">
@@ -79,6 +83,13 @@
                 </div>
             </div>
             @endforeach
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Admin Found!</h6>
+                </div>
+            </div>
+            @endif
         </div> 
         <div class="row">
             {{-- pagginate --}}
