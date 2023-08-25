@@ -39,7 +39,19 @@
             </div>
         </div> 
         <div class="row"> 
-            
+            @foreach ($TopPerformingCourses as $course)
+                @php 
+                    $review_sum = 0;
+                    $review_avg = 0;
+                    $total = 0;
+                    foreach($course->reviews as $review){
+                        $total++;
+                        $review_sum += $review->star;
+                    }
+                    if($total)
+                        $review_avg = $review_sum / $total;
+                @endphp
+
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
@@ -59,403 +71,38 @@
                                     </form>
                                 </li> 
                                 </ul>
-                              </div> 
+                            </div> 
                         </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
+                        <img  src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
                     </div> 
+
                     <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
+                        <a href="#">{{ substr($course->title,0,27) }}</a>
+                        <p>{{ $course->user->username }}</p>
                         <ul>
-                            <li><span>4.0</span></li>
+                            <li><span>{{ $review_avg }}</span></li>
+                            @for ($i = 0; $i<$review_avg; $i++)
                             <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
+                            @endfor
+                            <li><span>({{ $total }})</span></li>
                         </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
+                        @if($course->offer_price)
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
+                        @else
+                        <h5>€ {{ $course->price }} </h5> 
+                        @endif
                     </div>
                 </div>
             </div>
             {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
-            {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
-                <div class="course-single-item"> 
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="£">View</a></li> 
-                                  <li> 
-                                    <form method="post" class="d-inline" action="">
-                                        @csrf 
-                                        @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                    </form>
-                                </li> 
-                                </ul>
-                              </div> 
-                        </div> 
-                        <img src="{{asset('latest/assets/images/top-perfomr.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                    </div> 
-                    <div class="course-txt-box">
-                        <a href="#">Figma UI UX Design Essentials</a>
-                        <p>Chris Converse</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
-                        <h5>€ 200 <span>€ 360</span></h5> 
-                    </div>
-                </div>
-            </div>
-            {{-- course single box end --}}
-            
+            @endforeach
+        
         </div>
         <div class="row">
             <div class="col-12">
                 {{-- pagginate --}}
                 <div class="paggination-wrap">
-                    {{-- {{ $courses->links('pagination::bootstrap-5') }} --}}
+                    {{ $TopPerformingCourses->links('pagination::bootstrap-5') }}
                 </div>
                 {{-- pagginate --}}
             </div>
