@@ -19,7 +19,14 @@ class InstructorController extends Controller
      public function index()
      {    
         $user_role = "instructor"; 
-        $users = User::where('user_role',$user_role)->orderby('id', 'desc')->paginate(12); 
+
+        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $users = User::where('user_role',$user_role)->orderBy('id', 'desc');
+        if (!empty($name)) {
+            $users->where('name', 'like', '%' . trim($name) . '%');
+        }
+        $users = $users->paginate(12);
+ 
         return view('instructor/admin/grid',compact('users')); 
      }
 

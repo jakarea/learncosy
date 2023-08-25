@@ -664,6 +664,12 @@
     .form-group {
         position: relative;
 
+        .btn{
+            position: absolute;
+            right: 8px;
+            top: 5px;
+        }
+
         .form-control {
             border-radius: 0.5rem;
             border: 1px solid var(--components-input-outlined, rgba(145, 158, 171, 0.32));
@@ -723,6 +729,23 @@
             right: 12px;
             top: 15px;
         }
+    }
+}
+
+.btn-search{
+    display: inline-block; 
+    background-color: #294CFF;
+    border-radius: 7px;
+    color: #fff;
+    padding: 0.5rem .8rem;
+    font-size: .8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem;
+    transition: ease-in .3s;
+    &:hover{
+        background-color: #101828;
+        color: #fff;
     }
 }
 

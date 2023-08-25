@@ -21,10 +21,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="user-search-box-wrap bundle-search-grid">
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search course" class="form-control">
-                    </div>
+                    <form action="" method="GET">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Bundle Courses" class="form-control" name="title" value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}"> 
+                            <button type="submit" class="btn btn-search">Search</button>
+                        </div>
+                    </form> 
                     <div class="form-filter">
                         <select class="form-control">
                             <option value="">All </option>
@@ -41,6 +44,7 @@
             </div>
         </div>
         <div class="row"> 
+            @if (count($bundleCourses) > 0)
             @foreach ($bundleCourses as $course) 
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
@@ -91,6 +95,13 @@
             </div>
             {{-- course single box end --}}
             @endforeach 
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Bundle Course Found!</h6>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">
