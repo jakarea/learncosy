@@ -27,7 +27,7 @@ class StudentHomeController extends Controller
     // dashboard
     public function enrolled(){
         
-        $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
+        $enrolments = Checkout::with('course.reviews')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
     
         return view('e-learning/course/students/enrolled',compact('enrolments')); 
     }
@@ -54,7 +54,7 @@ class StudentHomeController extends Controller
     public function catalog(){
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $courses = Course::orderBy('id','desc');
+        $courses = Course::with('user','reviews')->orderBy('id','desc');
         $bundleCourse = BundleCourse::orderBy('id','desc')->get();
         $mainCategories = $courses->pluck('categories'); 
         if(!empty($title)){
@@ -112,10 +112,21 @@ class StudentHomeController extends Controller
     public function overview($slug)
     {   
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        
+        $related_course = [];
         if ($course) {
-            return view('e-learning/course/students/overview', compact('course','course_reviews'));
+            if($course->categories){
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query(); // Replace YourModel with your actual model class
+    
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+                $related_course = $query->take(4)->get();
+            }
+
+            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

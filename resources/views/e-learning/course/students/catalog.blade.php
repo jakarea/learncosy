@@ -55,15 +55,26 @@
         <div class="row">
             @foreach($courses as $course)
             @php
-            $desc = $course->short_description;
-            $max_length = 205;
-            if (strlen($desc) > $max_length) {
-            $short_description = substr($desc, 0, $max_length);
-            $last_space = strrpos($short_description, ' ');
-            $short_description = substr($short_description, 0, $last_space) . " ...";
-            } else {
-            $short_description = $desc;
-            }
+                $review_sum = 0;
+                $review_avg = 0;
+                $total = 0;
+                foreach($course->reviews as $review){
+                    $total++;
+                    $review_sum += $review->star;
+                }
+                if($total)
+                    $review_avg = $review_sum / $total;
+
+
+                $desc = $course->short_description;
+                $max_length = 205;
+                if (strlen($desc) > $max_length) {
+                $short_description = substr($desc, 0, $max_length);
+                $last_space = strrpos($short_description, ' ');
+                $short_description = substr($short_description, 0, $last_space) . " ...";
+                } else {
+                    $short_description = $desc;
+                }
             @endphp
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-3">
@@ -77,8 +88,7 @@
                     </div>
                     <div class="course-ol-box">
                         <h5>{{ Str::limit($course->title, 60) }}</h5>
-                        <span>Updated June 2023</span>
-                        <p>2 total hr • Beginner level • Subtitle </p>
+                        <span>Last Update: {{date('M d Y ', strtotime($course->updated_at)) }}</span>
                         <h6>{{ Str::limit($course->short_description, $limit = 90, $end = '...') }}</h6>
                         @php
                         $features = explode(",", $course->features);
@@ -102,20 +112,18 @@
                     </div>
                     <div class="course-txt-box">
                         @if ( isEnrolled($course->id) )
-                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
+                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
                         @else 
                             <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
                         @endif
                         
                         <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
                         <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
+                            <li><span>{{ $review_avg }}</span></li>
+                            @for ($i = 0; $i<$review_avg; $i++)
+                                <li><i class="fas fa-star"></i></li>
+                            @endfor
+                            <li><span>({{ $total }})</span></li>
                         </ul>
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                     </div> 

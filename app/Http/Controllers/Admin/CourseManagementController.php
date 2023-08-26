@@ -21,7 +21,7 @@ class CourseManagementController extends Controller
     public function index(){  
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $courses = Course::orderBy('id', 'desc');
+        $courses = Course::with('user','reviews')->orderBy('id', 'desc');
         if (!empty($title)) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
         }

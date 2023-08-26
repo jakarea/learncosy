@@ -73,7 +73,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],  
             'email' => $data['email'],
-            'company_name' => $data['company_name'],
+           // 'company_name' => $data['company_name'],
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
         ]); 
