@@ -66,7 +66,7 @@ class AdminManagementController extends Controller
        if ($request->hasFile('avatar')) {
            $image = $request->file('avatar');
            $name = $adminslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/admin');
+           $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
            $admin->avatar = $name;
        } 
@@ -129,7 +129,7 @@ class AdminManagementController extends Controller
          if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/admin/'.$user->avatar);
+               $oldFile = public_path('/assets/images/users/'.$user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
@@ -137,7 +137,7 @@ class AdminManagementController extends Controller
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/admin');
+           $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
            $user->avatar = $name; 
        }
@@ -150,7 +150,7 @@ class AdminManagementController extends Controller
          
         $admin = User::where('id', $id)->first();
          //delete admin avatar
-         $adminOldThumbnail = public_path('/assets/images/admin/'.$admin->avatar);
+         $adminOldThumbnail = public_path('/assets/images/users/'.$admin->avatar);
          if (file_exists($adminOldThumbnail)) {
              @unlink($adminOldThumbnail);
          } 

@@ -25,7 +25,7 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset('assets/images/instructor/'.$course->user->avatar)}}" alt="Place"
+                            <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
                                 class="img-fluid">
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>

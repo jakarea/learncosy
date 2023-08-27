@@ -27,7 +27,7 @@
                     </div>
                     <div class="media">
                         @if($instructor->avatar)
-                        <img src="{{ asset('assets/images/instructor/'.$instructor->avatar) }}" alt="{{$instructor->name}}"
+                        <img src="{{ asset('assets/images/users/'.$instructor->avatar) }}" alt="{{$instructor->name}}"
                             class="img-fluid">
                         @else
                         <span class="avatar-box">{!! strtoupper($instructor->name[0]) !!}</span>
@@ -115,11 +115,11 @@
                                 </div>
                                 <div class="media-body mb-2">
                                     <h6>Start At:</h6>
-                                    <a href="#" class="color-para">{{ date('M d, y', strtotime($payment->start_at)) }}</a>
+                                    <a href="#" class="color-para">{{ date('D M d Y H:i:s', strtotime($payment->start_at)) }}</a>
                                 </div>
                                 <div class="media-body mb-2">
                                     <h6>End At:</h6>
-                                    <a href="#" class="color-para">{{$payment->end_at ? date('M d, y', strtotime($payment->end_at)) : 'N/A'}}</a>
+                                    <a href="#" class="color-para">{{$payment->end_at ? date('D M d Y H:i:s', strtotime($payment->end_at)) : 'N/A'}}</a>
                                 </div>
                                 <div class="media-body">
                                     <h6>Duration:</h6>
@@ -169,7 +169,6 @@
                         
                         <div class="media-body">
                             <h6>{{ $domain ? $domain : 'No Social Account Found!' }}</h6>
-                            <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
                         </div>
                     </div>
                     @endforeach

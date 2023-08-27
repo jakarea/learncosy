@@ -75,7 +75,7 @@
                                 </ul>
                               </div> 
                         </div> 
-                        <img src="{{asset('assets/images/bundle-courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
                         <a href="{{url('admin/bundle/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>

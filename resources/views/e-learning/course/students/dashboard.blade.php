@@ -82,7 +82,7 @@
                     </div>
                     <div class="profile-widget-wrapper">
                         <div class="profile-widget-inner">
-                            <img src="{{ asset('assets/images/students/'.auth()->user()->avatar) }}" alt="Avatar"
+                            <img src="{{ asset('assets/images/users/'.auth()->user()->avatar) }}" alt="Avatar"
                                 class="img-fluid" width="100">
                             <div class="profile-widget-info mt-2">
                                 <h6 class="text-small">{{ auth()->user()->name }}</h6>

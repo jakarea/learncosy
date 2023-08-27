@@ -20,23 +20,27 @@
                             <h1>Messages <span>({{ count($highLightMessages) }})</span></h1>  
                         </div>
                         <div class="search">
+
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search" class="form-control">
                         </div> 
+                        
                         <div class="person-tab-body">  
                             @foreach ($highLightMessages as $message)
+                            
                             <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
                                 <div class="media">
                                     <div class="avatar">
-                                        <img src="{{asset('assets/images/instructor/'.$message[0]->user->avatar)}}" alt="Avatar" class="img-fluid">
+                                        <img src="{{asset('assets/images/users/'.$message[0]->user->avatar)}}" alt="Avatar" class="img-fluid">
                                         <i class="fas fa-circle"></i>
                                     </div> 
+                                   
                                     <div class="media-body">
                                         <div class="name">
-                                            <h5>{{$message[0]->user->name}}</h5>
-                                            <span>2m ago</span>
+                                            <h5>{{$message[count($message) - 1]->user->name}}</h5>
+                                            <span>{{$message[count($message) - 1]->created_at->diffForHumans() }}</span>
                                         </div>
-                                        <p>{{$message[0]->message}}.</p>
+                                        <p>{{$message[count($message) - 1]->message}}.</p>
                                     </div>
                                 </div>
                             </a>
@@ -50,7 +54,7 @@
                             <!-- chat person -->
                             <div class="media">
                                 @if ($senderInfo) 
-                                <img src="{{asset('assets/images/instructor/'.$senderInfo->avatar)}}" alt="Avatar" class="img-fluid">
+                                <img src="{{asset('assets/images/users/'.$senderInfo->avatar)}}" alt="Avatar" class="img-fluid">
                                 @else 
                                 <img src="{{asset('dashboard-assets/images/avatar.png')}}" alt="Avatar" class="img-fluid">
                                 @endif
@@ -67,9 +71,9 @@
                         <div class="main-chat-room"> 
                             <div class="chat-messages-box"> 
                                 @foreach ($messages as $message)
-                                <div class="{{ $message->user_id == $userId ? 'sender' : 'reciver'}} message-item">
+                                <div class="{{ $message->user_id == Auth::user()->id ? 'sender' : 'reciver'}} message-item">
                                     <p>{{$message->message}}</p>
-                                    <span>{{$message->created_at}}</span>
+                                    <span>{{$message->created_at->diffForHumans()}}</span>
                                 </div>
                                 <br>
                                 @endforeach

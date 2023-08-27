@@ -57,6 +57,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12 mt-15">
                 <div class="package-list-header" style="grid-template-columns: 100%">
@@ -80,26 +81,35 @@
                         </tr>
                         @foreach ($payments as $payment)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $payment->payment_method }}</td>
-                            <td>{{ $payment->user->name }}</td>
-                            <td>{{ $payment->course->title }}</td>
+                            <td>{{ $loop->iteration }} </td>
+                            <td>{{ $payment->payment_method }} </td>
+                            <td>{{ $payment->user->name }} </td>
+                            <td>{{ $payment->course->title }} </td>
                             <td>€ {{ $payment->amount }}</td>
                             <td>
                                 @if ($payment->status == 'completed')
-                                   <span style="color: #2A920B;">{{ $payment->status }}</span>
+                                    <span style="color: #2A920B;">{{ $payment->status }}</span>
                                 @else 
                                     <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{url('instructor/payments/details/static-details')}}" class="btn-view">View</a>
+                                <a href="{{url('instructor/payments',encrypt($payment->payment_id))}}" class="btn-view">View</a>
                             </td>
                         </tr>
                         @endforeach 
                     </table>
                 </div>
             </div>
+
+            <div class="col-12">
+            {{-- pagginate --}}
+                <div class="paggination-wrap">
+                        {{ $payments->links('pagination::bootstrap-5') }}
+                </div>
+            {{-- pagginate --}}
+            </div>
+
         </div> 
     </div>
 </main>

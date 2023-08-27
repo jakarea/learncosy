@@ -32,7 +32,7 @@
                     </div>
                     <div class="media">
                         @if($student->avatar)
-                        <img src="{{ asset('assets/images/students/'.$student->avatar) }}" alt="{{$student->name}}"
+                        <img src="{{ asset('assets/images/users/'.$student->avatar) }}" alt="{{$student->name}}"
                             class="img-fluid">
                         @else
                         <span class="avatar-box">{!! strtoupper($student->name[0]) !!}</span>

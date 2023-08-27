@@ -22,7 +22,7 @@
                         <div class="person-tab-body">    
                             <div class="media">
                                 <div class="avatar">
-                                    <img src="{{asset('assets/images/students/'.$sender_info->avatar)}}" alt="Avatar" class="img-fluid"> 
+                                    <img src="{{asset('assets/images/users/'.$sender_info->avatar)}}" alt="Avatar" class="img-fluid"> 
                                      
                                 </div> 
                                 <div class="media-body">
@@ -40,7 +40,7 @@
                     <div class="chat-main-body-box">
                         <div class="chat-room-head"> 
                             <div class="media"> 
-                                <img src="{{asset('assets/images/instructor/'.$reciver_info->user->avatar)}}" alt="Avatar" class="img-fluid">
+                                <img src="{{asset('assets/images/users/'.$reciver_info->user->avatar)}}" alt="Avatar" class="img-fluid">
                                 <div class="media-body">
                                     <h5> {{$reciver_info->user->name}}</h5>
                                     <p> {{$reciver_info->user->email}}</p>

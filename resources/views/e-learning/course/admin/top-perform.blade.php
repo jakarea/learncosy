@@ -77,7 +77,7 @@
                     </div> 
 
                     <div class="course-txt-box">
-                        <a href="#">{{ substr($course->title,0,27) }}</a>
+                        <a href="{{url('admin/courses/'.$course->slug)}}">{{ substr($course->title,0,27) }}</a>
                         <p>{{ $course->user->username }}</p>
                         <ul>
                             <li><span>{{ $review_avg }}</span></li>

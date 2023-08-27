@@ -68,7 +68,7 @@ class ProfileManagementController extends Controller
         if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/instructor/'.$user->avatar);
+               $oldFile = public_path('/assets/images/users/'.$user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
@@ -76,7 +76,7 @@ class ProfileManagementController extends Controller
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/instructor');
+           $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
            $user->avatar = $name; 
        }

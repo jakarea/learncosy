@@ -46,6 +46,17 @@
         <div class="row"> 
             @if (count($courses) > 0)
             @foreach ($courses as $course) 
+                @php 
+                    $review_sum = 0;
+                    $review_avg = 0;
+                    $total = 0;
+                    foreach($course->reviews as $review){
+                        $total++;
+                        $review_sum += $review->star;
+                    }
+                    if($total)
+                        $review_avg = $review_sum / $total;
+                @endphp
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
@@ -71,17 +82,19 @@
                     </div> 
                     <div class="course-txt-box">
                         <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                        <p>{{ Str::limit($course->short_description, $limit = 30, $end = '...') }}</p>
+                        <p>{{ $course->user->username }}</p>
                         <ul>
-                            <li><span>4.0</span></li>
+                            <li><span>{{ $review_avg }}</span></li>
+                            @for ($i = 0; $i<$review_avg; $i++)
                             <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
+                            @endfor
+                            <li><span>({{ $total }})</span></li>
                         </ul>
-                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
+                        @if($course->offer_price)
+                            <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
+                            @else
+                            <h5> {{ $course->price > 0 ? '€ '.$course->price: 'Free' }} </h5> 
+                        @endif
                     </div>
                 </div>
             </div>

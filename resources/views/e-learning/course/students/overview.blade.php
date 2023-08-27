@@ -25,7 +25,7 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset('assets/images/instructor/'.$course->user->avatar)}}" alt="Place"
+                            <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
                                 class="img-fluid">
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
@@ -112,7 +112,7 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}"
+                                <img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}"
                                     alt="Avatar" class="img-fluid">
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
@@ -138,102 +138,49 @@
                     <h3>Similar Course</h3>
                 </div> 
                 <div class="row">
+
+                    
+                    @foreach ($related_course as $course) 
+                        @php 
+                            $review_sum = 0;
+                            $review_avg = 0;
+                            $total = 0;
+                            foreach($course->reviews as $review){
+                                $total++;
+                                $review_sum += $review->star;
+                            }
+                            if($total)
+                                $review_avg = $review_sum / $total;
+                        @endphp
+                        {{-- course single box start --}}
+            
                     <div class="col-lg-5 col-sm-6">
-                        {{-- item --}}
-                        <div class="course-single-item">
+                        <div class="course-single-item"> 
                             <div class="course-thumb-box">
-                                <img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="Course Thumbanil"
-                                    class="img-fluid">
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
                             </div>
+
+                            
                             <div class="course-txt-box">
-                                <a href="#">Figma UI UX Design Essentials</a>
-                                <p>Chris Converse</p>
+                                <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                <p>{{ $course->user->username }}</p>
                                 <ul>
-                                    <li><span>4.0</span></li>
+                                    <li><span>{{ $review_avg }}</span></li>
+                                    @for ($i = 0; $i<$review_avg; $i++)
                                     <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><span>(145)</span></li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
                                 </ul>
-                                <h5>€ $17.99 <span>€ 20.13</span></h5>
+                                @if($course->offer_price)
+                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
+                                    @else
+                                    <h5> {{ $course->price > 0 ? '€ '.$course->price: 'Free' }} </h5> 
+                                @endif
                             </div>
                         </div>
-                        {{-- item --}}
                     </div>
-                    <div class="col-lg-5 col-sm-6">
-                        {{-- item --}}
-                        <div class="course-single-item">
-                            <div class="course-thumb-box">
-                                <img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="Course Thumbanil"
-                                    class="img-fluid">
-                            </div>
-                            <div class="course-txt-box">
-                                <a href="#">Figma UI UX Design Essentials</a>
-                                <p>Chris Converse</p>
-                                <ul>
-                                    <li><span>4.0</span></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><span>(145)</span></li>
-                                </ul>
-                                <h5>€ $17.99 <span>€ 20.13</span></h5>
-                            </div>
-                        </div>
-                        {{-- item --}}
-                    </div> 
-                    <div class="col-lg-5 mt-4 col-sm-6">
-                        {{-- item --}}
-                        <div class="course-single-item">
-                            <div class="course-thumb-box">
-                                <img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="Course Thumbanil"
-                                    class="img-fluid">
-                            </div>
-                            <div class="course-txt-box">
-                                <a href="#">Figma UI UX Design Essentials</a>
-                                <p>Chris Converse</p>
-                                <ul>
-                                    <li><span>4.0</span></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><span>(145)</span></li>
-                                </ul>
-                                <h5>€ $17.99 <span>€ 20.13</span></h5>
-                            </div>
-                        </div>
-                        {{-- item --}}
-                    </div>
-                    <div class="col-lg-5 mt-4 col-sm-6">
-                        {{-- item --}}
-                        <div class="course-single-item">
-                            <div class="course-thumb-box">
-                                <img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="Course Thumbanil"
-                                    class="img-fluid">
-                            </div>
-                            <div class="course-txt-box">
-                                <a href="#">Figma UI UX Design Essentials</a>
-                                <p>Chris Converse</p>
-                                <ul>
-                                    <li><span>4.0</span></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><i class="fas fa-star"></i></li>
-                                    <li><span>(145)</span></li>
-                                </ul>
-                                <h5>€ $17.99 <span>€ 20.13</span></h5>
-                            </div>
-                        </div>
-                        {{-- item --}}
-                    </div> 
+                    {{-- course single box end --}}
+                    @endforeach
                 </div> 
             </div>
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">

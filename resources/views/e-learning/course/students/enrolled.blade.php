@@ -48,22 +48,31 @@
         <div class="row">
             @foreach($enrolments as $enrolment) 
             {{-- course single box start --}}
+            @php
+                $review_sum = 0;
+                $review_avg = 0;
+                $total = 0;
+                foreach($enrolment->course->reviews as $review){
+                    $total++;
+                    $review_sum += $review->star;
+                }
+                if($total)
+                    $review_avg = $review_sum / $total;
+            @endphp
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
                     <div class="course-thumb-box"> 
                         <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 50) }}</a>
-                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 32, $end = '...') }}</p>
+                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 45) }}</a>
+                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 26, $end = '...') }}</p>
                         <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
+                            <li><span>{{ $review_avg }}</span></li>
+                            @for ($i = 0; $i<$review_avg; $i++)
+                                <li><i class="fas fa-star"></i></li>
+                            @endfor
+                            <li><span>({{ $total }})</span></li>
                         </ul>
                         <div class="course-progress-bar">
                             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}" aria-valuemin="0" aria-valuemax="100">

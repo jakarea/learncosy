@@ -81,7 +81,7 @@
                                               <i id="close-icon" class="fas fa-times"></i>
                                             </div> 
                                             @if ($bundleCourse->thumbnail)
-                                                <img  src="{{asset('assets/images/bundle-courses/'.$bundleCourse->thumbnail)}}" alt="thumbnail" class="img-fluid static-image">
+                                                <img  src="{{asset('assets/images/courses/'.$bundleCourse->thumbnail)}}" alt="thumbnail" class="img-fluid static-image">
                                                 @else 
                                                 <img  src="{{asset('assets/images/thumbnail.png')}}" alt="thumbnail" class="img-fluid static-image">
                                             @endif 
@@ -104,7 +104,7 @@
                                               <i id="close-icon2" class="fas fa-times"></i>
                                             </div> 
                                             @if ($bundleCourse->banner)
-                                                <img  src="{{asset('assets/images/bundle-courses/'.$bundleCourse->banner)}}" alt="thumbnail" class="img-fluid static-image2">
+                                                <img  src="{{asset('assets/images/courses/'.$bundleCourse->banner)}}" alt="thumbnail" class="img-fluid static-image2">
                                                 @else 
                                                 <img  src="{{asset('assets/images/thumbnail.png')}}" alt="thumbnail" class="img-fluid static-image2">
                                             @endif 

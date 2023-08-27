@@ -80,7 +80,7 @@
                     </div>
                     <div class="avatar">
                         @if ($user->avatar)
-                        <img src="{{asset('assets/images/students/'.$user->avatar)}}" alt="Avatar" class="img-fluid">
+                        <img src="{{asset('assets/images/users/'.$user->avatar)}}" alt="Avatar" class="img-fluid">
                         @else
                         <span>{!! strtoupper($user->name[0]) !!}</span>
                         @endif

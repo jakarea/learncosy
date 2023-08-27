@@ -27,7 +27,7 @@
                     </div>
                     <div class="media">
                         @if($user->avatar)
-                        <img src="{{ asset('assets/images/admin/'.$user->avatar) }}" alt="{{$user->name}}"
+                        <img src="{{ asset('assets/images/users/'.$user->avatar) }}" alt="{{$user->name}}"
                             class="img-fluid">
                         @else
                         <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
@@ -63,7 +63,7 @@
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         <div class="media-body">
-                            <h6>Bio</h6>
+                            <h6>Website</h6>
                             <a href="#">{{$user->short_bio ? $user->short_bio : '--'}}</a>
                         </div>
                     </div>

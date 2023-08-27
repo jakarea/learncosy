@@ -75,7 +75,7 @@ class CourseBundleController extends Controller
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
             $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/bundle-courses');
+            $destinationPath = public_path('/assets/images/courses');
             $image->move($destinationPath, $name);
             $bundleCourse->thumbnail = $name;
         } 
@@ -84,7 +84,7 @@ class CourseBundleController extends Controller
         if ($request->hasFile('banner')) {
             $image = $request->file('banner');
             $name2 = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/bundle-courses');
+            $destinationPath = public_path('/assets/images/courses');
             $image->move($destinationPath, $name2);
             $bundleCourse->banner = $name2;
         }
@@ -147,14 +147,14 @@ class CourseBundleController extends Controller
         if ($request->hasFile('thumbnail')) { 
              // Delete old file
              if ($bundleCourse->thumbnail) {
-                $oldFile = public_path('/assets/images/bundle-courses/'.$bundleCourse->thumbnail);
+                $oldFile = public_path('/assets/images/courses/'.$bundleCourse->thumbnail);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }
             } 
             $image = $request->file('thumbnail');
             $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/bundle-courses');
+            $destinationPath = public_path('/assets/images/courses');
             $image->move($destinationPath, $name);
             $bundleCourse->thumbnail = $name; 
         }
@@ -162,14 +162,14 @@ class CourseBundleController extends Controller
         if ($request->hasFile('banner')) { 
              // Delete old file
              if ($bundleCourse->banner) {
-                $oldFile = public_path('/assets/images/bundle-courses/'.$bundleCourse->banner);
+                $oldFile = public_path('/assets/images/courses/'.$bundleCourse->banner);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }
             } 
             $image = $request->file('banner');
             $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/bundle-courses');
+            $destinationPath = public_path('/assets/images/courses');
             $image->move($destinationPath, $name);
             $bundleCourse->banner = $name; 
         } 
@@ -184,12 +184,12 @@ class CourseBundleController extends Controller
         $bundleCourse = BundleCourse::where('slug', $slug)->first();
         if ($bundleCourse) {
             //delete thumbnail
-            $oldThumbnail = public_path('/assets/images/bundle-courses/'.$bundleCourse->thumbnail);
+            $oldThumbnail = public_path('/assets/images/courses/'.$bundleCourse->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
             }
             //delete banner
-            $oldBanner = public_path('/assets/images/bundle-courses/'.$bundleCourse->banner);
+            $oldBanner = public_path('/assets/images/courses/'.$bundleCourse->banner);
             if (file_exists($oldBanner)) {
                 @unlink($oldBanner);
             }
