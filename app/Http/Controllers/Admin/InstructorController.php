@@ -63,7 +63,7 @@ class InstructorController extends Controller
                 })
                 ->editColumn('image', function ($user) { 
                     if($user->avatar){
-                        return '<img src="/assets/images/instructor/'.$user->avatar.'" width="50" />';
+                        return '<img src="/assets/images/users/'.$user->avatar.'" width="50" />';
                     }else{ 
                         return '<div class="table-avatar">
                                 <span>'.strtoupper($user->name[0]).'</span>
@@ -126,7 +126,7 @@ class InstructorController extends Controller
        if ($request->hasFile('avatar')) {
            $image = $request->file('avatar');
            $name = $instructorslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/instructor');
+           $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
            $instructor->avatar = $name;
        } 
@@ -194,7 +194,7 @@ class InstructorController extends Controller
         if ($request->hasFile('avatar')) { 
            // Delete old file
            if ($user->avatar) {
-              $oldFile = public_path('/assets/images/instructor/'.$user->avatar);
+              $oldFile = public_path('/assets/images/users/'.$user->avatar);
               if (file_exists($oldFile)) {
                   unlink($oldFile);
               }
@@ -202,7 +202,7 @@ class InstructorController extends Controller
           $slugg = Str::slug($request->name);
           $image = $request->file('avatar');
           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/assets/images/instructor');
+          $destinationPath = public_path('/assets/images/users');
           $image->move($destinationPath, $name);
           $user->avatar = $name; 
       }
@@ -215,7 +215,7 @@ class InstructorController extends Controller
          
         $instructor = User::where('id', $id)->first();
          //delete instructor avatar
-         $instructorOldThumbnail = public_path('/assets/images/instructor/'.$instructor->avatar);
+         $instructorOldThumbnail = public_path('/assets/images/users/'.$instructor->avatar);
          if (file_exists($instructorOldThumbnail)) {
              @unlink($instructorOldThumbnail);
          }

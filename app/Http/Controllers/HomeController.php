@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class HomeController extends Controller
 {
@@ -31,13 +33,15 @@ class HomeController extends Controller
     public function studentsPayment()
     {
         // get all payments of the students who are enrolled in the courses of the instructor
-        $payments = Checkout::courseEnrolledByInstructor()->with('course')->get();
+        $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->paginate(12);
         return view('payments/instructor/students-payment', compact('payments'));
     }
 
-    public function details()
+    public function details($payment_id)
     {
-        return view('payments/instructor/details');
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        return view('payments/instructor/details', compact('payment'));
     }
 
     public function adminPayment()

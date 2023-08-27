@@ -15,7 +15,7 @@
                 <div class="course-left">
                     <div class="learning-banners-wrap">
                         @if($bundleCourse->banner)
-                         <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->banner)}}" alt="" class="img-fluid">
+                         <img src="{{asset('assets/images/courses/'.$bundleCourse->banner)}}" alt="" class="img-fluid">
                          @else 
                          <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="" class="img-fluid">
                          @endif

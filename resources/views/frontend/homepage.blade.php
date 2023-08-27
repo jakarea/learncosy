@@ -194,7 +194,7 @@
             <div class="col-lg-3 col-md-12">
                 <div class="course-instructor me-md-2 me-lg-0">
                     <div class="thumbnail">
-                        <img src="{{asset('assets/images/instructor/'.$instructors->avatar)}}" alt="Avatar"
+                        <img src="{{asset('assets/images/users/'.$instructors->avatar)}}" alt="Avatar"
                             class="img-fluid">
                     </div>
                     <div class="txt">
@@ -246,7 +246,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="bundle-course-box">
                     <div class="thumbnail">
-                        <img src="{{asset('assets/images/bundle-courses/'.$bundle_course->thumbnail) }}" alt="a"
+                        <img src="{{asset('assets/images/courses/'.$bundle_course->thumbnail) }}" alt="a"
                             class="img-fluid">
                     </div>
                     <div class="txt">
@@ -317,7 +317,7 @@
                     @foreach ($courses_review as $review)
                     <div class="student-feeback-box">
                         <div class="media">
-                            <img src="{{asset('assets/images/students/'.$review->user->avatar)}}" alt="a" class="img-fluid">
+                            <img src="{{asset('assets/images/users/'.$review->user->avatar)}}" alt="a" class="img-fluid">
                             <div class="media-body">
                                 <p>{{$review->comment}}</p>
 

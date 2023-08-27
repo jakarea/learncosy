@@ -10,7 +10,7 @@
 @section('content')
 <main class="course-page-wrap">
     <!-- suggested banner @S -->
-    <div class="learning-banners-wrap" @if($bundleCourse->banner) style="background-image: url('{{asset("assets/images/bundle-courses/".$bundleCourse->banner)}}');" @endif>
+    <div class="learning-banners-wrap" @if($bundleCourse->banner) style="background-image: url('{{asset("assets/images/courses/".$bundleCourse->banner)}}');" @endif>
         <div class="media">
             <div class="media-body">
                 <h1 class="addspy-main-title">{{$bundleCourse->title}}</h1>
@@ -26,7 +26,7 @@
             <div class="mylearning-video-content-box custom-margin-top">
                 <div class="video-iframe-vox">
                     <a href="#">
-                        <img src="{{asset('assets/images/bundle-courses/'.$bundleCourse->thumbnail)}}" alt="Course" class="img-fluid">
+                        <img src="{{asset('assets/images/courses/'.$bundleCourse->thumbnail)}}" alt="Course" class="img-fluid">
                     </a>
                 </div>
                 <div class="content-txt-box">

@@ -58,7 +58,7 @@
                                                 <div class="ol">
                                                     @if ($user->avatar)
                                                     <img id="avatar-preview"
-                                                        src="{{asset('assets/images/instructor/'.$user->avatar)}}"
+                                                        src="{{asset('assets/images/users/'.$user->avatar)}}"
                                                         alt="Avatar" class="img-fluid static-image">
                                                     @else
                                                     <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>

@@ -25,7 +25,7 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset('assets/images/instructor/'.$course->user->avatar)}}" alt="Place"
+                            <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
                                 class="img-fluid">
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
@@ -112,7 +112,7 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset('assets/images/students/'.$course_review->user->avatar) }}"
+                                <img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}"
                                     alt="Avatar" class="img-fluid">
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>

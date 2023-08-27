@@ -168,7 +168,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // instructor payment history static pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {  
             Route::get('/', 'studentsPayment');  
-            Route::get('/details/{slug}', 'details');  
+            
+            Route::get('/{payment_id}', 'details');  
             Route::get('/platform-fee', 'adminPayment');  
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });

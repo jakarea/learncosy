@@ -130,7 +130,7 @@
                 <div class="course-instructor">
                     <div class="thumbnail">
                         @if ($instructor->avatar)
-                        <img src="{{asset('assets/images/instructor/'.$instructor->avatar)}}" alt="Avatar"
+                        <img src="{{asset('assets/images/users/'.$instructor->avatar)}}" alt="Avatar"
                         class="img-fluid">
                         @else
                          <span class="avatar-ins">{!! strtoupper($instructor->name[0]) !!}</span>
@@ -187,7 +187,7 @@
                     @foreach ($courses_review as $review)
                     <div class="student-feeback-box">
                         <div class="media">
-                            <img src="{{asset('assets/images/students/'.$review->user->avatar)}}" alt="a" class="img-fluid">
+                            <img src="{{asset('assets/images/users/'.$review->user->avatar)}}" alt="a" class="img-fluid">
                             <div class="media-body">
                                 <p>{{$review->comment}}</p>
 

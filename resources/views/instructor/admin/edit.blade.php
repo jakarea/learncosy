@@ -162,7 +162,7 @@
                                 <div id="imageContainer">
                                     <span id="closeIcon" onclick="removeImage()">&#10006;</span>
                                     @if ($instructor->avatar)
-                                    <img src="{{asset('assets/images/instructor/'.$instructor->avatar)}}" alt="No Image"
+                                    <img src="{{asset('assets/images/users/'.$instructor->avatar)}}" alt="No Image"
                                         class="img-fluid d-block" id="uploadedImage">
                                     @else
                                     <img src="{{asset('latest/assets/images/avatar.png')}}" alt="No Image"

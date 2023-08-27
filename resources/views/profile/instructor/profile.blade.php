@@ -12,7 +12,6 @@
 @section('content')
 @php
     $social_links = explode(",", $user->social_links);
-    use Illuminate\Support\Str;
 @endphp
 <main class="user-profile-view-page">
     <div class="container-fluid">
@@ -32,7 +31,7 @@
                     </div>
                     <div class="media">
                         @if($user->avatar)
-                        <img src="{{ asset('assets/images/instructor/'.$user->avatar) }}" alt="{{$user->name}}"
+                        <img src="{{ asset('assets/images/users/'.$user->avatar) }}" alt="{{$user->name}}"
                             class="img-fluid">
                         @else
                         <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>

@@ -48,6 +48,11 @@ class Checkout extends Model
         return $this->belongsTo(User::class)->withDefault();
     }
 
+    public function instructor()
+    {
+        return $this->belongsTo(User::class,'instructor_id','id');
+    }
+
     public function getUserByCourseID($course_id)
     {
         return Checkout::where('course_id', $course_id)->pluck('user_id')->toArray();
