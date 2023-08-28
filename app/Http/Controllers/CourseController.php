@@ -18,10 +18,14 @@ class CourseController extends Controller
     // course list
     public function index(){
 
-        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc');
+        if (!empty($title)) {
+            $courses->where('title', 'like', '%' . trim($title) . '%');
+        }
+        $courses = $courses->paginate(12);
 
-        // return view('e-learning/course/instructor/index');  
-        return view('e-learning/course/instructor/list',compact('courses'));  
+        return view('e-learning/course/instructor/list',compact('courses'));
     }
 
     // data table getData

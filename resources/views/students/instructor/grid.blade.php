@@ -19,37 +19,39 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
                 <div class="user-title-box">
                     <h1>Total: <span>{{ count($users) }} Students</span></h1>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="user-search-box-wrap">
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search Students" class="form-control">
-                    </div>
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All Students</option>
-                            <option value="">Active Students</option>
-                            <option value="">Inactive Students</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
-                    </div>
-                    <div class="user-title-box">
-                        <a href="{{ url('instructor/students/create') }}"><img
-                                src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
-                            Students</a>
-                    </div>
+            <div class="col-lg-6">
+                <div class="user-title-box justify-content-end">
+                    <a href="{{ url('instructor/students/create') }}"><img
+                            src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
+                        Students</a>
                 </div>
             </div>
         </div>
         <div class="row">
+            <div class="col-12"> 
+                <form action="" method="GET">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Students" class="form-control" name="name"
+                                value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
+                        </div>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            @if (count($users) > 0)
             @foreach ($users as $user)
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="user-grid-box">
@@ -95,7 +97,14 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @endforeach 
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Students Found!</h6>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">

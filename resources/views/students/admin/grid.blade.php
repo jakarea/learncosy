@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form action="">
+                <form action="" method="GET">
                     <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
@@ -47,10 +47,7 @@
                             <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
                         </div>
                     </div>
-                </form>
-                <div class="user-search-box-wrap"> 
-                    
-                </div>
+                </form> 
             </div>
         </div>
         <div class="row">
