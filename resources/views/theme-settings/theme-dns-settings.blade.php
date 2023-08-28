@@ -75,9 +75,16 @@
                                                                     <p>This is the color of your menu bar. Your logo
                                                                         should look good on this.</p>
                                                                 </div>
-                                                                <a href="#"><img
-                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                        alt="Color" class="img-fluid"></a>
+
+                                                                <input type="color" class="form-control opacity-0" name="primary_color" id="primary_color"
+                                                                 value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}" style="width: 10px">
+
+                                                                <label for="primary_color" class="pen-box" style="background-color: {{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
+                                                                    <img
+                                                                        src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                        alt="Color" class="img-fluid me-0">
+                                                                </label>
+                                                                
                                                             </div>
                                                             <div class="media">
                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -87,9 +94,14 @@
                                                                     <p>The accent color is used to accentuate visual
                                                                         elements.</p>
                                                                 </div>
-                                                                <a href="#"><img
-                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                        alt="Color" class="img-fluid"></a>
+                                                                <input type="color" class="form-control opacity-0" name="secondary_color" id="secondary_color"
+                                                                 value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}" style="width: 10px">
+
+                                                                <label for="secondary_color" class="pen-box" style="background-color: {{ old('secondary_color', $module_settings->value->primary_color ?? '')}}">
+                                                                    <img
+                                                                        src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                        alt="Color" class="img-fluid me-0">
+                                                                </label>
                                                             </div>
                                                         </div>
                                                         <div
@@ -101,6 +113,7 @@
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Raouls Choice</h6>
+                                                                        <span>Active Theme</span>
                                                                     </div>
                                                                     <p>Raouls Choice is een simple en elegant thema
                                                                         zonder extra opties, mokkeljk te gebruken en

@@ -18,30 +18,39 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="user-search-box-wrap bundle-search-grid">
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search course" class="form-control">
-                    </div>
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All </option>
-                            <option value="">Best Rated Bundle</option>
-                            <option value="">Most Purchased Bundle</option>
-                            <option value="">Newest Bundle</option>
-                            <option value="">Oldest Bundle</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
-                    </div>
-                    <div class="user-title-box">
-                        <a href="{{url('instructor/bundle/courses/create')}}"><i class="fas fa-plus me-2"></i> Add New Bundle Course</a>
-                    </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="user-title-box">
+                    <h1>Total: <span>{{ count($bundleCourses) }} Bundle Courses</span></h1>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="user-title-box justify-content-end">
+                    <a href="{{ url('instructor/bundle/courses/select/course/2') }}"><i class="fas fa-plus me-2"></i> Add New Course</a>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="GET">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Courses" class="form-control" name="title"
+                                value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
+
+                        </div>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i>
+                                Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row"> 
+            @if (count($bundleCourses) > 0)
             @foreach ($bundleCourses as $course) 
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
@@ -92,7 +101,14 @@
                 </div>
             </div>
             {{-- course single box end --}}
-            @endforeach 
+            @endforeach
+            @else
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Bundle Course Found!</h6>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">

@@ -1519,6 +1519,17 @@
   display: none !important;
 }
 
+.pen-box {
+  border-radius: 0.35rem;
+  border: 2px solid #E1E4E9;
+  background: var(--neutral-color-neutral-20, #F1F4F9);
+  display: inline-flex;
+  width: 1.875rem;
+  height: 1.875rem;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;
@@ -1551,7 +1562,8 @@
   .dns-main-body {
     padding: 1.5rem;
   }
-  .dns-main-body .add-domain-box h2, .dns-main-body .add-domain-box h1 {
+  .dns-main-body .add-domain-box h2,
+  .dns-main-body .add-domain-box h1 {
     font-size: 1.2rem;
     line-height: 1.5rem;
   }

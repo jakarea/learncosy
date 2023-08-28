@@ -21,31 +21,37 @@
                 {{-- session message @E --}}
             </div>
         </div> 
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="user-title-box">
+                    <h1>Total: <span>{{ count($enrolments) }} Enroll Courses</span></h1>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="user-title-box justify-content-end">
+                    <a href="{{ url('students/courses-activies') }}">Course Activity</a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
-                <form action="">
-                    <div class="user-search-box-wrap">
+                <form action="" method="GET">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
-                            <input type="text" name="title" class="form-control" placeholder="Search course">
+                            <input type="text" placeholder="Search Courses" class="form-control" name="title"
+                                value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
-                        <div class="form-filter">
-                            <select class="form-control">
-                                <option value="">All </option>
-                                <option value="">Most Purchased</option>
-                                <option value="">Newest</option>
-                                <option value="">Oldest</option>
-                            </select>
-                            <i class="fas fa-angle-down"></i>
-                        </div>
-                        <div class="user-title-box">
-                            <a href="{{ url('students/courses-activies') }}">Course Activity</a>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="row">
+            @if (count($enrolments) > 0)
             @foreach($enrolments as $enrolment) 
             {{-- course single box start --}}
             @php
@@ -98,7 +104,14 @@
                 </div>
             </div>
             {{-- course single box end --}}
-            @endforeach
+            @endforeach 
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Courses Found!</h6>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">
