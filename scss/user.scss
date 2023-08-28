@@ -664,7 +664,7 @@
     .form-group {
         position: relative;
 
-        .btn{
+        .btn {
             position: absolute;
             right: 8px;
             top: 5px;
@@ -732,8 +732,8 @@
     }
 }
 
-.btn-search{
-    display: inline-block; 
+.btn-search {
+    display: inline-block;
     background-color: #294CFF;
     border-radius: 7px;
     color: #fff;
@@ -743,7 +743,8 @@
     font-weight: 500;
     line-height: 1.25rem;
     transition: ease-in .3s;
-    &:hover{
+
+    &:hover {
         background-color: #101828;
         color: #fff;
     }
@@ -1756,37 +1757,47 @@
             line-height: 1rem;
             margin-top: 1rem;
         }
-    }   
+    }
 }
 
 
 .feat-box .media {
-    img{
-        margin-right: 1!important;
+    img {
+        margin-right: 1 !important;
         margin-left: 0rem;
     }
 
-    a{
-        img{
-            margin-right: 0!important;
-        margin-left: 1rem!important;
+    a {
+        img {
+            margin-right: 0 !important;
+            margin-left: 1rem !important;
         }
     }
 }
 
 
-.paggination-wrap{
-    .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between{
-        justify-content: center!important;
-        div{
-            &:first-child{
-                display: none!important;
+.paggination-wrap {
+    .d-none.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between {
+        justify-content: center !important;
+
+        div {
+            &:first-child {
+                display: none !important;
             }
         }
     }
 }
 
-
+.pen-box { 
+    border-radius: 0.35rem;
+    border: 2px solid #E1E4E9;
+    background: var(--neutral-color-neutral-20, #F1F4F9);
+    display: inline-flex;
+    width: 1.875rem;
+    height: 1.875rem; 
+    justify-content: center;
+    align-items: center;  
+}
 
 
 
@@ -1830,78 +1841,85 @@
         }
     }
 
-    .student-profile-update-page .own-profile-box .header .nav .nav-item .nav-link{
+    .student-profile-update-page .own-profile-box .header .nav .nav-item .nav-link {
         margin-right: 0.5rem;
         font-size: 13px;
     }
 
-    .dns-settings-box-wrapper{
+    .dns-settings-box-wrapper {
         grid-template-columns: 100%;
     }
 
-    .dns-main-body{
+    .dns-main-body {
         padding: 1.5rem;
     }
 
-    .dns-main-body .add-domain-box h2, .dns-main-body .add-domain-box h1{
+    .dns-main-body .add-domain-box h2,
+    .dns-main-body .add-domain-box h1 {
         font-size: 1.2rem;
         line-height: 1.5rem;
     }
 
     .user-expperience-box .media p,
-    .user-expperience-box .media h6{
+    .user-expperience-box .media h6 {
         font-size: 14px;
     }
 
-    .certificate-header-tab .nav .nav-item .nav-link{
+    .certificate-header-tab .nav .nav-item .nav-link {
         font-size: 13px;
-        i{
+
+        i {
             margin-right: 0.2rem;
         }
     }
+
     .dns-main-body .add-domain-box .form-group {
         width: 100%;
     }
 
-    .dns-main-body .domain-verify-box .form-check label{
+    .dns-main-body .domain-verify-box .form-check label {
         font-size: 1rem;
     }
-    .dns-main-body .domain-verify-box .form-check h6{
+
+    .dns-main-body .domain-verify-box .form-check h6 {
         font-size: .875rem;
     }
 
-    .dns-main-body .d-flex a{
+    .dns-main-body .d-flex a {
         font-size: .875rem;
         margin-right: 0.4rem;
     }
 
-    .create-certificate-form{
+    .create-certificate-form {
         padding: 1rem;
     }
+
     .certificate-style-box .media,
-    .create-certificate-form .certificate-name .media{
+    .create-certificate-form .certificate-name .media {
         flex-direction: column;
-        a{
+
+        a {
             margin-top: 1rem;
         }
     }
 
     .certificate-style-box .media {
-        p{
+        p {
             width: 100%;
             margin-right: 0;
         }
     }
-    .certificate-style-box .media img{
+
+    .certificate-style-box .media img {
         margin-right: 0;
         margin-bottom: 1rem;
     }
 
-    .certificate-asset-upload{
+    .certificate-asset-upload {
         margin-top: 1rem;
     }
 
-    .certificate-header-tab .nav .nav-item:last-child .nav-link{
+    .certificate-header-tab .nav .nav-item:last-child .nav-link {
         margin-left: 0.5rem;
     }
 
@@ -1960,10 +1978,10 @@
     }
 
     .user-search-box-wrap {
-        grid-template-columns: 100%!important;
+        grid-template-columns: 100% !important;
     }
 
-    .user-search-box-wrap .form-group .form-control{
+    .user-search-box-wrap .form-group .form-control {
         margin-bottom: 1rem;
     }
 
@@ -2006,14 +2024,15 @@
         width: 100%;
     }
 
-    .dns-main-body .domain-verify-box .form-check label{
+    .dns-main-body .domain-verify-box .form-check label {
         font-size: 1rem;
     }
-    .dns-main-body .domain-verify-box .form-check h6{
+
+    .dns-main-body .domain-verify-box .form-check h6 {
         font-size: .875rem;
     }
 
-    .dns-main-body .d-flex a{
+    .dns-main-body .d-flex a {
         font-size: .875rem;
         margin-right: 0.4rem;
     }
