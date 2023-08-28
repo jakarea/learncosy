@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="package-list-header">
+                <div class="package-list-header" style="grid-template-columns: 10% 50% 18% 18%">
                     <h5>Module List</h5>
                     <div class="form-group">
                         <i class="fas fa-search"></i>

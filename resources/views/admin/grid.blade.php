@@ -2,7 +2,7 @@
 @section('title') All Admin List @endsection
 
 {{-- page style @S --}}
-@section('style') 
+@section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
@@ -20,26 +20,34 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-6">
                 <div class="user-title-box">
                     <h1>Total: <span>{{ count($users) }} Admin</span></h1>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="user-title-box justify-content-end">
+                    <a href="{{ url('admin/alladmin/create') }}"><img
+                        src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid">
+                    Add Admin</a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="user-search-box-wrap" style="grid-template-columns: 84% 16%">
-                    <form action="">
+                <form action="">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search Admin" class="form-control" name="name" value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}"> 
-                            <button type="submit" class="btn btn-search">Search</button>
+                            <input type="text" placeholder="Search Admin" class="form-control" name="name"
+                                value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
-                    </form> 
-                    <div class="user-title-box">
-                        <a href="{{ url('admin/alladmin/create') }}"><img src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add Admin</a>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -49,21 +57,23 @@
                 <div class="user-grid-box">
                     <div class="header-action">
                         <div class="dropdown">
-                            <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="{{ url('admin/alladmin/'.$user->id.'/edit') }}">Edit</a></li> 
-                              <li>
-                                <form method="post" class="d-inline"
-                                    action="{{ url('admin/alladmin/'.$user->id.'/destroy') }}">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button type="submit" class="dropdown-item btn text-danger">Delete</button>
-                                </form>
-                            </li> 
+                                <li><a class="dropdown-item"
+                                        href="{{ url('admin/alladmin/'.$user->id.'/edit') }}">Edit</a></li>
+                                <li>
+                                    <form method="post" class="d-inline"
+                                        action="{{ url('admin/alladmin/'.$user->id.'/destroy') }}">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="dropdown-item btn text-danger">Delete</button>
+                                    </form>
+                                </li>
                             </ul>
-                          </div> 
+                        </div>
                     </div>
                     <div class="avatar">
                         @if ($user->avatar)
@@ -71,7 +81,7 @@
                         @else
                         <span>{!! strtoupper($user->name[0]) !!}</span>
                         @endif
-    
+
                     </div>
                     <div class="txt">
                         <h4>{{ $user->name }}</h4>
@@ -83,14 +93,14 @@
                 </div>
             </div>
             @endforeach
-            @else 
+            @else
             <div class="col-12">
                 <div class="no-result-found">
                     <h6>No Admin Found!</h6>
                 </div>
             </div>
             @endif
-        </div> 
+        </div>
         <div class="row">
             {{-- pagginate --}}
             <div class="paggination-wrap">
@@ -102,4 +112,4 @@
 </main>
 {{-- ==== user list page @E ==== --}}
 @endsection
-{{-- page content @E --}} 
+{{-- page content @E --}}

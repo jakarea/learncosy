@@ -659,7 +659,7 @@
 .user-search-box-wrap {
     display: grid;
     grid-template-columns: 65% 19% 16%;
-    grid-gap: 1.19rem;
+    // grid-gap: 1.19rem;
 
     .form-group {
         position: relative;
@@ -776,6 +776,10 @@
 
         img {
             margin-right: 1.5rem;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         h5 {
@@ -1956,7 +1960,11 @@
     }
 
     .user-search-box-wrap {
-        grid-template-columns: 100%;
+        grid-template-columns: 100%!important;
+    }
+
+    .user-search-box-wrap .form-group .form-control{
+        margin-bottom: 1rem;
     }
 
     .enroll-course-list .list-wrap {

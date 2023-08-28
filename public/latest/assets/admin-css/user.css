@@ -579,7 +579,6 @@
 .user-search-box-wrap {
   display: grid;
   grid-template-columns: 65% 19% 16%;
-  grid-gap: 1.19rem;
 }
 .user-search-box-wrap .form-group {
   position: relative;
@@ -684,6 +683,11 @@
 }
 .user-expperience-box .media img {
   margin-right: 1.5rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .user-expperience-box .media h5 {
   color: var(--neutral-90, #252525);
@@ -1642,7 +1646,10 @@
     margin-bottom: 1rem;
   }
   .user-search-box-wrap {
-    grid-template-columns: 100%;
+    grid-template-columns: 100% !important;
+  }
+  .user-search-box-wrap .form-group .form-control {
+    margin-bottom: 1rem;
   }
   .enroll-course-list .list-wrap {
     padding: 1rem;

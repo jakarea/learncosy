@@ -19,36 +19,37 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
                 <div class="user-title-box">
                     <h1>Total: <span>{{ count($users) }} Students</span></h1>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="user-title-box justify-content-end">
+                    <a href="{{ url('admin/students/create') }}"><img
+                            src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
+                        Students</a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="user-search-box-wrap">
-                    <form action="" method="GET">
+                <form action="">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search Students" class="form-control" name="name" value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}"> 
-                            <button type="submit" class="btn btn-search">Search</button>
+                            <input type="text" placeholder="Search Students" class="form-control" name="name"
+                                value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
-                    </form> 
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All Students</option>
-                            <option value="">Active Students</option>
-                            <option value="">Inactive Students</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
+                        </div>
                     </div>
-                    <div class="user-title-box">
-                        <a href="{{ url('admin/students/create') }}"><img
-                                src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
-                            Students</a>
-                    </div>
+                </form>
+                <div class="user-search-box-wrap"> 
+                    
                 </div>
             </div>
         </div>

@@ -98,3 +98,7 @@ body {
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
 }
+
+.header-section{
+  padding-top: 1rem;
+}
