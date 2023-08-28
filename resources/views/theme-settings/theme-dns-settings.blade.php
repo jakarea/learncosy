@@ -37,7 +37,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-10 col-xl-9">
                                     <div class="theme-settings-wrap">
-                                        <form action="" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('module.setting.update') }}" method="POST"
+                                            enctype="multipart/form-data">
                                             @csrf
                                             <div class="theme-settings-box theme-dns-settings-box">
                                                 <div class="row">
@@ -46,23 +47,19 @@
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <label for="favicon3" class="file-upload-area p-0"
-                                                                id="file-upload-area3">
+                                                            <label for="imageInput" class="file-upload-area p-0"
+                                                                id="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/logo-view.svg')}}"
-                                                                    alt="a" class="img-fluid">
+                                                                    alt="a" class="img-fluid" id="preview">
+                                                                    
                                                             </label>
 
-                                                            <div id="uploadedFileContainer3"
-                                                                class="uploaded-file-container"></div>
-                                                            <div class="view">
-                                                                <input type="file" name="logo" id="favicon3"
-                                                                    class="form-control d-none @error('logo') is-invalid @enderror"
-                                                                    onchange="handleFileUpload(this, 'uploadedFileContainer3', 'file-upload-area3')">
-                                                                <span class="invalid-feedback">@error('logo'){{ $message
-                                                                    }} @enderror</span>
-                                                            </div>
+                                                            <input type="file" name="logo" id="imageInput" accept="image/*" onchange="previewImage()"
+                                                                class="form-control d-none  @error('logo') is-invalid @enderror">
+                                                            <span class="invalid-feedback">@error('logo'){{ $message }}
+                                                                @enderror</span>
 
-                                                            <h6>App Logo</h6>
+                                                            <h6 class="mt-3">App Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
                                                             <div class="small-view">
                                                                 <img src="{{asset('latest/assets/images/small-logo.png')}}"
@@ -386,7 +383,7 @@
                                             <div class="tab-content" id="nav-tabContent">
                                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                                     aria-labelledby="nav-home-tab" tabindex="0">
-                                                     
+
                                                     <div class="media">
                                                         <div class="media-body">
                                                             <h5>TXT name</h5>
@@ -410,11 +407,11 @@
                                                                 provider default)</h6>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                                                     aria-labelledby="nav-profile-tab" tabindex="0">
-                                                    
+
                                                     <div class="media">
                                                         <div class="media-body">
                                                             <h5>MXT name</h5>
@@ -438,7 +435,7 @@
                                                                 provider default)</h6>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
 
@@ -455,24 +452,43 @@
                                     <div class="add-domain-box domain-verify-box">
                                         <form action="">
                                             <h2>Add DNS records</h2>
-                                            <h3>To add these records for learncosy.com, go to your DNS hosting provider.</h3>
-                                            <p>To start routing email through Learncosy, select Exchange and Exchange online Protection. Next, sign in to your domain host and new DNS record that match the record shown here. copy the values below and paste them into the new record at your domain host, or download or print the DNS record info to use as a reference. When you’re finished, select Continue.</p>
+                                            <h3>To add these records for learncosy.com, go to your DNS hosting provider.
+                                            </h3>
+                                            <p>To start routing email through Learncosy, select Exchange and Exchange
+                                                online Protection. Next, sign in to your domain host and new DNS record
+                                                that match the record shown here. copy the values below and paste them
+                                                into the new record at your domain host, or download or print the DNS
+                                                record info to use as a reference. When you’re finished, select
+                                                Continue.</p>
 
                                             <div class="d-flex">
-                                                <a href="#"><img src="{{asset('latest/assets/images/icons/download-4.svg')}}" alt="download" class="img-fuid"> Download CSV file</a>
-                                                <a href="#"><img src="{{asset('latest/assets/images/icons/download-4.svg')}}" alt="download" class="img-fuid"> Download Zone file</a>
-                                                <a href="#"><img src="{{asset('latest/assets/images/icons/print.svg')}}" alt="download" class="img-fuid"> Print</a>
+                                                <a href="#"><img
+                                                        src="{{asset('latest/assets/images/icons/download-4.svg')}}"
+                                                        alt="download" class="img-fuid"> Download CSV file</a>
+                                                <a href="#"><img
+                                                        src="{{asset('latest/assets/images/icons/download-4.svg')}}"
+                                                        alt="download" class="img-fuid"> Download Zone file</a>
+                                                <a href="#"><img src="{{asset('latest/assets/images/icons/print.svg')}}"
+                                                        alt="download" class="img-fuid"> Print</a>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                                <label class="form-check-label form-check-label-2" for="flexCheckChecked">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckChecked" checked>
+                                                <label class="form-check-label form-check-label-2"
+                                                    for="flexCheckChecked">
                                                     Exchange and Exchange online protection
                                                 </label>
-                                              </div>
- 
+                                            </div>
 
-                                            <p>Email, contacts, and scheduling are all provided by Exchange. Set up this service to enable all the functionality of Outlook and other email clients. Exchange service need 3 records to work right: and MX record tells where to deliver email messages, a TXT to prevent someone from spoofing your domain to send spam and a CNAME record for client-side Auto discover, helping mail clients connect users to their respective mailboxes.</p>
+
+                                            <p>Email, contacts, and scheduling are all provided by Exchange. Set up this
+                                                service to enable all the functionality of Outlook and other email
+                                                clients. Exchange service need 3 records to work right: and MX record
+                                                tells where to deliver email messages, a TXT to prevent someone from
+                                                spoofing your domain to send spam and a CNAME record for client-side
+                                                Auto discover, helping mail clients connect users to their respective
+                                                mailboxes.</p>
 
                                             <div class="form-submit-bttns">
                                                 <button class="btn btn-cancel" type="reset">Back</button>
@@ -485,16 +501,20 @@
                                     {{-- domain setup finish --}}
                                     <div class="add-domain-box finish-txt">
                                         <form action="">
-                                            <h2><img src="{{asset('latest/assets/images/icons/gren-chehck.svg')}}" alt="gren-chehck" class="img-fluid"> Domain Setup is Complete</h2> 
-                                            <p>learncosly.com is all set up and you can now view and manage it from your domains list. <br>
-                                                You can now go to Active users to add new user and set up email addresses or aliases for everyone who needs to use learncosy.com for email.</p>
+                                            <h2><img src="{{asset('latest/assets/images/icons/gren-chehck.svg')}}"
+                                                    alt="gren-chehck" class="img-fluid"> Domain Setup is Complete</h2>
+                                            <p>learncosly.com is all set up and you can now view and manage it from your
+                                                domains list. <br>
+                                                You can now go to Active users to add new user and set up email
+                                                addresses or aliases for everyone who needs to use learncosy.com for
+                                                email.</p>
 
-                                                <h4>Next Steps</h4>
+                                            <h4>Next Steps</h4>
 
                                             <div class="finish-bttns">
                                                 <a href="#">Go to Active users</a>
                                                 <a href="#">View all domains</a>
-                                            </div> 
+                                            </div>
 
                                         </form>
                                     </div>
@@ -514,6 +534,25 @@
 
 {{-- page script @S --}}
 @section('script')
+<script>
+    function previewImage() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('imageInput');
+        var file = fileInput.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+</script>
+
 @endsection
 
 {{-- page script @E --}}
