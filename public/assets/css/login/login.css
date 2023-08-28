@@ -488,6 +488,12 @@ h6 {
     z-index: 2;
 }
 
+
+.cosy-login-page .hero-wrap .hero-content .logo a img{
+    max-height: 3rem;
+    object-fit: cover;
+}
+
 .cosy-login-page .hero-wrap .hero-particles {
     position: absolute;
     width: 100%;

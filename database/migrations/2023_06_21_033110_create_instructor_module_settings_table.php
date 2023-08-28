@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('value')->nullable();
             $table->string('image')->nullable();
             $table->string('logo')->nullable();
+            $table->string('app_logo')->nullable();
             $table->string('lp_bg_image')->nullable();
             $table->timestamps();
         });

@@ -187,7 +187,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group form-error mb-3">
-                                            <label for="lp_title"> Login Page Title <sup class="text-danger">*</sup>
+                                            <label for="lp_title">Login Page Title <sup class="text-danger">*</sup>
                                             </label>
                                             <input type="text" placeholder="Login Page Title" name="lp_title"
                                                 class="form-control @error('lp_title') is-invalid @enderror"

@@ -1801,12 +1801,34 @@
 
 
 
+.certificate-style-box.login-page-theme-box{
+    .media{
+        margin: 0!important;
+        padding: 0.8rem!important;
+        cursor: pointer;
+    }
+    .media.active{
+        border: 1px solid #294CFF!important;
+        border-radius: 10px!important;
+    }
+}
 
 
 
+.user-expperience-box .media .media-body{
+    img{
+        width: auto!important;
+        height: auto!important;
+    }
+}
 
-
-
+.preview-img{
+    max-width: 50%;
+    max-height: 124px;
+    margin-top: 2rem;
+    display: block;
+    margin-left: 1rem;
+}
 
 
 
@@ -1976,6 +1998,8 @@
         margin-right: 0;
         margin-bottom: 1rem;
     }
+
+  
 
     .user-search-box-wrap {
         grid-template-columns: 100% !important;
