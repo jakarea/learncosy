@@ -10,6 +10,29 @@
 
 {{-- page content @S --}}
 @section('content')
+@php 
+    $currentDate = now()->toDateString();
+
+    // Initialize variables for calculations
+    $totalEarnings = 0;
+    $totalEnrolment = 0;
+    $todaysEarnings = 0;
+    $todaysEnrolment = 0;
+
+    foreach ($payments as $payment) {
+        // Calculate total earnings and enrolment
+        $totalEarnings += $payment['amount'];
+        $totalEnrolment++;
+
+        // Check if the payment's start date is today
+        if (substr($payment['start_date'], 0, 10) === $currentDate) {
+            $todaysEarnings += $payment['amount'];
+            $todaysEnrolment++;
+        }
+    }
+        
+       
+@endphp
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
     <div class="container-fluid">
@@ -25,28 +48,28 @@
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Total Earnings</h5>
-                    <h4>$40,832.00</h4>
+                    <h4>€ {{$totalEarnings}}</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Earnings Today</h5>
-                    <h4>$120.00</h4>
+                    <h4>€ {{ $todaysEarnings }}</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Total Enrollments</h5>
-                    <h4>120 Students</h4>
+                    <h4>{{ $totalEnrolment }} Students</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Enrolled Today</h5>
-                    <h4>10 Students</h4>
+                    <h4>{{ $todaysEnrolment }} Students</h4>
                 </div>
             </div>
         </div>
@@ -80,6 +103,7 @@
     
                         </tr>
                         @foreach ($payments as $payment)
+            
                         <tr>
                             <td>{{ $loop->iteration }} </td>
                             <td>{{ $payment->payment_method }} </td>
