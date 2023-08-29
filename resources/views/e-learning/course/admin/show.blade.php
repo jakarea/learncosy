@@ -1,4 +1,3 @@
-
 @extends('layouts.latest.admin')
 @section('title') Course Details @endsection
 
@@ -52,7 +51,7 @@ $i = 0;
                         <div class="course-desc-txt">
                             {!! $course->description !!}
                         </div>
-                    </div> 
+                    </div>
                     <div class="download-files-box">
                         <h4>Download Files</h4>
                         <div class="files">
@@ -63,35 +62,36 @@ $i = 0;
                             <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
                                     alt="clock" title="120MB" class="img-fluid"></a>
                         </div>
-                    </div> 
+                    </div>
                     {{-- course review --}}
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
 
                         @if(count($course_reviews) > 0)
-                            @foreach($course_reviews as $course_review)
-                            <div class="media">
-                                <img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                                <div class="media-body">
-                                    <h5>{{$course_review->user->name}}</h5>
-                                    <ul>
-                                        @for ($i = 0; $i < $course_review->star; $i++)
-                                            <li><i class="fas fa-star"></i></li>
+                        @foreach($course_reviews as $course_review)
+                        <div class="media">
+                            <img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}" alt="Avatar"
+                                class="img-fluid">
+                            <div class="media-body">
+                                <h5>{{$course_review->user->name}}</h5>
+                                <ul>
+                                    @for ($i = 0; $i < $course_review->star; $i++)
+                                        <li><i class="fas fa-star"></i></li>
                                         @endfor
-                                    </ul>
-                                    <p>{{$course_review->comment}}</p>
-                                    <small>{{$course_review->created_at->diffForHumans()}}</small>
-                                    
-                                </div>
+                                </ul>
+                                <p>{{$course_review->comment}}</p>
+                                <small>{{$course_review->created_at->diffForHumans()}}</small>
+
                             </div>
-                            @endforeach
+                        </div>
+                        @endforeach
                         @else
                         <div class="media">
                             <div class="media-body">
                                 <p>No Review Found!</p>
                             </div>
                         </div>
-                        @endif 
+                        @endif
                     </div>
                     {{-- course review --}}
 
@@ -105,14 +105,14 @@ $i = 0;
                         <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
-                        @foreach($course->modules as $module) 
-                        <div class="accordion-item"> 
+                        @foreach($course->modules as $module)
+                        <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{$module->id}}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    <div class="d-flex"> 
-                                        <p><i class="fas fa-check-circle"></i> {{ $module->title }}</p> 
+                                    <div class="d-flex">
+                                        <p><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
                                     </div>
                                 </button>
                             </div>
@@ -120,22 +120,22 @@ $i = 0;
                                 aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
-                                        @foreach($module->lessons as $lesson) 
+                                        @foreach($module->lessons as $lesson)
                                         <li>
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}"
                                                 data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
                                                 <i class="fas fa-check-circle"></i> <i class="fas fa-play"></i>
-                                                 {{ $lesson->title }}
-                                            </a> 
+                                                {{ $lesson->title }}
+                                            </a>
                                         </li>
                                         @endforeach
-                                    </ul> 
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         @endforeach
-                    </div>  
+                    </div>
                 </div>
                 {{-- course outline --}}
 
@@ -143,53 +143,61 @@ $i = 0;
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
 
-                    {{-- item --}}
-                    <div class="course-single-item"> 
-                        <div class="course-thumb-box"> 
-                            <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                        </div> 
-                        <div class="course-txt-box">
-                            <a href="#">Figma UI UX Design Essentials</a>
-                            <p>Chris Converse</p>
-                            <ul>
-                                <li><span>4.0</span></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><span>(145)</span></li>
-                            </ul>
-                            <h5>€ $17.99 <span>€ 20.13</span></h5> 
+                    <div class="row">
+                        <div class="col-md-6 col-12 col-lg-12 col-xl-12">
+                            {{-- item --}}
+                            <div class="course-single-item">
+                                <div class="course-thumb-box">
+                                    <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil"
+                                        class="img-fluid">
+                                </div>
+                                <div class="course-txt-box">
+                                    <a href="#">Figma UI UX Design Essentials</a>
+                                    <p>Chris Converse</p>
+                                    <ul>
+                                        <li><span>4.0</span></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><span>(145)</span></li>
+                                    </ul>
+                                    <h5>€ $17.99 <span>€ 20.13</span></h5>
+                                </div>
+                            </div>
+                            {{-- item --}} 
+                        </div>
+                        <div class="col-md-6 col-12 col-lg-12 col-xl-12">
+                            {{-- item --}}
+                            <div class="course-single-item">
+                                <div class="course-thumb-box">
+                                    <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil"
+                                        class="img-fluid">
+                                </div>
+                                <div class="course-txt-box">
+                                    <a href="#">Figma UI UX Design Essentials</a>
+                                    <p>Chris Converse</p>
+                                    <ul>
+                                        <li><span>4.0</span></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><span>(145)</span></li>
+                                    </ul>
+                                    <h5>€ $17.99 <span>€ 20.13</span></h5>
+                                </div>
+                            </div>
+                            {{-- item --}} 
                         </div>
                     </div>
-                    {{-- item --}}
-                    {{-- item --}}
-                    <div class="course-single-item mt-4"> 
-                        <div class="course-thumb-box"> 
-                            <img src="{{asset('latest/assets/images/thumbnail.png')}}" alt="Course Thumbanil" class="img-fluid"> 
-                        </div> 
-                        <div class="course-txt-box">
-                            <a href="#">Figma UI UX Design Essentials</a>
-                            <p>Chris Converse</p>
-                            <ul>
-                                <li><span>4.0</span></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><span>(145)</span></li>
-                            </ul>
-                            <h5>€ $17.99 <span>€ 20.13</span></h5> 
-                        </div>
-                    </div>
-                    {{-- item --}}
                 </div>
                 {{-- related course --}}
             </div>
         </div>
-    </div> 
+    </div>
 </main>
 <!-- course details page @E -->
 @endsection

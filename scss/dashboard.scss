@@ -411,22 +411,17 @@ main {
         overflow-x: scroll;
     }
 
-    .course-status-box .d-flex {
-        padding: 0.8rem;
-        flex-direction: column;
-        align-items: flex-start;
-
-        div {
-            @include m.df;
-            margin-top: 0.5rem;
-        }
-
-    }
+    
 
     .course-status-box table tr th,
     .course-status-box table tr td {
         padding: 0.5rem;
         white-space: nowrap;
+    }
+
+    
+    .course-status-wrap .d-flex{
+        flex-direction: row!important;
     }
 }
 

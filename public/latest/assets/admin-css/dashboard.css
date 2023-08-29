@@ -354,21 +354,13 @@ main .container-fluid {
     display: block;
     overflow-x: scroll;
   }
-  .course-status-box .d-flex {
-    padding: 0.8rem;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .course-status-box .d-flex div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 0.5rem;
-  }
   .course-status-box table tr th,
   .course-status-box table tr td {
     padding: 0.5rem;
     white-space: nowrap;
+  }
+  .course-status-wrap .d-flex {
+    flex-direction: row !important;
   }
 }
 @media (min-width: 767px) and (max-width: 992px) {

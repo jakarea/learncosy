@@ -1351,19 +1351,11 @@
   }
   .course-status-wrap table {
     width: 100%;
-    display: block;
     overflow-x: scroll;
   }
-  .course-status-wrap .d-flex {
-    padding: 0.8rem;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .course-status-wrap .d-flex div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 0.5rem;
+  .total-client-box {
+    margin-bottom: 1rem;
+    height: auto;
   }
   .course-status-wrap table tr th,
   .course-status-wrap table tr td {
@@ -1374,6 +1366,10 @@
 @media (min-width: 767px) and (max-width: 992px) {
   .status-card-box {
     margin-bottom: 1rem;
+  }
+  .total-client-box {
+    margin-bottom: 1rem;
+    height: auto;
   }
   .student-courses-lists-pages .course-single-item {
     margin-bottom: 1rem;
@@ -1429,10 +1425,18 @@
   .status-card-box {
     margin-bottom: 1rem;
   }
+  .total-client-box {
+    margin-bottom: 1rem;
+    height: auto;
+  }
 }
 @media (min-width: 1199px) and (max-width: 1399px) {
   .profile-widget-history {
     margin-left: 0;
     margin-right: 0;
+  }
+  .total-client-box {
+    margin-bottom: 1rem;
+    height: auto;
   }
 }

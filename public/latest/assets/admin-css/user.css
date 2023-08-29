@@ -1571,6 +1571,21 @@
   transform: translate(-50%, -50%);
 }
 
+.edit-profile {
+  border: 1px solid #294CFF;
+  border-radius: 2rem;
+  display: inline-block;
+  padding: 0.7rem 1.2rem;
+  color: #294CFF;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: ease-in-out 0.3s;
+}
+.edit-profile:hover {
+  background-color: #294CFF;
+  color: #fff;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;
@@ -1724,6 +1739,24 @@
     padding: 2rem 1rem;
     margin-bottom: 1.5rem;
   }
+  .user-title-box {
+    margin-bottom: 0.4rem;
+    justify-content: flex-start !important;
+  }
+  .user-title-box .btn,
+  .user-title-box a {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.8rem;
+  }
+  .header-action .dropdown-menu {
+    transform: translate3d(-41.6px, -26.6px, 0px) !important;
+  }
+  .user-details-box h2, .user-details-box h3, .user-details-box h4, .user-details-box h5,
+  .contact-info-box h4 {
+    font-size: 1.2rem;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .contact-info-box {
@@ -1768,6 +1801,27 @@
     padding: 2rem 1rem;
     margin-bottom: 1.5rem;
   }
+  .user-title-box {
+    margin-bottom: 0.4rem;
+    justify-content: flex-start !important;
+  }
+  .user-title-box .btn,
+  .user-title-box a {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .header-action .dropdown-menu {
+    transform: translate3d(-41.6px, -26.6px, 0px) !important;
+  }
+  .user-search-box-wrap {
+    grid-template-columns: 100% !important;
+  }
+  .header-action .dropdown-menu {
+    transform: translate3d(39.4px, -26.6px, 0px) !important;
+  }
 }
 @media (min-width: 767px) and (max-width: 992px) {
   .contact-info-box {
@@ -1784,9 +1838,24 @@
     padding: 2rem 1rem;
     margin-bottom: 1.5rem;
   }
+  .user-title-box {
+    margin-bottom: 0.4rem;
+    justify-content: flex-start !important;
+  }
+  .user-title-box .btn,
+  .user-title-box a {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .user-search-box-wrap {
+    grid-template-columns: 100% !important;
+  }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .user-search-box-wrap {
-    grid-template-columns: 50% 25% 25%;
+    grid-template-columns: 85% 15% !important;
   }
 }

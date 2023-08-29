@@ -14,9 +14,18 @@ class AdminSubscriptionPackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //  
-        $subscription_packages = SubscriptionPackage::orderby('id', 'desc')->paginate(12); 
+    { 
+        $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+        $subscription_packages = SubscriptionPackage::orderby('id', 'desc');
+        if (!empty($name)) {
+            $subscription_packages->where('name', 'like', '%' . trim($name) . '%');
+        }
+        if (!empty($status)) {
+            $subscription_packages->where('status', 'like', '%' . trim($status) . '%');
+        }
+        $subscription_packages = $subscription_packages->paginate(12);
+
         return view('subscription/grid',compact('subscription_packages'));  
     }
 

@@ -34,8 +34,7 @@
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             {{-- profile edit form start --}}
-                            <form action="{{ route('students.profile.update',$user->id) }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('students.profile.update',$user->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">

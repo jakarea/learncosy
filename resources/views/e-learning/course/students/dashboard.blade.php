@@ -318,8 +318,8 @@
             @endforeach
             @else
             <div class="col-12">
-                <div class="text-center">
-                    <h6>No Course Found</h6>
+                <div class="text-center mt-4">
+                    <h6 style="font-size: 1.2rem; font-weight: 500;">No Course Found!</h6>
                 </div>
             </div>
             @endif

@@ -36,7 +36,7 @@
                             <h3>{{$user->name}}</h3>
                             <p>{{$user->user_role}}</p>
                         </div>
-                        <a href="{{url('admin/profile/edit')}}"><i class="fas fa-pen"></i></a>
+                        <a href="{{url('admin/profile/edit')}}" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
                 <div class="user-details-box">

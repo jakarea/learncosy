@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') All Subscription List Page @endsection
+@section('title') Subscription Packages @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -21,24 +21,39 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="package-list-header">
+                <div class="package-list-header d-flex justify-content-between">
                     <h5>Package List</h5>
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search package" class="form-control">
-                    </div>
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
-                    </div>
                     <div class="bttn">
                         <a href="{{ route('admin.subscription.create') }}" class="common-bttn"><i class="fas fa-plus"></i> Add Package</a>
                     </div>
                 </div>
+            </div> 
+            <div class="col-12">
+                <form action="" method="GET">
+                    <div class="package-list-header package-new-header"> 
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Package" class="form-control" name="name"
+                                value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
+                        </div>
+                        <div class="form-filter">
+
+                                @php 
+                                 $pack_status = isset($_GET['status']) ? $_GET['status'] : '';
+                                 @endphp
+
+                            <select class="form-control" name="status">
+                                <option value="">All</option> 
+                                <option value="active" {{ $pack_status == 'active' ? 'selected' : ''}}>Active</option>
+                                <option value="inactive" {{ $pack_status == 'inactive' ? 'selected' : ''}}>Inactive</option>
+                            </select>
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                        <div class="bttn">
+                            <button class="common-bttn border-0" type="submit"><i class="fas fa-search me-2"></i> Search</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">

@@ -1848,7 +1848,20 @@
     }
 }
 
-
+.edit-profile{
+    border: 1px solid #294CFF;
+    border-radius: 2rem;
+    display: inline-block;
+    padding: .7rem 1.2rem;
+    color: #294CFF;
+    font-size: .8rem;
+    font-weight: 500;
+    transition: ease-in-out .3s;
+    &:hover{
+        background-color: #294CFF;
+        color: #fff;
+    }
+}
 
 
 
@@ -2054,6 +2067,27 @@
         padding: 2rem 1rem;
         margin-bottom: 1.5rem;
     }
+
+    .user-title-box{
+        margin-bottom: 0.4rem;
+        justify-content: flex-start!important;
+        .btn,
+        a{
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    .header-action .dropdown-menu {  
+        transform: translate3d(-41.6px, -26.6px, 0px) !important; 
+    }
+
+    .user-details-box h2, .user-details-box h3, .user-details-box h4, .user-details-box h5,
+    .contact-info-box h4{
+        font-size: 1.2rem;
+    }
 }
 
 // landscape phone device 
@@ -2114,6 +2148,31 @@
         padding: 2rem 1rem;
         margin-bottom: 1.5rem;
     }
+
+    .user-title-box{
+        margin-bottom: 0.4rem;
+        justify-content: flex-start!important;
+        .btn,
+        a{
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 0.8rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .header-action .dropdown-menu {  
+        transform: translate3d(-41.6px, -26.6px, 0px) !important; 
+    }
+
+    .user-search-box-wrap{
+        grid-template-columns: 100%!important;
+    }
+
+    .header-action .dropdown-menu {
+        transform: translate3d(39.4px, -26.6px, 0px) !important;
+    }
 }
 
 // tablet device 
@@ -2135,12 +2194,30 @@
         padding: 2rem 1rem;
         margin-bottom: 1.5rem;
     }
+
+    .user-title-box{
+        margin-bottom: 0.4rem;
+        justify-content: flex-start!important;
+        .btn,
+        a{
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 0.8rem;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .user-search-box-wrap{
+        grid-template-columns: 100%!important;
+    }
 }
 
 // landtablet device 
-@include q.responsive(landtablet) {
-    .user-search-box-wrap {
-        grid-template-columns: 50% 25% 25%;
+@include q.responsive(landtablet) { 
+
+    .user-search-box-wrap{
+        grid-template-columns: 85% 15%!important;
     }
 }
 
