@@ -6,14 +6,14 @@
                 @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
                 @else
-                <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" class="-img-fluid">
+                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
                 @endif
             @else 
             <a class="navbar-brand" href="{{ route('instructor.dashboard.index') }}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
                 @else
-                <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" class="-img-fluid">
+                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
                 @endif
             </a>
             @endcan
@@ -23,7 +23,7 @@
             @if ( modulesetting('logo') )
                 <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
             @else
-            <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" class="-img-fluid">
+                <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
             @endif
         </a>
         @endif

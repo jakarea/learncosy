@@ -1,7 +1,11 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
-            <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
+            @if ( modulesetting('logo') )
+                    <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
+            @else
+                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
+            @endif
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
