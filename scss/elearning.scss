@@ -1922,6 +1922,18 @@ span.finsihLesson {
     .share-on-social-wrap .copy-link {
         grid-template-columns: 70% 30%;
     }
+
+    .course-single-item{
+        margin-bottom: 1rem;
+        height: auto;
+    }
+
+    .course-single-item .course-thumb-box{
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
 }
 
 // landscape phone device 
@@ -1949,6 +1961,13 @@ span.finsihLesson {
         margin-top: 2rem;
         padding: 1rem;
     }
+
+    .course-single-item .course-thumb-box{
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
 }
 
 // tablet device 
@@ -1956,13 +1975,29 @@ span.finsihLesson {
     .course-outline-wrap {
         margin-top: 2rem;
     }
+    .course-single-item .course-thumb-box{
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
 }
 
 // landtablet device 
-@include q.responsive(landtablet) {}
+@include q.responsive(landtablet) {
+    .course-single-item .course-thumb-box img{
+        display: block;
+        width: 100%;
+    }
+}
 
 // regular device 
-@include q.responsive(regular) {}
+@include q.responsive(regular) {
+    .course-single-item .course-thumb-box img{
+        display: block;
+        width: 100%;
+    }
+}
 
 // large device 
 @include q.responsive(large) {}

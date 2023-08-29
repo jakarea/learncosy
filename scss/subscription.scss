@@ -289,7 +289,9 @@
     box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
 }
 
-
+.package-new-header{
+    grid-template-columns: 70% 15% 15%;
+}
 
 
 
@@ -336,7 +338,6 @@
     .subscription-table-wrap table {
         width: 100%;
         overflow-x: scroll;
-        display: block;
 
         tr {
 
@@ -351,7 +352,7 @@
 // tablet device 
 @include q.responsive(tablet) {
     .package-list-header {
-        grid-template-columns: 30% 70%;
+        grid-template-columns: 70% 30%;
         grid-gap: 1rem;
     }
 }
@@ -359,7 +360,7 @@
 // landtablet device 
 @include q.responsive(landtablet) {
     .package-list-header {
-        grid-template-columns: 30% 70%;
+        grid-template-columns: 80% 20%;
         grid-gap: 1rem;
     }
 }
@@ -368,8 +369,7 @@
 @include q.responsive(regular) {
 
     .package-list-header {
-        grid-template-columns: 12% 45% 20% 20%;
-        grid-gap: 1rem;
+        grid-template-columns: 69% 15% 15%; 
     }
 }
 

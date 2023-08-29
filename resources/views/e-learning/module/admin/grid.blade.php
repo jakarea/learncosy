@@ -37,7 +37,7 @@
                         <i class="fas fa-angle-down"></i>
                     </div>
                     <div class="bttn">
-                        <a href="{{ url('admin/modules/create') }}" class="common-bttn"><i class="fas fa-plus"></i> Create Module</a>
+                        <button type="submit" class="common-bttn border-0"><i class="fas fa-search me-2"></i> Search</button>
                     </div>
                 </div>
             </div>
