@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
             @if ( modulesetting('logo') )
-                    <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
+                    <img src="{{asset('asseinstructor_module_settingsts/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
                     <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
             @endif

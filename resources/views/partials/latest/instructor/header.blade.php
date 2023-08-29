@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-xl header-area">
+<nav class="navbar navbar-expand-xl header-area" style="background: {{ modulesetting('primary_color') }}">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
             @if ( modulesetting('logo') )
