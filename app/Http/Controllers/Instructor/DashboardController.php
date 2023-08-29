@@ -6,6 +6,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Message;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $userId = Auth::user()->id;
+
+        $messages = Message::where('receiver_id',$userId)->orWhere('user_id',$userId)->groupBy('receiver_id','user_id')->take(3)->get();
+
         // return "From Instructor Dashboard Controller"; 
         $categories = [];
         $courses = 0;
@@ -42,7 +47,7 @@ class DashboardController extends Controller
         $categories = array_unique($unique_array);
 
         // return $earningByDates;
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages'));
     }
 
     public function analytics(){
