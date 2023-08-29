@@ -49,14 +49,17 @@ class ModuleSettingController extends Controller
      */
     public function store(Request $request)
     {
+        
         // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
-            ['value' => json_encode($request->except('_token', 'image', 'logo', 'lp_bg_image', 'favicon', 'apple_icon'))]
+            ['value' => json_encode($request->except('_token', 'image', 'logo', 'app_logo','lp_bg_image', 'favicon', 'apple_icon'))]
         );
 
+        // return $request->all();
+
         // Check if image or logo has been uploaded
-        if ($request->hasFile('image') || $request->hasFile('logo') || $request->hasFile('lp_bg_image') || $request->hasFile('favicon') || $request->hasFile('apple_icon')) {
+        if ($request->hasFile('image') || $request->hasFile('logo') || $request->hasFile('app_logo') || $request->hasFile('lp_bg_image') || $request->hasFile('favicon') || $request->hasFile('apple_icon')) {
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $image_name = rand() . '.' . $image->getClientOriginalExtension();
@@ -71,6 +74,13 @@ class ModuleSettingController extends Controller
                 $destinationPath = public_path('/assets/images/setting');
                 $logo->move($destinationPath, $logo_name);
                 $module_settings->logo = $logo_name;
+            }
+            if ($request->hasFile('app_logo')) {
+                $app_logo = $request->file('app_logo');
+                $app_logo_name = rand() . '.' . $app_logo->getClientOriginalExtension();
+                $destinationPath = public_path('/assets/images/setting');
+                $app_logo->move($destinationPath, $app_logo_name);
+                $module_settings->app_logo = $app_logo_name;
             }
 
             if ($request->hasFile('favicon')) {
