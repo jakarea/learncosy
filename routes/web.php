@@ -9,6 +9,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModuleManagementController;
+
 
 use App\Http\Controllers\Frontend\HomepageController;
 /*
@@ -244,7 +246,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
         });
-    
+        Route::prefix('profile')->controller(ExperienceController::class)->group(function () {
+            Route::post('/experience','store')->name('instructor.profile.experience');
+        });
+
         // settings page routes
         Route::prefix('settings')->controller(SettingsController::class)->group(function () {
             Route::get('/stripe', 'stripeIndex')->name('instructor.stripe');
