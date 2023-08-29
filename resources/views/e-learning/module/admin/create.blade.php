@@ -122,8 +122,7 @@ $course_id = isset($_GET['course']) ? $_GET['course'] : '';
                                     <select name="status" id="status"
                                         class="form-control @error('status') is-invalid @enderror">
                                         <option value="" disabled>Select Below</option>
-                                        <option value="draft">Draft</option>
-                                        <option value="pending">Unpublished</option>
+                                        <option value="pending">Pending</option>
                                         <option value="published">Published</option>
                                     </select>
                                     <i class="fas fa-angle-down"></i>
