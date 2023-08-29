@@ -4,7 +4,7 @@ Home Page
 @endsection
 {{-- page style @S --}}
 @section('style')
-
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -12,7 +12,7 @@ Home Page
 @section('content')
 <main class="dashboard-page-wrap">
     <div class="container-fluid">
-        <div class="row"> 
+        <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                 <!-- total client @s -->
                 <div class="total-client-box">
@@ -20,7 +20,7 @@ Home Page
                         <div class="media-body">
                             <h5>Students</h5>
                             <h4> {{ $studentsCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -34,7 +34,7 @@ Home Page
                         <div class="media-body">
                             <h5>Instructors</h5>
                             <h4> {{ $instructorsCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -48,7 +48,7 @@ Home Page
                         <div class="media-body">
                             <h5>Course</h5>
                             <h4> {{ $courseCount }}</h4>
-                        </div> 
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
@@ -61,14 +61,14 @@ Home Page
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4>{{ $totalEarnings }}</h4>
-                        </div> 
+                            <h4>{{ $totalEarnings }} €</h4>
+                        </div>
                     </div>
                     <p>All time stats</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
                 </div>
                 <!-- total client @e -->
-            </div> 
+            </div>
         </div>
         <div class="row">
             <div class="col-xl-8">
@@ -81,7 +81,8 @@ Home Page
                             <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
                         </div>
                     </div>
-                    <div id="earningChart"></div>
+                    {{-- <div id="earningChart"></div> --}}
+                    <div id="chartEar"></div>
                 </div>
             </div>
             <div class="col-xl-4">
@@ -90,55 +91,152 @@ Home Page
                         <h5>Top Performing Courses</h5>
                         <a href="{{ url('admin/courses')}}">View All</a>
                     </div>
-                    <div class="course-lists">
-                    @php 
+                    <div class="course-lists ms-0">
+                        @php
                         $sale_count = $TopPerformingCourses[0]->sale_count;
                         $sn = 1;
-                    @endphp
-                        @foreach ($TopPerformingCourses as $course)
-                        @php 
-                        if($course->sale_count < $sale_count && $sn < 3){
-                            $sale_count = $course->sale_count;
-                            $sn++;
-                        }
-                            
                         @endphp
-                        <div class="media">
-                            <img src="{{ asset('assets/images/courses/'.$course->thumbnail) }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5><a href="{{url('admin/courses',$course->slug) }}"> {{ substr($course->title,0,20).'...'  }}</a></h5>
-                                <p>{{ $course->categories}}</p>
+                        @foreach ($TopPerformingCourses as $course)
+                        @php
+                        if($course->sale_count < $sale_count && $sn < 3){ $sale_count=$course->sale_count;
+                            $sn++;
+                            }
+
+                            @endphp
+                            <div class="media">
+                                <img src="{{ asset('assets/images/courses/'.$course->thumbnail) }}" alt="Avatar"
+                                    class="img-fluid">
+                                <div class="media-body">
+                                    <h5><a href="{{url('admin/courses',$course->slug) }}"> {{
+                                            substr($course->title,0,20).'...' }}</a></h5>
+                                    <p>{{ $course->categories}}</p>
+                                </div>
+                                <img src="{{ asset('latest/assets/images/tofy-'.$sn.'.svg')  }}" alt="Avatar"
+                                    class="img-fluid me-0">
                             </div>
-                            <img src="{{ asset('latest/assets/images/tofy-'.$sn.'.svg')  }}" alt="Avatar" class="img-fluid">
-                        </div>
-                        @endforeach
-                        
-                        
+                            @endforeach
+
+
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-xl-8">
-                <div class="earnings-chart-wrap mt-15">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6">
-                            <h5>Students</h5>
-                        </div>
-                        <div class="col-lg-6 text-lg-end">
-                            <p>All time stats <a href="#"><i class="fas fa-bars ms-4"></i></a></p>
+                <div class="course-status-wrap mt-15">
+                    <div class="d-flex">
+                        <h4>Course Status</h4>
+                        <div>
+                            <a href="#">View All</a>
+                            <a href="#" class="me-0">This month <i class="fas fa-angle-down"></i></a>
                         </div>
                     </div>
-                    <div id="lineChart"></div>
+                    <table>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Earning</th>
+                            <th class="text-end">Visitor</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td class="text-end">
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td class="text-end">
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <p>UI/UX Design</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>Design</p>
+                            </td>
+                            <td>
+                                <p>$30</p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
+                            </td>
+                            <td>
+                                <p>$610.50</p>
+                            </td>
+                            <td class="text-end">
+                                <p>24,512</p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </div>  
+            </div>
             <div class="col-xl-4">
-                <div class="top-performing-course mt-15"> 
+                <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>Message</h5>
                         <a href="#">View All</a>
-                    </div> 
-                    <div class="messages-items-wrap"> 
+                    </div>
+                    <div class="messages-items-wrap">
                         @foreach ($lastMessages as $message)
                         <div class="messages-item">
                             <div class="media">
@@ -148,17 +246,18 @@ Home Page
                                     <i class="fas fa-circle"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans() }}</span></h5>
+                                    <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans()
+                                            }}</span></h5>
                                     <p>{{ substr($message->message,0,34) }}</p>
                                 </div>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         @endforeach
-                    </div> 
+                    </div>
                 </div>
             </div>
-        </div> 
-    </div> 
+        </div>
+    </div>
 </main>
 @endsection
 
@@ -302,7 +401,7 @@ Home Page
             }, ],
             chart: {
                 id: "area-datetime",
-                type: "area",
+                type: "bar",
                 height: 350,
                 zoom: {
                     autoScaleYaxis: true,
@@ -382,6 +481,71 @@ Home Page
 
 
         var chart = new ApexCharts(document.querySelector("#earningChart"), options);
+        chart.render();
+</script>
+
+<script>
+
+    const earningsByMonths = @json($earningByMonth);
+
+    var options = {
+          series: [{
+          name: 'Total Sales',
+          data: earningsByMonths
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        colors:['#294CFF', '#E7EBFF'],
+        plotOptions: { 
+          bar: {
+            horizontal: false,
+            columnWidth: '75%',
+            borderRadius: 2,
+            endingShape: 'rounded',
+            
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        grid: {
+        show: true,
+        borderColor: '#C2C6CE',
+        strokeDashArray: 4,
+        xaxis: {
+                lines: {
+                    show: false
+                }
+            },
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartEar"), options);
         chart.render();
 </script>
 
