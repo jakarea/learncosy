@@ -1421,7 +1421,7 @@
     border-radius: 0.5rem !important;
     border: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
     background: #FFF !important;
-    padding: 1.5rem !important;
+    padding: 1.5rem 1rem !important;
 
     .media {
         img {
@@ -1828,6 +1828,24 @@
     margin-top: 2rem;
     display: block;
     margin-left: 1rem;
+}
+
+.color-position{
+    position: relative;
+    input{
+        padding: 0!important;
+        width: 28px!important;
+        height: 28px!important;
+        border-radius: 10px!important;
+        border: 0!important;
+        background-color: transparent!important;
+    }
+    label{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
 }
 
 

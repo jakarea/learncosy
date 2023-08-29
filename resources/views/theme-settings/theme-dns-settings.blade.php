@@ -47,16 +47,16 @@
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <label for="imageInput" class="file-upload-area p-0"
-                                                                id="file-upload-area">
-                                                                <img src="{{asset('latest/assets/images/logo-view.svg')}}"
-                                                                    alt="a" class="img-fluid" id="preview">
-
+                                                            <label for="imageInput" class="file-upload-area pb-2" id="file-upload-area"> 
+                                                                
                                                                 @if(isset($module_settings->logo))
                                                                 <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
                                                                     alt="logo" class="img-fluid rounded mt-2">
+                                                                    @else 
+                                                                    <img src="{{asset('latest/assets/images/logo-view.svg')}}"
+                                                                    alt="a" class="img-fluid">
                                                                 @endif
-
+                                                                <img src="" alt="" class="img-fluid rounded mt-2" id="preview">
 
                                                             </label>
 
@@ -104,17 +104,16 @@
                                                                         should look good on this.</p>
                                                                 </div>
 
-                                                                <input type="color" class="form-control opacity-0"
+                                                                <div class="color-position">
+                                                                    <input type="color" class="form-control p-0"
                                                                     name="primary_color" id="primary_color"
-                                                                    value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}"
-                                                                    style="width: 10px">
+                                                                    value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
 
-                                                                <label for="primary_color" class="pen-box"
-                                                                    style="background-color: {{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
+                                                                <label for="primary_color">
                                                                     <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
                                                                         alt="Color" class="img-fluid me-0">
                                                                 </label>
-
+                                                                </div> 
                                                             </div>
                                                             <div class="media">
                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -124,16 +123,18 @@
                                                                     <p>The accent color is used to accentuate visual
                                                                         elements.</p>
                                                                 </div>
-                                                                <input type="color" class="form-control opacity-0"
+                                                                <div class="color-position">
+                                                                    <input type="color" class="form-control"
                                                                     name="secondary_color" id="secondary_color"
-                                                                    value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}"
-                                                                    style="width: 10px">
-
-                                                                <label for="secondary_color" class="pen-box"
-                                                                    style="background-color: {{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}">
+                                                                    value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}">
+                                                                    <label for="secondary_color">
                                                                     <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
                                                                         alt="Color" class="img-fluid me-0">
                                                                 </label>
+                                                                </div>
+                                                                
+
+                                                                
                                                             </div>
                                                         </div>
                                                         <div
@@ -254,14 +255,17 @@
                                                                 </div>
 
                                                             </div>
+
+                                                            <img src="" id="preview2" alt=""
+                                                                class="img-fluid rounded mt-2">
+
                                                             @if(isset($module_settings->lp_bg_image))
                                                             <img src="{{ asset('assets/images/setting/'.$module_settings->lp_bg_image) }}"
                                                                 alt="" class="img-fluid rounded mt-2">
 
                                                             @endif
 
-                                                            <img src="" id="preview2" alt=""
-                                                                class="img-fluid rounded mt-2">
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-12 col-xl-4">
