@@ -2,7 +2,7 @@
 @section('title', 'Instructor Analytics')
 {{-- page style @S --}}
 @section('style')
-     
+
 @endsection
 @section('content') 
     <main class="dashboard-page-wrap"> 
@@ -111,62 +111,24 @@
                     <div class="top-performing-course mt-15"> 
                         <div class="d-flex">
                             <h5>Message</h5>
-                            <a href="#">View All</a>
+                            <a href="{{ url('course/messages') }}">View All</a>
                         </div>  
                         <div class="messages-items-wrap"> 
-                            <div class="messages-item">
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
-                                            class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                        <p>The More Important the Work, the More Rest</p>
-                                    </div>
+                            @foreach ($messages as $message)
+                                <div class="messages-item">
+                                    <div class="media">
+                                        <div class="avatar">
+                                            <img src="{{ asset('/assets/images/users/'.$message->user->avatar) }}" alt="Avatar"
+                                                class="img-fluid">
+                                            <i class="fas fa-circle"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans()}}</span></h5>
+                                            <p>{{ $message->message }}</p>
+                                        </div>
+                                    </div> 
                                 </div> 
-                            </div> 
-                            <div class="messages-item">
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
-                                            class="img-fluid">
-                                        <i class="fas fa-circle text-success"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                        <p>The More Important the Work, the More Rest</p>
-                                    </div>
-                                </div> 
-                            </div> 
-                            <div class="messages-item">
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
-                                            class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                        <p>The More Important the Work, the More Rest</p>
-                                    </div>
-                                </div> 
-                            </div> 
-                            <div class="messages-item">
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/men-avatar.png') }}" alt="Avatar"
-                                            class="img-fluid">
-                                        <i class="fas fa-circle text-success"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Ronald Richards <span>4:45 Pm</span></h5>
-                                        <p>The More Important the Work, the More Rest</p>
-                                    </div>
-                                </div> 
-                            </div> 
-
+                            @endforeach
                         </div> 
                     </div>
                 </div>
