@@ -61,7 +61,7 @@ Home Page
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4>{{ $totalEarnings }} €</h4>
+                            <h4>€ {{ $totalEarnings }} </h4>
                         </div>
                     </div>
                     <p>All time stats</p>
@@ -102,7 +102,7 @@ Home Page
                             $sn++;
                             }
 
-                            @endphp
+                        @endphp
                             <div class="media">
                                 <img src="{{ asset('assets/images/courses/'.$course->thumbnail) }}" alt="Avatar"
                                     class="img-fluid">
@@ -127,8 +127,8 @@ Home Page
                     <div class="d-flex">
                         <h4>Course Status</h4>
                         <div>
-                            <a href="#">View All</a>
-                            <a href="#" class="me-0">This month <i class="fas fa-angle-down"></i></a>
+                            <a href="{{ url('admin/courses') }}">View All</a>
+                            <!-- <a href="#" class="me-0">This month <i class="fas fa-angle-down"></i></a> -->
                         </div>
                     </div>
                     <table>
@@ -138,95 +138,41 @@ Home Page
                             <th>Price</th>
                             <th>Rating</th>
                             <th>Earning</th>
-                            <th class="text-end">Visitor</th>
+                            <th class="text-end">Sell</th>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
-                                            class="img-fluid">
+
+                        @foreach ($TopPerformingCourses as $course)
+                            
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="avatar">
+                                            <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="c-status"
+                                                class="img-fluid">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5>{{substr($course->title,0,35)}}</h5>
+                                            <p>{{ $course->categories }}</p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <p>UI/UX Design</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p>Design</p>
-                            </td>
-                            <td>
-                                <p>$30</p>
-                            </td>
-                            <td>
-                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
-                            </td>
-                            <td>
-                                <p>$610.50</p>
-                            </td>
-                            <td class="text-end">
-                                <p>24,512</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <p>UI/UX Design</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p>Design</p>
-                            </td>
-                            <td>
-                                <p>$30</p>
-                            </td>
-                            <td>
-                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
-                            </td>
-                            <td>
-                                <p>$610.50</p>
-                            </td>
-                            <td class="text-end">
-                                <p>24,512</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{asset('latest/assets/images/c-status.png')}}" alt="c-status"
-                                            class="img-fluid">
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <p>UI/UX Design</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p>Design</p>
-                            </td>
-                            <td>
-                                <p>$30</p>
-                            </td>
-                            <td>
-                                <p><i class="fas fa-star" style="color: #F8AA00;"></i> 4.5</p> 
-                            </td>
-                            <td>
-                                <p>$610.50</p>
-                            </td>
-                            <td class="text-end">
-                                <p>24,512</p>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <p>Design</p>
+                                </td>
+                                <td>
+                                    <p>€ {{ $course->offer_price ? $course->offer_price :$course->price }}</p>
+                                </td>
+                                <td>
+                                    <p><i class="fas fa-star" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p> 
+                                </td>
+                                <td>
+                                    <p>€ {{ $course->sum_amount}}</p>
+                                </td>
+                                <td class="text-end">
+                                    <p>{{ $course->sale_count}}</p>
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>

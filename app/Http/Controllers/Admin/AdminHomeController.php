@@ -24,15 +24,36 @@ class AdminHomeController extends Controller
         $enrolmentStudents = 0;
 
 
-        $TopPerformingCourses = Course::select('courses.id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
-        ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-        ->groupBy('courses.id')
-        ->havingRaw('sale_count > 0')
-        ->orderByDesc('sale_count')
-        ->limit(5)
-        ->get();
+        // $TopPerformingCourses = Course::select('courses.id','courses.title','courses.categories','courses.thumbnail','courses.slug','courses.price','courses.offer_price', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'), DB::raw('SUM( checkouts.amount) as sum_amount'))
+        // ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+        // ->groupBy('courses.id')
+        // ->havingRaw('sale_count > 0')
+        // ->orderByDesc('sale_count')
+        // ->limit(7)
+        // ->get();
+
+        $TopPerformingCourses = Course::select(
+            'courses.id',
+            'courses.title',
+            'courses.categories',
+            'courses.thumbnail',
+            'courses.slug',
+            'courses.price',
+            'courses.offer_price',
+            DB::raw('COUNT(DISTINCT checkouts.id) as sale_count'),
+            DB::raw('SUM(checkouts.amount) as sum_amount'),
+            DB::raw('AVG(course_reviews.star) as avg_rating')
+        )
+            ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+            ->leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+            ->groupBy('courses.id')
+            ->havingRaw('sale_count > 0')
+            ->orderByDesc('sale_count')
+            ->limit(7)
+            ->get();
         
-        $lastMessages = Message::lastMessagePerUser()->with('user')->get();
+        
+        $lastMessages = Message::lastMessagePerUser()->with('user')->take(7)->get();
 
         $studentsCount = User::where('user_role', 'student')->count();
         $instructorsCount = User::where('user_role', 'instructor')->count();
