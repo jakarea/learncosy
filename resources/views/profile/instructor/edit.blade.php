@@ -6,6 +6,11 @@
 
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    <style>
+        .invalid-feedback {
+        display: block;
+    }
+    </style>
 @endsection
 {{-- page style @S --}}
 
@@ -15,6 +20,16 @@
 <main class="student-profile-update-page">
     <div class="container-fluid">
         <div class="row">
+
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
             <div class="col-12">
                 <div class="own-profile-box account-settings-box">
                     <div class="header">
@@ -155,16 +170,18 @@
                         <div class="tab-pane fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="row">
+                            
                                 <div class="col-12">
-                                    <div class="add-experience-form">
-                                        <form action="" method="POST" enctype="multipart/form-data">
+                                    <div class="add-experience-form" id="experience-form">
+                                        <form action="{{ route('instructor.profile.experience',$user->id) }}" method="POST">
                                             @csrf
+                                            <input type="hidden" name="id" value="{{ $editExp ? $editExp->id:''}}"/>
                                             <div class="content-settings-form-wrap profile-text-box-2">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="profession" placeholder="Add skill (e.g ui/ux design)"
-                                                                name="profession" required>
+                                                            <input type="text" class="form-control" id="profession" value="{{ $editExp ? $editExp->profession: old('profession') }}" placeholder="Add skill (e.g ui/ux design)"
+                                                                name="profession">
                                                             <label for="profession">Profession</label>
                                                             <span class="invalid-feedback">@error('profession'){{
                                                                 $message }}
@@ -174,7 +191,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="company_name"
-                                                                name="company_name" placeholder="Add company (e.g learn cosy)" required>
+                                                                name="company_name" value="{{ $editExp ? $editExp->company_name: old('company_name') }}" placeholder="Add company (e.g learn cosy)">
                                                             <label for="company_name">Company Name</label>
                                                             <span class="invalid-feedback">@error('company_name'){{
                                                                 $message }}
@@ -184,7 +201,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="job_type"
-                                                                name="job_type" placeholder="Add job type (e.g full time/ part time)" required>
+                                                                value="{{ $editExp ? $editExp->job_type: old('job_type') }}"
+                                                                name="job_type" placeholder="Add job type (e.g full time/ part time)">
                                                             <label for="job_type">Job Type</label>
                                                             <span class="invalid-feedback">@error('job_type'){{ $message
                                                                 }}
@@ -193,18 +211,20 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="experience_time"
-                                                                name="experience_time" placeholder="Add service time (e.g 5 years)" required>
-                                                            <label for="experience_time">Experience Time </label>
-                                                            <span class="invalid-feedback">@error('experience_time'){{
+                                                            <input type="text" class="form-control" id="experience"
+                                                            value="{{ $editExp ? $editExp->experience: old('experience') }}"
+                                                                name="experience" placeholder="Add service time (e.g 5 years)">
+                                                            <label for="experience">Experience Time </label>
+                                                            <span class="invalid-feedback">@error('experience'){{
                                                                 $message }}
                                                                 @enderror</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="join_date"
-                                                                name="join_date" placeholder="Add join date (e.g 02 jan 2020)" required>
+                                                            <input type="date" class="form-control" id="join_date"
+                                                                value="{{ $editExp ? $editExp->join_date: old('join_date') }}"
+                                                                name="join_date" placeholder="Add join date (e.g 02 jan 2020)">
                                                             <label for="join_date">Join Date</label>
                                                             <span class="invalid-feedback">@error('join_date'){{
                                                                 $message }}
@@ -213,20 +233,21 @@
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="retired_date"
-                                                                name="retired_date" placeholder="Add Retired date (e.g 02 jan 2022/ Present)" required>
-                                                            <label for="retired_date">Retired Date</label>
-                                                            <span class="invalid-feedback">@error('retired_date'){{
+                                                            <input type="date" class="form-control" id="retire_date"
+                                                                value="{{ $editExp ? $editExp->retire_date: old('retire_date') }}"
+                                                                name="retire_date" placeholder="Add Retired date (e.g 02 jan 2022/ Present)">
+                                                            <label for="retire_date">Retired Date</label>
+                                                            <span class="invalid-feedback" id="invalid_retire_date">@error('retire_date'){{
                                                                 $message }}
                                                                 @enderror</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <textarea name="short_desc" id="short_desc" placeholder="Add short description about this job..."
-                                                                class="form-control @error('short_desc') is-invalid @enderror"
-                                                                required></textarea>
-                                                            <label for="short_desc">Short Description</label>
+                                                            <textarea name="short_description" id="short_description" placeholder="Add short description about this job..."
+                                                                class="form-control @error('short_description') is-invalid @enderror"
+                                                            >{{ $editExp ? $editExp->short_description: old('short_description') }}</textarea>
+                                                            <label for="short_description">Short Description</label>
                                                             <span class="invalid-feedback">@error('description'){{
                                                                 $message
                                                                 }}
@@ -249,65 +270,25 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="user-expperience-box user-expperience-box-2">
-                                        <div class="media brdr-bttm">
-                                            <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                alt="experience-img" class="img-fluid">
-                                            <div class="media-body">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <h5>UI/UX Design</h5>
-                                                    <div>
-                                                        <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                        <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
-                                                                alt="img" class="img-fluid"></a>
+                                        @foreach ($experiences as $experience)
+                                            <div class="media brdr-bttm">
+                                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
+                                                    alt="experience-img" class="img-fluid">
+                                                <div class="media-body">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <h5>{{ $experience->profession }}</h5>
+                                                        <div>
+                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
+                                                            <a href="{{ url('instructor/profile/edit?id='.$experience->id )}}" ><img src=" {{ asset('latest/assets/images/icons/pen.svg')   }}" alt="img" class="img-fluid"></a>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                        class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                <p>Created and executed website for 10 brands utilizing multiple
-                                                    features and content types to increase brand outreach, engagement,
-                                                    and leads.</p>
-                                            </div>
-                                        </div>
-                                        <div class="media brdr-bttm">
-                                            <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                alt="experience-img" class="img-fluid">
-                                            <div class="media-body">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <h5>UI/UX Design</h5>
-                                                    <div>
-                                                        <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                        <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
-                                                                alt="img" class="img-fluid"></a>
-                                                    </div>
+                                                    <h6>{{ $experience->company_name }} <i class="fas fa-circle"></i> {{ $experience->job_type }} <i
+                                                            class="fas fa-circle"></i> {{ $experience->experience }}</h6>
+                                                    <p>{{ $experience->short_description }}</p>
                                                 </div>
-                                                <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                        class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                <p>Created and executed website for 10 brands utilizing multiple
-                                                    features and content types to increase brand outreach, engagement,
-                                                    and leads.</p>
                                             </div>
-                                        </div>
-                                        <div class="media">
-                                            <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                alt="experience-img" class="img-fluid">
-                                            <div class="media-body">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <h5>UI/UX Design</h5>
-                                                    <div>
-                                                        <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                        <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
-                                                                alt="img" class="img-fluid"></a>
-                                                    </div>
-                                                </div>
-                                                <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                        class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                <p>Created and executed website for 10 brands utilizing multiple
-                                                    features and content types to increase brand outreach, engagement,
-                                                    and leads.</p>
-                                            </div>
-                                        </div>
-
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -687,7 +668,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                          </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -759,6 +740,23 @@
 {{-- page script @S --}}
 @section('script')
 <script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('experience-form');
+
+        form.addEventListener('submit', function (event) {
+            var joinDate = new Date(document.getElementById('join_date').value);
+            var retireDate = new Date(document.getElementById('retire_date').value);
+
+            if (retireDate <= joinDate) {
+                event.preventDefault();
+                document.getElementById('invalid_retire_date').innerHTML ="Retire date must be after or equal to join date.";
+            }
+        });
+    });
+</script>
+
 @endsection
 
 {{-- page script @E --}}
