@@ -22,29 +22,36 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="package-list-header" style="grid-template-columns: 10% 50% 18% 18%">
-                    <h5>Lesson List</h5>
-                    <div class="form-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search module" class="form-control">
+
+                <form action="" method="GET">
+                    <div class="package-list-header module-header">
+                        <h5>Lesson List</h5>
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search Lesson" class="form-control" name="title"
+                                    value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
+                        </div>
+                        <div class="form-filter">
+                            @php 
+                                $lesson_status = isset($_GET['status']) ? $_GET['status'] : '';
+                            @endphp
+                            <select class="form-control" name="status">
+                                <option value="">All</option>
+                                <option value="pending" {{ $lesson_status == 'pending' ? 'selected' : ''}}>Pending</option>
+                                <option value="published" {{ $lesson_status == 'published' ? 'selected' : ''}}>Published</option>
+                            </select>
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                        <div class="bttn">
+                            <button type="submit" class="common-bttn border-0"><i class="fas fa-search me-2"></i> Search</button>
+                        </div>
                     </div>
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All</option>
-                            <option value="Publish">Publish</option>
-                            <option value="Unpublish">Unpublish</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
-                    </div>
-                    <div class="bttn">
-                        <a href="{{ url('admin/lessons/create') }}" class="common-bttn"><i class="fas fa-plus"></i> Create Lesson</a>
-                    </div>
-                </div>
+                </form> 
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="subscription-table-wrap">
+                <div class="subscription-table-wrap module-list-table">
                     <table>
                         <tr>
                             <th>
@@ -73,7 +80,7 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ url('admin/lessons/'.$lesson->slug.'/edit') }}" class="me-r"><img src="{{ asset('latest/assets/images/icons/edit.svg') }}" alt="Icon" class="img-fluid"></a>
+                                    {{-- <a href="{{ url('admin/lessons/'.$lesson->slug.'/edit') }}" class="me-r"><img src="{{ asset('latest/assets/images/icons/edit.svg') }}" alt="Icon" class="img-fluid"></a> --}}
 
                                     <form method="post" class="d-inline" action="{{ url('admin/lessons/'.$lesson->slug.'/destroy') }}">
                                         @csrf 

@@ -1795,7 +1795,9 @@ span.finsihLesson {
     }
 }
 
-
+.module-header{
+    grid-template-columns: 9% 60% 13% 10%;
+}
 
 
 
@@ -1934,6 +1936,10 @@ span.finsihLesson {
             width: 100%;
         }
     }
+
+    .module-header{
+        grid-template-columns: 100%;
+    }
 }
 
 // landscape phone device 
@@ -1968,6 +1974,14 @@ span.finsihLesson {
             width: 100%;
         }
     }
+
+    .module-header{
+        grid-template-columns: 100%;
+    }
+
+    .module-list-table.subscription-table-wrap table{
+        display: block!important;
+    }
 }
 
 // tablet device 
@@ -1980,6 +1994,9 @@ span.finsihLesson {
             display: block;
             width: 100%;
         }
+    }
+    .module-header{
+        grid-template-columns: 50% 50%;
     }
 }
 
