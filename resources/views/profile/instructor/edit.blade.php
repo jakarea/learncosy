@@ -55,15 +55,19 @@
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box">
-                                            <input type="file" id="avatar" class="d-none" name="avatar">
-                                            <label for="avatar" class="img-upload">
+                                        <div class="profile-picture-box"> 
+
+                                            <input type="file" name="avatar" id="imageInput"
+                                                                accept="image/*" onchange="previewImage()"
+                                                                class="form-control d-none  @error('avatar') is-invalid @enderror">
+                                                                 
+                                            <label for="imageInput" class="img-upload">
                                                 <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
                                                     alt="a" class="img-fluid">
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="avatar-preview"
+                                                    <img id="preview"
                                                         src="{{asset('assets/images/users/'.$user->avatar)}}"
                                                         alt="Avatar" class="img-fluid static-image">
                                                     @else
@@ -76,11 +80,10 @@
                                                 Max size of 3.1 MB</h6>
 
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
+                                                <label class="form-check-label" for="recivingMessage">Receiving
                                                     Messages</label>
                                                 <input class="form-check-input" type="checkbox" name="recivingMessage"
-                                                    role="switch" id="flexSwitchCheckChecked"
-                                                    value="{{ $user->recivingMessage == 1 ? 'checked' : '' }}">
+                                                    role="switch" id="recivingMessage" {{ $user->recivingMessage == 1 ? 'checked' : '' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -729,8 +732,28 @@
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script')
-<script src="{{asset('assets/js/file-upload.js')}}" type="text/javascript"></script>
+@section('script') 
+
+<script>
+    function previewImage() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('imageInput');
+        var file = fileInput.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    } 
+</script>
+
+
 <script>
     
     document.addEventListener('DOMContentLoaded', function () {

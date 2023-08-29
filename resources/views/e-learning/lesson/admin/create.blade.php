@@ -27,7 +27,7 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
             <div class="col-6">
                 <div class="user-header-bttn">
                     <a href="{{url('admin/lessons')}}"><img src="{{asset('latest/assets/images/icons/list.svg')}}"
-                            alt="user" class="img-fluid"> All Lesson </a>
+                            alt="user" class="img-fluid"> All Lessons </a>
                 </div>
             </div>
         </div>

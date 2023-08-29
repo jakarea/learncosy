@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('course_id'); 
+            $table->string('user_id')->nullable(); 
             $table->string('module_id'); 
             $table->text('title'); 
             $table->text('slug'); 
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->text('short_description')->nullable(); 
             $table->text('meta_keyword')->nullable(); 
             $table->string('meta_description', 160)->nullable(); 
-            $table->string('status')->default('draft');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

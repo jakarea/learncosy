@@ -349,7 +349,7 @@
                                                                 id="preview4">
 
                                                             @if(isset($module_settings->apple_icon))
-                                                            <img src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
+                                                            <img id="nweImg" src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
                                                                 alt="" class="img-fluid rounded mt-2"> @endif
 
                                                         </div>
