@@ -354,7 +354,7 @@ span.finsihLesson {
     border-radius: 0.75rem;
     border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
     background: #FFF;
-    padding: 1.5rem;
+    padding: 1rem;
     max-height: 560px;
     overflow-y: scroll;
 
@@ -437,7 +437,21 @@ span.finsihLesson {
         .accordion-button::after,
         .accordion-button:not(.collapsed)::after {
             background-image: none !important;
+            width: 0!important;
+            height: 0!important;
         }
+    }
+}
+
+.add-lesson-bttn{
+    margin-bottom: 1rem;
+    a{
+        display: inline-block;
+        padding: .4rem 1rem;
+        font-size: .85rem;
+        color: #fff;
+        background-color: #294CFF;
+        border-radius: 2rem;
     }
 }
 
