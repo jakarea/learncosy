@@ -9,6 +9,7 @@ use App\Models\Course;
 use Illuminate\Support\Str;
 use App\Models\Module; 
 use DataTables; 
+use Auth;
 
 class LessonManagementController extends Controller
 {
@@ -18,7 +19,8 @@ class LessonManagementController extends Controller
 
          $title = isset($_GET['title']) ? $_GET['title'] : '';
          $status = isset($_GET['status']) ? $_GET['status'] : '';
-         $lessons = Lesson::orderby('id', 'desc');
+         $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
+         
          if (!empty($title)) {
              $lessons->where('title', 'like', '%' . trim($title) . '%');
          }
@@ -29,55 +31,6 @@ class LessonManagementController extends Controller
 
          return view('e-learning/lesson/admin/grid',compact('lessons')); 
      }
-
-     // data table getData
-    public function lessonsDataTable()
-    { 
-            $lesson = Lesson::select('id','title','slug','thumbnail','meta_keyword','video_link','status')->get();
-          
-            return Datatables::of($lesson)
-                ->addColumn('action', function($lesson){ 
-                     
-                    $actions = '<div class="action-dropdown">
-                        <div class="dropdown">
-                            <a class="btn btn-drp" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="bttns-wrap"> 
-                                    <a class="dropdown-item" href="/admin/lessons/'.$lesson->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/admin/lessons/'.$lesson->slug.'/destroy">  
-                                    '.csrf_field().'
-                                    '.method_field("DELETE").'
-                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                    </form>    
-                                </div>
-                            </div> 
-                        </div>
-                    </div>';
-
-                    return $actions;
-
-                })
-                ->editColumn('image', function ($lesson) {
-                return '<img src="/assets/images/lessons/'.$lesson->thumbnail.'" width="50" />';
-            })
-            ->editColumn('status', function ($lesson) {
-                if($lesson->status == 'published'){
-                    return '<label class="badge bg-success">'.__('Published').'</label>';
-                }
-                if($lesson->status == 'draft'){
-                    return '<label class="badge bg-info">'.__('Draft').'</label>';
-                }
-                if($lesson->status == 'pending'){
-                    return '<label class="badge bg-danger">'.__('Pending').'</label>';
-                } 
-             })
-            ->addIndexColumn()
-            ->rawColumns(['action', 'image','status','keyword'])
-            ->make(true);
-    }
 
     // lesson create
     public function create(Request $request)
@@ -108,6 +61,7 @@ class LessonManagementController extends Controller
         //save lesson
         $lesson = new Lesson([
             'course_id' => $request->course_id,
+            'user_id' => auth::user()->id,
             'module_id' => $request->module_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -174,6 +128,7 @@ class LessonManagementController extends Controller
 
         $lesson = Lesson::where('slug', $slug)->first();
         $lesson->course_id = $request->course_id; 
+        $lesson->user_id = auth::user()->id;
         $lesson->module_id = $request->module_id; 
         $lesson->title = $request->title; 
         $lesson->slug = Str::slug($request->title);

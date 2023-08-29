@@ -71,9 +71,7 @@
                             </td> 
                             <td class="module-status">
                                 @if ($lesson->status == 'pending')
-                                <span class="badge text-bg-danger">Unpublish</span>
-                                @elseif ($lesson->status == 'draft')
-                                    <span class="badge text-bg-warning">Draft</span>
+                                <span class="badge text-bg-danger">Pending</span> 
                                 @elseif ($lesson->status == 'published')
                                     <span class="badge text-bg-primary">Publish</span>
                                 @endif 

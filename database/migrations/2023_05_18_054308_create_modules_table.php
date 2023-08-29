@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('number_of_attachment')->nullable();
             $table->string('number_of_video')->nullable();
             $table->string('duration'); 
-            $table->string('status')->default('draft');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
