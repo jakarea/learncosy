@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Course;
+
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Course;
+use App\Models\Experience;
 use Illuminate\Support\Str;
 use App\Mail\ProfileUpdated;
 use App\Mail\PasswordChanged;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 class ProfileManagementController extends Controller
 {
 
@@ -24,12 +26,19 @@ class ProfileManagementController extends Controller
     }
 
     // profile edit
-    public function edit()
-    {     
+    public function edit(Request $request)
+    {   
+        $experience_id = $request->query('id');
         $userId = Auth()->user()->id;  
         $user = User::find($userId);
+        $editExp = '';
+        if($experience_id){
+            $editExp = Experience::where('id', $experience_id)->first();
+        }
+        // return $editExp;
+        $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
         // dd($user);
-        return view('profile/instructor/edit',compact('user'));  
+        return view('profile/instructor/edit',compact('user','experiences','editExp'));  
     }
 
     public function update(Request $request)
