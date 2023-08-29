@@ -61,6 +61,7 @@ class AdminHomeController extends Controller
 
         $totalEarnings = $this->getTotalEarningViaSubscription();
 
+        // return $earningByMonth;
         return view(
             'e-learning/course/admin/dashboard',
             compact(

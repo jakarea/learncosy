@@ -74,9 +74,9 @@
                 <div class="col-12"> 
                     <div class="chart-box-wrap mt-15">
                         <div class="statics-head">
-                            <h5>Earnings</h5>
-                        </div>
-                        <div id="earningChart"></div>
+                            <h5>Earnings by date</h5>
+                        </div> 
+                        <div id="earningCh"></div>
                     </div> 
                 </div>
             </div>
@@ -86,7 +86,7 @@
                         <div class="statics-head">
                             <h5>Monthly Earning </h5>
                         </div>
-                        <div id="monthly_earning"></div>
+                        <div id="chartEar"></div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -243,157 +243,156 @@
         chart.render();
     </script>
 
-    <script>
-        // line chart for active and inactive students
-        const data = @json($activeInActiveStudents);
+<script>
 
-        var options = {
-            series: [{
-                name: 'Active',
-                data: data.active_students
-            }, {
-                name: 'Inactive',
-                data: data.inactive_students
-            }],
-            chart: {
-                height: 315,
-                type: 'area'
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                width: [0, 0],
-            },
-            colors: ['#09BD3C', '#1D3573'],
-            grid: {
-                show: true,
-                borderColor: '#D7D7D7',
-                strokeDashArray: 0,
-                position: 'back',
-                xaxis: {
-                    lines: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: true,
-                        opacity: 1,
-                    }
-                },
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: data.dates
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                },
-            },
+const data = @json($activeInActiveStudents);
+
+    var options = {
+          series: [{
+            name: "Active Students",
+            data: data.active_students
+        },{
+            name: "Inactive Students",
+            data: data.inactive_students
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        colors:['#294CFF','#FFAB00'], 
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'straight'
+        },
+        title: {
+          text: '',
+          align: 'left'
+        }, 
+        grid: {
+        show: true,
+        borderColor: '#C2C6CE',
+        strokeDashArray: 4,
+        },
+        xaxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#lineChart"), options);
         chart.render();
-    </script>
-    <script>
-        // chart for Earnings
-        const earnings = @json($earningByDates);
-        const earningsKeys = Object.keys(earnings)
-        const minDateForThisChart = earningsKeys.reduce((acc, current) => current < acc ? current : acc, earningsKeys[0])
-        const dataForSeries = Object.entries(earnings).map(([key, value]) => {
-            return [new Date(key).getTime(), value]
-        })
+</script>
 
-        var options = {
-            series: [{
-                data: dataForSeries,
-            }, ],
-            chart: {
-                id: "area-datetime",
-                type: "area",
-                height: 350,
-                zoom: {
-                    autoScaleYaxis: true,
-                },
-            },
-            annotations: {
-                yaxis: [{
-                    y: 30,
-                    borderColor: "#999",
-                    label: {
-                        show: true,
-                        text: "Support",
-                        style: {
-                            color: "#fff",
-                            background: "#00E396",
-                        },
-                    },
-                }, ],
-                xaxis: [{
-                    x: new Date(Math.min(...(Object.keys(earnings)))).getTime(),
-                    borderColor: "#999",
-                    yAxisIndex: 0,
-                    label: {
-                        show: true,
-                        text: "Rally",
-                        style: {
-                            color: "#fff",
-                            background: "#775DD0",
-                        },
-                    },
-                }, ],
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            markers: {
-                size: 0,
-                style: "hollow",
-            },
-            grid: {
-                show: true,
-                borderColor: "#D7D7D7",
-                strokeDashArray: 0,
-                position: "back",
-                xaxis: {
-                    lines: {
-                        show: false,
-                    },
-                },
-                yaxis: {
-                    lines: {
-                        show: true,
-                        opacity: 0.1,
-                    },
-                },
-            },
-            xaxis: {
-                type: "datetime",
-                min: minDateForThisChart,
-                tickAmount: 6,
-            },
-            tooltip: {
-                x: {
-                    format: "dd MMM yyyy",
-                },
-            },
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.9,
-                    stops: [0, 100],
-                },
-            },
+<script>
+
+    const earningsDate = @json($earningByDates);
+
+    var options = {
+          series: [{
+            name: "Earning By Date",
+            data: [earningsDate]
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        colors:['#294CFF'], 
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'straight'
+        },
+        title: {
+          text: '',
+          align: 'left'
+        }, 
+        grid: {
+        show: true,
+        borderColor: '#C2C6CE',
+        strokeDashArray: 4,
+        },
+        xaxis: {
+          categories: ['1 Jul', '5 Jul', '10 Jul', '15 Jul', '20 Jul', '25 Jul', '30 Jul'],
+        }
         };
 
-
-        var chart = new ApexCharts(document.querySelector("#earningChart"), options);
+        var chart = new ApexCharts(document.querySelector("#earningCh"), options);
         chart.render();
-    </script>
+</script>
+
+<script>
+
+    const earningsByMonths = @json($earningByMonth);
+
+    var options = {
+          series: [{
+          name: 'Total Sales',
+          data: earningsByMonths
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        colors:['#294CFF', '#E7EBFF'],
+        plotOptions: { 
+          bar: {
+            horizontal: false,
+            columnWidth: '60%',
+            borderRadius: 2,
+            endingShape: 'rounded',
+            
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'],
+        },
+        yaxis: {
+          title: {
+            text: '$ (thousands)'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        grid: {
+        show: true,
+        borderColor: '#C2C6CE',
+        strokeDashArray: 4,
+        xaxis: {
+                lines: {
+                    show: false
+                }
+            },
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartEar"), options);
+        chart.render();
+</script>
+
     <script>
         function updateClock() {
             var currentTime = new Date();
@@ -414,92 +413,5 @@
 
         // Update the clock every second
         setInterval(updateClock, 1000);
-    </script>
-
-    <script>
-// Earning by month
-var earningByMonths = @json($earningByMonth);
-
-var options = {
-          series: [{
-          name: 'Earning',
-          data: earningByMonths
-        }],
-          chart: {
-          height: 350,
-          type: 'bar',
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 10,
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
-          }
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return "€" + val ;
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ["#304758"]
-          }
-        },
-        
-        xaxis: {
-          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          position: 'top',
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#D8E3F0',
-                colorTo: '#BED1E6',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              }
-            }
-          },
-          tooltip: {
-            enabled: true,
-          }
-        },
-        yaxis: {
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false,
-          },
-          labels: {
-            show: false,
-            formatter: function (val) {
-              return val + "%";
-            }
-          }
-        
-        },
-        title: {
-          floating: true,
-          offsetY: 330,
-          align: 'center',
-          style: {
-            color: '#444'
-          }
-        }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#monthly_earning"), options);
-        chart.render();
     </script>
 @endsection
