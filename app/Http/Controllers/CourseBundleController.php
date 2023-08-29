@@ -13,9 +13,15 @@ class CourseBundleController extends Controller
 {
      // course bundle list
      public function index()
-     {  
-        $userId = Auth::user()->id;
-        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
+     {   
+
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $bundleCourses = BundleCourse::where('user_id', Auth::user()->id)->orderBy('id', 'desc');
+        if (!empty($title)) {
+            $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
+        }
+        $bundleCourses = $bundleCourses->paginate(12);
+ 
          return view('bundle/instructor/list',compact('bundleCourses')); 
      }
  

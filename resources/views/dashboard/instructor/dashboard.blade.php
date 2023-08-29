@@ -45,7 +45,7 @@
                     </div> 
 
                     <div class="text-center mt-4">
-                        <a href="#" class="common-bttn">Create New Course</a>
+                        <a href="{{url('instructor/courses/create/step-1')}}" class="common-bttn">Create New Course</a>
                     </div>
 
                 </div>
@@ -53,50 +53,25 @@
             <div class="col-lg-6">
                 <div class="recent-payment-box mt-15">
                     <h3>Recent Payment</h3>
-
+                    @foreach ($payments->slice(0, 4) as $payment)
                     <div class="payment-box"> 
-                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
+                        <h5><img src="{{ asset('assets/images/users/'.$payment->user->avatar )}}" alt="a" class="img-fluid"> {{ $payment->user->name }}</h5>
 
-                        <p>05 Aug 2023</p>
-                        <p>$10</p>
+                        <p>
+                            @if ($payment->status == 'completed')
+                                <span style="color: #2A920B;">{{ $payment->status }}</span>
+                            @else 
+                                <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
+                            @endif
+                        </p>
+                        <p>€ {{ $payment->amount }}</p>
 
-                        <a href="#">View</a>
+                        <a href="{{url('instructor/payments',encrypt($payment->payment_id))}}">View</a>
                     </div>
-                    <div class="payment-box"> 
-                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
-
-                        <p>05 Aug 2023</p>
-                        <p>$10</p>
-
-                        <a href="#">View</a>
-                    </div>
-                    <div class="payment-box"> 
-                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
-
-                        <p>05 Aug 2023</p>
-                        <p>$10</p>
-
-                        <a href="#">View</a>
-                    </div>
-                    <div class="payment-box"> 
-                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
-
-                        <p>05 Aug 2023</p>
-                        <p>$10</p>
-
-                        <a href="#">View</a>
-                    </div>
-                    <div class="payment-box"> 
-                        <h5><img src="{{ asset('latest/assets/images/avatar-big.png')}}" alt="a" class="img-fluid"> Bradford Kshlerin</h5>
-
-                        <p>05 Aug 2023</p>
-                        <p>$10</p>
-
-                        <a href="#">View</a>
-                    </div>
+                    @endforeach
 
                     <div class="text-center mt-3">
-                        <a href="#" class="common-bttn">View All Payment</a>
+                        <a href="{{url('instructor/payments')}}" class="common-bttn">View All Payment</a>
                     </div>
                 </div>
             </div>

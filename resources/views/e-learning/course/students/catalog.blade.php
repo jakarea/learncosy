@@ -29,30 +29,23 @@
         
         <div class="row">
             <div class="col-12">
-                <form action="">
-                    <div class="user-search-box-wrap">
+                <form action="" method="GET">
+                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
-                            <input type="text" name="title" class="form-control" placeholder="Search course"
+                            <input type="text" placeholder="Search Courses" class="form-control" name="title"
                                 value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
-                        <div class="form-filter">
-                            <select class="form-control">
-                                <option value="">All </option>
-                                <option value="">Most Purchased</option>
-                                <option value="">Newest</option>
-                                <option value="">Oldest</option>
-                            </select>
-                            <i class="fas fa-angle-down"></i>
-                        </div>
-                        <div class="user-title-box">
-                            <button type="submit" class="btn">Search</button>
+
+                        <div class="user-title-box justify-content-end">
+                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="row">
+            @if (count($courses) > 0)
             @foreach($courses as $course)
             @php
                 $review_sum = 0;
@@ -130,7 +123,14 @@
                 </div>
             </div>
             {{-- course single box end --}}
-            @endforeach
+            @endforeach 
+            @else 
+            <div class="col-12">
+                <div class="no-result-found">
+                    <h6>No Course Found!</h6>
+                </div>
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">

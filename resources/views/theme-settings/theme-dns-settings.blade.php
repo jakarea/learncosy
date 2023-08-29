@@ -51,20 +51,48 @@
                                                                 id="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/logo-view.svg')}}"
                                                                     alt="a" class="img-fluid" id="preview">
-                                                                    
+
+                                                                @if(isset($module_settings->logo))
+                                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
+                                                                    alt="logo" class="img-fluid rounded mt-2">
+                                                                @endif
+
+
                                                             </label>
 
-                                                            <input type="file" name="logo" id="imageInput" accept="image/*" onchange="previewImage()"
+                                                            <input type="file" name="logo" id="imageInput"
+                                                                accept="image/*" onchange="previewImage()"
                                                                 class="form-control d-none  @error('logo') is-invalid @enderror">
                                                             <span class="invalid-feedback">@error('logo'){{ $message }}
                                                                 @enderror</span>
 
                                                             <h6 class="mt-3">App Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
-                                                            <div class="small-view">
-                                                                <img src="{{asset('latest/assets/images/small-logo.png')}}"
-                                                                    alt="a" class="img-fluid">
+
+                                                            <div class="media align-items-center flex-column flex-lg-row">
+                                                                <label for="app_logo"
+                                                                    class="file-upload-area file-upload-2 mt-1">
+
+                                                                    <img src="http://nayan.localhost/latest/assets/images/icons/upload-icon.svg"
+                                                                        alt="a" class="img-fluid me-0">
+                                                                    <p class="mt-2"><span>Click to upload</span> SVG, PNG, JPG, or GIF <br> (max. 300x300px)</p>
+                                                                </label>
+
+                                                                @if(isset($module_settings->app_logo))
+                                                                <img src="{{ asset('assets/images/setting/'.$module_settings->app_logo) }}"
+                                                                    alt="logo" class="img-fluid rounded mt-2 preview-img">
+                                                                @endif
+
+                                                                <input type="file" name="app_logo" id="app_logo"
+                                                                    accept="image/*" onchange="previewImage5()"
+                                                                    class="form-control d-none  ">
+                                                                <span class="invalid-feedback"></span> 
                                                             </div>
+
+                                                            <img src="" id="preview5" alt="" class="img-fluid rounded mt-2">
+
+                                                           
+
                                                         </div>
                                                         <div class="feat-box">
                                                             <div class="media">
@@ -75,9 +103,18 @@
                                                                     <p>This is the color of your menu bar. Your logo
                                                                         should look good on this.</p>
                                                                 </div>
-                                                                <a href="#"><img
-                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                        alt="Color" class="img-fluid"></a>
+
+                                                                <input type="color" class="form-control opacity-0"
+                                                                    name="primary_color" id="primary_color"
+                                                                    value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}"
+                                                                    style="width: 10px">
+
+                                                                <label for="primary_color" class="pen-box"
+                                                                    style="background-color: {{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
+                                                                    <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                        alt="Color" class="img-fluid me-0">
+                                                                </label>
+
                                                             </div>
                                                             <div class="media">
                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -87,85 +124,144 @@
                                                                     <p>The accent color is used to accentuate visual
                                                                         elements.</p>
                                                                 </div>
-                                                                <a href="#"><img
-                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                        alt="Color" class="img-fluid"></a>
+                                                                <input type="color" class="form-control opacity-0"
+                                                                    name="secondary_color" id="secondary_color"
+                                                                    value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}"
+                                                                    style="width: 10px">
+
+                                                                <label for="secondary_color" class="pen-box"
+                                                                    style="background-color: {{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}">
+                                                                    <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                        alt="Color" class="img-fluid me-0">
+                                                                </label>
                                                             </div>
                                                         </div>
                                                         <div
                                                             class="certificate-style-box login-page-theme-box border-0">
                                                             <h6>Select Login Page Theme</h6>
-                                                            <div class="media">
-                                                                <img src="{{asset('latest/assets/images/login-01.png')}}"
-                                                                    alt="Color" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div class="d-flex">
-                                                                        <h6>Raouls Choice</h6>
+                                                            <input type="radio" class="d-none" id="default"
+                                                                name="lp_layout" value="default">
+                                                            <input type="radio" class="d-none" id="fullwidth"
+                                                                name="lp_layout" value="fullwidth">
+                                                            <input type="radio" class="d-none" id="leftsidebar"
+                                                                name="lp_layout" value="leftsidebar">
+                                                            <input type="radio" class="d-none" id="rightsidebar"
+                                                                name="lp_layout" value="rightsidebar">
+
+                                                            <label for="default">
+                                                                <div class="media">
+                                                                    <img src="{{asset('latest/assets/images/login-01.png')}}"
+                                                                        alt="Color" class="img-fluid">
+                                                                    <div class="media-body">
+                                                                        <div class="d-flex">
+                                                                            <h6>Raouls Choice</h6>
+                                                                            @if (old('lp_layout',
+                                                                            $module_settings->value->lp_layout ?? '') ==
+                                                                            'default')
+                                                                            <span>Active Theme</span>
+                                                                            @endif
+
+                                                                        </div>
+                                                                        <p>Raouls Choice is een simple en elegant thema
+                                                                            zonder extra opties, mokkeljk te gebruken en
+                                                                            geoptimaliseerd voor conversie.</p>
                                                                     </div>
-                                                                    <p>Raouls Choice is een simple en elegant thema
-                                                                        zonder extra opties, mokkeljk te gebruken en
-                                                                        geoptimaliseerd voor conversie.</p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="media">
-                                                                <img src="{{asset('latest/assets/images/login-02.png')}}"
-                                                                    alt="Color" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div class="d-flex">
-                                                                        <h6>Volledige Breedte Afbeelding</h6>
+                                                            </label>
+
+                                                            <label for="fullwidth">
+                                                                <div class="media">
+                                                                    <img src="{{asset('latest/assets/images/login-02.png')}}"
+                                                                        alt="Color" class="img-fluid">
+                                                                    <div class="media-body">
+                                                                        <div class="d-flex">
+                                                                            <h6>Volledige Breedte Afbeelding</h6>
+                                                                            @if (old('lp_layout',
+                                                                            $module_settings->value->lp_layout ?? '') ==
+                                                                            'fullwidth')
+                                                                            <span>Active Theme</span>
+                                                                            @endif
+                                                                        </div>
+                                                                        <p>In dit thema kon je een valledige breedte
+                                                                            afbeeliding uplioden en heb je toegang tot
+                                                                            nog
+                                                                            aartal extra optes.</p>
                                                                     </div>
-                                                                    <p>In dit thema kon je een valledige breedte
-                                                                        afbeeliding uplioden en heb je toegang tot nog
-                                                                        aartal extra optes.</p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="media">
-                                                                <img src="{{asset('latest/assets/images/login-03.png')}}"
-                                                                    alt="Color" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div class="d-flex">
-                                                                        <h6>Zijbalk &amp; Achtergrond</h6>
+                                                            </label>
+                                                            <label for="leftsidebar">
+                                                                <div class="media">
+                                                                    <img src="{{asset('latest/assets/images/login-03.png')}}"
+                                                                        alt="Color" class="img-fluid">
+                                                                    <div class="media-body">
+                                                                        <div class="d-flex">
+                                                                            <h6>Zijbalk &amp; Achtergrond</h6>
+                                                                            @if (old('lp_layout',
+                                                                            $module_settings->value->lp_layout ?? '') ==
+                                                                            'leftsidebar')
+                                                                            <span>Active Theme</span>
+                                                                            @endif
+                                                                        </div>
+                                                                        <p>Raouls Choice is een simple en elegant thema
+                                                                            zonder extra opties, mokkeljk te gebruken en
+                                                                            geoptimaliseerd voor conversie.</p>
                                                                     </div>
-                                                                    <p>Raouls Choice is een simple en elegant thema
-                                                                        zonder extra opties, mokkeljk te gebruken en
-                                                                        geoptimaliseerd voor conversie.</p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="media">
-                                                                <img src="{{asset('latest/assets/images/login-04.png')}}"
-                                                                    alt="Color" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div class="d-flex">
-                                                                        <h6>Zijbalk & Achtergrond</h6>
+                                                            </label>
+                                                            <label for="rightsidebar">
+                                                                <div class="media">
+                                                                    <img src="{{asset('latest/assets/images/login-04.png')}}"
+                                                                        alt="Color" class="img-fluid">
+                                                                    <div class="media-body">
+                                                                        <div class="d-flex">
+                                                                            <h6>Zijbalk & Achtergrond</h6>
+                                                                            @if (old('lp_layout',
+                                                                            $module_settings->value->lp_layout ?? '') ==
+                                                                            'rightsidebar')
+                                                                            <span>Active Theme</span>
+                                                                            @endif
+                                                                        </div>
+                                                                        <p>Raouls Choice is een simple en elegant thema
+                                                                            zonder extra opties, mokkeljk te gebruken en
+                                                                            geoptimaliseerd voor conversie.</p>
                                                                     </div>
-                                                                    <p>Raouls Choice is een simple en elegant thema
-                                                                        zonder extra opties, mokkeljk te gebruken en
-                                                                        geoptimaliseerd voor conversie.</p>
                                                                 </div>
-                                                            </div>
+                                                            </label>
                                                         </div>
                                                         <div
                                                             class="certificate-style-box login-page-theme-box border-0">
                                                             <div class="media mt-0">
-                                                                <label for="favicon1"
-                                                                    class="file-upload-area file-upload-2"
-                                                                    id="file-upload-area1">
+                                                                <label for="lp_bg_image"
+                                                                    class="file-upload-area file-upload-2">
+
                                                                     <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                         alt="a" class="img-fluid me-0">
                                                                     <p class="mt-2"><span>Click to upload</span> or drag
                                                                         and drop</p>
                                                                 </label>
+
+                                                                <input type="file" name="lp_bg_image" id="lp_bg_image"
+                                                                    accept="image/*" onchange="previewImage2()"
+                                                                    class="form-control d-none  @error('lp_bg_image') is-invalid @enderror">
+                                                                <span class="invalid-feedback">@error('lp_bg_image'){{
+                                                                    $message }}
+                                                                    @enderror</span>
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Upload Login Page Background Image</h6>
                                                                     </div>
                                                                     <p>SVG, PNG, JPG or GIF (max. 1200x900px)</p>
                                                                 </div>
+
                                                             </div>
-                                                        </div>
-                                                        <div class="save-bttns pb-5">
-                                                            <button type="button" class="btn btn-cancel">Cancel</button>
-                                                            <button type="submit" class="btn btn-submit">Save</button>
+                                                            @if(isset($module_settings->lp_bg_image))
+                                                            <img src="{{ asset('assets/images/setting/'.$module_settings->lp_bg_image) }}"
+                                                                alt="" class="img-fluid rounded mt-2">
+
+                                                            @endif
+
+                                                            <img src="" id="preview2" alt=""
+                                                                class="img-fluid rounded mt-2">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-12 col-xl-4">
@@ -176,7 +272,8 @@
 
                                                             <h6>Meta Title</h6>
                                                             <input type="text" class="form-control" name="meta_title"
-                                                                id="meta_title" value=""
+                                                                id="meta_title"
+                                                                value="{{ old('meta_title', $module_settings->value->meta_title ?? '')}}"
                                                                 class="form-control @error('meta_title') is-invalid @enderror">
                                                             <span class="invalid-feedback">@error('meta_title'){{
                                                                 $message }}
@@ -184,9 +281,10 @@
 
                                                             <h6>Meta Description</h6>
                                                             <textarea placeholder="Enter your description"
-                                                                class="form-control @error('meta_title') is-invalid @enderror"></textarea>
+                                                                name="meta_desc"
+                                                                class="form-control @error('meta_desc') is-invalid @enderror">{{ old('meta_desc', $module_settings->value->meta_desc ?? '')}}</textarea>
 
-                                                            <span class="invalid-feedback">@error('meta_title'){{
+                                                            <span class="invalid-feedback">@error('meta_desc'){{
                                                                 $message }}
                                                                 @enderror</span>
                                                         </div>
@@ -195,27 +293,27 @@
                                                             <p>Your favicon will be shown in browsers and in search
                                                                 results.</p>
 
-                                                            <label for="favicon1" class="file-upload-area"
-                                                                id="file-upload-area1">
+                                                            <label for="favicon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                     alt="a" class="img-fluid">
-                                                                <p><span>Click to upload</span> or drag and drop <br>
+                                                                <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
                                                             </label>
-                                                            <div id="uploadedFileContainer1"
-                                                                class="uploaded-file-container"></div>
 
-                                                            <div class="col-md-12 mt-3">
-                                                                <div class="form-group">
-                                                                    <input type="file" name="favicon" id="favicon1"
-                                                                        class="form-control d-none @error('favicon') is-invalid @enderror"
-                                                                        onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
-                                                                    <span class="invalid-feedback">@error('favicon'){{
-                                                                        $message }}
-                                                                        @enderror</span>
-                                                                </div>
-                                                            </div>
+                                                            <input type="file" name="favicon" id="favicon"
+                                                                accept="image/*" onchange="previewImage3()"
+                                                                class="form-control d-none  @error('favicon') is-invalid @enderror">
+                                                            <span class="invalid-feedback">@error('favicon'){{ $message
+                                                                }}
+                                                                @enderror</span>
+
+                                                            <img src="" alt="" class="img-fluid rounded mt-2"
+                                                                id="preview3">
+
+                                                            @if(isset($module_settings->favicon))
+                                                            <img src="{{ asset('assets/images/setting/'.$module_settings->favicon) }}"
+                                                                alt="" class="img-fluid rounded mt-2"> @endif
 
                                                         </div>
                                                         <div class="favicon-box">
@@ -228,27 +326,34 @@
                                                                 device.</p>
 
 
-                                                            <label for="favicon2" class="file-upload-area"
-                                                                id="file-upload-area2">
+                                                            <label for="apple_icon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                     alt="a" class="img-fluid">
-                                                                <p><span>Click to upload</span> or drag and drop <br>
+                                                                <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
                                                             </label>
-                                                            <div id="uploadedFileContainer2"
-                                                                class="uploaded-file-container"></div>
-                                                            <div class="col-md-12 mt-3">
-                                                                <div class="form-group">
-                                                                    <input type="file" name="apple_icon" id="favicon2"
-                                                                        class="form-control d-none  @error('apple_icon') is-invalid @enderror"
-                                                                        onchange="handleFileUpload(this, 'uploadedFileContainer2', 'file-upload-area2')">
-                                                                    <span
-                                                                        class="invalid-feedback">@error('apple_icon'){{
-                                                                        $message }}
-                                                                        @enderror</span>
-                                                                </div>
-                                                            </div>
+
+                                                            <input type="file" name="apple_icon" id="apple_icon"
+                                                                accept="image/*" onchange="previewImage4()"
+                                                                class="form-control d-none  @error('apple_icon') is-invalid @enderror">
+                                                            <span class="invalid-feedback">@error('apple_icon'){{
+                                                                $message }}
+                                                                @enderror</span>
+
+                                                            <img src="" alt="" class="img-fluid rounded mt-2"
+                                                                id="preview4">
+
+                                                            @if(isset($module_settings->apple_icon))
+                                                            <img src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
+                                                                alt="" class="img-fluid rounded mt-2"> @endif
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="save-bttns pb-5">
+                                                            <button type="button" class="btn btn-cancel">Cancel</button>
+                                                            <button type="submit" class="btn btn-submit">Save</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -550,7 +655,81 @@
         } else {
             preview.style.display = 'none';
         }
+    } 
+    function previewImage2() {
+        let preview2 = document.getElementById('preview2');
+        let fileInput2 = document.getElementById('lp_bg_image');
+        let file2 = fileInput2.files[0];
+        
+        if (file2) {
+            let reader2 = new FileReader();
+            reader2.onload = function(e) {
+                preview2.src = e.target.result;
+                preview2.style.display = 'block';
+            };
+            reader2.readAsDataURL(file2);
+        } else {
+            preview2.style.display = 'none';
+        }
+    } 
+    function previewImage3() {
+        let preview3 = document.getElementById('preview3');
+        let fileInput3 = document.getElementById('favicon');
+        let file3 = fileInput3.files[0];
+        
+        if (file3) {
+            let reader3 = new FileReader();
+            reader3.onload = function(e) {
+                preview3.src = e.target.result;
+                preview3.style.display = 'block';
+            };
+            reader3.readAsDataURL(file3);
+        } else {
+            preview3.style.display = 'none';
+        }
+    } 
+    function previewImage4() {
+        let preview4 = document.getElementById('preview4');
+        let fileInput4 = document.getElementById('apple_icon');
+        let file4 = fileInput4.files[0];
+        
+        if (file4) {
+            let reader4 = new FileReader();
+            reader4.onload = function(e) {
+                preview4.src = e.target.result;
+                preview4.style.display = 'block';
+            };
+            reader4.readAsDataURL(file4);
+        } else {
+            preview4.style.display = 'none';
+        }
     }
+    function previewImage5() {
+        let preview5 = document.getElementById('preview5');
+        let fileInput5 = document.getElementById('app_logo');
+        let file5 = fileInput5.files[0];
+        
+        if (file5) {
+            let reader5 = new FileReader();
+            reader5.onload = function(e) {
+                preview5.src = e.target.result;
+                preview5.style.display = 'block';
+            };
+            reader5.readAsDataURL(file5);
+        } else {
+            preview5.style.display = 'none';
+        }
+    }
+</script>
+
+<script>
+    let cards = [...document.querySelectorAll(".login-page-theme-box label .media")];
+    cards.forEach(card => {
+      card.addEventListener("click", function () {
+        cards.forEach(c => c.classList.remove("active"));
+        this.classList.add("active")
+      })
+    });
 </script>
 
 @endsection

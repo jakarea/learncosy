@@ -14,6 +14,7 @@ class InstructorModuleSetting extends Model
         'instructor_id',
         'value',
         'logo',
+        'app_logo',
         'image',
     ];
 
