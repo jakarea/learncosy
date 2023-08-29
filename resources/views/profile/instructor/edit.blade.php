@@ -3,14 +3,8 @@
 
 {{-- page style @S --}}
 @section('style')
-
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    <style>
-        .invalid-feedback {
-        display: block;
-    }
-    </style>
 @endsection
 {{-- page style @S --}}
 
@@ -20,16 +14,13 @@
 <main class="student-profile-update-page">
     <div class="container-fluid">
         <div class="row">
-
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                {{-- session message @E --}}
             </div>
-        @endif
-
+        </div>
+        <div class="row">
             <div class="col-12">
                 <div class="own-profile-box account-settings-box">
                     <div class="header">
