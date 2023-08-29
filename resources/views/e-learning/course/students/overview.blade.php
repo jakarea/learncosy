@@ -195,7 +195,7 @@
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
                         </form> 
-                        <a href="#" class="add-cart-bttn">Add to Chart</a>
+                        {{-- <a href="#" class="add-cart-bttn">Add to Chart</a> --}}
                         @endif 
                     </div>
                     <div class="course-desc-txt">

@@ -224,33 +224,21 @@
 
 .student-courses-lists-pages .course-single-item {
   position: relative;
-}
-.student-courses-lists-pages .course-single-item .btn-ellip {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  background-color: rgba(255, 255, 255, 0.457);
-  z-index: 9;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
+  transition: ease-in-out 0.3s;
 }
 .student-courses-lists-pages .course-ol-box {
   border-radius: 0.5rem;
   background: var(--background-light-paper, #FFF);
   padding: 1rem 0.75rem;
   position: absolute;
-  left: -5%;
-  top: 13.5%;
+  right: -103%;
+  top: -4%;
   width: 110%;
-  height: 115%;
-  display: none;
+  height: 108%;
   transition: ease-in-out 0.3s;
   z-index: 999;
+  border: 1px solid #ccc;
+  transform: scale(0);
 }
 .student-courses-lists-pages .course-ol-box h5 {
   color: var(--text-light-primary, #212B36);
@@ -325,8 +313,8 @@
 .student-courses-lists-pages .course-ol-box a:hover {
   background-color: #212B36;
 }
-.student-courses-lists-pages .active-ol .course-ol-box {
-  visibility: visible;
+.student-courses-lists-pages .course-single-item:hover .course-ol-box {
+  transform: scale(1);
 }
 .student-courses-lists-pages .course-progress-bar {
   margin: 0.6rem 0;

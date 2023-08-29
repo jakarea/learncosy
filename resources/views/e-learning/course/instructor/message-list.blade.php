@@ -10,7 +10,7 @@
 {{-- page content @S --}}
 @section('content')
 {{-- ==== message list page @S ==== --}}
-<main class="message-list-page-wrap">
+<main class="message-list-page-wrap student-messages-page">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
