@@ -15,7 +15,18 @@ class LessonManagementController extends Controller
      // lesson list
      public function index()
      {   
-         $lessons = Lesson::orderby('id', 'desc')->paginate(12); 
+
+         $title = isset($_GET['title']) ? $_GET['title'] : '';
+         $status = isset($_GET['status']) ? $_GET['status'] : '';
+         $lessons = Lesson::orderby('id', 'desc');
+         if (!empty($title)) {
+             $lessons->where('title', 'like', '%' . trim($title) . '%');
+         }
+         if (!empty($status)) {
+             $lessons->where('status', 'like', '%' . trim($status) . '%');
+         }
+         $lessons = $lessons->paginate(12);
+
          return view('e-learning/lesson/admin/grid',compact('lessons')); 
      }
 

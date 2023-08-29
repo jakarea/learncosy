@@ -21,28 +21,28 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Total Earnings</h5>
                     <h4>$40,832.00</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Earnings Today</h5>
                     <h4>$120.00</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Total Enrollments</h5>
                     <h4>120 Students</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
                     <h5>Enrolled Today</h5>
@@ -66,7 +66,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="subscription-table-wrap">
+                <div class="subscription-table-wrap payment-table-admin">
                     <table>
                         <tr>
                             <th>No</th>

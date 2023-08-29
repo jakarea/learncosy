@@ -36,12 +36,10 @@
                             <input type="text" placeholder="Search Package" class="form-control" name="name"
                                 value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
-                        <div class="form-filter">
-
-                                @php 
-                                 $pack_status = isset($_GET['status']) ? $_GET['status'] : '';
-                                 @endphp
-
+                        <div class="form-filter"> 
+                            @php 
+                            $pack_status = isset($_GET['status']) ? $_GET['status'] : '';
+                            @endphp
                             <select class="form-control" name="status">
                                 <option value="">All</option> 
                                 <option value="active" {{ $pack_status == 'active' ? 'selected' : ''}}>Active</option>

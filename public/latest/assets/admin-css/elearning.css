@@ -1561,6 +1561,10 @@ span.finsihLesson {
   height: auto;
 }
 
+.module-header {
+  grid-template-columns: 9% 60% 13% 10%;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
@@ -1654,6 +1658,9 @@ span.finsihLesson {
     display: block;
     width: 100%;
   }
+  .module-header {
+    grid-template-columns: 100%;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .course-title {
@@ -1679,6 +1686,12 @@ span.finsihLesson {
     display: block;
     width: 100%;
   }
+  .module-header {
+    grid-template-columns: 100%;
+  }
+  .module-list-table.subscription-table-wrap table {
+    display: block !important;
+  }
 }
 @media (min-width: 767px) and (max-width: 992px) {
   .course-outline-wrap {
@@ -1687,6 +1700,9 @@ span.finsihLesson {
   .course-single-item .course-thumb-box img {
     display: block;
     width: 100%;
+  }
+  .module-header {
+    grid-template-columns: 50% 50%;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {

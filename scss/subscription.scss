@@ -325,6 +325,16 @@
             }
         }
     }
+
+    .top-card-box{
+        margin-bottom: 1rem;
+        h5{
+            font-size: .8rem;
+        }
+        h4{
+            font-size: 1rem;
+        }
+    }
 }
 
 // landscape phone device 
@@ -347,6 +357,14 @@
             }
         }
     }
+
+    .top-card-box{
+        margin-bottom: 1rem;
+    }
+
+    .payment-table-admin.subscription-table-wrap table{
+        display: block;
+    }
 }
 
 // tablet device 
@@ -354,6 +372,10 @@
     .package-list-header {
         grid-template-columns: 70% 30%;
         grid-gap: 1rem;
+    }
+
+    .top-card-box{
+        margin-bottom: 1rem;
     }
 }
 
