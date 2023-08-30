@@ -18,15 +18,16 @@ Course Create - Step 1
                 {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
                 class --}}
                 {{-- add class "current" to "step-box" for the current step --}}
+               
+
                 <div class="course-create-step-wrap">
-                    <div class="step-box current">
+                    <div class="step-box active">
                         <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid"> --}}
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
                         </span>
                         <p>Contents</p>
                     </div>
-                    <div class="step-box">
+                    <div class="step-box current">
                         <span class="circle"></span>
                         <p>Facts</p>
                     </div>
@@ -51,6 +52,7 @@ Course Create - Step 1
                         <p>Share</p>
                     </div>
                 </div>
+
                 {{-- course step --}}
             </div>
         </div>

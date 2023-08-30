@@ -118,11 +118,12 @@ class AdminHomeController extends Controller
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at', 'subscription_packages.amount']);
+        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.amount']);
         $monthlySums = array_fill(0, 12, 0);
 
   // Iterate through the data array
   foreach ($data as $item) {
+    // print_r($item);
     // Extract the month from the created_at value
     $createdAt = Carbon::parse($item['created_at']);
     $month = intval($createdAt->format('m'));
