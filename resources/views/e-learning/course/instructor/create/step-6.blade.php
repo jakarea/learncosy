@@ -19,13 +19,14 @@ Course Create - Step 3
                 class --}}
                 {{-- add class "current" to "step-box" for the current step --}}
                 <div class="course-create-step-wrap">
-                    <div class="step-box active">
+                    <div class="step-box current">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                                class="img-fluid"> --}}
                         </span>
                         <p>Contents</p>
                     </div>
-                    <div class="step-box current">
+                    <div class="step-box">
                         <span class="circle"></span>
                         <p>Facts</p>
                     </div>

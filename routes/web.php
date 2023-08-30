@@ -455,7 +455,7 @@ Route::fallback(function () {
 
 // add course static route
 
-Route::get('/instructor/courses/create/step-1', function () {
+Route::get('/instructor/courses/create/step-6', function () {
     return view('e-learning/course/instructor/create/step-1');
 });
 
@@ -475,7 +475,7 @@ Route::get('/instructor/courses/create/step-5', function () {
     return view('e-learning/course/instructor/create/step-5');
 });
 
-Route::get('/instructor/courses/create/step-6', function () {
+Route::get('/instructor/courses/create/step-1', function () {
     return view('e-learning/course/instructor/create/step-6');
 });
 
