@@ -212,6 +212,10 @@
   top: 30px;
 }
 
+.student-messages-page .messages-box .chat-main-body-box .main-chat-room .chat-messages-box .message-item {
+  margin-top: 1rem !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .message-list-page-wrap .messages-box {
     grid-template-columns: 100%;

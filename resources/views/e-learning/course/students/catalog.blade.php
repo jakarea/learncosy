@@ -72,17 +72,32 @@
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-3">
                 <div class="course-single-item">
-                    <button class="btn btn-ellip" type="button">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
                     <div class="course-thumb-box">
                         <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
                             class="img-fluid">
                     </div>
+                    <div class="course-txt-box">
+                        @if ( isEnrolled($course->id) )
+                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
+                        @else 
+                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
+                        @endif
+                        
+                        <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
+                        <ul>
+                            <li><span>{{ $review_avg }}</span></li>
+                            @for ($i = 0; $i<$review_avg; $i++)
+                                <li><i class="fas fa-star"></i></li>
+                            @endfor
+                            <li><span>({{ $total }})</span></li>
+                        </ul>
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                    </div> 
+
                     <div class="course-ol-box">
-                        <h5>{{ Str::limit($course->title, 60) }}</h5>
+                        <h5>{{ Str::limit($course->title, 50) }}</h5>
                         <span>Last Update: {{date('M d Y ', strtotime($course->updated_at)) }}</span>
-                        <h6>{{ Str::limit($course->short_description, $limit = 90, $end = '...') }}</h6>
+                        <h6>{{ Str::limit($course->short_description, $limit = 120, $end = '...') }}</h6>
                         @php
                         $features = explode(",", $course->features);
                         $limitedItems = array_slice($features, 0, 4);
@@ -103,23 +118,7 @@
                         <a href="{{url('students/courses/overview/'.$course->slug )}}">Go to Course</a>
                         @endif 
                     </div>
-                    <div class="course-txt-box">
-                        @if ( isEnrolled($course->id) )
-                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
-                        @else 
-                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
-                        @endif
-                        
-                        <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
-                        <ul>
-                            <li><span>{{ $review_avg }}</span></li>
-                            @for ($i = 0; $i<$review_avg; $i++)
-                                <li><i class="fas fa-star"></i></li>
-                            @endfor
-                            <li><span>({{ $total }})</span></li>
-                        </ul>
-                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                    </div> 
+
                 </div>
             </div>
             {{-- course single box end --}}
@@ -147,5 +146,26 @@
 {{-- page content @E --}}
 
 @section('script')
+<script>
+    const parent = document.querySelector('.course-single-item');
+    const child = document.querySelector('.course-ol-box');
+  
+    parents.forEach(parent => {
+    parent.addEventListener('mouseenter', () => {
+      const parentRect = parent.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      
+      // Check if there's enough space on the right side of the parent
+      if (viewportWidth - parentRect.right < child.offsetWidth) {
+        child.style.right = 'auto';
+        child.style.left = '0';
+      }
+    });
 
+    parent.addEventListener('mouseleave', () => {
+      child.style.right = '-100%'; // Hide the child when not hovering
+    });
+  });
+  </script>
+  
 @endsection

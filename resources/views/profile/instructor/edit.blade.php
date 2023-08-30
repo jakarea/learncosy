@@ -81,9 +81,10 @@
 
                                             <div class="form-check form-switch ps-0">
                                                 <label class="form-check-label" for="recivingMessage">Receiving
-                                                    Messages</label>
-                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
-                                                    role="switch" id="recivingMessage" {{ $user->recivingMessage == 1 ? 'checked' : '' }}>
+                                                    Messages</label> 
+
+                                                <input class="form-check-input" type="checkbox" name="recivingMessage" value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ? 'checked' : '' }}>
+
                                             </div>
                                         </div>
                                     </div>
