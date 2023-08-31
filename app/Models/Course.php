@@ -17,7 +17,14 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'title', 
+        'slug',
+        'short_description', 
+        'auto_complete',
+        'thumbnail', 
+        'banner', 
+        'description', 
+        
         'sub_title',
         'user_id',
         'features',
@@ -28,10 +35,7 @@ class Course extends Model
         'price', 
         'offer_price', 
         'categories', 
-        'thumbnail', 
-        'banner', 
-        'short_description', 
-        'description', 
+       
         'meta_keyword', 
         'meta_description', 
         'number_of_module', 
