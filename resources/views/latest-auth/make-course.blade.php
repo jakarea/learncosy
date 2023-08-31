@@ -54,8 +54,8 @@ Make Course
                 <!-- login form start -->
                 <div class="username-box-wrap custom-margins"> 
                     <h1>Make your first course</h1>
-                    <p>Start create your first course click next. </p>
-                    <a class="btn btn-submit btn-primary mt-3" role="button" href="{{ url('/instructor/courses/create') }}">Create a new course</a>
+                    <p>Start create your first course click next. </p> 
+                    <a class="btn btn-submit btn-primary mt-3" role="button" href="{{ url('instructor/courses/create/step-1') }}">Create a new course</a>
                 </div>
                 <!-- login form end -->
             </div>

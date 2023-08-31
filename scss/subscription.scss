@@ -370,7 +370,7 @@
 // tablet device 
 @include q.responsive(tablet) {
     .package-list-header {
-        grid-template-columns: 70% 30%;
+        grid-template-columns: 100%;
         grid-gap: 1rem;
     }
 
@@ -382,7 +382,7 @@
 // landtablet device 
 @include q.responsive(landtablet) {
     .package-list-header {
-        grid-template-columns: 80% 20%;
+        grid-template-columns: 100%;
         grid-gap: 1rem;
     }
 }
@@ -390,9 +390,6 @@
 // regular device 
 @include q.responsive(regular) {
 
-    .package-list-header {
-        grid-template-columns: 69% 15% 15%; 
-    }
 }
 
 // large device 

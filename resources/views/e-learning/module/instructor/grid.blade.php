@@ -20,18 +20,11 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="package-list-header d-flex justify-content-between">
-                    <h5>Module List</h5>
-                    <div class="bttn">
-                        <a href="{{ url('instructor/modules/create') }}" class="common-bttn"><i class="fas fa-plus"></i> Add Module</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
+        <div class="row"> 
+            <div class="col-lg-12">
                 <form action="" method="GET">
-                    <div class="package-list-header package-new-header"> 
+                    <div class="package-list-header"> 
+                        <h5>Module List</h5>
                         <div class="form-group">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search Modules" class="form-control" name="title"
@@ -49,7 +42,7 @@
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="bttn">
-                            <button class="common-bttn border-0" type="submit"><i class="fas fa-search me-2"></i> Search</button>
+                            <a href="{{ url('instructor/modules/create') }}" class="common-bttn"><i class="fas fa-plus"></i> Add Module</a>
                         </div>
                     </div>
                 </form> 

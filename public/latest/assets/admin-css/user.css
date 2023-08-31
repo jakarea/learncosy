@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .user-title-box h1 {
   color: var(--neutral-color-neutral-70, #2F3A4C);
@@ -35,6 +35,30 @@
 }
 .user-title-box button:hover,
 .user-title-box a:hover {
+  background-color: #2F3A4C;
+}
+
+.user-add-box button,
+.user-add-box a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  background: var(--primary-color-blue, #294CFF);
+  transition: all linear 0.3s;
+}
+.user-add-box button img,
+.user-add-box a img {
+  margin-right: 0.2rem;
+}
+.user-add-box button:hover,
+.user-add-box a:hover {
   background-color: #2F3A4C;
 }
 
@@ -577,8 +601,7 @@
 }
 
 .user-search-box-wrap {
-  display: grid;
-  grid-template-columns: 65% 19% 16%;
+  margin-bottom: 2rem;
 }
 .user-search-box-wrap .form-group {
   position: relative;
@@ -1760,6 +1783,13 @@
   .user-header-bttn {
     text-align: left;
   }
+  .user-add-box {
+    text-align: left !important;
+    margin-bottom: 1rem;
+  }
+  .user-search-box-wrap {
+    margin-bottom: 1rem;
+  }
 }
 @media (min-width: 574px) and (max-width: 767px) {
   .contact-info-box {
@@ -1825,6 +1855,13 @@
   .header-action .dropdown-menu {
     transform: translate3d(39.4px, -26.6px, 0px) !important;
   }
+  .user-add-box {
+    text-align: left !important;
+    margin-bottom: 1rem;
+  }
+  .user-search-box-wrap {
+    margin-bottom: 1rem;
+  }
 }
 @media (min-width: 767px) and (max-width: 992px) {
   .contact-info-box {
@@ -1856,9 +1893,22 @@
   .user-search-box-wrap {
     grid-template-columns: 100% !important;
   }
+  .user-add-box {
+    text-align: left !important;
+    margin-bottom: 1rem;
+  }
+  .user-search-box-wrap {
+    margin-bottom: 1rem;
+  }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .user-search-box-wrap {
     grid-template-columns: 85% 15% !important;
+  }
+  .user-add-box button, .user-add-box a {
+    font-size: 0.8rem;
+  }
+  .user-add-box {
+    margin-bottom: 1rem;
   }
 }
