@@ -78,7 +78,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group lesson-files-upload">
                                     <label for="thumbnail">Thumbnail</label>
-                                    <input type="file" id="thumbnail" class="d-none">
+                                    <input type="file" id="thumbnail" class="d-none" name="thumbnail">
                                     <label class="media" for="thumbnail">
                                         <img src="{{asset('latest/assets/images/placeholder.svg')}}" alt="Logo"
                                             class="img-fluid">
@@ -97,8 +97,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group lesson-files-upload">
-                                    <label for="lesson_file">Image</label>
-                                    <input type="file" id="lesson_file" class="d-none">
+                                    <label for="lesson_file">File</label>
+                                    <input type="file" id="lesson_file" class="d-none" name="lesson_file">
                                     <label class="media media2" for="lesson_file">
                                         <img src="{{asset('latest/assets/images/placeholder.svg')}}" alt="Logo"
                                             class="img-fluid">
@@ -167,8 +167,7 @@
                                     <label for="status">Status</label>
                                     <select name="status" id="status"
                                         class="form-control @error('status') is-invalid @enderror">
-                                        <option value="" disabled>Select Below</option>
-                                        <option value="draft" {{ $lesson->status == 'draft' ? 'selected' : ''}}>Draft</option>
+                                        <option value="" disabled>Select Below</option> 
                                         <option value="pending" {{ $lesson->status == 'pending' ? 'selected' : ''}}>Pending</option>
                                         <option value="published" {{ $lesson->status == 'published' ? 'selected' : ''}}>Published</option>
                                     </select>

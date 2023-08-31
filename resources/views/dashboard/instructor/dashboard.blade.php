@@ -11,14 +11,14 @@
             <div class="col-12">
                 <div class="welcome-back-box">
                     <h1>Welcome back, {{auth::user()->name}}</h1>
-                    <h6>Your progress this week is Awesome, let’s keep it up.</h6>
+                    <h6>Your progress this week is Awesome, let's keep it up.</h6>
                     <h5>Complete your profile</h5>
 
                     <div class="d_flex">
-                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 25%"></div>
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width: 75%"></div>
                         </div>
-                        <span>25%</span>
+                        <span>75%</span>
                     </div>
                 </div>
             </div>

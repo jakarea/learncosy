@@ -93,13 +93,17 @@
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
                         <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        @elseif ($domain == 'facebook')
+                        <i class="fa-brands fa-facebook-f" style="color: #1C1C1C; font-size: 1rem; margin-right: 1rem; width: 24px;
+                        height: 24px;
+                        margin-top: 0.5rem;"></i>
                         @else
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         @endif
                         
                         <div class="media-body">
-                            <h6>{{ $domain ? $domain : 'No Account Found!' }}</h6>
-                            <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
+                            <h6>{{ $domain ? $domain : '' }}</h6>
+                            <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '' }}</a>
                         </div>
                     </div>
                     @endforeach

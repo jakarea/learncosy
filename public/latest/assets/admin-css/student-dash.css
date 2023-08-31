@@ -961,6 +961,7 @@
   border-radius: 0.5rem;
   background: var(--background-light-paper, #FFF);
   box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  min-height: 95%;
 }
 .course-status-wrap .d-flex {
   align-items: center;
@@ -1023,7 +1024,7 @@
   margin-right: 1rem;
 }
 .course-status-wrap table tr td .media .avatar img {
-  width: 0.2em 0.4rem;
+  width: 2.4rem;
   height: 2.4rem;
   -o-object-fit: cover;
      object-fit: cover;

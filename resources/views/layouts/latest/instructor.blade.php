@@ -33,6 +33,14 @@
     <link href="{{ asset('latest/assets/admin-css/ins-responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
+    @if (modulesetting('primary_color'))
+    {{-- <style>
+        .header-area .navbar-nav .nav-item .nav-link{
+            color: #fff!important;
+        }
+    </style> --}}
+    @endif
+
     @yield('seo')
 </head>
 

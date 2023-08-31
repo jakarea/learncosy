@@ -11,7 +11,7 @@
 {{-- page content @S --}}
 @section('content')
 @php
-    $social_links = explode(",", $user->social_links);
+$social_links = explode(",", $user->social_links);
 @endphp
 <main class="user-profile-view-page">
     <div class="container-fluid">
@@ -50,39 +50,35 @@
                 </div>
 
                 <div class="user-expperience-box">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4>Experiences</h4>  
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4>Experiences</h4>
                         <div>
-                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                        <a href="#" class="ms-3"><img src="{{ asset('latest/assets/images/icons/pen.svg') }}" alt="img" class="img-fluid"></a>
+                            <a href="{{url('instructor/profile/edit')}}"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img"
+                                    class="img-fluid"></a>
                         </div>
                     </div>
-                    
 
+
+                    @foreach ($experiences as $experience)
                     <div class="media brdr-bttm">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img"
+                            class="img-fluid">
                         <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h5>{{ $experience->profession }}</h5>
+                                <div> 
+                                    <a href="{{ url('instructor/profile/edit?id='.$experience->id )}}"><img
+                                            src=" {{ asset('latest/assets/images/icons/pen.svg')   }}" alt="img"
+                                            class="img-fluid"></a>
+                                </div>
+                            </div>
+
+                            <h6>{{ $experience->company_name }} <i class="fas fa-circle"></i> {{ $experience->job_type
+                                }} <i class="fas fa-circle"></i> {{ $experience->experience }}</h6>
+                            <p>{{ $experience->short_description }}</p>
                         </div>
                     </div>
-                    <div class="media brdr-bttm">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
-                        <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
-                        <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
-                        </div>
-                    </div>
+                    @endforeach
 
                 </div>
             </div>
@@ -108,16 +104,16 @@
                         <div class="media-body">
                             <h6>Instagram</h6>
                             @if ($user->social_links)
-                                <a href="{{ $user->social_links }}">{{ $user->social_links }}</a>
+                            <a href="{{ $user->social_links }}">{{ $user->social_links }}</a>
                             @endif
-                            
+
                         </div>
-                    </div> 
-                </div>  
+                    </div>
+                </div>
             </div>
         </div>
         {{-- profile information @E --}}
     </div>
 </main>
 @endsection
-{{-- page content @E --}} 
+{{-- page content @E --}}

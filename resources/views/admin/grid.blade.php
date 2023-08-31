@@ -20,34 +20,30 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-12">
                 <div class="user-title-box">
                     <h1>Total: <span>{{ count($users) }} Admin</span></h1>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="user-title-box justify-content-end">
-                    <a href="{{ url('admin/alladmin/create') }}"><img
-                        src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid">
-                    Add Admin</a>
-                </div>
-            </div>
+            </div> 
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-10">
                 <form action="">
-                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
+                    <div class="user-search-box-wrap">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search Admin" class="form-control" name="name"
                                 value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
-
-                        <div class="user-title-box justify-content-end">
-                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
-                        </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-lg-2">
+                <div class="user-add-box text-end">
+                    <a href="{{ url('admin/alladmin/create') }}"><img
+                        src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid">
+                    Add Admin</a>
+                </div>
             </div>
         </div>
         <div class="row">

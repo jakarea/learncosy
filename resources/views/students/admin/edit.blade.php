@@ -91,9 +91,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label> 
                                     @php $socialLinks = explode(",",$student->social_links); @endphp 
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                        class="form-control @error('social_links') is-invalid @enderror"
-                                        id="features" multiple> 
+                                     
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
@@ -103,7 +101,7 @@
                                     </div> 
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -130,23 +128,21 @@
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
+                                    <input type="file" name="avatar" id="imageInput" accept="image/*" onchange="previewImage()"
+                                    class="form-control d-none  @error('avatar') is-invalid @enderror">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }} @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
-                                    @if ($student->avatar)
-                                    <img src="{{asset('assets/images/users/'.$student->avatar)}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
-                                    @else
-                                    <img src="{{asset('latest/assets/images/avatar.png')}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
+                                <div id="imageContainer"> 
+                                    <img src="" alt="" class="img-fluid" id="preview">
+                                    @if($student->avatar)
+                                        <img src="{{ asset('assets/images/users/'.$student->avatar) }}" alt="logo" class="img-fluid">
                                     @endif 
+                                   
                                 </div>
                             </div> 
                             <div class="col-md-6">
@@ -212,7 +208,24 @@
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
 </script>
 <script src="{{asset('assets/js/tinymce.js')}}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
+<script>
+    function previewImage() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('imageInput');
+        var file = fileInput.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    } 
+</script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
     let extraFileds = document.querySelector('.url-extra-field');

@@ -26,24 +26,41 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        
         <div class="row">
             <div class="col-12">
                 <form action="" method="GET">
-                    <div class="user-search-box-wrap" style="grid-template-columns: 88% 12%">
-                        <div class="form-group">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search Courses" class="form-control" name="title"
-                                value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
+                    <div class="row">
+                        <div class="col-xl-8 col-md-8">
+                            <div class="user-search-box-wrap">
+                                <div class="form-group">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" placeholder="Search Course" class="form-control" name="title"
+                                        value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="user-title-box justify-content-end">
-                            <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
+                        <div class="col-xl-3 col-md-4">
+                            <div class="user-search-box-wrap">
+                                <div class="form-filter">
+                                    <select class="form-control">
+                                        <option value="">Best Rated</option>
+                                        <option value="">Most Purchased</option>
+                                        <option value="">Newest</option>
+                                        <option value="">Oldest</option>
+                                    </select>
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-1 ps-0 col-md-5">
+                            <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
+                                <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
-        </div>
+        </div>         
         <div class="row">
             @if (count($courses) > 0)
             @foreach($courses as $course)

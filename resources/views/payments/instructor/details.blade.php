@@ -94,7 +94,9 @@
                         <ul>
                             <li><img src="{{asset('latest/assets/images/icons/p-1.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->email }}</li>
                             <li><img src="{{asset('latest/assets/images/icons/p-2.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->phone }}</li>
-                            <li><img src="{{asset('latest/assets/images/icons/p-3.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->social_links }}</li>
+                            <li>
+                                <a href="{{ $payment->user->social_links }}" target="_blank"><img src="{{asset('latest/assets/images/icons/p-3.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->social_links }}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

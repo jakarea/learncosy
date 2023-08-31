@@ -37,18 +37,7 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
                     <form action="{{route('lesson.store')}}" method="POST" class="create-form-box"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group form-error">
-                                    <label for="title">Title <sup class="text-danger">*</sup>
-                                    </label>
-                                    <input type="text" placeholder="Enter Course Title" name="title"
-                                        class="form-control @error('title') is-invalid @enderror"
-                                        value="{{ old('title')}}" id="title">
-                                    <span class="invalid-feedback">@error('title'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
+                        <div class="row"> 
                             <div class="col-md-12">
                                 <div class="form-group form-error">
                                     <label for="course_id">Select Course <sup class="text-danger">*</sup>
@@ -81,17 +70,28 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
                                         @enderror</span>
                                 </div>
                             </div> 
+                            <div class="col-md-12">
+                                <div class="form-group form-error">
+                                    <label for="title">Title <sup class="text-danger">*</sup>
+                                    </label>
+                                    <input type="text" placeholder="Enter Lesson Title" name="title"
+                                        class="form-control @error('title') is-invalid @enderror"
+                                        value="{{ old('title')}}" id="title">
+                                    <span class="invalid-feedback">@error('title'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group lesson-files-upload">
-                                    <label for="thumbnail">Logo</label>
-                                    <input type="file" id="thumbnail" class="d-none">
+                                    <label for="thumbnail">Thumbnail</label>
+                                    <input type="file" id="thumbnail" class="d-none" name="thumbnail">
                                     <label class="media" for="thumbnail">
                                         <img src="{{asset('latest/assets/images/placeholder.svg')}}" alt="Logo"
                                             class="img-fluid">
                                         <div class="media-body">
                                             <h5>Select Image</h5>
-                                            <p>Drop files here or <a href="#">click</a> browse thorough your Device.
-                                                Accepted file type (.jpg .png webp)</p>
+                                            <p><u>Click here</u> and browse thorough your Device.
+                                                Accepted file type (.jpg .png .webp)</p>
                                         </div>
                                     </label>
 
@@ -104,15 +104,15 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group lesson-files-upload">
-                                    <label for="lesson_file">Image</label>
-                                    <input type="file" id="lesson_file" class="d-none">
+                                    <label for="lesson_file">File</label>
+                                    <input type="file" id="lesson_file" class="d-none" name="lesson_file">
                                     <label class="media media2" for="lesson_file">
                                         <img src="{{asset('latest/assets/images/placeholder.svg')}}" alt="Logo"
                                             class="img-fluid">
                                         <div class="media-body">
                                             <h5>Select Image</h5>
-                                            <p>Drop files here or <a href="#">click</a> browse thorough your Device.
-                                                Accepted file type (.jpg .png webp)</p>
+                                            <p><u>Click here</u> and browse thorough your Device.
+                                                Accepted file type (.jpg .png .webp)</p>
                                         </div>
                                     </label>
                                     <div class="uploaded-image2">
@@ -163,8 +163,7 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
                                     <label for="status">Status</label>
                                     <select name="status" id="status"
                                         class="form-control @error('status') is-invalid @enderror">
-                                        <option value="" disabled>Select Below</option>
-                                        <option value="draft">Draft</option>
+                                        <option value="" disabled>Select Below</option> 
                                         <option value="pending">Pending</option>
                                         <option value="published">Published</option>
                                     </select>
