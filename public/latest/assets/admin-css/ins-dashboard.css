@@ -86,6 +86,7 @@
   background: #FFF;
   box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
   padding: 1.5rem;
+  min-height: 91.5%;
 }
 .my-courses-box h3 {
   color: var(--text-light-primary, #212B36);
@@ -139,6 +140,14 @@
   background: #FFF;
   box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
   padding: 1.5rem;
+  min-height: 91.5%;
+  position: relative;
+}
+.recent-payment-box .text-center {
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+  width: 100%;
 }
 .recent-payment-box h3 {
   color: var(--text-light-primary, #212B36);
@@ -194,6 +203,14 @@
   background: var(--neutral-white, #FFF);
   box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
   padding: 1.5rem 1.125rem;
+  min-height: 95%;
+  position: relative;
+}
+.chart-box-wrap #course_earning {
+  position: absolute;
+  left: 0;
+  top: 30%;
+  width: 100%;
 }
 .chart-box-wrap h5 {
   color: var(--neutral-black-black-500, #1D1F2C);
