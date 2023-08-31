@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') My Profile Password @endsection
+@section('title') Update Password @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -16,7 +16,7 @@
     <div class="row align-items-center">
       <div class="col-12 col-md-7">
         <div class="user-header">
-          <h2>Update Your Password</h2>
+          <h2>Update Password</h2>
         </div>
       </div>
       <div class="col-12 col-md-5">
@@ -32,34 +32,35 @@
           <form action="{{ route('admin.password.update',$user->id) }}" method="POST">
             @csrf
             <div class="form-group">
-              <label for="">Email</label>
+              <label for="">Your Email</label>
               <input type="text" placeholder="Email" class="form-control" value="{{ $user->email}}" disabled>
             </div>
-            <!-- input @E -->
-            <!-- input @S -->
-            <div class="form-group">
-              <label for="">New Password<sup class="text-danger">*</sup></label>
-              <input type="password" name="password" placeholder="*********"
-                class="form-control @error('password') is-invalid @enderror" id="password">
-              <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
-              <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="">New Password <sup class="text-danger">*</sup></label>
+                  <input type="password" name="password" placeholder="*********"
+                    class="form-control @error('password') is-invalid @enderror" id="password">
+                  <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
+                  <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="">Confirm New Password <sup class="text-danger">*</sup></label>
+                  <input type="password" name="password_confirmation" placeholder="*********"
+                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                    id="password_confirmation">
+                  <span class="invalid-feedback">@error('password_confirmation'){{ $message }} @enderror</span>
+                  <i class="fa-regular fa-eye" onclick="changeType2()" id="eye-click2"></i>
+                </div>
+              </div>
             </div>
-            <!-- input @E -->
-            <!-- input @S -->
-            <div class="form-group">
-              <label for="">Confirm New Password<sup class="text-danger">*</sup></label>
-              <input type="password" name="password_confirmation" placeholder="*********"
-                class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation">
-              <span class="invalid-feedback">@error('password_confirmation'){{ $message }} @enderror</span>
-              <i class="fa-regular fa-eye" onclick="changeType2()" id="eye-click2"></i>
-            </div>
-            <!-- input @E -->
-            <!-- submit @S -->
+
             <div class="form-submit-bttns">
               <button type="reset" class="btn btn-cancel">Cancel</button>
-              <button type="submit" class="btn btn-submit">Update Password</button>
+              <button type="submit" class="btn btn-submit">Update</button>
             </div>
-            <!-- submit @E -->
           </form>
           {{-- user update form @e --}}
         </div>

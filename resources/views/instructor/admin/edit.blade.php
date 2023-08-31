@@ -110,9 +110,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
                                     @php $socialLinks = explode(",",$instructor->social_links); @endphp
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                        class="form-control @error('social_links') is-invalid @enderror" id="features"
-                                        multiple>
+
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
@@ -124,7 +122,8 @@
                                     </div>
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i
+                                            class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -141,7 +140,7 @@
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="">Sample Certificates</label>
+                                    <label for="">Avatar</label>
                                 </div>
                                 <div id="image-container">
                                     <label for="imageInput" class="upload-box">
@@ -151,23 +150,24 @@
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
+
+                                    <input type="file" name="avatar" id="imageInput" accept="image/*" onchange="previewImage()"
+                                    class="form-control d-none  @error('avatar') is-invalid @enderror">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }} @enderror</span>
+ 
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
-                                    @if ($instructor->avatar)
-                                    <img src="{{asset('assets/images/users/'.$instructor->avatar)}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
-                                    @else
-                                    <img src="{{asset('latest/assets/images/avatar.png')}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
-                                    @endif
+                                
+                                <div id="imageContainer"> 
+                                    <img src="" alt="" class="img-fluid" id="preview">
+                                    @if($instructor->avatar)
+                                        <img src="{{ asset('assets/images/users/'.$instructor->avatar) }}" alt="logo" class="img-fluid">
+                                    @endif 
+                                   
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -177,7 +177,8 @@
                                         <div class="col-md-2">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault1" value="1" {{ $instructor->recivingMessage == 1
+                                                    id="flexRadioDefault1" value="1" {{ $instructor->recivingMessage ==
+                                                1
                                                 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Enable
@@ -187,7 +188,8 @@
                                         <div class="col-md-2">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault2" value="0" {{ $instructor->recivingMessage == 0
+                                                    id="flexRadioDefault2" value="0" {{ $instructor->recivingMessage ==
+                                                0
                                                 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Disable
@@ -233,52 +235,69 @@
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
 </script>
 <script src="{{asset('assets/js/tinymce.js')}}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
 <script>
-   const urlBttn = document.querySelector('#url_increment');
-let extraFields = document.querySelector('.url-extra-field');
+    function previewImage() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('imageInput');
+        var file = fileInput.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    } 
+</script>
+<script>
+    const urlBttn = document.querySelector('#url_increment');
+    let extraFields = document.querySelector('.url-extra-field');
 
-// A function to create a new input field
-const createField = () => {
-  let div = document.createElement("div");
-  let node = document.createElement("input");
-  node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-  node.setAttribute("multiple", "");
-  node.setAttribute("type", "url");
-  node.setAttribute("placeholder", "Enter Social Link");
-  node.setAttribute("name", "social_links[]");
+    // A function to create a new input field
+    const createField = () => {
+    let div = document.createElement("div");
+    let node = document.createElement("input");
+    node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
+    node.setAttribute("multiple", "");
+    node.setAttribute("type", "url");
+    node.setAttribute("placeholder", "Enter Social Link");
+    node.setAttribute("name", "social_links[]");
 
-  let link = document.createElement("a");
-  link.innerHTML = "<i class='fas fa-minus'></i>";
-  link.setAttribute("onclick", "removeField(this)");
-  div.appendChild(node);
-  div.appendChild(link);
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
+    div.appendChild(node);
+    div.appendChild(link);
 
-  extraFields.appendChild(div);
-}
+    extraFields.appendChild(div);
+    }
 
-// A function to remove a field
-const removeField = (element) => {
-  let fieldDiv = element.parentElement;
-  fieldDiv.remove();
-}
+    // A function to remove a field
+    const removeField = (element) => {
+    let fieldDiv = element.parentElement;
+    fieldDiv.remove();
+    }
 
-// Add an event listener to create a new field
-urlBttn.addEventListener('click', createField, true);
+    // Add an event listener to create a new field
+    urlBttn.addEventListener('click', createField, true);
 
-// Show the minus icon for the existing input fields in the loop
-const existingInputs = document.querySelectorAll('.url-extra-field input');
-for (const input of existingInputs) {
-  let link = document.createElement("a");
-  link.innerHTML = "<i class='fas fa-minus'></i>";
-  link.setAttribute("onclick", "removeField(this)");
+    // Show the minus icon for the existing input fields in the loop
+    const existingInputs = document.querySelectorAll('.url-extra-field input');
+    for (const input of existingInputs) {
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
 
-  let div = document.createElement("div");
-  div.appendChild(input);
-  div.appendChild(link);
+    let div = document.createElement("div");
+    div.appendChild(input);
+    div.appendChild(link);
 
-  extraFields.appendChild(div);
-}
+    extraFields.appendChild(div);
+    }
 </script>
 
 @endsection

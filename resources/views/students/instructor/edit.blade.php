@@ -91,9 +91,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label> 
                                     @php $socialLinks = explode(",",$student->social_links); @endphp 
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                        class="form-control @error('social_links') is-invalid @enderror"
-                                        id="features" multiple> 
+                                    
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
@@ -103,7 +101,7 @@
                                     </div> 
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -215,46 +213,50 @@
 <script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
-    let extraFileds = document.querySelector('.url-extra-field');
-  
-    const createFiled = () => {
-      let div = document.createElement("div");
-      let node = document.createElement("input");
-      node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-      node.setAttribute("multiple", "");
-      node.setAttribute("type", "url");
-      node.setAttribute("placeholder", "Enter Social Link");
-      node.setAttribute("name", "social_links[]");
-  
-      let linkk = document.createElement("a");
-      linkk.innerHTML = "<i class='fas fa-minus'></i>";
-      linkk.setAttribute("onclick", "removeField(this)");
-      div.appendChild(node);
-      div.appendChild(linkk);
-  
-      extraFileds.appendChild(div);
+    let extraFields = document.querySelector('.url-extra-field');
+
+    // A function to create a new input field
+    const createField = () => {
+    let div = document.createElement("div");
+    let node = document.createElement("input");
+    node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
+    node.setAttribute("multiple", "");
+    node.setAttribute("type", "url");
+    node.setAttribute("placeholder", "Enter Social Link");
+    node.setAttribute("name", "social_links[]");
+
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
+    div.appendChild(node);
+    div.appendChild(link);
+
+    extraFields.appendChild(div);
     }
-  
+
+    // A function to remove a field
     const removeField = (element) => {
-      element.parentElement.style.display = 'none';
+    let fieldDiv = element.parentElement;
+    fieldDiv.remove();
     }
-  
-    urlBttn.addEventListener('click', createFiled, true);
-  
+
+    // Add an event listener to create a new field
+    urlBttn.addEventListener('click', createField, true);
+
     // Show the minus icon for the existing input fields in the loop
     const existingInputs = document.querySelectorAll('.url-extra-field input');
     for (const input of existingInputs) {
-      let linkk = document.createElement("a");
-      linkk.innerHTML = "<i class='fas fa-minus'></i>";
-      linkk.setAttribute("onclick", "removeField(this)");
-  
-      let div = document.createElement("div");
-      div.appendChild(input);
-      div.appendChild(linkk);
-      
-      extraFileds.appendChild(div);
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
+
+    let div = document.createElement("div");
+    div.appendChild(input);
+    div.appendChild(link);
+
+    extraFields.appendChild(div);
     }
-  </script>
+</script>
   
 @endsection
 {{-- page script @E --}}

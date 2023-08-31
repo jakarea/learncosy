@@ -91,9 +91,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
                                     @php $socialLinks = explode(",",$user->social_links); @endphp
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
-                                        class="form-control @error('social_links') is-invalid @enderror" id="features"
-                                        multiple>
+                                    
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
@@ -105,7 +103,7 @@
                                     </div>
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">

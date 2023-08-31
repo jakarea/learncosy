@@ -7,7 +7,7 @@ Connect
 @section('style')
 <style>
     .custom-margin-top {
-        padding-top: 8rem !important;
+        padding-top: 4rem !important;
     }
 </style>
 @endsection

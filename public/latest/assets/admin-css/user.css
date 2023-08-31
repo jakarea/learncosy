@@ -254,6 +254,7 @@
   border: 1px solid var(--neutral-40, #E0E0E0);
   background: var(--neutral-10, #FFF);
   padding: 1.5rem;
+  overflow-x: hidden;
 }
 .contact-info-box h4 {
   color: var(--neutral-90, #252525);

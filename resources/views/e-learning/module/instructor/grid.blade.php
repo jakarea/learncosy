@@ -62,6 +62,7 @@
                             <th>Status</th>
                             <th class="text-end">Action</th>
                         </tr>
+                        {{-- @if ($modules > 0)  --}}
                          @foreach ($modules as $module) 
                         <tr>
                             <td>
@@ -97,6 +98,13 @@
                             </td>
                         </tr>
                         @endforeach
+                        {{-- @else 
+                        <tr>
+                            <td colspan="6">
+                                <p>No Module Found!</p>
+                            </td>
+                        </tr>
+                        @endif --}}
                     </table>
                 </div>
             </div>
