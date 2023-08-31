@@ -22,7 +22,8 @@ class ProfileManagementController extends Controller
         $id = Auth::user()->id;
         $user = User::find($id); 
         $courses = Course::where('user_id', $id)->get();
-        return view('profile/instructor/profile',compact('user','courses')); 
+        $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
+        return view('profile/instructor/profile',compact('user','courses','experiences')); 
     }
 
     // profile edit

@@ -34,7 +34,7 @@
                     <a class="{{ Request::is('instructor/bundle/courses*')  ? ' active' : '' }} nav-link" href="#">Bundle Course <i class="fas fa-angle-down"></i></a>
                     <ul class="submenu-box">
                         <li><a href="{{ url('instructor/bundle/courses') }}" class="{{ Request::is('instructor/bundle/courses')  ? ' active' : '' }}"> All Bundle Courses</a></li>
-                        <li><a href="{{ url('instructor/bundle/courses/select/course/2') }}" class="{{ Request::is('instructor/bundle/courses/create')  ? ' active' : '' }}">Add New Bundle Course</a></li> 
+                        <li><a href="{{ url('instructor/bundle/courses/select/course/1') }}" class="{{ Request::is('instructor/bundle/courses/create')  ? ' active' : '' }}">Add New Bundle Course</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">

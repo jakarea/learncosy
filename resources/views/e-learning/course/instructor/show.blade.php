@@ -261,6 +261,10 @@ $i = 0;
                             </div>
                         </div>
                         @endforeach
+                        <div class="text-center add-lesson-bttn mt-2">
+                            <a href="{{ url('instructor/modules/create?course='.$course->id) }}"
+                                class="add_lesson_bttn">Add Module</a>
+                        </div>
                     </div>
                 </div>
                 {{-- course outline --}}

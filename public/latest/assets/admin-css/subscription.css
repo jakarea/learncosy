@@ -3,7 +3,7 @@
   background-color: #fff;
   display: grid;
   grid-template-columns: 10% 50% 20% 20%;
-  grid-gap: 1.94rem;
+  grid-gap: 1.6rem;
   align-items: center;
 }
 .package-list-header h5 {

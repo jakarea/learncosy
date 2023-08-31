@@ -75,7 +75,7 @@ class LessonController extends Controller
         //save lesson
         $lesson = new Lesson([
             'course_id' => $request->course_id,
-            'user_id' => auth::user()->id,
+            'user_id' => Auth::user()->id,
             'module_id' => $request->module_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -105,7 +105,7 @@ class LessonController extends Controller
             $image->move($destinationPath, $name2);
             $lesson->lesson_file = $name2;
         }
-          
+           
         $lesson->save();
 
         // return redirect()->route('lesson.upload.video')->with('success', 'Lesson saved!');
@@ -219,7 +219,7 @@ class LessonController extends Controller
 
         $lesson = Lesson::where('slug', $slug)->first();
         $lesson->course_id = $request->course_id; 
-        $lesson->user_id = auth::user()->id;
+        $lesson->user_id = Auth::user()->id;
         $lesson->module_id = $request->module_id; 
         $lesson->title = $request->title; 
         $lesson->slug = Str::slug($request->title);

@@ -461,6 +461,7 @@ span.finsihLesson {
   background: var(--neutral-color-neutral-10, #F9FAFB);
   align-items: center;
   padding: 2.5rem;
+  cursor: pointer;
 }
 .lesson-files-upload .media2 img,
 .lesson-files-upload .media img {
@@ -1551,6 +1552,16 @@ span.finsihLesson {
   font-weight: 400;
   line-height: 150%;
   margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+}
+.paid-student-name .txt ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
 }
 .paid-student-name .txt ul li img {
   margin-right: 0.5rem;
@@ -1577,6 +1588,122 @@ span.finsihLesson {
 
 .module-header {
   grid-template-columns: 9% 60% 13% 10%;
+}
+
+.uploadOuter {
+  text-align: center;
+  padding: 2rem;
+}
+
+.dragBox {
+  width: 100%;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 3px dashed #8C8FAE;
+  transition: transform 0.3s;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3958;
+  line-height: 140%;
+  cursor: pointer;
+}
+
+.dragBox i {
+  display: block;
+  font-size: 1.8rem;
+  color: #4c60ff;
+  border: 2px solid #4c60ff;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+}
+
+.upload-progress .progress {
+  border-radius: 1rem;
+  background-color: #DEE3EB;
+}
+
+.upload-progress .progress .progress-bar {
+  background-color: #4c60ff;
+  border-radius: 1rem;
+}
+
+.upload-progress h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3958;
+  line-height: 140%;
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+.upload-progress p {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #4c60ff;
+  line-height: 140%;
+  font-style: italic;
+}
+
+.dragBox input[type=file] {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+}
+
+.draging {
+  transform: scale(1.1);
+}
+
+#preview {
+  text-align: center;
+}
+
+#preview img {
+  max-width: 100%;
+}
+
+.upload-video-form {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--white, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+  margin-top: 2rem;
+}
+.upload-video-form .form-group {
+  margin-top: 0.75rem;
+}
+.upload-video-form .form-group label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  line-height: 140%;
+  margin-bottom: 0.5rem;
+}
+.upload-video-form .form-group .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  padding: 0.625rem 0.875rem;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.75rem;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

@@ -31,6 +31,9 @@
 }
 .header-area .navbar-brand img {
   max-width: 8.5rem;
+  max-height: 3rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .header-area .navbar-nav .nav-item {
   position: relative;
