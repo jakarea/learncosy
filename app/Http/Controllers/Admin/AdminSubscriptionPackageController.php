@@ -154,7 +154,7 @@ class AdminSubscriptionPackageController extends Controller
             $subscription_package->save();
 
             // return back with success message
-            return redirect()->back()->with('success', 'Subscription Package updated successfully');
+            return redirect()->route('admin.subscription')->with('success', 'Subscription Package Updated Successfully'); 
     }
 
     /**

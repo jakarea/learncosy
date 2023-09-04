@@ -27,6 +27,7 @@
     <link href="{{ asset('latest/assets/admin-css/style.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/header.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     
     @yield('style') 
     <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
@@ -49,6 +50,30 @@
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script>
+        // darkMode.js
+        const modeBttn = document.getElementById("darkModeBttn");
+        const htmlBody = document.querySelector("body");
+    
+        // Function to toggle between dark and light mode
+        function toggleMode() {
+            htmlBody.classList.toggle('dark-mode');
+    
+            // Store user preference in local storage
+            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
+            localStorage.setItem('mode', mode);
+        }
+    
+        // Set initial mode based on stored preference or default to 'dark-mode'
+        const storedMode = localStorage.getItem('mode');
+        if (storedMode === '') {
+            htmlBody.classList.remove('dark-mode');
+        }
+    
+        // Attach event listener to the button
+        modeBttn.addEventListener('click', toggleMode);
+    
+      </script>
 
     @yield('script')
 </body>

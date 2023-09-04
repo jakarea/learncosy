@@ -103,6 +103,9 @@
 .header-area .d-flex {
   align-items: center;
 }
+.header-area .d-flex .dark-mode-bttn-area {
+  margin-right: 1rem;
+}
 .header-area .d-flex a.bttn {
   border-radius: 0.75rem;
   border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);

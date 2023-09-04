@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-1 ps-0 col-md-5">
+                        <div class="col-xl-1 ps-lg-0 col-md-5">
                             <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
                                 <button type="submit" class="btn btn-search"><i class="fas fa-search text-white me-2"></i> Search</button>
                             </div>
@@ -110,7 +110,6 @@
                         </ul>
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                     </div> 
-
                     <div class="course-ol-box">
                         <h5>{{ Str::limit($course->title, 50) }}</h5>
                         <span>Last Update: {{date('M d Y ', strtotime($course->updated_at)) }}</span>
@@ -121,7 +120,7 @@
                         @endphp
                         <ul>
                             @foreach ($limitedItems as $feature)
-                            <li><i class="fas fa-check"></i> {{$feature}}</li>
+                            <li><i class="fas fa-check"></i>{{ Str::limit($feature, 40) }}</li>
                             @endforeach
                         </ul>
                         @if ( !isEnrolled($course->id) )
