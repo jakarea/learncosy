@@ -297,10 +297,33 @@
   color: #d7def4 !important;
 }
 .dark-mode .contact-info-box .media img {
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
 }
-.dark-mode .profile-update-page .form-group i, .dark-mode .lesson-create-page .form-group i, .dark-mode .module-update-page .form-group i, .dark-mode .module-create-page .form-group i {
-  color: #d7def4;
+.dark-mode .profile-update-page .form-group i,
+.dark-mode .lesson-create-page .form-group i,
+.dark-mode .module-update-page .form-group i,
+.dark-mode .module-create-page .form-group i {
+  color: #d7def4 !important;
+}
+.dark-mode .fas.fa-bars.ms-4 {
+  color: #d7def4 !important;
+}
+.dark-mode .mce-content-body {
+  background: #eeeeee !important;
+}
+.dark-mode .header-action .dropdown i {
+  color: #66768E !important;
+}
+.dark-mode .paggination-wrap .pagination .page-item .page-link {
+  color: #d7def4 !important;
+}
+.dark-mode .paggination-wrap .pagination .page-item.active .page-link {
+  border-radius: 3.125rem !important;
+  background: rgba(145, 158, 171, 0.16) !important;
+}
+.dark-mode .alert.alert-success {
+  background: #60c296 !important;
+  color: #fff !important;
 }
 
 .dark-mode-bttn {

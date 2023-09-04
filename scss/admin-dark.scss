@@ -364,28 +364,62 @@
     }
 
     .user-details-box {
-        border: 1px solid var(--others-dark-stroke, #1A1A1A)!important;
-        background: #0D0D0D!important;
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
     }
 
-    .contact-info-box{
-        border: 1px solid var(--others-dark-stroke, #1A1A1A)!important;
-        background: #0D0D0D!important;
+    .contact-info-box {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
     }
 
-    .contact-info-box .media .media-body a{
-        color: #7289FF!important;
+    .contact-info-box .media .media-body a {
+        color: #7289FF !important;
     }
 
-    .contact-info-box .media i{
-        color: #d7def4!important;
-    }
-    .contact-info-box .media img{
-        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    .contact-info-box .media i {
+        color: #d7def4 !important;
     }
 
-    .profile-update-page .form-group i, .lesson-create-page .form-group i, .module-update-page .form-group i, .module-create-page .form-group i{
-        color: #d7def4;
+    .contact-info-box .media img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
+    }
+
+    .profile-update-page .form-group i,
+    .lesson-create-page .form-group i,
+    .module-update-page .form-group i,
+    .module-create-page .form-group i {
+        color: #d7def4 !important;
+    }
+
+    .fas.fa-bars.ms-4 {
+        color: #d7def4 !important;
+    }
+
+    .mce-content-body {
+        background: #eeeeee !important
+    }
+
+    .header-action {
+        .dropdown {
+            i {
+                color: #66768E !important;
+            }
+        }
+    }
+
+    .paggination-wrap .pagination .page-item .page-link {
+        color: #d7def4 !important;
+    }
+
+    .paggination-wrap .pagination .page-item.active .page-link {
+        border-radius: 3.125rem!important;
+        background: rgba(145, 158, 171, 0.16)!important;
+    }
+
+    .alert.alert-success{
+        background: #60c296!important;
+        color: #fff!important;
     }
 }
 
