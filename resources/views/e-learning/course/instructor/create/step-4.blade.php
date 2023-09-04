@@ -125,13 +125,12 @@ Course Create - Step 4
                         </div>
                     </div>
                     {{-- course page file box end --}}
-                    
                 </div>
 
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
-                    <a href="#">Back</a>
-                    <a href="#">Next</a>
+                    <a href="{{ url('instructor/courses/create/step-3') }}">Back</a>
+                    <a href="{{ url('instructor/courses/create/step-5') }}">Next</a>
                 </div>
                 {{-- step next bttns --}}
             </form>
