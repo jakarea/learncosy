@@ -103,6 +103,14 @@ body {
   width: 100%;
 }
 
+.ligth-ele {
+  display: block !important;
+}
+
+.dark-ele {
+  display: none !important;
+}
+
 .common-bttn {
   border-radius: 0.375rem;
   background: var(--primary-color-blue, #294CFF);

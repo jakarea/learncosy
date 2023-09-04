@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
-            <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
+            <img src="{{asset('latest/assets/images/black-logo.svg')}}" alt="Logo" class="img-fluid light-ele">
+            <img src="{{asset('latest/assets/images/dark-logo.svg')}}" alt="Logo" class="img-fluid dark-ele">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,11 +47,6 @@
             </ul>
             @endcan
             <div class="d-flex">
-                <div class="dark-mode-bttn-area">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="darkModeBttn">
-                    </div>
-                </div>
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
