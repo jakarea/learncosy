@@ -18,7 +18,6 @@ Course Create - Step 1
                 {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
                 class --}}
                 {{-- add class "current" to "step-box" for the current step --}}
-               
 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
@@ -180,7 +179,7 @@ Course Create - Step 1
                         {{-- course page add box start --}}
                         <div class="add-content-box mt-3">
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                    class="fas fa-plus"></i> Add Page</button>
+                                    class="fas fa-plus"></i> Add Lesson</button>
                         </div>
                         {{-- course page add box end --}}
 
@@ -190,14 +189,14 @@ Course Create - Step 1
                     {{-- course content add box start --}}
                     <div class="add-content-box">
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                class="fas fa-plus"></i> Add Content</button>
+                                class="fas fa-plus"></i> Add Module</button>
                     </div>
                     {{-- course content add box end --}}
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="#">Back</a>
-                        <a href="#">Next</a>
+                        <a href="{{ url('instructor/courses/create/step-2') }}">Back</a>
+                        <a href="{{ url('instructor/courses/create/step-4') }}">Next</a>
                     </div>
                     {{-- step next bttns --}}
                 </div>
@@ -213,15 +212,16 @@ Course Create - Step 1
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="course-name-txt">
-                        <h5>Course name</h5>
-                        <form action="">
+                        <h5>Module name</h5>
+                        <form action="{{ url('/instructor/courses/create/step-3') }}" method="post">
+                            @csrf
                             <div class="form-group">
-                                <input type="text" placeholder="Enter Course Name" class="form-control">
+                                <input type="text" placeholder="Enter Module Name" name="module_name" class="form-control">
                             </div>
                             <div class="form-check form-switch">
-                                <label class="form-check-label" for="flexSwitchCheckChecked">Is a Modual</label>
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                    id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label" for="is_module">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" name="is_module" value="1" role="switch"
+                                    id="is_module" checked>
                             </div>
                             <p>Disable this if you want a separate content page.</p>
                             <div class="form-submit">
@@ -259,9 +259,9 @@ Course Create - Step 1
                                 </div>
                             </div>
                             <div class="form-check form-switch">
-                                <label class="form-check-label" for="flexSwitchCheckChecked">Is a Modual</label>
+                                <label class="form-check-label" for="is_module1">Is a Modual</label>
                                 <input class="form-check-input" type="checkbox" role="switch"
-                                    id="flexSwitchCheckChecked" checked>
+                                    id="is_module1" checked>
                             </div>
                             <p>Disable this if you want a separate content page.</p>
                             <div class="form-submit">
