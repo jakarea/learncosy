@@ -1,6 +1,19 @@
 .dark-mode {
     background: #121212 !important;
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #D2DEEF !important;
+    }
+
+    p {
+        color: #A6B1C4;
+    }
+
     .header-area {
         border-bottom: 1px solid #1A1A1A !important;
         background: #0D0D0D !important;
@@ -17,7 +30,7 @@
     .header-area .navbar-nav .nav-item .submenu-box {
         border: 1px solid #1A1A1A !important;
         background: #0D0D0D !important;
-        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20)!important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
     }
 
     .header-area .navbar-nav .nav-item .submenu-box li a {
@@ -33,19 +46,437 @@
         border-color: #E74956;
     }
 
+    .header-area .d-flex a.bttn img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    }
+
     .header-area .d-flex .btn.avatar img {
         outline-color: #7289FF;
+        border-color: #0D0D0D;
+        background-color: #0D0D0D;
     }
 
-    .total-client-box { 
-        border: 1px solid #1A1A1A!important;
-        background: #0D0D0D!important;
-        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20)!important;
-    }
-
-    .header-area .dropdown-menu{
+    .total-client-box {
         border: 1px solid #1A1A1A !important;
         background: #0D0D0D !important;
-        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20)!important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .header-area .dropdown-menu {
+        border: 1px solid #1A1A1A !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .header-area .dropdown-menu .dropdown-item {
+        color: #66768E !important;
+    }
+
+    .total-client-box h4 {
+        color: #D2DEEF !important;
+    }
+
+    .course-status-wrap,
+    .top-performing-course,
+    .earnings-chart-wrap {
+        border: 1px solid #1A1A1A !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .top-performing-course .d-flex a {
+        color: #fff !important;
+    }
+
+    .course-status-wrap .d-flex,
+    .course-lists .media h5 {
+        a {
+            color: #fff !important;
+        }
+    }
+
+    .course-status-wrap table tr td {
+        background: #0D0D0D !important;
+        border-color: #0D0D0D !important;
+
+        p {
+            color: #D2DEEF !important;
+        }
+    }
+
+    .course-status-wrap table tr th {
+        background-color: #161616 !important;
+    }
+
+    .user-title-box h1 {
+        color: #C5CCD8 !important;
+
+        span {
+            color: #7289FF;
+        }
+    }
+
+    .user-search-box-wrap .form-group .form-control {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+        color: #fff !important;
+    }
+
+    .user-add-box button,
+    .user-add-box a {
+        background: var(--others-dark-mode-btn, #7289FF);
+    }
+
+    .user-grid-box {
+        border: 1px solid #1A1A1A !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .user-grid-box .btn-ellipse {
+        background: rgba(145, 158, 171, 0.08);
+    }
+
+    .user-grid-box h4 {
+        color: #D2DEEF !important;
+    }
+
+    .user-grid-box h5 {
+        color: #66768E !important;
+    }
+
+    .user-grid-box a {
+        background: rgba(25, 25, 25, 0.50) !important;
+        color: #7289FF !important;
+    }
+
+    .header-action .dropdown-menu {
+        border: 1px solid #1A1A1A !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .dark-mode-bttn {
+        background-color: #0D0D0D !important;
+        border: 2px solid #1A1A1A !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .user-search-box-wrap .form-filter .form-control {
+        border: 1px solid rgba(145, 158, 171, 0.32) !important;
+        background: #0D0D0D !important;
+        color: #fff;
+        border: 1px solid #1A1A1A !important;
+    }
+
+    .package-list-header {
+        background-color: #0D0D0D !important;
+    }
+
+    .package-list-header .form-group .form-control {
+        background: #0D0D0D !important;
+    }
+
+    .package-list-header .form-filter .form-control {
+        background: #0D0D0D !important;
+    }
+
+    .common-bttn {
+        background: #7289FF;
+    }
+
+    .subscription-table-wrap table tr th {
+        background-color: #161616;
+    }
+
+    .subscription-table-wrap table tr td {
+        border-bottom: 1px solid #1E222A;
+        background: #0D0D0D;
+    }
+
+    .subscription-table-wrap table tr td h5 {
+        color: #C9D3DE !important;
+    }
+
+    .subscription-table-wrap table tr td p {
+        color: #C9D3DE !important;
+    }
+
+    .subscription-table-wrap table tr td span {
+        background: #0E2C1C !important;
+        color: #00C562 !important;
+    }
+
+    .package-list-header .form-filter .form-control {
+        color: #C9D3DE !important;
+    }
+
+    .user-add-form-wrap {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16) !important;
+
+
+        form {
+            .form-group {
+                label {
+                    color: #C5CCD8 !important;
+                }
+
+                .form-control {
+                    border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+                    background: #0D0D0D !important;
+                    color: #fff !important;
+                }
+            }
+
+            .custom-hr h5 {
+                color: #D2DEEF !important;
+            }
+        }
+    }
+
+    #image-container .upload-box span {
+        border: 1px dashed rgba(145, 158, 171, 0.32) !important;
+        background-color: #161616 !important;
+    }
+
+    .form-submit-bttns {
+        .btn-submit {
+            border: 1px solid #7289FF !important;
+            background: #7289FF;
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+            color: #0D0D0D !important;
+
+            &:hover {
+                color: #fff !important;
+            }
+        }
+
+        .btn-cancel {
+            border: 1px solid #313A49 !important;
+            background: #0D0D0D !important;
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+        }
+    }
+
+    .user-add-form-wrap form .custom-hr hr,
+    .user-add-form-wrap form .form-group .mce-tinymce.mce-container.mce-panel {
+        background-color: transparent !important;
+    }
+
+    .user-header-bttn a {
+        background: #7289FF !important;
+    }
+
+    .package-list-header .form-group .form-control {
+        color: #fff !important;
+    }
+
+    .package-list-header {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+    }
+
+    .subscription-package-form {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+
+        .form-group .form-control {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+            color: #fff !important;
+        }
+    }
+
+    .subscription-package-form form .form-group #feature_increment {
+        background: #131313 !important;
+        color: #7289FF !important;
+    }
+
+    .course-single-item {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+    }
+
+    .course-single-item .course-thumb-box .header-action {
+        background-color: #7289FF !important;
+    }
+
+    .course-single-item .course-txt-box a {
+        color: #D2DEEF !important;
+    }
+
+    .header-action .dropdown-menu li .dropdown-item {
+        color: #D2DEEF !important;
+
+        &:hover {
+            background-color: #1A1A1A !important;
+        }
+    }
+
+    .course-single-item .course-txt-box h5 {
+        color: #D2DEEF !important;
+    }
+
+    .top-card-box,
+    .related-course-box,
+    .course-outline-wrap,
+    .download-files-box,
+    .content-txt-box {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+    }
+
+    .download-files-box .files a {
+        border: 1px solid var(--neutral-color-neutral-70, #2F3A4C) !important;
+        background: #171717 !important;
+        color: #7289FF !important;
+    }
+
+    .light-ele {
+        display: none !important;
+    }
+
+    .dark-ele {
+        display: block !important;
+    }
+
+    .user-profile-picture {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+    }
+
+    .user-profile-picture .media {
+        background-color: transparent;
+    }
+
+    .edit-profile {
+        color: #7289FF !important;
+        border-color: #7289FF !important;
+    }
+
+    .edit-profile:hover {
+        background-color: #7289FF !important;
+        color: #fff !important;
+    }
+
+    .user-details-box {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A)!important;
+        background: #0D0D0D!important;
+    }
+
+    .contact-info-box{
+        border: 1px solid var(--others-dark-stroke, #1A1A1A)!important;
+        background: #0D0D0D!important;
+    }
+
+    .contact-info-box .media .media-body a{
+        color: #7289FF!important;
+    }
+
+    .contact-info-box .media i{
+        color: #d7def4!important;
+    }
+    .contact-info-box .media img{
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    }
+
+    .profile-update-page .form-group i, .lesson-create-page .form-group i, .module-update-page .form-group i, .module-create-page .form-group i{
+        color: #d7def4;
+    }
+}
+
+.dark-mode-bttn {
+    z-index: 999999;
+    max-height: 75px;
+    max-width: 42px;
+    min-height: 75px;
+    min-width: 36px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #d7def4;
+    border-radius: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 6px;
+    display: flex;
+    position: fixed;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    right: 2%;
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+        background-color: #fff;
+        transition: ease-in-out .3s;
+        cursor: pointer;
+
+        i {
+            color: #66768E;
+        }
+    }
+
+    label.active {
+        background-color: #294CFF;
+        transition: ease-in-out .3s;
+
+        i {
+            color: #fff;
+        }
+    }
+}
+
+.dark-mode-bttn {
+    border-color: rgb(215, 222, 244);
+    background-color: rgb(255, 255, 255);
+}
+
+body {
+    .dark-mode-bttn {
+        label {
+            &:first-child {
+                background-color: #294CFF !important;
+            }
+
+            &:last-child {
+                background-color: transparent !important;
+            }
+        }
+    }
+}
+
+body.dark-mode {
+    .dark-mode-bttn {
+        label {
+            &:first-child {
+                background-color: transparent !important;
+
+                i {
+                    color: #66768E;
+                }
+            }
+
+            &:last-child {
+                background-color: #7289FF !important;
+
+                i {
+                    color: #fff;
+                }
+            }
+        }
     }
 }
