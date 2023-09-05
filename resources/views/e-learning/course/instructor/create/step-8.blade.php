@@ -64,7 +64,8 @@ Course Create - Step 8
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Image</h4>
                         <input type="file" class="d-none" id="fileInput">
                         <label for="fileInput" class="file-up-box">
-                            <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid light-ele">
+                            <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon" class="img-fluid dark-ele">
                             <p><label for="fileInput">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
