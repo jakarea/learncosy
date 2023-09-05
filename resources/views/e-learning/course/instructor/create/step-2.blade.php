@@ -129,6 +129,7 @@ Course Create - Step 2
                     <a href="#">Back</a>
                     <button class="btn btn-primary" type="submit">Next</button>
                 </div>
+
                 {{-- step next bttns --}}
             </form>
             </div>
