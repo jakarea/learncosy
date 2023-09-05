@@ -801,37 +801,257 @@
 
     .bundle-create-inputs .input-group .form-control,
     .bundle-create-inputs .form-group .form-control {
-        border: 1px solid #2C2C2C!important;
-        background: #0D0D0D!important;
-        color: #fff!important;
+        border: 1px solid #2C2C2C !important;
+        background: #0D0D0D !important;
+        color: #fff !important;
     }
 
-    .bundle-create-inputs .input-group .input-group-text, .bundle-create-inputs .form-group .input-group-text{
-        border-color: #2C2C2C!important;
-        color: #fff!important;
+    .bundle-create-inputs .input-group .input-group-text,
+    .bundle-create-inputs .form-group .input-group-text {
+        border-color: #2C2C2C !important;
+        color: #fff !important;
     }
 
-    .header-area .navbar-nav .nav-item .submenu-box li a:hover{
-        background-color: #131313!important;
+    .header-area .navbar-nav .nav-item .submenu-box li a:hover {
+        background-color: #131313 !important;
     }
 
-    .user-add-box button img, .user-add-box a img{
-        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(319deg) brightness(102%) contrast(101%)!important;
+    .user-add-box button img,
+    .user-add-box a img {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(319deg) brightness(102%) contrast(101%) !important;
         transition: all linear .3s;
     }
-    .user-add-box button img, .user-add-box a:hover img{
-        filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(171deg) brightness(93%) contrast(105%)!important;
+
+    .user-add-box button img,
+    .user-add-box a:hover img {
+        filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(171deg) brightness(93%) contrast(105%) !important;
     }
 
     .subscription-table-wrap table tr td,
-    .enroll-course-list .list-wrap table tr td{
-        color: #d7def4!important;
+    .enroll-course-list .list-wrap table tr td {
+        color: #d7def4 !important;
     }
 
-    .earning-table{
-        border-color: #2C2C2C!important;
-        box-shadow: none!important;
+    .earning-table {
+        border-color: #2C2C2C !important;
+        box-shadow: none !important;
     }
+
+    .instructor-profile-update-page {
+        .own-profile-box.account-settings-box {
+            background-color: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+
+        .user-expperience-box,
+        .account-settings-box .tab-pane.active-bg {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #0D0D0D;
+            box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+        }
+
+        .account-settings-box .profile-text-box-2 {
+            background: #0D0D0D !important;
+        }
+
+        .user-expperience-box .media p {
+            color: #d7def4 !important;
+        }
+
+        .user-expperience-box .brdr-bttm {
+            border-color: #2C2C2C !important;
+        }
+
+        .user-expperience-box .media h6 {
+            color: #7C7C7C !important;
+        }
+
+        .certificate-header-tab .nav .nav-item .nav-link {
+            border: 1.5px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+        }
+
+        .certificate-header-tab .nav .nav-item .nav-link.active {
+            border: 1.5px solid #5672FF !important;
+        }
+
+        .create-certificate-form {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+            box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+        }
+
+        .create-certificate-form .certificate-name .form-control {
+            border-radius: 0.5rem !important;
+            border: 1px solid rgba(145, 158, 171, 0.32) !important;
+            background-color: transparent !important;
+            color: #fff;
+        }
+
+        .create-certificate-form .certificate-name .media img {
+            filter: invert(42%) sepia(88%) saturate(1229%) hue-rotate(212deg) brightness(109%) contrast(101%) !important;
+        }
+
+        .certificate-asset-upload .upload-media-box {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+            box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+        }
+
+        .certificate-asset-upload .upload-media-box span {
+            color: #5672FF !important;
+        }
+
+        .certificate-style-box,
+        .create-certificate-form .certificate-name {
+            border-color: #1A1A1A;
+        }
+
+        .create-certificate-form-2 .form-group label {
+            background-color: #0D0D0D !important;
+        }
+    }
+
+    .dark-mode .common-bttn {
+        color: #0D0D0D !important;
+    }
+
+    .student-profile-update-page .own-profile-box .header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        background: #0D0D0D;
+    }
+
+    .content-settings-form-wrap .form-control:valid+label,
+    .content-settings-form-wrap .form-control:focus+label {
+        background: #0D0D0D !important;
+    }
+
+    .content-settings-form-wrap .form-control {
+        color: #fff !important;
+    }
+
+    .content-settings-form-wrap .form-control:hover,
+    .content-settings-form-wrap .form-control:focus-within {
+        border-color: #7289FF !important;
+    }
+
+    .dns-page-wrapper {
+        .account-settings-box .tab-pane.active-bg {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #0D0D0D;
+            box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+        }
+
+        .logo-box-view {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #141414;
+        }
+
+        .theme-settings-box {
+            background-color: transparent !important;
+        }
+
+        .file-upload-area {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+            box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+        }
+
+        .file-upload-area p span {
+            color: #5672FF !important;
+        }
+
+        .login-page-theme-box,
+        .feat-box {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+            background: #0D0D0D !important;
+            box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20) !important;
+        }
+
+        .feat-box .media img {
+            filter: invert(42%) sepia(88%) saturate(1229%) hue-rotate(212deg) brightness(109%) contrast(101%) !important;
+        }
+
+        .logo-box-view p,
+        .dns-main-body .d-flex a,
+        .dns-main-body .domain-verify-box .form-check label,
+        .dns-main-body .add-domain-box p,
+        .favicon-box p,
+        .meta-box p,
+        .certificate-style-box .media .media-body p,
+        .feat-box .media p {
+            color: #A6B1C4;
+        }
+
+        .certificate-style-box.login-page-theme-box .media.active {
+            border-color: #5672FF !important;
+        }
+
+        .save-bttns .btn-submit {
+            background-color: #5672FF !important;
+            border-color: #5672FF !important;
+        }
+
+        .favicon-box,
+        .meta-box {
+            background: #141414;
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+        }
+
+        .meta-box .form-control {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #1D1D1D;
+            color: #fff;
+        }
+
+        .dns-left-sidebar {
+            border-right: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #0D0D0D;
+        }
+
+        .dns-main-body {
+            border: 1px solid var(--others-dark-stroke, #1A1A1A);
+            background: #0D0D0D;
+        }
+
+        .dns-main-body .add-domain-box .form-control {
+            border: 1px solid #5672FF;
+            background: #101010;
+            box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+            color: #fff;
+        }
+
+        .dns-left-sidebar .setup-step .step-box p {
+            color: #66768E !important;
+        }
+
+        .dns-left-sidebar .setup-step .step-box.active p,
+        .dns-main-body .finish-txt a {
+            color: #5672FF !important;
+        }
+
+        .dns-main-body .d-flex a img {
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+        }
+
+        .dns-left-sidebar .setup-step .step-box.active span {
+            border-color: #5672FF !important;   
+            outline-color: #2F3A4C!important;
+            box-shadow: 0px 0px 0px 4px #F4EBFF!important;
+        }
+
+        .dns-left-sidebar .setup-step .step-box.active:before {
+            background-color: #5672FF!important;
+        }
+
+        .dns-left-sidebar .setup-step .step-box.big span{
+            border-color: #5672FF !important;   
+            outline-color: #2F3A4C!important;
+        }
+    }
+
+
 }
 
 
