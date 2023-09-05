@@ -73,8 +73,11 @@
                                                                 <label for="app_logo"
                                                                     class="file-upload-area file-upload-2 mt-1">
 
-                                                                    <img src="http://nayan.localhost/latest/assets/images/icons/upload-icon.svg"
-                                                                        alt="a" class="img-fluid me-0">
+                                                                    <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                        alt="a" class="img-fluid me-0 light-ele">
+
+                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                        alt="a" class="img-fluid me-0 dark-ele">
                                                                     <p class="mt-2"><span>Click to upload</span> SVG, PNG, JPG, or GIF <br> (max. 300x300px)</p>
                                                                 </label>
 
@@ -236,7 +239,11 @@
                                                                     class="file-upload-area file-upload-2">
 
                                                                     <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                        alt="a" class="img-fluid me-0">
+                                                                        alt="a" class="img-fluid me-0 light-ele">
+
+                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                        alt="a" class="img-fluid me-0 dark-ele">
+                                                                        
                                                                     <p class="mt-2"><span>Click to upload</span> or drag
                                                                         and drop</p>
                                                                 </label>
@@ -299,7 +306,10 @@
 
                                                             <label for="favicon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                    alt="a" class="img-fluid">
+                                                                        alt="a" class="img-fluid me-0 light-ele">
+
+                                                                    <img src="{{asset('latest/assets/images/icons/upload-3.svg')}}"
+                                                                        alt="a" class="img-fluid me-0 dark-ele">
                                                                 <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
@@ -332,7 +342,10 @@
 
                                                             <label for="apple_icon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                    alt="a" class="img-fluid">
+                                                                        alt="a" class="img-fluid me-0 light-ele">
+
+                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                        alt="a" class="img-fluid me-0 dark-ele">
                                                                 <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
