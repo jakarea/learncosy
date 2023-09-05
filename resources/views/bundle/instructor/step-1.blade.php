@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="user-search-box-wrap bundle-select-grid">
+                <div class="user-search-box-wrap bundle-select-grid d-grid" style="grid-auto-columns: 60% 40%;">
                     <div class="form-group">
                         <i class="fas fa-search"></i>
                         <input type="text" placeholder="Search course" class="form-control">

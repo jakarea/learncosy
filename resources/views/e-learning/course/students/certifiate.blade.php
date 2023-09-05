@@ -51,7 +51,6 @@
                                         <h6>UI/UX Design</h6>
                                     </div>
                                 </div>
-                                
                             </td>  
                             <td>
                                 <p>6h</p>
@@ -69,7 +68,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">
@@ -106,7 +106,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">
@@ -143,7 +144,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">
@@ -180,7 +182,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">
@@ -217,7 +220,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">
@@ -254,7 +258,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#">

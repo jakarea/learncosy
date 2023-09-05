@@ -36,9 +36,9 @@
 
 <body>
 
-  <!-- full page wrapper @s -->
+  {{-- full page wrapper @s --}}
   <div class="full-page-wrapper">
-    <!-- header start -->
+    {{-- header start --}}
     <header class="header-section">
       <div class="container-fluid">
         <div class="row align-items-center">
@@ -59,20 +59,33 @@
         </div>
       </div>
     </header>
-    <!-- header end -->
+    {{-- header end --}}
 
-    <!-- auth part start -->
+    {{-- auth part start --}}
     @yield('content')
-    <!-- auth part end -->
+    {{-- auth part end --}}
 
   </div>
-  <!-- full page wrapper @e -->
+  {{-- full page wrapper @e --}}
+
+  {{-- dark mode button start --}}
+  <input type="checkbox" id="darkModeBttn" class="d-none">
+
+  <div class="dark-mode-bttn">
+      <label for="darkModeBttn" class="active">
+          <i class="fa-solid fa-sun"></i>
+      </label>
+      <label for="darkModeBttn">
+          <i class="fa-solid fa-moon"></i>
+      </label>
+  </div>
+  {{-- dark mode button end --}}
 
   <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
   <script>
     // darkMode.js
-    const modeBttn = document.getElementById("darkLightMode");
+    const modeBttn = document.getElementById("darkModeBttn");
     const htmlBody = document.querySelector("body");
 
     // Function to toggle between dark and light mode
@@ -81,19 +94,21 @@
 
         // Store user preference in local storage
         const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
-        localStorage.setItem('mode', mode);
+        localStorage.setItem('dark-mode', mode);
     }
 
-    // Set initial mode based on stored preference or default to 'dark-mode'
-    const storedMode = localStorage.getItem('mode');
-    if (storedMode === '') {
-        htmlBody.classList.remove('dark-mode');
+    // Check the initial state from local storage
+    const storedMode = localStorage.getItem('dark-mode');
+    if (storedMode === 'dark-mode') {
+        htmlBody.classList.add('dark-mode');
     }
 
-    // Attach event listener to the button
-    modeBttn.addEventListener('click', toggleMode);
+    // Attach event listener to the checkbox
+    modeBttn.addEventListener('change', toggleMode);
 
-  </script>
+
+</script>
+
   @yield('script')
 </body>
 

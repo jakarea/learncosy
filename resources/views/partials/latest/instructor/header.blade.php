@@ -4,7 +4,8 @@
             @if ( modulesetting('logo') )
                 <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
-                <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
+                <img src="{{asset('latest/assets/images/black-logo.svg')}}" alt="Logo" class="img-fluid light-ele">
+                <img src="{{asset('latest/assets/images/dark-logo.svg')}}" alt="Logo" class="img-fluid dark-ele">
             @endif
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

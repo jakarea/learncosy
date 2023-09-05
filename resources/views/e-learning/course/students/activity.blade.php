@@ -23,14 +23,18 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="package-list-header" style="grid-template-columns: 80% 20%">
+                <div class="package-list-header" style="grid-template-columns: 50% 50%">
                     <h5>Course Activity</h5>  
+                    <div class="text-end">
+                        <a href="#" class="common-bttn me-4"><i class="fas fa-angle-left me-2"></i> My Course</a>
+                    </div>
                 </div>
-            </div>
+            </div> 
         </div>
+
         <div class="row">
             <div class="col-12">
-                <div class="subscription-table-wrap activity-table">
+                <div class="subscription-table-wrap activity-table filter-image">
                     <table>
                         <tr> 
                             <th>Course Name</th>
@@ -65,42 +69,11 @@
                                 <p>600</p>
                             </td>  
                             <td>
-                                <p>Complete</p>
+                                <p class="completed">Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
-                            </td>  
-                            <td>
-                                <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                                <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
@@ -132,7 +105,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
@@ -164,7 +138,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
@@ -196,7 +171,8 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
@@ -228,7 +204,41 @@
                                 <p>Complete</p>
                             </td>  
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid">
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
+                            </td>  
+                            <td>
+                                <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
+                            </td>   
+                        </tr> 
+                        <tr> 
+                            <td>
+                                <div class="media">
+                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
+                                    <div class="media-body">
+                                        <h5>Figma Course Part 1</h5>
+                                        <h6>UI/UX Design</h6>
+                                    </div>
+                                </div>
+                            </td>  
+                            <td>
+                                <p>6h</p>
+                            </td>  
+                            <td>
+                                <p>1</p>
+                            </td>  
+                            <td>
+                                <p>1000</p>
+                            </td>  
+                            <td>
+                                <p>600</p>
+                            </td>  
+                            <td>
+                                <p>Complete</p>
+                            </td>  
+                            <td>
+                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
+                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
                             </td>  
                             <td>
                                 <a href="#" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
