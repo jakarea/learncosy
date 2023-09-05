@@ -428,14 +428,6 @@
 .dark-mode .student-courses-lists-pages .course-progress-bar .d-flex h6 {
   color: #ED5763 !important;
 }
-.dark-mode .user-add-box button,
-.dark-mode .user-add-box a {
-  color: #0D0D0D !important;
-}
-.dark-mode .user-add-box button:hover,
-.dark-mode .user-add-box a:hover {
-  color: #fff !important;
-}
 .dark-mode .subscription-table-wrap table tr td a {
   background: transparent !important;
   color: #fff !important;
@@ -629,15 +621,6 @@
 .dark-mode .header-area .navbar-nav .nav-item .submenu-box li a:hover {
   background-color: #131313 !important;
 }
-.dark-mode .user-add-box button img,
-.dark-mode .user-add-box a img {
-  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(319deg) brightness(102%) contrast(101%) !important;
-  transition: all linear 0.3s;
-}
-.dark-mode .user-add-box button img,
-.dark-mode .user-add-box a:hover img {
-  filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(171deg) brightness(93%) contrast(105%) !important;
-}
 .dark-mode .subscription-table-wrap table tr td,
 .dark-mode .enroll-course-list .list-wrap table tr td {
   color: #d7def4 !important;
@@ -771,27 +754,27 @@
 }
 .dark-mode .dns-page-wrapper .favicon-box,
 .dark-mode .dns-page-wrapper .meta-box {
-  background: #141414;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+  background: #141414 !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1) !important;
 }
 .dark-mode .dns-page-wrapper .meta-box .form-control {
-  border: 1px solid var(--others-dark-stroke, #1A1A1A);
-  background: #1D1D1D;
-  color: #fff;
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #1D1D1D !important;
+  color: #fff !important;
 }
 .dark-mode .dns-page-wrapper .dns-left-sidebar {
-  border-right: 1px solid var(--others-dark-stroke, #1A1A1A);
-  background: #0D0D0D;
+  border-right: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
 }
 .dark-mode .dns-page-wrapper .dns-main-body {
-  border: 1px solid var(--others-dark-stroke, #1A1A1A);
-  background: #0D0D0D;
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
 }
 .dark-mode .dns-page-wrapper .dns-main-body .add-domain-box .form-control {
-  border: 1px solid #5672FF;
-  background: #101010;
-  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
-  color: #fff;
+  border: 1px solid #5672FF !important;
+  background: #101010 !important;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16) !important;
+  color: #fff !important;
 }
 .dark-mode .dns-page-wrapper .dns-left-sidebar .setup-step .step-box p {
   color: #66768E !important;
@@ -801,7 +784,7 @@
   color: #5672FF !important;
 }
 .dark-mode .dns-page-wrapper .dns-main-body .d-flex a img {
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
 }
 .dark-mode .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active span {
   border-color: #5672FF !important;
@@ -814,6 +797,226 @@
 .dark-mode .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.big span {
   border-color: #5672FF !important;
   outline-color: #2F3A4C !important;
+}
+.dark-mode .dns-page-wrapper .dns-page-wrapper .dns-main-body {
+  border-right: 0 !important;
+}
+.dark-mode .dns-page-wrapper .dns-main-body .domain-verify-box .nav .nav-link.active {
+  color: #DADADA !important;
+  border-bottom: 2.5px solid #5672FF !important;
+  background-color: transparent !important;
+}
+.dark-mode .dns-page-wrapper .dark-ele {
+  display: inline-block !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box span.circle {
+  background: #212121 !important;
+  border-color: #4D545F !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box:before {
+  background-color: #4D545F !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.current span.circle {
+  border-color: #5672FF !important;
+  outline: #4D545F solid 2px !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.current p {
+  color: #5672FF !important;
+}
+.dark-mode .back-next-bttns a:last-child {
+  background-color: #5672FF !important;
+  border-color: #5672FF !important;
+  color: #344054 !important;
+}
+.dark-mode .back-next-bttns a:first-child {
+  border: 1px solid #2D343E !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+  color: #344054 !important;
+}
+.dark-mode .lesson-edit-form-wrap,
+.dark-mode .content-settings-form-wrap {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1) !important;
+}
+.dark-mode .content-settings-form-wrap label {
+  background-color: transparent !important;
+}
+.dark-mode .form-check-input:checked {
+  background-color: #5672FF !important;
+  border-color: #5672FF !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box p {
+  color: #66768E !important;
+}
+.dark-mode .lesson-edit-form-wrap .form-upload #upload-box {
+  border: 1.5px dashed var(--others-dark-stroke, #7C7C7C) !important;
+  background: #0D0D0D !important;
+  color: #A6B1C4 !important;
+}
+.dark-mode .lesson-edit-form-wrap .form-upload #upload-box img {
+  margin-right: 0.5rem;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
+}
+.dark-mode .lesson-edit-form-wrap .course-page-edit-box {
+  border: 1.5px dashed var(--others-dark-stroke, #7C7C7C) !important;
+  background: #0D0D0D !important;
+  margin-bottom: 0.5rem !important;
+}
+.dark-mode .course-content-box .dropdown-menu {
+  border: 1.5px dashed var(--others-dark-stroke, #7C7C7C) !important;
+  background: #0D0D0D !important;
+  box-shadow: none !important;
+}
+.dark-mode .course-content-box .dropdown-menu .dropdown-item {
+  color: #d7def4 !important;
+}
+.dark-mode .course-content-box .dropdown-menu .dropdown-item:hover {
+  background: #101010 !important;
+}
+.dark-mode .course-content-box i {
+  color: #d7def4 !important;
+}
+.dark-mode .content-settings-form-wrap .content-type .d-flex a.active {
+  color: #7289FF;
+}
+.dark-mode .highlighted-area-upload {
+  border: 3px dashed #66768E !important;
+  background: #0D0D0D !important;
+  box-shadow: none !important;
+}
+.dark-mode .highlighted-area-upload p {
+  color: #A6B1C4 !important;
+}
+.dark-mode .highlighted-area-upload p label {
+  color: #7289FF !important;
+}
+.dark-mode .lesson-edit-form-wrap .course-page-edit-box .dropdown span {
+  color: #d7def4 !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.active span.circle {
+  border-color: #7289FF !important;
+  outline: #7289FF solid 2px !important;
+  background-color: #7289FF !important;
+}
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.active:before {
+  background-color: #7289FF !important;
+}
+.dark-mode .course-create-step-page-wrap .course-content-box {
+  border: 1.5px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+}
+.dark-mode .course-create-step-page-wrap .course-content-box .title .media img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
+}
+.dark-mode .course-content-box i {
+  color: #66768E !important;
+}
+.dark-mode .course-with-page {
+  border: 1.5px solid var(--others-dark-stroke, #1A1A1A);
+  background: #0D0D0D !important;
+}
+.dark-mode .course-with-page .course-content-inside.course-content-box {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #171717 !important;
+}
+.dark-mode .course-create-step-page-wrap .content-step-wrap .add-content-box button {
+  border: 2px dashed var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+}
+.dark-mode .content-settings-form-wrap img.euro {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%) !important;
+}
+.dark-mode .top-image-upload-box {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
+}
+.dark-mode .top-image-upload-box .file-up-box {
+  border: 1px dashed #313A49 !important;
+  background: #0D0D0D !important;
+}
+.dark-mode .top-image-upload-box .file-up-box p label {
+  color: #5672FF !important;
+}
+.dark-mode .top-image-upload-box .dark-ele {
+  display: inline-block !important;
+}
+.dark-mode .add-lesson-bttn a,
+.dark-mode .share-on-social-wrap .copy-link a,
+.dark-mode .content-settings-form-wrap .btn-primary {
+  background-color: #7289FF !important;
+}
+.dark-mode .content-settings-form-wrap .form-control option {
+  color: #0E2C1C !important;
+}
+.dark-mode .user-expperience-box,
+.dark-mode .share-on-social-wrap {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
+}
+.dark-mode .share-on-social-wrap .d-flex a span {
+  color: #D2DEEF !important;
+}
+.dark-mode .share-on-social-wrap .copy-link input {
+  color: #fff !important;
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+.dark-mode .course-single-item .course-thumb-box .header-action i {
+  color: #d7def4 !important;
+}
+.dark-mode .fa-regular.fa-pen-to-square.text-primary {
+  color: #5672FF !important;
+}
+.dark-mode .visibility-form-wrap .form-group i {
+  color: #5672FF !important;
+}
+.dark-mode .header-area .dropdown-menu .dropdown-item:hover,
+.dark-mode .header-area .navbar-nav .nav-item .submenu-box li a.active {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+.dark-mode .course-desc-txt {
+  color: #d7def4;
+}
+.dark-mode .user-details-box {
+  color: #d7def4;
+}
+.dark-mode .user-details-box h2, .dark-mode .user-details-box h3, .dark-mode .user-details-box h4, .dark-mode .user-details-box h5, .dark-mode .user-details-box h6, .dark-mode .user-details-box p {
+  color: #d7def4;
+}
+.dark-mode .user-expperience-box .media h6 {
+  color: #4D545F;
+}
+.dark-mode .user-expperience-box .media p {
+  color: #d7def4;
+}
+.dark-mode .status-card-box .d-flex span img {
+  filter: none !important;
+}
+.dark-mode .profile-widget-history li {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark-mode .module-status .text-bg-danger {
+  background: rgba(255, 229, 216, 0.27) !important;
+  color: #F46D29 !important;
+}
+.dark-mode .user-profile-picture .media img {
+  border-color: #0D0D0D !important;
+}
+.dark-mode .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active span {
+  box-shadow: none !important;
+}
+.dark-mode .dns-left-sidebar .setup-step .step-box:before {
+  background-color: #2F3A4C;
+}
+.dark-mode .dns-left-sidebar .setup-step .step-box span {
+  border-color: #2F3A4C;
+}
+.dark-mode .dns-left-sidebar .setup-step .step-box span {
+  outline-color: #2F3A4C;
 }
 
 .dark-mode-bttn {
