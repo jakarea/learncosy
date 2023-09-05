@@ -23,7 +23,8 @@ Home Page
                         </div>
                     </div>
                     <p>All time stats</p>
-                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
                 <!-- total client @e -->
             </div>
@@ -37,7 +38,8 @@ Home Page
                         </div>
                     </div>
                     <p>All time stats</p>
-                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
                 <!-- total client @e -->
             </div>
@@ -51,7 +53,8 @@ Home Page
                         </div>
                     </div>
                     <p>All time stats</p>
-                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
                 <!-- total client @e -->
             </div>
@@ -65,7 +68,8 @@ Home Page
                         </div>
                     </div>
                     <p>All time stats</p>
-                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
                 <!-- total client @e -->
             </div>
@@ -127,8 +131,7 @@ Home Page
                     <div class="d-flex">
                         <h4>Course Status</h4>
                         <div>
-                            <a href="{{ url('admin/courses') }}">View All</a>
-                            <!-- <a href="#" class="me-0">This month <i class="fas fa-angle-down"></i></a> -->
+                            <a href="{{ url('admin/courses') }}" class="me-0">View All</a> 
                         </div>
                     </div>
                     <table>

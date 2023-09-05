@@ -55,17 +55,13 @@ $i = 0;
                         </div>
                         @if( isEnrolled($course->id) && $course->user->recivingMessage)
                         <a href="{{url('course/messages/send/'.$course->id)}}" class="common-bttn">Get Support</a>
-                        @else
-                        <a href="#" class="common-bttn">  <i class="fas fa-lock"></i>
-                            Get Support
-                        </a>
                         @endif
                         @if ( !isEnrolled($course->id) )
                         <form action="{{route('students.checkout', $course->slug)}}" method="GET">
                             <input type="hidden" name="course_id" value="{{$course->id}}">
                             <input type="hidden" name="price" value="{{$course->price}}">
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                            <button type="submit" class="btn enrol-bttn">Enroll Now <i
+                            <button type="submit" class="btn common-bttn px-3">Enroll Now <i
                                     class="fas fa-angle-right ms-2"></i></button>
                         </form>
                         @endif

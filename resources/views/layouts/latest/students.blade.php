@@ -27,6 +27,7 @@
     <link href="{{ asset('latest/assets/admin-css/style.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/header.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     
     @yield('style') 
     <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
@@ -36,7 +37,7 @@
 </head>
 
 <body> 
-    <!-- ========= Main Root Wrapper @S ========= -->
+    {{-- Main Root Wrapper @S --}}
     <div class="main-page-wrapper">
 
         {{-- header start --}}
@@ -50,10 +51,48 @@
 
         @yield('content')
     </div>
-    <!-- ========= Main Root Wrapper @E ========= -->
+    {{-- Main Root Wrapper @E --}}
+
+    {{-- dark mode button start --}}
+    <input type="checkbox" id="darkModeBttn" class="d-none">
+
+    <div class="dark-mode-bttn">
+        <label for="darkModeBttn" class="active">
+            <i class="fa-solid fa-sun"></i>
+        </label>
+        <label for="darkModeBttn">
+            <i class="fa-solid fa-moon"></i>
+        </label>
+    </div>
+    {{-- dark mode button end --}}
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script>
+        // darkMode.js
+        const modeBttn = document.getElementById("darkModeBttn");
+        const htmlBody = document.querySelector("body");
+    
+        // Function to toggle between dark and light mode
+        function toggleMode() {
+            htmlBody.classList.toggle('dark-mode');
+    
+            // Store user preference in local storage
+            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
+            localStorage.setItem('dark-mode', mode);
+        }
+    
+        // Check the initial state from local storage
+        const storedMode = localStorage.getItem('dark-mode');
+        if (storedMode === 'dark-mode') {
+            htmlBody.classList.add('dark-mode');
+        }
+    
+        // Attach event listener to the checkbox
+        modeBttn.addEventListener('change', toggleMode);
+    
+    
+    </script>
 
     @yield('script')
 </body>

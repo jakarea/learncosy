@@ -23,7 +23,8 @@
                             </div> 
                         </div>
                         <p>All time stats</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
                     <!-- total client @e -->
                 </div>
@@ -37,7 +38,8 @@
                             </div> 
                         </div>
                         <p>All time stats</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
                     <!-- total client @e -->
                 </div>
@@ -51,7 +53,8 @@
                             </div> 
                         </div>
                         <p>All time stats</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
                     <!-- total client @e -->
                 </div>
@@ -65,7 +68,8 @@
                             </div> 
                         </div>
                         <p>All time stats</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
                     <!-- total client @e -->
                 </div> 

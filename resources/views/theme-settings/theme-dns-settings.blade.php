@@ -12,7 +12,7 @@
 {{-- page content @S --}}
 @section('content')
 {{-- student update page @S --}}
-<main class="student-profile-update-page">
+<main class="student-profile-update-page dns-page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
