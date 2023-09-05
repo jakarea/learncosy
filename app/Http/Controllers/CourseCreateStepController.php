@@ -194,4 +194,76 @@ class CourseCreateStepController extends Controller
         return redirect('instructor/courses/create/step-3');
     }
 
+    public function step5(){
+        // $lastInsertedId = session()->get('lastInsertedId');
+        // $lastModuledId = session()->get('lastModuledId');
+        // $lastLessonId = session()->get('lastLessonId');
+
+        // if(!$lastInsertedId || !$lastModuledId || !$lastLessonId){
+        //     return redirect('instructor/courses');
+        // }
+        return view('e-learning/course/instructor/create/step-5');
+    }
+
+    public function step5c(Request $request)
+    {
+        $request->validate([
+            'lesson_id' => 'required',
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
+        ],
+        [ 
+            'video_link.required' => 'Video file is required!',
+            'video_link' => 'Max file size is 1 GB!',
+        ]);
+    
+        $file = $request->file('video_link');
+        $videoName = $file->getClientOriginalName();
+        
+        [$vimeoData, $status, $accountName] = isVimeoConnected();
+            
+        if ($status === 'Connected') {
+            $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
+    
+            $uri = $vimeo->upload($file->getPathname(), [
+                'name' => $videoName,
+                'approach' => 'tus',
+                'size' => $file->getSize(),
+            ]);
+    
+            if ($uri) {
+                $lesson = Lesson::find($request->lesson_id);
+                $lesson->video_link = $uri;
+                $lesson->save();
+            }
+    
+            return response()->json(['uri' => $uri]);
+        } elseif ($status === 'Invalid Credentials') {
+            return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
+        } else {
+            return response()->json(['error' => 'Vimeo account is not connected.']);
+        }
+    }
+    
+
+    public function getProgress(Request $request)
+    {
+        $uri = $request->input('uri');
+
+        // $vimeo = new VimeoSDK(config('vimeo.access_token'));
+
+        $vimeo = Vimeo::connection();
+
+        $video = $vimeo->request($uri);
+
+
+        if (isset($response['body']['upload']['upload_status']) && $response['body']['upload']['upload_status'] === 'in_progress') {
+            $progress = $response['body']['upload']['upload_progress'] * 100;
+        } else {
+            $progress = 100;
+        }
+    
+
+        return response()->json(['progress' => $progress]);
+
+    }
 }

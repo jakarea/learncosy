@@ -200,22 +200,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('step-3', 'step3');
             Route::post('step-3', 'step3c');
-            
-
-            // Route::get('step-3', function () {
-            //     return view('e-learning/course/instructor/create/step-3');
-            // });
 
             Route::get('step-4', 'step4');
             Route::post('step-4', 'step4c');
 
-            // Route::get('step-4', function () {
-            //     return view('e-learning/course/instructor/create/step-4');
-            // });
-
-            Route::get('step-5', function () {
-                return view('e-learning/course/instructor/create/step-5');
-            });
+            Route::get('step-5', 'step5');
+            Route::post('step-5', 'step5c');
 
             Route::get('step-6', function () {
                 return view('e-learning/course/instructor/create/step-3');

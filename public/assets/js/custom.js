@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleMainPage.classList.toggle("main-page-width");
     }
 
-    toggleBar.addEventListener("click", sidebarExpand);
-
+    // toggleBar.addEventListener("click", sidebarExpand);
 
     // toastr.options = {
     //     "closeButton": false,
