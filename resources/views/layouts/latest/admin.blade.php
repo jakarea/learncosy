@@ -48,7 +48,6 @@
     {{-- Main Root Wrapper @E --}}
 
     {{-- dark mode button start --}}
-
     <input type="checkbox" id="darkModeBttn" class="d-none">
 
     <div class="dark-mode-bttn">

@@ -157,7 +157,8 @@
                                 <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
                             </ul>
                         </div>
-                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/cir-2.svg') }}" alt="icon" class="img-fluid dark-ele"></a>
                     </div>   
                     <div class="media"> 
                         <div class="media-body">
@@ -168,7 +169,8 @@
                                 <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
                             </ul>
                         </div>
-                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/cir-2.svg') }}" alt="icon" class="img-fluid dark-ele"></a>
                     </div>   
                     <div class="media"> 
                         <div class="media-body">
@@ -179,7 +181,8 @@
                                 <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
                             </ul>
                         </div>
-                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/cir-2.svg') }}" alt="icon" class="img-fluid dark-ele"></a>
                     </div>   
                     <div class="media"> 
                         <div class="media-body">
@@ -190,7 +193,8 @@
                                 <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
                             </ul>
                         </div>
-                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/cir-2.svg') }}" alt="icon" class="img-fluid dark-ele"></a>
                     </div>   
                     <div class="media"> 
                         <div class="media-body">
@@ -201,7 +205,10 @@
                                 <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon" class="img-fluid"> 1 min ago</li>
                             </ul>
                         </div>
-                        <a href="#"><img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid"></a>
+                        <a href="#">
+                            <img src="{{ asset('latest/assets/images/circle-q.svg') }}" alt="icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/cir-2.svg') }}" alt="icon" class="img-fluid dark-ele">
+                        </a>
                     </div>   
 
                 </div>

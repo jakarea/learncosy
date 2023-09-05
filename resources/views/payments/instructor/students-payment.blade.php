@@ -46,28 +46,32 @@
         <div class="row">
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
-                    <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid">
+                    <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-01-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Total Earnings</h5>
                     <h4>€ {{$totalEarnings}}</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
-                    <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid">
+                    <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-02-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Earnings Today</h5>
                     <h4>€ {{ $todaysEarnings }}</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
-                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Total Enrollments</h5>
                     <h4>{{ $totalEnrolment }} Students</h4>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
-                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Enrolled Today</h5>
                     <h4>{{ $todaysEnrolment }} Students</h4>
                 </div>
@@ -80,7 +84,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 mt-15">
                 <div class="package-list-header" style="grid-template-columns: 100%">

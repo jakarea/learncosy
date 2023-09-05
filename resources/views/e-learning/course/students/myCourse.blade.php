@@ -94,7 +94,8 @@
                             <h5>{{$module->title}}</h5>
                             <p>{{$module->number_of_lesson}} Lessons. {{$module->duration}} Duration</p>
                         </div>
-                        <img src="{{asset('latest/assets/images/full.svg')}}" alt="full"  class="img-fluid">
+                        <img src="{{asset('latest/assets/images/full.svg')}}" alt="full"  class="img-fluid light-ele">
+                        <img src="{{asset('latest/assets/images/cir-2.svg')}}" alt="full"  class="img-fluid dark-ele">
                     </div>
 
                     <hr>

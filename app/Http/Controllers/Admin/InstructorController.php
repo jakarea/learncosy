@@ -25,7 +25,7 @@ class InstructorController extends Controller
         if (!empty($name)) {
             $users->where('name', 'like', '%' . trim($name) . '%');
         }
-        $users = $users->paginate(12);
+        $users = $users->paginate(2);
  
         return view('instructor/admin/grid',compact('users')); 
      }
