@@ -34,30 +34,16 @@
         <div class="container">
             <div class="logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
+                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="login-page-wrapper">
+    <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{asset('latest/assets/images/login-left.svg')}});">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="login-text">
-                        <h1>Sign in to </h1>
-                        <h3>Learn Cosy</h3>
-                        <p>Whether you're a student, professional, or lifelong learner, our eLearning website empowers
-                            you to pursue your passions, achieve your aspirations, and stay ahead in today's dynamic
-                            world. Unlock a world of knowledge and growth with us today!</p>
-                    </div>
-                    <div class="login-promo-image">
-                        <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
-                            title="Leancosy white logo" class="login2-logo" />
-                    </div>
-                </div>
-                <div class="col-md-6">
+            <div class="row justify-content-end"> 
+                <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
                         <div class="login-heading">
                             <h6>Welcome to <span>Learn Cosy</span></h6>
@@ -66,19 +52,10 @@
                                 <a href="#">Sign up</a>
                             </div>
                         </div>
-                        <h1>Sign in</h1>
-                        <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
-                                    class="img-fluid"> Sign in with Google</a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
-                                    class="img-fluid"></a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
-                                    class="img-fluid"></a>
-                        </div>
+                        <h1>Sign in</h1> 
 
                         <form method="POST" action="{{ route('login') }}" class="login-from">
                             @csrf
- 
                             <div class="form-group">
                                 <label>Enter your username or email address</label>
                                 <input type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
@@ -111,32 +88,44 @@
                                     <a href="{{ route('password.request') }}">
                                         {{ __('Forgot Password?') }}
                                     </a>
-                                @endif 
+                                @endif
                             </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">Next</button>
                             </div>
                         </form>
+
+                        <h6 class="or">or</h6>
+
+                        <div class="buttons-group">
+                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                                    class="img-fluid"> Sign in with Google</a>
+                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
+                                    class="img-fluid"></a>
+                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                                    class="img-fluid"></a>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- dark mode button start --}}
-    <input type="checkbox" id="darkModeBttn" class="d-none">
+     {{-- dark mode button start --}}
+     <input type="checkbox" id="darkModeBttn" class="d-none">
 
-    <div class="dark-mode-bttn">
-        <label for="darkModeBttn" class="active">
-            <i class="fa-solid fa-sun"></i>
-        </label>
-        <label for="darkModeBttn">
-            <i class="fa-solid fa-moon"></i>
-        </label>
-    </div>
-    {{-- dark mode button end --}}
+     <div class="dark-mode-bttn">
+         <label for="darkModeBttn" class="active">
+             <i class="fa-solid fa-sun"></i>
+         </label>
+         <label for="darkModeBttn">
+             <i class="fa-solid fa-moon"></i>
+         </label>
+     </div>
+     {{-- dark mode button end --}}
 
-    <script>
+     <script>
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
@@ -179,8 +168,7 @@
 
 
 </script>
-    
-</body>
 
+</body>
 
 </html>
