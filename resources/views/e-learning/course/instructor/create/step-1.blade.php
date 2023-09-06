@@ -71,7 +71,7 @@ Course Create - Step 3
                         </div>  
                         <div class="form-group">
                             <h6>Short Description</h6>
-                            <textarea class="form-control" id="short_description" name="short_description"></textarea> 
+                            <textarea class="form-control" name="short_description"></textarea> 
                         </div>   
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <h6>User must manually tick off each lesson</h6>

@@ -74,7 +74,7 @@ class CourseCreateStepController extends Controller
         //     $file->move(public_path('uploads'), $filename);
         // }
 
-        $image_path = 'public/assets/images/courses/thumbnail.png';
+        $image_path = 'assets/images/courses/thumbnail.png';
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $filename = time() . '_' . $file->getClientOriginalName();
@@ -83,7 +83,7 @@ class CourseCreateStepController extends Controller
             $image = Image::make($file);
             $image->encode('webp', 90); // Convert to WebP with 90% quality
             
-            $image_path = 'public/assets/images/courses/'.$course->slug . '.webp';
+            $image_path = 'assets/images/courses/'.$course->slug . '.webp';
 
             $image->save(public_path('assets/images/courses/') . $course->slug . '.webp');
         }
@@ -195,10 +195,10 @@ class CourseCreateStepController extends Controller
     }
 
     public function step5(){
-        // $lastInsertedId = session()->get('lastInsertedId');
-        // $lastModuledId = session()->get('lastModuledId');
-        // $lastLessonId = session()->get('lastLessonId');
-
+        $lastInsertedId = session()->get('lastInsertedId');
+        $lastModuledId = session()->get('lastModuledId');
+        $lastLessonId = session()->get('lastLessonId');
+        
         // if(!$lastInsertedId || !$lastModuledId || !$lastLessonId){
         //     return redirect('instructor/courses');
         // }
@@ -207,8 +207,11 @@ class CourseCreateStepController extends Controller
 
     public function step5c(Request $request)
     {
+        $lastInsertedId = session()->get('lastInsertedId');
+        $lastModuledId = session()->get('lastModuledId');
+        $lastLessonId = session()->get('lastLessonId');
+
         $request->validate([
-            'lesson_id' => 'required',
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
         ],
         [ 
@@ -222,20 +225,20 @@ class CourseCreateStepController extends Controller
         [$vimeoData, $status, $accountName] = isVimeoConnected();
             
         if ($status === 'Connected') {
-            $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
+            $vimeo = new \Vimeo\Vimeo($vimeoData->client_id.'5', $vimeoData->client_secret.'5', $vimeoData->access_key.'5');
     
             $uri = $vimeo->upload($file->getPathname(), [
                 'name' => $videoName,
                 'approach' => 'tus',
                 'size' => $file->getSize(),
             ]);
-    
+            
             if ($uri) {
-                $lesson = Lesson::find($request->lesson_id);
+                $lesson = Lesson::find($lastLessonId);
                 $lesson->video_link = $uri;
+                $lesson->short_description = $request->description;
                 $lesson->save();
             }
-    
             return response()->json(['uri' => $uri]);
         } elseif ($status === 'Invalid Credentials') {
             return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
