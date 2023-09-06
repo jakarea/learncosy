@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@400;600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    list-style-type: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+i,
+button,
+strong,
+u,
+sub,
+sup,
+span,
+textarea,
+table tr td,
+select,
+input {
+    padding: 0;
+    margin: 0;
+}
+
+select:focus-within,
+textarea:focus-within,
+input:focus-within,
+.form-control:focus-within,
+button:focus-within {
+    box-shadow: none !important;
+}
+
+a,
+a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+ol,
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1212px !important;
+}
+
+body {
+    min-height: 100vh;
+    background: #FF9D25;
+}
+
+
+.login-header {
+    padding-top: 1rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.login-page-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 0;
+}
+
+.login-page-wrapper:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #fff;
+    z-index: -1;
+}
+
+.login-text {
+    margin-top: 4rem;
+}
+
+.login-text h1 {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 600;
+    font-style: normal;
+    font-family: 'Poppins', sans-serif;
+    line-height: normal;
+}
+
+.login-text h3 {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: normal;
+    font-style: normal;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-text p {
+    margin-top: 22px;
+    width: 54%;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 400;
+    line-height: normal;
+    font-style: normal;
+}
+
+.login-promo-image {
+    margin-left: -30px;
+    margin-top: 110px;
+}
+
+.login-box-wrap {
+    border-radius: 2.5rem;
+    background: #FFF;
+    box-shadow: 0px 4px 35px 0px rgba(0, 0, 0, 0.08);
+    padding: 2.75rem;
+    max-width: 33.6875rem;
+    margin-left: auto;
+}
+
+.login-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.login-heading h6 {
+    color: #000;
+    font-size: 1.3125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login-heading h6 span {
+    color: #FF9D25;
+    font-weight: 600;
+}
+
+.login-heading a {
+    color: #FF9D25;
+    display: block;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login-heading p {
+    color: #8D8D8D;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.login-box-wrap h1 {
+    color: #000;
+    font-size: 3.4375rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 2rem;
+}
+
+.buttons-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.buttons-group a {
+    border-radius: 0.5625rem;
+    background: #FFF7E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.4375rem;
+    padding: .8rem .9rem;
+}
+
+.buttons-group a:first-child {
+    min-width: 18.625rem;
+    color: #FF9D25;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.buttons-group a:first-child img {
+    margin-right: 1.3rem;
+}
+
+.login-from .form-group {
+    margin-top: 2rem;
+}
+
+.login-from .form-group .form-control {
+    border-radius: 0.5625rem;
+    border: 1px solid #ADADAD;
+    background: #FFF;
+    height: 3.5625rem;
+    color: var(--neutral-color-neutral-60, #66768E);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem;
+}
+
+.login-from .form-group .form-control:focus-within {
+    border-color: #FF9D25;
+}
+
+.login-from .form-group label {
+    color: #000;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: normal;
+}
+
+.checbox-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+}
+
+.checbox-wrap .form-check {
+    align-items: center;
+}
+
+.checbox-wrap .form-check-label {
+    color: var(--gray-700, #344054);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.checbox-wrap a {
+    color: #FF9D25;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.submit-button {
+    margin-top: 2.5rem;
+}
+
+.submit-button .btn-submit {
+    border-radius: 0.625rem;
+    background: #FF9D25;
+    box-shadow: 0px 4px 19px 0px rgba(119, 147, 65, 0.30);
+    padding: 0.9375rem 12.9375rem;
+    color: #FFF;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.login-four-page-wrap {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: top left;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.login-four-page-wrap:before {
+    height: 100%;
+    width: 50%;
+    left: auto;
+    right: 0;
+    background-color: #EAF3FA;
+}
+
+.login-four-page-wrap .checbox-wrap a,
+.login-four-page-wrap .login-heading h6 span,
+.login-four-page-wrap .login-heading a {
+    color: #2F7AEB !important;
+}
+
+.login-four-page-wrap .submit-button .btn-submit {
+    background: #699EEE;
+    box-shadow: 0px 4px 19px 0px rgba(119, 147, 65, 0.30) !important;
+}
+
+
+.or {
+    color: #ABABAB;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 1.8rem 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.buttons-group a {
+    background: #EFF4FF;
+    color: #2F7AEB!important;
+}

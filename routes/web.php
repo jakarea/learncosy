@@ -69,6 +69,14 @@ Route::get('/login3', function(){
     return view('login/login3');
 })->middleware('guest');
 
+Route::get('/login4', function(){
+    return view('login/login4');
+})->middleware('guest');
+
+Route::get('/login5', function(){
+    return view('login/login5');
+})->middleware('guest');
+
 
 Route::get('/auth-register', function(){
     return view('custom-auth/register');

@@ -28,34 +28,21 @@
 
 </head>
 
-<body>
+<body class="bg-white">
 
     <header class="login-header">
         <div class="container">
             <div class="logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" title="learncosy logo">
+                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="login-page-wrapper">
+    <section class="login-page-wrapper login-four-page-wrap" style="background-image: url({{asset('latest/assets/images/login-left.svg')}});">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="login-text">
-                        <h1>Sign in to </h1>
-                        <h3>Learn Cosy</h3>
-                        <p>Whether you're a student, professional, or lifelong learner, our eLearning website empowers
-                            you to pursue your passions, achieve your aspirations, and stay ahead in today's dynamic
-                            world. Unlock a world of knowledge and growth with us today!</p>
-                    </div>
-                    <div class="login-promo-image">
-                        <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
-                            title="Leancosy white logo" class="login2-logo" />
-                    </div>
-                </div>
+            <div class="row justify-content-end"> 
                 <div class="col-md-6">
                     <div class="login-box-wrap">
                         <div class="login-heading">
@@ -65,15 +52,7 @@
                                 <a href="#">Sign up</a>
                             </div>
                         </div>
-                        <h1>Sign in</h1>
-                        <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
-                                    class="img-fluid"> Sign in with Google</a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
-                                    class="img-fluid"></a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
-                                    class="img-fluid"></a>
-                        </div>
+                        <h1>Sign in</h1> 
 
                         <form action="" class="login-from">
                             <div class="form-group">
@@ -99,6 +78,18 @@
                                 <button class="btn btn-submit" type="submit">Next</button>
                             </div>
                         </form>
+
+                        <h6 class="or">or</h6>
+
+                        <div class="buttons-group">
+                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                                    class="img-fluid"> Sign in with Google</a>
+                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
+                                    class="img-fluid"></a>
+                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                                    class="img-fluid"></a>
+                        </div>
+
                     </div>
                 </div>
             </div>

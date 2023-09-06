@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@400;600&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    list-style-type: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+i,
+button,
+strong,
+u,
+sub,
+sup,
+span,
+textarea,
+table tr td,
+select,
+input {
+    padding: 0;
+    margin: 0;
+}
+
+select:focus-within,
+textarea:focus-within,
+input:focus-within,
+.form-control:focus-within,
+button:focus-within {
+    box-shadow: none !important;
+}
+
+a,
+a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+ol,
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1212px !important;
+}
+
+body {
+    min-height: 100vh;
+    background: #FF9D25;
+}
+
+
+.login-header {
+    padding-top: 1rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.login-page-wrapper {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 0;
+}
+
+.login-page-wrapper:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #fff;
+    z-index: -1;
+}
+
+.login-text {
+    margin-top: 4rem;
+}
+
+.login-text h1 {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 600;
+    font-style: normal;
+    font-family: 'Poppins', sans-serif;
+    line-height: normal;
+}
+
+.login-text h3 {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: normal;
+    font-style: normal;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-text p {
+    margin-top: 22px;
+    width: 54%;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 400;
+    line-height: normal;
+    font-style: normal;
+}
+
+.login-promo-image {
+    margin-left: -30px;
+    margin-top: 110px;
+}
+
+.login-box-wrap {
+    border-radius: 2.5rem;
+    border: 1px solid #E0E0E0;
+    background: #FFF;
+    box-shadow: 0px 82px 40px -14px rgba(100, 100, 100, 0.08);
+    padding: 2.3rem 6rem;
+}
+
+
+.login-box-wrap h1 {
+    color: #212121;
+    text-align: center;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 2.34375rem;
+    letter-spacing: -0.03125rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-box-wrap p {
+    color: var(--gray-500, #667085);
+    text-align: center;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5rem;
+}
+
+.buttons-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.buttons-group a {
+    border-radius: 1px;
+    background: #EEEEEE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem; 
+    width: 3rem; 
+    margin: 0 .4rem;
+} 
+ 
+
+.login-from .form-group {
+    margin-top: 1rem;
+}
+
+.login-from .form-group .form-control {
+    border: 1px solid #ADADAD;
+    background: #FFF;
+    border-radius: 1px;
+    height: 3.5625rem;
+    color: var(--neutral-color-neutral-60, #66768E);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem;
+}
+
+.login-from .form-group .form-control:focus-within {
+    border-color: #212121;
+}
+
+.login-from .form-group label {
+    color: #000;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: normal;
+}
+
+.checbox-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+}
+
+.checbox-wrap .form-check {
+    align-items: center;
+}
+
+.checbox-wrap .form-check-label {
+    color: var(--gray-700, #344054);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.checbox-wrap a {
+    color: #212121;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.submit-button {
+    margin-top: 2.5rem;
+}
+
+.submit-button .btn-submit {
+    background: #212121;
+    color: #FFF;
+    border-radius: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.76rem;
+    height: 4rem;
+}
+
+.login-four-page-wrap {
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 4rem 0;
+}
+
+.or {
+    color: #000; 
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.40813rem;
+    margin: 1.5rem 0 1rem;
+    text-align: center;
+    text-transform: uppercase;
+}
