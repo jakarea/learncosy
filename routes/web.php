@@ -16,6 +16,7 @@ use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
 
+
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\CheckoutController;
@@ -34,7 +35,8 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 
-
+use App\Models\User; 
+use App\Models\InstructorModuleSetting; 
 use App\Http\Controllers\Frontend\HomepageController;
 /*
 |--------------------------------------------------------------------------
@@ -57,19 +59,29 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
 
 // custom auth screen route
 Route::get('/auth-login', function(){
-    return view('custom-auth/login');
+
+    $subdomain = explode('.', request()->getHost())[0];
+    
+    $instrcutor = User::where('username', $subdomain)->firstOrFail();
+    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
+    $loginPageStyle = json_decode($instrcutorModuleSettings->value);
+
+    if ($loginPageStyle->lp_layout == 'fullwidth') {
+        return view('login/login2');
+    }
+    elseif($loginPageStyle->lp_layout == 'default'){
+        return view('login/login3');
+    }
+    elseif($loginPageStyle->lp_layout == 'leftsidebar'){
+        return view('login/login5');
+    }
+    elseif($loginPageStyle->lp_layout == 'rightsidebar'){
+        return view('login/login4');
+    }else{
+        return view('login/login');
+    }
+
 })->name('tlogin')->middleware('guest');
-
-
-// custom auth screen route
-Route::get('/login2', function(){
-    return view('login/login2');
-})->middleware('guest');
-
-Route::get('/login3', function(){
-    return view('login/login3');
-})->middleware('guest');
-
 
 Route::get('/auth-register', function(){
     return view('custom-auth/register');
