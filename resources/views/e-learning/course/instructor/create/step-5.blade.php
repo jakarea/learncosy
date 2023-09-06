@@ -39,16 +39,12 @@ Course Create - Step 5
                 
                 <div class="lesson-edit-form-wrap mt-4">
                     <form  id="uploadForm" action="{{ url('instructor/courses/create/step-5') }}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
-    
                     @csrf    
-                    <div class="progress">
-                            <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">100%</div>
-                        </div>
-
-                        <div class="highlighted-area-upload">
+                        <div class="highlighted-area-upload dragBox">
                             <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
                             <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
-                            <p><label for="uploadFile">Click here</label> to set the highlighted video</p>
+                            
+                            <p class="file-name"><label for="uploadFile">Click here</label> to set the highlighted video</p>
                         </div>
                         <div id="preview"></div>
                         <div class="upload-progress">
@@ -62,9 +58,10 @@ Course Create - Step 5
                             <span class="invalid-feedback">@error('video_link'){{ $message }}
                                         @enderror</span>
                         </div>
+
                         <h4>A Short description for this video</h4>
                         <div class="form-group">
-                            <textarea class="form-control" id="description"></textarea>
+                            <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                         <!-- <div class="form-group form-upload">
                             <label for="file" class="txt">Upload Files</label>
@@ -160,22 +157,23 @@ Course Create - Step 5
 {{-- page content @E --}}
 
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+<script src="//cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js" type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 
 <script>
     function dragNdrop(event) {
         // While selecting file, only allow video file
         var fileInput = document.getElementById('uploadFile');
+        
         var filePath = fileInput.value;
         var allowedExtensions = /(\.mp4|\.mov|\.avi|\.wmv|\.flv|\.mkv)$/i;
-        if (!allowedExtensions.exec(filePath)) {
+        if (filePath && !allowedExtensions.exec(filePath)) {
             alert('Invalid file type');
             fileInput.value = '';
             return false;
         }
-        
+
     var fileName = event.target.files[0].name;
     document.querySelector('.file-name').innerHTML = fileName;
     document.querySelector('.file-name').style.display = 'block';
@@ -198,10 +196,7 @@ $(document).ready(function() {
 
         var formData = new FormData(this);
         var urlParams = new URLSearchParams(window.location.search);
-        var lesson_id = urlParams.get('lesson_id');
-        // get lesson id from browser and add to form data
-        formData.append('lesson_id', lesson_id);
-
+        console.log({formData})
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
@@ -245,16 +240,17 @@ $(document).ready(function() {
                 $('.upload-progress p').css('margin-top', '10px');
             },
             success: function(response) {
+                console.log({response})
                 // reset button state
                 $('.btn-submit').attr('disabled', false).text('Upload');
                 var uri = response.uri;
-                checkProgress(uri);
+                //checkProgress(uri);
             },
             // handle all types of errors
             error: function(xhr) {
                 var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
                 alert(errors);
-                cosnole.log(errors);
+                console.log({errors});
                 // reset button state
                 $('.btn-submit').attr('disabled', false).text('Upload');
             }
