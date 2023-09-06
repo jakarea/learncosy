@@ -61,7 +61,6 @@ ul {
 
 body {
     min-height: 100vh;
-    background: #FF9D25;
 }
 
 
@@ -72,6 +71,28 @@ body {
     top: 0;
     width: 100%;
     z-index: 999;
+}
+
+.login-header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-header .logo .signup-bttn {
+    border: 1.5px solid var(--primary-color-blue-lightest, #E7EBFF);
+    height: 3rem;
+    color: var(--primary-color-blue-lightest, #E7EBFF);
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1.40813rem;
+    letter-spacing: 0.04375rem;
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .login-page-wrapper {
@@ -137,7 +158,6 @@ body {
     padding: 2.3rem 6rem;
 }
 
-
 .login-box-wrap h1 {
     color: #212121;
     text-align: center;
@@ -161,7 +181,7 @@ body {
 .buttons-group {
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
 .buttons-group a {
@@ -170,14 +190,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 3rem; 
-    width: 3rem; 
-    margin: 0 .4rem;
-} 
- 
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 0 .8rem;
+}
+
 
 .login-from .form-group {
     margin-top: 1rem;
+    position: relative;
+}
+
+
+.login-from .form-group i {
+    position: absolute;
+    right: 1rem;
+    top: 3.8rem;
+    cursor: pointer;
 }
 
 .login-from .form-group .form-control {
@@ -233,7 +262,7 @@ body {
 }
 
 .submit-button {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
 }
 
 .submit-button .btn-submit {
@@ -254,13 +283,27 @@ body {
 
 .login-four-page-wrap {
     min-height: 100vh;
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding: 4rem 0;
+    position: relative;
+    padding: 7rem 0 4rem;
+    z-index: 1;
+}
+
+.bg-olg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.bg-olg img {
+    display: block;
+    width: 100%;
 }
 
 .or {
-    color: #000; 
+    color: #000;
     font-size: 0.8rem;
     font-style: normal;
     font-weight: 400;
@@ -269,3 +312,259 @@ body {
     text-align: center;
     text-transform: uppercase;
 }
+
+.login-ftr {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.login-ftr p {
+    color: #616161;
+    font-size: 0.64313rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.04375rem;
+}
+
+
+
+
+/* dark mode css */
+.dark-mode-bttn {
+    z-index: 999999;
+    max-height: 75px;
+    max-width: 42px;
+    min-height: 75px;
+    min-width: 36px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #d7def4;
+    border-radius: 30px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 6px;
+    display: flex;
+    position: fixed;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    right: 2%;
+}
+
+.dark-mode-bttn label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: ease-in-out .3s;
+    cursor: pointer;
+}
+
+.dark-mode-bttn label i {
+    color: #66768E;
+}
+
+.dark-mode-bttn label.active {
+    background-color: #294CFF;
+    transition: ease-in-out .3s;
+}
+
+.dark-mode-bttn label.active i {
+    color: #fff;
+}
+
+.dark-mode-bttn {
+    border-color: rgb(215, 222, 244);
+    background-color: rgb(255, 255, 255);
+}
+
+.dark-mode-bttn label:first-child {
+    background-color: #294CFF !important;
+}
+
+.dark-mode-bttn label:last-child {
+    background-color: transparent !important;
+}
+
+body.dark-mode .dark-mode-bttn label:first-child {
+    background-color: transparent !important;
+}
+
+body.dark-mode .dark-mode-bttn label:first-child i {
+    color: #66768E;
+}
+
+body.dark-mode .dark-mode-bttn label:last-child {
+    background-color: #7289FF !important;
+}
+
+body.dark-mode .dark-mode-bttn label:last-child i {
+    color: #fff;
+}
+
+.dark-ele {
+    display: none !important;
+}
+
+.light-ele {
+    display: inline-block !important;
+}
+
+body.dark-mode .dark-ele {
+    display: inline-block !important;
+}
+
+body.dark-mode .light-ele {
+    display: none !important;
+}
+
+body.dark-mode {
+    background-color: #FFA83F !important;
+}
+ 
+body.dark-mode h3,
+body.dark-mode h1 {
+    color: #0D0D0D !important;
+}
+
+body.dark-mode .login-page-wrapper:before {
+    background-color: #0D0D0D !important;
+}
+
+body.dark-mode .login-box-wrap { 
+    border: 1px solid #2C2C2C!important;
+    background: #0D0D0D!important; 
+    box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20)!important;
+}
+
+body.dark-mode .login-heading h6 {
+    color: #C5CCD8 !important;
+}
+
+body.dark-mode .login-box-wrap  p {
+    color: #A6B1C4 !important;
+}
+
+body.dark-mode .checbox-wrap a,
+body.dark-mode .login-from .form-group label,
+body.dark-mode .login-box-wrap h1 {
+    color: #fff !important;
+}
+
+body.dark-mode .buttons-group a {
+    background-color: #121212 !important; 
+}
+
+
+body.dark-mode .login-from .form-group .form-control {
+    border: 1px solid #ADADAD !important;
+    background: #0D0D0D !important;
+    color: #fff !important;
+}
+
+body.dark-mode .or,
+body.dark-mode .login-from .form-group i {
+    color: #fff !important;
+}
+
+body.dark-mode .login-ftr p a,
+body.dark-mode .checbox-wrap .form-check-label {
+    color: #66768E !important;
+}
+
+body.dark-mode .submit-button .btn-submit {
+    background: #DEDEDE !important;
+    box-shadow: 0px 4px 19px 0px rgba(119, 147, 65, 0.30) !important;
+    color: #0D0D0D !important;
+}
+
+body.dark-mode .dark-mode-bttn {
+    border-color: #66768E !important;
+    background-color: #0D0D0D !important;
+}
+
+body.dark-mode .login-header .logo .signup-bttn {
+    border-color: #191919 !important;
+    color: #191919 !important;
+}
+body.dark-mode .form-check-input{
+    background-color: transparent!important;
+    border-color: #EEEEEE!important;
+}
+/* dark mode css end */
+
+
+
+
+
+
+
+
+@media (min-width: 320px) and (max-width: 575px) {
+    .login-box-wrap {
+        padding: 1.5rem;
+    }
+
+    .login-box-wrap h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .login-from .form-group .form-control {
+        font-size: 14px;
+        height: 2.8rem;
+    }
+
+    .submit-button .btn-submit {
+        height: 2.8rem;
+    }
+
+    .login-from .form-group label {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .login-box-wrap {
+        padding: 1.5rem;
+    }
+
+    .login-box-wrap h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .login-from .form-group .form-control {
+        font-size: 14px;
+        height: 2.8rem;
+    }
+
+    .submit-button .btn-submit {
+        height: 2.8rem;
+    }
+
+    .login-from .form-group label {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .login-box-wrap {
+        padding: 2.5rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+@media (min-width: 1200px) and (max-width: 1360px) {}
+
+@media (min-width: 1361px) {}
