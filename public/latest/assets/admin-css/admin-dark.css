@@ -1018,6 +1018,17 @@
 .dark-mode .dns-left-sidebar .setup-step .step-box span {
   outline-color: #2F3A4C;
 }
+.dark-mode .paid-student-name .txt,
+.dark-mode .pay-details-box-invoice,
+.dark-mode .payment-name-box,
+.dark-mode .payment-details-title {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
+}
+.dark-mode .pay-details-box-invoice table tr th {
+  background-color: #2F3A4C;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

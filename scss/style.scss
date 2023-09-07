@@ -112,6 +112,10 @@
     }
 }
 
+.invalid-feedback{
+    display: block!important;
+}
+
 // responsive css start
 @include q.responsive(phone) {}
 
