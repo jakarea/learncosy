@@ -72,6 +72,9 @@ Course Create - Step 11
 
                     <div class="d-flex">
                         <a href="#">
+                           
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}" target="_blank">
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
                         </a>
@@ -83,24 +86,29 @@ Course Create - Step 11
                             <img src="{{asset('latest/assets/images/icons/tkt.svg')}}" alt="FB" class="img-fluid">
                             <span>Tiktok</span>
                         </a>
-                        <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB" class="img-fluid">
+                        <a href="https://twitter.com/intent/tweet?url={{ url('courses',$course->slug)}}&text={{ $course->title }}" target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB" class="img-fluid">
                             <span>Twitter</span>
                         </a>
+                        <a href="https://www.linkedin.com/shareArticle?url=http://example.com" target="_blank">
+                            <img src="{{asset('latest/assets/images/icons/linkedin.svg')}}" alt="FB" class="img-fluid">
+                            <span>LinkedIn</span></a>
+
+
                     </div>
 
                     <h6>As a message</h6>
 
                     <div class="d-flex">
-                        <a href="#">
+                        
+                        <a href="https://www.messenger.com/share.php?text={{ url('courses',$course->slug) }}">
                             <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                             <span>Messenger</span>
                         </a>
-                        <a href="#">
+                        <a href="https://api.whatsapp.com/send?text={{ url('courses',$course->slug) }}">
                             <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                             <span>Whatsapp</span>
                         </a>
-                        <a href="#">
+                        <a href="https://telegram.me/share/url?url={{ url('courses',$course->slug) }}">
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
@@ -113,7 +121,7 @@ Course Create - Step 11
                     <h6>Or copy link</h6>
 
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="https://73cd2de3/f139-4813-b1ab/4ccc9fd9a4f0/course/newcoursecoure" class="form-control">
+                        <input type="text" placeholder="Link" value="{{ url('courses', $course->slug)}}" class="form-control">
                         <a href="#">Copy</a>
                     </div>
 

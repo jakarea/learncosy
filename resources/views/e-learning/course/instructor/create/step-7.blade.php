@@ -57,25 +57,29 @@ Course Create - Step 7
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="">
+                <form action="" method="POST" >
+                    @csrf
                     <div class="content-settings-form-wrap">
                         <h4>Select Price</h4>
                         <div class="form-group">
-                            <input id="price" class="form-control" type="text" required>
+                            <input id="price" class="form-control" name="price" value="{{ old('price')  }}" type="text" >
                             <label for="price">Regular Price</label>
                             <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
+                            <span class="invalid-feedback d-block">@error('price'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group">
-                            <input id="offer_price" class="form-control" type="text" required>
+                            <input id="offer_price" class="form-control" name="offer_price" value="{{ old('offer_price')  }}" type="text" >
                             <label for="offer_price">Sales Price</label>
                             <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
+                            <span class="invalid-feedback d-block">@error('offer_price'){{ $message }}
+                                        @enderror</span>
                         </div>    
                     </div>
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="#">Back</a>
-                        <a href="#">Next</a>
+                        <a href="{{ url('instructor/courses/create/step-6')}} ">Back</a>
+                        <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
                 </form>

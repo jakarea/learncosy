@@ -162,6 +162,7 @@ Course Create - Step 5
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 
 <script>
+    var baseUrl = "{{ url('') }}";
     function dragNdrop(event) {
         // While selecting file, only allow video file
         var fileInput = document.getElementById('uploadFile');
@@ -244,6 +245,10 @@ $(document).ready(function() {
                 // reset button state
                 $('.btn-submit').attr('disabled', false).text('Upload');
                 var uri = response.uri;
+                var price = response.price;
+                if(price === 0){
+                    window.location.href = baseUrl + '/instructor/courses/create/step-7';
+                }
                 //checkProgress(uri);
             },
             // handle all types of errors
