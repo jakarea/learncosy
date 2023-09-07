@@ -13,6 +13,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
+use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
 
 
@@ -198,6 +199,45 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/{slug}/edit', 'edit')->name('course.edit');
             Route::post('/{slug}/edit', 'update')->name('course.update'); 
             Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+        });
+
+        Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
+            
+            // add course static route
+            Route::get('step-1', 'step1');
+            Route::post('step-1', 'step1c');
+
+            Route::get('step-2', 'step2');
+            Route::post('step-2', 'step2c');
+
+            Route::get('step-3', 'step3');
+            Route::post('step-3', 'step3c');
+
+            Route::get('step-4', 'step4');
+            Route::post('step-4', 'step4c');
+
+            Route::get('step-5', 'step5');
+            Route::post('step-5', 'step5c');
+
+            Route::get('step-6', function () {
+                return view('e-learning/course/instructor/create/step-3');
+            });
+
+            Route::get('step-7', 'step7');
+            Route::post('step-7', 'step7c');
+
+            Route::get('step-8', 'step8');
+            Route::post('step-8', 'step8c');
+
+            Route::get('step-9', 'step9');
+            Route::post('step-9', 'step9c');
+
+            Route::get('step-10', 'step10');
+            Route::post('step-10', 'step10c');
+
+            Route::get('step-11', 'step11');
+            Route::post('step-11', 'step11c');
+
         });
         // module page routes
         Route::prefix('modules')->controller(ModuleController::class)->group(function () {
@@ -463,50 +503,4 @@ Route::get('/logout', function () {
  */
 Route::fallback(function () {
     return redirect()->route('tlogin');
-});
-
-// add course static route
-
-Route::get('/instructor/courses/create/step-6', function () {
-    return view('e-learning/course/instructor/create/step-1');
-});
-
-Route::get('/instructor/courses/create/step-2', function () {
-    return view('e-learning/course/instructor/create/step-2');
-});
-
-Route::get('/instructor/courses/create/step-3', function () {
-    return view('e-learning/course/instructor/create/step-3');
-});
-
-Route::get('/instructor/courses/create/step-4', function () {
-    return view('e-learning/course/instructor/create/step-4');
-});
-
-Route::get('/instructor/courses/create/step-5', function () {
-    return view('e-learning/course/instructor/create/step-5');
-});
-
-Route::get('/instructor/courses/create/step-1', function () {
-    return view('e-learning/course/instructor/create/step-6');
-});
-
-Route::get('/instructor/courses/create/step-7', function () {
-    return view('e-learning/course/instructor/create/step-7');
-});
-
-Route::get('/instructor/courses/create/step-8', function () {
-    return view('e-learning/course/instructor/create/step-8');
-});
-
-Route::get('/instructor/courses/create/step-9', function () {
-    return view('e-learning/course/instructor/create/step-9');
-});
-
-Route::get('/instructor/courses/create/step-10', function () {
-    return view('e-learning/course/instructor/create/step-10');
-});
-
-Route::get('/instructor/courses/create/step-11', function () {
-    return view('e-learning/course/instructor/create/step-11');
 });

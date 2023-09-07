@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->text('title'); 
+            $table->string('auto_complete')->nullable()->default(1);
             $table->string('user_id')->nullable(); 
             $table->text('sub_title')->nullable(); 
             $table->text('features')->nullable(); 
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->string('offer_price')->nullable();
             $table->text('categories')->nullable();
-            $table->string('thumbnail')->nullable()->default("thumbnail.png");
+            $table->string('thumbnail')->nullable()->default("public/assets/images/courses/thumbnail.png");
             $table->string('banner')->nullable()->default("suggested-banner.png"); 
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();

@@ -59,21 +59,22 @@ Course Create - Step 8
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="top-image-upload-box">
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Image</h4>
-                        <input type="file" class="d-none" id="fileInput">
-                        <label for="fileInput" class="file-up-box">
+                        <input type="file" class="d-none" id="banner" name="banner">
+                        <label for="banner" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid light-ele">
                             <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon" class="img-fluid dark-ele">
-                            <p><label for="fileInput">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
+                            <p><label for="banner">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
                     <div class="top-image-upload-box mt-2">
                         <img id="previewImage" src="" alt="No Image Uploaded yet" class="img-fluid">
                     </div> 
                     
-                    <div class="content-settings-form-wrap mt-0">
+                    <!-- <div class="content-settings-form-wrap mt-0">
                         <h4>Appearance Course</h4>
                         <div class="form-group">
                             <input id="name" class="form-control" type="text" required>
@@ -91,12 +92,12 @@ Course Create - Step 8
                                     id="flexSwitchCheckChecked" checked>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="#">Back</a>
-                        <a href="#">Next</a>
+                        <a href="{{ url('instructor/courses/create/step-7')}} ">Back</a>
+                        <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
                 </form>
@@ -109,7 +110,7 @@ Course Create - Step 8
 @section('script')
 <script>
     // Function to handle file input change
-document.getElementById('fileInput').addEventListener('change', function (e) {
+document.getElementById('banner').addEventListener('change', function (e) {
     const file = e.target.files[0];
 
     if (file) {

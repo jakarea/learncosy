@@ -63,18 +63,20 @@ Course Create - Step 10
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action=""> 
+                <form action="" method="POST" > 
+                    @csrf
                     <div class="content-settings-form-wrap visibility-form-wrap">
                         <h4>Visibility</h4>
                         <hr>
                         <div class="form-group">
                             <h6>Status of the Course</h6>
                             <i class="fas fa-circle"></i>
-                             <select class="form-control">
-                                <option value="">Concept</option>
-                                <option value="">Concept 2</option>
-                             </select>
-                             <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down" class="img-fluid euro" style="top: 3rem">
+                            <select class="form-control" name="status">
+                                <option value="Draft">Draft</option>
+                                <option value="Published">Publish</option>
+                            </select>
+                            <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down" class="img-fluid euro" style="top: 3rem">
+                            <span class="invalid-feedback d-block">@error('status'){{ $message }} @enderror</span>
                         </div>   
                         <div class="media auto-text">
                             <div class="media-body"> 
@@ -82,20 +84,22 @@ Course Create - Step 10
                                 <p>If you don’t want any comment about your course please turn off comment.</p>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked> 
-                              </div>
+                                <input class="form-check-input" type="checkbox" name="allow_review" role="switch" id="flexSwitchCheckChecked" value="1" checked> 
+                                <span class="invalid-feedback d-block">@error('allow_review'){{ $message }} @enderror</span>
+                            </div>
                         </div>  
                     </div>
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="#">Back</a>
-                        <a href="#">Next</a>
+                        <a href="{{ url('instructor/courses/create/step-10')}} ">Back</a>
+                        <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
                 </form>
             </div>
         </div>
+    </div>
 </main>
 @endsection
 {{-- page content @E --}}

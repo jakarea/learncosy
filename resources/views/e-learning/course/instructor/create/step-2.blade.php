@@ -37,23 +37,24 @@ Course Create - Step 2
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <div class="lesson-edit-form-wrap">
-                    <h4>Page 1</h4>
-
-                    <form action="">
+                    <h4>Description</h4>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
-                            <textarea class="form-control" id="description"></textarea>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                            <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group form-upload">
-                            <label for="file" class="txt">Upload Files</label>
-                            <input type="file" id="file" class="d-none">
+                            <label for="file" class="txt">Course Thumbail</label>
+                            <input type="file" id="file" class="d-none" name="thumbnail">
                             <label for="file" id="upload-box">
                                 <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
                             </label>
-                            <span>*.doc, *.pdf, *.xls file (max 25 mb)</span>
+                            <span>*.png, *.jpeg, *.webp file (max 5 mb)</span>
+                            <span class="invalid-feedback">@error('thumbnail'){{ $message }} @enderror</span>
                         </div>
-                   
                     {{-- course page file box start --}}
-                    <div class="course-content-box course-page-edit-box">
+                    <!-- <div class="course-content-box course-page-edit-box">
                         <div class="title"> 
                             <div class="media">
                                 <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar" class="img-fluid">
@@ -73,10 +74,10 @@ Course Create - Step 2
                                 <li><a class="dropdown-item" href="#">Replace file</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- course page file box end --}}
                     {{-- course page file box start --}}
-                    <div class="course-content-box course-page-edit-box">
+                    <!-- <div class="course-content-box course-page-edit-box">
                         <div class="title"> 
                             <div class="media">
                                 <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar" class="img-fluid">
@@ -96,9 +97,9 @@ Course Create - Step 2
                                 <li><a class="dropdown-item" href="#">Replace file</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- course page file box end --}}{{-- course page file box start --}}
-                    <div class="course-content-box course-page-edit-box">
+                    <!-- <div class="course-content-box course-page-edit-box">
                         <div class="title">
                             <div class="media">
                                 <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar" class="img-fluid">
@@ -118,7 +119,7 @@ Course Create - Step 2
                                 <li><a class="dropdown-item" href="#">Replace file</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- course page file box end --}}
                     
                 </div>
@@ -126,8 +127,9 @@ Course Create - Step 2
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
                     <a href="#">Back</a>
-                    <a href="#">Next</a>
+                    <button class="btn btn-primary" type="submit">Next</button>
                 </div>
+
                 {{-- step next bttns --}}
             </form>
             </div>

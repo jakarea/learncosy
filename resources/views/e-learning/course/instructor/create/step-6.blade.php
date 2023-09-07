@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 3
+Course Create - Step 1
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -18,15 +18,15 @@ Course Create - Step 3
                 {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
                 class --}}
                 {{-- add class "current" to "step-box" for the current step --}}
+
                 <div class="course-create-step-wrap">
-                    <div class="step-box current">
+                    <div class="step-box active">
                         <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid"> --}}
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
                         </span>
                         <p>Contents</p>
                     </div>
-                    <div class="step-box">
+                    <div class="step-box current">
                         <span class="circle"></span>
                         <p>Facts</p>
                     </div>
@@ -51,50 +51,235 @@ Course Create - Step 3
                         <p>Share</p>
                     </div>
                 </div>
+
                 {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="">
-                    <div class="content-settings-form-wrap">
-                        <h4>Course Information</h4>
-                        <div class="form-group">
-                            <input id="name" class="form-control" type="text" required>
-                            <label for="name">Name</label>
+            <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+                <div class="content-step-wrap">
+                    {{-- course content box start --}}
+                    <div class="course-content-box">
+                        <div class="title">
+                            <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
+                                class="img-fluid me-4">
+                            <div class="media">
+                                <img src="{{asset('latest/assets/images/icons/plus-box.svg')}}" alt="Bar"
+                                    class="img-fluid">
+                                <div class="media-body">
+                                    <h5>Course 1</h5>
+                                    <p>Module with 1 page</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input id="slug" class="form-control" type="text" required>
-                            <label for="slug">Slug</label>
-                        </div>  
-                        <div class="form-group">
-                            <h6>Description</h6>
-                            <textarea class="form-control" id="description"></textarea> 
-                        </div>   
-                        <div class="form-group d-flex align-items-center justify-content-between">
-                            <h6>User must manually tick off each lesson</h6>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked> 
-                              </div>
+                        <div class="actions">
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
+                                    class="fa-solid fa-ellipsis"></i></button>
+                            <a href="#"><i class="fas fa-angle-down"></i></a>
                         </div>
                     </div>
+                    {{-- course content box end --}}
+                    {{-- course with page --}}
+                    <div class="course-with-page">
+                        {{-- course content box start --}}
+                        <div class="course-content-box course-content-inside">
+                            <div class="title">
+                                <div class="media">
+                                    <img src="{{asset('latest/assets/images/icons/book.svg')}}" alt="Bar"
+                                        class="img-fluid">
+                                    <div class="media-body">
+                                        <h5>Course 1</h5>
+                                        <p>Module with 1 page</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2"><i class="fa-solid fa-ellipsis"></i></button>
+                                <a href="#"><i class="fas fa-angle-down"></i></a>
+                            </div>
+                        </div>
+                        {{-- course content box end --}}
+                        {{-- course page box start --}}
+                        <div class="course-content-box course-page-box">
+                            <div class="title">
+                                <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
+                                    class="img-fluid me-4">
+                                <div class="media">
+                                    <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar"
+                                        class="img-fluid">
+                                    <div class="media-body">
+                                        <h5>Page 1</h5>
+                                        <p>Text</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
+                                    <li><a class="dropdown-item" href="#">Edit Lesson</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {{-- course page box end --}}
+                        {{-- course page box start --}}
+                        <div class="course-content-box course-page-box">
+                            <div class="title">
+                                <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
+                                    class="img-fluid me-4">
+                                <div class="media">
+                                    <img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="Bar"
+                                        class="img-fluid">
+                                    <div class="media-body">
+                                        <h5>Page 2</h5>
+                                        <p>Text</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
+                                    <li><a class="dropdown-item" href="#">Edit Lesson</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {{-- course page box end --}}
+                        {{-- course page box start --}}
+                        <div class="course-content-box course-page-box">
+                            <div class="title">
+                                <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
+                                    class="img-fluid me-4">
+                                <div class="media">
+                                    <img src="{{asset('latest/assets/images/icons/video.svg')}}" alt="Bar"
+                                        class="img-fluid">
+                                    <div class="media-body">
+                                        <h5>Page 3</h5>
+                                        <p>Text</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
+                                    <li><a class="dropdown-item" href="#">Edit Lesson</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {{-- course page box end --}}
+
+                        {{-- course page add box start --}}
+                        <div class="add-content-box mt-3">
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                    class="fas fa-plus"></i> Add Lesson</button>
+                        </div>
+                        {{-- course page add box end --}}
+
+                    </div>
+                    {{-- course with page --}}
+
+                    {{-- course content add box start --}}
+                    <div class="add-content-box">
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                class="fas fa-plus"></i> Add Module</button>
+                    </div>
+                    {{-- course content add box end --}}
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="#">Back</a>
-                        <a href="#">Next</a>
+                        <a href="{{ url('instructor/courses/create/step-2') }}">Back</a>
+                        <a href="{{ url('instructor/courses/create/step-4') }}">Next</a>
                     </div>
                     {{-- step next bttns --}}
-                </form>
+                </div>
             </div>
         </div>
+    </div>
 </main>
+
+{{-- course name modal --}}
+<div class="course-name-modal">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="course-name-txt">
+                        <h5>Module name</h5>
+                        <form action="{{ url('/instructor/courses/create/step-3') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Module Name" name="module_name" class="form-control">
+                            </div>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="is_module">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" name="is_module" value="1" role="switch"
+                                    id="is_module" checked>
+                            </div>
+                            <p>Disable this if you want a separate content page.</p>
+                            <div class="form-submit">
+                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="course-name-txt">
+                        <h5>Page Name</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Page Name" class="form-control">
+                            </div>
+                            <div class="page-type">
+                                <h6>Type</h6>
+
+                                <div class="d-flex">
+                                    <a href="#" class="active"><img
+                                            src="{{asset('latest/assets/images/icons/file.svg')}}" alt="a"
+                                            class="img-fluid"> Text</a>
+                                    <a href="#"><img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="a"
+                                            class="img-fluid"> Audio</a>
+                                    <a href="#"><img src="{{asset('latest/assets/images/icons/video.svg')}}" alt="a"
+                                            class="img-fluid"> Video</a>
+                                </div>
+                            </div>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="is_module1">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="is_module1" checked>
+                            </div>
+                            <p>Disable this if you want a separate content page.</p>
+                            <div class="form-submit">
+                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{{-- course name modal --}}
+
 @endsection
 {{-- page content @E --}}
 
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 @endsection
