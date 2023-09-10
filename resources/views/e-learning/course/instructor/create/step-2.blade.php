@@ -41,7 +41,7 @@ Course Create - Step 2
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <textarea class="form-control" id="description" name="description"></textarea>
+                            <textarea class="form-control" id="description" name="description"> {{ $course->description ? $course->description : old('description')}}</textarea>
                             <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group form-upload">
