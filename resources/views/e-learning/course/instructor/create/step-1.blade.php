@@ -56,22 +56,22 @@ Course Create - Step 3
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="" method="POST">
+                <form action="{{ route('course.store.step-1',[$course ? $course->id : '']) }}" method="POST">
                     @csrf
                     <div class="content-settings-form-wrap">
                         <h4>Course Information</h4>
                         <div class="form-group">
-                            <input id="title" name="title" class="form-control" type="text">
+                            <input id="title" name="title" class="form-control" type="text" value="{{ $course ? $course->title : old('title') }}">
                             <label for="title">Title</label>
                             <span class="invalid-feedback">@error('title'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group">
-                            <input id="slug" name="slug" class="form-control" type="text" required>
+                            <input id="slug" name="slug" class="form-control" type="text" value="{{ $course ? $course->slug : old('slug') }}">
                             <label for="slug">Slug</label>
                         </div>  
                         <div class="form-group">
                             <h6>Short Description</h6>
-                            <textarea class="form-control" name="short_description"></textarea> 
+                            <textarea class="form-control" name="short_description">{{ $course ? $course->short_description : old('short_description') }}</textarea> 
                         </div>   
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <h6>User must manually tick off each lesson</h6>
@@ -96,10 +96,6 @@ Course Create - Step 3
 
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
-
 <script>
     const titleInput = document.getElementById('title');
     const slugInput = document.getElementById('slug');
