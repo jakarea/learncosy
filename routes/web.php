@@ -78,7 +78,7 @@ Route::get('/auth-login', function(){
     elseif($loginPageStyle->lp_layout == 'rightsidebar'){
         return view('login/login4');
     }else{
-        return view('login/login');
+        return view('login/login1');
     }
 
 })->name('tlogin')->middleware('guest');

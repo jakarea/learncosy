@@ -372,12 +372,11 @@
                                                                     <div class="col-lg-3">
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                            <input type="file" name="favicon" id="favicon1"
-                                                    class="form-control d-none @error('favicon') is-invalid @enderror"
-                                                    onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
+                                                                            <input type="file" name="favicon" id="favicon1" class="form-control d-none @error('favicon') is-invalid @enderror" onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
                                                      
                                                                             <label for="favicon1" class="upload-media-box" id="file-upload-area1">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
                                                                                 <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
  
@@ -388,7 +387,8 @@
                                                                             <h5>Instructor Signature </h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
                                                                                 <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>
@@ -575,7 +575,8 @@
                                                                             <h5>Logo</h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
                                                                                 <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>
@@ -583,7 +584,8 @@
                                                                             <h5>Instructor Signature </h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
                                                                                 <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>

@@ -283,6 +283,9 @@
     grid-template-columns: 100%;
     grid-gap: 0.5rem;
   }
+  .subscription-table-wrap.subs-table table {
+    display: block;
+  }
   .subscription-table-wrap table {
     width: 100%;
     overflow-x: scroll;

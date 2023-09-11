@@ -343,14 +343,35 @@
         padding-top: 1rem;
         padding-bottom: 1rem;
     }
+
+    .chart-box-wrap #course_earning{
+        position: inherit;
+    }
+
+    .recent-payment-box .text-center {
+        position: inherit;
+        margin-top: 1rem!important;
+    }
 }
 
 // landscape phone device 
 @include q.responsive(landphone) {
-     
+    .chart-box-wrap #course_earning{
+        position: inherit;
+    }
+    .recent-payment-box .text-center {
+        position: inherit;
+        margin-top: 1rem!important;
+    }
 }
 
 // tablet device 
 @include q.responsive(tablet) {
-     
+    .chart-box-wrap #course_earning{
+        position: inherit;
+    }
+    .recent-payment-box .text-center {
+        position: inherit;
+        margin-top: 1rem!important;
+    }
 }
