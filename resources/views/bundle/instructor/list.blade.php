@@ -57,7 +57,7 @@
         <div class="row">
             @if (count($bundleCourses) > 0)
             @foreach ($bundleCourses as $course)
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
                     <div class="course-thumb-box">
                         @if ($course->status == 'pending')
