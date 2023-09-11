@@ -56,6 +56,10 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
+Route::get('/system/notification', function () {
+    return view('instructor.notification.system');
+});
+
 
 // custom auth screen route
 Route::get('/auth-login', function(){
@@ -78,7 +82,7 @@ Route::get('/auth-login', function(){
     elseif($loginPageStyle->lp_layout == 'rightsidebar'){
         return view('login/login4');
     }else{
-        return view('login/login');
+        return view('login/login1');
     }
 
 })->name('tlogin')->middleware('guest');

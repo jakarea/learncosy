@@ -293,4 +293,29 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
+  .chart-box-wrap #course_earning {
+    position: inherit;
+  }
+  .recent-payment-box .text-center {
+    position: inherit;
+    margin-top: 1rem !important;
+  }
+}
+@media (min-width: 574px) and (max-width: 767px) {
+  .chart-box-wrap #course_earning {
+    position: inherit;
+  }
+  .recent-payment-box .text-center {
+    position: inherit;
+    margin-top: 1rem !important;
+  }
+}
+@media (min-width: 767px) and (max-width: 992px) {
+  .chart-box-wrap #course_earning {
+    position: inherit;
+  }
+  .recent-payment-box .text-center {
+    position: inherit;
+    margin-top: 1rem !important;
+  }
 }

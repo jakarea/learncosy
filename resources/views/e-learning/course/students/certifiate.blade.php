@@ -40,7 +40,7 @@
                             <th>Your Point</th>
                             <th>Status</th>
                             <th>Progress</th>
-                            <th>Progress</th>
+                            <th>Actions</th>
                         </tr>  
                         <tr> 
                             <td>

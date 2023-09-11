@@ -87,29 +87,33 @@
                 }
             @endphp
             {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
-                    <div class="course-thumb-box">
-                        <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
-                            class="img-fluid">
-                    </div>
-                    <div class="course-txt-box">
-                        @if ( isEnrolled($course->id) )
-                            <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
-                        @else 
-                            <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
-                        @endif
-                        
-                        <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
-                        <ul>
-                            <li><span>{{ $review_avg }}</span></li>
-                            @for ($i = 0; $i<$review_avg; $i++)
-                                <li><i class="fas fa-star"></i></li>
-                            @endfor
-                            <li><span>({{ $total }})</span></li>
-                        </ul>
-                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                    <div>
+                        <div class="course-thumb-box">
+                            <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
+                                class="img-fluid">
+                        </div>
+                        <div class="course-txt-box">
+                            @if ( isEnrolled($course->id) )
+                                <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
+                            @else 
+                                <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
+                            @endif
+                            
+                            <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
+                            <ul>
+                                <li><span>{{ $review_avg }}</span></li>
+                                @for ($i = 0; $i<$review_avg; $i++)
+                                    <li><i class="fas fa-star"></i></li>
+                                @endfor
+                                <li><span>({{ $total }})</span></li>
+                            </ul>
+                        </div>    
                     </div> 
+                    <div class="course-txt-box">
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                    </div>
                     <div class="course-ol-box">
                         <h5>{{ Str::limit($course->title, 50) }}</h5>
                         <span>Last Update: {{date('M d Y ', strtotime($course->updated_at)) }}</span>
