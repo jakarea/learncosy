@@ -281,7 +281,7 @@ $(document).ready(function() {
                             // redirect to course single page
                             // var urlParams = new URLSearchParams(window.location.search);
                             // var lesson_slug = urlParams.get('lesson_slug');
-                            // window.location.href = '{{ route('course.show', ':lesson_slug') }}'.replace(
+                            // window.location.href = ' route('course.show', ':lesson_slug') '.replace(
                             //     ':lesson_slug', lesson_slug);
 
                         }, 3000);

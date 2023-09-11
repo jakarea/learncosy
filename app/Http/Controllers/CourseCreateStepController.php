@@ -14,11 +14,15 @@ use Intervention\Image\Facades\Image;
 
 class CourseCreateStepController extends Controller
 {
-    public function step1(){
-        return view('e-learning/course/instructor/create/step-1');
+    public function step1($id = null){
+        $course = '';
+        if($id){
+            $course = Course::findOrFail($id);
+        }
+        return view('e-learning/course/instructor/create/step-1',compact('course'));
     }
 
-    public function step1c(Request $request){
+    public function step1c(Request $request, $id=null){
         $request->validate([
             'title' => 'required',
         ]);
@@ -29,6 +33,7 @@ class CourseCreateStepController extends Controller
         $slug = $slug ? Str::slug($slug) : Str::slug($title);
         $originalSlug = $slug;
         $counter = 2;
+
         $short_description = $request->input('short_description');
         // Check for unique slug
         while (Course::where('slug', $slug)->exists()) {
@@ -36,7 +41,8 @@ class CourseCreateStepController extends Controller
             $counter++;
         }
 
-        $course = new Course([
+        $course = Course::findOrNew($id);
+        $course->fill([
             'user_id' => Auth::user()->id,
             'title' => $title,
             'slug' => $slug,
@@ -48,73 +54,48 @@ class CourseCreateStepController extends Controller
         $course->save();
         $id = $course->id;
         session()->put('lastCourseId', $id);
-        return redirect('instructor/courses/create/step-2')->with('success', 'Course created successfully');
+        return redirect('instructor/courses/create/'.$id.'/content')->with('success', 'Course created successfully');
     }
 
-    public function step2(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
-            return redirect('instructor/courses');
-        }
-        return view('e-learning/course/instructor/create/step-2',['lastCourseId' => $lastCourseId]);
+    public function step2($id){ 
+        $course = Course::where('id', $id)->firstOrFail();
+        return view('e-learning/course/instructor/create/step-2',compact('course'));
     }
 
-    public function step2c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
+    public function step2c(Request $request, $id){
+        $course = Course::where('id', $id)->firstOrFail();
         $request->validate([
             'thumbnail' => 'nullable|file|mimes:jpeg,png,pdf|max:5121', // Example mime types and maximum size
             'description' => 'required|string',
         ]);
-    
-        // Handle file upload
-        // if ($request->hasFile('thumbnail')) {
-        //     $file = $request->file('thumbnail');
-            // $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->move(public_path('uploads'), $filename);
-        // }
 
         $image_path = 'assets/images/courses/thumbnail.png';
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
-            $filename = time() . '_' . $file->getClientOriginalName();
-    
             // Convert image to WebP using Intervention Image
             $image = Image::make($file);
             $image->encode('webp', 90); // Convert to WebP with 90% quality
-            
             $image_path = 'assets/images/courses/'.$course->slug . '.webp';
-
             $image->save(public_path('assets/images/courses/') . $course->slug . '.webp');
         }
 
         // Store other form data
         $description = $request->input('description');
-        $course->short_description = $description;
+        $course->description = $description;
         $course->thumbnail = $image_path;
         $course->save();
-        return redirect('instructor/courses/create/step-3')->with('success', 'Data has been saved successfully');
+        
+        return redirect('instructor/courses/create/'.$id.'/facts')->with('success', 'Course created successfully');
     }
 
-    public function step3(){
-        $lastCourseId = session()->get('lastCourseId');
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId');
-        $lastLessonId = session()->get('lastLessonId');
-        if(!$lastCourseId){
-            return redirect('instructor/courses');
-        }
-        return view('e-learning/course/instructor/create/step-6');
+    public function step3($id){
+
+        $modules = Module::with('lessons')->where('course_id', $id)->get();
+        return view('e-learning/course/instructor/create/step-6',compact('modules'));
     }
 
-    public function step3c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId') ? session()->get('lastModuledId') : '';
-
-        if(!$lastCourseId){
-            return redirect('instructor/courses');
-        }
-
+    public function step3c(Request $request, $id){
+        
         $request->validate([
             'module_name' => 'required',
             // 'is_module' => 'required'
@@ -124,36 +105,25 @@ class CourseCreateStepController extends Controller
             $module = new Module();
             $module->title = $request->input('module_name');
             $module->slug = Str::slug($request->input('module_name'));
-            $module->course_id = $lastCourseId;
+            $module->course_id = $id;
             $module->user_id = Auth::user()->id;
             $module->save();
-
-            session()->put('lastModuledId', $module->id);
         }
 
-        if($lastModuledId && !$request->is_module){
+        if(!$request->is_module){
             $lesson = new Lesson();
-            $lesson->course_id = $lastCourseId;
+            $lesson->course_id = $id;
             $lesson->user_id = Auth::user()->id;
-            $lesson->module_id = $lastModuledId;
+            $lesson->module_id = $request->module_id;
             $lesson->title = $request->input('module_name');
             $lesson->slug = Str::slug($request->input('module_name'));
             $lesson->save();
-
-            session()->put('lastLessonId', $lesson->id);
         }
         
-        return redirect('instructor/courses/create/step-3');
+        return redirect('instructor/courses/create/'.$id.'/facts');
     }
 
     public function step4(){
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId');
-        $lastLessonId = session()->get('lastLessonId');
-
-        if(!$lastCourseId || !$lastModuledId || !$lastLessonId){
-            return redirect('instructor/courses');
-        }
         return view('e-learning/course/instructor/create/step-4');
     }
 
@@ -195,13 +165,6 @@ class CourseCreateStepController extends Controller
     }
 
     public function step5(){
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId');
-        $lastLessonId = session()->get('lastLessonId');
-        
-        // if(!$lastCourseId || !$lastModuledId || !$lastLessonId){
-        //     return redirect('instructor/courses');
-        // }
         return view('e-learning/course/instructor/create/step-5');
     }
 

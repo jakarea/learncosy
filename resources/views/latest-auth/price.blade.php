@@ -67,7 +67,7 @@ Verify Email
                 </div>
             </div>
         </div>
-       
+
         <div class="row">
             <div class="col-12">
                 <div class="pricing-tab-head">
@@ -86,11 +86,15 @@ Verify Email
                 </div>
             </div>
         </div>
+
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <div class="row justify-content-center">
-                @foreach( getSubscriptionPackage() as $package )
+                    @php 
+                        $packages = getSubscriptionPackage();
+                    @endphp
+                @foreach( $packages as $package )
                     @php
                         $package_featurelist = json_decode($package->features);
                     @endphp 
@@ -114,7 +118,7 @@ Verify Email
                             </div>
                             @if (!isSubscribed($package->id))
                             <div class="bttn">
-                                <a href="{{ route('instructor.subscription.create', $package->id) }}" class="will-subscribe">Subscribe Now</a> 
+                                <a href="{{ url('instructor/subscription/create/'. $package->id) }}" class="will-subscribe">Subscribe Now</a> 
                             </div>
                             @else
                             <div class="bttn">
@@ -127,6 +131,7 @@ Verify Email
                 @endforeach
                 </div>
             </div>
+
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
                 <div class="row justify-content-center">

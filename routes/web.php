@@ -189,34 +189,38 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
         // course page routes
-        Route::prefix('courses')->controller(CourseController::class)->group(function () {
-            Route::get('/', 'index')->name('instructor.courses'); 
-            // data table route 
-            Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
-            Route::get('/create', 'create');
-            Route::post('/create', 'store')->name('course.store');
-            Route::get('/{slug}', 'show')->name('course.show');   
-            Route::get('/{slug}/edit', 'edit')->name('course.edit');
-            Route::post('/{slug}/edit', 'update')->name('course.update'); 
-            Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
-        });
+        // Route::prefix('courses')->controller(CourseController::class)->group(function () {
+        //     Route::get('/', 'index')->name('instructor.courses'); 
+        //     // data table route 
+        //     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
+        //     //Route::get('/create', 'create');
+        //     Route::post('/create', 'store')->name('course.store');
+        //     Route::get('/{slug}', 'show')->name('course.show');   
+        //     Route::get('/{slug}/edit', 'edit')->name('course.edit');
+        //     Route::post('/{slug}/edit', 'update')->name('course.update'); 
+        //     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+        // });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
             
             // add course static route
-            Route::get('step-1', 'step1');
-            Route::post('step-1', 'step1c');
+            Route::get('/', 'step1')->name('course.create.step-1');
 
-            Route::get('step-2', 'step2');
-            Route::post('step-2', 'step2c');
+            Route::post('/{id}', 'step1c')->name('course.store.step-1');
+            Route::post('/', 'step1c')->name('course.store.step-1');
+            Route::get('/{id}', 'step1')->where('id', '[0-9]+')->name('course.store.step-1');
 
-            Route::get('step-3', 'step3');
-            Route::post('step-3', 'step3c');
 
-            Route::get('step-4', 'step4');
+            Route::get('/{id}/content', 'step2');
+            Route::post('/{id}/content', 'step2c');
+
+            Route::get('{id}/facts', 'step3');
+            Route::post('{id}/facts', 'step3c');
+
+            Route::get('{id}/audio', 'step4');
             Route::post('step-4', 'step4c');
 
-            Route::get('step-5', 'step5');
+            Route::get('/{id}/video', 'step5');
             Route::post('step-5', 'step5c');
 
             Route::get('step-6', function () {
