@@ -23,7 +23,7 @@
                 <div class="user-title-box">
                     <h1>Total: <span>{{ count($bundleCourses) }} Bundle Courses</span></h1>
                 </div>
-            </div> 
+            </div>
         </div> --}}
         <div class="row">
             <div class="col-12">
@@ -53,64 +53,69 @@
                         </div>
                         <div class="col-xl-1 col-md-5">
                             <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                <button type="submit" class="btn text-white"><i class="fas fa-search text-white me-2"></i> Search</button>
+                                <button type="submit" class="btn text-white"><i
+                                        class="fas fa-search text-white me-2"></i> Search</button>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div> 
+            </div>
         </div>
         <div class="row">
             @if (count($bundleCourses) > 0)
             @foreach ($bundleCourses as $course)
             {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
-                    <div class="course-thumb-box">
-                        @if ($course->status == 'pending')
-                        <span class="badge text-bg-danger">Pending</span>
-                        @elseif ($course->status == 'draft')
-                        <span class="badge text-bg-warning">Draft</span>
-                        @elseif ($course->status == 'published')
-                        <span class="badge text-bg-primary">Publish</span>
-                        @endif
-
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item"
-                                            href="{{url('admin/bundle/courses/'.$course->slug)}}">View</a></li>
-                                    <li>
-                                        <form method="post" class="d-inline"
-                                            action="{{ url('admin/bundle/courses/'.$course->slug.'/destroy') }}">
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                    <div>
+                        <div class="course-thumb-box">
+                            @if ($course->status == 'pending')
+                            <span class="badge text-bg-danger">Pending</span>
+                            @elseif ($course->status == 'draft')
+                            <span class="badge text-bg-warning">Draft</span>
+                            @elseif ($course->status == 'published')
+                            <span class="badge text-bg-primary">Publish</span>
+                            @endif
+    
+                            <div class="header-action">
+                                <div class="dropdown">
+                                    <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="{{url('admin/bundle/courses/'.$course->slug)}}">View</a></li>
+                                        <li>
+                                            <form method="post" class="d-inline"
+                                                action="{{ url('admin/bundle/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="dropdown-item btn text-danger">Delete </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
+                                class="img-fluid">
                         </div>
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
-                            class="img-fluid">
+                        <div class="course-txt-box">
+                            <a href="{{url('admin/bundle/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
+                                45, $end = '..') }}</a>
+                            <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                            <ul>
+                                <li><span>4.0</span></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><i class="fas fa-star"></i></li>
+                                <li><span>(145)</span></li>
+                            </ul> 
+                        </div>
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('admin/bundle/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
-                            45, $end = '..') }}</a>
-                        <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
-                        <ul>
-                            <li><span>4.0</span></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><i class="fas fa-star"></i></li>
-                            <li><span>(145)</span></li>
-                        </ul>
                         <h5>€ {{ $course->price }} </h5>
                     </div>
                 </div>

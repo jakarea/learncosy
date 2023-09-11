@@ -177,3 +177,8 @@
 .dark-mode .connect-modal-box .fas.fa-close{
     color: #fff!important;
 }
+
+.dark-mode .form-check-input:checked {
+    background-color: transparent!important;
+    border-color: #D2DEEF!important;
+}

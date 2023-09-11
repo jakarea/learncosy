@@ -51,8 +51,8 @@ Course Create - Step 3
                             <h5>Type</h5>
 
                             <div class="d-flex">
-                                <a href="#" class="active"><img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="a" class="img-fluid"> Text</a>
-                                <a href="#"><img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="a" class="img-fluid">Audio</a>
+                                <a href="#" class="active" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="a" class="img-fluid"> Text</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="a" class="img-fluid">Audio</a>
                                 <a href="#"><img src="{{asset('latest/assets/images/icons/video.svg')}}" alt="a" class="img-fluid">Video</a>
                             </div>
                         </div>
@@ -81,6 +81,78 @@ Course Create - Step 3
             </div>
         </div>
 </main>
+
+{{-- course name modal --}}
+<div class="course-name-modal">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="course-name-txt">
+                        <h5>Course name</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Course Name" class="form-control">
+                            </div>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckChecked" checked>
+                            </div>
+                            <p>Disable this if you want a separate content page.</p>
+                            <div class="form-submit">
+                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="course-name-txt">
+                        <h5>Page Name</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Page Name" class="form-control">
+                            </div>
+                            <div class="page-type">
+                                <h6>Type</h6>
+
+                                <div class="d-flex">
+                                    <a href="#" class="active"><img
+                                            src="{{asset('latest/assets/images/icons/file.svg')}}" alt="a"
+                                            class="img-fluid"> Text</a>
+                                    <a href="#"><img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="a"
+                                            class="img-fluid"> Audio</a>
+                                    <a href="#"><img src="{{asset('latest/assets/images/icons/video.svg')}}" alt="a"
+                                            class="img-fluid"> Video</a>
+                                </div>
+                            </div>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckChecked" checked>
+                            </div>
+                            <p>Disable this if you want a separate content page.</p>
+                            <div class="form-submit">
+                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- course name modal --}}
+
 @endsection
 {{-- page content @E --}}
 

@@ -2,9 +2,11 @@
   border-radius: 1rem;
   background: var(--background-light-paper, #FFF);
   box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
-  min-height: 20.625rem;
   padding: 0.5rem 0.5rem 1rem 0.5rem;
-  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .course-single-item .course-thumb-box {
   position: relative;
@@ -1710,9 +1712,97 @@ span.finsihLesson {
   line-height: 1.75rem;
 }
 
+.notification-box-wrapper {
+  border-radius: 0.5rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+  padding: 1.5rem;
+}
+.notification-box-wrapper h5 {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.notification-box-wrapper .notify-item-box {
+  border-radius: 0.5rem;
+  border: 1px solid #EAEAEA;
+  background: #FFF;
+  padding: 1rem 0.8rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.notification-box-wrapper .notify-item-box .media {
+  align-items: center;
+}
+.notification-box-wrapper .notify-item-box .media .icon {
+  width: 2.68963rem;
+  height: 2.68963rem;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #F4F2FF;
+  margin-right: 1.5rem;
+}
+.notification-box-wrapper .notify-item-box .media .icon i {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  background-color: #D1AFFD;
+  width: 1.12069rem;
+  height: 1.12069rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+}
+.notification-box-wrapper .notify-item-box .media h5 {
+  color: #000;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+.notification-box-wrapper .notify-item-box .media p {
+  color: #000;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 0.2rem;
+}
+
+.line {
+  background-color: #E5ECF6 !important;
+  height: 1px;
+  width: 100%;
+  margin-top: 0;
+}
+
+.ligth-ele {
+  display: inline-block !important;
+}
+
+.dark-ele {
+  display: none !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
+  }
+  .notify-item-box {
+    flex-direction: column;
+  }
+  .delete-item {
+    margin-top: 1rem;
   }
   .course-single-item .course-thumb-box .header-action .dropdown-menu {
     transform: translate3d(-30.4px, -26.6px, 0px) !important;

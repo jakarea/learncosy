@@ -53,7 +53,8 @@
                         </div>
                         <div class="col-xl-1 col-md-5">
                             <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                <button type="submit" class="btn text-white"><i class="fas fa-search text-white me-2"></i> Search</button>
+                                <button type="submit" class="btn text-white"><i
+                                        class="fas fa-search text-white me-2"></i> Search</button>
                             </div>
                         </div>
                     </div>
@@ -75,42 +76,48 @@
             $review_avg = $review_sum / $total;
             @endphp
             {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('admin/courses/'.$course->slug)}}">View</a>
-                                    </li>
-                                    <li>
-                                        <form method="post" class="d-inline"
-                                            action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                    <div>
+                        <div class="course-thumb-box">
+                            <div class="header-action">
+                                <div class="dropdown">
+                                    <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="{{url('admin/courses/'.$course->slug)}}">View</a>
+                                        </li>
+                                        <li>
+                                            <form method="post" class="d-inline"
+                                                action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="dropdown-item btn text-danger">Delete
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
+                                class="img-fluid">
                         </div>
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
-                            class="img-fluid">
+                        <div class="course-txt-box">
+                            <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40,
+                                $end = '..') }}</a>
+                            <p>{{ $course->user->username }}</p>
+                            <ul>
+                                <li><span>{{ $review_avg }}</span></li>
+                                @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40,
-                            $end = '..') }}</a>
-                        <p>{{ $course->user->username }}</p>
-                        <ul>
-                            <li><span>{{ $review_avg }}</span></li>
-                            @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
-                                @endfor
-                                <li><span>({{ $total }})</span></li>
-                        </ul>
                         @if($course->offer_price)
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                         @else

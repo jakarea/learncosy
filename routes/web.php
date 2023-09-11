@@ -56,6 +56,10 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
+Route::get('/system/notification', function () {
+    return view('instructor.notification.system');
+});
+
 
 // custom auth screen route
 Route::get('/auth-login', function(){

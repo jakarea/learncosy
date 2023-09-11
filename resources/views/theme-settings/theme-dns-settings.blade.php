@@ -94,8 +94,6 @@
 
                                                             <img src="" id="preview5" alt="" class="img-fluid rounded mt-2">
 
-                                                           
-
                                                         </div>
                                                         <div class="feat-box">
                                                             <div class="media">
@@ -134,10 +132,7 @@
                                                                     <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
                                                                         alt="Color" class="img-fluid me-0">
                                                                 </label>
-                                                                </div>
-                                                                
-
-                                                                
+                                                                </div> 
                                                             </div>
                                                         </div>
                                                         <div
@@ -251,9 +246,7 @@
                                                                 <input type="file" name="lp_bg_image" id="lp_bg_image"
                                                                     accept="image/*" onchange="previewImage2()"
                                                                     class="form-control d-none  @error('lp_bg_image') is-invalid @enderror">
-                                                                <span class="invalid-feedback">@error('lp_bg_image'){{
-                                                                    $message }}
-                                                                    @enderror</span>
+                                                                
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Upload Login Page Background Image</h6>
@@ -369,7 +362,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="save-bttns pb-5">
-                                                            <button type="button" class="btn btn-cancel">Cancel</button>
+                                                            <button type="button" class="btn btn-cancel">Reset</button>
                                                             <button type="submit" class="btn btn-submit">Save</button>
                                                         </div>
                                                     </div>
