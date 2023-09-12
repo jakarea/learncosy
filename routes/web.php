@@ -70,25 +70,50 @@ Route::get('/auth-login', function(){
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $loginPageStyle = json_decode($instrcutorModuleSettings->value);
 
-    if ($loginPageStyle->lp_layout == 'fullwidth') {
-        return view('login/login2');
-    }
-    elseif($loginPageStyle->lp_layout == 'default'){
-        return view('login/login3');
-    }
-    elseif($loginPageStyle->lp_layout == 'leftsidebar'){
-        return view('login/login5');
-    }
-    elseif($loginPageStyle->lp_layout == 'rightsidebar'){
-        return view('login/login4');
-    }else{
-        return view('login/login1');
+    if ($loginPageStyle) {
+        if ($loginPageStyle->lp_layout == 'fullwidth') {
+            return view('login/login2');
+        }
+        elseif($loginPageStyle->lp_layout == 'default'){
+            return view('login/login3');
+        }
+        elseif($loginPageStyle->lp_layout == 'leftsidebar'){
+            return view('login/login5');
+        }
+        elseif($loginPageStyle->lp_layout == 'rightsidebar'){
+            return view('login/login4');
+        }else{
+            return view('auth/login');
+        }
     }
 
 })->name('tlogin')->middleware('guest');
 
 Route::get('/auth-register', function(){
-    return view('custom-auth/register');
+
+    $subdomain = explode('.', request()->getHost())[0];
+    
+    $instrcutor = User::where('username', $subdomain)->firstOrFail();
+    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
+    $registerPageStyle = json_decode($instrcutorModuleSettings->value);
+
+    if ($registerPageStyle) {
+        if ($registerPageStyle->lp_layout == 'fullwidth') {
+            return view('register/register2');
+        }
+        elseif($registerPageStyle->lp_layout == 'default'){
+            return view('register/register1');
+        }
+        elseif($registerPageStyle->lp_layout == 'leftsidebar'){
+            return view('register/register3');
+        }
+        elseif($registerPageStyle->lp_layout == 'rightsidebar'){
+            return view('register/register4');
+        }else{
+            return view('auth/register');
+        }
+    }
+
 })->name('tregister')->middleware('guest'); 
 
 Route::get('/auth/password/reset', function(){
@@ -296,6 +321,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/{id}', 'index')->name('module.setting');
             Route::get('dns/{id}', 'dnsTheme')->name('module.dns.setting');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
+            Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });
         // profile management page routes
