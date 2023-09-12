@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Login Page</title>
+    <title>LearnCosy Authintication | Register Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
@@ -46,19 +46,30 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
                         <div class="login-heading">
-                            <h6>Welcome to <span>Learn Cosy</span></h6>
+                            <h6>Create a <span>Account!</span></h6>
                             <div>
-                                <p>No Account ?</p>
-                                <a href="{{url('/register')}}">Sign up</a>
+                                <p>Have Account ?</p>
+                                <a href="{{url('/login')}}">Sign in</a>
                             </div>
                         </div>
-                        <h1>Sign in</h1> 
+                        <h1>Sign Up</h1> 
 
-                        <form method="POST" action="{{ route('login') }}" class="login-from">
+                        <form method="POST" action="{{ route('register') }}" class="login-from">
                             @csrf
-                            <div class="form-group">
-                                <label>Enter your username or email address</label>
-                                <input type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
+                            <div class="form-group mt-3">
+                                <label for="email" class="form-label">{{ __('Name') }}</label>
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter your Name" autocomplete="name" autofocus>
+                
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                    <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -66,32 +77,27 @@
                                     @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label>Enter your Password</label>
+                            <input type="hidden" name="user_role" value="student">
+
+                            <div class="form-group mt-3">
+                                <label for="password" class="form-label">Password</label>
                                 <input id="password-field" placeholder="••••••••" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror 
-                                    <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror 
+                                <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+
                             </div>
-                            <div class="checbox-wrap">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <div class="form-group mt-3">
+                                <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
                 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember me for 30 days') }}
-                                    </label>
-                                </div>
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}">
-                                        {{ __('Forgot Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                                    <input id="password-confirm" type="password" placeholder="********" class="form-control" name="password_confirmation" autocomplete="new-password">
+
+                            </div> 
                             <div class="submit-button">
-                                <button class="btn btn-submit" type="submit">Next</button>
+                                <button class="btn btn-submit" type="submit">Register</button>
                             </div>
                         </form>
 
@@ -99,7 +105,7 @@
 
                         <div class="buttons-group">
                             <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
-                                    class="img-fluid"> Sign in with Google</a>
+                                    class="img-fluid"> Sign up with Google</a>
                             <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
                                     class="img-fluid"></a>
                             <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"

@@ -157,8 +157,21 @@ class ModuleSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function reset($id)
+    { 
+
+        $item = InstructorModuleSetting::findOrFail($id);
+
+        $value = ["primary_color" => "","secondary_color"=>"","lp_layout"=>"","meta_title"=>"","meta_desc"=>""];
+        $item->value = json_encode($value);
+        $item->logo = null;
+        $item->lp_bg_image = null;
+        $item->apple_icon = null;
+        $item->app_logo = null;
+        $item->favicon = null;
+ 
+        $item->save();
+ 
+        return response()->json(['message' => 'Theme Reset']);
     }
 }
