@@ -2033,12 +2033,64 @@ span.finsihLesson {
 }
 
 
-.ligth-ele{
-    display: inline-block!important;
+.ligth-ele {
+    display: inline-block !important;
 }
-.dark-ele{
-    display: none!important;
+
+.dark-ele {
+    display: none !important;
 }
+
+
+.liked-course-button {
+    .like-btn {
+        border-radius: 0.75rem;
+        border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+        background: var(--gray-white, #FFF);
+        padding: 0.375rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: ease-in .3s;
+
+        i{
+            color: #A6B1C4;
+            font-size: 1.2rem;
+            transition: ease-in .3s;
+        }
+
+        &:hover{
+            background-color: #FFE5D8;
+            i{
+                color: #fe251b;
+            }
+        }
+    }
+
+    .like-btn.active{
+        background-color: #FFE5D8;
+            i{
+                color: #fe251b;
+            }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2058,11 +2110,11 @@ span.finsihLesson {
         padding: 1rem 0;
     }
 
-    .notify-item-box{
+    .notify-item-box {
         flex-direction: column;
     }
 
-    .delete-item{
+    .delete-item {
         margin-top: 1rem;
     }
 

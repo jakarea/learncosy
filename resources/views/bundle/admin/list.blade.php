@@ -40,11 +40,11 @@
                                         All Bundle
                                     </button> 
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">All Bundle</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="best_rated">Best Rated Bundle</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="most_purchased">Most Purchased Bundle</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="newest">Newest Bundle</a></li>
-                                        <li><a class="dropdown-item" href="#" data-value="oldest">Oldest Bundle</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#">All Bundle</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated Bundle</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased Bundle</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest Bundle</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest Bundle</a></li>
                                     </ul>
                                 </div>
                                 <i class="fas fa-angle-down"></i>
@@ -142,7 +142,6 @@
 </main>
 @endsection
 
-
 {{-- page script @S --}}
 @section('script')
 <script>
@@ -154,7 +153,7 @@
         let urlParams = new URLSearchParams(queryString);
         let title = urlParams.get('title');
         let status = urlParams.get('status');
-        let dropdownItems = document.querySelectorAll(".dropdown-item");
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
         if(status == "best_rated"){
             dropbtn.innerText = 'Best Rated Bundle';

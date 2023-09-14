@@ -25,7 +25,7 @@ class BundleCourseManagementController extends Controller
             $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
         }
         if ($status) {
-            if ($status == 'óldest') {
+            if ($status == 'oldest') {
                 $bundleCourses->orderBy('id', 'asc');
             }
             

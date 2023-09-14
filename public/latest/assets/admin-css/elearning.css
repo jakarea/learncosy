@@ -1794,6 +1794,34 @@ span.finsihLesson {
   display: none !important;
 }
 
+.liked-course-button .like-btn {
+  border-radius: 0.75rem;
+  border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
+  background: var(--gray-white, #FFF);
+  padding: 0.375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in 0.3s;
+}
+.liked-course-button .like-btn i {
+  color: #A6B1C4;
+  font-size: 1.2rem;
+  transition: ease-in 0.3s;
+}
+.liked-course-button .like-btn:hover {
+  background-color: #FFE5D8;
+}
+.liked-course-button .like-btn:hover i {
+  color: #fe251b;
+}
+.liked-course-button .like-btn.active {
+  background-color: #FFE5D8;
+}
+.liked-course-button .like-btn.active i {
+  color: #fe251b;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

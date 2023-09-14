@@ -21,12 +21,21 @@ class StudentController extends Controller
 
         // get student who purchase course based on course user_id and logged in user_id
        $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+
+       
  
         $name = isset($_GET['name']) ? $_GET['name'] : '';
-        $users = User::whereIn('id', $checkout->pluck('user_id'));
-        if (!empty($name)) {
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
+        $users = User::whereIn('id', $checkout->pluck('user_id')); 
+        
+        if ($name) {
             $users->where('name', 'like', '%' . trim($name) . '%');
         }
+        if ($status) {
+            $users->where('status', '=', $status);
+        }
+
         $users = $users->paginate(12);
  
          return view('students/instructor/grid',compact('users')); 

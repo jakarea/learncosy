@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form action="" method="GET">
+                <form action="" method="GET" id="myForm">
                     <div class="row">
                         <div class="col-xl-8 col-md-8">
                             <div class="user-search-box-wrap">
@@ -37,19 +37,25 @@
                                     <input type="text" placeholder="Search Course" class="form-control" name="title"
                                         value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                                 </div>
+                                <input type="hidden" name="status" id="inputField">
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-4">
-                            <div class="user-search-box-wrap">
-                                <div class="form-filter">
-                                    <select class="form-control">
-                                        <option value="">Best Rated</option>
-                                        <option value="">Most Purchased</option>
-                                        <option value="">Newest</option>
-                                        <option value="">Oldest</option>
-                                    </select>
-                                    <i class="fas fa-angle-down"></i>
+                            <div class="filter-dropdown-box">
+                                <div class="dropdown">
+                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="dropdownBttn">
+                                        All
+                                    </button> 
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest</a></li>
+                                    </ul>
                                 </div>
+                                <i class="fas fa-angle-down"></i>
                             </div>
                         </div>
                         <div class="col-xl-1 ps-lg-0 col-md-5">
@@ -165,27 +171,44 @@
 @endsection
 {{-- page content @E --}}
 
+
+{{-- page script @S --}}
 @section('script')
 <script>
-    const parent = document.querySelector('.course-single-item');
-    const child = document.querySelector('.course-ol-box');
-  
-    parents.forEach(parent => {
-    parent.addEventListener('mouseenter', () => {
-      const parentRect = parent.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      
-      // Check if there's enough space on the right side of the parent
-      if (viewportWidth - parentRect.right < child.offsetWidth) {
-        child.style.right = 'auto';
-        child.style.left = '0';
-      }
-    });
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let title = urlParams.get('title');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
-    parent.addEventListener('mouseleave', () => {
-      child.style.right = '-100%'; // Hide the child when not hovering
+        if(status == "best_rated"){
+            dropbtn.innerText = 'Best Rated';
+        }
+        if(status == "most_purchased"){
+            dropbtn.innerText = 'Most Purchased';
+        }
+        if(status == "newest"){
+            dropbtn.innerText = 'Newest';
+        }
+        if(status == "oldest"){
+            dropbtn.innerText = 'Oldest';
+        }
+
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
     });
-  });
-  </script>
-  
+</script>
 @endsection
+{{-- page script @E --}}

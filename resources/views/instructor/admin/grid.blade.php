@@ -46,9 +46,9 @@
                                 All Instructor
                             </button> 
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">All Instructor</a></li>
-                                <li><a class="dropdown-item" href="#" data-value="active">Active Instructor</a></li>
-                                <li><a class="dropdown-item" href="#" data-value="inactive">Inactive Instructor</a></li>
+                                <li><a class="dropdown-item filterItem" href="#">All Instructor</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="active">Active Instructor</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="inactive">Inactive Instructor</a></li>
                             </ul>
                         </div>
                         <i class="fas fa-angle-down"></i>
@@ -139,7 +139,7 @@
         let urlParams = new URLSearchParams(queryString);
         let name = urlParams.get('name');
         let status = urlParams.get('status');
-        let dropdownItems = document.querySelectorAll(".dropdown-item");
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
         if(status == "active"){
             dropbtn.innerText = 'Active Instructor';
