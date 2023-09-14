@@ -17,10 +17,25 @@ class BundleCourseManagementController extends Controller
     {  
         $userId = Auth::user()->id;
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $bundleCourses = BundleCourse::orderBy('id', 'desc');
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
+        $bundleCourses = BundleCourse::query();
+
         if (!empty($title)) {
             $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
         }
+        if ($status) {
+            if ($status == 'óldest') {
+                $bundleCourses->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'newest') {
+                $bundleCourses->orderBy('id', 'desc');
+            }
+        }else{
+            $bundleCourses->orderBy('id', 'desc'); 
+        }
+
         $bundleCourses = $bundleCourses->paginate(12);
  
         return view('bundle/admin/list',compact('bundleCourses')); 

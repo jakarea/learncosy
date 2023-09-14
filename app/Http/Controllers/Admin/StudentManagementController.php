@@ -19,13 +19,18 @@ class StudentManagementController extends Controller
     {   
         $user_role = "student";
         $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
         $users = User::where('user_role',$user_role)->orderBy('id', 'desc');
-        if (!empty($name)) {
+        if ($name) {
             $users->where('name', 'like', '%' . trim($name) . '%');
         }
+        if ($status) {
+            $users->where('status', '=', $status);
+        }
         $users = $users->paginate(12);
-         
-         return view('students/admin/grid',compact('users'));  
+        
+        return view('students/admin/grid',compact('users'));  
     }
 
     // data table getData

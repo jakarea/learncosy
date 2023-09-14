@@ -17,12 +17,14 @@ class AdminSubscriptionPackageController extends Controller
     { 
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
+
+
         $subscription_packages = SubscriptionPackage::orderby('id', 'desc');
-        if (!empty($name)) {
+        if ($name) {
             $subscription_packages->where('name', 'like', '%' . trim($name) . '%');
         }
-        if (!empty($status)) {
-            $subscription_packages->where('status', 'like', '%' . trim($status) . '%');
+        if ($status) {
+            $subscription_packages->where('status', '=', $status);
         }
         $subscription_packages = $subscription_packages->paginate(12);
 

@@ -21,10 +21,25 @@ class CourseManagementController extends Controller
     public function index(){  
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $courses = Course::with('user','reviews')->orderBy('id', 'desc');
-        if (!empty($title)) {
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+        $courses = Course::with('user','reviews');
+
+        if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
         }
+
+        if ($status) {
+            if ($status == 'óldest') {
+                $courses->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'newest') {
+                $courses->orderBy('id', 'desc');
+            }
+        }else{
+            $courses->orderBy('id', 'desc'); 
+        }
+
         $courses = $courses->paginate(12);
  
         return view('e-learning/course/admin/list',compact('courses'));  
