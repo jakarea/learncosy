@@ -4,15 +4,15 @@
 @section('style')
 
 @endsection
-@section('content') 
-    <main class="dashboard-page-wrap"> 
+@section('content')
+    <main class="dashboard-page-wrap">
         <div class="container-fluid">
             <div class="row">
-                @can('instructor')
-                <div class="col-12"> 
+                {{-- @can('instructor')
+                <div class="col-12">
                     {!! isInstructorSubscribed(auth()->user()->id) !!}
                 </div>
-                @endcan
+                @endcan --}}
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
                     <!-- total client @s -->
                     <div class="total-client-box">
@@ -20,9 +20,9 @@
                             <div class="media-body">
                                 <h5>Students</h5>
                                 <h4>  {{ count($students) }} </h4>
-                            </div> 
+                            </div>
                         </div>
-                        <p>All time stats</p>
+                        <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageChangeOfStudentEnroll }}</b> % VS last month</p>
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
@@ -35,9 +35,9 @@
                             <div class="media-body">
                                 <h5>Courses</h5>
                                 <h4> {{ count($courses) }} </h4>
-                            </div> 
+                            </div>
                         </div>
-                        <p>All time stats</p>
+                        <p> <b style="color: {{ $formatedPercentageOfCourse >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageOfCourse }}</b> % VS last month</p>
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
@@ -50,9 +50,9 @@
                             <div class="media-body">
                                 <h5>Earnings</h5>
                                 <h4>{{ count($earningByDates) }} €</h4>
-                            </div> 
+                            </div>
                         </div>
-                        <p>All time stats</p>
+                        <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfEarning }}</b> % VS last month</p>
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
@@ -65,23 +65,23 @@
                             <div class="media-body">
                                 <h5>Sell Rating</h5>
                                 <h4>35%</h4>
-                            </div> 
+                            </div>
                         </div>
                         <p>All time stats</p>
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
                     <!-- total client @e -->
-                </div> 
+                </div>
             </div>
             <div class="row">
-                <div class="col-12"> 
+                <div class="col-12">
                     <div class="chart-box-wrap mt-15">
                         <div class="statics-head">
                             <h5>Earnings by date</h5>
-                        </div> 
+                        </div>
                         <div id="earningCh"></div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -112,12 +112,12 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="top-performing-course mt-15"> 
+                    <div class="top-performing-course mt-15">
                         <div class="d-flex">
                             <h5>Message</h5>
                             <a href="{{ url('course/messages') }}">View All</a>
-                        </div>  
-                        <div class="messages-items-wrap"> 
+                        </div>
+                        <div class="messages-items-wrap">
                             @foreach ($messages as $message)
                                 <div class="messages-item">
                                     <div class="media">
@@ -130,15 +130,15 @@
                                             <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans()}}</span></h5>
                                             <p>{{ $message->message }}</p>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                             @endforeach
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>   
-    </main> 
+        </div>
+    </main>
 @endsection
 @section('script')
 
@@ -228,7 +228,7 @@ const data = @json($activeInActiveStudents);
             enabled: false
           }
         },
-        colors:['#294CFF','#FFAB00'], 
+        colors:['#294CFF','#FFAB00'],
         dataLabels: {
           enabled: false
         },
@@ -238,7 +238,7 @@ const data = @json($activeInActiveStudents);
         title: {
           text: '',
           align: 'left'
-        }, 
+        },
         grid: {
         show: true,
         borderColor: '#C2C6CE',
@@ -269,7 +269,7 @@ const data = @json($activeInActiveStudents);
             enabled: false
           }
         },
-        colors:['#294CFF'], 
+        colors:['#294CFF'],
         dataLabels: {
           enabled: false
         },
@@ -279,7 +279,7 @@ const data = @json($activeInActiveStudents);
         title: {
           text: '',
           align: 'left'
-        }, 
+        },
         grid: {
         show: true,
         borderColor: '#C2C6CE',
@@ -308,13 +308,13 @@ const data = @json($activeInActiveStudents);
           height: 350
         },
         colors:['#294CFF', '#E7EBFF'],
-        plotOptions: { 
+        plotOptions: {
           bar: {
             horizontal: false,
             columnWidth: '60%',
             borderRadius: 2,
             endingShape: 'rounded',
-            
+
           },
         },
         dataLabels: {
