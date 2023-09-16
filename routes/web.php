@@ -15,8 +15,6 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
-
-
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\CheckoutController;
