@@ -26,6 +26,8 @@
                     <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-01-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Total Earnings</h5>
+                    <p><b style="color: {{ $formattedPercentageChangeOfEarningByMonth >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfEarningByMonth }}</b> %</p>
+
                     <h4>${{$totalEnrollmentSell}}</h4>
                 </div>
             </div>
@@ -34,6 +36,8 @@
                     <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-02-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Earnings Today</h5>
+                    <p><b style="color: {{ $formattedPercentageChangeOfEarningByDay >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfEarningByDay }}</b> %</p>
+
                     <h4>${{$todaysTotalEnrollmentSell}}</h4>
                 </div>
             </div>
@@ -41,6 +45,7 @@
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
+                    <p><b style="color: {{ $formatedPercentageChangeOfStudentEnrollByMonth >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageChangeOfStudentEnrollByMonth }}</b> %</p>
                     <h5>Total Enrollments</h5>
                     <h4>{{$totalEnrollment}} Students</h4>
                 </div>
@@ -49,6 +54,7 @@
                 <div class="top-card-box">
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
+                    <p><b style="color: {{ $formatedPercentageChangeOfStudentEnrollByDay >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageChangeOfStudentEnrollByDay }}</b> %</p>
                     <h5>Enrolled Today</h5>
                     <h4>{{$todaysEnrollment}} Students</h4>
                 </div>
