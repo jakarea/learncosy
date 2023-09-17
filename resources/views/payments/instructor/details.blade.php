@@ -76,7 +76,7 @@
                     </table>
                     <div class="download-inv-box">
                         <a href="#">Back</a>
-                        <a href="#"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
+                        <a href="{{route('generate-pdf',encrypt($payment->payment_id))}}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
                     </div>
                 </div>
             </div>
