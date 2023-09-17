@@ -56,9 +56,7 @@ $social_links = explode(",", $user->social_links);
                             <a href="{{url('instructor/profile/edit')}}"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img"
                                     class="img-fluid"></a>
                         </div>
-                    </div>
-
-
+                    </div> 
                     @foreach ($experiences as $experience)
                     <div class="media brdr-bttm">
                         <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img"

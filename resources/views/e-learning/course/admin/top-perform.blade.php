@@ -25,6 +25,8 @@
                 </div>
             </div>
             <div class="col-lg-3 col-12 col-sm-4 col-md-4">
+                <form action="" method="GET" id="myForm">
+                    <input type="hidden" name="status" id="inputField">
                 <div class="filter-dropdown-box">
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -40,6 +42,7 @@
                     </div>
                     <i class="fas fa-angle-down"></i>
                 </div>
+                </form>
             </div>
         </div> 
         <div class="row"> 
@@ -67,7 +70,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                      <li><a class="dropdown-item" href="£">View</a></li> 
+                                      <li><a class="dropdown-item" href="{{url('admin/courses/'.$course->slug)}}">View</a></li> 
                                       <li> 
                                         <form method="post" class="d-inline" action="">
                                             @csrf 
@@ -117,3 +120,41 @@
     </div>
 </main>
 @endsection
+
+
+{{-- page script @S --}}
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if(status == "last_7_days"){
+            dropbtn.innerText = 'Last 7 Days';
+        }
+        if(status == "last_30_days"){
+            dropbtn.innerText = 'Last 30 Days';
+        }
+        if(status == "last_1_year"){
+            dropbtn.innerText = 'Last 1 Year';
+        }
+
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
+@endsection
+{{-- page script @E --}}

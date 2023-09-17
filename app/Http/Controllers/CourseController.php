@@ -28,7 +28,7 @@ class CourseController extends Controller
         }
 
         if ($status) {
-            if ($status == 'óldest') {
+            if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
             }
             
