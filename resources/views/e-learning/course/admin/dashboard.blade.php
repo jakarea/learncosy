@@ -22,7 +22,7 @@ Home Page
                             <h4> {{ $studentsCount }}</h4>
                         </div>
                     </div>
-                    <p>All time stats</p>
+                    <p> <b style="color: {{ $formattedPercentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfStudent }}</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -37,7 +37,7 @@ Home Page
                             <h4> {{ $instructorsCount }}</h4>
                         </div>
                     </div>
-                    <p>All time stats</p>
+                    <p> <b style="color: {{ $formattedPercentageChangeOfInstructor >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfInstructor }}</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -52,7 +52,7 @@ Home Page
                             <h4> {{ $courseCount }}</h4>
                         </div>
                     </div>
-                    <p>All time stats</p>
+                    <p> <b style="color: {{ $formattedPercentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfCourse }}</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -67,7 +67,7 @@ Home Page
                             <h4>€ {{ $totalEarnings }} </h4>
                         </div>
                     </div>
-                    <p>All time stats</p>
+                    <p> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage }}</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -131,7 +131,7 @@ Home Page
                     <div class="d-flex">
                         <h4>Course Status</h4>
                         <div>
-                            <a href="{{ url('admin/courses') }}" class="me-0">View All</a> 
+                            <a href="{{ url('admin/courses') }}" class="me-0">View All</a>
                         </div>
                     </div>
                     <table>
@@ -145,7 +145,7 @@ Home Page
                         </tr>
 
                         @foreach ($TopPerformingCourses as $course)
-                            
+
                             <tr>
                                 <td>
                                     <div class="media">
@@ -166,7 +166,7 @@ Home Page
                                     <p>€ {{ $course->offer_price ? $course->offer_price :$course->price }}</p>
                                 </td>
                                 <td>
-                                    <p><i class="fas fa-star" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p> 
+                                    <p><i class="fas fa-star" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p>
                                 </td>
                                 <td>
                                     <p>€ {{ $course->sum_amount}}</p>

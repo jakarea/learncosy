@@ -15,6 +15,20 @@ use App\Http\Controllers\Controller;
 class AdminHomeController extends Controller
 
 {
+
+    private $currentMonthStart;
+    private $currentMonthEnd;
+    private $previousMonthStart;
+    private $previousMonthEnd;
+
+    public function __construct()
+    {
+        $this->currentMonthStart = Carbon::now()->startOfMonth();
+        $this->currentMonthEnd = Carbon::now()->endOfMonth();
+        $this->previousMonthStart = Carbon::now()->subMonth()->startOfMonth();
+        $this->previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
+    }
+
     // dashboard
     public function dashboard()
     {
@@ -51,11 +65,42 @@ class AdminHomeController extends Controller
             ->orderByDesc('sale_count')
             ->limit(7)
             ->get();
-        
-        
+
+
         $lastMessages = Message::lastMessagePerUser()->with('user')->take(7)->get();
 
         $studentsCount = User::where('user_role', 'student')->count();
+        $currentMonthStart = $this->currentMonthStart;
+        $currentMonthEnd = $this->currentMonthEnd;
+        $previousMonthStart = $this->previousMonthStart;
+        $previousMonthEnd = $this->previousMonthEnd;
+
+        $currentMonthStudentCount = User::where('user_role', 'student')
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->count();
+        $previousMonthStudentCount = User::where('user_role', 'student')
+            ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
+            ->count();
+
+        $currentMonthInstructorCount = User::where('user_role', 'instructor')
+            ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+            ->count();
+        $previousMonthInstructorCount = User::where('user_role', 'instructor')
+            ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
+            ->count();
+        $percentageChangeOfStudent = 0;
+        if ($previousMonthStudentCount !== 0) {
+            $percentageChangeOfStudent = (($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100;
+        }
+        $formattedPercentageChangeOfStudent = ($percentageChangeOfStudent >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfStudent), 2) . '%';
+
+        $percentageChangeOfInstructor = 0;
+        if ($previousMonthStudentCount !== 0) {
+            $percentageChangeOfInstructor = (($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100;
+        }
+        $formattedPercentageChangeOfInstructor = ($percentageChangeOfInstructor >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfInstructor), 2) . '%';
+
+
         $instructorsCount = User::where('user_role', 'instructor')->count();
         $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
 
@@ -65,6 +110,16 @@ class AdminHomeController extends Controller
         $earningByMonth = $this->getEarningByMonth();
         $courses = Course::get();
         $courseCount = count($courses);
+
+        $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
+        $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
+        $percentageChangeOfCourse = 0;
+        if ($previousMonthCourseCount !== 0) {
+            $percentageChangeOfCourse = (($currentMonthCourseCount - $previousMonthCourseCount) / abs($previousMonthCourseCount)) * 100;
+        }
+        $formattedPercentageChangeOfCourse = ($percentageChangeOfCourse >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfCourse), 2) . '%';
+
+
         $allCategories = $courses->pluck('categories');
         $unique_array_categories = [];
         foreach ($allCategories as $category) {
@@ -81,6 +136,7 @@ class AdminHomeController extends Controller
         $categories = array_unique($unique_array_categories);
 
         $totalEarnings = $this->getTotalEarningViaSubscription();
+        $earningParcentage = $this->getEarningParcentageViaSubscription();
 
         // return $earningByMonth;
         return view(
@@ -99,12 +155,16 @@ class AdminHomeController extends Controller
                 'totalEarnings',
                 'earningByMonth',
                 'TopPerformingCourses',
-                'lastMessages'
+                'lastMessages',
+                'formattedPercentageChangeOfStudent',
+                'formattedPercentageChangeOfInstructor',
+                'formattedPercentageChangeOfCourse',
+                'earningParcentage'
             )
         );
     }
 
-    public function perform(){ 
+    public function perform(){
         $TopPerformingCourses = Course::select('courses.id','courses.price','courses.offer_price','courses.user_id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')
@@ -133,7 +193,7 @@ class AdminHomeController extends Controller
   }
 
   return $monthlySums;
-        
+
     }
 
     private function getTotalEarningViaSubscription()
@@ -174,6 +234,37 @@ class AdminHomeController extends Controller
         return $earningsByDate;
 
     }
+
+
+    private function getEarningParcentageViaSubscription()
+    {
+        $currentMonthStart = $this->currentMonthStart;
+        $currentMonthEnd = $this->currentMonthEnd;
+        $previousMonthStart = $this->previousMonthStart;
+        $previousMonthEnd = $this->previousMonthEnd;
+
+        $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+            ->whereBetween('subscriptions.start_at', [$currentMonthStart, $currentMonthEnd])
+            ->sum('subscription_packages.amount');
+        $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+            ->whereBetween('subscriptions.start_at', [$previousMonthStart, $previousMonthEnd])
+            ->sum('subscription_packages.amount');
+        if ($previousMonthTotal !== 0) {
+            $percentageChange = (($currentMonthTotal - $previousMonthTotal) / abs($previousMonthTotal)) * 100;
+        } else {
+            $percentageChange = ($currentMonthTotal > 0) ? 100 : 0;
+        }
+
+        $formattedPercentageChange = number_format($percentageChange, 2) . '%';
+
+        return $formattedPercentageChange;
+    }
+
+
+
+
+
+
     private function getActiveInActiveStudents($data)
     {
         $activeCountByDate = [];
