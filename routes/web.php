@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GeneratepdfController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -212,6 +213,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'studentsPayment');  
             
             Route::get('/{payment_id}', 'details');  
+            Route::get('/generate-pdf/{id}','generatePdf')->name('generate-pdf');
             Route::get('/platform-fee', 'adminPayment');  
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
@@ -523,6 +525,8 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
     });
 });
+
+// Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {
     Auth::logout();
