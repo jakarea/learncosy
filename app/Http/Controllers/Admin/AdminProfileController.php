@@ -6,45 +6,47 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
+use App\Models\Checkout;
 use App\Models\User;
+use Carbon\Carbon;
 use App\Mail\PasswordChanged;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;   
-use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdminProfileController extends Controller
 {
     // profile show
     public function show()
-    {  
+    {
         $id = Auth::user()->id;
-        $user = User::find($id); 
-        return view('profile/admin/profile',compact('user')); 
+        $user = User::find($id);
+        return view('profile/admin/profile',compact('user'));
     }
 
     // profile edit
     public function edit()
-    {    
-        $userId = Auth()->user()->id;  
+    {
+        $userId = Auth()->user()->id;
         $user = User::find($userId);
-        return view('profile/admin/edit',compact('user'));  
+        return view('profile/admin/edit',compact('user'));
     }
 
     public function update(Request $request)
     {
         // return $request->all();
 
-        $userId = Auth()->user()->id;  
+        $userId = Auth()->user()->id;
 
         $this->validate($request, [
             'name' => 'required|string',
             'short_bio' => 'required|string',
-            'phone' => 'required|string', 
+            'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
 
-       
+
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
         $user->username =  Str::slug($request->username);
@@ -53,27 +55,27 @@ class AdminProfileController extends Controller
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
-        $user->email = $user->email; 
+        $user->email = $user->email;
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }else{
             $user->password = $user->password;
-        }  
+        }
 
-        if ($request->hasFile('avatar')) { 
+        if ($request->hasFile('avatar')) {
             // Delete old file
             if ($user->avatar) {
                $oldFile = public_path('/assets/images/users/'.$user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
-           } 
+           }
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
            $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
-           $user->avatar = $name; 
+           $user->avatar = $name;
        }
 
         $user->save();
@@ -85,10 +87,10 @@ class AdminProfileController extends Controller
 
     // password update
     public function passwordUpdate()
-    {    
-        $userId = Auth()->user()->id;  
+    {
+        $userId = Auth()->user()->id;
         $user = User::find($userId);
-        return view('profile/admin/password-change',compact('user'));  
+        return view('profile/admin/password-change',compact('user'));
     }
 
     public function postChangePassword(Request $request)
@@ -100,22 +102,54 @@ class AdminProfileController extends Controller
             'password' => 'required|confirmed|min:6|string',
         ]);
 
-        $userId = Auth()->user()->id; 
+        $userId = Auth()->user()->id;
         $user = User::where('id', $userId)->first();
         $user->password = Hash::make($request->password);
 
         $user->save();
-        
+
         // Send email
         Mail::to($user->email)->send(new PasswordChanged($user));
         return redirect()->route('admin.profile')->with('success', 'Your password has been changed successfully!');
     }
 
     public function adminPayment()
-    {   
+    {
+        $students = [];
+        $todaysStudents = [];
         $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
- 
-        return view('payments/admin/grid-admin-payment', compact('payments'));
+
+        $enrolments = Checkout::orderBy('id', 'desc')->get();
+        $todaysEnrolments = Checkout::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
+
+        foreach ($enrolments as $enrolment) {
+            $students[$enrolment->user_id] = $enrolment->created_at;
+        }
+
+        foreach ($todaysEnrolments as $enrolment) {
+            $todaysStudents[$enrolment->user_id] = $enrolment->created_at;
+        }
+
+        $totalEnrollment =  count($students);
+        $todaysEnrollment =  count($todaysStudents);
+
+        $totalEnroll = $this->getEnrollmentData();
+        $totalEnrollmentSell = $totalEnroll->sum('amount');
+
+        $totalEnrollToday = $this->getEnrollmentDataToday();
+        $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
+
+        return view('payments/admin/grid-admin-payment', compact('payments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell'));
+    }
+
+    private function getEnrollmentData()
+    {
+        return Checkout::orderBy('id', 'desc')->get();
+    }
+
+    private function getEnrollmentDataToday()
+    {
+        return Checkout::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
     }
 
     public function adminPaymentData( Request $request )
@@ -137,7 +171,7 @@ class AdminProfileController extends Controller
             })
             ->rawColumns(['action', 'status', 'features'])
             ->make(true);
-        
-        
+
+
     }
 }
