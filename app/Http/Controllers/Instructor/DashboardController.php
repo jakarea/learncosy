@@ -19,18 +19,61 @@ class DashboardController extends Controller
 
         $messages = Message::where('receiver_id',$userId)->orWhere('user_id',$userId)->groupBy('receiver_id','user_id')->take(3)->get();
 
-        // return "From Instructor Dashboard Controller"; 
+        // return "From Instructor Dashboard Controller";
         $categories = [];
         $courses = 0;
         $students = [];
+        $currentMonthEnrolledStudents = [];
+        $previousMonthEnrolledStudents = [];
 
         $enrolments = Checkout::where('instructor_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+
+        $firstDayOfCurrentMonth = Carbon::now()->startOfMonth();
+        $lastDayOfCurrentMonth = Carbon::now()->endOfMonth();
+        $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
+        $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
+        $currentMonthEnrollment = $this->getEnrollmentData(Auth::user()->id, $firstDayOfCurrentMonth, $lastDayOfCurrentMonth);
+        $previousMonthEnrollment = $this->getEnrollmentData(Auth::user()->id, $firstDayOfPreviousMonth, $lastDayOfPreviousMonth);
+        $currentMonthTotalSell = $currentMonthEnrollment->sum('amount');
+        $previousMonthTotalSell = $previousMonthEnrollment->sum('amount');
+        $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
+        $formattedPercentageChangeOfEarning = round($percentageChange, 2);
+
+        $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                ->whereYear('created_at', '=', now()->year)
+                ->whereMonth('created_at', '=', now()->month)
+                ->get();
+
+        $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+            ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
+            ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
+            ->get();
+
+
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates($enrolments);
         $earningByMonth = $this->getEarningByMonth($enrolments);
         $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
         $courses = Course::where('user_id', Auth::user()->id)->get();
+
+        $currentMonthCourse = Course::where('user_id', Auth::user()->id)
+                ->whereYear('created_at', '=', now()->year)
+                ->whereMonth('created_at', '=', now()->month)
+                ->count();
+
+        $previousMonthCourse = Course::where('user_id', Auth::user()->id)
+            ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
+            ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
+            ->count();
+
+        if ($previousMonthCourse === 0) {
+            $percentageOfCourse = ($currentMonthCourse > 0) ? 100 : 0;
+        } else {
+            $percentageOfCourse = (($currentMonthCourse - $previousMonthCourse) / abs($previousMonthCourse)) * 100;
+        }
+
+
         $allCategories = $courses->pluck('categories');
         $unique_array = [];
         foreach ($allCategories as $category) {
@@ -44,10 +87,40 @@ class DashboardController extends Controller
             $students[$enrolment->user_id] = $enrolment->created_at;
         }
 
+        foreach ($currentMonthEnrollments as $enrolment) {
+            $currentMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
+        }
+
+        foreach ($previousMonthEnrollments as $enrolment) {
+            $previousMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
+        }
+
+        $currentMonthEnrolledStudentsCount = count($currentMonthEnrolledStudents);
+        $previousMonthEnrolledStudentsCount = count($previousMonthEnrolledStudents);
+
+        if ($previousMonthEnrolledStudentsCount === 0) {
+            $percentageChangeOfStudentEnroll = ($currentMonthEnrolledStudentsCount > 0) ? 100 : 0;
+        } else {
+            $percentageChangeOfStudentEnroll = (($currentMonthEnrolledStudentsCount - $previousMonthEnrolledStudentsCount) / abs($previousMonthEnrolledStudentsCount)) * 100;
+        }
+
+        $formatedPercentageChangeOfStudentEnroll = number_format($percentageChangeOfStudentEnroll, 2);
+        $formatedPercentageOfCourse = number_format($percentageOfCourse, 2);
+
+
         $categories = array_unique($unique_array);
 
         // return $earningByDates;
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning'));
+    }
+
+
+    private function getEnrollmentData($instructorId, $startDate, $endDate)
+    {
+        return Checkout::where('instructor_id', $instructorId)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
     public function analytics(){
@@ -118,7 +191,7 @@ class DashboardController extends Controller
 
         return $earningsByDate;
     }
-   
+
     private function getEarningByMonth($data)
     {
         $monthlySums = array_fill(0, 12, 0);
@@ -134,7 +207,7 @@ class DashboardController extends Controller
         }
 
         return $monthlySums;
-        
+
     }
 
     private function getCourseWisePayments($enrolments)
