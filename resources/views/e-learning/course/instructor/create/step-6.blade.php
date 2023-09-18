@@ -113,7 +113,7 @@ Course Create - Step 1
                             {{-- course page add box start --}}
                             <div class="add-content-box mt-3">
                                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#lessonModal_{{$module->id}}"><i
-                                        class="fas fa-plus"></i> Add Lesson {{ $module->id}}</button>
+                                        class="fas fa-plus"></i> Add Lesson </button>
                             </div>
                             {{-- course page add box end --}}
 
@@ -209,3 +209,34 @@ Course Create - Step 1
 
 @section('script')
 @endsection
+
+
+.rnb-notice {
+        background: #f8f7f7;
+        padding: 17px;
+	}
+
+    .rnb-notice:hover {
+        border: 1px solid #e67272;
+    }
+
+    p.note_att {   	
+        font-size: 16px;
+        font-weight: 700;
+        color: #e67272;
+    }
+
+    .rnb-notice {
+        background: #f8f7f7;
+        padding: 17px;
+	}
+
+    .rnb-notice:hover {
+        border: 1px solid #e67272;
+    }
+
+    p.note_att {   	
+        font-size: 16px;
+        font-weight: 700;
+        color: #e67272;
+    }
