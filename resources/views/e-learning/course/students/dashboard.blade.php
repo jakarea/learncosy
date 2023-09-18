@@ -113,25 +113,24 @@
                     <h3>Liked Courses </h3>
 
                     <div class="course-box-overflown">
-                        @foreach ($enrolments as $enrolment)
+                        @foreach ($likeCourses as $likeCourse)
                         <div class="media">
-                            @if ($enrolment->course->thumbnail)
-                            <img src="{{asset('assets/images/courses/'.$enrolment->course->thumbnail)}}" alt="a"
+                            @if ($likeCourse->course->thumbnail)
+                            <img src="{{asset('assets/images/courses/'.$likeCourse->course->thumbnail)}}" alt="a"
                                 class="img-fluid me-3" style="width: 100px; border-radius: 1rem">
                             @else
                             <img src="{{asset('latest/assets/images/course-small.svg')}}" alt="a"
                                 class="img-fluid me-3">
                             @endif
                             <div class="media-body">
-                                <h5>{{
-                                    $enrolment->course->title}}</h5>
-                                <p><strong>Enrolled Fee:</strong> {{ $enrolment->amount}} €</p>
+                                <h5>{{ $likeCourse->course->title}}</h5>
+                                <p><strong>Fee:</strong> {{ $likeCourse->course->offer_price}} €</p>
                                 <ul class="mt-1">
-                                    <li><i class="fas fa-calendar me-2"></i> {{ $enrolment->created_at->format('F j,
+                                    <li><i class="fas fa-calendar me-2"></i> {{ $likeCourse->course->created_at->format('F j,
                                         Y')}}</li>
                                 </ul>
                             </div>
-                            <a href="{{url('students/courses/'.$enrolment->course->slug )}}"><i
+                            <a href="{{url('students/courses/'.$likeCourse->course->slug )}}"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></a>
                         </div>
                         @endforeach

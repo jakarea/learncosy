@@ -764,8 +764,11 @@
 
 
 {{-- theme reset ajax request with featch --}}
-<script>
-    const baseUrl = 'http://nayan.localhost';
+<script> 
+ 
+    let currentURL = window.location.href; 
+    const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
     const deleteButton = document.getElementById('deleteButton');
 
     deleteButton.addEventListener('click', () => {
@@ -773,8 +776,7 @@
 
         if (confirmation) {
             const moduleId = {{ $module_settings->id }};
-
-            // console.log(moduleId);
+ 
  
             fetch(`${baseUrl}/instructor/theme/setting/reset/${moduleId}`, {
                 method: 'POST',

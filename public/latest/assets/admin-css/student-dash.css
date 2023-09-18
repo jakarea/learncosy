@@ -231,7 +231,7 @@
   background: var(--background-light-paper, #FFF);
   padding: 1rem 0.75rem;
   position: absolute;
-  right: -30%;
+  right: -110%;
   top: -4%;
   width: 110%;
   height: 108%;
@@ -1074,6 +1074,10 @@
   background: #171B3C;
 }
 
+.hover-item:nth-child(4n) .course-single-item .course-ol-box {
+  right: 100% !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .student-courses-lists-pages .course-ol-box {
     left: 0%;
@@ -1409,6 +1413,15 @@
     width: 100%;
     margin-top: 1rem;
   }
+  .hover-item:nth-child(4n) .course-single-item .course-ol-box {
+    right: -110% !important;
+  }
+  .hover-item:nth-child(3n) .course-single-item .course-ol-box {
+    right: -110% !important;
+  }
+  .hover-item:nth-child(2n) .course-single-item .course-ol-box {
+    right: 100% !important;
+  }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .status-card-box {
@@ -1417,6 +1430,12 @@
   .total-client-box {
     margin-bottom: 1rem;
     height: auto;
+  }
+  .hover-item:nth-child(4n) .course-single-item .course-ol-box {
+    right: -110% !important;
+  }
+  .hover-item:nth-child(3n) .course-single-item .course-ol-box {
+    right: 100% !important;
   }
 }
 @media (min-width: 1199px) and (max-width: 1399px) {
@@ -1427,5 +1446,11 @@
   .total-client-box {
     margin-bottom: 1rem;
     height: auto;
+  }
+  .hover-item:nth-child(4n) .course-single-item .course-ol-box {
+    right: -110% !important;
+  }
+  .hover-item:nth-child(3n) .course-single-item .course-ol-box {
+    right: 100% !important;
   }
 }

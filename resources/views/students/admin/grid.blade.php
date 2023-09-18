@@ -25,10 +25,10 @@
                     <h1>Total: <span>{{ count($users) }} Students</span></h1>
                 </div>
             </div>
-        </div>  
-        <div class="row">
-            <div class="col-lg-7 col-xl-7">
-                <form action="" method="GET">
+        </div>
+        <form action="" method="GET" id="myForm">
+            <div class="row">
+                <div class="col-lg-7 col-xl-7">
                     <div class="user-search-box-wrap">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
@@ -36,28 +36,33 @@
                                 value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="col-lg-5 col-xl-3">
-                <div class="user-search-box-wrap">
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All Students</option>
-                            <option value="">Active Students</option>
-                            <option value="">Inactive Students</option>
-                        </select>
+                    <input type="hidden" name="status" id="inputField">
+                </div>
+                <div class="col-lg-5 col-xl-3">
+                    <div class="filter-dropdown-box">
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                id="dropdownBttn">
+                                All Students
+                            </button> 
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item filterItem" href="#">All Students</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="active">Active Students</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="inactive">Inactive Students</a></li>
+                            </ul>
+                        </div>
                         <i class="fas fa-angle-down"></i>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-xl-2">
-                <div class="user-add-box">
-                    <a href="{{ url('admin/students/create') }}"><img
-                        src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
-                    Students</a>
+                <div class="col-lg-3 col-xl-2">
+                    <div class="user-add-box">
+                        <a href="{{ url('admin/students/create') }}"><img
+                                src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
+                            Students</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div class="row">
             @if (count($users) > 0)
             @foreach ($users as $user)
@@ -105,8 +110,8 @@
                     </div>
                 </div>
             </div>
-            @endforeach 
-            @else 
+            @endforeach
+            @else
             <div class="col-12">
                 <div class="no-result-found">
                     <h6>No Students Found!</h6>
@@ -116,13 +121,13 @@
         </div>
         <div class="row">
             <div class="col-12">
-              {{-- pagginate --}}
-              <div class="paggination-wrap">
-                 {{ $users->links('pagination::bootstrap-5') }}
-             </div>
-             {{-- pagginate --}}
+                {{-- pagginate --}}
+                <div class="paggination-wrap">
+                    {{ $users->links('pagination::bootstrap-5') }}
+                </div>
+                {{-- pagginate --}}
             </div>
-         </div>
+        </div>
     </div>
 </main>
 {{-- ==== Students list page @E ==== --}}
@@ -131,6 +136,34 @@
 
 {{-- page script @S --}}
 @section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('name');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
+        if(status == "active"){
+            dropbtn.innerText = 'Active Students';
+        }
+        if(status == "inactive"){
+            dropbtn.innerText = 'Inactive Students';
+        }
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
 @endsection
 {{-- page script @E --}}
