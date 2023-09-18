@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GeneratepdfController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -15,8 +16,6 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
-
-
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\CheckoutController;
@@ -214,21 +213,20 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'studentsPayment');  
             
             Route::get('/{payment_id}', 'details');  
+            Route::get('/generate-pdf/{id}','generatePdf')->name('generate-pdf');
             Route::get('/platform-fee', 'adminPayment');  
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
         // course page routes
-        // Route::prefix('courses')->controller(CourseController::class)->group(function () {
-        //     Route::get('/', 'index')->name('instructor.courses'); 
-        //     // data table route 
-        //     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
-        //     //Route::get('/create', 'create');
-        //     Route::post('/create', 'store')->name('course.store');
-        //     Route::get('/{slug}', 'show')->name('course.show');   
-        //     Route::get('/{slug}/edit', 'edit')->name('course.edit');
-        //     Route::post('/{slug}/edit', 'update')->name('course.update'); 
-        //     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
-        // });
+        Route::prefix('courses')->controller(CourseController::class)->group(function () {
+            Route::get('/', 'index')->name('instructor.courses');  
+            //Route::get('/create', 'create');
+            // Route::post('/create', 'store')->name('course.store');
+            Route::get('/{slug}', 'show')->name('course.show');   
+            // Route::get('/{slug}/edit', 'edit')->name('course.edit');
+            // Route::post('/{slug}/edit', 'update')->name('course.update'); 
+            Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+        });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
             
@@ -343,8 +341,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // all students profile page routes for instructor
         Route::prefix('students')->controller(StudentController::class)->group(function () {
-            Route::get('/', 'index')->name('allStudents'); 
-            Route::get('/datatable', 'studentsDataTable')->name('students.data.table');
+            Route::get('/', 'index')->name('allStudents');  
             Route::get('/create', 'create'); 
             Route::post('/create', 'store')->name('student.add');
             Route::get('/profile/{id}', 'show')->name('studentProfile'); 
@@ -391,6 +388,8 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::post('/courses/{slug}', 'review')->name('students.review.courses'); 
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');  
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
+
+    Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
 
     
     // student checkout page routes
@@ -525,6 +524,8 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
     });
 });
+
+// Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {
     Auth::logout();

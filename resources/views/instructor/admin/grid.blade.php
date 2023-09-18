@@ -26,9 +26,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-7 col-xl-7">
-                <form action="" method="GET">
+        <form action="" method="GET" id="myForm">
+            <div class="row">
+                <div class="col-lg-7 col-xl-7">
                     <div class="user-search-box-wrap">
                         <div class="form-group">
                             <i class="fas fa-search"></i>
@@ -36,28 +36,33 @@
                                 value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="col-lg-5 col-xl-3">
-                <div class="user-search-box-wrap">
-                    <div class="form-filter">
-                        <select class="form-control">
-                            <option value="">All Instructor</option>
-                            <option value="">Active Instructor</option>
-                            <option value="">Inactive Instructor</option>
-                        </select>
+                    <input type="hidden" name="status" id="inputField">
+                </div>
+                <div class="col-lg-5 col-xl-3">
+                    <div class="filter-dropdown-box">
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                id="dropdownBttn">
+                                All Instructor
+                            </button> 
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item filterItem" href="#">All Instructor</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="active">Active Instructor</a></li>
+                                <li><a class="dropdown-item filterItem" href="#" data-value="inactive">Inactive Instructor</a></li>
+                            </ul>
+                        </div>
                         <i class="fas fa-angle-down"></i>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-xl-2">
-                <div class="user-add-box">
-                    <a href="{{ url('admin/instructor/create') }}"><img
-                            src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
-                        Instructor</a>
+                <div class="col-lg-3 col-xl-2">
+                    <div class="user-add-box">
+                        <a href="{{ url('admin/instructor/create') }}"><img
+                                src="{{asset('latest/assets/images/user-plus.svg')}}" alt="User" class="img-fluid"> Add
+                            Instructor</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div class="row">
             @if (count($users) > 0)
             @foreach ($users as $user)
@@ -82,11 +87,6 @@
                                 </li>
                             </ul>
                         </div>
-                        <ul>
-                            <li>
-
-                            </li>
-                        </ul>
                     </div>
                     <div class="avatar">
                         @if ($user->avatar)
@@ -128,3 +128,36 @@
 {{-- ==== user list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
+
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('name');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if(status == "active"){
+            dropbtn.innerText = 'Active Instructor';
+        }
+        if(status == "inactive"){
+            dropbtn.innerText = 'Inactive Instructor';
+        }
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
+
+@endsection

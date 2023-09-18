@@ -22,7 +22,7 @@
         </div>
         <div class="row"> 
             <div class="col-lg-12">
-                <form action="" method="GET">
+                <form action="" method="GET" id="myForm">
                     <div class="package-list-header"> 
                         <h5>Module List</h5>
                         <div class="form-group">
@@ -30,15 +30,19 @@
                             <input type="text" placeholder="Search Modules" class="form-control" name="title"
                                 value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
-                        <div class="form-filter"> 
-                            @php 
-                            $modul_status = isset($_GET['status']) ? $_GET['status'] : '';
-                            @endphp
-                            <select class="form-control" name="status">
-                                <option value="">All</option> 
-                                <option value="pending" {{ $modul_status == 'pending' ? 'selected' : ''}}>Pending</option>
-                                <option value="published" {{ $modul_status == 'published' ? 'selected' : ''}}>Published</option>
-                            </select>
+                        <input type="hidden" name="status" id="inputField"> 
+                        <div class="filter-dropdown-box">
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    id="dropdownBttn">
+                                    All
+                                </button> 
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                    <li><a class="dropdown-item filterItem" href="#" data-value="pending">Pending</a></li>
+                                    <li><a class="dropdown-item filterItem" href="#" data-value="published">Published</a></li>
+                                </ul>
+                            </div>
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="bttn">
@@ -121,3 +125,37 @@
 {{-- ==== module list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
+
+
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('title');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if(status == "pending"){
+            dropbtn.innerText = 'Pending';
+        }
+        if(status == "published"){
+            dropbtn.innerText = 'Published';
+        }
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
+
+@endsection
