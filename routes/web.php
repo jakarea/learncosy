@@ -222,7 +222,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'index')->name('instructor.courses');  
             //Route::get('/create', 'create');
             // Route::post('/create', 'store')->name('course.store');
-            Route::get('/{slug}', 'show')->name('course.show');   
+            // Route::get('/{slug}', 'show')->name('course.show');   
             // Route::get('/{slug}/edit', 'edit')->name('course.edit');
             // Route::post('/{slug}/edit', 'update')->name('course.update'); 
             Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
@@ -243,11 +243,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}/facts', 'step3');
             Route::post('{id}/facts', 'step3c');
+            Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
 
-            Route::get('{id}/audio', 'step4');
-            Route::post('step-4', 'step4c');
+            Route::get('{id}/audio/{les_id}', 'step4');
+            Route::post('step-4', 'step4c')->name('course.lesson.audio.create');
 
-            Route::get('/{id}/video', 'step5');
+            Route::get('/{id}/video/{les_id}', 'step5');
             Route::post('step-5', 'step5c');
 
             Route::get('step-6', function () {

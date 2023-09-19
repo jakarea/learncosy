@@ -96,41 +96,63 @@ class CourseCreateStepController extends Controller
 
     public function step3c(Request $request, $id){
         
+        // return $request->all();
+
         $request->validate([
-            'module_name' => 'required',
-            // 'is_module' => 'required'
+            'lesson_name' => 'required',
+            'lesson_type' => 'required'
         ]);
-
-        if($request->is_module){
-            $module = new Module();
-            $module->title = $request->input('module_name');
-            $module->slug = Str::slug($request->input('module_name'));
-            $module->course_id = $id;
-            $module->user_id = Auth::user()->id;
-            $module->save();
-        }
-
-        if(!$request->is_module){
-            $lesson = new Lesson();
-            $lesson->course_id = $id;
-            $lesson->user_id = Auth::user()->id;
-            $lesson->module_id = $request->module_id;
-            $lesson->title = $request->input('module_name');
-            $lesson->slug = Str::slug($request->input('module_name'));
-            $lesson->save();
-        }
+ 
+        $lesson = new Lesson();
+        $lesson->course_id = $id;
+        $lesson->user_id = Auth::user()->id;
+        $lesson->module_id = $request->module_id;
+        $lesson->title = $request->input('lesson_name');
+        $lesson->slug = Str::slug($request->input('lesson_name'));
+        $lesson->type = $request->input('lesson_type');
+        $lesson->save();
         
         return redirect('instructor/courses/create/'.$id.'/facts');
     }
 
+    public function step3d(Request $request, $id){
+        
+        // return $request->all();
+
+        $request->validate([
+            'lesson_name' => 'required',
+            'lesson_type' => 'required'
+        ]);
+
+        $lesson_id = $request->input('lesson_id');
+
+        $lesson = Lesson::where('id', $lesson_id)->first();
+  
+        $lesson->course_id = $id;
+        $lesson->user_id = Auth::user()->id;
+        $lesson->module_id = $request->module_id;
+        $lesson->title = $request->input('lesson_name');
+        $lesson->slug = Str::slug($request->input('lesson_name'));
+        $lesson->type = $request->input('lesson_type');
+        $lesson->save();
+        
+        return redirect()->back()->with('success', 'Lesson Updated successfully');
+    }
+
     public function step4(){
+        
         return view('e-learning/course/instructor/create/step-4');
     }
 
-    public function step4c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId');
-        $lastLessonId = session()->get('lastLessonId');
+    public function step4c(Request $request, $id,$les_id){
+
+        $all = $request->all();
+
+        return [$all,$id,$les_id];
+
+        // $lastCourseId = session()->get('lastCourseId');
+        // $lastModuledId = session()->get('lastModuledId');
+        // $lastLessonId = session()->get('lastLessonId');
 
         if(!$lastCourseId || !$lastModuledId || !$lastLessonId){
             return redirect('instructor/courses');

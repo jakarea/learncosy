@@ -52,14 +52,14 @@ Course Create - Step 2
                             <span class="invalid-feedback">@error('thumbnail'){{ $message }}
                                 @enderror</span> 
                             <label for="imageInput" id="upload-box">
-                                <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
+                                <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="" class="img-fluid"> Upload
                             </label>
                             <span>*.png, *.jpeg, *.webp file (max 5 mb)</span> 
 
                             <div class="mt-2">
                                 <img src="" alt="" class="img-fluid rounded"  id="preview"> 
                                 @if ($course->thumbnail)
-                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Bar" class="img-fluid rounded"> 
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="" class="img-fluid rounded"> 
                             @endif
                             </div> 
 

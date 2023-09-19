@@ -57,7 +57,14 @@ Course Create - Step 1
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+
+                
+
                 <div class="content-step-wrap">
+                    {{-- session message @S --}}
+                    @include('partials/session-message')
+                    {{-- session message @E --}}
+
                     @foreach ($modules as $module)
                     {{-- course with page --}}
                     <div class="course-with-page">
@@ -93,8 +100,8 @@ Course Create - Step 1
                                         <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar"
                                             class="img-fluid">
                                         <div class="media-body">
-                                            <h5>{{ $lesson->title}}</h5>
-                                            <p>Text</p>
+                                            <h5>{{ $lesson->title }}</h5>
+                                            <p>{{ $lesson->type }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,48 +110,70 @@ Course Create - Step 1
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
+                                        <li>
+                                            @if ($lesson->type == 'audio')
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->id) }}">Add Content</a>
+                                            @elseif($lesson->type == 'video')
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->id) }}">Add Content</a>
+                                            @elseif($lesson->type == 'text')
+                                            <a class="dropdown-item" href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->id) }}">Add Content</a>
+                                            @else 
+                                            <a class="dropdown-item" href="#">Invalid Type</a>
+                                            @endif
+                                           
+                                        </li>
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                data-bs-target="#lessonAddModal">Edit Lesson</a></li>
+                                                data-bs-target="#lessonAddModal_{{ $lesson->id }}">Edit Lesson</a></li>
+                                        <form action="{{ route('lesson.destroy', $lesson->slug) }}" method="post" class="d-inline">
+                                            @csrf 
+                                            @method('delete')
+                                            <li>
+                                                <button type="submit" class="btn dropdown-item">Remove Lesson</button>
+                                            </li>
+                                        </form>
                                     </ul>
 
                                     <div class="course-name-modal">
-                                        <div class="modal fade" id="lessonAddModal" tabindex="-1"
-                                            aria-labelledby="lessonAddModal" aria-hidden="true">
+                                        <div class="modal fade" id="lessonAddModal_{{ $lesson->id }}" tabindex="-1"
+                                            aria-labelledby="lessonAddModal_{{ $lesson->id }}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-body">
                                                         <div class="course-name-txt">
                                                             <h5>Lesson name</h5>
-                                                            <form action="" method="post">
+                                                            <form action="{{ route('course.lesson.step.update',$lesson->id) }}" method="post">
                                                                 @csrf
+                                                                <input type="hidden" name="module_id" value="{{$module->id}}">
+                                                                <input type="hidden" name="lesson_id" value="{{$lesson->id}}">
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Enter Lesson Name"
-                                                                        name="" class="form-control">
+                                                                    <input type="text" placeholder="Enter Lesson Name" name="lesson_name" value="{{ $lesson->title }}" class="form-control">
                                                                 </div>
                                                                 <div class="page-type mb-4">
                                                                     <h6>Type</h6>
 
-                                                                    <div class="d-flex">
-                                                                        <a href="#" class="active"><img
+                                                                    <input type="hidden" name="lesson_type" class="inputField2" value="{{ $lesson->type }}">
+
+                                                                    <div class="d-flex lesson-types2">
+                                                                        <a href="#" data-values="text" class="{{ $lesson->type == 'text' ? 'active' : '' }}"><img
                                                                                 src="{{asset('latest/assets/images/icons/file.svg')}}"
                                                                                 alt="a" class="img-fluid"> Text</a>
-                                                                        <a href="#"><img
+                                                                        <a href="#" data-values="audio" class="{{ $lesson->type == 'audio' ? 'active' : '' }}"><img
                                                                                 src="{{asset('latest/assets/images/icons/audio.svg')}}"
                                                                                 alt="a" class="img-fluid"> Audio</a>
-                                                                        <a href="#"><img
+                                                                        <a href="#" class="{{ $lesson->type == 'video' ? 'active' : '' }}" data-values="video"><img
                                                                                 src="{{asset('latest/assets/images/icons/video.svg')}}"
                                                                                 alt="a" class="img-fluid"> Video</a>
                                                                     </div>
+
                                                                 </div>
-                                                                <div class="form-check form-switch">
+                                                                {{-- <div class="form-check form-switch">
                                                                     <label class="form-check-label" for="is_module">Is a
                                                                         Modual</label>
                                                                     <input class="form-check-input" type="checkbox"
                                                                         name="is_module" value="1" role="switch"
                                                                         id="is_module" checked>
-                                                                </div>
-                                                                <p>Disable this if you want a separate content page.</p>
+                                                                </div> --}}
+                                                                <p>Select the Lesson type.</p>
                                                                 <div class="form-submit">
                                                                     <button type="button" class="btn btn-cancel"
                                                                         data-bs-dismiss="modal">Cancel</button>
@@ -163,14 +192,11 @@ Course Create - Step 1
                             </div>
                             {{-- course page box end --}}
                             @endforeach
-
-
+ 
                             {{-- course page add box start --}}
                             <div class="add-content-box mt-3">
                                 <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#lessonModal_{{$module->id}}"><i class="fas fa-plus"></i> Add Lesson
-                                    {{
-                                    $module->id}}</button>
+                                    data-bs-target="#lessonModal_{{$module->id}}"><i class="fas fa-plus"></i> Add Lesson </button>
                             </div>
                             {{-- course page add box end --}}
                         </div>
@@ -188,31 +214,35 @@ Course Create - Step 1
                                                     @csrf
                                                     <input type="hidden" name="module_id" value="{{$module->id}}">
                                                     <div class="form-group">
-                                                        <input type="text" placeholder="Enter Module Name"
-                                                            name="module_name" class="form-control">
+                                                        <input type="text" placeholder="Enter Lesson Name"
+                                                            name="lesson_name" class="form-control">
                                                     </div>
                                                     <div class="page-type mb-4">
                                                         <h6>Type</h6>
 
-                                                        <div class="d-flex">
-                                                            <a href="#" class="active"><img
+                                                        <input type="hidden" name="lesson_type" class="inputField">
+
+                                                        <div class="d-flex lesson-types"> 
+                                                            <a href="#" data-value="text"><img
                                                                     src="{{asset('latest/assets/images/icons/file.svg')}}"
                                                                     alt="a" class="img-fluid"> Text</a>
-                                                            <a href="#"><img
+                                                            <a href="#" data-value="audio"><img
                                                                     src="{{asset('latest/assets/images/icons/audio.svg')}}"
                                                                     alt="a" class="img-fluid"> Audio</a>
-                                                            <a href="#"><img
+                                                            <a href="#" class="active" data-value="video"><img
                                                                     src="{{asset('latest/assets/images/icons/video.svg')}}"
                                                                     alt="a" class="img-fluid"> Video</a>
                                                         </div>
                                                     </div>
-                                                    <div class="form-check form-switch">
+
+                                                    {{-- <div class="form-check form-switch">
                                                         <label class="form-check-label" for="is_module">Is a
                                                             Modual</label>
                                                         <input class="form-check-input" type="checkbox" name="is_module"
                                                             value="1" role="switch" id="is_module" checked>
-                                                    </div>
-                                                    <p>Disable this if you want a separate content page.</p>
+                                                    </div> --}}
+
+                                                    <p>Select The Lesson type.</p>
                                                     <div class="form-submit">
                                                         <button type="button" class="btn btn-cancel"
                                                             data-bs-dismiss="modal">Cancel</button>
@@ -309,6 +339,40 @@ Course Create - Step 1
         });
     });
 });
-
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const typeBttns = document.querySelectorAll(".lesson-types a"); 
+    let inputF = document.querySelector(".inputField"); 
+
+    typeBttns.forEach(function(bttn) {
+        bttn.addEventListener("click", function(e) {
+            e.preventDefault();
+            typeBttns.forEach(c => c.classList.remove("active"));
+            this.classList.add("active");   
+            inputF.value = this.getAttribute("data-value"); 
+        });
+    });
+
+});
+
+</script> 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const typeBttns2 = document.querySelectorAll(".lesson-types2 a"); 
+    let inputF2 = document.querySelector(".inputField2"); 
+
+    typeBttns2.forEach(function(bttn2) {
+        bttn2.addEventListener("click", function(e) {
+            e.preventDefault();
+            typeBttns2.forEach(c2 => c2.classList.remove("active"));
+            this.classList.add("active");   
+            inputF2.value = this.getAttribute("data-values"); 
+        });
+    });
+});
+
+</script> 
 @endsection
