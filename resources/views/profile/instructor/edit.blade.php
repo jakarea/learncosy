@@ -385,7 +385,7 @@
                                                                                     <a href="#" class="close-bttn">
                                                                                         <i class="fas fa-close"></i>
                                                                                     </a>
-                                                                                    <img src="{{asset('latest/assets/images/big-cert.png')}}"
+                                                                                    <img src="{{asset('latest/assets/images/big-c-01.svg')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </div>
                                                                                 {{-- full page preview --}}
@@ -412,7 +412,7 @@
                                                                                 <a href="#" class="close-bttn">
                                                                                     <i class="fas fa-close"></i>
                                                                                 </a>
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </div>
                                                                             {{-- full page preview --}}
@@ -438,7 +438,7 @@
                                                                                     <a href="#" class="close-bttn">
                                                                                         <i class="fas fa-close"></i>
                                                                                     </a>
-                                                                                    <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                    <img src="{{asset('latest/assets/images/big-c-03.svg')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </div>
                                                                                 {{-- full page preview --}}
@@ -687,7 +687,7 @@
                                                                                 <a href="#" class="close-bttn">
                                                                                     <i class="fas fa-close"></i>
                                                                                 </a>
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                <img src="{{asset('latest/assets/images/big-c-01.svg')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </div>
                                                                             {{-- full page preview --}}
@@ -714,7 +714,7 @@
                                                                                 <a href="#" class="close-bttn">
                                                                                     <i class="fas fa-close"></i>
                                                                                 </a>
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </div>
                                                                             {{-- full page preview --}}
@@ -740,7 +740,7 @@
                                                                                 <a href="#" class="close-bttn">
                                                                                     <i class="fas fa-close"></i>
                                                                                 </a>
-                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                <img src="{{asset('latest/assets/images/big-c-03.svg')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </div>
                                                                             {{-- full page preview --}}
