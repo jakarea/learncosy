@@ -1817,7 +1817,7 @@ span.finsihLesson {
         }
     }
 }
- 
+
 .module-header {
     grid-template-columns: 9% 60% 13% 10%;
 }
@@ -2046,25 +2046,39 @@ span.finsihLesson {
         justify-content: center;
         transition: ease-in .3s;
 
-        i{
+        i {
             color: #A6B1C4;
             font-size: 1.2rem;
             transition: ease-in .3s;
         }
 
-        &:hover{
+        &:hover {
             background-color: #FFE5D8;
-            i{
+
+            i {
                 color: #fe251b;
             }
         }
     }
 
-    .like-btn.active{
+    .like-btn.active {
         background-color: #FFE5D8;
-            i{
-                color: #fe251b;
-            }
+
+        i {
+            color: #fe251b;
+        }
+    }
+}
+
+.filter-sort-box {
+    .filterItem {
+        overflow: hidden;
+        color: var(--neutral-color-neutral-70, #2F3A4C);
+        text-overflow: ellipsis;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.375rem;
     }
 }
 
