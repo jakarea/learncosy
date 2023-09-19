@@ -49,18 +49,18 @@
                     </div>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane active-bg fade show active" id="pills-home" role="tabpanel"
-                            aria-labelledby="pills-home-tab" tabindex="0"> 
+                            aria-labelledby="pills-home-tab" tabindex="0">
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
                                 class="profile-form create-form-box" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box"> 
+                                        <div class="profile-picture-box">
 
-                                            <input type="file" name="avatar" id="imageInput"
-                                                                accept="image/*" onchange="previewImage()"
-                                                                class="form-control d-none  @error('avatar') is-invalid @enderror">
-                                                                 
+                                            <input type="file" name="avatar" id="imageInput" accept="image/*"
+                                                onchange="previewImage()"
+                                                class="form-control d-none  @error('avatar') is-invalid @enderror">
+
                                             <label for="imageInput" class="img-upload">
                                                 <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
                                                     alt="a" class="img-fluid">
@@ -81,9 +81,11 @@
 
                                             <div class="form-check form-switch ps-0">
                                                 <label class="form-check-label" for="recivingMessage">Receiving
-                                                    Messages</label> 
+                                                    Messages</label>
 
-                                                <input class="form-check-input" type="checkbox" name="recivingMessage" value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
+                                                    value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ?
+                                                'checked' : '' }}>
 
                                             </div>
                                         </div>
@@ -165,17 +167,20 @@
                         <div class="tab-pane fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="row">
-                            
+
                                 <div class="col-12">
                                     <div class="add-experience-form" id="experience-form">
-                                        <form action="{{ route('instructor.profile.experience',$user->id) }}" method="POST">
+                                        <form action="{{ route('instructor.profile.experience',$user->id) }}"
+                                            method="POST">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $editExp ? $editExp->id:''}}"/>
+                                            <input type="hidden" name="id" value="{{ $editExp ? $editExp->id:''}}" />
                                             <div class="content-settings-form-wrap profile-text-box-2">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="profession" value="{{ $editExp ? $editExp->profession: old('profession') }}" placeholder="Add skill (e.g ui/ux design)"
+                                                            <input type="text" class="form-control" id="profession"
+                                                                value="{{ $editExp ? $editExp->profession: old('profession') }}"
+                                                                placeholder="Add skill (e.g ui/ux design)"
                                                                 name="profession">
                                                             <label for="profession">Profession</label>
                                                             <span class="invalid-feedback">@error('profession'){{
@@ -186,7 +191,9 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="company_name"
-                                                                name="company_name" value="{{ $editExp ? $editExp->company_name: old('company_name') }}" placeholder="Add company (e.g learn cosy)">
+                                                                name="company_name"
+                                                                value="{{ $editExp ? $editExp->company_name: old('company_name') }}"
+                                                                placeholder="Add company (e.g learn cosy)">
                                                             <label for="company_name">Company Name</label>
                                                             <span class="invalid-feedback">@error('company_name'){{
                                                                 $message }}
@@ -197,7 +204,8 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="job_type"
                                                                 value="{{ $editExp ? $editExp->job_type: old('job_type') }}"
-                                                                name="job_type" placeholder="Add job type (e.g full time/ part time)">
+                                                                name="job_type"
+                                                                placeholder="Add job type (e.g full time/ part time)">
                                                             <label for="job_type">Job Type</label>
                                                             <span class="invalid-feedback">@error('job_type'){{ $message
                                                                 }}
@@ -207,8 +215,9 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="experience"
-                                                            value="{{ $editExp ? $editExp->experience: old('experience') }}"
-                                                                name="experience" placeholder="Add service time (e.g 5 years)">
+                                                                value="{{ $editExp ? $editExp->experience: old('experience') }}"
+                                                                name="experience"
+                                                                placeholder="Add service time (e.g 5 years)">
                                                             <label for="experience">Experience Time </label>
                                                             <span class="invalid-feedback">@error('experience'){{
                                                                 $message }}
@@ -219,7 +228,8 @@
                                                         <div class="form-group">
                                                             <input type="date" class="form-control" id="join_date"
                                                                 value="{{ $editExp ? $editExp->join_date: old('join_date') }}"
-                                                                name="join_date" placeholder="Add join date (e.g 02 jan 2020)">
+                                                                name="join_date"
+                                                                placeholder="Add join date (e.g 02 jan 2020)">
                                                             <label for="join_date">Join Date</label>
                                                             <span class="invalid-feedback">@error('join_date'){{
                                                                 $message }}
@@ -230,18 +240,20 @@
                                                         <div class="form-group">
                                                             <input type="date" class="form-control" id="retire_date"
                                                                 value="{{ $editExp ? $editExp->retire_date: old('retire_date') }}"
-                                                                name="retire_date" placeholder="Add Retired date (e.g 02 jan 2022/ Present)">
+                                                                name="retire_date"
+                                                                placeholder="Add Retired date (e.g 02 jan 2022/ Present)">
                                                             <label for="retire_date">Retired Date</label>
-                                                            <span class="invalid-feedback" id="invalid_retire_date">@error('retire_date'){{
+                                                            <span class="invalid-feedback"
+                                                                id="invalid_retire_date">@error('retire_date'){{
                                                                 $message }}
                                                                 @enderror</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
-                                                            <textarea name="short_description" id="short_description" placeholder="Add short description about this job..."
-                                                                class="form-control @error('short_description') is-invalid @enderror"
-                                                            >{{ $editExp ? $editExp->short_description: old('short_description') }}</textarea>
+                                                            <textarea name="short_description" id="short_description"
+                                                                placeholder="Add short description about this job..."
+                                                                class="form-control @error('short_description') is-invalid @enderror">{{ $editExp ? $editExp->short_description: old('short_description') }}</textarea>
                                                             <label for="short_description">Short Description</label>
                                                             <span class="invalid-feedback">@error('description'){{
                                                                 $message
@@ -266,23 +278,29 @@
                                 <div class="col-12">
                                     <div class="user-expperience-box user-expperience-box-2">
                                         @foreach ($experiences as $experience)
-                                            <div class="media brdr-bttm">
-                                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                    alt="experience-img" class="img-fluid">
-                                                <div class="media-body">
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h5>{{ $experience->profession }}</h5>
-                                                        <div>
-                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                            <a href="{{ url('instructor/profile/edit?id='.$experience->id )}}" ><img src=" {{ asset('latest/assets/images/icons/pen.svg')   }}" alt="img" class="img-fluid"></a>
-                                                        </div>
+                                        <div class="media brdr-bttm">
+                                            <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
+                                                alt="experience-img" class="img-fluid">
+                                            <div class="media-body">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <h5>{{ $experience->profession }}</h5>
+                                                    <div>
+                                                        <a href="#"><img
+                                                                src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                alt="img" class="img-fluid"></a>
+                                                        <a
+                                                            href="{{ url('instructor/profile/edit?id='.$experience->id )}}"><img
+                                                                src=" {{ asset('latest/assets/images/icons/pen.svg')   }}"
+                                                                alt="img" class="img-fluid"></a>
                                                     </div>
-
-                                                    <h6>{{ $experience->company_name }} <i class="fas fa-circle"></i> {{ $experience->job_type }} <i
-                                                            class="fas fa-circle"></i> {{ $experience->experience }}</h6>
-                                                    <p>{{ $experience->short_description }}</p>
                                                 </div>
+
+                                                <h6>{{ $experience->company_name }} <i class="fas fa-circle"></i> {{
+                                                    $experience->job_type }} <i class="fas fa-circle"></i> {{
+                                                    $experience->experience }}</h6>
+                                                <p>{{ $experience->short_description }}</p>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -301,16 +319,24 @@
                                     <div class="certificate-header-tab">
                                         <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                              <button class="nav-link active" id="pills-add_cert-tab" data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button" role="tab" aria-controls="pills-add_cert" aria-selected="true"><i class="fas fa-plus"></i> Add Certificate</button>
+                                                <button class="nav-link active" id="pills-add_cert-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
+                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true"><i
+                                                        class="fas fa-plus"></i> Add Certificate</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                              <button class="nav-link" id="pills-custom_cert-tab" data-bs-toggle="pill" data-bs-target="#pills-custom_cert" type="button" role="tab" aria-controls="pills-custom_cert" aria-selected="false"><i class="fas fa-plus"></i>  Custom Certificate</button>
-                                            </li> 
-                                          </ul>
+                                                <button class="nav-link" id="pills-custom_cert-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-custom_cert"
+                                                    type="button" role="tab" aria-controls="pills-custom_cert"
+                                                    aria-selected="false"><i class="fas fa-plus"></i> Custom
+                                                    Certificate</button>
+                                            </li>
+                                        </ul>
                                     </div>
                                     <div class="cert-body-tab">
                                         <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-add_cert" role="tabpanel" aria-labelledby="pills-add_cert-tab" tabindex="0">
+                                            <div class="tab-pane fade show active" id="pills-add_cert" role="tabpanel"
+                                                aria-labelledby="pills-add_cert-tab" tabindex="0">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form">
@@ -319,52 +345,117 @@
                                                                     <div class="col-lg-9">
                                                                         <div class="certificate-name">
                                                                             <h6>Course/ Certificate Name </h6>
-                                                                            <input type="text" placeholder="Professional UI/UX Design Course" class="form-control">
+                                                                            <input type="text"
+                                                                                placeholder="Professional UI/UX Design Course"
+                                                                                class="form-control">
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/icons/color.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/color.svg')}}"
+                                                                                    alt="Color" class="img-fluid">
                                                                                 <div class="media-body">
                                                                                     <h5>Certificate Color</h5>
-                                                                                    <p>This is the color of your menu bar. Your logo should look good on this.</p>
+                                                                                    <p>This is the color of your menu
+                                                                                        bar. Your logo should look good
+                                                                                        on this.</p>
                                                                                 </div>
-                                                                                <a href="#"><img src="{{asset('latest/assets/images/icons/pen-3.svg')}}" alt="Color" class="img-fluid"></a>
+                                                                                <a href="#"><img
+                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
+                                                                                        alt="Color"
+                                                                                        class="img-fluid"></a>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/icons/color-2.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
+                                                                                    alt="Color" class="img-fluid">
                                                                                 <div class="media-body">
                                                                                     <h5>Accent Color</h5>
-                                                                                    <p>The accent color is used to accentuate visual elements.</p>
+                                                                                    <p>The accent color is used to
+                                                                                        accentuate visual elements.</p>
                                                                                 </div>
-                                                                                <a href="#"><img src="{{asset('latest/assets/images/icons/pen-3.svg')}}" alt="Color" class="img-fluid"></a>
+                                                                                <a href="#"><img
+                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
+                                                                                        alt="Color"
+                                                                                        class="img-fluid"></a>
                                                                             </div>
-                                                                        </div> 
+                                                                        </div>
                                                                         <div class="certificate-style-box">
                                                                             <h6>Select Certificate Style</h6>
+
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-01.png')}}" alt="Color" class="img-fluid">
+                                                                                {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/big-cert.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
+
+                                                                                <a href="#" class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-01.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1</h6>
                                                                                         <span>Active Certificate</span>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}" alt="Color" class="img-fluid">
+                                                                               {{-- full page preview --}}
+                                                                               <div class="full-page-preview">
+                                                                                <a href="#" class="close-bttn">
+                                                                                    <i class="fas fa-close"></i>
+                                                                                </a>
+                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </div>
+                                                                            {{-- full page preview --}}
+
+                                                                            <a href="#" class="cert-bttn">
+                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 2</h6> 
+                                                                                        <h6>Certificate Style 2</h6>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}" alt="Color" class="img-fluid">
+                                                                                {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
+
+                                                                                <a href="#" class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 3</h6> 
+                                                                                        <h6>Certificate Style 3</h6>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -372,24 +463,40 @@
                                                                     <div class="col-lg-3">
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                            <input type="file" name="favicon" id="favicon1" class="form-control d-none @error('favicon') is-invalid @enderror" onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
-                                                     
-                                                                            <label for="favicon1" class="upload-media-box" id="file-upload-area1">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
+                                                                            <input type="file" name="favicon"
+                                                                                id="favicon1"
+                                                                                class="form-control d-none @error('favicon') is-invalid @enderror"
+                                                                                onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')">
+
+                                                                            <label for="favicon1"
+                                                                                class="upload-media-box"
+                                                                                id="file-upload-area1">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
- 
-                                                                            <div id="uploadedFileContainer1" class="uploaded-file-container"></div>
+
+                                                                            <div id="uploadedFileContainer1"
+                                                                                class="uploaded-file-container"></div>
 
                                                                         </div>
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -409,19 +516,26 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                    
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
                                                             </div>
@@ -429,18 +543,25 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
                                                             </div>
@@ -448,27 +569,35 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="pills-custom_cert" role="tabpanel" aria-labelledby="pills-custom_cert-tab" tabindex="0">
+                                            <div class="tab-pane fade" id="pills-custom_cert" role="tabpanel"
+                                                aria-labelledby="pills-custom_cert-tab" tabindex="0">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form create-certificate-form-2">
@@ -480,25 +609,26 @@
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control">
                                                                                 <label for="">First Name</label>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
-                                                                        <div class="certificate-name border-0 pe-0"> 
+                                                                        <div class="certificate-name border-0 pe-0">
                                                                             <h6>&nbsp;</h6>
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control">
                                                                                 <label for="">Last Name</label>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-12 my-3">
-                                                                        <div class="certificate-name border-0 pe-0"> 
+                                                                        <div class="certificate-name border-0 pe-0">
                                                                             <h6>Certificate/ Course Name</h6>
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control">
-                                                                                <label for="">Professional UI/UX Design Course</label>
-                                                                            </div> 
+                                                                                <label for="">Professional UI/UX Design
+                                                                                    Course</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
@@ -507,65 +637,127 @@
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control">
                                                                                 <label for="">01/08/2023</label>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
-                                                                        <div class="certificate-name border-0 pe-0"> 
+                                                                        <div class="certificate-name border-0 pe-0">
                                                                             <h6>Certificate Issue Date *</h6>
                                                                             <div class="form-group">
                                                                                 <input type="text" class="form-control">
                                                                                 <label for="">01/08/2023</label>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-9 mt-3">
-                                                                        <div class="certificate-name"> 
+                                                                        <div class="certificate-name">
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/icons/color.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/color.svg')}}"
+                                                                                    alt="Color" class="img-fluid">
                                                                                 <div class="media-body">
                                                                                     <h5>Certificate Color</h5>
-                                                                                    <p>This is the color of your menu bar. Your logo should look good on this.</p>
+                                                                                    <p>This is the color of your menu
+                                                                                        bar. Your logo should look good
+                                                                                        on this.</p>
                                                                                 </div>
-                                                                                <a href="#"><img src="{{asset('latest/assets/images/icons/pen-3.svg')}}" alt="Color" class="img-fluid"></a>
+                                                                                <a href="#"><img
+                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
+                                                                                        alt="Color"
+                                                                                        class="img-fluid"></a>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/icons/color-2.svg')}}" alt="Color" class="img-fluid">
+                                                                                <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
+                                                                                    alt="Color" class="img-fluid">
                                                                                 <div class="media-body">
                                                                                     <h5>Accent Color</h5>
-                                                                                    <p>The accent color is used to accentuate visual elements.</p>
+                                                                                    <p>The accent color is used to
+                                                                                        accentuate visual elements.</p>
                                                                                 </div>
-                                                                                <a href="#"><img src="{{asset('latest/assets/images/icons/pen-3.svg')}}" alt="Color" class="img-fluid"></a>
+                                                                                <a href="#"><img
+                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
+                                                                                        alt="Color"
+                                                                                        class="img-fluid"></a>
                                                                             </div>
-                                                                        </div> 
+                                                                        </div>
                                                                         <div class="certificate-style-box">
                                                                             <h6>Select Certificate Style</h6>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-01.png')}}" alt="Color" class="img-fluid">
+                                                                                {{-- full page preview --}}
+                                                                               <div class="full-page-preview">
+                                                                                <a href="#" class="close-bttn">
+                                                                                    <i class="fas fa-close"></i>
+                                                                                </a>
+                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </div>
+                                                                            {{-- full page preview --}}
+
+                                                                            <a href="#" class="cert-bttn">
+                                                                                <img src="{{asset('latest/assets/images/certificate-01.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1</h6>
                                                                                         <span>Active Certificate</span>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}" alt="Color" class="img-fluid">
+                                                                                {{-- full page preview --}}
+                                                                               <div class="full-page-preview">
+                                                                                <a href="#" class="close-bttn">
+                                                                                    <i class="fas fa-close"></i>
+                                                                                </a>
+                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </div>
+                                                                            {{-- full page preview --}}
+
+                                                                            <a href="#" class="cert-bttn">
+                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 2</h6> 
+                                                                                        <h6>Certificate Style 2</h6>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="media">
-                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}" alt="Color" class="img-fluid">
+                                                                                {{-- full page preview --}}
+                                                                               <div class="full-page-preview">
+                                                                                <a href="#" class="close-bttn">
+                                                                                    <i class="fas fa-close"></i>
+                                                                                </a>
+                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </div>
+                                                                            {{-- full page preview --}}
+
+                                                                            <a href="#" class="cert-bttn">
+                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                    alt="Cert" class="img-fluid">
+                                                                            </a>
                                                                                 <div class="media-body">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 3</h6> 
+                                                                                        <h6>Certificate Style 3</h6>
                                                                                     </div>
-                                                                                    <p>Raouls Choice is een simple en elegant thema zonder extra opties, mokkeljk te gebruken en geoptimaliseerd voor conversie.</p>
+                                                                                    <p>Raouls Choice is een simple en
+                                                                                        elegant thema zonder extra
+                                                                                        opties, mokkeljk te gebruken en
+                                                                                        geoptimaliseerd voor conversie.
+                                                                                    </p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -575,24 +767,37 @@
                                                                             <h5>Logo</h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
                                                                             <input type="file" class="d-none" id="logo">
                                                                             <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="Color" class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="Color" class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele">
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
-                                                                            <a href="#" class="common-bttn"><img src="{{asset('latest/assets/images/icons/download4.svg')}}" alt="Color" class="img-fluid me-2"> Download</a>
+                                                                            <a href="#" class="common-bttn"><img
+                                                                                    src="{{asset('latest/assets/images/icons/download4.svg')}}"
+                                                                                    alt="Color" class="img-fluid me-2">
+                                                                                Download</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -606,19 +811,26 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                    
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
                                                             </div>
@@ -626,18 +838,25 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
                                                             </div>
@@ -645,21 +864,28 @@
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
                                                                 <div class="media-body">
-                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-between">
                                                                         <h5>UI/UX Design</h5>
                                                                         <div>
-                                                                            <a href="#"><img src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img" class="img-fluid"></a>
-                                                                            <a href="#" ><img src="{{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></a>
+                                                                            <a href="#"><img
+                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
                                                                         </div>
                                                                     </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i
-                                                                            class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands utilizing multiple
-                                                                        features and content types to increase brand outreach, engagement,
+                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
+                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
+                                                                        - Present (5y 3m)</h6>
+                                                                    <p>Created and executed website for 10 brands
+                                                                        utilizing multiple
+                                                                        features and content types to increase brand
+                                                                        outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -735,7 +961,7 @@
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script') 
+@section('script')
 
 <script>
     function previewImage() {
@@ -758,7 +984,6 @@
 
 
 <script>
-    
     document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('experience-form');
 
@@ -772,6 +997,38 @@
             }
         });
     });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".cert-bttn");
+    const closeButtons = document.querySelectorAll(".close-bttn");
+    const mainBody = document.querySelector(".full-page-preview"); 
+    
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            const certBox = this.parentElement.querySelector(".full-page-preview"); 
+
+            if (certBox) { 
+                certBox.classList.toggle('show');
+            }
+        });
+    });
+
+    closeButtons.forEach(function(bttn) {
+        bttn.addEventListener("click", function(e) {
+            e.preventDefault();
+            const certBox = this.parentElement; 
+
+            if (certBox) { 
+                certBox.classList.remove('show');
+            }
+        });
+    });
+     
+});
+
 </script>
 
 @endsection
