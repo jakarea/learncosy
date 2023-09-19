@@ -71,29 +71,21 @@ Course Create - Step 11
                     <h6>As a post</h6>
 
                     <div class="d-flex">
-                        <a href="#">
-                           
-                        </a>
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}" target="_blank">
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
                         </a>
                         <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/ins.svg')}}" alt="FB" class="img-fluid">
-                            <span>Instagram</span>
+                            <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
+                            <span>Telegram</span>
                         </a>
-                        <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/tkt.svg')}}" alt="FB" class="img-fluid">
-                            <span>Tiktok</span>
+                        <a href="https://www.linkedin.com/shareArticle?url=http://example.com" target="_blank">
+                            <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB" class="img-fluid">
+                            <span>LinkedIn</span> 
                         </a>
                         <a href="https://twitter.com/intent/tweet?url={{ url('courses',$course->slug)}}&text={{ $course->title }}" target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB" class="img-fluid">
                             <span>Twitter</span>
                         </a>
-                        <a href="https://www.linkedin.com/shareArticle?url=http://example.com" target="_blank">
-                            <img src="{{asset('latest/assets/images/icons/linkedin.svg')}}" alt="FB" class="img-fluid">
-                            <span>LinkedIn</span></a>
-
-
                     </div>
 
                     <h6>As a message</h6>
@@ -112,10 +104,10 @@ Course Create - Step 11
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
-                        <a href="#">
+                        {{-- <a href="#">
                             <img src="{{asset('latest/assets/images/icons/twec.svg')}}" alt="FB" class="img-fluid">
                             <span>Wechat</span>
-                        </a>
+                        </a> --}}
                     </div>
 
                     <h6>Or copy link</h6>

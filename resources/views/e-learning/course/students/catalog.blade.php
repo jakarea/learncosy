@@ -141,10 +141,9 @@
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
                         </form>  
                         @else 
-                        <a href="{{url('students/courses/overview/'.$course->slug )}}">Go to Course</a>
+                        <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}">Go to Course</a>
                         @endif 
                     </div>
-
                 </div>
             </div>
             {{-- course single box end --}}
