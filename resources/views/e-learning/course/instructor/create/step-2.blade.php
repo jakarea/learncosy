@@ -45,13 +45,24 @@ Course Create - Step 2
                             <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group form-upload">
-                            <label for="file" class="txt">Course Thumbail</label>
-                            <input type="file" id="file" class="d-none" name="thumbnail">
-                            <label for="file" id="upload-box">
+                            <label for="thumbnail" class="txt">Course Thumbail</label>
+                            <input type="file" name="thumbnail" id="imageInput"
+                                accept="image/*" onchange="previewImage()"
+                                class="form-control d-none  @error('thumbnail') is-invalid @enderror">
+                            <span class="invalid-feedback">@error('thumbnail'){{ $message }}
+                                @enderror</span> 
+                            <label for="imageInput" id="upload-box">
                                 <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
                             </label>
-                            <span>*.png, *.jpeg, *.webp file (max 5 mb)</span>
-                            <span class="invalid-feedback">@error('thumbnail'){{ $message }} @enderror</span>
+                            <span>*.png, *.jpeg, *.webp file (max 5 mb)</span> 
+
+                            <div class="mt-2">
+                                <img src="" alt="" class="img-fluid rounded"  id="preview"> 
+                                @if ($course->thumbnail)
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Bar" class="img-fluid rounded"> 
+                            @endif
+                            </div> 
+
                         </div>
                     {{-- course page file box start --}}
                     <!-- <div class="course-content-box course-page-edit-box">
@@ -142,4 +153,23 @@ Course Create - Step 2
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js" type="text/javascript"></script>
 <script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
+
+<script>
+    function previewImage() {
+        var preview = document.getElementById('preview');
+        var fileInput = document.getElementById('imageInput');
+        var file = fileInput.files[0];
+        
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+</script>
 @endsection

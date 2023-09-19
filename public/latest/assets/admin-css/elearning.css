@@ -1827,6 +1827,21 @@ span.finsihLesson {
   line-height: 1.375rem;
 }
 
+.toggle-box-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.toggle-box-wrap.active {
+  max-height: none;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: all linear 0.4s;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
