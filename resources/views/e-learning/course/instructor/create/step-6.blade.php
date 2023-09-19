@@ -76,101 +76,104 @@ Course Create - Step 1
                             <div class="actions">
                                 <button type="button" class="btn" data-bs-toggle="modal"
                                     data-bs-target="#lessonModal"><i class="fa-solid fa-ellipsis"></i></button>
-                                <a href="#"><i class="fas fa-angle-down"></i></a>
+
+                                <a href="#" class="accrodin-bttn"><i class="fas fa-angle-down"></i></a>
                             </div>
                         </div>
                         {{-- course content box end --}}
 
-                        @foreach ($module->lessons as $lesson)
-                        {{-- course page box start --}}
-                        <div class="course-content-box course-page-box">
-                            <div class="title">
-                                <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
-                                    class="img-fluid me-4">
-                                <div class="media">
-                                    <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar"
-                                        class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>{{ $lesson->title}}</h5>
-                                        <p>Text</p>
+                        <div class="toggle-box-wrap">
+                            @foreach ($module->lessons as $lesson)
+                            {{-- course page box start --}}
+                            <div class="course-content-box course-page-box">
+                                <div class="title">
+                                    <img src="{{asset('latest/assets/images/icons/bars-2.svg')}}" alt="Bar"
+                                        class="img-fluid me-4">
+                                    <div class="media">
+                                        <img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="Bar"
+                                            class="img-fluid">
+                                        <div class="media-body">
+                                            <h5>{{ $lesson->title}}</h5>
+                                            <p>Text</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#lessonAddModal">Edit Lesson</a></li>
-                                </ul>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Remove Lesson</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#lessonAddModal">Edit Lesson</a></li>
+                                    </ul>
 
-                                {{-- lesson add modal --}}
-                                <div class="course-name-modal">
-                                    <div class="modal fade" id="lessonAddModal" tabindex="-1"
-                                        aria-labelledby="lessonAddModal" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="course-name-txt">
-                                                        <h5>Lesson name</h5>
-                                                        <form action="" method="post">
-                                                            @csrf
-                                                            <div class="form-group">
-                                                                <input type="text" placeholder="Enter Lesson Name"
-                                                                    name="" class="form-control">
-                                                            </div>
-                                                            <div class="page-type mb-4">
-                                                                <h6>Type</h6>
-
-                                                                <div class="d-flex">
-                                                                    <a href="#" class="active"><img
-                                                                            src="{{asset('latest/assets/images/icons/file.svg')}}"
-                                                                            alt="a" class="img-fluid"> Text</a>
-                                                                    <a href="#"><img
-                                                                            src="{{asset('latest/assets/images/icons/audio.svg')}}"
-                                                                            alt="a" class="img-fluid"> Audio</a>
-                                                                    <a href="#"><img
-                                                                            src="{{asset('latest/assets/images/icons/video.svg')}}"
-                                                                            alt="a" class="img-fluid"> Video</a>
+                                    <div class="course-name-modal">
+                                        <div class="modal fade" id="lessonAddModal" tabindex="-1"
+                                            aria-labelledby="lessonAddModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="course-name-txt">
+                                                            <h5>Lesson name</h5>
+                                                            <form action="" method="post">
+                                                                @csrf
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="Enter Lesson Name"
+                                                                        name="" class="form-control">
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-check form-switch">
-                                                                <label class="form-check-label" for="is_module">Is a
-                                                                    Modual</label>
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    name="is_module" value="1" role="switch"
-                                                                    id="is_module" checked>
-                                                            </div>
-                                                            <p>Disable this if you want a separate content page.</p>
-                                                            <div class="form-submit">
-                                                                <button type="button" class="btn btn-cancel"
-                                                                    data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-submit">Next</button>
-                                                            </div>
-                                                        </form>
+                                                                <div class="page-type mb-4">
+                                                                    <h6>Type</h6>
+
+                                                                    <div class="d-flex">
+                                                                        <a href="#" class="active"><img
+                                                                                src="{{asset('latest/assets/images/icons/file.svg')}}"
+                                                                                alt="a" class="img-fluid"> Text</a>
+                                                                        <a href="#"><img
+                                                                                src="{{asset('latest/assets/images/icons/audio.svg')}}"
+                                                                                alt="a" class="img-fluid"> Audio</a>
+                                                                        <a href="#"><img
+                                                                                src="{{asset('latest/assets/images/icons/video.svg')}}"
+                                                                                alt="a" class="img-fluid"> Video</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-check form-switch">
+                                                                    <label class="form-check-label" for="is_module">Is a
+                                                                        Modual</label>
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        name="is_module" value="1" role="switch"
+                                                                        id="is_module" checked>
+                                                                </div>
+                                                                <p>Disable this if you want a separate content page.</p>
+                                                                <div class="form-submit">
+                                                                    <button type="button" class="btn btn-cancel"
+                                                                        data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-submit">Next</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
-                                {{-- Lesson add modal --}}
-
                             </div>
-                        </div>
-                        {{-- course page box end --}}
-                        @endforeach
+                            {{-- course page box end --}}
+                            @endforeach
 
 
-                        {{-- course page add box start --}}
-                        <div class="add-content-box mt-3">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#lessonModal_{{$module->id}}"><i class="fas fa-plus"></i> Add Lesson {{
-                                $module->id}}</button>
+                            {{-- course page add box start --}}
+                            <div class="add-content-box mt-3">
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#lessonModal_{{$module->id}}"><i class="fas fa-plus"></i> Add Lesson
+                                    {{
+                                    $module->id}}</button>
+                            </div>
+                            {{-- course page add box end --}}
                         </div>
-                        {{-- course page add box end --}}
 
                         {{-- lesson modal --}}
                         <div class="course-name-modal">
@@ -284,4 +287,28 @@ Course Create - Step 1
 {{-- page content @E --}}
 
 @section('script')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".accrodin-bttn");
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            const toggleBoxWrap = this.parentElement.parentElement.parentElement.querySelector(".toggle-box-wrap"); 
+
+            if (toggleBoxWrap) {
+
+                this.querySelector(".fa-angle-down").classList.toggle("rotate");
+
+                if (toggleBoxWrap.style.maxHeight) {
+                    toggleBoxWrap.style.maxHeight = null;
+                } else {
+                    toggleBoxWrap.style.maxHeight = toggleBoxWrap.scrollHeight + "px";
+                }
+            }
+        });
+    });
+});
+
+</script>
 @endsection

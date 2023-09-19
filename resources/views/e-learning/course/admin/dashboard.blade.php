@@ -136,8 +136,7 @@ Home Page
                     </div>
                     <table>
                         <tr>
-                            <th>Course Name</th>
-                            <th>Category</th>
+                            <th>Course Name</th> 
                             <th>Price</th>
                             <th>Rating</th>
                             <th>Earning</th>
@@ -158,10 +157,7 @@ Home Page
                                             <p>{{ $course->categories }}</p>
                                         </div>
                                     </div>
-                                </td>
-                                <td>
-                                    <p>Design</p>
-                                </td>
+                                </td> 
                                 <td>
                                     <p>€ {{ $course->offer_price ? $course->offer_price :$course->price }}</p>
                                 </td>

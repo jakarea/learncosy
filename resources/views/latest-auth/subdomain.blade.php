@@ -58,7 +58,8 @@ Verify Email
                     </a>
                     <h1>Choose Subdomain</h1>
                     <p>Choose your subdomain.</p>
-                    <form action="{{ route('instructor.username.update', Auth::user()->id) }}" method="POST" class="profile-form create-form-box ms-0 username-form"enctype="multipart/form-data">
+                    <form action="{{ route('instructor.username.update', Auth::user()->id) }}" method="POST"
+                        class="profile-form create-form-box ms-0 username-form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="subdomain">Subdomain URL</label>
@@ -66,21 +67,19 @@ Verify Email
                         <div class="input-group">
                             @if (Auth::user()->username)
                             <input type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
-                                placeholder="write your subdomain" id="subdomain" name="username" aria-describedby="subdomain"
-                                value="{{ old('username') ?? Auth::user()->username }}"
-                                autocomplete="subdomain"
-                                readonly
-                                autofocus>
+                                placeholder="write your subdomain" id="subdomain" name="username"
+                                aria-describedby="subdomain" value="{{ old('username') ?? Auth::user()->username }}"
+                                autocomplete="subdomain" readonly autofocus>
                             @else
                             <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
-                                placeholder="write your subdomain" id="subdomain" name="username" aria-describedby="subdomain"
-                                value="{{ old('username') }}"
-                                autocomplete="subdomain"
+                                placeholder="write your subdomain" id="subdomain" name="username"
+                                aria-describedby="subdomain" value="{{ old('username') }}" autocomplete="subdomain"
                                 autofocus>
-                                @error('username') <span class="invalid-feedback" role="alert"> <strong>{{ $message }}</strong> </span> @enderror
+                            @error('username') <span class="invalid-feedback" role="alert"> <strong>{{ $message
+                                    }}</strong> </span> @enderror
                             @endif
                             <span class="input-group-text bg-white" id="subdomain">.learncosy.com</span>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <span>Letter &amp; number only</span>
                         </div>
@@ -91,11 +90,30 @@ Verify Email
                             </span>
                             @enderror
                         </div>
+                        {{-- show suggested username --}}
+                        @if(session('suggestedUsernames'))
+                        <div class="showing-suggested-username">
+                            <div class="media">
+                                <img src="{{asset('latest/assets/images/icons/error-icon.svg')}}" alt="a"
+                                    class="img-fluid">
+                                <div class="media-body">
+                                    <p>This subdomain is already taken. Other <br> available option:</p>
+                                    @foreach(session('suggestedUsernames') as $suggestedUsername)
+                                    <a href="#" data-value="{{ $suggestedUsername }}" class="suggestedName">{{ $suggestedUsername }}</a> <br>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                        </div>
+                        @endif
+                        {{-- show suggested username --}}
                         <div class="form-submit">
                             <button type="submit" class="btn btn-submit mx-auto">Save Changes</button>
                         </div>
                     </form>
-                    <!-- Show validation error -->
+
+
+
                     @if ($errors->any())
                     <div class="alert alert-danger mt-3">
                         <ul class="mb-0">
@@ -115,5 +133,17 @@ Verify Email
 @endsection
 
 @section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () { 
+        let suggestedLinks = document.querySelectorAll('.suggestedName');
+        let usernameInput = document.getElementById('subdomain');
+        suggestedLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); 
+                usernameInput.value = this.getAttribute('data-value'); 
+            });
+        });
+    });
+</script>
 
 @endsection

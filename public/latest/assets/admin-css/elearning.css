@@ -1817,6 +1817,71 @@ span.finsihLesson {
   color: #fe251b;
 }
 
+.filter-sort-box .filterItem {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+
+.toggle-box-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+}
+
+.toggle-box-wrap.active {
+  max-height: none;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: all linear 0.4s;
+}
+
+.full-page-preview {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+  transition: ease-out 0.3s;
+}
+.full-page-preview img {
+  width: auto !important;
+  height: auto !important;
+}
+
+.full-page-preview.show {
+  transform: scale(1);
+}
+
+.close-bttn {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: #fff;
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+}
+.close-bttn i {
+  font-size: 1rem;
+  color: #294CFF;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
