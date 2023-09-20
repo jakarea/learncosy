@@ -39,7 +39,12 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-1',compact('course')); 
     }
 
-    public function step1c(Request $request, $id=null){
+    public function step1c(Request $request, $id){
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
         $request->validate([
             'title' => 'required',
         ]);
@@ -68,44 +73,16 @@ class CourseCreateStepController extends Controller
         ]);
 
         $course->save();
-        $id = $course->id;
-        session()->put('lastCourseId', $id);
-        return redirect('instructor/courses/create/'.$id.'/facts')->with('success', 'Course Title Saved Successfully');
-    }
+        $id = $course->id; 
 
-    public function step2($id){ 
-        // $course = Course::where('id', $id)->firstOrFail();
-        // return view('e-learning/course/instructor/create/step-2',compact('course'));
-    }
-
-    public function step2c(Request $request, $id){
-        $course = Course::where('id', $id)->firstOrFail();
-        $request->validate([
-            'thumbnail' => 'nullable|file|mimes:jpeg,png,pdf|max:5121', // Example mime types and maximum size
-            'description' => 'required|string',
-        ]);
-
-        $image_path = '';
-
-        if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-            // Convert image to WebP using Intervention Image
-            $image = Image::make($file);
-            $image->encode('webp', 90); // Convert to WebP with 90% quality
-            $image_path = 'assets/images/courses/'.$course->slug . '.webp';
-            $image->save(public_path('assets/images/courses/') . $course->slug . '.webp');
-        }
-
-        // Store other form data
-        $description = $request->input('description');
-        $course->description = $description;
-        $course->thumbnail = $image_path;
-        $course->save();
-        
-        return redirect('instructor/courses/create/'.$id.'/facts')->with('success', 'Course created successfully');
-    }
+        return redirect('instructor/courses/create/'.$id.'/price')->with('success', 'Course Title Saved Successfully');
+    } 
 
     public function step3($id){
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $modules = Module::with('lessons')->where('course_id', $id)->get();
         return view('e-learning/course/instructor/create/step-6',compact('modules'));
@@ -113,7 +90,9 @@ class CourseCreateStepController extends Controller
 
     public function step3c(Request $request, $id){
         
-        // return $request->all();
+         if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $request->validate([
             'lesson_name' => 'required',
@@ -128,19 +107,19 @@ class CourseCreateStepController extends Controller
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
         $lesson->save();
-        
-        return redirect('instructor/courses/create/'.$id.'/facts');
+
+        return redirect()->back()->with('success', 'Lesson Created Successfully');
     }
 
     public function step3cd(Request $request, $id){
         
-        // return $request->all();
+        if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $request->validate([
             'module_name' => 'required'
-        ]);
-
-        // return $id;
+        ]); 
  
         $module = new Module();
         $module->course_id = $id;
@@ -154,7 +133,9 @@ class CourseCreateStepController extends Controller
 
     public function step3cu(Request $request, $id){
         
-        // return $request->all();
+        if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $request->validate([
             'module_name' => 'required'
@@ -174,7 +155,9 @@ class CourseCreateStepController extends Controller
 
     public function step3d(Request $request, $id){
         
-        // return $request->all();
+        if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $request->validate([
             'lesson_name' => 'required',
@@ -182,7 +165,6 @@ class CourseCreateStepController extends Controller
         ]);
 
         $lesson_id = $request->input('lesson_id');
-
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
   
         $lesson->course_id = $request->input('course_id');
@@ -198,9 +180,9 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonText($course_id,$module_id,$lesson_id){
 
-        // return [$course_id,$module_id,$lesson_id];
-
-
+        if(!$lesson_id){
+            return redirect('instructor/courses');
+        }
           
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail(); 
          
@@ -209,10 +191,12 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonContent(Request $request, $lesson_id){
 
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
-        $lesson->text = $request->input('text');
+        if(!$lesson_id){
+            return redirect('instructor/courses');
+        }
 
-        // return $request->all();
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson->text = $request->input('text'); 
 
         $request->validate([
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
@@ -223,30 +207,25 @@ class CourseCreateStepController extends Controller
         if ($request->hasFile('lesson_file')) {
 
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-        
-                // Store the file in the 'uploads/lessons' directory
-                $file->storeAs('uploads/lessons', $filename);
-        
-                // Add the filename to the array
+                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $file->storeAs('uploads/lessons', $filename); 
                 $uploadedFilenames[] = $filename;
             }
- 
-        
-            // Convert the array of filenames to a comma-separated string
+  
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
         
         $lesson->save();
  
-
         return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
         
     }
 
     public function stepLessonInstitue($id,$module_id,$lesson_id){
 
-        // return [$id,$module_id,$lesson_id];
+        if(!$id){
+            return redirect('instructor/courses');
+        }
 
         $course = Course::where('id', $id)->firstOrFail();
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
@@ -254,62 +233,33 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-3',compact('course','lesson'));
     }
 
-    public function step4(){
+    public function stepLessonAudio($id,$module_id,$lesson_id){
         
         return view('e-learning/course/instructor/create/step-4');
     }
 
-    public function step4c(Request $request, $id,$les_id){
+    public function stepLessonAudioSet(Request $request, $id,$module_id,$lesson_id){
 
-        // $all = $request->all();
-
-        // return [$all,$id,$les_id];
-
-        // $lastCourseId = session()->get('lastCourseId');
-        // $lastModuledId = session()->get('lastModuledId');
-        // $lastLessonId = session()->get('lastLessonId');
-
-        if(!$lastCourseId || !$lastModuledId || !$lastLessonId){
+        if(!$id){
             return redirect('instructor/courses');
         }
 
-        $request->validate([
-            'module_name' => 'required',
-            // 'is_module' => 'required'
-        ]);
+        // Audio Type Lesson Request here
+    }
 
-        if($request->is_module){
-            $module = new Module();
-            $module->title = $request->input('module_name');
-            $module->slug = Str::slug($request->input('module_name'));
-            $module->course_id = $lastCourseId;
-            $module->user_id = Auth::user()->id;
-            $module->save();
-            session()->put('lastModuledId', $module->id);
+    public function stepLessonVideo($id,$module_id,$lesson_id){
+
+        if(!$id){
+            return redirect('instructor/courses');
         }
 
-        if($lastModuledId && !$request->is_module){
-            $lesson = new Lesson();
-            $lesson->course_id = $lastCourseId;
-            $lesson->user_id = Auth::user()->id;
-            $lesson->module_id = $lastModuledId;
-            $lesson->title = $request->input('module_name');
-            $lesson->slug = Str::slug($request->input('module_name'));
-            $lesson->save();
-        }
+        $course = Course::where('id', $id)->firstOrFail();
         
-        return redirect('instructor/courses/create/step-3');
+        return view('e-learning/course/instructor/create/step-5',compact('course'));
     }
 
-    public function step5(){
-        return view('e-learning/course/instructor/create/step-5');
-    }
-
-    public function step5c(Request $request)
+    public function stepLessonVideoSet(Request $request, $id,$module_id,$lesson_id)
     {
-        $lastCourseId = session()->get('lastCourseId');
-        $lastModuledId = session()->get('lastModuledId');
-        $lastLessonId = session()->get('lastLessonId');
 
         $request->validate([
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
@@ -352,11 +302,19 @@ class CourseCreateStepController extends Controller
     
     public function coursePrice($id){
          
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
         $course = Course::where('id', $id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-7',compact('course'));
     }
 
     public function coursePriceSet(Request $request, $id){
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
          
         $course = Course::where('id', $id)->firstOrFail();
 
@@ -375,12 +333,20 @@ class CourseCreateStepController extends Controller
 
     public function courseDesign($id){ 
 
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
         $course = Course::where('id', $id)->firstOrFail();
          
         return view('e-learning/course/instructor/create/step-8',compact('course'));
     }
 
     public function courseDesignSet(Request $request,$id){
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
          
         $course = Course::where('id', $id)->firstOrFail();
 
@@ -391,18 +357,12 @@ class CourseCreateStepController extends Controller
 
         $image_path = '';
         if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-    
-            // Convert image to WebP using Intervention Image
+            $file = $request->file('thumbnail'); 
             $image = Image::make($file);
-            $image->encode('webp', 90); // Convert to WebP with 90% quality
-            
-            $image_path = 'assets/images/courses/thumbnail_'.$course->slug . '.webp';
-
+            $image->encode('webp', 90); 
+            $image_path = 'assets/images/courses/thumbnail_'.$course->slug . '.webp'; 
             $image->save(public_path('assets/images/courses/thumbnail_') . $course->slug . '.webp');
         }
-
-        // Store other form data
         $course->thumbnail = $image_path;
         $course->save();
 
@@ -423,8 +383,6 @@ class CourseCreateStepController extends Controller
 
     public function courseCertificateSet(Request $request, $id){
 
-        // return $request->all();
-
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -439,8 +397,7 @@ class CourseCreateStepController extends Controller
         $image_path = 'assets/images/courses/sample_certificates.png';
 
         if ($request->hasFile('sample_certificates')) {
-            $file = $request->file('sample_certificates');
-            // Convert image to WebP using Intervention Image
+            $file = $request->file('sample_certificates'); 
             $image = Image::make($file);
             $image->encode('webp', 90); // Convert to WebP with 90% quality
             $image_path = 'assets/images/courses/sample_certificates_'.$course->slug . '.webp';

@@ -83,7 +83,7 @@ Course Create - Step 3
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{url('instructor/courses/create')}}" class="btn-cancel">Back</a>
+                        <a href="{{url('instructor/courses/create/'.$course->id)}}" class="btn-cancel">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

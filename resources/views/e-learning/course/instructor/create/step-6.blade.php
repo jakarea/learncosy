@@ -17,13 +17,13 @@ Course Create - Step 1
                 {{-- course step --}}
 
                 <div class="course-create-step-wrap">
-                    <div class="step-box active">
+                    <div class="step-box current">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid"> --}}
                         </span>
                         <p>Contents</p>
                     </div>
-                    <div class="step-box current">
+                    <div class="step-box">
                         <span class="circle"></span>
                         <p>Facts</p>
                     </div>
@@ -179,10 +179,10 @@ Course Create - Step 1
                                         <li>
                                             @if ($lesson->type == 'audio')
                                             <a class="dropdown-item"
-                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add Content</a>
+                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add Content</a>
                                             @elseif($lesson->type == 'video')
                                             <a class="dropdown-item"
-                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add Content </a>
+                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add Content </a>
                                             @elseif($lesson->type == 'text')
                                             <a class="dropdown-item"
                                                 href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add  Content </a> 
@@ -372,8 +372,8 @@ Course Create - Step 1
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/'.request()->route('id')) }}">Back</a>
-                        <a href="{{ url('instructor/courses/create/'.request()->route('id').'/price') }}">Next</a>
+                        <a href="{{ url('instructor/courses/create/') }}">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Next</a>
                     </div>
                     {{-- step next bttns --}}
                 </div>

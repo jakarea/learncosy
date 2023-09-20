@@ -99,7 +99,7 @@ Course Create - Design Step
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/step-7')}} ">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.$course->id.'/price')}} ">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

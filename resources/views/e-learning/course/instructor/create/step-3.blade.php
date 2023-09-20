@@ -78,7 +78,7 @@ Course Create - Step 3
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a> 
-                        <a href="{{url('instructor/courses/create/'.$course->id.'/facts')}}">Next</a>
+                        <a href="{{url('instructor/courses/create/'.$course->id)}}">Next</a>
                     </div>
                     {{-- step next bttns --}}
                 </form>

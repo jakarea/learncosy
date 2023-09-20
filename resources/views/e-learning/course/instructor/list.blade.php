@@ -81,7 +81,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="{{url('instructor/courses/'.$course->slug)}}">View</a></li> 
-                                        <li><a class="dropdown-item" href="{{url('instructor/courses/'.$course->slug.'/edit')}}">Edit</a></li> 
+                                        <li><a class="dropdown-item" href="{{url('instructor/courses/create/'.$course->id)}}">Edit</a></li> 
                                         <li> 
                                             <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
                                                 @csrf 

@@ -78,7 +78,7 @@ Course Create - Step 7
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.request()->route('id')) }}">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

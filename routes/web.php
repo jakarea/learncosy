@@ -234,29 +234,23 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'start')->name('course.create.step-1');
             Route::post('created/', 'startSet')->name('course.create.start');
 
-            Route::get('/{id}', 'step1');
-            Route::post('/{id}', 'step1c')->name('course.store.step-1');
-            Route::post('/', 'step1c')->name('course.store.step-1');
-            Route::get('/{id}', 'step1')->where('id', '[0-9]+')->name('course.store.step-1');
+            Route::get('/{id}/facts', 'step1');
+            Route::post('/{id}/facts', 'step1c')->name('course.store.step-1');
 
-
-            Route::get('/{id}/content', 'step2');
-            Route::post('/{id}/content', 'step2c');
-
-            Route::get('{id}/facts', 'step3');
-            Route::post('{id}/facts', 'step3c');
+            Route::get('{id}', 'step3');
+            Route::post('{id}', 'step3c');
             Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');
             Route::post('{id}/factsu', 'step3cu')->name('course.module.step.update');
             Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
 
             Route::get('{id}/text/{module_id}/content/{lesson_id}', 'stepLessonText');
             Route::post('{lesson_id}/step-lesson-content', 'stepLessonContent')->name('course.lesson.text.update');
+ 
+            Route::get('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudio');
+            Route::post('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudioSet')->name('course.lesson.audio.create');
 
-            Route::get('{id}/audio/{les_id}', 'step4');
-            Route::post('step-4', 'step4c')->name('course.lesson.audio.create');
-
-            Route::get('/{id}/video/{les_id}', 'step5');
-            Route::post('step-5', 'step5c');
+            Route::get('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideo');
+            Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
 
             Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 

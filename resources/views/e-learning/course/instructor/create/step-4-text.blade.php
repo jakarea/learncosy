@@ -93,7 +93,7 @@ Course Create - Lesson Text Content Add
 
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
-                    <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/facts') }}" class="btn-cancel">Back</a>
+                    <a href="{{ url('instructor/courses/create/'.$lesson->course_id) }}" class="btn-cancel">Back</a>
                     <button type="submit" class="btn btn-submit">Next</button>
                 </div>
                 {{-- step next bttns --}}
