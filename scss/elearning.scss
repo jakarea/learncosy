@@ -2138,16 +2138,22 @@ span.finsihLesson {
         color: #294CFF;
     }
 }
+.module-dropdown-box{
+    display: flex;
+    align-items: center;
+    .dropdown-item{
+        margin-left: 0!important;
+    }
+}
 
-// .course-content-box.course-page-box{
-//     .dropdown-menu{
-//         top: -50px!important;
-//         left: -100px!important;
-//     }
-// }
 
-
-
+.course-content-box.course-page-box{
+    .dropdown-menu {
+        top: -50px!important;
+        overflow-y: visible;
+        min-height: 115px!important;
+    }
+}
 
 
 

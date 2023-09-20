@@ -66,25 +66,28 @@ Course Create - Step 10
                 <form action="" method="POST" > 
                     @csrf
                     <div class="content-settings-form-wrap visibility-form-wrap">
+                        {{-- session message @S --}}
+                    @include('partials/session-message')
+                    {{-- session message @E --}}
                         <h4>Visibility</h4>
                         <hr>
                         <div class="form-group">
                             <h6>Status of the Course</h6>
                             <i class="fas fa-circle"></i>
                             <select class="form-control" name="status">
-                                <option value="Draft">Draft</option>
-                                <option value="Published">Publish</option>
+                                <option value="draft" {{ $course->status == 'draft' ? 'selected' : ''}}>Draft</option>
+                                <option value="published" {{ $course->status == 'published' ? 'selected' : ''}}>Publish</option>
                             </select>
                             <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down" class="img-fluid euro" style="top: 3rem">
                             <span class="invalid-feedback d-block">@error('status'){{ $message }} @enderror</span>
                         </div>   
                         <div class="media auto-text">
                             <div class="media-body"> 
-                                <h6>Comment for the course</h6>
-                                <p>If you don’t want any comment about your course please turn off comment.</p>
+                                <h6>Review for the course</h6>
+                                <p>If you don't want any review about your course please turn off checkmark.</p>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="allow_review" role="switch" id="flexSwitchCheckChecked" value="1" checked> 
+                                <input class="form-check-input" type="checkbox" name="allow_review" role="switch" id="flexSwitchCheckChecked" value="1"  {{ $course->allow_review == '1' ? 'checked' : ''}} > 
                                 <span class="invalid-feedback d-block">@error('allow_review'){{ $message }} @enderror</span>
                             </div>
                         </div>  
@@ -92,7 +95,7 @@ Course Create - Step 10
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/step-10')}} ">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.$course->id.'/certificate')}}">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

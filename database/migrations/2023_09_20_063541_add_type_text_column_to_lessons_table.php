@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             $table->string('type')->default('video')->nullable();
+            $table->longText('text')->default('')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ return new class extends Migration
     {
         Schema::table('lessons', function (Blueprint $table) {
             $table->dropColumn('type');
+            $table->dropColumn('text');
         });
     }
 };

@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 8
+Course Create - Design Step 
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -14,10 +14,7 @@ Course Create - Step 8
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -62,25 +59,31 @@ Course Create - Step 8
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="top-image-upload-box">
+                        {{-- session message @S --}}
+                    @include('partials/session-message')
+                    {{-- session message @E --}}
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Image</h4>
-                        <input type="file" class="d-none" id="banner" name="banner">
-                        <label for="banner" class="file-up-box">
+                        <input type="file" class="d-none" id="thumbnail" name="thumbnail">
+                        <label for="thumbnail" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid light-ele">
                             <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon" class="img-fluid dark-ele">
-                            <p><label for="banner">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
+                            <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
                     <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="No Image Uploaded yet" class="img-fluid">
+                        <img id="previewImage" src="" alt="" class="img-fluid rounded">
+                        @if ($course->thumbnail)
+                            <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid rounded">
+                        @endif
                     </div> 
                     
-                    <!-- <div class="content-settings-form-wrap mt-0">
+                    <div class="content-settings-form-wrap mt-0">
                         <h4>Appearance Course</h4>
                         <div class="form-group">
-                            <input id="name" class="form-control" type="text" required>
+                            <input id="name" class="form-control" type="text" value="{{ $course->title }}" required>
                             <label for="name">Appearance Product Overview</label>
                             <span class="d-block mt-3"><img src="{{asset('latest/assets/images/icons/eye-2.svg')}}"
-                                    alt="gallery-icon" class="img-fluid"> Preview</span>
+                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/'.$course->slug)}}">Preview</a></span>
                         </div>
                         <div class="media auto-text">
                             <div class="media-body">
@@ -92,7 +95,7 @@ Course Create - Step 8
                                     id="flexSwitchCheckChecked" checked>
                             </div>
                         </div>
-                    </div> -->
+                    </div> 
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
@@ -110,7 +113,7 @@ Course Create - Step 8
 @section('script')
 <script>
     // Function to handle file input change
-document.getElementById('banner').addEventListener('change', function (e) {
+document.getElementById('thumbnail').addEventListener('change', function (e) {
     const file = e.target.files[0];
 
     if (file) {

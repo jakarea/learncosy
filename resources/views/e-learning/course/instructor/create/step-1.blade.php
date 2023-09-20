@@ -19,14 +19,14 @@ Course Create - Step 3
                 class --}}
                 {{-- add class "current" to "step-box" for the current step --}}
                 <div class="course-create-step-wrap">
-                    <div class="step-box current">
+                    <div class="step-box active">
                         <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid"> --}}
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                                class="img-fluid">
                         </span>
                         <p>Contents</p>
                     </div>
-                    <div class="step-box">
+                    <div class="step-box current">
                         <span class="circle"></span>
                         <p>Facts</p>
                     </div>
@@ -70,8 +70,8 @@ Course Create - Step 3
                             <label for="slug">Slug</label>
                         </div>  
                         <div class="form-group">
-                            <h6>Short Description</h6>
-                            <textarea class="form-control" name="short_description">{{ $course ? $course->short_description : old('short_description') }}</textarea> 
+                            <h6>Description</h6>
+                            <textarea class="form-control" name="description" id="description">{{ $course ? $course->short_description : old('description') }}</textarea> 
                         </div>   
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <h6>User must manually tick off each lesson</h6>
@@ -83,7 +83,7 @@ Course Create - Step 3
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        
+                        <a href="{{url('instructor/courses/create')}}" class="btn-cancel">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
@@ -119,5 +119,8 @@ Course Create - Step 3
             .replace(/-+$/, '');          // Trim - from end of text
     }
 </script>
+
+<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js" type="text/javascript"></script>
+<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
 
 @endsection

@@ -14,10 +14,7 @@ Course Create - Step 7
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                {{-- course step --}}  
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -60,15 +57,18 @@ Course Create - Step 7
                 <form action="" method="POST" >
                     @csrf
                     <div class="content-settings-form-wrap">
+                        {{-- session message @S --}}
+                    @include('partials/session-message')
+                    {{-- session message @E --}}
                         <h4>Select Price</h4>
                         <div class="form-group">
-                            <input id="price" class="form-control" name="price" value="{{ old('price')  }}" type="text" >
+                            <input id="price" class="form-control" name="price" value="{{ $course->price ? $course->price : old('price')  }}" type="text" >
                             <label for="price">Regular Price</label>
                             <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
                             <span class="invalid-feedback d-block">@error('price'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group">
-                            <input id="offer_price" class="form-control" name="offer_price" value="{{ old('offer_price')  }}" type="text" >
+                            <input id="offer_price" class="form-control" name="offer_price" value="{{ $course->offer_price ? $course->offer_price : old('offer_price')  }}" type="text" >
                             <label for="offer_price">Sales Price</label>
                             <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
                             <span class="invalid-feedback d-block">@error('offer_price'){{ $message }}
@@ -78,7 +78,7 @@ Course Create - Step 7
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/step-6')}} ">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

@@ -1886,6 +1886,20 @@ span.finsihLesson {
   color: #294CFF;
 }
 
+.module-dropdown-box {
+  display: flex;
+  align-items: center;
+}
+.module-dropdown-box .dropdown-item {
+  margin-left: 0 !important;
+}
+
+.course-content-box.course-page-box .dropdown-menu {
+  top: -50px !important;
+  overflow-y: visible;
+  min-height: 115px !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

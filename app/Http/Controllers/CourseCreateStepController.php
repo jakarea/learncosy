@@ -14,12 +14,29 @@ use Intervention\Image\Facades\Image;
 
 class CourseCreateStepController extends Controller
 {
-    public function step1($id = null){
-        $course = '';
-        if($id){
-            $course = Course::findOrFail($id);
+    public function start(){
+
+        return view('e-learning/course/instructor/create/step-0'); 
+    }
+
+    public function startSet(Request $request){
+
+        $course = new Course(); 
+        $course->user_id = Auth::user()->id;  
+        $course->save();
+        
+        return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started Successfuly');
+    }
+
+    public function step1($id){
+
+        if(!$id){
+            return redirect('instructor/courses');
         }
-        return view('e-learning/course/instructor/create/step-1',compact('course'));
+
+        $course = Course::where('id', $id)->firstOrFail();
+
+        return view('e-learning/course/instructor/create/step-1',compact('course')); 
     }
 
     public function step1c(Request $request, $id=null){
@@ -34,7 +51,7 @@ class CourseCreateStepController extends Controller
         $originalSlug = $slug;
         $counter = 2;
 
-        $short_description = $request->input('short_description');
+        $description = $request->input('description');
         // Check for unique slug
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
@@ -46,20 +63,19 @@ class CourseCreateStepController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $title,
             'slug' => $slug,
-            'short_description' => $short_description,
-            'auto_complete' => $auto_complete
-            // Other course attributes
+            'description' => $description,
+            'auto_complete' => $auto_complete 
         ]);
 
         $course->save();
         $id = $course->id;
         session()->put('lastCourseId', $id);
-        return redirect('instructor/courses/create/'.$id.'/content')->with('success', 'Course created successfully');
+        return redirect('instructor/courses/create/'.$id.'/facts')->with('success', 'Course Title Saved Successfully');
     }
 
     public function step2($id){ 
-        $course = Course::where('id', $id)->firstOrFail();
-        return view('e-learning/course/instructor/create/step-2',compact('course'));
+        // $course = Course::where('id', $id)->firstOrFail();
+        // return view('e-learning/course/instructor/create/step-2',compact('course'));
     }
 
     public function step2c(Request $request, $id){
@@ -69,7 +85,8 @@ class CourseCreateStepController extends Controller
             'description' => 'required|string',
         ]);
 
-        $image_path = 'assets/images/courses/thumbnail.png';
+        $image_path = '';
+
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             // Convert image to WebP using Intervention Image
@@ -115,6 +132,46 @@ class CourseCreateStepController extends Controller
         return redirect('instructor/courses/create/'.$id.'/facts');
     }
 
+    public function step3cd(Request $request, $id){
+        
+        // return $request->all();
+
+        $request->validate([
+            'module_name' => 'required'
+        ]);
+
+        // return $id;
+ 
+        $module = new Module();
+        $module->course_id = $id;
+        $module->user_id = Auth::user()->id;
+        $module->title = $request->input('module_name');
+        $module->slug = Str::slug($request->input('module_name'));
+        $module->save();
+        
+        return redirect()->back()->with('success', 'Module Created successfully');
+    }
+
+    public function step3cu(Request $request, $id){
+        
+        // return $request->all();
+
+        $request->validate([
+            'module_name' => 'required'
+        ]);
+
+        $module_id = $request->input('module_id');
+
+        $module = Module::where('id', $module_id)->firstOrFail();
+        $module->course_id = $id;
+        $module->user_id = Auth::user()->id;
+        $module->title = $request->input('module_name');
+        $module->slug = Str::slug($request->input('module_name'));
+        $module->save();
+        
+        return redirect()->back()->with('success', 'Module Updated successfully');
+    }
+
     public function step3d(Request $request, $id){
         
         // return $request->all();
@@ -126,9 +183,9 @@ class CourseCreateStepController extends Controller
 
         $lesson_id = $request->input('lesson_id');
 
-        $lesson = Lesson::where('id', $lesson_id)->first();
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
   
-        $lesson->course_id = $id;
+        $lesson->course_id = $request->input('course_id');
         $lesson->user_id = Auth::user()->id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
@@ -139,6 +196,64 @@ class CourseCreateStepController extends Controller
         return redirect()->back()->with('success', 'Lesson Updated successfully');
     }
 
+    public function stepLessonText($course_id,$module_id,$lesson_id){
+
+        // return [$course_id,$module_id,$lesson_id];
+
+
+          
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail(); 
+         
+        return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
+    }
+
+    public function stepLessonContent(Request $request, $lesson_id){
+
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson->text = $request->input('text');
+
+        // return $request->all();
+
+        $request->validate([
+            'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
+        ]);
+
+        $uploadedFilenames = [];
+
+        if ($request->hasFile('lesson_file')) {
+
+            foreach ($request->file('lesson_file') as $file) {
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
+        
+                // Store the file in the 'uploads/lessons' directory
+                $file->storeAs('uploads/lessons', $filename);
+        
+                // Add the filename to the array
+                $uploadedFilenames[] = $filename;
+            }
+ 
+        
+            // Convert the array of filenames to a comma-separated string
+            $lesson->lesson_file = implode(",", $uploadedFilenames);
+        }
+        
+        $lesson->save();
+ 
+
+        return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
+        
+    }
+
+    public function stepLessonInstitue($id,$module_id,$lesson_id){
+
+        // return [$id,$module_id,$lesson_id];
+
+        $course = Course::where('id', $id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        
+        return view('e-learning/course/instructor/create/step-3',compact('course','lesson'));
+    }
+
     public function step4(){
         
         return view('e-learning/course/instructor/create/step-4');
@@ -146,9 +261,9 @@ class CourseCreateStepController extends Controller
 
     public function step4c(Request $request, $id,$les_id){
 
-        $all = $request->all();
+        // $all = $request->all();
 
-        return [$all,$id,$les_id];
+        // return [$all,$id,$les_id];
 
         // $lastCourseId = session()->get('lastCourseId');
         // $lastModuledId = session()->get('lastModuledId');
@@ -235,17 +350,15 @@ class CourseCreateStepController extends Controller
         }
     }
     
-    public function step7(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
-            return redirect('instructor/courses');
-        }
-        return view('e-learning/course/instructor/create/step-7');
+    public function coursePrice($id){
+         
+        $course = Course::where('id', $id)->firstOrFail();
+        return view('e-learning/course/instructor/create/step-7',compact('course'));
     }
 
-    public function step7c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
+    public function coursePriceSet(Request $request, $id){
+         
+        $course = Course::where('id', $id)->firstOrFail();
 
         $request->validate([
             'price' => 'required|numeric',
@@ -255,97 +368,110 @@ class CourseCreateStepController extends Controller
         $course->price = $request->input('price');
         $course->offer_price = $request->input('offer_price');
         $course->save();
-        return redirect('instructor/courses/create/step-8')->with('success', 'Data has been saved successfully');
+
+        return redirect('instructor/courses/create/'.$course->id.'/design')->with('success', 'Course Price Set successfully');
+         
     }
 
+    public function courseDesign($id){ 
 
-    public function step8(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
-            return redirect('instructor/courses');
-        }
-        return view('e-learning/course/instructor/create/step-8',['lastCourseId' => $lastCourseId]);
+        $course = Course::where('id', $id)->firstOrFail();
+         
+        return view('e-learning/course/instructor/create/step-8',compact('course'));
     }
 
-    public function step8c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
+    public function courseDesignSet(Request $request,$id){
+         
+        $course = Course::where('id', $id)->firstOrFail();
+
         $request->validate([
-            'banner' => 'nullable|file|mimes:jpeg,png,jpg|max:5121', // Example mime types and maximum size
+            'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg|max:5121',  
         ]);
     
-        // Handle file upload
-        // if ($request->hasFile('thumbnail')) {
-        //     $file = $request->file('thumbnail');
-            // $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->move(public_path('uploads'), $filename);
-        // }
 
-        $image_path = 'assets/images/courses/banner.png';
-        if ($request->hasFile('banner')) {
-            $file = $request->file('banner');
+        $image_path = '';
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
     
             // Convert image to WebP using Intervention Image
             $image = Image::make($file);
             $image->encode('webp', 90); // Convert to WebP with 90% quality
             
-            $image_path = 'assets/images/courses/banner_'.$course->slug . '.webp';
+            $image_path = 'assets/images/courses/thumbnail_'.$course->slug . '.webp';
 
-            $image->save(public_path('assets/images/courses/banner_') . $course->slug . '.webp');
+            $image->save(public_path('assets/images/courses/thumbnail_') . $course->slug . '.webp');
         }
 
         // Store other form data
-        $course->banner = $image_path;
+        $course->thumbnail = $image_path;
         $course->save();
-        return redirect('instructor/courses/create/step-9')->with('success', 'Data has been saved successfully');
+
+
+        return redirect('instructor/courses/create/'.$course->id.'/certificate')->with('success', 'Course Design Set successfully');
     }
 
 
-    public function step9(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
+    public function courseCertificate($id){ 
+        if(!$id){
             return redirect('instructor/courses');
         }
-        return view('e-learning/course/instructor/create/step-9',['lastCourseId' => $lastCourseId]);
+
+        $course = Course::where('id', $id)->firstOrFail();
+
+        return view('e-learning/course/instructor/create/step-9',compact('course'));
     }
 
-    public function step9c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
+    public function courseCertificateSet(Request $request, $id){
+
+        // return $request->all();
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+         
+        $course = Course::where('id', $id)->firstOrFail();
+
         $request->validate([
-            'certificate' => 'nullable|file|mimes:jpeg,png,pdf,svg|max:5121', // Example mime types and maximum size
-            'has_certificate' => 'required',
+            'sample_certificates' => 'nullable|file|mimes:jpeg,png,pdf,svg|max:5121',
+            'hascertificate' => 'required',
         ]);
 
-        $image_path = 'assets/images/courses/certificate.png';
-        if ($request->hasFile('certificate')) {
-            $file = $request->file('certificate');
+        $image_path = 'assets/images/courses/sample_certificates.png';
+
+        if ($request->hasFile('sample_certificates')) {
+            $file = $request->file('sample_certificates');
             // Convert image to WebP using Intervention Image
             $image = Image::make($file);
             $image->encode('webp', 90); // Convert to WebP with 90% quality
-            $image_path = 'assets/images/courses/certificate_'.$course->slug . '.webp';
-            $image->save(public_path('assets/images/courses/certificate_') . $course->slug . '.webp');
+            $image_path = 'assets/images/courses/sample_certificates_'.$course->slug . '.webp';
+            $image->save(public_path('assets/images/courses/sample_certificates_') . $course->slug . '.webp');
         }
 
         // Store other form data
-        $description = $request->input('description');
-        $course->hascertificate = $request->input('has_certificate');
-        $course->certificate = $image_path;
+        $course->hascertificate = $request->input('hascertificate');
+        $course->sample_certificates = $image_path;
         $course->save();
-        return redirect('instructor/courses/create/step-10')->with('success', 'Data has been saved successfully');
+
+        return redirect('instructor/courses/create/'.$course->id.'/visibility')->with('success', 'Course Sample Certificate Set successfully'); 
     }
 
-    public function step10(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
+    public function visibility($id){
+        if(!$id){
             return redirect('instructor/courses');
         }
-        return view('e-learning/course/instructor/create/step-10',['lastCourseId' => $lastCourseId]);
+
+        $course = Course::where('id', $id)->firstOrFail();
+
+        return view('e-learning/course/instructor/create/step-10',compact('course'));
     }
 
-    public function step10c(Request $request){
-        $lastCourseId = session()->get('lastCourseId');
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
+    public function visibilitySet(Request $request,$id){
+       if(!$id){
+            return redirect('instructor/courses');
+        }
+
+        $course = Course::where('id', $id)->firstOrFail();
+        
         $request->validate([
             'status' => 'required',
         ]);
@@ -353,16 +479,18 @@ class CourseCreateStepController extends Controller
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;
         $course->save();
-        return redirect('instructor/courses/create/step-11')->with('success', 'Data has been saved successfully');
+
+        return redirect('instructor/courses/create/'.$course->id.'/share')->with('success', 'Course Status Set successfully'); 
     }
 
-    public function step11(){
-        $lastCourseId = session()->get('lastCourseId');
-        if(!$lastCourseId){
+    public function courseShare($id){
+        if(!$id){
             return redirect('instructor/courses');
         }
-        $course = Course::where('id', $lastCourseId)->firstOrFail();
-        return view('e-learning/course/instructor/create/step-11',['course' => $course]);
+
+        $course = Course::where('id', $id)->firstOrFail();
+ 
+        return view('e-learning/course/instructor/create/step-11',compact('course'));
     }
 
 

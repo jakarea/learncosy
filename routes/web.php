@@ -231,8 +231,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
             
             // add course static route
-            Route::get('/', 'step1')->name('course.create.step-1');
+            Route::get('/', 'start')->name('course.create.step-1');
+            Route::post('created/', 'startSet')->name('course.create.start');
 
+            Route::get('/{id}', 'step1');
             Route::post('/{id}', 'step1c')->name('course.store.step-1');
             Route::post('/', 'step1c')->name('course.store.step-1');
             Route::get('/{id}', 'step1')->where('id', '[0-9]+')->name('course.store.step-1');
@@ -243,7 +245,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}/facts', 'step3');
             Route::post('{id}/facts', 'step3c');
+            Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');
+            Route::post('{id}/factsu', 'step3cu')->name('course.module.step.update');
             Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
+
+            Route::get('{id}/text/{module_id}/content/{lesson_id}', 'stepLessonText');
+            Route::post('{lesson_id}/step-lesson-content', 'stepLessonContent')->name('course.lesson.text.update');
 
             Route::get('{id}/audio/{les_id}', 'step4');
             Route::post('step-4', 'step4c')->name('course.lesson.audio.create');
@@ -251,24 +258,21 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/{id}/video/{les_id}', 'step5');
             Route::post('step-5', 'step5c');
 
-            Route::get('step-6', function () {
-                return view('e-learning/course/instructor/create/step-3');
-            });
+            Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
-            Route::get('step-7', 'step7');
-            Route::post('step-7', 'step7c');
+            Route::get('{id}/price', 'coursePrice');
+            Route::post('{id}/price', 'coursePriceSet');
 
-            Route::get('step-8', 'step8');
-            Route::post('step-8', 'step8c');
+            Route::get('{id}/design', 'courseDesign');
+            Route::post('{id}/design', 'courseDesignSet');
 
-            Route::get('step-9', 'step9');
-            Route::post('step-9', 'step9c');
+            Route::get('{id}/certificate', 'courseCertificate');
+            Route::post('{id}/certificate', 'courseCertificateSet');
 
-            Route::get('step-10', 'step10');
-            Route::post('step-10', 'step10c');
+            Route::get('{id}/visibility', 'visibility');
+            Route::post('{id}/visibility', 'visibilitySet');
 
-            Route::get('step-11', 'step11');
-            Route::post('step-11', 'step11c');
+            Route::get('{id}/share', 'courseShare');
 
         });
         // module page routes
