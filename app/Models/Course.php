@@ -17,37 +17,37 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 
+        'title',
         'slug',
-        'short_description', 
+        'short_description',
         'auto_complete',
-        'thumbnail', 
-        'banner', 
-        'description', 
-        
+        'thumbnail',
+        'banner',
+        'description',
+
         'sub_title',
         'user_id',
         'features',
-        'slug', 
-        'prerequisites', 
-        'outcome', 
-        'promo_video', 
-        'price', 
-        'offer_price', 
-        'categories', 
-       
-        'meta_keyword', 
-        'meta_description', 
-        'number_of_module', 
-        'number_of_lesson', 
-        'number_of_quiz', 
-        'number_of_attachment', 
-        'number_of_video', 
-        'duration', 
-        'hascertificate', 
-        'sample_certificates', 
-        'subscription_status', 
-        'status', 
+        'slug',
+        'prerequisites',
+        'outcome',
+        'promo_video',
+        'price',
+        'offer_price',
+        'categories',
+
+        'meta_keyword',
+        'meta_description',
+        'number_of_module',
+        'number_of_lesson',
+        'number_of_quiz',
+        'number_of_attachment',
+        'number_of_video',
+        'duration',
+        'hascertificate',
+        'sample_certificates',
+        'subscription_status',
+        'status',
     ];
 
     public function user(){
@@ -58,7 +58,7 @@ class Course extends Model
         return $this->hasMany(Module::class,'course_id','id');
     }
 
-    
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'course_user')
@@ -79,11 +79,11 @@ class Course extends Model
     {
         return $this->hasMany(Checkout::class);
     }
-   
+
     public function reviews(){
         return $this->hasMany(CourseReview::class,'course_id','id');
     }
 
     // get purchased students list based on instructor id
-    
+
 }

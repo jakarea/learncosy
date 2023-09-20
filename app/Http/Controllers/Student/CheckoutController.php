@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use Mail;
 use Stripe\Stripe;
 use App\Models\Course;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
 use App\Http\Controllers\Controller;
@@ -19,15 +20,17 @@ class CheckoutController extends Controller
     {
         // Stripe::setApiKey(auth()->user()->stripe_secret_key ?? env('STRIPE_SECRET'));
     }
-    
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($slug)
+    public function index()
     {
         //
+        // $cart = Cart::select('course_id')->where('user_id', auth()->id())->get();
+        // dd($cart);
         $course = Course::where('slug', $slug)->first();
 
         // configure stripe key
@@ -73,6 +76,57 @@ class CheckoutController extends Controller
         return redirect($checkout_session->url);
     }
 
+
+
+
+    public function indexOfCart()
+    {
+        $courseIds = Cart::where('user_id', auth()->id())->pluck('course_id')->toArray();
+        $courses = Course::whereIn('id', $courseIds)->get();
+        $course_price = 0;
+        $courseTitles = [];
+        foreach ($courses as $course) {
+            Stripe::setApiKey( $course->user->stripe_secret_key);
+            if($course->user->stripe_secret_key == null){
+                return redirect()->route('students.show.courses', $course->slug)->with('error', 'Instructor has not connected with stripe yet. Remove that course from cart first please');
+            }
+            $courseTitles[] = $course->title;
+
+            if($course->offer_price == 0){
+                $course_price = $course_price + $course->price;
+            }else{
+                $course_price = $course_price + $course->offer_price;
+            }
+
+            $checkout = $course->checkouts()->where('user_id', auth()->user()->id)->first();
+
+            if($checkout){
+                return redirect()->route('students.show.courses', $course->slug)->with('error', 'You have already enrolled in this course. Remove that course from cart');
+            }
+        }
+        $courseNames = implode(', ', $courseTitles);
+
+
+        $checkout_session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+                    'unit_amount' => $course_price * 100,
+                    'product_data' => [
+                        'name' => $courseNames,
+                        'images' => [asset('assets/images/courses/new-budle-course-64cb5712834ef.jpg')],
+                    ],
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('checkout.success', $course->slug) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('checkout.cancel', $course->slug),
+        ]);
+
+        return redirect($checkout_session->url);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -110,9 +164,9 @@ class CheckoutController extends Controller
             $payment_id = $session->payment_intent;
             $paymentMethod = 'Stripe';
             $amount = $session->amount_total / 100;
-    
 
-    
+
+
             // Attach the user to the course with the payment details
             $course->students()->attach(auth()->user()->id, [
                 'payment_method' => $paymentMethod,
@@ -121,7 +175,7 @@ class CheckoutController extends Controller
                 'start_at' => $start_date,
                 'end_at' => $end_date,
             ]);
-    
+
             // Store the transaction in the checkout table
             $checkout = $course->checkouts()->create([
                 'course_id' => $course->id,
@@ -134,12 +188,12 @@ class CheckoutController extends Controller
                 'start_date' => $start_date,
                 'end_date' => $end_date,
             ]);
-    
+
             if ($checkout) {
 
                  // Send email
                  Mail::to(auth()->user()->email)->send(new CourseEnroll($course));
-                 
+
                 return redirect()->route('students.show.courses', $course->slug)->with('success', 'You have successfully enrolled in this course');
             } else {
                 return redirect()->route('students.show.courses', $course->slug)->with('error', 'Something went wrong');

@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
+use App\Models\Cart;
 use App\Models\CourseLog;
 use App\Models\BundleCourse;
 use App\Models\CourseReview;
@@ -18,18 +19,19 @@ use App\Http\Controllers\Controller;
 class StudentHomeController extends Controller
 {
     // dashboard
-    public function dashboard(){ 
+    public function dashboard(){
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
-        
-        return view('e-learning/course/students/dashboard', compact('enrolments')); 
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+
+        return view('e-learning/course/students/dashboard', compact('enrolments','cartCount'));
     }
 
     // dashboard
     public function enrolled(){
-        
+
         $enrolments = Checkout::with('course.reviews')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
-    
-        return view('e-learning/course/students/enrolled',compact('enrolments')); 
+
+        return view('e-learning/course/students/enrolled',compact('enrolments'));
     }
 
     // all course list
@@ -42,27 +44,29 @@ class StudentHomeController extends Controller
             $titles = explode( ' ', $title);
             $courses->where('title','like','%'.trim($titles[0]).'%');
             if(isset($titles[1])){
-                $courses->where('title','like','%'.trim($titles[1]).'%'); 
+                $courses->where('title','like','%'.trim($titles[1]).'%');
             }
         }
         $courses = $courses->paginate(12);
-        
-        return view('e-learning/course/students/home',compact('courses')); 
+
+        return view('e-learning/course/students/home',compact('courses'));
     }
 
     // catalog course list
     public function catalog(){
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $courses = Course::with('user','reviews')->orderBy('id','desc');
         $bundleCourse = BundleCourse::orderBy('id','desc')->get();
-        $mainCategories = $courses->pluck('categories'); 
+        $mainCategories = $courses->pluck('categories');
         if(!empty($title)){
             $titles = explode( ' ', $title);
             $courses->where('title','like','%'.trim($titles[0]).'%');
             $bundleCourse->where('title','like','%'.trim($titles[0]).'%');
             if(isset($titles[1])){
-                $courses->where('title','like','%'.trim($titles[1]).'%'); 
+                $courses->where('title','like','%'.trim($titles[1]).'%');
                 $bundleCourse->where('title','like','%'.trim($titles[1]).'%');
             }
         }
@@ -70,11 +74,11 @@ class StudentHomeController extends Controller
             $cats = explode( ' ', $cat);
             $courses->where('categories','like','%'.trim($cats[0]).'%');
             if(isset($cats[1])){
-                $courses->where('cat','like','%'.trim($cats[1]).'%'); 
+                $courses->where('cat','like','%'.trim($cats[1]).'%');
             }
         }
         $unique_array = [];
-        foreach($mainCategories as $category){ 
+        foreach($mainCategories as $category){
             $cats = explode(",", $category);
             foreach($cats as $cat){
                 $unique_array[] = strtolower($cat);
@@ -82,26 +86,26 @@ class StudentHomeController extends Controller
         }
         $categories = array_unique($unique_array);
         $courses = $courses->paginate(12);
-        
-        return view('e-learning/course/students/catalog',compact('courses','categories', 'bundleCourse')); 
+
+        return view('e-learning/course/students/catalog',compact('cartCount','courses','categories', 'bundleCourse'));
     }
 
-    // account Management 
+    // account Management
     public function accountManagement(){
 
-        $userId = Auth()->user()->id;  
+        $userId = Auth()->user()->id;
         $user = User::find($userId);
         $checkout = Checkout::where('user_id', $userId)->with('course')->get();
-        return view('settings/students/account-management',compact('user', 'checkout')); 
+        return view('settings/students/account-management',compact('user', 'checkout'));
     }
 
-    
+
     // course show
     public function show($slug)
-    {   
+    {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        
+
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews'));
         } else {
@@ -110,7 +114,7 @@ class StudentHomeController extends Controller
     }
     // course overview
     public function overview($slug)
-    {   
+    {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
@@ -119,7 +123,7 @@ class StudentHomeController extends Controller
             if($course->categories){
                 $categoryArray = explode(',', $course->categories);
                 $query = Course::query(); // Replace YourModel with your actual model class
-    
+
                 foreach ($categoryArray as $category) {
                     $query->orWhere('categories', 'like', '%' . trim($category) . '%');
                 }
@@ -134,39 +138,39 @@ class StudentHomeController extends Controller
 
       // my course details
       public function courseDetails($slug){
-        
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        
+
         if ($course) {
-            return view('e-learning/course/students/myCourse',compact('course','course_reviews')); 
+            return view('e-learning/course/students/myCourse',compact('course','course_reviews'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
-    
+
     }
 
     public function storeCourseLog(Request $request){
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
-        $userId = Auth()->user()->id;  
+        $userId = Auth()->user()->id;
 
         $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
         if(!$courseLog){
             $courseLogInfo = new CourseLog([
-                'course_id' => $courseId,  
+                'course_id' => $courseId,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
-                'user_id'   => $userId,  
-            ]);  
+                'user_id'   => $userId,
+            ]);
             $courseLogInfo->save();
             return response()->json([
                 'message' => 'course log save successfully',
-                'course_id' => $courseId,  
+                'course_id' => $courseId,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
-                'user_id'   => $userId, 
+                'user_id'   => $userId,
             ]);
         }else{
             $courseLog->course_id = $courseId;
@@ -175,13 +179,13 @@ class StudentHomeController extends Controller
             $courseLog->update();
             return response()->json([
                 'message' => 'course log updated',
-                'course_id' => $courseId,  
+                'course_id' => $courseId,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
-                'user_id'   => $userId, 
+                'user_id'   => $userId,
             ]);
         }
-       
+
     }
 
     /**
@@ -199,7 +203,7 @@ class StudentHomeController extends Controller
             ['lesson_id' => $lessonId, 'module_id' => $moduleId],
             [
                 'course_id' => $courseId,
-                'module_id' => $moduleId, 
+                'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
                 'is_completed' => true
@@ -212,7 +216,7 @@ class StudentHomeController extends Controller
     }
 
     public function review(Request $request,$slug){
-        $userId = Auth()->user()->id;  
+        $userId = Auth()->user()->id;
         $lessons = Lesson::orderby('id', 'desc')->paginate(10);
         $modules = Module::orderby('id', 'desc')->paginate(10);
         $course = Course::where('slug', $slug)->with('user')->first();
@@ -223,25 +227,25 @@ class StudentHomeController extends Controller
             $course_reviews->save();
         }else{
             $review = new CourseReview([
-                'user_id'   => $userId,  
+                'user_id'   => $userId,
                 'course_id' => $course->id,
                 'star'      => $request->star,
-                'comment'   => $request->comment,  
-            ]);  
+                'comment'   => $request->comment,
+            ]);
             $review->save();
         }
-        
+
         return redirect()->route('students.show.courses',$slug)->with('message', 'comment submitted successfully!');
 
     }
 
     public function certificate()
-    {    
+    {
         return view('e-learning/course/students/certifiate');
     }
 
     public function message2()
-    {    
-        return view('e-learning/course/students/message-2'); 
+    {
+        return view('e-learning/course/students/message-2');
     }
 }
