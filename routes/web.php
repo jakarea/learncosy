@@ -180,9 +180,9 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/complete', function(){
         return view('latest-auth.price');
     });
-    Route::get('/profile/step-3/complete', function(){
-        return view('latest-auth.subdomain');
-    });
+    
+    Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+
     Route::get('/profile/step-4/complete', function(){
         return view('latest-auth.connect');
     });

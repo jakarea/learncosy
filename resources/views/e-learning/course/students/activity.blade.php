@@ -38,8 +38,7 @@
                     <table>
                         <tr> 
                             <th>Course Name</th>
-                            <th>Duration</th> 
-                            <th>Quiz</th>
+                            <th>Duration</th>  
                             <th>Total Point</th>
                             <th>Your Point</th>
                             <th>Status</th>
@@ -59,9 +58,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
@@ -92,9 +89,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
@@ -125,9 +120,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
@@ -158,9 +151,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
@@ -191,9 +182,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
@@ -224,9 +213,7 @@
                             <td>
                                 <p>6h</p>
                             </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                              
                             <td>
                                 <p>1000</p>
                             </td>  
