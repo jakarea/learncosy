@@ -128,7 +128,7 @@
                                     <a href="{{ url('admin/courses/'.$value->course->slug)}}" class="common-bttn text-white">View</a>
                                 </td>
                             </tr> 
-                            @endforeach
+                            @endforeach 
                             {{-- item @E --}} 
                         </table>
                     </div>

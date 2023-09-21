@@ -214,6 +214,11 @@
     }
 }
 
+.navbar-toggler i{
+    color: #294CFF;
+    font-size: 1.2rem;
+}
+
 // responsive css start
 @include q.responsive(phone) {
     .header-area {

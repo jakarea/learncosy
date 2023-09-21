@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GeneratepdfController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -15,8 +16,6 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
-
-
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\CheckoutController;
@@ -56,6 +55,10 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
+Route::get('/system/notification', function () {
+    return view('instructor.notification.system');
+});
+
 
 // custom auth screen route
 Route::get('/auth-login', function(){
@@ -66,25 +69,50 @@ Route::get('/auth-login', function(){
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $loginPageStyle = json_decode($instrcutorModuleSettings->value);
 
-    if ($loginPageStyle->lp_layout == 'fullwidth') {
-        return view('login/login2');
-    }
-    elseif($loginPageStyle->lp_layout == 'default'){
-        return view('login/login3');
-    }
-    elseif($loginPageStyle->lp_layout == 'leftsidebar'){
-        return view('login/login5');
-    }
-    elseif($loginPageStyle->lp_layout == 'rightsidebar'){
-        return view('login/login4');
-    }else{
-        return view('login/login');
+    if ($loginPageStyle) {
+        if ($loginPageStyle->lp_layout == 'fullwidth') {
+            return view('login/login2');
+        }
+        elseif($loginPageStyle->lp_layout == 'default'){
+            return view('login/login3');
+        }
+        elseif($loginPageStyle->lp_layout == 'leftsidebar'){
+            return view('login/login5');
+        }
+        elseif($loginPageStyle->lp_layout == 'rightsidebar'){
+            return view('login/login4');
+        }else{
+            return view('auth/login');
+        }
     }
 
 })->name('tlogin')->middleware('guest');
 
 Route::get('/auth-register', function(){
-    return view('custom-auth/register');
+
+    $subdomain = explode('.', request()->getHost())[0];
+    
+    $instrcutor = User::where('username', $subdomain)->firstOrFail();
+    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
+    $registerPageStyle = json_decode($instrcutorModuleSettings->value);
+
+    if ($registerPageStyle) {
+        if ($registerPageStyle->lp_layout == 'fullwidth') {
+            return view('register/register2');
+        }
+        elseif($registerPageStyle->lp_layout == 'default'){
+            return view('register/register1');
+        }
+        elseif($registerPageStyle->lp_layout == 'leftsidebar'){
+            return view('register/register3');
+        }
+        elseif($registerPageStyle->lp_layout == 'rightsidebar'){
+            return view('register/register4');
+        }else{
+            return view('auth/register');
+        }
+    }
+
 })->name('tregister')->middleware('guest'); 
 
 Route::get('/auth/password/reset', function(){
@@ -185,21 +213,20 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'studentsPayment');  
             
             Route::get('/{payment_id}', 'details');  
+            Route::get('/generate-pdf/{id}','generatePdf')->name('generate-pdf');
             Route::get('/platform-fee', 'adminPayment');  
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
         // course page routes
-        // Route::prefix('courses')->controller(CourseController::class)->group(function () {
-        //     Route::get('/', 'index')->name('instructor.courses'); 
-        //     // data table route 
-        //     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
-        //     //Route::get('/create', 'create');
-        //     Route::post('/create', 'store')->name('course.store');
-        //     Route::get('/{slug}', 'show')->name('course.show');   
-        //     Route::get('/{slug}/edit', 'edit')->name('course.edit');
-        //     Route::post('/{slug}/edit', 'update')->name('course.update'); 
-        //     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
-        // });
+        Route::prefix('courses')->controller(CourseController::class)->group(function () {
+            Route::get('/', 'index')->name('instructor.courses');  
+            //Route::get('/create', 'create');
+            // Route::post('/create', 'store')->name('course.store');
+            Route::get('/{slug}', 'show')->name('course.show');   
+            // Route::get('/{slug}/edit', 'edit')->name('course.edit');
+            // Route::post('/{slug}/edit', 'update')->name('course.update'); 
+            Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+        });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
             
@@ -292,6 +319,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/{id}', 'index')->name('module.setting');
             Route::get('dns/{id}', 'dnsTheme')->name('module.dns.setting');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
+            Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });
         // profile management page routes
@@ -313,8 +341,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // all students profile page routes for instructor
         Route::prefix('students')->controller(StudentController::class)->group(function () {
-            Route::get('/', 'index')->name('allStudents'); 
-            Route::get('/datatable', 'studentsDataTable')->name('students.data.table');
+            Route::get('/', 'index')->name('allStudents');  
             Route::get('/create', 'create'); 
             Route::post('/create', 'store')->name('student.add');
             Route::get('/profile/{id}', 'show')->name('studentProfile'); 
@@ -362,6 +389,8 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');  
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 
+    Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
+
     
     // student checkout page routes
     Route::prefix('checkout')->controller(CheckoutController::class)->group(function () {
@@ -395,7 +424,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
-        Route::get('/dashboard/top-perform/courses', 'perform');
+        Route::get('/top-perform/courses', 'perform');
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin'); 
@@ -495,6 +524,8 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
     });
 });
+
+// Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {
     Auth::logout();

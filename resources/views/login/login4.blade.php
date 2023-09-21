@@ -49,7 +49,7 @@
                             <h6>Welcome to <span>Learn Cosy</span></h6>
                             <div>
                                 <p>No Account ?</p>
-                                <a href="#">Sign up</a>
+                                <a href="{{url('/register')}}">Sign up</a>
                             </div>
                         </div>
                         <h1>Sign in</h1> 

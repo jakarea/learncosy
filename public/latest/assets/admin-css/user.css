@@ -1610,6 +1610,45 @@
   color: #fff;
 }
 
+.goto-course-box {
+  border-radius: 0.75rem;
+  background: var(--White, #FFF);
+  padding: 1.5rem;
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.04), 0px 20px 24px -4px rgba(16, 24, 40, 0.1);
+  text-align: center;
+}
+.goto-course-box h1 {
+  color: var(--gray-900, #101828);
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.75rem;
+}
+.goto-course-box p {
+  color: var(--gray-500, #667085);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  margin-top: 1rem;
+}
+.goto-course-box a.go-to-account-course {
+  border-radius: 0.5rem;
+  border: 1px solid var(--primary-600, #7F56D9);
+  background: var(--primary-color-blue, #294CFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  color: var(--White, #FFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 0.625rem 1.125rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;
@@ -1777,7 +1816,10 @@
   .header-action .dropdown-menu {
     transform: translate3d(-41.6px, -26.6px, 0px) !important;
   }
-  .user-details-box h2, .user-details-box h3, .user-details-box h4, .user-details-box h5,
+  .user-details-box h2,
+  .user-details-box h3,
+  .user-details-box h4,
+  .user-details-box h5,
   .contact-info-box h4 {
     font-size: 1.2rem;
   }
@@ -1906,7 +1948,8 @@
   .user-search-box-wrap {
     grid-template-columns: 85% 15% !important;
   }
-  .user-add-box button, .user-add-box a {
+  .user-add-box button,
+  .user-add-box a {
     font-size: 0.8rem;
   }
   .user-add-box {

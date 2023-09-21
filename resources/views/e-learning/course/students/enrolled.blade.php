@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <form action="" method="GET">
+                <form action="" method="GET" id="myForm">
                     <div class="row">
                         <div class="col-xl-7 col-md-8">
                             <div class="user-search-box-wrap">
@@ -32,19 +32,25 @@
                                     <input type="text" placeholder="Search Course" class="form-control" name="title"
                                         value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                                 </div>
+                                <input type="hidden" name="status" id="inputField">
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-4">
-                            <div class="user-search-box-wrap">
-                                <div class="form-filter">
-                                    <select class="form-control">
-                                        <option value="">Best Rated</option>
-                                        <option value="">Most Purchased</option>
-                                        <option value="">Newest</option>
-                                        <option value="">Oldest</option>
-                                    </select>
-                                    <i class="fas fa-angle-down"></i>
+                            <div class="filter-dropdown-box">
+                                <div class="dropdown">
+                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="dropdownBttn">
+                                        All
+                                    </button> 
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest</a></li>
+                                    </ul>
                                 </div>
+                                <i class="fas fa-angle-down"></i>
                             </div>
                         </div>
                         <div class="col-xl-2 col-md-5">
@@ -71,21 +77,26 @@
                 if($total)
                     $review_avg = $review_sum / $total;
             @endphp
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item"> 
-                    <div class="course-thumb-box"> 
-                        <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
+                    <div>
+                        <div class="course-thumb-box"> 
+                            <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
+                        </div>
+                        <div class="course-txt-box">
+                            <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 45) }}</a>
+                            <p>{{ Str::limit($enrolment->course->short_description, $limit = 26, $end = '...') }}</p>
+                            <ul>
+                                <li><span>{{ $review_avg }}</span></li>
+                                @for ($i = 0; $i<$review_avg; $i++)
+                                    <li><i class="fas fa-star"></i></li>
+                                @endfor
+                                <li><span>({{ $total }})</span></li>
+                            </ul>
+                            
+                        </div> 
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 45) }}</a>
-                        <p>{{ Str::limit($enrolment->course->short_description, $limit = 26, $end = '...') }}</p>
-                        <ul>
-                            <li><span>{{ $review_avg }}</span></li>
-                            @for ($i = 0; $i<$review_avg; $i++)
-                                <li><i class="fas fa-star"></i></li>
-                            @endfor
-                            <li><span>({{ $total }})</span></li>
-                        </ul>
                         <div class="course-progress-bar">
                             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}" aria-valuemin="0" aria-valuemax="100">
                                 @if (StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) == 100)
@@ -106,7 +117,7 @@
                             </div>
                             
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             {{-- course single box end --}}
@@ -133,8 +144,44 @@
 @endsection
 {{-- page content @E --}}
 
+
 {{-- page script @S --}}
 @section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let title = urlParams.get('title');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
+        if(status == "best_rated"){
+            dropbtn.innerText = 'Best Rated';
+        }
+        if(status == "most_purchased"){
+            dropbtn.innerText = 'Most Purchased';
+        }
+        if(status == "newest"){
+            dropbtn.innerText = 'Newest';
+        }
+        if(status == "oldest"){
+            dropbtn.innerText = 'Oldest';
+        }
+
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
 @endsection
-{{-- page script @E --}} 
+{{-- page script @E --}}

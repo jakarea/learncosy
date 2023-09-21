@@ -19,69 +19,20 @@ class InstructorController extends Controller
      public function index()
      {    
         $user_role = "instructor"; 
-
         $name = isset($_GET['name']) ? $_GET['name'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
         $users = User::where('user_role',$user_role)->orderBy('id', 'desc');
-        if (!empty($name)) {
+        if ($name) {
             $users->where('name', 'like', '%' . trim($name) . '%');
         }
-        $users = $users->paginate(2);
- 
+        if ($status) {
+            $users->where('status', '=', $status);
+        }
+        $users = $users->paginate(12);
+
         return view('instructor/admin/grid',compact('users')); 
      }
-
-     // data table getData
-    public function instructorDataTable()
-    {       $user_role = "instructor";
-            $user = User::where('user_role',$user_role)->get();
-          
-            return Datatables::of($user)
-                ->addColumn('action', function($user){ 
-                     
-                    $actions = '<div class="action-dropdown">
-                        <div class="dropdown">
-                            <a class="btn btn-drp" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="bttns-wrap"> 
-                                    <a class="dropdown-item" href="/admin/instructor/profile/'.$user->id.'"> <i class="fas fa-eye"></i></a>  
-                                    <a class="dropdown-item" href="/admin/instructor/'.$user->id.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/admin/instructor/'.$user->id.'/destroy">  
-                                    '.csrf_field().'
-                                    '.method_field("DELETE").'
-                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                    </form>    
-                                </div>
-                            </div> 
-                        </div>
-                    </div>';
-
-                    return $actions;
-
-                })
-                ->editColumn('image', function ($user) { 
-                    if($user->avatar){
-                        return '<img src="/assets/images/users/'.$user->avatar.'" width="50" />';
-                    }else{ 
-                        return '<div class="table-avatar">
-                                <span>'.strtoupper($user->name[0]).'</span>
-                            </div>';
-                    } 
-            })
-            ->editColumn('status', function ($user) {
-                if($user->recivingMessage == 1){
-                    return '<label class="badge bg-success">'.__('Enabled').'</label>';
-                }
-                if($user->recivingMessage == 0){
-                    return '<label class="badge bg-danger">'.__('Disabled').'</label>';
-                } 
-             })
-            ->addIndexColumn()
-            ->rawColumns(['action', 'image','status'])
-            ->make(true);
-    }
 
      // create page 
      public function create()

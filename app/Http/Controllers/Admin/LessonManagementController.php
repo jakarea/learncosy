@@ -19,14 +19,17 @@ class LessonManagementController extends Controller
 
          $title = isset($_GET['title']) ? $_GET['title'] : '';
          $status = isset($_GET['status']) ? $_GET['status'] : '';
-         $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
+
+         $lessons = Lesson::orderby('id', 'desc');
          
-         if (!empty($title)) {
+         if ($title) {
              $lessons->where('title', 'like', '%' . trim($title) . '%');
          }
-         if (!empty($status)) {
-             $lessons->where('status', 'like', '%' . trim($status) . '%');
-         }
+
+         if ($status) {
+            $lessons->where('status', '=', $status);
+        }
+
          $lessons = $lessons->paginate(12);
 
          return view('e-learning/lesson/admin/grid',compact('lessons')); 

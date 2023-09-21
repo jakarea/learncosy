@@ -18,16 +18,9 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        {{-- <div class="row">
-            <div class="col-12">
-                <div class="user-title-box">
-                    <h1>Total: <span>{{ count($courses) }} Courses</span></h1>
-                </div>
-            </div>
-        </div> --}}
-        <div class="row">
-            <div class="col-12">
-                <form action="" method="GET">
+        <form action="" method="GET" id="myForm">
+            <div class="row">
+                <div class="col-12">
                     <div class="row">
                         <div class="col-xl-8 col-md-8">
                             <div class="user-search-box-wrap">
@@ -36,30 +29,37 @@
                                     <input type="text" placeholder="Search Course" class="form-control" name="title"
                                         value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                                 </div>
+                                <input type="hidden" name="status" id="inputField">
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-4">
-                            <div class="user-search-box-wrap">
-                                <div class="form-filter">
-                                    <select class="form-control">
-                                        <option value="">Best Rated</option>
-                                        <option value="">Most Purchased</option>
-                                        <option value="">Newest</option>
-                                        <option value="">Oldest</option>
-                                    </select>
-                                    <i class="fas fa-angle-down"></i>
+                        <div class="col-xl-3 col-md-4"> 
+                            <div class="filter-dropdown-box">
+                                <div class="dropdown">
+                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                        id="dropdownBttn">
+                                        All
+                                    </button> 
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest</a></li>
+                                    </ul>
                                 </div>
+                                <i class="fas fa-angle-down"></i>
                             </div>
                         </div>
                         <div class="col-xl-1 col-md-5">
                             <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                <button type="submit" class="btn text-white"><i class="fas fa-search text-white me-2"></i> Search</button>
+                                <button type="submit" class="btn text-white"><i
+                                        class="fas fa-search text-white me-2"></i> Search</button>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
         <div class="row">
             @if (count($courses) > 0)
             @foreach ($courses as $course)
@@ -74,43 +74,50 @@
             if($total)
             $review_avg = $review_sum / $total;
             @endphp
+            
             {{-- course single box start --}}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
-                    <div class="course-thumb-box">
-                        <div class="header-action">
-                            <div class="dropdown">
-                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('admin/courses/'.$course->slug)}}">View</a>
-                                    </li>
-                                    <li>
-                                        <form method="post" class="d-inline"
-                                            action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="dropdown-item btn text-danger">Delete </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                    <div>
+                        <div class="course-thumb-box">
+                            <div class="header-action">
+                                <div class="dropdown">
+                                    <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"
+                                                href="{{url('admin/courses/'.$course->slug)}}">View</a>
+                                        </li>
+                                        <li>
+                                            <form method="post" class="d-inline"
+                                                action="{{ url('admin/courses/'.$course->slug.'/destroy') }}">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="dropdown-item btn text-danger">Delete
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
+                                class="img-fluid">
                         </div>
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
-                            class="img-fluid">
+                        <div class="course-txt-box">
+                            <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40,
+                                $end = '..') }}</a>
+                            <p>{{ $course->user->username }}</p>
+                            <ul>
+                                <li><span>{{ $review_avg }}</span></li>
+                                @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="course-txt-box">
-                        <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40,
-                            $end = '..') }}</a>
-                        <p>{{ $course->user->username }}</p>
-                        <ul>
-                            <li><span>{{ $review_avg }}</span></li>
-                            @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
-                                @endfor
-                                <li><span>({{ $total }})</span></li>
-                        </ul>
                         @if($course->offer_price)
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                         @else
@@ -141,3 +148,45 @@
     </div>
 </main>
 @endsection
+{{-- page content @E --}}
+
+{{-- page script @S --}}
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let title = urlParams.get('title');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if(status == "best_rated"){
+            dropbtn.innerText = 'Best Rated';
+        }
+        if(status == "most_purchased"){
+            dropbtn.innerText = 'Most Purchased';
+        }
+        if(status == "newest"){
+            dropbtn.innerText = 'Newest';
+        }
+        if(status == "oldest"){
+            dropbtn.innerText = 'Oldest';
+        }
+
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
+        });
+    });
+</script>
+@endsection
+{{-- page script @E --}}

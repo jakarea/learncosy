@@ -16,6 +16,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                {{-- session message @S --}}
+                @include('partials/session-message')
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+                    Module settings Reset successfully
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                    Module settings Reset Failed
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {{-- session message @E --}}
                 <div class="own-profile-box account-settings-box">
                     <div class="header">
                         <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -47,17 +58,19 @@
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <label for="imageInput" class="file-upload-area pb-2" id="file-upload-area"> 
-                                                                
-                                                                @if(isset($module_settings->logo))
-                                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
-                                                                    alt="logo" class="img-fluid rounded mt-2">
-                                                                    @else 
-                                                                    <img src="{{asset('latest/assets/images/logo-view.svg')}}"
-                                                                    alt="a" class="img-fluid">
-                                                                @endif
-                                                                <img src="" alt="" class="img-fluid rounded mt-2" id="preview">
+                                                            <label for="imageInput" class="file-upload-area pb-2"
+                                                                id="file-upload-area">
 
+                                                                @if(isset($module_settings->logo) ||
+                                                                $module_settings->logo != null)
+                                                                <img src="{{ asset('assets/images/setting/'.$module_settings->logo) }}"
+                                                                    alt="" class="img-fluid rounded mt-2">
+                                                                @else
+                                                                <img src="{{asset('latest/assets/images/logo-view.svg')}}"
+                                                                    alt="" class="img-fluid">
+                                                                @endif
+                                                                <img src="" alt="" class="img-fluid rounded mt-2"
+                                                                    id="preview">
                                                             </label>
 
                                                             <input type="file" name="logo" id="imageInput"
@@ -69,7 +82,8 @@
                                                             <h6 class="mt-3">App Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <div class="media align-items-center flex-column flex-lg-row">
+                                                            <div
+                                                                class="media align-items-center flex-column flex-lg-row">
                                                                 <label for="app_logo"
                                                                     class="file-upload-area file-upload-2 mt-1">
 
@@ -78,23 +92,25 @@
 
                                                                     <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
                                                                         alt="a" class="img-fluid me-0 dark-ele">
-                                                                    <p class="mt-2"><span>Click to upload</span> SVG, PNG, JPG, or GIF <br> (max. 300x300px)</p>
+                                                                    <p class="mt-2"><span>Click to upload</span> SVG,
+                                                                        PNG, JPG, or GIF <br> (max. 300x300px)</p>
                                                                 </label>
 
-                                                                @if(isset($module_settings->app_logo))
+                                                                @if(isset($module_settings->app_logo) ||
+                                                                $module_settings->app_logo != null)
                                                                 <img src="{{ asset('assets/images/setting/'.$module_settings->app_logo) }}"
-                                                                    alt="logo" class="img-fluid rounded mt-2 preview-img">
+                                                                    alt="logo"
+                                                                    class="img-fluid rounded mt-2 preview-img">
                                                                 @endif
 
                                                                 <input type="file" name="app_logo" id="app_logo"
                                                                     accept="image/*" onchange="previewImage5()"
                                                                     class="form-control d-none  ">
-                                                                <span class="invalid-feedback"></span> 
+                                                                <span class="invalid-feedback"></span>
                                                             </div>
 
-                                                            <img src="" id="preview5" alt="" class="img-fluid rounded mt-2">
-
-                                                           
+                                                            <img src="" id="preview5" alt=""
+                                                                class="img-fluid rounded mt-2">
 
                                                         </div>
                                                         <div class="feat-box">
@@ -109,14 +125,14 @@
 
                                                                 <div class="color-position">
                                                                     <input type="color" class="form-control p-0"
-                                                                    name="primary_color" id="primary_color"
-                                                                    value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
+                                                                        name="primary_color" id="primary_color"
+                                                                        value="{{ old('primary_color', $module_settings->value->primary_color ?? '')}}">
 
-                                                                <label for="primary_color">
-                                                                    <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
-                                                                        alt="Color" class="img-fluid me-0">
-                                                                </label>
-                                                                </div> 
+                                                                    <label for="primary_color">
+                                                                        <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                            alt="Color" class="img-fluid me-0">
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                             <div class="media">
                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -128,16 +144,13 @@
                                                                 </div>
                                                                 <div class="color-position">
                                                                     <input type="color" class="form-control"
-                                                                    name="secondary_color" id="secondary_color"
-                                                                    value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}">
+                                                                        name="secondary_color" id="secondary_color"
+                                                                        value="{{ old('secondary_color', $module_settings->value->secondary_color ?? '')}}">
                                                                     <label for="secondary_color">
-                                                                    <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
-                                                                        alt="Color" class="img-fluid me-0">
-                                                                </label>
+                                                                        <img src="{{asset('latest/assets/images/icons/pen-ic.svg')}}"
+                                                                            alt="Color" class="img-fluid me-0">
+                                                                    </label>
                                                                 </div>
-                                                                
-
-                                                                
                                                             </div>
                                                         </div>
                                                         <div
@@ -243,7 +256,7 @@
 
                                                                     <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
                                                                         alt="a" class="img-fluid me-0 dark-ele">
-                                                                        
+
                                                                     <p class="mt-2"><span>Click to upload</span> or drag
                                                                         and drop</p>
                                                                 </label>
@@ -251,9 +264,7 @@
                                                                 <input type="file" name="lp_bg_image" id="lp_bg_image"
                                                                     accept="image/*" onchange="previewImage2()"
                                                                     class="form-control d-none  @error('lp_bg_image') is-invalid @enderror">
-                                                                <span class="invalid-feedback">@error('lp_bg_image'){{
-                                                                    $message }}
-                                                                    @enderror</span>
+
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Upload Login Page Background Image</h6>
@@ -272,7 +283,7 @@
 
                                                             @endif
 
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-12 col-xl-4">
@@ -306,10 +317,10 @@
 
                                                             <label for="favicon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                        alt="a" class="img-fluid me-0 light-ele">
+                                                                    alt="a" class="img-fluid me-0 light-ele">
 
-                                                                    <img src="{{asset('latest/assets/images/icons/upload-3.svg')}}"
-                                                                        alt="a" class="img-fluid me-0 dark-ele">
+                                                                <img src="{{asset('latest/assets/images/icons/upload-3.svg')}}"
+                                                                    alt="a" class="img-fluid me-0 dark-ele">
                                                                 <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
@@ -342,10 +353,10 @@
 
                                                             <label for="apple_icon" class="file-upload-area">
                                                                 <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                        alt="a" class="img-fluid me-0 light-ele">
+                                                                    alt="a" class="img-fluid me-0 light-ele">
 
-                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
-                                                                        alt="a" class="img-fluid me-0 dark-ele">
+                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                    alt="a" class="img-fluid me-0 dark-ele">
                                                                 <p><span>Click to upload</span> z <br>
                                                                     SVG, PNG, JPG, or GIF
                                                                     (max. 300x300px)</p>
@@ -362,14 +373,16 @@
                                                                 id="preview4">
 
                                                             @if(isset($module_settings->apple_icon))
-                                                            <img id="nweImg" src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
+                                                            <img id="nweImg"
+                                                                src="{{ asset('assets/images/setting/'.$module_settings->apple_icon) }}"
                                                                 alt="" class="img-fluid rounded mt-2"> @endif
 
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="save-bttns pb-5">
-                                                            <button type="button" class="btn btn-cancel">Cancel</button>
+                                                            <button type="button" class="btn btn-cancel"
+                                                                id="deleteButton">Reset</button>
                                                             <button type="submit" class="btn btn-submit">Save</button>
                                                         </div>
                                                     </div>
@@ -746,6 +759,55 @@
         cards.forEach(c => c.classList.remove("active"));
         this.classList.add("active")
       })
+    });
+</script>
+
+
+{{-- theme reset ajax request with featch --}}
+<script> 
+ 
+    let currentURL = window.location.href; 
+    const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
+    const deleteButton = document.getElementById('deleteButton');
+
+    deleteButton.addEventListener('click', () => {
+        const confirmation = window.confirm('If you Reset Settings! All of your preferrence will be deleted and can not be undo!');
+
+        if (confirmation) {
+            const moduleId = {{ $module_settings->id }};
+ 
+ 
+            fetch(`${baseUrl}/instructor/theme/setting/reset/${moduleId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Theme Reset') {
+                   document.querySelector('.alert-success').style.display = "block";
+
+                   window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                   setTimeout(() => {
+                        window.location.reload();
+                   }, 2000);
+
+
+                } else {
+                    document.querySelector('.alert-danger').style.display = "block"; 
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }
     });
 </script>
 

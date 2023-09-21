@@ -18,11 +18,11 @@ class ModuleController extends Controller
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
         $modules = Module::where('user_id',auth::user()->id)->orderby('id', 'desc');
-        if (!empty($title)) {
+        if ($title) {
             $modules->where('title', 'like', '%' . trim($title) . '%');
         }
-        if (!empty($status)) {
-            $modules->where('status', 'like', '%' . trim($status) . '%');
+        if ($status) {
+            $modules->where('status', '=', $status);
         }
         $modules = $modules->paginate(12);
 

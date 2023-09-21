@@ -93,7 +93,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="subscription-table-wrap earning-table">
+                <div class="subscription-table-wrap earning-table subs-table">
                     <table>
                         <tr>
                             <th width="5%">No</th>
