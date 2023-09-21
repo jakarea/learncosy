@@ -130,6 +130,6 @@ class ModuleController extends Controller
         }
         $module->delete();
 
-        return redirect('instructor/modules')->with('success', 'Module deleted!');
+        return redirect()->back()->with('success', 'Module Successfuly deleted!');
     }
 }

@@ -794,6 +794,7 @@ span.finsihLesson {
   justify-content: flex-end;
   align-items: center;
 }
+.page-type .d-flex label,
 .page-type .d-flex a {
   display: inline-flex;
   color: var(--neutral-color-neutral-60, #66768E);
@@ -803,12 +804,15 @@ span.finsihLesson {
   line-height: 1.25rem;
   margin-left: 1rem;
 }
+.page-type .d-flex label img,
 .page-type .d-flex a img {
   margin-right: 0.5rem;
 }
+.page-type .d-flex label.active,
 .page-type .d-flex a.active {
   color: #294CFF;
 }
+.page-type .d-flex label.active img,
 .page-type .d-flex a.active img {
   filter: invert(31%) sepia(87%) saturate(6650%) hue-rotate(233deg) brightness(105%) contrast(101%);
 }
@@ -1880,6 +1884,20 @@ span.finsihLesson {
 .close-bttn i {
   font-size: 1rem;
   color: #294CFF;
+}
+
+.module-dropdown-box {
+  display: flex;
+  align-items: center;
+}
+.module-dropdown-box .dropdown-item {
+  margin-left: 0 !important;
+}
+
+.course-content-box.course-page-box .dropdown-menu {
+  top: -50px !important;
+  overflow-y: visible;
+  min-height: 115px !important;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {
