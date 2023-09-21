@@ -424,7 +424,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
-        Route::get('/dashboard/top-perform/courses', 'perform');
+        Route::get('/top-perform/courses', 'perform');
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin'); 

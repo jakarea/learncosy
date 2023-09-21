@@ -40,7 +40,7 @@ class CourseManagementController extends Controller
             $courses->orderBy('id', 'desc'); 
         }
 
-        $courses = $courses->paginate(12);
+        $courses = $courses->paginate(16);
  
         return view('e-learning/course/admin/list',compact('courses'));  
     }
