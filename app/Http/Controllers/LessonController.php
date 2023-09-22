@@ -281,6 +281,9 @@ class LessonController extends Controller
          }
         $lesson->delete();
 
-        return redirect('instructor/lessons')->with('success', 'Lesson deleted!');
+        return redirect()->back()->with('success', 'Lesson deleted!');
+
+
+        // return redirect('instructor/lessons')->with('success', 'Lesson deleted!');
     }
 }

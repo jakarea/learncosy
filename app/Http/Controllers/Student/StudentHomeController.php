@@ -6,6 +6,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\course_like;
 use App\Models\Module;
 use App\Models\Checkout;
 use App\Models\CourseLog;
@@ -20,8 +21,10 @@ class StudentHomeController extends Controller
     // dashboard
     public function dashboard(){ 
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
+
+       $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
         
-        return view('e-learning/course/students/dashboard', compact('enrolments')); 
+        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses')); 
     }
 
     // dashboard
@@ -101,9 +104,16 @@ class StudentHomeController extends Controller
     {   
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+        $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
+
+        $liked = '';
+
+        if ($course_like ) {
+            $liked = 'active';
+        }
         
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','course_reviews'));
+            return view('e-learning/course/students/show', compact('course','course_reviews','liked'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -243,5 +253,29 @@ class StudentHomeController extends Controller
     public function message2()
     {    
         return view('e-learning/course/students/message-2'); 
+    }
+
+    public function courseLike($course_id, $ins_id)
+    {
+
+        $course_liked = course_like::where('course_id', $course_id)->where('instructor_id', $ins_id)->first();
+
+        if ($course_liked) {
+             $course_liked->delete();
+             $status = 'unliked';
+        }else{
+            $course_like = new course_like([
+                'course_id' => $course_id,
+                'instructor_id' => $ins_id,
+                'user_id' => Auth::user()->id,
+                'status' => 1,
+            ]);
+            $course_like->save();
+
+            $status = 'liked';
+        }
+
+
+        return response()->json(['message' => $status]);
     }
 }

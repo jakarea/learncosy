@@ -62,7 +62,7 @@
                     <h4>Course Details</h4>
                     <div class="row">
                         <div class="col-lg-6">
-                            <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> 200 Enrolled</p>
+                            {{-- <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> 200 Enrolled</p> --}}
                             <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> English</p>
                             <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
                             <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_module}} Modules</p>
@@ -92,7 +92,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>{{$module->title}}</h5>
-                            <p>{{$module->number_of_lesson}} Lessons. {{$module->duration}} Duration</p>
+                            <p>{{$module->number_of_lesson}} Lessons. {{$module->duration}} M. Duration</p>
                         </div>
                         <img src="{{asset('latest/assets/images/full.svg')}}" alt="full"  class="img-fluid light-ele">
                         <img src="{{asset('latest/assets/images/cir-2.svg')}}" alt="full"  class="img-fluid dark-ele">

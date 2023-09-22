@@ -66,40 +66,36 @@ Course Create - Step 11
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-7 col-xl-6">
                 <div class="share-on-social-wrap">
-                    <h4>Share</h4> 
+                    <h4>Share</h4>
 
                     <h6>As a post</h6>
 
                     <div class="d-flex">
-                        <a href="#">
-                           
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}" target="_blank">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}"
+                            target="_blank">
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
                         </a>
                         <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/ins.svg')}}" alt="FB" class="img-fluid">
-                            <span>Instagram</span>
+                            <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
+                            <span>Telegram</span>
                         </a>
-                        <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/tkt.svg')}}" alt="FB" class="img-fluid">
-                            <span>Tiktok</span>
+                        <a href="https://www.linkedin.com/shareArticle?url={{ url('courses',$course->slug)}}" target="_blank">
+                            <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
+                                class="img-fluid">
+                            <span>LinkedIn</span>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ url('courses',$course->slug)}}&text={{ $course->title }}" target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB" class="img-fluid">
+                        <a href="https://twitter.com/intent/tweet?url={{ url('courses',$course->slug)}}&text={{ $course->title }}"
+                            target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB"
+                                class="img-fluid">
                             <span>Twitter</span>
                         </a>
-                        <a href="https://www.linkedin.com/shareArticle?url=http://example.com" target="_blank">
-                            <img src="{{asset('latest/assets/images/icons/linkedin.svg')}}" alt="FB" class="img-fluid">
-                            <span>LinkedIn</span></a>
-
-
                     </div>
 
                     <h6>As a message</h6>
 
                     <div class="d-flex">
-                        
+
                         <a href="https://www.messenger.com/share.php?text={{ url('courses',$course->slug) }}">
                             <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                             <span>Messenger</span>
@@ -112,17 +108,18 @@ Course Create - Step 11
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
-                        <a href="#">
-                            <img src="{{asset('latest/assets/images/icons/twec.svg')}}" alt="FB" class="img-fluid">
-                            <span>Wechat</span>
-                        </a>
                     </div>
 
-                    <h6>Or copy link</h6>
+                    <div class="d-flex align-items-center justify-content-between mb-0">
+                        <h6>Or copy link</h6>
+                        <span id="notify" style="color: green; font-size: 14px;"></span>
+                    </div>
+                    
 
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="{{ url('courses', $course->slug)}}" class="form-control">
-                        <a href="#">Copy</a>
+                        <input type="text" placeholder="Link" value="{{ url('courses', $course->slug)}}"
+                            class="form-control" id="linkToCopy">
+                        <a href="#" id="copyButton">Copy</a>
                     </div>
 
                 </div>
@@ -133,5 +130,17 @@ Course Create - Step 11
 {{-- page content @E --}}
 
 @section('script')
+<script>
+    const copyButton = document.getElementById("copyButton");
+    const linkToCopy = document.getElementById("linkToCopy");
+    const notify = document.getElementById("notify");
 
+    copyButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        linkToCopy.select();
+        document.execCommand("copy"); 
+        notify.innerText = 'Copied!';
+    });
+
+</script>
 @endsection

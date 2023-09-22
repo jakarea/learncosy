@@ -185,9 +185,9 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/complete', function(){
         return view('latest-auth.price');
     });
-    Route::get('/profile/step-3/complete', function(){
-        return view('latest-auth.subdomain');
-    });
+    
+    Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+
     Route::get('/profile/step-4/complete', function(){
         return view('latest-auth.connect');
     });
@@ -223,58 +223,55 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
         // course page routes
-        // Route::prefix('courses')->controller(CourseController::class)->group(function () {
-        //     Route::get('/', 'index')->name('instructor.courses'); 
-        //     // data table route 
-        //     Route::get('/datatable', 'courseDataTable')->name('courses.data.table'); 
-        //     //Route::get('/create', 'create');
-        //     Route::post('/create', 'store')->name('course.store');
-        //     Route::get('/{slug}', 'show')->name('course.show');   
-        //     Route::get('/{slug}/edit', 'edit')->name('course.edit');
-        //     Route::post('/{slug}/edit', 'update')->name('course.update'); 
-        //     Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
-        // });
+        Route::prefix('courses')->controller(CourseController::class)->group(function () {
+            Route::get('/', 'index')->name('instructor.courses');  
+            //Route::get('/create', 'create');
+            // Route::post('/create', 'store')->name('course.store');
+            // Route::get('/{slug}', 'show')->name('course.show');   
+            // Route::get('/{slug}/edit', 'edit')->name('course.edit');
+            // Route::post('/{slug}/edit', 'update')->name('course.update'); 
+            Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+        });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
             
             // add course static route
-            Route::get('/', 'step1')->name('course.create.step-1');
+            Route::get('/', 'start')->name('course.create.step-1');
+            Route::post('created/', 'startSet')->name('course.create.start');
 
-            Route::post('/{id}', 'step1c')->name('course.store.step-1');
-            Route::post('/', 'step1c')->name('course.store.step-1');
-            Route::get('/{id}', 'step1')->where('id', '[0-9]+')->name('course.store.step-1');
+            Route::get('/{id}/facts', 'step1');
+            Route::post('/{id}/facts', 'step1c')->name('course.store.step-1');
 
+            Route::get('{id}', 'step3');
+            Route::post('{id}', 'step3c');
+            Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');
+            Route::post('{id}/factsu', 'step3cu')->name('course.module.step.update');
+            Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
 
-            Route::get('/{id}/content', 'step2');
-            Route::post('/{id}/content', 'step2c');
+            Route::get('{id}/text/{module_id}/content/{lesson_id}', 'stepLessonText');
+            Route::post('{lesson_id}/step-lesson-content', 'stepLessonContent')->name('course.lesson.text.update');
+ 
+            Route::get('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudio');
+            Route::post('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudioSet')->name('course.lesson.audio.create');
 
-            Route::get('{id}/facts', 'step3');
-            Route::post('{id}/facts', 'step3c');
+            Route::get('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideo');
+            Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
 
-            Route::get('{id}/audio', 'step4');
-            Route::post('step-4', 'step4c');
+            Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
-            Route::get('/{id}/video', 'step5');
-            Route::post('step-5', 'step5c');
+            Route::get('{id}/price', 'coursePrice');
+            Route::post('{id}/price', 'coursePriceSet');
 
-            Route::get('step-6', function () {
-                return view('e-learning/course/instructor/create/step-3');
-            });
+            Route::get('{id}/design', 'courseDesign');
+            Route::post('{id}/design', 'courseDesignSet');
 
-            Route::get('step-7', 'step7');
-            Route::post('step-7', 'step7c');
+            Route::get('{id}/certificate', 'courseCertificate');
+            Route::post('{id}/certificate', 'courseCertificateSet');
 
-            Route::get('step-8', 'step8');
-            Route::post('step-8', 'step8c');
+            Route::get('{id}/visibility', 'visibility');
+            Route::post('{id}/visibility', 'visibilitySet');
 
-            Route::get('step-9', 'step9');
-            Route::post('step-9', 'step9c');
-
-            Route::get('step-10', 'step10');
-            Route::post('step-10', 'step10c');
-
-            Route::get('step-11', 'step11');
-            Route::post('step-11', 'step11c');
+            Route::get('{id}/share', 'courseShare');
 
         });
         // module page routes
@@ -348,8 +345,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // all students profile page routes for instructor
         Route::prefix('students')->controller(StudentController::class)->group(function () {
-            Route::get('/', 'index')->name('allStudents'); 
-            Route::get('/datatable', 'studentsDataTable')->name('students.data.table');
+            Route::get('/', 'index')->name('allStudents');  
             Route::get('/create', 'create'); 
             Route::post('/create', 'store')->name('student.add');
             Route::get('/profile/{id}', 'show')->name('studentProfile'); 
@@ -397,6 +393,8 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');  
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 
+    Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
+
     
     // student checkout page routes
     Route::prefix('checkout')->controller(CheckoutController::class)->group(function () {
@@ -430,7 +428,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
-        Route::get('/dashboard/top-perform/courses', 'perform');
+        Route::get('/top-perform/courses', 'perform');
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin'); 

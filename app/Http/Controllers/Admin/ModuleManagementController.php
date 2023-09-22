@@ -19,12 +19,13 @@ class ModuleManagementController extends Controller
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
+
         $modules = Module::orderby('id', 'desc');
-        if (!empty($title)) {
+        if ($title) {
             $modules->where('title', 'like', '%' . trim($title) . '%');
         }
-        if (!empty($status)) {
-            $modules->where('status', 'like', '%' . trim($status) . '%');
+        if ($status) {
+            $modules->where('status', '=', $status);
         }
         $modules = $modules->paginate(12);
 
