@@ -6,6 +6,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Course;
+use App\Models\Notification;
+use App\Models\Checkout;
 use App\Models\Module;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +56,20 @@ class CourseCreateStepController extends Controller
         $course->save();
         $id = $course->id;
         session()->put('lastCourseId', $id);
+        // Start insert Notification
+        $checkout = new Checkout;
+        $checkouts = $checkout->getCheckoutByInstructorID();
+        foreach($checkouts as $checkout){
+            $notification = new Notification([
+                'instructor_id' => $checkout->instructor_id,
+                'course_id' => $checkout->course_id,
+                'user_id' => $checkout->user_id,
+                'message' => 'message',
+                'type' => 'New Course Created'
+            ]); 
+            $notification->save();
+        }
+        // End insert Notification
         return redirect('instructor/courses/create/'.$id.'/content')->with('success', 'Course created successfully');
     }
 

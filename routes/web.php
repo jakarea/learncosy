@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GeneratepdfController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -55,9 +56,12 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
-Route::get('/system/notification', function () {
-    return view('instructor.notification.system');
-});
+
+
+//Start Notification
+Route::get('notification-details', [NotificationController::class,'notificationDetails'])->name('notification.details');
+//End Notification
+
 
 
 // custom auth screen route
@@ -130,6 +134,7 @@ Route::get('/home', function(Request $request){
 
     if($subdomain != 'app' &&  $role == 'student'){
         return redirect('/students/dashboard');
+
     }
 
     if($subdomain != 'app' &&  $role == 'instructor'){

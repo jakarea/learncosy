@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use App\Models\User;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
@@ -73,6 +74,10 @@ class Checkout extends Model
         return Checkout::whereHas('course', function ($query) {
             $query->where('user_id', auth()->user()->id);
         });
+    }
+    public function getCheckoutByInstructorID()
+    {
+        return Checkout::where('instructor_id', Auth::user()->id)->select('id','instructor_id','course_id','user_id')->get()->unique('user_id');
     }
 
     // get student payment by course user id is equal to auth user id and course id is equal to course id
