@@ -28,14 +28,6 @@
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3">
                 <div class="user-search-box-wrap">
                     <div class="form-filter">
-                        <!-- <select class="form-control" id="day-wise-notification">
-                            <option value="">Please select</option>
-                            <option value="1" onclick="return getNotificationDayWise();">Today</option>
-                            <option value="7" onclick="return getNotificationDayWise();">Last 7 days</option>
-                            <option value="30" onclick="return getNotificationDayWise();">Last 30 days</option>
-                            <option value="365" onclick="return getNotificationDayWise();">Last 1 year</option>
-                        </select> -->
-
                         <select class="form-control" id="day-wise-notification">
                           <option value="">Please select</option>
                           <option value="1">Today</option>
@@ -43,8 +35,6 @@
                           <option value="30">Last 30 days</option>
                           <option value="365">Last 1 year</option>
                         </select>
-
-
                         <i class="fas fa-angle-down"></i>
                     </div>
                 </div>
