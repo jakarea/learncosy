@@ -21,7 +21,7 @@
         </div>
         <div class="row"> 
             <div class="col-12">
-                <form action="" method="GET">
+                <form action="" method="GET" id="myForm">
                     <div class="package-list-header"> 
                         <h5>Package List</h5>
                         <div class="form-group">
@@ -29,15 +29,19 @@
                             <input type="text" placeholder="Search Package" class="form-control" name="name"
                                 value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                         </div>
-                        <div class="form-filter"> 
-                            @php 
-                            $pack_status = isset($_GET['status']) ? $_GET['status'] : '';
-                            @endphp
-                            <select class="form-control" name="status">
-                                <option value="">All</option> 
-                                <option value="active" {{ $pack_status == 'active' ? 'selected' : ''}}>Active</option>
-                                <option value="inactive" {{ $pack_status == 'inactive' ? 'selected' : ''}}>Inactive</option>
-                            </select>
+                        <input type="hidden" name="status" id="inputField">
+                        <div class="filter-dropdown-box">
+                            <div class="dropdown">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    id="dropdownBttn">
+                                    All
+                                </button> 
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                    <li><a class="dropdown-item filterItem" href="#" data-value="active">Active</a></li>
+                                    <li><a class="dropdown-item filterItem" href="#" data-value="inactive">Inactive</a></li>
+                                </ul>
+                            </div>
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="bttn">
@@ -88,7 +92,15 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.subscription.edit', $package->id) }}" class="me-r"><img src="{{ asset('latest/assets/images/icons/edit.svg') }}" alt="Icon" class="img-fluid"></a>
-                                <a href="{{ route('admin.subscription.destroy', $package->id) }}" class="delete_data" data-id="{{ $package->id }}"><img src="{{ asset('latest/assets/images/icons/trash.svg') }}" alt="Icon" class="img-fluid"></a>
+
+                                <form method="post" class="d-inline ps-0"
+                                        action="{{ route('admin.subscription.destroy', $package->id) }}">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn"><img src="{{ asset('latest/assets/images/icons/trash.svg') }}" alt="Icon" class="img-fluid"></button>
+                                    </form>
+                                    
+                                {{-- <a href="{{ route('admin.subscription.destroy', $package->id) }}"><img src="{{ asset('latest/assets/images/icons/trash.svg') }}" alt="Icon" class="img-fluid"></a> --}}
                             </td>
                         </tr>
                         @endforeach
@@ -111,38 +123,33 @@
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-        //delete_data on click confirm button then delete
-        $(document).on('click', '.delete_data', function(e) {
-            e.preventDefault();
-            var id = $(this).attr('data-id');
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('name');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
-            // Send confirmation alert
-            if (window.confirm("Are you sure you want to delete this?")) {
-                $.ajax({
-                    url: "{{ route('admin.subscription.destroy', ':id') }}".replace(':id', id),
-                    type: "DELETE",
-                    data: {
-                        id: id,
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(response) {
-                        if (response.status) {
-                            $('#myDataTable').DataTable().ajax.reload();
-                            window.location.reload();
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    }
-                });
-            } else {
-                alert("You've clicked Cancel");
-            }
+        if(status == "active"){
+            dropbtn.innerText = 'Active';
+        }
+        if(status == "inactive"){
+            dropbtn.innerText = 'Inactive';
+        }
+        inputField.value = status;
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit(); 
+            });
         });
-
     });
 </script>
 @endsection

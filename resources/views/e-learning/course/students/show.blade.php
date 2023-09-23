@@ -38,11 +38,12 @@ $i = 0;
                             <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069"
                                 data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
-                        @endif 
+                        @endif
                     </div>
                     @else
                     <a href="#">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" class="img-fluid">
+                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course"
+                            class="img-fluid">
                     </a>
                     {{-- video player --}}
                     @endif
@@ -53,18 +54,13 @@ $i = 0;
                             <h1>{{$course->title}}</h1>
                             <p>{{ $course->user->name }} . {{ $course->user->name }} </p>
                         </div>
-                        @if( isEnrolled($course->id) && $course->user->recivingMessage)
-                        <a href="{{url('course/messages/send/'.$course->id)}}" class="common-bttn">Get Support</a>
-                        @endif
-                        @if ( !isEnrolled($course->id) )
-                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
-                            <input type="hidden" name="course_id" value="{{$course->id}}">
-                            <input type="hidden" name="price" value="{{$course->price}}">
-                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                            <button type="submit" class="btn common-bttn px-3">Enroll Now <i
-                                    class="fas fa-angle-right ms-2"></i></button>
-                        </form>
-                        @endif
+                        {{-- liked course button here --}}
+                        <div class="liked-course-button">
+                            <button class="btn like-btn {{ $liked }}" id="likeBttn">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        {{-- liked course button here --}}
                     </div>
                     {{-- course title --}}
                     <hr>
@@ -91,10 +87,10 @@ $i = 0;
 
                         <div class="media course-review-input-box">
                             @if($course->user->avatar)
-                                @if($course->user->user_role == 'student')
-                                <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
-                                    class="img-fluid"> 
-                                @endif
+                            @if($course->user->user_role == 'student')
+                            <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
+                                class="img-fluid">
+                            @endif
                             @else
                             <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
                             @endif
@@ -102,10 +98,10 @@ $i = 0;
                                 <form action="{{route('students.review.courses',$course->slug)}}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <div class="form-group"> 
-                                        <input type="text" name="comment" id="review" placeholder="Write a review"> 
+                                    <div class="form-group">
+                                        <input type="text" name="comment" id="review" placeholder="Write a review">
                                     </div>
-                                    <div class="form-rev"> 
+                                    <div class="form-rev">
                                         <div id="full-stars">
                                             <div class="rating-group">
                                                 <label aria-label="1 star" class="rating__label" for="rating-1"><i
@@ -135,7 +131,7 @@ $i = 0;
                                 </form>
                             </div>
                         </div>
- 
+
                         @if(count($course_reviews) > 0)
                         @foreach($course_reviews as $course_review)
                         <div class="media">
@@ -160,7 +156,7 @@ $i = 0;
                         </div>
                         @endif
                     </div>
-                    {{-- course review --}} 
+                    {{-- course review --}}
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
@@ -225,6 +221,20 @@ $i = 0;
                 </div>
                 {{-- course outline --}}
 
+                @if( isEnrolled($course->id) && $course->user->recivingMessage)
+                <a href="{{url('course/messages/send/'.$course->id)}}"
+                    class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
+                @endif
+                @if ( !isEnrolled($course->id) )
+                <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                    <input type="hidden" name="course_id" value="{{$course->id}}">
+                    <input type="hidden" name="price" value="{{$course->price}}">
+                    <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
+                    <button type="submit" class="btn common-bttn px-3">Enroll Now <i
+                            class="fas fa-angle-right ms-2"></i></button>
+                </form>
+                @endif
+
                 {{-- related course --}}
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
@@ -277,7 +287,7 @@ $i = 0;
                 {{-- related course --}}
             </div>
         </div>
-    </div> 
+    </div>
 </main>
 <!-- course details page @E -->
 @endsection
@@ -394,6 +404,39 @@ $i = 0;
             @endif
         });
 
+        
+    });
+</script>
+
+<script>
+    let currentURL = window.location.href; 
+    const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+    const likeBttn = document.getElementById('likeBttn');
+
+    likeBttn.addEventListener('click', (e) => {
+
+        const course_id = {{ $course->id }};
+        const ins_id = {{ $course->user_id }};
+
+        fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'liked') {
+                    likeBttn.classList.add('active');  
+
+                } else {
+                    likeBttn.classList.remove('active');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
         
     });
 </script>

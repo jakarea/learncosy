@@ -7,6 +7,8 @@ use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\App;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HomeController extends Controller
 {
@@ -70,7 +72,15 @@ class HomeController extends Controller
             })
             ->rawColumns(['action', 'status', 'features'])
             ->make(true);
-        
-        
+    }
+
+    public function generatePdf($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment
+        );
+        $pdf = Pdf::loadView('invoice',$data);
+        return $pdf->download('invoice-'.$payment_id.'.pdf');
     }
 }

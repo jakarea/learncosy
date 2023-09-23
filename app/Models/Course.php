@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
+use App\Models\course_like;
 use App\Models\CourseReview;
 use Illuminate\Database\Eloquent\Model;
 
@@ -82,6 +83,10 @@ class Course extends Model
 
     public function reviews(){
         return $this->hasMany(CourseReview::class,'course_id','id');
+    }
+
+    public function likes(){
+        return $this->hasMany(course_like::class,'course_id','id');
     }
 
     // get purchased students list based on instructor id
