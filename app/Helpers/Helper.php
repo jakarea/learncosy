@@ -454,3 +454,13 @@ if (!function_exists('studentRadarChart')) {
         ];
     }
 }
+
+/**
+ * Helper function to get unseenNotification
+ */
+if (!function_exists('unseenNotification')) {
+    function unseenNotification()
+    { 
+        return \App\Models\Notification::where('status', 'unseen')->where('user_id',Auth::user()->id)->count();
+    }
+}
