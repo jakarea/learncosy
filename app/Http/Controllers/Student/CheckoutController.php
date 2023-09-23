@@ -106,6 +106,7 @@ class CheckoutController extends Controller
         }
         $courseNames = implode(', ', $courseTitles);
 
+        $idsString = implode(',', $courseIds);
 
         $checkout_session = Session::create([
             'payment_method_types' => ['card'],
@@ -121,8 +122,8 @@ class CheckoutController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('checkout.success', $course->slug) . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('checkout.cancel', $course->slug),
+            'success_url' => route('checkout.success', $idsString ) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('checkout.cancel', $idsString ),
         ]);
 
         return redirect($checkout_session->url);
@@ -134,74 +135,86 @@ class CheckoutController extends Controller
      */
     public function success($slug)
     {
-        // Find the course based on the slug
-        $course = Course::where('slug', $slug)->first();
-        Stripe::setApiKey( $course->user->stripe_secret_key);
-        // Get the session ID
-        $session_id = Session::all()['data'][0]['id'];
-        $start_date = null;
-        $end_date = null;
-        // start_date end_date add based on course subscription_status
-        if($course->subscription_status == 'one_time'){
+        $courseIds = explode(',', $slug);
+
+        foreach ($courseIds as $courseId) {
+            $course = Course::where('id', $courseId)->first();
+            Stripe::setApiKey( $course->user->stripe_secret_key);
+            $session_id = Session::all()['data'][0]['id'];
             $start_date = null;
             $end_date = null;
-        }else if($course->subscription_status == 'monthly'){
-            $start_date = now()->toDateTimeString();
-            $end_date = now()->addMonth();
-        }else if($course->subscription_status == 'anully'){
-            $start_date = now()->toDateTimeString();
-            $end_date = now()->addYear();
-        }else if($course->subscription_status == 'Free'){
-            $start_date = null;
-            $end_date = null;
-        }
-
-        // return $start_date . ' ' . $end_date;
-
-        try {
-            // Retrieve the payment data and amount using the session ID
-            $session = Session::retrieve($session_id);
-            $payment_id = $session->payment_intent;
-            $paymentMethod = 'Stripe';
-            $amount = $session->amount_total / 100;
-
-
-
-            // Attach the user to the course with the payment details
-            $course->students()->attach(auth()->user()->id, [
-                'payment_method' => $paymentMethod,
-                'amount' => $amount,
-                'paid' => true,
-                'start_at' => $start_date,
-                'end_at' => $end_date,
-            ]);
-
-            // Store the transaction in the checkout table
-            $checkout = $course->checkouts()->create([
-                'course_id' => $course->id,
-                'instructor_id' => $course->user_id,
-                'payment_method' => $paymentMethod,
-                'payment_status' => 'paid',
-                'payment_id' => $payment_id,
-                'status' => 'completed',
-                'amount' => $amount,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-            ]);
-
-            if ($checkout) {
-
-                 // Send email
-                 Mail::to(auth()->user()->email)->send(new CourseEnroll($course));
-
-                return redirect()->route('students.show.courses', $course->slug)->with('success', 'You have successfully enrolled in this course');
-            } else {
-                return redirect()->route('students.show.courses', $course->slug)->with('error', 'Something went wrong');
+            if($course->subscription_status == 'one_time'){
+                $start_date = null;
+                $end_date = null;
+            }else if($course->subscription_status == 'monthly'){
+                $start_date = now()->toDateTimeString();
+                $end_date = now()->addMonth();
+            }else if($course->subscription_status == 'anully'){
+                $start_date = now()->toDateTimeString();
+                $end_date = now()->addYear();
+            }else if($course->subscription_status == 'Free'){
+                $start_date = null;
+                $end_date = null;
             }
-        } catch (\Exception $e) {
-            // Handle any exceptions that occur during the process
-            return redirect()->route('students.show.courses', $slug)->with('error', $e->getMessage());
+
+
+            try {
+                // Retrieve the payment data and amount using the session ID
+                $session = Session::retrieve($session_id);
+                $payment_id = $session->payment_intent;
+                $paymentMethod = 'Stripe';
+                // $amount = $session->amount_total / 100;
+                $amount = $course->price / 100;
+
+
+
+                // Attach the user to the course with the payment details
+                $course->students()->attach(auth()->user()->id, [
+                    'payment_method' => $paymentMethod,
+                    'amount' => $amount,
+                    'paid' => true,
+                    'start_at' => $start_date,
+                    'end_at' => $end_date,
+                ]);
+
+                // Store the transaction in the checkout table
+                $checkout = $course->checkouts()->create([
+                    'course_id' => $course->id,
+                    'instructor_id' => $course->user_id,
+                    'payment_method' => $paymentMethod,
+                    'payment_status' => 'paid',
+                    'payment_id' => $payment_id,
+                    'status' => 'completed',
+                    'amount' => $amount,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ]);
+
+                if ($checkout) {
+
+                     // Send email
+                     Mail::to('asifrahman449@gmail.com')->send(new CourseEnroll($course));
+                    $cart = Cart::select('course_id')->where('user_id', auth()->id())->get();
+
+                } else {
+                    // return redirect()->route('students.show.courses', $course->slug)->with('error', 'Something went wrong');
+                }
+            } catch (\Exception $e) {
+                // Handle any exceptions that occur during the process
+                // return redirect()->route('students.show.courses', $slug)->with('error', $e->getMessage());
+                return redirect()->route('students.catalog.courses')->with('error', $e->getMessage());
+
+            }
+
         }
+        $cartItems = Cart::where('user_id', auth()->id())->get();
+
+        foreach ($cartItems as $cartItem) {
+            $cartItem->delete();
+        }
+        return redirect()->route('students.catalog.courses')->with('success', 'You have successfully enrolled in this course');
+
+
     }
 
     /**
