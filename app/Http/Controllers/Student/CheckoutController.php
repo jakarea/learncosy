@@ -193,7 +193,7 @@ class CheckoutController extends Controller
                 if ($checkout) {
 
                      // Send email
-                     Mail::to('asifrahman449@gmail.com')->send(new CourseEnroll($course));
+                     Mail::to(auth()->user()->email)->send(new CourseEnroll($course));
                     $cart = Cart::select('course_id')->where('user_id', auth()->id())->get();
 
                 } else {
