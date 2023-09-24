@@ -34,7 +34,7 @@ $layoutName = "layouts.latest.admin";
                 <div class="user-title-box">
                     <h1>Notification </h1>
                 </div>
-            </div> 
+            </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3">
                 <div class="filter-dropdown-box">
                     <div class="dropdown">
@@ -42,7 +42,7 @@ $layoutName = "layouts.latest.admin";
                             id="dropdownBttn">
                             Please select
                         </button>
-                        <ul class="dropdown-menu" id="day-wise-notification"> 
+                        <ul class="dropdown-menu" id="day-wise-notification">
                             <li><a class="dropdown-item filterItem" href="#" data-value="1">Today</a></li>
                             <li><a class="dropdown-item filterItem" href="#" data-value="7">Last 7 days</a></li>
                             <li><a class="dropdown-item filterItem" href="#" data-value="30">Last 30 days</a></li>
@@ -62,11 +62,10 @@ $layoutName = "layouts.latest.admin";
                     <div class="show-notification-item">
                         <div class="single" data-value="1">
                             {{-- day --}}
-                            @if (count($todays) == 0)
-                                <h5>No Notification for Today</h5>
-                            @else 
-                                <h5>Today</h5>
-                            @endif 
+                            <h5>Today</h5>
+                            @if (count($todays) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -75,10 +74,12 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($today['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
-                                        @endif 
+                                        <img src="{{asset('assets/images/courses/'.$today['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
                                     <div class="media-body">
@@ -88,9 +89,11 @@ $layoutName = "layouts.latest.admin";
                                 </div>
                                 <div class="delete-item">
                                     <form action="{{ route('notification.destroy',$today['id']) }}" method="POST">
-                                        @csrf  
-                                        <button type="submit" class="btn"><img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete" class="img-fluid"></button>
-                                    </form> 
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -98,13 +101,13 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="2">
-                            {{-- day --}}
-                            @if (count($yestardays) == 0)
-                                <h5 class="mt-5">No Notification for Yesterday</h5>
-                            @else 
-                            <h5 class="mt-5">Yesterday</h5>
-                            @endif 
-                            
+                            {{-- day --}} 
+                            <h5 class="mt-5">Yesterday</h5> 
+
+                            @if (count($yestardays) == 0) 
+                                @include('partials/no-data')
+                            @endif
+
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -113,9 +116,11 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($yestarday['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$yestarday['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        <img src="{{asset('assets/images/courses/'.$yestarday['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
@@ -127,8 +132,10 @@ $layoutName = "layouts.latest.admin";
 
                                 <div class="delete-item">
                                     <form action="{{ route('notification.destroy',$yestarday['id']) }}" method="POST">
-                                        @csrf  
-                                        <button type="submit" class="btn"><img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete" class="img-fluid"></button>
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
                                     </form>
                                 </div>
                             </div>
@@ -137,12 +144,12 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="7">
-                            {{-- day --}}
-                            @if (count($sevenDays) == 0)
-                                <h5 class="mt-5">No Notification for Last 7 Days</h5>
-                            @else 
-                                <h5 class="mt-5">Last 7 Days</h5>
-                            @endif 
+                            {{-- day --}} 
+                            <h5 class="mt-5">Last 7 Days</h5>
+
+                            @if (count($sevenDays) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -151,9 +158,11 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($sevenDay['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$sevenDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        <img src="{{asset('assets/images/courses/'.$sevenDay['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
@@ -165,8 +174,10 @@ $layoutName = "layouts.latest.admin";
 
                                 <div class="delete-item">
                                     <form action="{{ route('notification.destroy',$sevenDay['id']) }}" method="POST">
-                                        @csrf  
-                                        <button type="submit" class="btn"><img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete" class="img-fluid"></button>
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
                                     </form>
                                 </div>
                             </div>
@@ -176,11 +187,12 @@ $layoutName = "layouts.latest.admin";
 
                         <div class="single" data-value="30">
                             {{-- day --}}
-                            @if (count($thirtyDays) == 0)
-                                <h5 class="mt-5">No Notification for Last 30 Days</h5>
-                            @else 
-                                <h5 class="mt-5">Last 30 Days</h5>
-                            @endif 
+                            <h5 class="mt-5">Last 30 Days</h5>
+
+                            @if (count($thirtyDays) == 0) 
+                                @include('partials/no-data')
+                            @endif
+
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -189,9 +201,11 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($thirtyDay['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$thirtyDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        <img src="{{asset('assets/images/courses/'.$thirtyDay['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
@@ -203,8 +217,10 @@ $layoutName = "layouts.latest.admin";
 
                                 <div class="delete-item">
                                     <form action="{{ route('notification.destroy',$thirtyDay['id']) }}" method="POST">
-                                        @csrf  
-                                        <button type="submit" class="btn"><img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete" class="img-fluid"></button>
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
                                     </form>
                                 </div>
                             </div>
@@ -214,11 +230,11 @@ $layoutName = "layouts.latest.admin";
 
                         <div class="single" data-value="365">
                             {{-- day --}}
-                            @if (count($lastOneYears) == 0)
-                            <h5 class="mt-5">No Notification for Last 1 year</h5>
-                            @else 
-                                <h5 class="mt-5">Last 1 year</h5>
-                            @endif 
+                            <h5 class="mt-5">Last 1 year</h5>
+
+                            @if (count($lastOneYears) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -227,9 +243,11 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($lastOneYear['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$lastOneYear['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        <img src="{{asset('assets/images/courses/'.$lastOneYear['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
@@ -241,8 +259,10 @@ $layoutName = "layouts.latest.admin";
 
                                 <div class="delete-item">
                                     <form action="{{ route('notification.destroy',$lastOneYear['id']) }}" method="POST">
-                                        @csrf  
-                                        <button type="submit" class="btn"><img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete" class="img-fluid"></button>
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
                                     </form>
                                 </div>
                             </div>
@@ -266,6 +286,9 @@ $layoutName = "layouts.latest.admin";
         </div>
     </div>
 </main>
+@endsection
+
+@section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -322,30 +345,10 @@ $layoutName = "layouts.latest.admin";
                     document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'block';
                 }
-
-                // itemWrapperItems.forEach(wItem => {  
-
-                //     document.querySelector(".single[data-value='1']").;
-
-
-                //     if(status == "1"){
-                //         wItem.getAttribute("data-value")
-                //     }
-                //     if(status == "7"){
-                //         dropbtn.innerText = 'Last 7 days';
-                //     }
-                //     if(status == "30"){
-                //         dropbtn.innerText = 'Last 30 days';
-                //     }
-                //     if(status == "365"){
-                //         dropbtn.innerText = 'Last 1 year';
-                //     } 
  
-                // });
 
             });
         });
     });
 </script>
-  
 @endsection

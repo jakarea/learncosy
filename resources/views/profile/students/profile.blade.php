@@ -12,6 +12,7 @@
 @php
     $social_links = explode(",", $user->social_links);
     use Illuminate\Support\Str;
+
 @endphp
 
 <main class="user-profile-view-page">
