@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Course;
 use App\Models\User;
+use App\Models\Cart;
 use App\Mail\MessageSent;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 use Auth;
 
 
@@ -16,7 +16,8 @@ class MessageController extends Controller
 {
      // message
      public function index(Request $request)
-     {    
+     {
+        $cartCount = Cart::where('user_id', auth()->id())->count();
         $course_id = $request->query('course');
         $senderId = $request->query('sender');
         $userId = Auth::user()->id;
@@ -53,13 +54,13 @@ class MessageController extends Controller
             $messages = $highLightMessages->first() ? $highLightMessages->first() : [];
             $senderInfo =  User::find($highLightMessages->keys()->first());
         }
-        
-        return view('e-learning/course/instructor/message-list',compact('highLightMessages','messages','userId','senderInfo')); 
+
+        return view('e-learning/course/instructor/message-list',compact('highLightMessages','messages','userId','senderInfo','cartCount'));
      }
- 
+
      // instructor message list
      public function send($courseId)
-     {    
+     {
         $userId = Auth::user()->id;
         $message = Message::where('user_id', $userId)->where('course_id',$courseId)->first();
 
@@ -73,8 +74,8 @@ class MessageController extends Controller
         $sender_info = Auth::user();
 
 
-        return view('e-learning/course/instructor/message',compact('userId','courseId','reciver_info','sender_info')); 
-     } 
+        return view('e-learning/course/instructor/message',compact('userId','courseId','reciver_info','sender_info'));
+     }
 
      public function getChatRoomMessages($chat_room){
         $userId = Auth::user()->id;
@@ -83,62 +84,62 @@ class MessageController extends Controller
         $chat_users = array_unique($chat_users_fetch);
         foreach($chat_users as $chat_user){
             if($chat_user == $userId){
-                $sender_id = $chat_user; 
+                $sender_id = $chat_user;
             }else{
-                $sender_id = $userId; 
+                $sender_id = $userId;
                 $reciver_id = $chat_user;
             }
         }
         $sender_info = User::where('id',$sender_id)->first();
         $reciver_info = User::where('id',$reciver_id)->first();
-        $courseId =  $messages[0]->course_id; 
+        $courseId =  $messages[0]->course_id;
 
-          
-       
 
-        return view('e-learning/course/instructor/message_chat_room-2',compact('messages','userId','chat_room','sender_info','reciver_info')); 
+
+
+        return view('e-learning/course/instructor/message_chat_room-2',compact('messages','userId','chat_room','sender_info','reciver_info'));
 
      }
 
      public function postChatRoomMessages(Request $request, $chat_room){
 
         $request->validate([
-            'message' => 'required', 
+            'message' => 'required',
         ]);
 
         $userId = Auth::user()->id;
         $message= Message::with('course')->where('receiver_id',$chat_room)->first();
         $message = new Message([
-            'receiver_id'   => $chat_room, 
+            'receiver_id'   => $chat_room,
             'course_id' => $message->course_id,
             'user_id'   => $userId,
             'message'   => $request->message
-        ]); 
+        ]);
         $message->save();
-    
+
         return redirect()->route('get.chat_room.message',$chat_room)->with('message', 'Form submitted successfully!');
 
      }
 
      public function submitMessage(Request $request, $course_id){
-        
+
         $request->validate([
-            'message' => 'required', 
+            'message' => 'required',
         ]);
 
         $userId = Auth::user()->id;
-        $receiverId = Course::with('user')->where('id',$course_id)->first(); 
+        $receiverId = Course::with('user')->where('id',$course_id)->first();
         $message = new Message([
-            'receiver_id' => $receiverId->user->id, 
+            'receiver_id' => $receiverId->user->id,
             'course_id'   => $course_id,
             'user_id'     => $userId,
             'message'     => $request->message
-        ]); 
+        ]);
         $message->save();
 
          // Send email
          Mail::to($receiverId->user->email)->send(new MessageSent($message));
-       
+
         return redirect()->route('message')->with('message', 'Form submitted successfully!');
 
 
@@ -149,16 +150,16 @@ class MessageController extends Controller
         $senderId = $request->query('sender');
 
         $request->validate([
-            'message' => 'required', 
+            'message' => 'required',
         ]);
 
         $userId = Auth::user()->id;
         $message = new Message([
-            'receiver_id' => $senderId, 
+            'receiver_id' => $senderId,
             'course_id'   => '',
             'user_id'     => $userId,
             'message'     => $request->message
-        ]); 
+        ]);
         $message->save();
 
         return redirect()->back();
