@@ -45,7 +45,7 @@ class LoginController extends Controller
     /*
     * Login
     */
-    
+
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -61,7 +61,7 @@ class LoginController extends Controller
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->username
                     if ($user->username && !$request->is('//app.localhost')) {
-                        return redirect()->to('//' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard'); 
+                        return redirect()->to('//' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard');
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');

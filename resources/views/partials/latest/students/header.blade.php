@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{url('/')}}"> 
+        <a class="navbar-brand" href="{{url('/')}}">
             @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
@@ -12,9 +12,9 @@
             aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             @can('student')
-            <ul class="navbar-nav m-auto"> 
+            <ul class="navbar-nav m-auto">
                 <li class="nav-item">
                     <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
                 </li>
@@ -29,13 +29,20 @@
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>
-                </li> 
+                </li>
             </ul>
-            @endcan 
-            <div class="d-flex"> 
+            @endcan
+            <div class="d-flex">
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
+                {{-- <a href="#" class="bttn">
+                    <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="S" class="img-fluid">
+                    <span>5</span>
+                </a> --}}
+                <a href="{{ route('cart.index') }}">
+                    Cart
+                    <span id="cart-count">{{ $cartCount }}</span>
                 <a href="{{ url('/notification-details') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
                   
@@ -51,25 +58,25 @@
                             @if(auth()->user()->user_role == 'student')
                                 <img src="{{ asset('assets/images/users/'.auth()->user()->avatar) }}" alt="{{auth()->user()->name}}"
                                 class="img-fluid">
-                            @endif 
+                            @endif
                         @else
                             <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
-                        @endif 
+                        @endif
 
-                    </button> 
+                    </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">Profile</a></li>  
-                        <li><a class="dropdown-item" href="{{ url('students/profile/edit') }}">Account Setting</a></li>  
+                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ url('students/profile/edit') }}">Account Setting</a></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">Logout
-                            </a> 
+                            </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </li>
                     </ul>
-                </div>  
+                </div>
             </div>
 
         </div>
