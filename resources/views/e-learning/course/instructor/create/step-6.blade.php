@@ -278,10 +278,7 @@ Course Create - Step 1
 
                                 </div>
                             </div>
-                            {{-- course page box end --}}
-
-                           
-
+                            {{-- course page box end --}} 
                             @endforeach
 
                             {{-- course page add box start --}}
@@ -318,8 +315,7 @@ Course Create - Step 1
                                                             <input type="radio" name="lesson_type" class="opacity-0"
                                                                 id="les_video_{{$module->id}}" value="video" checked>
 
-                                                            <div class="d-flex lesson-types">
-
+                                                            <div class="d-flex lesson-types"> 
                                                                 <label for="les_text_{{$module->id}}"
                                                                     class=""><img
                                                                         src="{{asset('latest/assets/images/icons/file.svg')}}"
@@ -334,14 +330,6 @@ Course Create - Step 1
                                                                         alt="a" class="img-fluid"> Video</label>
                                                             </div>
                                                         </div>
-
-                                                        {{-- <div class="form-check form-switch">
-                                                            <label class="form-check-label" for="is_module">Is a
-                                                                Modual</label>
-                                                            <input class="form-check-input" type="checkbox" name="is_module"
-                                                                value="1" role="switch" id="is_module" checked>
-                                                        </div> --}}
-
                                                         <p>Select The Lesson type.</p>
                                                         <div class="form-submit">
                                                             <button type="button" class="btn btn-cancel"
@@ -356,20 +344,16 @@ Course Create - Step 1
                                 </div>
                             </div>
                             {{-- Lesson modal --}}
-
                         </div> 
-
                     </div>
                     {{-- course with page --}}
                     @endforeach
-
                     {{-- course content add box start --}}
                     <div class="add-content-box">
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#moduleModal"><i
                                 class="fas fa-plus"></i> Add Module</button>
                     </div>
                     {{-- course content add box end --}}
-
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         <a href="{{ url('instructor/courses/create/') }}">Back</a>
