@@ -36,7 +36,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModuleManagementController;
 
-use App\Models\User;
+use App\Models\User; 
 use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\Frontend\HomepageController;
 /*
@@ -60,7 +60,8 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
 
 
 //Start Notification
-Route::get('notification-details', [NotificationController::class,'notificationDetails'])->name('notification.details');
+Route::get('students/notification-details', [NotificationController::class,'notificationDetails'])->name('notification.details'); 
+Route::post('students/notification-details/destroy/{id}', [NotificationController::class,'destroy'])->name('notification.destroy'); 
 //End Notification
 
 

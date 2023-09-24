@@ -195,7 +195,11 @@
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
                         </form> 
-                        {{-- <a href="#" class="add-cart-bttn">Add to Chart</a> --}}
+
+                        <form action="{{ route('cart.add', $course) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
+                        </form> 
                         @endif 
                     </div>
                     <div class="course-desc-txt">

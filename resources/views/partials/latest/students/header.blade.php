@@ -36,21 +36,17 @@
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                {{-- <a href="#" class="bttn">
-                    <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="S" class="img-fluid">
-                    <span>5</span>
-                </a> --}}
-                <a href="{{ route('cart.index') }}">
-                    Cart
-                    <span id="cart-count">{{ $cartCount }}</span>
-                <a href="{{ url('/notification-details') }}" class="bttn">
+                <a href="{{ route('cart.index') }}" class="bttn">
+                    <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="Cart" class="img-fluid">
+                    <span id="cart-count">{{ cartCount() }}</span>
+                </a>
+                <a href="{{ url('students/notification-details') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
-                  
-                    @if (unseenNotification() == '0')
-                        
-                    @else
-                        <span>{{ unseenNotification() }}</span>
-                    @endif  
+                   
+                    @if (unseenNotification() >= 1)
+                    <span>{{ unseenNotification() }}</span>
+                    @endif
+                     
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,7 +74,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 </nav>

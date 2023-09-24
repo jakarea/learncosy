@@ -464,3 +464,13 @@ if (!function_exists('unseenNotification')) {
         return \App\Models\Notification::where('status', 'unseen')->where('user_id',Auth::user()->id)->count();
     }
 }
+
+/**
+ * Helper function to get cartCount
+ */
+if (!function_exists('cartCount')) {
+    function cartCount()
+    { 
+        return \App\Models\Cart::where('user_id', auth()->id())->count();
+    }
+}

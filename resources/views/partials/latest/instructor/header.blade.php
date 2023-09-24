@@ -57,7 +57,7 @@
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                <a href="#" class="bttn">
+                <a href="{{ url('instructor/notification-details') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
                     @if (unseenNotification() == '0')    
                     @else
