@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GeneratepdfController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
@@ -55,9 +56,12 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
-Route::get('/system/notification', function () {
-    return view('instructor.notification.system');
-});
+
+
+//Start Notification
+Route::get('notification-details', [NotificationController::class,'notificationDetails'])->name('notification.details');
+//End Notification
+
 
 
 // custom auth screen route
@@ -130,6 +134,7 @@ Route::get('/home', function(Request $request){
 
     if($subdomain != 'app' &&  $role == 'student'){
         return redirect('/students/dashboard');
+
     }
 
     if($subdomain != 'app' &&  $role == 'instructor'){
@@ -423,7 +428,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
-        Route::get('/dashboard/top-perform/courses', 'perform');
+        Route::get('/top-perform/courses', 'perform');
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin'); 

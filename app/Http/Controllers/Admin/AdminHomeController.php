@@ -36,16 +36,7 @@ class AdminHomeController extends Controller
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
-
-
-        // $TopPerformingCourses = Course::select('courses.id','courses.title','courses.categories','courses.thumbnail','courses.slug','courses.price','courses.offer_price', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'), DB::raw('SUM( checkouts.amount) as sum_amount'))
-        // ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-        // ->groupBy('courses.id')
-        // ->havingRaw('sale_count > 0')
-        // ->orderByDesc('sale_count')
-        // ->limit(7)
-        // ->get();
-
+            
         $TopPerformingCourses = Course::select(
             'courses.id',
             'courses.title',
@@ -67,9 +58,9 @@ class AdminHomeController extends Controller
             ->get();
 
 
-        $lastMessages = Message::lastMessagePerUser()->with('user')->take(7)->get();
+        $lastMessages = Message::lastMessagePerUser()->with('user')->take(10)->get();
 
-        $studentsCount = User::where('user_role', 'student')->count();
+        $studentsCount = User::where('user_role', 'student')->count(); //9
         $currentMonthStart = $this->currentMonthStart;
         $currentMonthEnd = $this->currentMonthEnd;
         $previousMonthStart = $this->previousMonthStart;
@@ -90,16 +81,13 @@ class AdminHomeController extends Controller
             ->count();
         $percentageChangeOfStudent = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfStudent = (($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100;
+            $percentageChangeOfStudent = (int)((($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100);
         }
-        $formattedPercentageChangeOfStudent = ($percentageChangeOfStudent >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfStudent), 2) . '%';
 
         $percentageChangeOfInstructor = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfInstructor = (($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100;
+            $percentageChangeOfInstructor = (int)((($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100);
         }
-        $formattedPercentageChangeOfInstructor = ($percentageChangeOfInstructor >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfInstructor), 2) . '%';
-
 
         $instructorsCount = User::where('user_role', 'instructor')->count();
         $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
@@ -117,8 +105,6 @@ class AdminHomeController extends Controller
         if ($previousMonthCourseCount !== 0) {
             $percentageChangeOfCourse = (($currentMonthCourseCount - $previousMonthCourseCount) / abs($previousMonthCourseCount)) * 100;
         }
-        $formattedPercentageChangeOfCourse = ($percentageChangeOfCourse >= 0 ? '+' : '-') . number_format(abs($percentageChangeOfCourse), 2) . '%';
-
 
         $allCategories = $courses->pluck('categories');
         $unique_array_categories = [];
@@ -138,7 +124,25 @@ class AdminHomeController extends Controller
         $totalEarnings = $this->getTotalEarningViaSubscription();
         $earningParcentage = $this->getEarningParcentageViaSubscription();
 
-        // return $earningByMonth;
+        $courses = Course::select(
+            'courses.id',
+            'courses.title',
+            'courses.categories',
+            'courses.thumbnail',
+            'courses.slug',
+            'courses.price',
+            'courses.offer_price',
+            DB::raw('COUNT(DISTINCT checkouts.id) as sale_count'),
+            DB::raw('SUM(checkouts.amount) as sum_amount'),
+            DB::raw('AVG(course_reviews.star) as avg_rating')
+        )
+            ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+            ->leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+            ->groupBy('courses.id')
+            ->orderByDesc('courses.id')
+            ->limit(10)
+            ->get();
+
         return view(
             'e-learning/course/admin/dashboard',
             compact(
@@ -156,16 +160,15 @@ class AdminHomeController extends Controller
                 'earningByMonth',
                 'TopPerformingCourses',
                 'lastMessages',
-                'formattedPercentageChangeOfStudent',
-                'formattedPercentageChangeOfInstructor',
-                'formattedPercentageChangeOfCourse',
+                'percentageChangeOfStudent',
+                'percentageChangeOfInstructor',
+                'percentageChangeOfCourse',
                 'earningParcentage'
             )
         );
     }
 
     public function perform(){ 
- 
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
@@ -272,15 +275,13 @@ class AdminHomeController extends Controller
         $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->whereBetween('subscriptions.start_at', [$previousMonthStart, $previousMonthEnd])
             ->sum('subscription_packages.amount');
+
         if ($previousMonthTotal !== 0) {
             $percentageChange = (($currentMonthTotal - $previousMonthTotal) / abs($previousMonthTotal)) * 100;
         } else {
             $percentageChange = ($currentMonthTotal > 0) ? 100 : 0;
         }
-
-        $formattedPercentageChange = number_format($percentageChange, 2) . '%';
-
-        return $formattedPercentageChange;
+        return (int)$percentageChange;
     }
 
 

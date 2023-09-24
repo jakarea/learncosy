@@ -59,7 +59,13 @@
                 </a>
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
-                    <span>5</span>
+                    <span>
+                        @if (unseenNotification() == '0')
+                                
+                        @else
+                                {{ unseenNotification() }}
+                        @endif 
+                    </span>
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">

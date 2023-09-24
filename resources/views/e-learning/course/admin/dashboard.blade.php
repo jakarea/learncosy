@@ -22,7 +22,7 @@ Home Page
                             <h4> {{ $studentsCount }}</h4>
                         </div>
                     </div>
-                    <p> <b style="color: {{ $formattedPercentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfStudent }}</b> VS last month</p>
+                    <p> <b style="color: {{ $percentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfStudent >= 0 ? '+'.$percentageChangeOfStudent : $percentageChangeOfStudent}}%</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -37,7 +37,9 @@ Home Page
                             <h4> {{ $instructorsCount }}</h4>
                         </div>
                     </div>
-                    <p> <b style="color: {{ $formattedPercentageChangeOfInstructor >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfInstructor }}</b> VS last month</p>
+                    
+                    <p> <b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfInstructor >= 0 ? '+'.$percentageChangeOfInstructor : $percentageChangeOfInstructor}}%</b> VS last month</p>
+                    
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -52,7 +54,7 @@ Home Page
                             <h4> {{ $courseCount }}</h4>
                         </div>
                     </div>
-                    <p> <b style="color: {{ $formattedPercentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfCourse }}</b> VS last month</p>
+                    <p> <b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfCourse >= 0 ? '+'.$percentageChangeOfCourse : $percentageChangeOfCourse}}%</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -67,7 +69,8 @@ Home Page
                             <h4>€ {{ $totalEarnings }} </h4>
                         </div>
                     </div>
-                    <p> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage }}</b> VS last month</p>
+                    
+                    <p> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ? '+'.$earningParcentage : $earningParcentage}}%</b> VS last month</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -93,7 +96,7 @@ Home Page
                 <div class="top-performing-course mt-15">
                     <div class="d-flex">
                         <h5>Top Performing Courses</h5>
-                        <a href="{{ url('admin/courses')}}">View All</a>
+                        <a href="{{ url('admin/top-perform/courses')}}">View All</a>
                     </div>
                     <div class="course-lists ms-0">
                         @php
@@ -113,7 +116,7 @@ Home Page
                                 <div class="media-body">
                                     <h5><a href="{{url('admin/courses',$course->slug) }}"> {{
                                             substr($course->title,0,20).'...' }}</a></h5>
-                                    <p>{{ $course->categories}}</p>
+                                    <p> {{ $course->categories}} </p>
                                 </div>
                                 <img src="{{ asset('latest/assets/images/tofy-'.$sn.'.svg')  }}" alt="Avatar"
                                     class="img-fluid me-0">
@@ -136,14 +139,14 @@ Home Page
                     </div>
                     <table>
                         <tr>
-                            <th>Course Name</th> 
+                            <th>Course Name</th>
                             <th>Price</th>
                             <th>Rating</th>
                             <th>Earning</th>
                             <th class="text-end">Sell</th>
                         </tr>
 
-                        @foreach ($TopPerformingCourses as $course)
+                        @foreach ($courses as $course)
 
                             <tr>
                                 <td>
@@ -154,18 +157,19 @@ Home Page
                                         </div>
                                         <div class="media-body">
                                             <h5>{{substr($course->title,0,35)}}</h5>
-                                            <p>{{ $course->categories }}</p>
+                                            <p> {{ $course->categories }}</p>
                                         </div>
                                     </div>
-                                </td> 
+                                </td>
+                            
                                 <td>
-                                    <p>€ {{ $course->offer_price ? $course->offer_price :$course->price }}</p>
+                                    <p>{{ ($course->offer_price ? $price = $course->offer_price : $price= $course->price) ? '€' . $price : 'Free'}}</p>
                                 </td>
                                 <td>
                                     <p><i class="fas fa-star" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p>
                                 </td>
                                 <td>
-                                    <p>€ {{ $course->sum_amount}}</p>
+                                    <p>€{{ $course->sum_amount?$course->sum_amount:0}}</p>
                                 </td>
                                 <td class="text-end">
                                     <p>{{ $course->sale_count}}</p>
