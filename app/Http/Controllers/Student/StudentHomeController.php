@@ -32,8 +32,8 @@ class StudentHomeController extends Controller
     public function enrolled(){
 
         $enrolments = Checkout::with('course.reviews')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
-
-        return view('e-learning/course/students/enrolled',compact('enrolments'));
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+        return view('e-learning/course/students/enrolled',compact('enrolments','cartCount'));
     }
 
     // all course list
@@ -250,12 +250,14 @@ class StudentHomeController extends Controller
 
     public function certificate()
     {
-        return view('e-learning/course/students/certifiate');
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+        return view('e-learning/course/students/certifiate', compact('cartCount'));
     }
 
-    public function message2()
+    public function message()
     {
-        return view('e-learning/course/students/message-2');
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+        return view('e-learning/course/students/message-2', compact('cartCount'));
     }
 
     public function courseLike($course_id, $ins_id)
