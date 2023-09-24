@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Message;
 use App\Models\Checkout;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -228,15 +229,49 @@ class DashboardController extends Controller
         return $course_wise_payments;
     }
 
+    public function subdomain()
+    { 
+        return view('latest-auth.subdomain');
+    }
+
     public function username($user_id, Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
+            // 'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
+            'username' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
         ]);
 
-        $user = User::find($user_id);
-        $user->username = $request->username;
-        $user->save();
-        return redirect('instructor/profile/step-4/complete');
+        $proposedUsername = $request->username;
+
+        $existingUser = User::where('username', $proposedUsername)->first();
+
+        if ($existingUser) { 
+            $suggestedUsernames = [];
+            $count = rand(10, 99);
+
+            while (count($suggestedUsernames) < 2) {
+                $suggestedUsername = $proposedUsername . $count;
+                if (!User::where('username', $suggestedUsername)->exists()) {
+                    $suggestedUsernames[] = $suggestedUsername;
+                }
+                $count++;
+            }
+            session(['suggestedUsernames' => $suggestedUsernames]);
+ 
+            return redirect()->back();
+
+        } else { 
+            $user = User::find($user_id);
+            $user->username = $request->username;
+            $user->save();
+
+            if (session('suggestedUsernames')) {
+                session()->forget('suggestedUsernames');
+            }
+
+            return redirect('instructor/profile/step-4/complete');
+        }
+
+  
     }
 }

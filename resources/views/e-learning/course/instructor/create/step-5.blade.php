@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 5
+Course Create - Video Upload Step
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -14,10 +14,7 @@ Course Create - Step 5
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-4 col-xl-3">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                {{-- course step --}} 
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle">

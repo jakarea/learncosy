@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('/')}}">
             @if ( modulesetting('logo') )
-                    <img src="{{asset('asseinstructor_module_settingsts/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
+                    <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
                     <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="img-fluid">
             @endif
@@ -43,6 +43,16 @@
                 <a href="{{ route('cart.index') }}">
                     Cart
                     <span id="cart-count">{{ $cartCount }}</span>
+                <a href="{{ url('/notification-details') }}" class="bttn">
+                    <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
+
+                    <span>
+                            @if (unseenNotification() == '0')
+
+                            @else
+                                {{ unseenNotification() }}
+                            @endif
+                    </span>
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">

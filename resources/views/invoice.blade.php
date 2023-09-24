@@ -1,352 +1,224 @@
 <!DOCTYPE html>
-<html>
-<head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title></title>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="payment-details-title">
-                    <h1>Payment Details</h1>
-                </div>
-            </div>
-        </div>  
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="payment-name-box">
-                    <div>
-                        <h6>Payment by</h6>
-                        <h5>{{ $payment->user->name}}</h5>
-                    </div>
-                    <div>
-                        <h6>Subscription Date</h6>
-                        <h5>{{ date(' d M, Y',strtotime($payment->start_date)) }}</h5>
-                    </div>
-                    <div>
-                        <h6>Payment Date</h6>
-                        <h5>{{ date(' d M, Y',strtotime($payment->created_at)) }}</h5>
-                    </div>
-                    <div>
-                        <h6>Payment type</h6>
-                        <h5>{{ $payment->payment_method }}</h5>
-                    </div>
-                    <div>
-                        <h6>Status</h6>
-                       <span>{{ $payment->status }}</span>
-                    </div>
-                </div>
-                <div class="pay-details-box-invoice">
-                    <table>
-                        <tr>
-                            <th>Details</th>
-                            <th>Course Type</th>
-                            <th>Amount</th>
-                        </tr>
-                        <tr>
-                            <td>{{ $payment->course->title }}</td>
-                            <td>
-                            {{ $payment->course->categories }}
-                            </td>
-                            <td>€{{ $payment->course->price }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"> discount</td>
-                            <td>€{{ $payment->course->price - $payment->course->offer_price }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Grand Total</td>
-                            <td>€{{ $payment->course->offer_price }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-         </div>
-    </div>
-</body>
-</html> 
-
-
-<!-- <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        @media screen {
-            @font-face {
-                font-family: 'Lato';
-                font-style: normal;
-                font-weight: 400;
-                src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
-            }
+    <link href="images/favicon.png" rel="icon" />
+    <title>Payment From Student - Learncosy</title>
 
-            @font-face {
-                font-family: 'Lato';
-                font-style: normal;
-                font-weight: 700;
-                src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
-            }
-
-            @font-face {
-                font-family: 'Lato';
-                font-style: italic;
-                font-weight: 400;
-                src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
-            }
-
-            @font-face {
-                font-family: 'Lato';
-                font-style: italic;
-                font-weight: 700;
-                src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-            }
-        }
-
-        /* CLIENT-SPECIFIC STYLES */
-        body,
-        table,
-        td,
-        a {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-
-        table,
-        td {
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-        }
-
-        img {
-            -ms-interpolation-mode: bicubic;
-        }
-
-        /* RESET STYLES */
-        img {
-            border: 0;
-            height: auto;
-            line-height: 100%;
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
             outline: none;
+            list-style-type: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        ol,
+        ul,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        a,
+        p,
+        i,
+        button,
+        strong,
+        u,
+        sub,
+        sup,
+        span,
+        textarea,
+        table tr td,
+        select,
+        input {
+            padding: 0;
+            margin: 0;
+        }
+
+        select:focus-within,
+        textarea:focus-within,
+        input:focus-within,
+        .form-control:focus-within,
+        button:focus-within {
+            box-shadow: none !important;
+        }
+
+        a,
+        a:hover {
+            color: #000;
             text-decoration: none;
         }
 
-        table {
-            border-collapse: collapse !important;
+        ol,
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
+            font-family: Arial, Helvetica, sans-serif; 
         }
 
-        /* iOS BLUE LINKS */
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: none !important;
-            font-size: inherit !important;
-            font-family: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
+        table tr th {
+            padding: .8rem 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
         }
 
-        /* MOBILE STYLES */
-        @media screen and (max-width:600px) {
-            h1 {
-                font-size: 32px !important;
-                line-height: 32px !important;
-            }
+        table tr th h1 {
+            font-size: 1.875rem;
+            color: #0c2f54;
         }
 
-        /* ANDROID CENTER FIX */
-        div[style*="margin: 16px 0;"] {
-            margin: 0 !important;
+        table tr th p {
+            font-size: .875rem;
+            color: #535b61;
+        }
+ 
+
+        .border-0 {
+            border: 0 !important;
+        }
+
+        address {
+            font-size: .875rem;
+            color: #535b61;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 24px;
+        }
+
+        .billed-table {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .billed-table .card-header td {
+            font-size: .875rem;
+            font-weight: 600;
+            color: #000;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+        }
+
+        .billed-table tbody td {
+            font-size: .875rem;
+            font-weight: 400;
+            color: #000;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+        }
+
+        .bl-0 {
+            border-left: 0 !important;
+        }
+
+        .br-0 {
+            border-right: 0 !important;
         }
     </style>
 </head>
 
-<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
-     HIDDEN PREHEADER TEXT 
-    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account.
-    </div>
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      
+<body>
+    <table border="0" cellspacing="0" cellpadding="0" style="width: 70%; margin: 0 auto;">
         <tr>
-            <td bgcolor="#FFA73B" align="center">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> </td>
-                    </tr>
-                </table>
-            </td>
+            <th class="border-0" style="text-align: left;">
+                <a href="#">
+                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Learncosy" class="img-fluid">
+                </a>
+            </th>
+            <th class=" border-0" style="text-align: right;">
+                <h1>Invoice</h1>
+            </th>
         </tr>
         <tr>
-            <td bgcolor="#FFA73B" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Welcome!</h1> <img src=" https://img.icons8.com/clouds/100/000000/handshake.png" width="125" height="120" style="display: block; border: 0px;" />
-                        </td>
-                    </tr>
-                </table>
-            </td>
+            <th colspan="2" class="" style="text-align: right;">
+                <p>Date: {{ now()->format('d-M-Y') }}</p>
+            </th>
         </tr>
         <tr>
-            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your account. Just press the button below.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
-                                        <table border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr> 
-                    <tr>
-                        <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">https://bit.li.utlddssdstueincx</a></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">If you have any questions, just reply to this email&mdash;we're always happy to help out.</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Cheers,<br>BBB Team</p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#f4f4f4" align="center" style="padding: 30px 10px 0px 10px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                    <tr>
-                        <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Need more help?</h2>
-                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">We&rsquo;re here to help you out</a></p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-            <h1>hello world</h1>
-    
+            <td style="padding-top: 1rem;">
+                <address>
+                    <strong>Payment By: </strong> <br>
+                    Name: {{ $payment->user->name}} <br />
+                    Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
+                    Payment Date : {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
+                    Payment type : {{ $payment->payment_method }} <br>
+                    Status type : {{ $payment->status }}
 
+                </address>
+            </td>
+            <td style="padding-top: 1rem; text-align: right;" class="" valign="top">
+                <address>
+                    <strong>Billed To: </strong> <br>
+                    Name: {{ Auth::user()->name }}<br />
+                    @if (Auth::user()->company_name)
+                    Company Name: {{ Auth::user()->company_name }} <br />
+                    @endif
+                   
+                    Email: {{ Auth::user()->email }}
+                </address>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table border="0" cellspacing="0" cellpadding="0" class="billed-table">
+                    <thead class="card-header">
+                        <tr>
+                            <td class="br-0" width="50%"><strong>Details</strong></td>
+                            <td class="bl-0 br-0" width="15%"><strong>Course Type</strong></td>
+                            <td class="bl-0 " width="15%" style="text-align: right;"><strong>Amount</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="br-0">{{ $payment->course->title }}</td>
+                            <td class="bl-0 br-0">{{ $payment->course->categories }}</td>
+                            <td class="bl-0 " style="text-align: right;">€{{ $payment->course->price }}</td>
+                        </tr>
+                        <tr class="" style="text-align: right;">
+                            <td colspan="2" class="br-0">
+                                <strong>Discount:</strong>
+                            </td>
+                            <td class="bl-0">
+                                €{{ $payment->course->price - $payment->course->offer_price }}
+                            </td>
+                        </tr>
+                        <tr class="" style="text-align: right;">
+                            <td colspan="2" class="br-0">
+                                <strong>Tax:</strong>
+                            </td>
+                            <td class="bl-0">
+                                € 0
+                            </td>
+                        </tr>
+                        <tr class="" style="text-align: right;">
+                            <td colspan="2" class="br-0">
+                                <strong>Grand Total:</strong>
+                            </td>
+                            <td class="bl-0">
+                                €{{ $payment->course->offer_price }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center; padding-top: 2rem;">
+                <p style="font-size: 12px; color: #535b61;">This invoice is computer generated, Powred by Learcosy</p>
             </td>
         </tr>
     </table>
-    
 </body>
 
-</html> -->
-
-
-
-
-<!-- <html>
-
-<body style="font-family: Open Sans, sans-serif; font-size: 100%; font-weight: 400; line-height: 1.4; color: #000;">
-  <table style="max-width: 670px; width: 100%; margin: 50px auto 10px; background-color: #fff; padding: 50px; border-radius: 3px; box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);">
-    <thead>
-      <tr>
-        <th style="text-align: left;">
-          <img style="max-width: 150px;" src="https://www.bachanatours.in/book/img/logo.png">
-        </th>
-        <th style="text-align: right; font-weight: 400;">{{ date('d M Y') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="min-width: 0; max-width: 670px;">
-        <td style="height: 35px;"></td>
-      </tr>
-      <tr style="min-width: 0; max-width: 670px;">
-        <td colspan="2" style="border: 1px solid #ddd; padding: 10px 20px;">
-          <p style="font-size: 14px; margin: 0 0 6px 0;">
-            <span style="font-weight: bold; display: inline-block; min-width: 150px;">Order status</span>
-            <b style="color: green; font-weight: normal; margin: 0;">Success</b>
-          </p>
-          <p style="font-size: 14px; margin: 0 0 6px 0;">
-            <span style="font-weight: bold; display: inline-block; min-width: 146px;">Transaction ID</span> 
-          </p>
-          <p style="font-size: 14px; margin: 0 0 0 0;">
-            <span style="font-weight: bold; display: inline-block; min-width: 146px;">Order amount</span> € 
-          </p>
-        </td>
-      </tr>
-      <tr style="min-width: 0; max-width: 670px;">
-        <td style="height: 35px;"></td>
-      </tr>
-      <tr style="min-width: 0; max-width: 670px;">
-        <td style="width: 50%; padding: 20px; vertical-align: top;">
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Name</span> {{ auth()->user()->name }}
-          </p>
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Email</span> {{ auth()->user()->email }}
-          </p>
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Phone</span> {{ auth()->user()->phone }}
-          </p>
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">ID No.</span>  {{ auth()->user()->id }}
-          </p>
-        </td>
-        <td style="width: 50%; padding: 20px; vertical-align: top;">
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Address</span>
-              Khudiram Pally, Malbazar, West Bengal, India, 735221
-          </p> 
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Package Name</span> 
-          </p>
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Duration of your vacation</span>
-            Start at 
-          </p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html> -->
-
-
-
-
-
-
-
-
-
-
-
-
+</html>

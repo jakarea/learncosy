@@ -34,8 +34,26 @@ class HomeController extends Controller
 
     public function studentsPayment()
     {
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
         // get all payments of the students who are enrolled in the courses of the instructor
-        $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->paginate(12);
+        $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id);
+    
+
+        if ($status) {
+            if ($status == 'asc') {
+                $payments->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'desc') {
+                $payments->orderBy('id', 'desc');
+            }
+        }else{
+            $payments->orderBy('id', 'desc'); 
+        }
+
+        $payments = $payments->paginate(12);
+
         return view('payments/instructor/students-payment', compact('payments'));
     }
 

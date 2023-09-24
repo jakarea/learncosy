@@ -14,10 +14,7 @@ Course Create - Step 9
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -73,42 +70,48 @@ Course Create - Step 9
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="top-image-upload-box">
-                        <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Preview</h4>
-                        <input type="file" class="d-none" id="certificate" name="certificate">
+                        {{-- session message @S --}}
+                    @include('partials/session-message')
+                    {{-- session message @E --}}
+                        <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid">Preview</h4>
+                        <input type="file" class="d-none" id="certificate" name="sample_certificates">
                         <label for="certificate" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid light-ele">
                             <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon" class="img-fluid dark-ele">
                             <p><label for="certificate">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
-                        <span class="invalid-feedback">@error('certificate'){{ $message }} @enderror</span>
+                        <span class="invalid-feedback">@error('sample_certificates'){{ $message }} @enderror</span>
                     </div>
                     <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="No Image Uploaded yet" class="img-fluid">
+                        <img id="previewImage" src="" alt="" class="img-fluid">
+                        @if ($course->sample_certificates)
+                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded">
+                    @endif
                     </div> 
                     <div class="content-settings-form-wrap mt-0">
                         <h4>Certificate</h4>
                         <hr>
                         <div class="form-group">
                             <h6>Select Certificate</h6>
-                                <select class="form-control" name="has_certificate">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                <select class="form-control" name="hascertificate">
+                                    <option value="no" {{ $course->hascertificate == 'no' ? 'selected' : ''}}>No</option>
+                                    <option value="yes" {{ $course->hascertificate == 'yes' ? 'selected' : ''}}>Yes</option>
                                 </select>
                                 <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down" class="img-fluid euro" style="top: 3rem">
-                                <span class="invalid-feedback">@error('has_certificate'){{ $message }} @enderror</span>
+                                <span class="invalid-feedback">@error('hascertificate'){{ $message }} @enderror</span>
                         </div>   
-                        <!-- <div class="media auto-text">
+                        <div class="media auto-text">
                             <div class="media-body"> 
                                 <p>Or Create a new Certificate</p>
                             </div>
-                            <a href="#" class="btn btn-primary">Create</a>
-                        </div>  -->
+                            <a href="{{url('instructor/profile/edit')}}" class="btn btn-primary">Create</a>
+                        </div>  
                         <hr class="mb-0">
                     </div>
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/step-8')}} ">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.$course->id.'/design')}}">Back</a>
                         <button class="btn btn-primary" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}

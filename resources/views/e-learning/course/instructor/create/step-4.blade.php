@@ -38,19 +38,21 @@ Course Create - Step 4
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <div class="highlighted-area-upload">
                     <img src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="a" class="img-fluid">
-                    <input type="file" class="d-none" id="audio">
+                    
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
                 </div>
                 <div class="lesson-edit-form-wrap mt-4">
                     <h4>Selecting Suitable Plants for Page 2</h4>
 
-                    <form action="">
+                    <form action="{{ route('course.lesson.audio.create') }}" method="POST">
+                        @csrf
+                        <input type="file" class="d-none" id="audio" name="audio">
                         <div class="form-group">
-                            <textarea class="form-control" id="description"></textarea>
+                            <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                         <div class="form-group form-upload">
                             <label for="file" class="txt">Upload Files</label>
-                            <input type="file" id="file" class="d-none">
+                            <input type="file" id="file" class="d-none" name="files">
                             <label for="file" id="upload-box">
                                 <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
                             </label>

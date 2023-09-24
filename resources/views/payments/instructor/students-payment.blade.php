@@ -92,26 +92,46 @@
             </div>
         </div>
         <div class="row">
+            {{-- filter form --}}
+            <form action="" method="GET" id="myForm">
+                <input type="hidden" name="status" id="inputField">
+            </form>
+            {{-- filter form --}}
             <div class="col-12">
                 <div class="subscription-table-wrap earning-table subs-table">
                     <table>
                         <tr>
-                            <th width="5%">No</th>
-                            <th width="10%">Payment Type</th>
-                            <th width="15%">Student Name</th>
-                            <th>Course Name</th>
+                            <th width="3%">No</th>
+                            <th class="d-flex justify-content-between">
+                                <span>Course Name</span>
+                                <div class="filter-sort-box">
+                                    <div class="dropdown">
+                                        <button class="btn p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                            id="dropdownBttn">
+                                            <img src="{{ asset('latest/assets/images/icons/sort-icon.svg') }}" alt="a" class="img-fluid">
+                                        </button> 
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="asc">In order A-Z</a></li> 
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="desc">In order Z-A</a></li> 
+                                        </ul>
+                                    </div> 
+                                </div>
+                            </th>
+                            <th width="12%">Student Name</th>
+                            <th width="12%">Payment Date</th>
+                            <th width="12%">Payment Type</th> 
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Action</th>
-    
                         </tr>
                         @foreach ($payments as $payment)
             
                         <tr>
                             <td>{{ $loop->iteration }} </td>
-                            <td>{{ $payment->payment_method }} </td>
+                            <td>{{ Str::limit($payment->course->title, $limit = 46, $end = '..') }}</td>
                             <td>{{ $payment->user->name }} </td>
-                            <td>{{ $payment->course->title }} </td>
+                            <td>{{ $payment->created_at->format('d M Y') }} </td>
+                            <td>{{ $payment->payment_method }} </td>
                             <td>€ {{ $payment->amount }}</td>
                             <td>
                                 @if ($payment->status == 'completed')
@@ -128,7 +148,6 @@
                     </table>
                 </div>
             </div>
-
             <div class="col-12">
             {{-- pagginate --}}
                 <div class="paggination-wrap">
@@ -136,10 +155,29 @@
                 </div>
             {{-- pagginate --}}
             </div>
-
         </div> 
     </div>
 </main>
 {{-- ==== admin payment list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
+
+{{-- page script @S --}}
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField"); 
+        let form = document.getElementById("myForm"); 
+        let dropdownItems = document.querySelectorAll(".filterItem");
+    
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                form.submit(); 
+            });
+        });
+    });
+</script>
+@endsection
+{{-- page script @E --}}
