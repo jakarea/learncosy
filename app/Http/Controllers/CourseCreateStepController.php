@@ -75,8 +75,9 @@ class CourseCreateStepController extends Controller
         ]);
 
         $course->save();
-        // $id = $course->id;
-        // session()->put('lastCourseId', $id);
+
+        $id = $course->id;
+
         // Start insert Notification
         $checkout = new Checkout;
         $checkouts = $checkout->getCheckoutByInstructorID();
@@ -91,9 +92,10 @@ class CourseCreateStepController extends Controller
             $notification->save();
         }
         // End insert Notification
-        return redirect('instructor/courses/create/'.$id.'/content')->with('success', 'Course created successfully');
-    }
- 
+
+        return redirect('instructor/courses/create/'.$id.'/price')->with('success', 'Course Title Saved Successfully');
+    } 
+
 
     public function step3($id){
 
@@ -285,7 +287,7 @@ class CourseCreateStepController extends Controller
             'video_link.required' => 'Video file is required!',
             'video_link' => 'Max file size is 1 GB!',
         ]);
-    
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
         
@@ -295,18 +297,18 @@ class CourseCreateStepController extends Controller
             $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
     
             $uri = $vimeo->upload($file->getPathname(), [
-                'name' => $videoName,
+                'name' => $lesson->title,
                 'approach' => 'tus',
                 'size' => $file->getSize(),
             ]);
             
             if ($uri) {
-                $lesson = Lesson::find($lastLessonId);
+                $lesson = Lesson::find($lesson_id);
                 $lesson->video_link = $uri;
                 $lesson->short_description = $request->description;
                 $lesson->save();
             }
-            $course = Course::find($lastCourseId);
+            $course = Course::find($id);
             $price = $course->price ?? 0;
             return response()->json(['uri' => $uri, 'price' => $price]);
 
