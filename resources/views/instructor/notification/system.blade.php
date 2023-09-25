@@ -1,6 +1,16 @@
-@extends('layouts.latest.instructor')
+@php
+if ( Auth::user()->user_role == 'instructor') {
+$layoutName = "layouts.latest.instructor";
+}elseif(Auth::user()->user_role == 'student'){
+$layoutName = "layouts.latest.students";
+}else{
+$layoutName = "layouts.latest.admin";
+}
 
-@section('title') All Courses @endsection
+@endphp
+
+@extends($layoutName)
+@section('title') Instructor Notifications @endsection
 
 {{-- style section @S --}}
 @section('style')
@@ -24,23 +34,27 @@
                 <div class="user-title-box">
                     <h1>Notification </h1>
                 </div>
-            </div> 
+            </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3">
-                <div class="user-search-box-wrap">
-                    <div class="form-filter">
-                        <select class="form-control" id="day-wise-notification">
-                          <option value="">Please select</option>
-                          <option value="1">Today</option>
-                          <option value="7">Last 7 days</option>
-                          <option value="30">Last 30 days</option>
-                          <option value="365">Last 1 year</option>
-                        </select>
-                        <i class="fas fa-angle-down"></i>
+                <div class="filter-dropdown-box">
+                    <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            id="dropdownBttn">
+                            Please select
+                        </button>
+                        <ul class="dropdown-menu" id="day-wise-notification">
+                            <li><a class="dropdown-item filterItem" href="#" data-value="1">Today</a></li>
+                            <li><a class="dropdown-item filterItem" href="#" data-value="7">Last 7 days</a></li>
+                            <li><a class="dropdown-item filterItem" href="#" data-value="30">Last 30 days</a></li>
+                            <li><a class="dropdown-item filterItem" href="#" data-value="365">Last 1 year</a></li>
+                        </ul>
                     </div>
+                    <i class="fas fa-angle-down"></i>
                 </div>
-            </div> 
-        </div> 
-         <div class="row">
+                <input type="hidden" id="inputField">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 <hr class="line">
                 <div class="notification-box-wrapper">
@@ -49,43 +63,65 @@
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
+                            @if (count($todays) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
                             @foreach($todays as $today)
-                                <div class="notify-item-box">
-                                    <div class="media">
-                                        <div class="icon">
-                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
-                                            <i class="fas fa-heart"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <h5>{{$today['type']}}</h5>
-                                            <p>{{$today['message']}}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="delete-item">
-                                        <a href="#"> 
-                                            <img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="icon" class="img-fluid">
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div> 
-
-                        <div class="single" data-value="2">
-                            {{-- day --}}
-                            <h5 class="mt-5">Yesterday</h5>
-                            {{-- day --}}
-
-                            {{-- notify item start --}}
-                             @foreach($yestardays as $yestarday)
                             <div class="notify-item-box">
                                 <div class="media">
                                     <div class="icon">
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        @if ($today['thumbnail'])
+                                        <img src="{{asset('assets/images/courses/'.$today['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{$today['type']}}</h5>
+                                        <p>{{$today['message']}}</p>
+                                    </div>
+                                </div>
+                                <div class="delete-item">
+                                    <form action="{{ route('notification.destroy',$today['id']) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
+                                </div>
+                            </div>
+                            @endforeach
+                            {{-- notify item end --}}
+                        </div>
+
+                        <div class="single" data-value="2">
+                            {{-- day --}} 
+                            <h5 class="mt-5">Yesterday</h5> 
+
+                            @if (count($yestardays) == 0) 
+                                @include('partials/no-data')
+                            @endif
+
+                            {{-- day --}}
+
+                            {{-- notify item start --}}
+                            @foreach($yestardays as $yestarday)
+                            <div class="notify-item-box">
+                                <div class="media">
+                                    <div class="icon">
+                                        @if ($yestarday['thumbnail'])
+                                        <img src="{{asset('assets/images/courses/'.$yestarday['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
                                     <div class="media-body">
@@ -95,9 +131,12 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <a href="#"> 
-                                        <img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="icon" class="img-fluid">
-                                    </a>
+                                    <form action="{{ route('notification.destroy',$yestarday['id']) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -105,16 +144,26 @@
                         </div>
 
                         <div class="single" data-value="7">
-                             {{-- day --}}
-                            <h5 class="mt-5">Seven Days</h5>
+                            {{-- day --}} 
+                            <h5 class="mt-5">Last 7 Days</h5>
+
+                            @if (count($sevenDays) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
-                             @foreach($sevenDays as $sevenDay)
+                            @foreach($sevenDays as $sevenDay)
                             <div class="notify-item-box">
                                 <div class="media">
                                     <div class="icon">
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        @if ($sevenDay['thumbnail'])
+                                        <img src="{{asset('assets/images/courses/'.$sevenDay['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
                                     <div class="media-body">
@@ -124,9 +173,12 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <a href="#"> 
-                                        <img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="icon" class="img-fluid">
-                                    </a>
+                                    <form action="{{ route('notification.destroy',$sevenDay['id']) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -134,16 +186,27 @@
                         </div>
 
                         <div class="single" data-value="30">
-                             {{-- day --}}
-                            <h5 class="mt-5">Thirty Days</h5>
+                            {{-- day --}}
+                            <h5 class="mt-5">Last 30 Days</h5>
+
+                            @if (count($thirtyDays) == 0) 
+                                @include('partials/no-data')
+                            @endif
+
                             {{-- day --}}
 
                             {{-- notify item start --}}
-                             @foreach($thirtyDays as $thirtyDay)
+                            @foreach($thirtyDays as $thirtyDay)
                             <div class="notify-item-box">
                                 <div class="media">
                                     <div class="icon">
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        @if ($thirtyDay['thumbnail'])
+                                        <img src="{{asset('assets/images/courses/'.$thirtyDay['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
                                     <div class="media-body">
@@ -153,9 +216,12 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <a href="#"> 
-                                        <img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="icon" class="img-fluid">
-                                    </a>
+                                    <form action="{{ route('notification.destroy',$thirtyDay['id']) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -163,16 +229,26 @@
                         </div>
 
                         <div class="single" data-value="365">
-                             {{-- day --}}
-                            <h5 class="mt-5">Last One Year</h5>
+                            {{-- day --}}
+                            <h5 class="mt-5">Last 1 year</h5>
+
+                            @if (count($lastOneYears) == 0) 
+                                @include('partials/no-data')
+                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
-                             @foreach($lastOneYears as $lastOneYear)
+                            @foreach($lastOneYears as $lastOneYear)
                             <div class="notify-item-box">
                                 <div class="media">
                                     <div class="icon">
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon" class="img-fluid">
+                                        @if ($lastOneYear['thumbnail'])
+                                        <img src="{{asset('assets/images/courses/'.$lastOneYear['thumbnail'])}}"
+                                            alt="Thumbnail" class="img-fluid">
+                                        @else
+                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                            class="img-fluid">
+                                        @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
                                     <div class="media-body">
@@ -182,9 +258,12 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <a href="#"> 
-                                        <img src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="icon" class="img-fluid">
-                                    </a>
+                                    <form action="{{ route('notification.destroy',$lastOneYear['id']) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn"><img
+                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                class="img-fluid"></button>
+                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -195,7 +274,7 @@
 
                 </div>
             </div>
-         </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 {{-- pagginate --}}
@@ -207,42 +286,69 @@
         </div>
     </div>
 </main>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-      var selectBox = document.getElementById("day-wise-notification");
-      var contentDivs = document.querySelectorAll(
-        ".show-notification-item .single"
-      );
-      function showDefaultContent() {
-        contentDivs.forEach(function (div) {
-          div.style.display = "none";
-        });
-        var todayContent = document.querySelector(
-          ".show-notification-item .single[data-value='1']"
-        );
-        var yestardayDaysContent = document.querySelector(
-          ".show-notification-item .single[data-value='2']"
-        );
+@endsection
 
-        if (todayContent && yestardayDaysContent) {
-          todayContent.style.display = "block";
-          yestardayDaysContent.style.display = "block";
-        }
-      }
-      showDefaultContent();
-      selectBox.addEventListener("change", function () {
-        var selectedValue = selectBox.value;
-        contentDivs.forEach(function (div) {
-          div.style.display = "none";
+@section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");  
+        let dropdownItems = document.querySelectorAll(".filterItem");
+        let itemWrapperItems = document.querySelectorAll(".show-notification-item .single");
+        let status;
+
+        itemWrapperItems.forEach(witem => {
+            witem.style.display = 'none';
         });
-        var selectedContentDiv = document.querySelector(
-          ".show-notification-item .single[data-value='" + selectedValue + "']"
-        );
-        if (selectedContentDiv) {
-          selectedContentDiv.style.display = "block";
-        }
-      });
-        
+
+        document.querySelector(".single[data-value='1']").style.display = 'block';
+        document.querySelector(".single[data-value='2']").style.display = 'block';
+
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                status = inputField.value;
+
+                if(status == "1"){
+                    dropbtn.innerText = 'Today';
+                    document.querySelector(".single[data-value='1']").style.display = 'block';
+                    document.querySelector(".single[data-value='2']").style.display = 'none';
+                    document.querySelector(".single[data-value='7']").style.display = 'none';
+                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='365']").style.display = 'none';
+                }
+                if(status == "7"){
+                    dropbtn.innerText = 'Last 7 days'; 
+                    document.querySelector(".single[data-value='1']").style.display = 'block';
+                    document.querySelector(".single[data-value='2']").style.display = 'block';
+                    document.querySelector(".single[data-value='7']").style.display = 'block';
+                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='365']").style.display = 'none';
+                }
+                if(status == "30"){
+                    dropbtn.innerText = 'Last 30 days'; 
+                    document.querySelector(".single[data-value='1']").style.display = 'block';
+                    document.querySelector(".single[data-value='2']").style.display = 'block';
+                    document.querySelector(".single[data-value='7']").style.display = 'block';
+                    document.querySelector(".single[data-value='30']").style.display = 'block'; 
+                    document.querySelector(".single[data-value='365']").style.display = 'none';
+                }
+                if(status == "365"){
+                    dropbtn.innerText = 'Last 1 year'; 
+                    document.querySelector(".single[data-value='1']").style.display = 'block';
+                    document.querySelector(".single[data-value='2']").style.display = 'block';
+                    document.querySelector(".single[data-value='7']").style.display = 'block';
+                    document.querySelector(".single[data-value='30']").style.display = 'block';
+                    document.querySelector(".single[data-value='365']").style.display = 'block';
+                }
+ 
+
+            });
+        });
+    });
 </script>
 @endsection

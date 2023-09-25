@@ -75,8 +75,9 @@ class CourseCreateStepController extends Controller
         ]);
 
         $course->save();
+
         $id = $course->id;
-        session()->put('lastCourseId', $id);
+
         // Start insert Notification
         $checkout = new Checkout;
         $checkouts = $checkout->getCheckoutByInstructorID();
@@ -94,6 +95,7 @@ class CourseCreateStepController extends Controller
 
         return redirect('instructor/courses/create/'.$id.'/price')->with('success', 'Course Title Saved Successfully');
     } 
+
 
     public function step3($id){
 
