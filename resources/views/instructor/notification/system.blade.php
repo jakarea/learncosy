@@ -58,14 +58,15 @@ $layoutName = "layouts.latest.admin";
             <div class="col-lg-12">
                 <hr class="line">
                 <div class="notification-box-wrapper">
-
+                    @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 ) 
+                    @include('partials/no-data')
+                    @else 
                     <div class="show-notification-item">
+                        
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
-                            @if (count($todays) == 0) 
-                                @include('partials/no-data')
-                            @endif
+                            
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -101,12 +102,8 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="2">
-                            {{-- day --}} 
-                            <h5 class="mt-5">Yesterday</h5> 
-
-                            @if (count($yestardays) == 0) 
-                                @include('partials/no-data')
-                            @endif
+                            {{-- day --}}  
+                            <h5 class="mt-5">Yesterday</h5>
 
                             {{-- day --}}
 
@@ -144,12 +141,8 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="7">
-                            {{-- day --}} 
+                            {{-- day --}}  
                             <h5 class="mt-5">Last 7 Days</h5>
-
-                            @if (count($sevenDays) == 0) 
-                                @include('partials/no-data')
-                            @endif
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -186,12 +179,8 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="30">
-                            {{-- day --}}
+                            {{-- day --}} 
                             <h5 class="mt-5">Last 30 Days</h5>
-
-                            @if (count($thirtyDays) == 0) 
-                                @include('partials/no-data')
-                            @endif
 
                             {{-- day --}}
 
@@ -229,12 +218,9 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="365">
-                            {{-- day --}}
-                            <h5 class="mt-5">Last 1 year</h5>
+                            {{-- day --}} 
 
-                            @if (count($lastOneYears) == 0) 
-                                @include('partials/no-data')
-                            @endif
+                            <h5 class="mt-5">Last 1 year</h5>
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -271,7 +257,7 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                     </div>
-
+                    @endif
                 </div>
             </div>
         </div>
@@ -279,7 +265,7 @@ $layoutName = "layouts.latest.admin";
             <div class="col-12">
                 {{-- pagginate --}}
                 <div class="paggination-wrap">
-                    {{-- {{ $courses->links('pagination::bootstrap-5') }} --}}
+                    {{-- {{ $lastOneYears->links('pagination::bootstrap-5') }} --}}
                 </div>
                 {{-- pagginate --}}
             </div>

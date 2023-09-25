@@ -200,6 +200,9 @@
     background-color: #fff;
     padding: 2rem;
     text-align: center;
+    min-height: 50vh;
+    @include m.df(center);
+    flex-direction: column;
     i{
         color: #294CFF;
         font-size: 2rem;
@@ -234,7 +237,6 @@
         background-color: #294CFF!important; 
     }
 }
-
 
 
 // responsive css start

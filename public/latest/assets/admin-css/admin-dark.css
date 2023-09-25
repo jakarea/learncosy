@@ -1167,6 +1167,43 @@
 .dark-mode .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item:hover {
   background-color: #66768E !important;
 }
+.dark-mode .no-data-found {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  color: #fff !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+}
+.dark-mode .cart-info-from {
+  border-radius: 1.25rem;
+  border: 1px solid var(--others-dark-stroke, #1A1A1A);
+  background: #0D0D0D;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2);
+}
+.dark-mode .cart-info-from .payment-method-wrapper a {
+  background: #171717;
+  border-color: #171717;
+}
+.dark-mode .cart-info-from .payment-method-wrapper a:hover {
+  border-color: #7289FF;
+}
+.dark-mode .cart-info-from .payment-method-wrapper a.active {
+  border-color: #7289FF;
+}
+.dark-mode .cart-right-wrap {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A);
+  background: #0D0D0D;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2);
+}
+.dark-mode .cart-right-wrap .cart-items-wrap {
+  border-color: #22282F;
+}
+.dark-mode .subtotal-wrap-2 tr td:last-child,
+.dark-mode .cart-items-wrap h5 {
+  color: #7289FF !important;
+}
+.dark-mode .cart-close i {
+  color: #fff;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

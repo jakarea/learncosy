@@ -79,6 +79,18 @@ Course Create - Step 3
                                 <input class="form-check-input" type="checkbox" name="auto_complete" role="switch" id="flexSwitchCheckChecked" checked> 
                             </div>
                         </div>
+                        <div class="form-group">
+                            <h6>Total Curriculum</h6>
+                            <input id="curriculum" name="curriculum" class="form-control" placeholder="Total Curriculum" type="text" value="{{ $course ? $course->curriculum : old('curriculum') }}">
+                        </div> 
+                        <div class="form-group">
+                            <h6>Language</h6>
+                            <input id="language" name="language" class="form-control" placeholder="Language" type="text" value="{{ $course ? $course->language : old('language') }}">
+                        </div> 
+                        <div class="form-group">
+                            <h6>Platform</h6>
+                            <input id="platform" name="platform" class="form-control" placeholder="ex: Figma/ Adobe XD/ Photoshop" type="text" value="{{ $course ? $course->platform : old('platform') }}">
+                        </div>  
                     </div>
 
                     {{-- step next bttns --}}

@@ -937,7 +937,7 @@ span.finsihLesson {
             }
         }
 
-        label.active ,
+        label.active,
         a.active {
             color: #294CFF;
 
@@ -2083,7 +2083,7 @@ span.finsihLesson {
         line-height: 1.375rem;
     }
 }
- 
+
 .toggle-box-wrap {
     max-height: 0;
     overflow: hidden;
@@ -2094,12 +2094,12 @@ span.finsihLesson {
     max-height: none;
 }
 
-.rotate{
+.rotate {
     transform: rotate(180deg);
     transition: all linear .4s;
 }
 
-.full-page-preview{
+.full-page-preview {
     position: fixed;
     left: 0;
     top: 0;
@@ -2112,17 +2112,18 @@ span.finsihLesson {
     justify-content: center;
     transform: scale(0);
     transition: ease-out .3s;
-    img{
-        width: auto!important;
-        height: auto!important;
+
+    img {
+        width: auto !important;
+        height: auto !important;
     }
 }
 
-.full-page-preview.show{
+.full-page-preview.show {
     transform: scale(1);
 }
 
-.close-bttn{
+.close-bttn {
     width: 2rem;
     height: 2rem;
     display: inline-flex;
@@ -2133,28 +2134,258 @@ span.finsihLesson {
     position: absolute;
     left: 2rem;
     top: 2rem;
-    i{
+
+    i {
         font-size: 1rem;
         color: #294CFF;
     }
 }
-.module-dropdown-box{
+
+.module-dropdown-box {
     display: flex;
     align-items: center;
-    .dropdown-item{
-        margin-left: 0!important;
+
+    .dropdown-item {
+        margin-left: 0 !important;
     }
 }
 
 
-.course-content-box.course-page-box{
+.course-content-box.course-page-box {
     .dropdown-menu {
-        top: -50px!important;
+        top: -50px !important;
         overflow-y: visible;
-        min-height: 115px!important;
+        min-height: 115px !important;
     }
 }
 
+
+// cart css 
+
+.cart-right-wrap {
+    border-radius: 1.25rem;
+    border: 1px solid var(--gray-100, #F2F4F7);
+    background: #FFF;
+    padding: 1rem;
+    box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
+}
+
+.cart-items-wrap {
+    border-radius: 0.75rem;
+    border: 1px solid var(--gray-300, #DFE3E8);
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    .d-flex {
+        justify-content: space-between;
+    }
+
+    .media {
+        // align-items: center;
+        width: 90%;
+
+        img {
+            width: 6rem;
+            height: 5.875rem;
+            flex-shrink: 0;
+            margin-right: 0.7rem;
+            border-radius: 0.5rem;
+            object-fit: cover;
+        }
+    }
+
+    h6 {
+        color: var(--gray-800, #1D2939);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.5rem;
+    }
+
+    p {
+        color: var(--neutral-color-neutral-60, #66768E);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.375rem;
+    }
+
+    ul {
+        @include m.df;
+
+        li {
+            margin-right: 0.2rem;
+
+            span {
+                display: inline-block;
+                color: var(--neutral-color-neutral-60, #66768E);
+                font-size: 0.75rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.375rem;
+            }
+
+            i {
+                color: #FFB900;
+                font-size: 0.75rem;
+            }
+
+            .empty {
+                color: rgba(102, 118, 142, 0.3);
+            }
+        }
+    }
+
+    h5 {
+        color: var(--primary-color-blue, #294CFF);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.25rem;
+
+        s {
+            color: var(--neutral-color-neutral-60, #66768E);
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;
+            text-decoration: line-through;
+            margin-left: 0.6rem;
+        }
+    }
+}
+
+.cart-close {
+    width: 10%;
+    text-align: end;
+
+    i {
+        color: #000;
+        font-size: 1.2rem;
+    }
+}
+
+
+.subtotal-wrap {
+    margin-top: 3rem;
+}
+
+
+.subtotal-wrap table {
+    width: 100%;
+}
+
+.subtotal-wrap table tr {
+    td {
+        &:last-child {
+            text-align: right;
+        }
+    }
+}
+
+.subtotal-wrap table tr td {
+    color: var(--Text-Secondary, #3A5B6C);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    padding-top: 1.4rem;
+}
+
+.subtotal-wrap-2 {
+    border-top: 1px solid #DFE3E8;
+    padding-top: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.subtotal-wrap-2 tr td:last-child {
+    color: var(--primary-color-blue, #294CFF);
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 2rem;
+}
+
+.cart-checkout-bttn-wrap {
+    margin-top: 1.5rem;
+}
+
+.cart-checkout-bttn-wrap a {
+    border-radius: 0.375rem;
+    background: var(--primary-color-blue, #294CFF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    color: var(--neutral-10, #FFF);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+    border: 2px solid #294CFF;
+    transition: all linear .3s;
+    i{
+        font-size: 2rem;
+        margin-left: 0.7rem;
+    }
+}
+
+
+.cart-checkout-bttn-wrap a:hover {
+    background-color: #1334d8;
+}
+
+.cart-info-from {
+    border-radius: 1.25rem;
+    border: 1px solid var(--gray-100, #F2F4F7);
+    background: #FFF;
+    box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
+    padding: 1rem;
+
+    h2 {
+        color: var(--gray-900, #161C24);
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.875rem;
+    }
+
+    .content-settings-form-wrap {
+        padding: 0rem;
+        box-shadow: none;
+        margin-top: 0rem;
+    }
+}
+
+.payment-method-wrapper {
+    @include m.df(space-between);
+    margin-top: 1rem;
+
+    a {
+        border-radius: 0.75rem;
+        background: #F4F5F6;
+        height: 3.5rem;
+        // padding: 0.75rem 5.0625rem 0.75rem 4.75rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #F4F5F6;
+        transition: ease-in-out .3s;
+
+        &:hover{
+            border: 2px solid var(--primary-color-blue, #294CFF);
+        }
+    }
+
+    a.active { 
+        border: 2px solid var(--primary-color-blue, #294CFF); 
+    }
+}
+
+/* checkout css end */
 
 
 
@@ -2173,6 +2404,13 @@ span.finsihLesson {
 @include q.responsive(phone) {
     .course-title {
         padding: 1rem 0;
+    }
+
+    .payment-method-wrapper a {
+        height: 2.5rem;
+        a{
+            width: 2.7rem;
+        }
     }
 
     .notify-item-box {

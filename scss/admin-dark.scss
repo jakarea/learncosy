@@ -1510,12 +1510,59 @@
         box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
     }
 
-    .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item{
+    .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item {
         color: #d7def4;
     }
 
-    .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item:hover { 
+    .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item:hover {
         background-color: #66768E !important;
+    }
+
+    .no-data-found {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+        background: #0D0D0D !important;
+        color: #fff !important;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+    }
+
+    .cart-info-from {
+        border-radius: 1.25rem;
+        border: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+
+        .payment-method-wrapper {
+            a {
+                background: #171717;
+                border-color: #171717;
+
+                &:hover {
+                    border-color: #7289FF;
+                }
+            }
+
+            a.active {
+                border-color: #7289FF;
+            }
+        }
+    }
+
+    .cart-right-wrap { 
+        border: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D; 
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+        .cart-items-wrap{
+            border-color: #22282F;
+        }
+    }
+
+    .subtotal-wrap-2 tr td:last-child,
+    .cart-items-wrap h5{
+        color: #7289FF!important;
+    }
+
+    .cart-close i{
+        color: #fff;
     }
 }
 

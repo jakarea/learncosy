@@ -429,6 +429,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(CartController::class)->group(function () {
     Route::get('/cart', 'index')->name('cart.index');
     Route::post('/cart/add/{course}', 'add')->name('cart.add');
+    Route::post('/cart/remove/{id}', 'remove')->name('cart.remove');
 });
 
 /* ======================================================== */
