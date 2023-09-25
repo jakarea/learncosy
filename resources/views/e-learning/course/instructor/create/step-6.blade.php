@@ -146,7 +146,7 @@ Course Create - Step 1
                         </div>
                         {{-- course content box end --}}
 
-                        <div class="toggle-box-wrap">
+                        <div class="toggle-box-wrap {{ request()->input('tab') == $module->id ? 'active' : ''}}">
                             @foreach ($module->lessons as $lesson)
                             {{-- course page box start --}}
                             <div class="course-content-box course-page-box">
