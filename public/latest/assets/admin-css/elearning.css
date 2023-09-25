@@ -1900,9 +1900,217 @@ span.finsihLesson {
   min-height: 115px !important;
 }
 
+.cart-right-wrap {
+  border-radius: 1.25rem;
+  border: 1px solid var(--gray-100, #F2F4F7);
+  background: #FFF;
+  padding: 1rem;
+  box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
+}
+
+.cart-items-wrap {
+  border-radius: 0.75rem;
+  border: 1px solid var(--gray-300, #DFE3E8);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.cart-items-wrap .d-flex {
+  justify-content: space-between;
+}
+.cart-items-wrap .media {
+  width: 90%;
+}
+.cart-items-wrap .media img {
+  width: 6rem;
+  height: 5.875rem;
+  flex-shrink: 0;
+  margin-right: 0.7rem;
+  border-radius: 0.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.cart-items-wrap h6 {
+  color: var(--gray-800, #1D2939);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+.cart-items-wrap p {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+.cart-items-wrap ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.cart-items-wrap ul li {
+  margin-right: 0.2rem;
+}
+.cart-items-wrap ul li span {
+  display: inline-block;
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+.cart-items-wrap ul li i {
+  color: #FFB900;
+  font-size: 0.75rem;
+}
+.cart-items-wrap ul li .empty {
+  color: rgba(102, 118, 142, 0.3);
+}
+.cart-items-wrap h5 {
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+.cart-items-wrap h5 s {
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  text-decoration: line-through;
+  margin-left: 0.6rem;
+}
+
+.cart-close {
+  width: 10%;
+  text-align: end;
+}
+.cart-close i {
+  color: #000;
+  font-size: 1.2rem;
+}
+
+.subtotal-wrap {
+  margin-top: 3rem;
+}
+
+.subtotal-wrap table {
+  width: 100%;
+}
+
+.subtotal-wrap table tr td:last-child {
+  text-align: right;
+}
+
+.subtotal-wrap table tr td {
+  color: var(--Text-Secondary, #3A5B6C);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  padding-top: 1.4rem;
+}
+
+.subtotal-wrap-2 {
+  border-top: 1px solid #DFE3E8;
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.subtotal-wrap-2 tr td:last-child {
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.cart-checkout-bttn-wrap {
+  margin-top: 1.5rem;
+}
+
+.cart-checkout-bttn-wrap a {
+  border-radius: 0.375rem;
+  background: var(--primary-color-blue, #294CFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  color: var(--neutral-10, #FFF);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  border: 2px solid #294CFF;
+  transition: all linear 0.3s;
+}
+.cart-checkout-bttn-wrap a i {
+  font-size: 2rem;
+  margin-left: 0.7rem;
+}
+
+.cart-checkout-bttn-wrap a:hover {
+  background-color: #1334d8;
+}
+
+.cart-info-from {
+  border-radius: 1.25rem;
+  border: 1px solid var(--gray-100, #F2F4F7);
+  background: #FFF;
+  box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
+  padding: 1rem;
+}
+.cart-info-from h2 {
+  color: var(--gray-900, #161C24);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.875rem;
+}
+.cart-info-from .content-settings-form-wrap {
+  padding: 0rem;
+  box-shadow: none;
+  margin-top: 0rem;
+}
+
+.payment-method-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.payment-method-wrapper a {
+  border-radius: 0.75rem;
+  background: #F4F5F6;
+  height: 3.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #F4F5F6;
+  transition: ease-in-out 0.3s;
+}
+.payment-method-wrapper a:hover {
+  border: 2px solid var(--primary-color-blue, #294CFF);
+}
+.payment-method-wrapper a.active {
+  border: 2px solid var(--primary-color-blue, #294CFF);
+}
+
+/* checkout css end */
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
+  }
+  .payment-method-wrapper a {
+    height: 2.5rem;
+  }
+  .payment-method-wrapper a a {
+    width: 2.7rem;
   }
   .notify-item-box {
     flex-direction: column;
