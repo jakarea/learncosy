@@ -787,7 +787,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.message === 'Theme Reset') {
+                if (data.message === 'Theme Reset') { 
+
                    document.querySelector('.alert-success').style.display = "block";
 
                    window.scrollTo({

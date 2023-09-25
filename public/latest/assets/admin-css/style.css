@@ -262,6 +262,11 @@ body {
   background-color: #fff;
   padding: 2rem;
   text-align: center;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .no-data-found i {
   color: #294CFF;

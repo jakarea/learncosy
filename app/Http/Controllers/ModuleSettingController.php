@@ -171,7 +171,7 @@ class ModuleSettingController extends Controller
         $item->favicon = null;
  
         $item->save();
- 
+        
         return response()->json(['message' => 'Theme Reset']);
     }
 }

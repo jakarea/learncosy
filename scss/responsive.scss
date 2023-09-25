@@ -3,7 +3,19 @@
 
 // small phone device
 @include q.responsive(phone) {
-     
+    .dark-mode-bttn {
+        max-height: 63px;
+        max-width: 36px;
+        min-height: 63px;
+        min-width: 36px;
+        grid-column-gap: 4px;
+        grid-row-gap: 2px;
+        padding: 4px; 
+    }
+    .dark-mode-bttn label {
+        width: 1.5rem;
+        height: 1.5rem; 
+    }
 }
 
 // landscape phone device 

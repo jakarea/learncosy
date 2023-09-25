@@ -1167,6 +1167,12 @@
 .dark-mode .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item:hover {
   background-color: #66768E !important;
 }
+.dark-mode .no-data-found {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  background: #0D0D0D !important;
+  color: #fff !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;
