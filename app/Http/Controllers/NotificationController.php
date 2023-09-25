@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Notification;
 Use \Carbon\Carbon;
 
+
 class NotificationController extends Controller
 {
     public function notificationDetails()
@@ -18,73 +19,65 @@ class NotificationController extends Controller
         }
         $currentYear = Carbon::now()->subDays(365); 
         $today = Carbon::now();
-        $lastOneYears = Notification::leftjoin('users','notifications.user_id','=','users.id')
-                                        ->where('notifications.user_id',Auth::user()->id)
-                                        ->whereYear('notifications.created_at','>', $currentYear) 
-                                        ->select('notifications.id','notifications.type','notifications.message','users.avatar','notifications.created_at')
-                                        ->orderBy('notifications.created_at','DESC')
-                                        ->get();
+       $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
+       ->where('notifications.user_id', Auth::user()->id)
+       ->whereYear('notifications.created_at', '>', $currentYear)
+       ->join('courses', 'notifications.course_id', '=', 'courses.id')
+       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.message', 'users.avatar', 'notifications.created_at')
+       ->orderBy('notifications.created_at', 'DESC')
+       ->get();
+    
+                                                           
+        // Get today's date
+        $today = now();
+        
+        // Initialize arrays for each category
         $todays = [];
         $yestardays = [];
         $sevenDays = [];
         $thirtyDays = [];
-        foreach ($lastOneYears as $key => $lastOneYear) 
-        {
-            // Start Todays
-            $today = Carbon::parse(Carbon::now())->toDateString();
-            $getQueryDate = Carbon::parse($lastOneYear->created_at)->toDateString();
-            if($today == $getQueryDate)
-            {
-                $todays[] = array(
-                    'id' => $lastOneYear->id,
-                    'type' => $lastOneYear->type,
-                    'message' => $lastOneYear->message,
-                    'avatar' => $lastOneYear->avatar,
-                    'create' => $lastOneYear->created_at
-                );
+        $lastOneYears = [];
+        
+        foreach ($data as $item) {
+            $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
+        
+            // Calculate the interval in days
+            $interval = $today->diffInDays($createdAt);
+        
+            if ($interval == 0) {
+                // Today
+                $todays[] = $item;
+            } elseif ($interval == 1) {
+                // Yesterday
+                $yestardays[] = $item;
+            } elseif ($interval > 2 && $interval <= 7) {
+                // Last 7 days
+                $sevenDays[] = $item;
+            } elseif ($interval >= 8 && $interval <= 30) {
+                    
+                $thirtyDays[] = $item;
+            } elseif ($interval >= 31 && $interval <= 365) {
+                    
+                $lastOneYears[] = $item;
             }
-            // End Todays
-            // Start Yestarday
-            $yestarday = Carbon::parse(Carbon::yesterday())->toDateString();
-            if($getQueryDate == $yestarday)
-            {
-                $yestardays[] = array(
-                    'id' => $lastOneYear->id,
-                    'type' => $lastOneYear->type,
-                    'message' => $lastOneYear->message,
-                    'avatar' => $lastOneYear->avatar,
-                    'create' => $lastOneYear->created_at
-                );
-            }
-            // End Yestarday
-            // Start 7 days
-            $lastSevenDaysDate = Carbon::parse(Carbon::now()->subDays(7))->toDateString();
-            if($getQueryDate > $lastSevenDaysDate)
-            {
-                $sevenDays[] = array(
-                    'id' => $lastOneYear->id,
-                    'type' => $lastOneYear->type,
-                    'message' => $lastOneYear->message,
-                    'avatar' => $lastOneYear->avatar,
-                    'create' => $lastOneYear->created_at
-                );
-            }
-            // End 7 days
-            // Start 30 days
-            $lastThirtyDaysDate = Carbon::parse(Carbon::now()->subDays(30))->toDateString();
-            if($getQueryDate > $lastThirtyDaysDate)
-            {
-                $thirtyDays[] = array(
-                    'id' => $lastOneYear->id,
-                    'type' => $lastOneYear->type,
-                    'message' => $lastOneYear->message,
-                    'avatar' => $lastOneYear->avatar,
-                    'create' => $lastOneYear->created_at
-                );
-            }
-            // End 30 days
-        }
-        // return $thirtyDays;
+        } 
+                                        
+                        //  return [$todays,
+                        //  $yestardays,
+                        //  $sevenDays,
+                        //  $thirtyDays,
+                        //  $lastOneYears];    
+                        
+        // return $todays;
         return view('instructor.notification.system',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
+    }
+
+    public function destroy($id){
+        // return $id;
+
+        $notify = Notification::where('id', $id)->first(); 
+        $notify->delete();
+
+        return redirect()->back()->with('success', 'Notification Successfuly Deleted!');
     }
 }

@@ -10,6 +10,7 @@
 
 {{-- page content @S --}}
 @section('content')
+
 <main class="student-dashboard-page">
     <div class="container-fluid">
         <div class="row">

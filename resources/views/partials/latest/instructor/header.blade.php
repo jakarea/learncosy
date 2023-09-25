@@ -57,15 +57,13 @@
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                <a href="#" class="bttn">
+                <a href="{{ url('instructor/notification-details') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
-                    <span>
-                        @if (unseenNotification() == '0')
-                                
-                        @else
-                                {{ unseenNotification() }}
-                        @endif 
-                    </span>
+                    @if (unseenNotification() == '0')    
+                    @else
+                        <span> {{ unseenNotification() }}</span>  
+                    @endif 
+                    
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">

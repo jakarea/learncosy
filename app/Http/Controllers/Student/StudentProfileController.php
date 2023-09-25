@@ -20,7 +20,8 @@ class StudentProfileController extends Controller
     {  
         $id = Auth::user()->id;
         $user = User::find($id); 
-        $checkout = Checkout::where('user_id', $id)->with('course')->get();
+        $checkout = Checkout::where('user_id', $id)->with('course')->get(); 
+
         return view('profile/students/profile',compact('user','checkout')); 
     }
 
