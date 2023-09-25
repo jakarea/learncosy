@@ -46,7 +46,7 @@
                                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         id="dropdownBttn">
                                         All
-                                    </button> 
+                                    </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item filterItem" href="#">All</a></li>
                                         <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated</a></li>
@@ -66,7 +66,7 @@
                     </div>
                 </form>
             </div>
-        </div>         
+        </div>
         <div class="row">
             @if (count($courses) > 0)
             @foreach($courses as $course)
@@ -103,10 +103,10 @@
                         <div class="course-txt-box">
                             @if ( isEnrolled($course->id) )
                                 <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}"> {{ Str::limit($course->title, 45) }}</a>
-                            @else 
+                            @else
                                 <a href="{{url('students/courses/overview/'.$course->slug )}}"> {{ Str::limit($course->title, 50) }}</a>
                             @endif
-                            
+
                             <p>{{ Str::limit($course->short_description, $limit = 46, $end = '...') }}</p>
                             <ul>
                                 <li><span>{{ $review_avg }}</span></li>
@@ -115,8 +115,8 @@
                                 @endfor
                                 <li><span>({{ $total }})</span></li>
                             </ul>
-                        </div>    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="course-txt-box">
                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                     </div>
@@ -134,21 +134,25 @@
                             @endforeach
                         </ul>
                         @if ( !isEnrolled($course->id) )
-                        <form action="{{route('students.checkout', $course->slug)}}" method="GET">
+                        {{-- <form action="{{route('students.checkout', $course->slug)}}" method="GET">
                             <input type="hidden" name="course_id" value="{{$course->id}}">
                             <input type="hidden" name="price" value="{{$course->price}}">
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
-                        </form>  
-                        @else 
+                        </form> --}}
+                        <form action="{{ route('cart.add', $course) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn add-to-cart-button">Add to Cart</button>
+                        </form>
+                        @else
                         <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}">Go to Course</a>
-                        @endif 
+                        @endif
                     </div>
                 </div>
             </div>
             {{-- course single box end --}}
-            @endforeach 
-            @else 
+            @endforeach
+            @else
             <div class="col-12">
                 <div class="no-result-found">
                     <h6>No Course Found!</h6>
@@ -198,16 +202,42 @@
         }
 
         inputField.value = status;
-    
+
         dropdownItems.forEach(item => {
             item.addEventListener("click", function(e) {
                 e.preventDefault();
                 inputField.value = this.getAttribute("data-value");
                 dropbtn.innerText = item.innerText;
-                form.submit(); 
+                form.submit();
             });
         });
     });
+
+$(document).ready(function() {
+            $('.add-to-cart-button').on('click', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('cart.add', $course) }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        course_id: '{{ $course->id }}',
+                    },
+                    success: function(response) {
+                        if (response.error) {
+                        // Display an alert with the error message
+                        alert(response.error);
+                    } else {
+                        // Update the cart count in the navigation bar
+                        $('#cart-count').text(response.cartCount);
+                    }                    },
+                    error: function() {
+                        alert('An error occurred while adding to the cart.');
+                    }
+
+                });
+            });
+        });
 </script>
 @endsection
 {{-- page script @E --}}
