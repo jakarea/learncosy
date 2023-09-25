@@ -173,16 +173,12 @@ class LessonController extends Controller
 
         $video = $vimeo->request($uri);
 
-
         if (isset($response['body']['upload']['upload_status']) && $response['body']['upload']['upload_status'] === 'in_progress') {
             $progress = $response['body']['upload']['upload_progress'] * 100;
         } else {
             $progress = 100;
         }
-    
-
         return response()->json(['progress' => $progress]);
-
     }
 
      // lesson edit

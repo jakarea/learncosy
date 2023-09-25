@@ -83,7 +83,7 @@
                                         <li><a class="dropdown-item" href="{{url('instructor/courses/'.$course->slug)}}">View</a></li> 
                                         <li><a class="dropdown-item" href="{{url('instructor/courses/create/'.$course->id)}}">Edit</a></li> 
                                         <li> 
-                                            <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->slug.'/destroy') }}">
+                                            <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->id.'/destroy') }}">
                                                 @csrf 
                                                 @method("DELETE")
                                                 <button type="submit" class="dropdown-item btn text-danger">Delete </button>
@@ -95,7 +95,7 @@
                             <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid"> 
                         </div> 
                         <div class="course-txt-box">
-                            <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 30, $end = '..') }}</a>
+                            <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title?$course->title:'Untitled course', $limit = 30, $end = '..') }}</a>
                             <p>{{ Str::limit($course->short_description, $limit = 26, $end = '...') }}</p>
                             <ul>
                                 <li><span>4.0</span></li>
