@@ -246,6 +246,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}', 'step3');
             Route::post('{id}', 'step3c');
+
             Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');
             Route::post('{id}/factsu', 'step3cu')->name('course.module.step.update');
             Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
@@ -260,6 +261,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
 
             Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
+
+            Route::get('{id}/objects', 'courseObjects');
+            Route::post('{id}/objects', 'courseObjectsSet');
+
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');

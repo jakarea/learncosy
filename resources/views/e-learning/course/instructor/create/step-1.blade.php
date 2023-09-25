@@ -13,11 +13,8 @@ Course Create - Step 3
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -27,8 +24,14 @@ Course Create - Step 3
                         <p>Contents</p>
                     </div>
                     <div class="step-box current">
-                        <span class="circle"></span>
+                        <span class="circle">
+                             
+                        </span>
                         <p>Facts</p>
+                    </div>
+                    <div class="step-box">
+                        <span class="circle"></span>
+                        <p>Objects</p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -71,7 +74,7 @@ Course Create - Step 3
                         </div>  
                         <div class="form-group">
                             <h6>Description</h6>
-                            <textarea class="form-control" name="description" id="description">{{ $course ? $course->short_description : old('description') }}</textarea> 
+                            <textarea class="form-control" name="description" id="description">{{ $course ? $course->description : old('description') }}</textarea> 
                         </div>   
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <h6>User must manually tick off each lesson</h6>

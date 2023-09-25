@@ -13,19 +13,23 @@ Course Create - Step 1
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box current">
-                        <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid"> --}}
+                        <span class="circle"> 
                         </span>
                         <p>Contents</p>
                     </div>
                     <div class="step-box">
-                        <span class="circle"></span>
+                        <span class="circle">
+                             
+                        </span>
                         <p>Facts</p>
+                    </div>
+                    <div class="step-box">
+                        <span class="circle"></span>
+                        <p>Objects</p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -48,7 +52,6 @@ Course Create - Step 1
                         <p>Share</p>
                     </div>
                 </div>
-
                 {{-- course step --}}
             </div>
         </div>

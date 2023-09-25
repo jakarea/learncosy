@@ -49,6 +49,10 @@ class Course extends Model
         'sample_certificates',
         'subscription_status',
         'status',
+        'curriculum',
+        'language',
+        'platform',
+        'objective',
     ];
 
     public function user(){

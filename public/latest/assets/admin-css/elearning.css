@@ -514,7 +514,7 @@ span.finsihLesson {
 
 .course-create-step-page-wrap .course-create-step-wrap {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   align-items: center;
 }
 .course-create-step-page-wrap .course-create-step-wrap .step-box {
@@ -524,7 +524,7 @@ span.finsihLesson {
 .course-create-step-page-wrap .course-create-step-wrap .step-box:before {
   position: absolute;
   content: "";
-  left: 51px;
+  left: 52px;
   top: 8px;
   background-color: #E7EBFF;
   height: 0.125rem;
@@ -2102,6 +2102,102 @@ span.finsihLesson {
 }
 
 /* checkout css end */
+.object-list-wrap {
+  margin-top: 1rem;
+}
+.object-list-wrap .item {
+  position: relative;
+}
+.object-list-wrap .item .form-control {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 0.8rem 0;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2rem;
+}
+.object-list-wrap .item .actions {
+  min-width: 10%;
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+}
+.object-list-wrap .item i {
+  font-size: 1rem;
+  position: absolute;
+  left: 0;
+  bottom: 1rem;
+}
+.object-list-wrap .item.active .form-control {
+  border: 1px solid #294CFF !important;
+  border-radius: 0.675rem;
+}
+
+.submit-bttns-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.submit-bttns-box .btn-cancel {
+  border-radius: 0.375rem;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: var(--White, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  color: var(--gray-700, #344054);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5625rem 1.0625rem;
+  margin-right: 0.8rem;
+}
+.submit-bttns-box .btn-submit {
+  border-radius: 0.375rem;
+  border: 1px solid var(--primary-color-blue-light, #3D5CFF);
+  background: var(--gray-white, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  color: var(--primary-color-blue-light, #3D5CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5625rem 1.0625rem;
+  margin-left: 0.8rem;
+}
+
+.add-object {
+  margin-top: 1.5rem;
+}
+.add-object .btn-add {
+  border-radius: 0.375rem;
+  border: 2px dashed var(--neutral-color-neutral-30, #E5ECF6);
+  background: #FFF;
+  color: var(--neutral-color-neutral-60, #66768E);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.125rem;
+  width: 100%;
+}
+.add-object .btn-add i {
+  margin-right: 0.5rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

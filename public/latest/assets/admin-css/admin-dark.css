@@ -1204,6 +1204,12 @@
 .dark-mode .cart-close i {
   color: #fff;
 }
+.dark-mode .add-object .btn-add,
+.dark-mode .submit-bttns-box .btn-submit,
+.dark-mode .submit-bttns-box .btn-cancel {
+  border: 1px solid var(--others-dark-stroke, #66768E);
+  background: #0D0D0D;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

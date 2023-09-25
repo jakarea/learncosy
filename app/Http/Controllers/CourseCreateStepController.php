@@ -43,9 +43,12 @@ class CourseCreateStepController extends Controller
 
     public function step1c(Request $request, $id){
 
+        // return $request->all();
+
         if(!$id){
             return redirect('instructor/courses');
         }
+
 
         $request->validate([
             'title' => 'required',
@@ -59,6 +62,10 @@ class CourseCreateStepController extends Controller
         $counter = 2;
 
         $description = $request->input('description');
+        $curriculum = $request->input('curriculum');
+        $language = $request->input('language');
+        $platform = $request->input('platform');
+
         // Check for unique slug
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
@@ -71,27 +78,15 @@ class CourseCreateStepController extends Controller
             'title' => $title,
             'slug' => $slug,
             'description' => $description,
+            'curriculum' => $curriculum,
+            'language' => $language,
+            'platform' => $platform,
             'auto_complete' => $auto_complete 
         ]);
 
-        $course->save();
-        // $id = $course->id;
-        // session()->put('lastCourseId', $id);
-        // Start insert Notification
-        $checkout = new Checkout;
-        $checkouts = $checkout->getCheckoutByInstructorID();
-        foreach($checkouts as $checkout){
-            $notification = new Notification([
-                'instructor_id' => $checkout->instructor_id,
-                'course_id' => $checkout->course_id,
-                'user_id' => $checkout->user_id,
-                'message' => 'message',
-                'type' => 'New Course Created'
-            ]); 
-            $notification->save();
-        }
-        // End insert Notification
-        return redirect('instructor/courses/create/'.$id.'/content')->with('success', 'Course created successfully');
+        $course->save();  
+         
+        return redirect('instructor/courses/create/'.$id.'/objects')->with('success', 'Course Facts Info Saved successfully');
     }
  
 
@@ -317,6 +312,48 @@ class CourseCreateStepController extends Controller
         }
     }
     
+    public function courseObjects($id){
+         
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
+        $course = Course::where('id', $id)->firstOrFail();
+        // return $course->objective;
+        return view('e-learning/course/instructor/create/objects',compact('course'));
+    }
+
+    public function courseObjectsSet(Request $request, $id){
+
+        // return $request->all();
+
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
+        $course = Course::where('id', $id)->firstOrFail();
+
+        $request->validate([
+            'objective' => 'array', // Ensure 'objective' is an array 
+            'objective_details' => 'string',
+        ]);
+ 
+        $newObjectives = $request->input('objective');
+        if (is_array($newObjectives)) {
+            $storeAgain =  implode(', ', $newObjectives); 
+        }else{
+            $storeAgain =  $newObjectives; 
+        }
+        
+        $objectiveDetails = $request->input('objective_details');
+        $course->objective = $storeAgain;
+        $course->objective_details = $objectiveDetails;
+        $course->save();
+
+        return redirect()->back()->with('success', 'Course Objecttive Set successfully');
+         
+    }
+    
     public function coursePrice($id){
          
         if(!$id){
@@ -453,6 +490,22 @@ class CourseCreateStepController extends Controller
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;
         $course->save();
+
+        if ($course->status == 'published') {
+
+            $checkout = new Checkout;
+            $checkouts = $checkout->getCheckoutByInstructorID();
+            foreach($checkouts as $checkout){
+                $notification = new Notification([
+                    'instructor_id' => $checkout->instructor_id,
+                    'course_id' => $checkout->course_id,
+                    'user_id' => $checkout->user_id,
+                    'message' => 'message',
+                    'type' => 'New Course Created'
+                ]); 
+                $notification->save();
+            }
+        }
 
         return redirect('instructor/courses/create/'.$course->id.'/share')->with('success', 'Course Status Set successfully'); 
     }
