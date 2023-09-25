@@ -232,7 +232,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             // Route::get('/{slug}', 'show')->name('course.show');
             // Route::get('/{slug}/edit', 'edit')->name('course.edit');
             // Route::post('/{slug}/edit', 'update')->name('course.update');
-            Route::delete('/{slug}/destroy', 'destroy')->name('course.destroy');
+            Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
         });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
