@@ -59,7 +59,7 @@
                 </a>
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
-                    <span>0</span>
+                    {{-- <span>0</span> --}}
                     
                 </a>
                 <div class="dropdown">

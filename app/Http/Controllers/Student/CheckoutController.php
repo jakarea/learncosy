@@ -164,9 +164,11 @@ class CheckoutController extends Controller
                 $payment_id = $session->payment_intent;
                 $paymentMethod = 'Stripe';
                 // $amount = $session->amount_total / 100;
-                $amount = $course->price / 100;
+                $amount = $course->price;
 
-
+                if($course->offer_price){
+                    $amount = $course->offer_price;
+                }
 
                 // Attach the user to the course with the payment details
                 $course->students()->attach(auth()->user()->id, [

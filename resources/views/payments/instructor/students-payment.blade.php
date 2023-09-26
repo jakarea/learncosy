@@ -10,29 +10,6 @@
 
 {{-- page content @S --}}
 @section('content')
-@php 
-    $currentDate = now()->toDateString();
-
-    // Initialize variables for calculations
-    $totalEarnings = 0;
-    $totalEnrolment = 0;
-    $todaysEarnings = 0;
-    $todaysEnrolment = 0;
-
-    foreach ($payments as $payment) {
-        // Calculate total earnings and enrolment
-        $totalEarnings += $payment['amount'];
-        $totalEnrolment++;
-
-        // Check if the payment's start date is today
-        if (substr($payment['start_date'], 0, 10) === $currentDate) {
-            $todaysEarnings += $payment['amount'];
-            $todaysEnrolment++;
-        }
-    }
-        
-       
-@endphp
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
     <div class="container-fluid">

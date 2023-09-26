@@ -2275,15 +2275,15 @@ span.stripe-bg i {
   stroke-linecap: round;
 }
 .circle-prog-big .cards svg circle:last-of-type {
-  stroke-dasharray: 360px;
-  stroke-dashoffset: calc(360px - 360px * var(--percent) / 100);
+  stroke-dasharray: 390px;
+  stroke-dashoffset: calc(390px - 390px * var(--percent) / 100);
   stroke: #32BCA3;
 }
 .circle-prog-big .number {
   position: absolute;
-  left: 50%;
+  left: 48%;
   top: 56%;
-  transform: translate(-60%, -45%);
+  transform: translate(-56%, -50%);
 }
 .circle-prog-big .number h5 {
   color: #fff;

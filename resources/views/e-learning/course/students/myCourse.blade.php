@@ -154,7 +154,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>{{$module->title}}</h5>
-                            <p>{{ count($module->lessons) }} Lessons - {{ $completedLessons }} Completed</p>
+                            <p>{{ count($module->lessons) }} Lessons - {{ $completedLessons }} Completed</p> 
                         </div>
 
                         <div class="circle-prog">
