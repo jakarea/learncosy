@@ -115,7 +115,7 @@ Course Create - Step 9
                             <div class="media-body"> 
                                 <p>Or Create a new Certificate</p>
                             </div>
-                            <a href="{{url('instructor/profile/edit')}}" class="btn btn-primary" target="_blank">Create</a>
+                            <a href="{{ route('account.settings', ['tab' => 'certificate']) }}" class="btn btn-primary" target="_blank">Create</a>
                         </div>  
                         <hr class="mb-0">
                     </div>

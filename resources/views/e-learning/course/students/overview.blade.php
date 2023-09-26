@@ -46,11 +46,13 @@
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
-                    @php $features = explode(",", $course->features); @endphp
+                    @php 
+                        $objectives = explode(",", $course->objective);
+                    @endphp
 
                     <ul>
-                        @foreach ($features as $feature)
-                        <li><i class="fas fa-check"></i> {{$feature}} </li>
+                        @foreach ($objectives as $object)
+                        <li><i class="fas fa-check"></i> {{$object}} </li>
                         @endforeach
                     </ul>
                 </div>
@@ -139,7 +141,6 @@
                 </div> 
                 <div class="row">
 
-                    
                     @foreach ($related_course as $course) 
                         @php 
                             $review_sum = 0;
@@ -160,7 +161,6 @@
                             <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
                             </div>
 
-                            
                             <div class="course-txt-box">
                                 <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
                                 <p>{{ $course->user->username }}</p>
@@ -208,13 +208,30 @@
                     </div>
                     <div class="course-details-txt">
                         <h4>Course Details</h4> 
-                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> 200 Enrolled</p>
-                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> English</p>
+                        @if ($course->curriculum)
+                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
+                        @endif 
+                        @if ($course->platform)
+                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->platform }}</p>
+                        @endif 
+                        @if ($course->language)
+                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->language }}</p>
+                        @endif 
+                        @if ($course->duration)
                         <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
+                        @endif 
+                        @if ($course->number_of_module)
                         <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_module}} Modules</p>
+                        @endif 
+                        @if ($course->number_of_lesson)
                         <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
+                        @endif 
+                        @if ($course->number_of_attachment)
                         <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
+                        @endif 
+                        @if ($course->number_of_video)
                         <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_video}} Videos</p>
+                        @endif 
                         @if ($course->hascertificate)
                             <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid"> Certificate of Completion</p> 
                         @endif 

@@ -26,29 +26,29 @@
                     <div class="header">
                         <ul class="nav nav-pills" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                                     aria-selected="true">My Profile</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link" id="pills-experience-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-experience" type="button" role="tab"
                                     aria-controls="pills-experience" aria-selected="false">Experience</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-certificate-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link" id="pills-certificate-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-certificate" type="button" role="tab"
                                     aria-controls="pills-certificate" aria-selected="false">Certificate</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-password-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link" id="pills-password-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-password" type="button" role="tab"
                                     aria-controls="pills-password" aria-selected="false">Password</button>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane active-bg fade show active" id="pills-home" role="tabpanel"
+                        <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
                                 class="profile-form create-form-box" enctype="multipart/form-data">
@@ -164,7 +164,7 @@
                                 {{-- profile edit form end --}}
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="pills-experience" role="tabpanel"
+                        <div class="tab-pane tab-con fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="row">
 
@@ -312,7 +312,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-certificate" role="tabpanel"
+                        <div class="tab-pane tab-con fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
@@ -896,7 +896,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade active-bg" id="pills-password" role="tabpanel"
+                        <div class="tab-pane tab-con fade active-bg" id="pills-password" role="tabpanel"
                             aria-labelledby="pills-password-tab" tabindex="0">
                             {{-- password tab start --}}
                             <div class="row user-add-form-wrap user-add-form-wrap-2 mt-0">
@@ -962,7 +962,6 @@
 
 {{-- page script @S --}}
 @section('script')
-
 <script>
     function previewImage() {
         var preview = document.getElementById('preview');
@@ -981,7 +980,6 @@
         }
     } 
 </script>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -1028,7 +1026,34 @@
     });
      
 });
+</script>
 
+{{-- tab open js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () { 
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabToOpen = urlParams.get('tab');
+        const tabPanes = document.querySelectorAll('.tab-con');
+        const tabLinks = document.querySelectorAll('.tab-link'); 
+        const experienceTabLink = document.getElementById('pills-experience-tab');
+        const experienceTabContent = document.getElementById('pills-experience');
+        const certificateTabLink = document.getElementById('pills-certificate-tab');
+        const certificateTabContent = document.getElementById('pills-certificate');
+
+        // Open the tab if the 'tab' parameter is specified
+        if (tabToOpen == 'experience') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            experienceTabLink.classList.add('active'); 
+            experienceTabContent.classList.add('show', 'active'); 
+        }
+        else if (tabToOpen == 'certificate') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            certificateTabLink.classList.add('active'); 
+            certificateTabContent.classList.add('show', 'active'); 
+        }
+    });
 </script>
 
 @endsection

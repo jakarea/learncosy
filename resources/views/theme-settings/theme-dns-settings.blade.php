@@ -811,9 +811,9 @@
     });
 </script>
 
+{{-- tab open js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get the value of the 'tab' parameter from the URL
+    document.addEventListener('DOMContentLoaded', function () { 
         const urlParams = new URLSearchParams(window.location.search);
         const tabToOpen = urlParams.get('tab');
         const homeTabLink = document.getElementById('pills-home-tab');
