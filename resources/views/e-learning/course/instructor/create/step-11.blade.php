@@ -150,6 +150,11 @@ Course Create - Step 11
         linkToCopy.select();
         document.execCommand("copy"); 
         notify.innerText = 'Copied!';
+
+        setTimeout(() => {
+            notify.innerText = '';
+        }, 1000);
+
     });
 
 </script>

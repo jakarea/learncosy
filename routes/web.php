@@ -327,8 +327,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
-            Route::get('/{id}', 'index')->name('module.setting');
-            Route::get('dns/{id}', 'dnsTheme')->name('module.dns.setting');
+            Route::get('/', 'index')->name('module.setting');
+            Route::get('/dns', 'dnsTheme')->name('module.setting.dns');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
             Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
