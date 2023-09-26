@@ -91,6 +91,7 @@
                 </div>
             </div>
         </div>
+        @if (count($payments) > 0) 
         <div class="row">
             {{-- filter form --}}
             <form action="" method="GET" id="myForm">
@@ -156,6 +157,13 @@
             {{-- pagginate --}}
             </div>
         </div> 
+        @else 
+        <div class="row">
+            <div class="col-12">
+                @include('partials/no-data');
+            </div>
+        </div>
+        @endif
     </div>
 </main>
 {{-- ==== admin payment list page @E ==== --}}

@@ -26,6 +26,7 @@
                         </div> 
                         
                         <div class="person-tab-body">  
+                            @if (count($highLightMessages) > 0)
                             @foreach ($highLightMessages as $message)
                             
                             <a href="{{ route('message') }}?sender={{ $message[0]->user->id}}">
@@ -45,11 +46,17 @@
                                 </div>
                             </a>
                             @endforeach 
+                            @else 
+                                <div>
+                                    @include('partials/no-data');
+                                </div>
+                            @endif 
                         </div> 
                     </div>
                     <!-- person list @e -->
                     <!-- chat-main-body box @s -->
                     <div class="chat-main-body-box">
+                        @if (count($messages) > 0) 
                         <div class="chat-room-head">
                             <!-- chat person -->
                             <div class="media">
@@ -66,8 +73,8 @@
                                 <a href="#" class="common-bttn">View Profile</a>
                             </div>
                             <!-- chat person --> 
-                        </div>
-                        <!-- main chart room @s -->
+                        </div> 
+                        
                         <div class="main-chat-room"> 
                             <div class="chat-messages-box"> 
                                 @foreach ($messages as $message)
@@ -78,10 +85,8 @@
                                 <br>
                                 @endforeach
                             </div> 
-                        </div>
-                        <!-- main chart room @e -->
-
-                        <!-- message send box @s -->
+                        </div>  
+ 
                         <form id="send" method="POST"
                             action="{{ route('message-send',['sender' => isset($senderInfo)?$senderInfo->id :'']) }}">
                             @csrf
@@ -97,12 +102,13 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
-                        <!-- <a href="" onclick="document.getElementById('send').submit();" class="bttn"><i class="fas fa-paper-plane"></i> SEND</a> -->
-
-                        <!-- message send box @e -->
-                    </div>
-                    <!-- chat-main-body box @e -->
+                        </form> 
+                        @else 
+                        <div>
+                            @include('partials/no-data');
+                        </div>
+                        @endif
+                    </div> 
                 </div>
             </div>
         </div>

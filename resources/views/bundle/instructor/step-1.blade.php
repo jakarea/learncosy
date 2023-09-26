@@ -53,6 +53,7 @@
             </div>
         </div>
         <div class="row"> 
+            @if (count($bundleCourses) > 0)
             @foreach ($bundleCourses as $course) 
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
@@ -82,6 +83,11 @@
             </div>
             {{-- course single box end --}}
             @endforeach 
+            @else
+            <div class="col-12">
+                @include('partials/no-data');
+            </div>
+            @endif
         </div>
         <div class="row">
             <div class="col-12">

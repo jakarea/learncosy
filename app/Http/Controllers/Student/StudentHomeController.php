@@ -25,6 +25,8 @@ class StudentHomeController extends Controller
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
 
+        // return $likeCourses;
+        
         return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount'));
     }
 
@@ -55,14 +57,24 @@ class StudentHomeController extends Controller
     }
 
     // catalog course list
-    public function catalog(){
-        $cartCount = Cart::where('user_id', auth()->id())->count();
+    public function catalog(Request $request){
+        $host = $request->getHost();   
+        $instructorUserName = explode('.', $host)[0];
+
+        $instructor = User::where('username', $instructorUserName)->first();
+
+        if ( $instructor) { 
+            $courses = Course::where('user_id', $instructor->id)->with('user','reviews')->orderBy('id','desc');
+        }else{
+            $courses = Course::with('user','reviews')->orderBy('id','desc');
+        }
+
+        $bundleCourse = BundleCourse::orderBy('id','desc')->get();
+        $mainCategories = $courses->pluck('categories');
 
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $courses = Course::with('user','reviews')->orderBy('id','desc');
-        $bundleCourse = BundleCourse::orderBy('id','desc')->get();
-        $mainCategories = $courses->pluck('categories');
+
         if(!empty($title)){
             $titles = explode( ' ', $title);
             $courses->where('title','like','%'.trim($titles[0]).'%');
@@ -87,9 +99,12 @@ class StudentHomeController extends Controller
             }
         }
         $categories = array_unique($unique_array);
-        $courses = $courses->paginate(12);
+        $courses = $courses->paginate(12);  
 
-        return view('e-learning/course/students/catalog',compact('cartCount','courses','categories', 'bundleCourse'));
+        $cartCourses = Cart::where('user_id', auth()->id())->get();
+
+
+        return view('e-learning/course/students/catalog',compact('cartCourses','courses','categories', 'bundleCourse'));
     }
 
     // account Management
@@ -106,15 +121,20 @@ class StudentHomeController extends Controller
     public function show($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
-        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        $cartCount = Cart::where('user_id', auth()->id())->count();
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
         if ($course_like ) {
             $liked = 'active';
         }
+
+        $totalModules = count($course->modules);
+        $totalLessons = $course->modules->sum(function ($module) {
+            return count($module->lessons);
+        }); 
+
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','course_reviews','liked','cartCount','course_like'));
+            return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -123,7 +143,7 @@ class StudentHomeController extends Controller
     public function overview($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
-        $cartCount = Cart::where('user_id', auth()->id())->count();
+        $cartCourses = Cart::where('user_id', auth()->id())->get();
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $related_course = [];
@@ -138,7 +158,7 @@ class StudentHomeController extends Controller
                 $related_course = $query->take(4)->get();
             }
 
-            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCount'));
+            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCourses'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -146,13 +166,19 @@ class StudentHomeController extends Controller
 
       // my course details
       public function courseDetails($slug){
-
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
-        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        $cartCount = Cart::where('user_id', auth()->id())->count();
-
+        
+        $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count(); 
+        $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray(); 
+        foreach ($course->modules as $module) {
+             foreach ($module->lessons as $lesson) { 
+               $completed = in_array($lesson->id, $completes);
+               $lesson->completed =  (int)$completed;
+             }
+        }
+ 
         if ($course) {
-            return view('e-learning/course/students/myCourse',compact('course','course_reviews','cartCount'));
+            return view('e-learning/course/students/myCourse',compact('course','totalReviews'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

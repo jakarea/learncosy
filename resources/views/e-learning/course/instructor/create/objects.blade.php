@@ -102,12 +102,10 @@ Course Create - Step 3
                         <div class="submit-bttns-box">
                             <button class="btn btn-cancel" type="reset">Cancel</button>
                             <button class="btn btn-submit" type="submit">Save</button>
-                        </div>
-                        @if (!empty($course->objective))
+                        </div> 
                         <div class="add-object">
                             <button class="btn btn-add" type="button" id="add-item-button"><i class="fas fa-plus"></i> Add Object</button>
-                        </div> 
-                        @endif
+                        </div>  
                     </div>
 
                     {{-- step next bttns --}}

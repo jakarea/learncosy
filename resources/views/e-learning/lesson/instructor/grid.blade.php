@@ -56,6 +56,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if (count($lessons) > 0)
                 <div class="subscription-table-wrap module-list-table">
                     <table>
                         <tr>
@@ -95,6 +96,11 @@
                         @endforeach
                     </table>
                 </div>
+                @else
+                <div>
+                    @include('partials/no-data');
+                </div>
+                @endif
             </div>
         </div>
         <div class="row">

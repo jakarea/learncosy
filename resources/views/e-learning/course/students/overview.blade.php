@@ -114,7 +114,7 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}"
+                                <img src="{{ asset($course_review->user->avatar) }}"
                                     alt="Avatar" class="img-fluid">
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
@@ -158,7 +158,7 @@
                     <div class="col-lg-5 col-sm-6">
                         <div class="course-single-item"> 
                             <div class="course-thumb-box">
-                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
+                            <img src="{{asset($course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
                             </div>
 
                             <div class="course-txt-box">
@@ -186,7 +186,7 @@
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course" class="img-fluid">
+                        <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid">
                         <h2>€ {{ $course->offer_price }}</h2> 
                         @if ( !isEnrolled($course->id) )
                         <form action="{{route('students.checkout', $course->slug)}}" method="GET">
@@ -194,11 +194,15 @@
                             <input type="hidden" name="price" value="{{$course->price}}">
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
-                        </form> 
-
+                        </form>  
+                        
                         <form action="{{ route('cart.add', $course) }}" method="POST">
                             @csrf
+                            @if ($cartCourses->pluck('course_id')->contains($course->id))
+                                <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>Already Added to Cart</button>
+                            @else 
                             <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
+                            @endif
                         </form> 
                         @endif 
                     </div>

@@ -43,11 +43,13 @@ $social_links = explode(",", $user->social_links);
                         <a href="{{url('instructor/profile/edit') }}" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
+                @if ($user->short_bio) 
                 <div class="user-details-box">
                     <h5>About Me</h5>
                     <p>{{ $user->short_bio }}</p>
                     {!! $user->description !!}
                 </div>
+                @endif
 
                 <div class="user-expperience-box">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -57,6 +59,7 @@ $social_links = explode(",", $user->social_links);
                                     class="img-fluid"></a>
                         </div>
                     </div> 
+                    @if (count($experiences) > 0)
                     @foreach ($experiences as $experience)
                     <div class="media brdr-bttm">
                         <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img"
@@ -77,7 +80,11 @@ $social_links = explode(",", $user->social_links);
                         </div>
                     </div>
                     @endforeach
-
+                    @else
+                    <div>
+                        @include('partials/no-data');
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-4">
@@ -90,6 +97,7 @@ $social_links = explode(",", $user->social_links);
                             <a href="mailto:{{$user->email}}">{{$user->email}}</a>
                         </div>
                     </div>
+                    @if ($user->phone) 
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/phone.svg') }}" alt="email" class="img-fluid">
                         <div class="media-body">
@@ -97,16 +105,19 @@ $social_links = explode(",", $user->social_links);
                             <a href="#">{{$user->phone ? $user->phone : '--'}}</a>
                         </div>
                     </div>
+                    @endif
+
+                    @if ($user->social_links) 
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         <div class="media-body">
                             <h6>Instagram</h6>
                             @if ($user->social_links)
                             <a href="{{ $user->social_links }}">{{ $user->social_links }}</a>
-                            @endif
-
+                            @endif 
                         </div>
                     </div>
+                    @endif 
                 </div>
             </div>
         </div>

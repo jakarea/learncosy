@@ -69,6 +69,7 @@ class CourseCreateStepController extends Controller
         $originalSlug = $slug;
         $counter = 2;
 
+        $short_description = $request->input('short_description');
         $description = $request->input('description');
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
@@ -85,6 +86,7 @@ class CourseCreateStepController extends Controller
             'user_id' => Auth::user()->id,
             'title' => $title,
             'slug' => $slug,
+            'short_description' => $short_description,
             'description' => $description,
             'curriculum' => $curriculum,
             'language' => $language,

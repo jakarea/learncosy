@@ -20,40 +20,44 @@
                 {{-- session message @E --}}
             </div>
         </div>
-        <div class="row"> 
+        <div class="row">
             <div class="col-lg-12">
                 <form action="" method="GET" id="myForm">
-                    <div class="package-list-header"> 
+                    <div class="package-list-header">
                         <h5>Module List</h5>
                         <div class="form-group">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Search Modules" class="form-control" name="title"
                                 value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
-                        <input type="hidden" name="status" id="inputField"> 
+                        <input type="hidden" name="status" id="inputField">
                         <div class="filter-dropdown-box">
                             <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     id="dropdownBttn">
                                     All
-                                </button> 
+                                </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item filterItem" href="#">All</a></li>
-                                    <li><a class="dropdown-item filterItem" href="#" data-value="pending">Pending</a></li>
-                                    <li><a class="dropdown-item filterItem" href="#" data-value="published">Published</a></li>
+                                    <li><a class="dropdown-item filterItem" href="#" data-value="pending">Pending</a>
+                                    </li>
+                                    <li><a class="dropdown-item filterItem" href="#"
+                                            data-value="published">Published</a></li>
                                 </ul>
                             </div>
                             <i class="fas fa-angle-down"></i>
                         </div>
                         <div class="bttn">
-                            <a href="{{ url('instructor/modules/create') }}" class="common-bttn"><i class="fas fa-plus"></i> Add Module</a>
+                            <a href="{{ url('instructor/modules/create') }}" class="common-bttn"><i
+                                    class="fas fa-plus"></i> Add Module</a>
                         </div>
                     </div>
-                </form> 
+                </form>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
+                @if (count($modules) > 0)
                 <div class="subscription-table-wrap module-list-table">
                     <table>
                         <tr>
@@ -66,8 +70,8 @@
                             <th>Status</th>
                             <th class="text-end">Action</th>
                         </tr>
-                        {{-- @if ($modules > 0)  --}}
-                         @foreach ($modules as $module) 
+
+                        @foreach ($modules as $module)
                         <tr>
                             <td>
                                 <h5>{{$module->title}}</h5>
@@ -80,37 +84,40 @@
                             </td>
                             <td>
                                 <p>{{$module->number_of_attachment}}</p>
-                            </td> 
+                            </td>
                             <td class="module-status">
                                 @if ($module->status == 'pending')
                                 <span class="badge text-bg-danger">Pending</span>
                                 @elseif ($module->status == 'published')
-                                    <span class="badge text-bg-primary">Published</span>
-                                @endif 
+                                <span class="badge text-bg-primary">Published</span>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ url('instructor/modules/'.$module->slug.'/edit') }}" class="me-r"><img src="{{ asset('latest/assets/images/icons/edit.svg') }}" alt="Icon" class="img-fluid"></a>
-                                    
-                                    <form method="post" class="d-inline" action="{{ url('instructor/modules/'.$module->slug.'/destroy') }}">
-                                        @csrf 
+                                    <a href="{{ url('instructor/modules/'.$module->slug.'/edit') }}" class="me-r"><img
+                                            src="{{ asset('latest/assets/images/icons/edit.svg') }}" alt="Icon"
+                                            class="img-fluid"></a>
+
+                                    <form method="post" class="d-inline"
+                                        action="{{ url('instructor/modules/'.$module->slug.'/destroy') }}">
+                                        @csrf
                                         @method("DELETE")
-                                        <button type="submit" class="dropdown-item btn text-danger d-inline"><img src="{{ asset('latest/assets/images/icons/trash.svg') }}" alt="Icon" class="img-fluid"> </button>
-                                    </form> 
+                                        <button type="submit" class="dropdown-item btn text-danger d-inline"><img
+                                                src="{{ asset('latest/assets/images/icons/trash.svg') }}" alt="Icon"
+                                                class="img-fluid"> </button>
+                                    </form>
                                 </div>
-                               
+
                             </td>
                         </tr>
                         @endforeach
-                        {{-- @else 
-                        <tr>
-                            <td colspan="6">
-                                <p>No Module Found!</p>
-                            </td>
-                        </tr>
-                        @endif --}}
                     </table>
                 </div>
+                @else
+                <div>
+                    @include('partials/no-data');
+                </div>
+                @endif
             </div>
         </div>
         <div class="row">
