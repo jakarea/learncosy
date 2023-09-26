@@ -8,6 +8,6 @@ $(document).ready(function () {
     autoPlay: true,
     prevArrow: '.prev',
     nextArrow: '.next',
-    dots: false, 
+    dots: false,
   });
 });

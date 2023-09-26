@@ -13,20 +13,22 @@ Course Create - Step 1
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
-
                 <div class="course-create-step-wrap">
-                    <div class="step-box current">
+                    <div class="step-box">
                         <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a"
-                                class="img-fluid"> --}}
                         </span>
                         <p>Contents</p>
                     </div>
                     <div class="step-box">
-                        <span class="circle"></span>
+                        <span class="circle">
+                        </span>
                         <p>Facts</p>
+                    </div>
+                    <div class="step-box">
+                        <span class="circle"></span>
+                        <p>Objects</p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -49,14 +51,13 @@ Course Create - Step 1
                         <p>Share</p>
                     </div>
                 </div>
-
                 {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="content-step-wrap">
-                    <form action="{{ route('course.create.start') }}" method="POST">
+                    <form action="{{ route('course.create.start') }}" method="POST" id="myForm">
                         @csrf
                         {{-- course content add box start --}}
                         <div class="add-content-box">
@@ -66,8 +67,8 @@ Course Create - Step 1
                         {{-- course content add box end --}}
 
                         {{-- step next bttns --}}
-                        <div class="back-next-bttns">  
-                            <button type="submit" class="btn btn-submit">Next</button>
+                        <div class="back-next-bttns">
+                            <button type="submit" class="btn btn-submit">Next</button> 
                         </div>
                         {{-- step next bttns --}}
                     </form>
@@ -112,6 +113,4 @@ Course Create - Step 1
 {{-- course name modal --}}
 @endsection
 {{-- page content @E --}}
-
-@section('script')
-@endsection
+ 

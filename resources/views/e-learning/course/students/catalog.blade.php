@@ -125,12 +125,12 @@
                         <span>Last Update: {{date('M d Y ', strtotime($course->updated_at)) }}</span>
                         <h6>{{ Str::limit($course->short_description, $limit = 120, $end = '...') }}</h6>
                         @php
-                        $features = explode(",", $course->features);
-                        $limitedItems = array_slice($features, 0, 4);
+                        $objective = explode(",", $course->objective);
+                        $limitedItems = array_slice($objective, 0, 4);
                         @endphp
                         <ul>
-                            @foreach ($limitedItems as $feature)
-                            <li><i class="fas fa-check"></i>{{ Str::limit($feature, 40) }}</li>
+                            @foreach ($limitedItems as $object)
+                            <li><i class="fas fa-check"></i>{{ Str::limit($object, 36) }}</li>
                             @endforeach
                         </ul>
                         @if ( !isEnrolled($course->id) )

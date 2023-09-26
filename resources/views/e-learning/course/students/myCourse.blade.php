@@ -62,20 +62,36 @@
                     <h4>Course Details</h4>
                     <div class="row">
                         <div class="col-lg-6">
-                            {{-- <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> 200 Enrolled</p> --}}
-                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> English</p>
+                            @if ($course->curriculum)
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
+                            @endif 
+                            @if ($course->platform)
+                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->platform }}</p>
+                            @endif 
+                            @if ($course->language)
+                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->language }}</p>
+                            @endif 
+                            @if ($course->duration)
                             <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
+                            @endif 
+                            @if ($course->number_of_module)
                             <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_module}} Modules</p>
-                            @if ($course->hascertificate)
-                            <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid"> Certificate of Completion</p> 
-                        @endif 
+                            @endif 
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6"> 
+                            @if ($course->number_of_lesson)
                             <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
-                            <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
-                            <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_video}} Videos</p>
-                           
-                        </div>
+                            @endif 
+                            @if ($course->number_of_attachment)
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
+                            @endif 
+                            @if ($course->number_of_video)
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_video}} Videos</p>
+                            @endif 
+                            @if ($course->hascertificate)
+                                <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid"> Certificate of Completion</p> 
+                            @endif 
+                        </div> 
                     </div>
                 </div>
             </div>

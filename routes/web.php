@@ -246,6 +246,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}', 'step3');
             Route::post('{id}', 'step3c');
+
             Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');
             Route::post('{id}/factsu', 'step3cu')->name('course.module.step.update');
             Route::post('{id}/facts-update', 'step3d')->name('course.lesson.step.update');
@@ -260,6 +261,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
 
             Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
+
+            Route::get('{id}/objects', 'courseObjects');
+            Route::post('{id}/objects', 'courseObjectsSet');
+
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');
@@ -322,8 +327,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
-            Route::get('/{id}', 'index')->name('module.setting');
-            Route::get('dns/{id}', 'dnsTheme')->name('module.dns.setting');
+            Route::get('/', 'index')->name('module.setting');
+            Route::get('/dns', 'dnsTheme')->name('module.setting.dns');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
             Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
@@ -331,7 +336,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
-            Route::get('/edit', 'edit');
+            Route::get('/account-settings', 'edit')->name('account.settings');
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');

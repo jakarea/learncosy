@@ -13,45 +13,55 @@ Course Create - Step 11
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                                class="img-fluid">
                         </span>
                         <p>Contents</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Facts</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
+                        </span>
+                        <p>Objects</p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Price</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Design</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Certificate</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Visibility</p>
                     </div>
@@ -140,6 +150,11 @@ Course Create - Step 11
         linkToCopy.select();
         document.execCommand("copy"); 
         notify.innerText = 'Copied!';
+
+        setTimeout(() => {
+            notify.innerText = '';
+        }, 1000);
+
     });
 
 </script>

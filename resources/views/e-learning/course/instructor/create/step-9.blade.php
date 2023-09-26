@@ -13,30 +13,41 @@ Course Create - Step 9
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}} 
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                                class="img-fluid">
                         </span>
                         <p>Contents</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Facts</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
+                        </span>
+                        <p>Objects</p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Price</p>
                     </div>
                     <div class="step-box active">
                         <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="a" class="img-fluid">
+                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                            class="img-fluid">
                         </span>
                         <p>Design</p>
                     </div>
@@ -104,7 +115,7 @@ Course Create - Step 9
                             <div class="media-body"> 
                                 <p>Or Create a new Certificate</p>
                             </div>
-                            <a href="{{url('instructor/profile/edit')}}" class="btn btn-primary">Create</a>
+                            <a href="{{ route('account.settings', ['tab' => 'certificate']) }}" class="btn btn-primary" target="_blank">Create</a>
                         </div>  
                         <hr class="mb-0">
                     </div>

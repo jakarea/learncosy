@@ -1564,6 +1564,13 @@
     .cart-close i{
         color: #fff;
     }
+
+    .add-object .btn-add,
+    .submit-bttns-box .btn-submit,
+    .submit-bttns-box .btn-cancel{
+        border: 1px solid var(--others-dark-stroke, #66768E);
+        background: #0D0D0D; 
+    }
 }
 
 

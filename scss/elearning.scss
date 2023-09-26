@@ -594,7 +594,7 @@ span.finsihLesson {
 .course-create-step-page-wrap {
     .course-create-step-wrap {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(8, 1fr);
         align-items: center;
 
         .step-box {
@@ -604,7 +604,7 @@ span.finsihLesson {
             &:before {
                 position: absolute;
                 content: "";
-                left: 51px;
+                left: 52px;
                 top: 8px;
                 background-color: #E7EBFF;
                 height: 0.125rem;
@@ -2326,7 +2326,8 @@ span.finsihLesson {
     line-height: 150%;
     border: 2px solid #294CFF;
     transition: all linear .3s;
-    i{
+
+    i {
         font-size: 2rem;
         margin-left: 0.7rem;
     }
@@ -2375,21 +2376,115 @@ span.finsihLesson {
         border: 2px solid #F4F5F6;
         transition: ease-in-out .3s;
 
-        &:hover{
+        &:hover {
             border: 2px solid var(--primary-color-blue, #294CFF);
         }
     }
 
-    a.active { 
-        border: 2px solid var(--primary-color-blue, #294CFF); 
+    a.active {
+        border: 2px solid var(--primary-color-blue, #294CFF);
     }
 }
 
 /* checkout css end */
 
 
+.object-list-wrap {
+    margin-top: 1rem;
+
+    .item {
+        position: relative;
+        .form-control { 
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid #E0E0E0;
+            padding: .8rem 0;
+            margin-bottom: 1rem;
+            align-items: center;
+            justify-content: space-between; 
+            padding-left: 2rem;
+        }
+        .actions {
+            min-width: 10%;
+            position: absolute;
+            right: 0;
+            bottom: 1rem;
+        }
+
+        i {
+            font-size: 1rem; 
+            position: absolute;
+            left: 0;
+            bottom: 1rem;
+        } 
+    }
+    .item.active{
+        .form-control {   
+            border: 1px solid #294CFF!important;
+            border-radius: 0.675rem 
+        }
+    }
+}
+
+.submit-bttns-box {
+    @include m.df(space-between);
+    margin-top: 1rem;
+
+    .btn-cancel {
+        border-radius: 0.375rem;
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: var(--White, #FFF);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: var(--gray-700, #344054);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        @include m.df(center);
+        width: 100%;
+        padding: 0.5625rem 1.0625rem;
+        margin-right: 0.8rem;
+    }
+
+    .btn-submit {
+        border-radius: 0.375rem;
+        border: 1px solid var(--primary-color-blue-light, #3D5CFF);
+        background: var(--gray-white, #FFF);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: var(--primary-color-blue-light, #3D5CFF);
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        @include m.df(center);
+        width: 100%;
+        padding: 0.5625rem 1.0625rem;
+        margin-left: 0.8rem;
+    }
+}
 
 
+.add-object {
+    margin-top: 1.5rem;
+
+    .btn-add {
+        border-radius: 0.375rem;
+        border: 2px dashed var(--neutral-color-neutral-30, #E5ECF6);
+        background: #FFF;
+        color: var(--neutral-color-neutral-60, #66768E);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.5rem;
+        @include m.df(center);
+        height: 4.125rem;
+        width: 100%;
+
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+}
 
 
 
@@ -2408,7 +2503,8 @@ span.finsihLesson {
 
     .payment-method-wrapper a {
         height: 2.5rem;
-        a{
+
+        a {
             width: 2.7rem;
         }
     }

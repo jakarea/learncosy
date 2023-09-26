@@ -393,7 +393,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade " id="pills-experience" role="tabpanel"
+                        <div class="tab-pane fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="dns-settings-box-wrapper">
                                 <div class="dns-left-sidebar">
@@ -762,7 +762,6 @@
     });
 </script>
 
-
 {{-- theme reset ajax request with featch --}}
 <script> 
  
@@ -808,6 +807,31 @@
             .catch(error => {
                 console.error(error);
             });
+        }
+    });
+</script>
+
+{{-- tab open js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () { 
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabToOpen = urlParams.get('tab');
+        const homeTabLink = document.getElementById('pills-home-tab');
+        const profileTabLink = document.getElementById('pills-experience-tab');
+        const homeTabContent = document.getElementById('pills-home');
+        const profileTabContent = document.getElementById('pills-experience');
+
+        // Open the tab if the 'tab' parameter is specified
+        if (tabToOpen) {
+            profileTabLink.classList.add('active');
+            homeTabLink.classList.remove('active');
+            profileTabContent.classList.add('show', 'active');
+            homeTabContent.classList.remove('show', 'active');
+        }else{
+            profileTabLink.classList.remove('active');
+            homeTabLink.classList.add('active');
+            profileTabContent.classList.remove('show', 'active');
+            homeTabContent.classList.add('show', 'active');
         }
     });
 </script>
