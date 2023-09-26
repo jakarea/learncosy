@@ -6,6 +6,7 @@ use Auth;
 use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -54,7 +55,31 @@ class HomeController extends Controller
 
         $payments = $payments->paginate(12);
 
-        return view('payments/instructor/students-payment', compact('payments'));
+        // Assuming you have an array of course enrollment records called $enrollments
+
+        $enrollments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->get();
+        // Calculate total earnings and total enrollment count
+        $totalEarnings = 0;
+        $totalEnrolment = count($enrollments);
+
+        foreach ($enrollments as $enrollment) {
+        $totalEarnings += $enrollment['amount'];
+        }
+
+        // Calculate today's earnings and today's enrollment count
+        $todaysEarnings = 0;
+        $todaysEnrolment = 0;
+        $todayDate = date('d'); 
+
+        foreach ($enrollments as $enrollment) {
+            $date = Carbon::createFromDate($enrollment['created_at']);
+            if ( $date->day == $todayDate) {
+                $todaysEarnings += $enrollment['amount'];
+                $todaysEnrolment++;
+            }
+        }
+    
+        return view('payments/instructor/students-payment', compact('payments','todaysEarnings','todaysEnrolment','totalEarnings','totalEnrolment'));
     }
 
     public function details($payment_id)
