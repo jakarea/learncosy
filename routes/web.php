@@ -75,7 +75,7 @@ Route::get('/auth-login', function(){
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $loginPageStyle = json_decode($instrcutorModuleSettings->value);
 
-    if ($loginPageStyle) {
+    if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
         if ($loginPageStyle->lp_layout == 'fullwidth') {
             return view('login/login2');
         }
@@ -90,6 +90,8 @@ Route::get('/auth-login', function(){
         }else{
             return view('auth/login');
         }
+    }else{
+        return view('auth/login');
     }
 
 })->name('tlogin')->middleware('guest');

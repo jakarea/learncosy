@@ -81,7 +81,7 @@
                 <div class="course-single-item"> 
                     <div>
                         <div class="course-thumb-box"> 
-                            <img src="{{asset('assets/images/courses/'. $enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
+                            <img src="{{asset($enrolment->course->thumbnail)}}" alt="{{ $enrolment->course->slug}}" class="img-fluid">
                         </div>
                         <div class="course-txt-box">
                             <a href="{{url('students/courses/'.$enrolment->course->slug )}}">  {{ Str::limit($enrolment->course->title, 45) }}</a>
@@ -93,7 +93,6 @@
                                 @endfor
                                 <li><span>({{ $total }})</span></li>
                             </ul>
-                            
                         </div> 
                     </div>
                     <div class="course-txt-box">
@@ -124,9 +123,7 @@
             @endforeach 
             @else 
             <div class="col-12">
-                <div class="no-result-found">
-                    <h6>No Courses Found!</h6>
-                </div>
+                 @include('partials/no-data');
             </div>
             @endif
         </div>

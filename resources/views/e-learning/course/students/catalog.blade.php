@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="row">
-            @if (count($courses) > 0)
+            @if (count($courses))
             @foreach($courses as $course)
             @php
                 $review_sum = 0;
@@ -97,7 +97,7 @@
                 <div class="course-single-item">
                     <div>
                         <div class="course-thumb-box">
-                            <img src="{{asset('assets/images/courses/'. $course->thumbnail)}}" alt="{{ $course->slug}}"
+                            <img src="{{asset($course->thumbnail)}}" alt="{{ $course->slug}}"
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
@@ -141,8 +141,12 @@
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
                         </form> --}}
                         <form action="{{ route('cart.add', $course) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn add-to-cart-button">Add to Cart</button>
+                            @csrf 
+                            @if ($cartCourses->pluck('course_id')->contains($course->id))
+                                <button type="button" class="btn add-to-cart-button bg-secondary" disabled>Already Added to Cart</button>
+                            @else 
+                                <button type="submit" class="btn add-to-cart-button">Add to Cart</button>
+                            @endif 
                         </form>
                         @else
                         <a href="{{url('students/courses/my-courses/details/'.$course->slug )}}">Go to Course</a>
@@ -154,9 +158,7 @@
             @endforeach
             @else
             <div class="col-12">
-                <div class="no-result-found">
-                    <h6>No Course Found!</h6>
-                </div>
+                @include('partials/no-data');
             </div>
             @endif
         </div>
@@ -164,7 +166,7 @@
             <div class="col-12">
                 {{-- pagginate --}}
                 <div class="paggination-wrap">
-                    {{ $courses->links('pagination::bootstrap-5') }}
+                    {{-- {{ $courses->links('pagination::bootstrap-5') }} --}}
                 </div>
                 {{-- pagginate --}}
             </div>
@@ -213,31 +215,6 @@
         });
     });
 
-$(document).ready(function() {
-            $('.add-to-cart-button').on('click', function(event) {
-                event.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('cart.add', $course) }}',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        course_id: '{{ $course->id }}',
-                    },
-                    success: function(response) {
-                        if (response.error) {
-                        // Display an alert with the error message
-                        alert(response.error);
-                    } else {
-                        // Update the cart count in the navigation bar
-                        $('#cart-count').text(response.cartCount);
-                    }                    },
-                    error: function() {
-                        alert('An error occurred while adding to the cart.');
-                    }
-
-                });
-            });
-        });
 </script>
 @endsection
 {{-- page script @E --}}

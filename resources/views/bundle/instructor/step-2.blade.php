@@ -26,7 +26,7 @@
             </div>
             <div class="col-lg-5">
                 <div class="select-bundle-title mt-0">
-                    <button type="button" class="btn"> 3 Course Added</button>
+                    <button type="button" class="btn"> 0 Course Added</button>
                 </div>
             </div>
         </div>
@@ -34,6 +34,7 @@
             <div class="col-12">
                 <div class="selected-bundle-courses-wrap">
                     <div class="row"> 
+                        @if (count($bundleCourses) > 0)
                         @foreach ($bundleCourses as $course) 
                         {{-- course single box start --}}
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
@@ -59,6 +60,11 @@
                         </div>
                         {{-- course single box end --}}
                         @endforeach 
+                        @else
+                        <div class="col-12">
+                            @include('partials/no-data');
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="bundle-create-form-wrap">

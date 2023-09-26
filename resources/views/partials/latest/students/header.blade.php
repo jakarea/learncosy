@@ -38,7 +38,10 @@
                 </a>
                 <a href="{{ route('cart.index') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="Cart" class="img-fluid">
+
+                    @if (cartCount() >= 1)
                     <span id="cart-count">{{ cartCount() }}</span>
+                    @endif
                 </a>
                 <a href="{{ url('students/notification-details') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">

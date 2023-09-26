@@ -17,7 +17,7 @@
                 @include('partials/session-message')
                 {{-- session message @E --}}
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-12">
                 <form action="" method="GET" id="myForm">
@@ -38,13 +38,17 @@
                                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                         id="dropdownBttn">
                                         All
-                                    </button> 
+                                    </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item filterItem" href="#">All</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best
+                                                Rated</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#"
+                                                data-value="most_purchased">Most Purchased</a></li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest</a>
+                                        </li>
+                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest</a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <i class="fas fa-angle-down"></i>
@@ -52,64 +56,82 @@
                         </div>
                         <div class="col-xl-2 ps-0 col-md-5">
                             <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                <a href="{{ url('instructor/courses/create/step-1') }}"><i class="fas fa-plus me-2"></i> Add New Course</a>
+                                <a href="{{ url('instructor/courses/create') }}"><i class="fas fa-plus me-2"></i>
+                                    Add New Course</a>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-        </div> 
-        <div class="row"> 
+        </div>
+        <div class="row">
             @if (count($courses) > 0)
-            @foreach ($courses as $course) 
+            @foreach ($courses as $course)
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-3">
-                <div class="course-single-item"> 
+                <div class="course-single-item">
                     <div>
                         <div class="course-thumb-box">
                             @if ($course->status == 'pending')
                             <span class="badge text-bg-danger">Pending</span>
                             @elseif ($course->status == 'draft')
-                                <span class="badge text-bg-warning">Draft</span>
+                            <span class="badge text-bg-warning">Draft</span>
                             @elseif ($course->status == 'published')
-                                <span class="badge text-bg-primary">Publish</span>
+                            <span class="badge text-bg-primary">Publish</span>
                             @endif
                             <div class="header-action">
                                 <div class="dropdown">
-                                    <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{url('instructor/courses/'.$course->slug)}}">View</a></li> 
-                                        <li><a class="dropdown-item" href="{{url('instructor/courses/create/'.$course->id)}}">Edit</a></li> 
-                                        <li> 
-                                            <form method="post" class="d-inline" action="{{ url('instructor/courses/'.$course->id.'/destroy') }}">
-                                                @csrf 
+                                        <li><a class="dropdown-item"
+                                                href="{{url('instructor/courses/'.$course->slug)}}">View</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="{{url('instructor/courses/create/'.$course->id)}}">Edit</a></li>
+                                        <li>
+                                            <form method="post" class="d-inline"
+                                                action="{{ url('instructor/courses/'.$course->id.'/destroy') }}">
+                                                @csrf
                                                 @method("DELETE")
-                                                <button type="submit" class="dropdown-item btn text-danger">Delete </button>
+                                                <button type="submit" class="dropdown-item btn text-danger">Delete
+                                                </button>
                                             </form>
-                                        </li> 
+                                        </li>
                                     </ul>
-                                </div> 
-                            </div> 
-                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid"> 
-                        </div> 
+                                </div>
+                            </div>
+                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
+                        </div>
                         <div class="course-txt-box">
-                            <a href="{{url('instructor/courses/'.$course->slug)}}">{{ Str::limit($course->title?$course->title:'Untitled course', $limit = 30, $end = '..') }}</a>
-                            <p>{{ Str::limit($course->short_description, $limit = 26, $end = '...') }}</p>
+                            <a href="{{url('instructor/courses/'.$course->slug)}}">{{
+                                Str::limit($course->title?$course->title:'Untitled course', $limit = 52, $end = '..')
+                                }}</a>
+                            <p>{{ Str::limit($course->short_description, $limit = 34, $end = '...') }}</p>
+
+                            @php
+                                $review_sum = 0;
+                                $review_avg = 0;
+                                $total = 0;
+                                foreach($course->reviews as $review){
+                                $total++;
+                                $review_sum += $review->star;
+                                }
+                                if($total)
+                                $review_avg = $review_sum / $total;
+                            @endphp
+
                             <ul>
-                                <li><span>4.0</span></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><i class="fas fa-star"></i></li>
-                                <li><span>(145)</span></li>
-                            </ul> 
+                                <li><span>{{ $review_avg }}</span></li>
+                                @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                    @endfor
+                                    <li><span>({{ $total }})</span></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="course-txt-box">
-                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
+                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                     </div>
                 </div>
             </div>
@@ -117,9 +139,7 @@
             @endforeach
             @else
             <div class="col-12">
-                <div class="no-result-found">
-                    <h6>No Course Found!</h6>
-                </div>
+                @include('partials/no-data');
             </div>
             @endif
         </div>

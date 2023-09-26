@@ -93,7 +93,7 @@ Course Create - Design Step
                             <input id="name" class="form-control" type="text" value="{{ $course->title }}" required>
                             <label for="name">Appearance Product Overview</label>
                             <span class="d-block mt-3"><img src="{{asset('latest/assets/images/icons/eye-2.svg')}}"
-                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/'.$course->slug)}}">Preview</a></span>
+                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/'.$course->slug)}}" target="_blank">Preview</a></span>
                         </div>
                         <div class="media auto-text">
                             <div class="media-body">

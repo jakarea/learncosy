@@ -112,7 +112,7 @@
             <div class="col-lg-8">
                 <div class="my-courses-box mt-15">
                     <h3>Liked Courses </h3>
- 
+
                     <div class="course-box-overflown">
                         @foreach ($likeCourses as $likeCourse)
                         <div class="media">

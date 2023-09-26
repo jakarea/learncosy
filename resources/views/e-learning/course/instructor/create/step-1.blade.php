@@ -73,6 +73,10 @@ Course Create - Step 3
                             <label for="slug">Slug</label>
                         </div>  
                         <div class="form-group">
+                            <h6>Short Description</h6>
+                            <textarea class="form-control" placeholder="Enter Short Description" name="short_description" id="short_description">{{ $course ? $course->short_description : old('short_description') }}</textarea> 
+                        </div>   
+                        <div class="form-group">
                             <h6>Description</h6>
                             <textarea class="form-control" name="description" id="description">{{ $course ? $course->description : old('description') }}</textarea> 
                         </div>   

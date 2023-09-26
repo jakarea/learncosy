@@ -183,7 +183,7 @@ $totalPrice += $item->courses->offer_price;
                 </div>
 
             </div>
-            <div class="col-lg-5"> 
+            <div class="col-lg-5">
                 <div class="cart-right-wrap">
                     @foreach ($cart as $item)
 
@@ -192,29 +192,28 @@ $totalPrice += $item->courses->offer_price;
                     $review_avg = 0;
                     $total = 0;
                     foreach($item->courses->reviews as $review){
-                        $total++;
-                        $review_sum += $review->star;
+                    $total++;
+                    $review_sum += $review->star;
                     }
                     if($total)
-                        $review_avg = $review_sum / $total;
-                @endphp
+                    $review_avg = $review_sum / $total;
+                    @endphp
 
                     {{-- cart item start here --}}
                     <div class="cart-items-wrap">
                         <div class="d-flex">
                             <div class="media">
-                                <img src="{{asset('assets/images/courses/'.$item->courses->thumbnail)}}"
+                                <img src="{{asset($item->courses->thumbnail)}}"
                                     alt="Course Thumbnail" class="img-fluid">
                                 <div class="media-body">
-                                    <h6>{{ $item->courses->title }}</h6>
+                                    <h6>{{ Str::limit($item->courses->title, $limit = 30, $end = '...') }}</h6>
                                     <p>{{ $item->instructor }}</p>
 
                                     <ul>
                                         <li><span>{{ $review_avg }}</span></li>
-                                        @for ($i = 0; $i<$review_avg; $i++)
-                                            <li><i class="fas fa-star"></i></li>
-                                        @endfor
-                                        <li><span>({{ $total }})</span></li>
+                                        @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                            @endfor
+                                            <li><span>({{ $total }})</span></li>
                                     </ul>
 
                                     <h5>€{{ $item->courses->offer_price }} <s>€{{ $item->courses->price }}</s></h5>
@@ -252,14 +251,18 @@ $totalPrice += $item->courses->offer_price;
                     </div>
 
                     <div class="cart-checkout-bttn-wrap">
-                        <a href="{{ route('students.checkout.cart') }}" class="common-bttn">Pay €{{ $totalPrice }} with <i class="fa-brands fa-stripe"></i> </a>
+                        <a href="{{ route('students.checkout.cart') }}" class="common-bttn">Pay €{{ $totalPrice }} with
+                            <span class="stripe-bg">
+                                <i class="fa-brands fa-stripe"></i>
+                            </span>
+                        </a>
                     </div>
-                </div> 
-            </div>
-            @else  
-                <div class="col-12">
-                    @include('partials/no-data'); 
                 </div>
+            </div>
+            @else
+            <div class="col-12">
+                @include('partials/no-data');
+            </div>
             @endif
         </div>
     </div>

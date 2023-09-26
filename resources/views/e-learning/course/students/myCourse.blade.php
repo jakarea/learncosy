@@ -15,7 +15,8 @@
 
 @section('content')
 <main class="course-overview-page">
-    <div class="overview-banner-box" style="background-image: url({{asset('assets/images/courseds/'.$course->banner)}});">
+    <div class="overview-banner-box"
+        style="background-image: url({{asset('assets/images/courseds/'.$course->banner)}});">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-8">
@@ -33,17 +34,48 @@
                             </div>
                         </div>
                         @endif
-                        <h4>{{ $course->duration }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course . {{
-                            count($course_reviews) }} Reviews</h4>
+                        <h4>{{ $course->duration }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
+                            . {{ $totalReviews }} Reviews</h4>
 
-                        <a href="{{url('students/courses/'. $course->slug)}}" class="common-bttn" style="border-radius: 6.25rem; margin-top: 2rem">Start Course</a>
+                        <a href="{{url('students/courses/'. $course->slug)}}" class="common-bttn"
+                            style="border-radius: 6.25rem; margin-top: 2rem">Start Course</a>
 
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="overall-progress">
                         <h6>Overall Progress</h6>
-                        <img src="{{asset('latest/assets/images/overall.svg')}}" alt="Place"  class="img-fluid">
+
+                        <div class="circle-prog-big">
+                            <div class="cards">
+                                <div class="percent">
+                                    <svg>
+                                        <circle cx="73" cy="73" r="65"></circle>
+                                        <circle cx="73" cy="73" r="65"
+                                            style="--percent: {{ StudentActitviesProgress(auth()->user()->id, $course->id) }}">
+                                        </circle>
+                                    </svg>
+
+                                    @php
+                                    $totalLessons = 0;  
+                                    $completedLessons = 0; 
+                                    @endphp 
+                                    @foreach ($course->modules as $module)
+                                    @php 
+                                    $totalLessons += count($module->lessons);
+                                    $completedLessons += $module->lessons->where('completed', 1)->count();
+                                    @endphp
+                                    @endforeach
+
+                                    <div class="number">
+                                        <h5>{{ StudentActitviesProgress(auth()->user()->id, $course->id) }}<span>%</span></h5>
+                                        <p>{{ $completedLessons }}/{{ $totalLessons }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -54,7 +86,7 @@
             <div class="col-lg-6">
                 <div class="course-description-box">
                     <h4>Course Description</h4>
-                   {!! $course->description !!}
+                    {!! $course->description !!}
                 </div>
             </div>
             <div class="col-lg-6">
@@ -63,67 +95,113 @@
                     <div class="row">
                         <div class="col-lg-6">
                             @if ($course->curriculum)
-                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                    class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
+                            @endif
                             @if ($course->platform)
-                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->platform }}</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->platform }}</p>
+                            @endif
                             @if ($course->language)
-                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->language }}</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->language }}</p>
+                            @endif
                             @if ($course->duration)
-                            <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
+                            @endif
                             @if ($course->number_of_module)
-                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_module}} Modules</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->number_of_module}} Modules</p>
+                            @endif
                         </div>
-                        <div class="col-lg-6"> 
+                        <div class="col-lg-6">
                             @if ($course->number_of_lesson)
-                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
+                            @endif
                             @if ($course->number_of_attachment)
-                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
+                            @endif
                             @if ($course->number_of_video)
-                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_video}} Videos</p>
-                            @endif 
+                            <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $course->number_of_video}} Videos</p>
+                            @endif
                             @if ($course->hascertificate)
-                                <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid"> Certificate of Completion</p> 
-                            @endif 
-                        </div> 
+                            <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users"
+                                    class="img-fluid"> Certificate of Completion</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="all-modules-box">
                     <h3>Modules ({{count($course->modules)}})</h3>
                 </div>
             </div>
-            @foreach ($course->modules as $module) 
+            @foreach ($course->modules as $module)
+            @php
+            $totalLessons = count($module->lessons);
+            $completedLessons = $module->lessons->where('completed', 1)->count();
+            $percentage = $totalLessons > 0 ? ($completedLessons / $totalLessons) * 100 : 0;
+            @endphp
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="course-modules-boxx">
                     <div class="media">
                         <div class="media-body">
                             <h5>{{$module->title}}</h5>
-                            <p>{{$module->number_of_lesson}} Lessons. {{$module->duration}} M. Duration</p>
+                            <p>{{ count($module->lessons) }} Lessons - {{ $completedLessons }} Completed</p>
                         </div>
-                        <img src="{{asset('latest/assets/images/full.svg')}}" alt="full"  class="img-fluid light-ele">
-                        <img src="{{asset('latest/assets/images/cir-2.svg')}}" alt="full"  class="img-fluid dark-ele">
+
+                        <div class="circle-prog">
+                            <div class="cards">
+                                <div class="percent">
+                                    <svg>
+                                        <circle cx="27" cy="30" r="25"></circle>
+                                        <circle cx="27" cy="30" r="25" style="--percent: {{ $percentage }}"></circle>
+                                    </svg>
+                                    <div class="number">
+                                        <h6>{{ $percentage }}<span>%</span></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                     <hr>
-
                     <ul>
-                        <li><span> {{ $module->number_of_attachment }} Total Attachment</span> <img src="{{asset('latest/assets/images/icons/chk.svg')}}" alt="full"  class="img-fluid"></li> 
-                        <li><span> {{ $module->number_of_video }} Total Video</span> <img src="{{asset('latest/assets/images/icons/chk.svg')}}" alt="full"  class="img-fluid"></li> 
+                        @foreach ($module->lessons->slice(0, 3) as $lesson)
+                        <li>
+                            <span>{{ Str::limit($lesson->title, 30) }}</span>
+                            <div>
+                                @if ($lesson->completed == 1)
+                                <img src="{{asset('latest/assets/images/icons/chk.svg')}}" alt="icon"
+                                    class="img-fluid ms-2">
+                                @else
+                                @if ($lesson->type == 'text')
+                                <i class="fa-regular fa-file-lines text-dark ms-2"></i>
+                                @elseif($lesson->type == 'audio')
+                                <i class="fa-solid fa-headphones text-dark ms-2"></i>
+                                @elseif($lesson->type == 'video')
+                                <i class="fa-solid fa-play text-dark ms-2"></i>
+                                @endif
+                                @endif
+                            </div>
+                        </li>
+                        @endforeach
+
+                        {{-- @php print_r($course_activities) @endphp --}}
                     </ul>
 
+                    @if (count($module->lessons) > 3)
                     <div class="text-center">
-                        <a href="{{url('students/dashboard')}}">Show More <i class="fas fa-angle-down"></i></a>
+                        <a href="{{url('students/home')}}">Show More <i class="fas fa-angle-down"></i></a>
                     </div>
+                    @endif
+
                 </div>
             </div>
             @endforeach

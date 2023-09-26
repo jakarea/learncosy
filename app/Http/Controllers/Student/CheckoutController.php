@@ -26,7 +26,7 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
         //
         // $cart = Cart::select('course_id')->where('user_id', auth()->id())->get();

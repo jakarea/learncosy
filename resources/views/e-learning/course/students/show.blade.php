@@ -1,5 +1,5 @@
 @extends('layouts.latest.students')
-@section('title') Course Details @endsection
+@section('title') {{ $course->title ? $course->title : 'Course Details' }} @endsection
 
 {{-- style section @S --}}
 @section('style')
@@ -164,7 +164,9 @@ $i = 0;
                 <div class="course-outline-wrap">
                     <div class="header">
                         <h3>Modules</h3>
-                        <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
+                        <h6>
+                            {{ $totalModules }} Module . {{ $totalLessons }} Lessons
+                        </h6> 
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach($course->modules as $module)
@@ -173,9 +175,12 @@ $i = 0;
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    <div class="d-flex">
-                                        <p><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
-                                    </div>
+                                    <div class="media align-items-center">
+                                        <i class="fas fa-check-circle me-2"></i> 
+                                        <div class="media-body">
+                                            <p>{{ $module->title }}</p>
+                                        </div>
+                                    </div> 
                                 </button>
                             </div>
                             <div id="collapse_{{$module->id}}" class="accordion-collapse collapse "
@@ -194,21 +199,27 @@ $i = 0;
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{$lesson->id}}"
                                                 data-course-id="{{$course->id}}" data-modules-id="{{$module->id}}">
-                                                <i class="fas fa-play-circle"></i>
-                                                {{ $lesson->title }}
-                                            </a>
-
-                                            <!-- course complete checkmark -->
-                                            <span class="float-end mt-2" style="cursor:pointer;">
-                                                @if( isLessonCompleted($lesson->id) )
-                                                <i class="fas fa-check-circle text-success"></i>
-                                                @else
-                                                <i class="fas fa-check-circle is_complete_lesson"
-                                                    data-course="{{ $course->id }}" data-module="{{ $module->id }}"
-                                                    data-lesson="{{ $lesson->id }}"
-                                                    data-user="{{ Auth::user()->id }}"></i>
+                                                
+                                                @if ($lesson->type == 'text')
+                                                    <i class="fa-regular fa-file-lines"></i>
+                                                @elseif($lesson->type == 'audio')
+                                                    <i class="fa-solid fa-headphones"></i>
+                                                @elseif($lesson->type == 'video')
+                                                    <i class="fa-solid fa-video"></i>
                                                 @endif
-                                            </span>
+                                                {{ $lesson->title }}
+                                                <span class="mt-2 ml-1" style="cursor:pointer;">
+                                                    @if( isLessonCompleted($lesson->id) )
+                                                    <i class="fa-regular fa-circle-play text-success"></i>
+                                                    @else 
+                                                    <i class="fa-regular fa-circle-play is_complete_lesson"
+                                                        data-course="{{ $course->id }}" data-module="{{ $module->id }}"
+                                                        data-lesson="{{ $lesson->id }}"
+                                                        data-user="{{ Auth::user()->id }}"></i>
+                                                    @endif
+                                                </span>
+                                            </a> 
+                                            
                                             @endif
                                         </li>
                                         @endforeach
@@ -388,12 +399,12 @@ $i = 0;
                     data: data,
                     beforeSend: function() {
                         // Change class to spinner
-                        $element.removeClass('fas fa-check-circle').addClass('spinner-border spinner-border-sm');
+                        $element.removeClass('fa-solid fa-circle-play').addClass('spinner-border spinner-border-sm');
                     },
                     success: function(response) {
                         console.log('response', response);
                         // Change icon to success checkmark
-                        $element.removeClass('spinner-border spinner-border-sm').addClass('fas fa-check-circle text-success');
+                        $element.removeClass('spinner-border spinner-border-sm').addClass('fa-solid fa-circle-play text-success');
                     },
                     error: function(xhr, status, error) {
                         // Handle errors, if any
