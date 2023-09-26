@@ -33,28 +33,27 @@ Course Create - Video Upload Step
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                
                 <div class="lesson-edit-form-wrap mt-4">
-                    <form  id="uploadForm" action="{{ url('instructor/courses/create/step-5') }}" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
-                    @csrf    
+                    <form  id="uploadForm" action="" method="POST" class="create-form-box custom-select" enctype="multipart/form-data">
+                        @csrf 
                         <div class="highlighted-area-upload dragBox">
                             <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
                             <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
-                            
                             <p class="file-name"><label for="uploadFile">Click here</label> to set the highlighted video</p>
                         </div>
                         <div id="preview"></div>
                         <div class="upload-progress">
-                            <div class="progress" role="progressbar" aria-label="Basic example"
-                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar" style="width: 0%"></div>
-                            </div>
-                            <h3>0%</h3>
-                            <p>Please, while uploading the video. don't close the window or dont't
-                                change the URL *</p>
-                            <span class="invalid-feedback">@error('video_link'){{ $message }}
-                                        @enderror</span>
+                            <div class="progress d-none">
+                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" 
+                                aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div>
+                            <h3 class="h33 d-none">0%</h3>
+                            <p class="warnm d-none">Please, while uploading the video. don't close the window or dont't
+                                change the URL *</p>
+                            <span class="invalid-feedback">@error('video_link'){{ $message }} @enderror</span>
+                        </div>
+
+                        
 
                         <h4>A Short description for this video</h4>
                         <div class="form-group">
@@ -160,6 +159,16 @@ Course Create - Video Upload Step
 
 <script>
     var baseUrl = "{{ url('') }}";
+    var currentURL= window.location.href
+    var urlObject = new URL(currentURL);
+    var pathname = urlObject.pathname;
+    var pathnameParts = pathname.split('/');
+    var course_id = pathnameParts[4];
+    var module_id = pathnameParts[6];
+    const uploadProgress = document.querySelector('.progress');
+    const warnm = document.querySelector('.warnm');
+    const h33 = document.querySelector('.h33');
+
     function dragNdrop(event) {
         // While selecting file, only allow video file
         var fileInput = document.getElementById('uploadFile');
@@ -184,115 +193,110 @@ Course Create - Video Upload Step
 function drag() {
     document.getElementById('uploadFile').parentNode.className = 'draging dragBox';
 }
+
 function drop() {
     document.getElementById('uploadFile').parentNode.className = 'dragBox';
 }
 
 $(document).ready(function() {
     $('#uploadForm').submit(function(e) {
-        e.preventDefault();
 
+        e.preventDefault();
+        uploadProgress.classList.remove('d-none');
+        warnm.classList.remove('d-none');
+        h33.classList.remove('d-none');
         var formData = new FormData(this);
         var urlParams = new URLSearchParams(window.location.search);
-        console.log({formData})
+        var url = window.location.href;
+
         $.ajax({
-            url: $(this).attr('action'),
+            url: url,
             type: 'POST',
             data: formData,
             dataType: 'json',
             cache: false,
             contentType: false,
             processData: false,
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                // Upload progress
-                xhr.upload.addEventListener('progress', function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = (evt.loaded / evt.total) * 100;
-                        $('.progress-bar').css('width', percentComplete + '%');
-                        $('.upload-progress h3').text(percentComplete + '%');
-                    }
-                }, false);
-                return xhr;
-            },
+            // xhr: function() {
+            //     var xhr = new window.XMLHttpRequest();
+            //     // Upload progress
+            //     xhr.upload.addEventListener('progress', function(evt) {
+            //         if (evt.lengthComputable) {
+            //             var percentComplete = (evt.loaded / evt.total) * 100;
+            //             $('.progress-bar').css('width', percentComplete + '%');
+            //             $('.upload-progress h3').text(percentComplete + '%');
+            //         }
+            //     }, false);
+            //     return xhr;
+            // },
             beforeSend: function() {
+                
                 // set button state to loading and disable with spinner
                 $('.btn-submit').attr('disabled', true).html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
                 );
                 // check if file is not empty
+
                 var fileInput = document.getElementById('uploadFile');
-                var filePath = fileInput.value;
-                if (filePath === '') {
-                    alert('Please select a file');
-                    $('.btn-submit').attr('disabled', false).text('Upload');
-                    return false;
+                const selectedFile = fileInput.files[0];
+
+                // Get the size of the selected file in bytes
+                const fileSizeBytes = selectedFile.size;
+
+                // Convert the size to a more human-readable format (e.g., KB, MB, GB)
+                const fileSizeKB = fileSizeBytes / 1024; // 1 KB = 1024 bytes
+                const fileSizeMB = fileSizeKB / 1024; // 1 MB = 1024 KB
+
+                var fixedMax = Math.floor(Math.random() * 12) + 83
+                var currentPercentage = 0;
+                var progressPercentage = Math.floor(70 / fileSizeMB);
+                var randomFraction = 1;
+                var randomNumberInRange = 1;
+                // upload-progress p tag add style as warning
+                let progressId; // Declare the interval ID variable
+
+                function updateProgress() {
+                    randomFraction = Math.random();
+                    randomNumberInRange = Math.floor(1 + (randomFraction * (4 - 1)));
+                    currentPercentage += Math.ceil(progressPercentage);
+                    $('.progress-bar').css('width', currentPercentage + '%');
+                    $('.upload-progress h3').text(currentPercentage + '%');
+                // Check the condition you want
+                    if (currentPercentage >= fixedMax) {
+                        clearInterval(progressId); // Stop the interval when the condition is met
+                    }
                 }
 
-                // upload-progress p tag add style as warning
-                $('.upload-progress p').css('color', '#fff');
-                // $('.upload-progress p').css('background-color', '#ffc107');
-                $('.upload-progress p').css('background-color', '#ff0000');
-                $('.upload-progress p').css('padding', '10px');
-                $('.upload-progress p').css('border-radius', '5px');
-                $('.upload-progress p').css('margin-top', '10px');
+            // Start the interval and store its ID
+            progressId = setInterval(updateProgress, randomNumberInRange * 500);
+
             },
             success: function(response) {
-                console.log({response})
-                // reset button state
                 $('.btn-submit').attr('disabled', false).text('Upload');
                 var uri = response.uri;
                 var price = response.price;
-                if(price === 0){
-                    window.location.href = baseUrl + '/instructor/courses/create/step-7';
-                }
                 //checkProgress(uri);
+                //uploadProgress.classList.add('d-none');
+                $('.progress-bar').css('width', '100%');
+                $('.upload-progress h3').text('Completed');
+                const progressBAR = document.querySelector('.progress-bar');
+                progressBAR.classList.remove('bg-warning');
+                progressBAR.classList.add('bg-success');
+                $('.upload-progress p').css('display', 'none');
+                window.location.href = baseUrl + '/instructor/courses/create/'+ course_id +'?tab='+module_id;
             },
             // handle all types of errors
             error: function(xhr) {
+                progressBAR.classList.remove('bg-danger');
+                uploadProgress.classList.add('d-none');
+                warnm.classList.add('d-none');
                 var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
                 alert(errors);
-                console.log({errors});
-                // reset button state
+                console.log({errors})
                 $('.btn-submit').attr('disabled', false).text('Upload');
             }
         });
     });
-
-    function checkProgress(uri) {
-        var interval = setInterval(function() {
-            $.ajax({
-                url: '/instructor/lessons/progress',
-                type: 'GET',
-                data: { uri: uri },
-                dataType: 'json',
-                success: function(response) {
-                    var progress = response.progress;
-                    $('.progress-bar').css('width', progress + '%');
-                    $('.upload-progress h3').text(progress + '%');
-                    if (progress === 100) {
-                        clearInterval(interval);
-                        // redirect to lesson page
-                        setTimeout(function() {
-                            window.location.href = '/instructor/courses';
-                            // redirect to course single page
-                            // var urlParams = new URLSearchParams(window.location.search);
-                            // var lesson_slug = urlParams.get('lesson_slug');
-                            // window.location.href = ' route('course.show', ':lesson_slug') '.replace(
-                            //     ':lesson_slug', lesson_slug);
-
-                        }, 3000);
-                    }
-                },
-                error: function(error) {
-                    // get all errors and display
-                    var errors = error.responseJSON.errors;
-                    // alert(errors);
-                    alert('Something went wrong. Please try again.');
-                }
-            });
-        }, 1000);
-    }
 });
 
 </script>

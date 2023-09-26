@@ -297,9 +297,9 @@ class CourseController extends Controller
         return redirect('instructor/courses')->with('success', 'Course Updated!');
     }
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::where(['id'=> $id,'user_id' => Auth::user()->id])->first();
         if ($course) {
             //delete thumbnail
             $oldThumbnail = public_path('/assets/images/courses/'.$course->thumbnail);

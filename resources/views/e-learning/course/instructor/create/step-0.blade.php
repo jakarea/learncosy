@@ -61,15 +61,14 @@ Course Create - Step 1
                         @csrf
                         {{-- course content add box start --}}
                         <div class="add-content-box">
-                            <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Content</button>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#moduleModal"><i
+                                class="fas fa-plus"></i> Add Content</button>
                         </div>
                         {{-- course content add box end --}}
 
                         {{-- step next bttns --}}
                         <div class="back-next-bttns">
-                            <button type="submit" class="btn btn-submit">Next</button>
-                            {{-- <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}"
-                                id="submitForm">Next</a> --}}
+                            <button type="submit" class="btn btn-submit">Next</button> 
                         </div>
                         {{-- step next bttns --}}
                     </form>
@@ -79,20 +78,39 @@ Course Create - Step 1
     </div>
 </main>
 
+{{-- course name modal --}}
+<div class="course-name-modal">
+    <div class="modal fade" id="moduleModal" tabindex="-1" aria-labelledby="moduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="course-name-txt">
+                        <h5>Module name</h5> 
 
+                        <form action="{{ route('course.create.start') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Module Name" name="module_name"
+                                    class="form-control">
+                            </div>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="is_module">Is a Modual</label>
+                                <input class="form-check-input" type="checkbox" name="is_module" value="1" role="switch"
+                                    id="is_module" checked>
+                            </div>
+                            <p>Disable this if you want a separate content page.</p>
+                            <div class="form-submit">
+                                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-submit">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- course name modal --}}
 @endsection
 {{-- page content @E --}}
-
-@section('script')
-
-{{-- <script>
-    let myForm = document.getElementById('myForm');
-    let submitForm = document.getElementById('submitForm');
-
-    submitForm.addEventListener("click", function(e) {
-    e.preventDefault();
-    myForm.submit();
-    });
-
-</script> --}}
-@endsection
+ 
