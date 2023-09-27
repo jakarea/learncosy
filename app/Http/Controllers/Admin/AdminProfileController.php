@@ -64,7 +64,7 @@ class AdminProfileController extends Controller
         $user->name = $request->name;
         $user->username =  Str::slug($request->username);
         $user->short_bio = $request->short_bio;
-        $user->social_links = implode(",",$request->social_links);
+        $user->social_links = $request->social_links ? implode(",",$request->social_links) : '';
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
@@ -279,7 +279,11 @@ class AdminProfileController extends Controller
         $previousMonthEnrollment = $this->getEnrollmentByDateRange($previousMonthStart, $previousMonthEnd);
         $currentMonthTotalSell = $currentMonthEnrollment->sum('amount');
         $previousMonthTotalSell = $previousMonthEnrollment->sum('amount');
-        $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
+        $percentageChange = 0;
+        if($previousMonthTotalSell){
+            $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
+        }
+            
         return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
     }
 
@@ -291,8 +295,11 @@ class AdminProfileController extends Controller
         $currentDayTotalSell = $currentDayEnrollment->sum('amount');
         $previousDayTotalSell = $previousDayEnrollment->sum('amount');
         // dd( $previousMonthTotalSell);
-
-        $percentageChange = (($currentDayTotalSell - $previousDayTotalSell) / abs($previousDayTotalSell)) * 100;
+        $percentageChange = 0;
+        if($previousDayTotalSell){
+            $percentageChange = (($currentDayTotalSell - $previousDayTotalSell) / abs($previousDayTotalSell)) * 100;
+        }
+        
         return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
     }
 

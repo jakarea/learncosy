@@ -92,7 +92,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item"
-                                                            href="{{ url('instructor/courses/' . $course->slug) }}">View</a>
+                                                            href="{{ url('instructor/courses/' . $course->id) }}">View</a>
                                                     </li>
                                                     <li><a class="dropdown-item"
                                                             href="{{ url('instructor/courses/create/' . $course->id) }}">Edit</a>
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="course-txt-box">
                                         <a
-                                            href="{{ url('instructor/courses/' . $course->slug) }}">{{ Str::limit($course->title ? $course->title : 'Untitled course', $limit = 52, $end = '..') }}</a>
+                                            href="{{ url('instructor/courses/' . $course->id) }}">{{ Str::limit($course->title ? $course->title : 'Untitled course', $limit = 52, $end = '..') }}</a>
                                         <p>{{ Str::limit($course->short_description, $limit = 34, $end = '...') }}</p>
 
                                         @php

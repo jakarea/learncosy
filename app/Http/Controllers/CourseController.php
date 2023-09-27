@@ -161,13 +161,18 @@ class CourseController extends Controller
     }
 
     // course show
-    public function show($slug)
+    public function show($id)
     {   
-        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $course = Course::where('id', $id)->with('modules.lessons','user')->first();
+        $relatedCourses = Course::where('id', '!=', $id)
+            ->where('user_id', Auth::user()->id)
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','course_reviews'));
+            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }

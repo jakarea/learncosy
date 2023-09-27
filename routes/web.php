@@ -58,7 +58,7 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 //End Notification
 
 // custom auth screen route
-Route::get('/auth-  ', function () {
+Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
@@ -220,7 +220,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'index')->name('instructor.courses');
             //Route::get('/create', 'create');
             // Route::post('/create', 'store')->name('course.store');
-            // Route::get('/{slug}', 'show')->name('course.show');
+            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
             // Route::get('/{slug}/edit', 'edit')->name('course.edit');
             // Route::post('/{slug}/edit', 'update')->name('course.update');
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
@@ -374,7 +374,7 @@ Route::get('/dashboard1', function () {
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes
-    Route::get('/dashboard1', public function () {
+    Route::get('/dashboard1', function () {
         return 'Student dashboard from auth!';
     });
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
@@ -430,7 +430,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
 /* ===================== Admin Routes ===================== */
 /* ======================================================== */
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
-    Route::group(['middleware' => 'role:admin'], public function () {
+    Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
         Route::get('/top-perform/courses', 'perform');
         // all admin profile manage routes for admin

@@ -127,8 +127,7 @@
                                         
                                     @endphp
                                     <div class="media">
-                                        <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}"
-                                            alt="Avatar" class="img-fluid">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Avatar" class="img-fluid">
                                         <div class="media-body">
                                             <h5><a href="{{ url('admin/courses', $course->slug) }}">
                                                     {{ substr($course->title, 0, 20) . '...' }}</a></h5>
@@ -168,8 +167,8 @@
                                     <td>
                                         <div class="media">
                                             <div class="avatar">
-                                                <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}"
-                                                    alt="c-status" class="img-fluid">
+                                                <img src="{{ asset($course->thumbnail) }}" alt="c-status"
+                                                    class="img-fluid">
                                             </div>
                                             <div class="media-body">
                                                 <h5>{{ substr($course->title, 0, 35) }}</h5>
