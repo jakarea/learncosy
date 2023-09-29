@@ -15,15 +15,11 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('course_id'); 
-            $table->string('user_id')->nullable(); 
-            $table->text('title'); 
-            $table->text('slug'); 
-            $table->string('number_of_lesson'); 
-            $table->string('number_of_attachment')->nullable();
-            $table->string('number_of_video')->nullable();
-            $table->string('duration'); 
-            $table->string('status')->default('pending');
+            $table->integer('course_id');
+            $table->integer('user_id')->nullable();
+            $table->text('title');
+            $table->text('slug');
+            $table->string('status', 30)->default('draft');
             $table->timestamps();
         });
     }

@@ -28,25 +28,40 @@
                         </a>
                         <h1>Welcome back</h1>
                         <p>Welcome back! Please enter your details.</p>
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.update') }}">
                             @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <input type="hidden" name="email" value="{{ $email }}">
+
                             <div class="form-group">
-                                <label for="email">{{ __('Email') }}</label>
-                                <input type="email" placeholder="Enter Email"
-                                    class="form-control @error('email') is-invalid @enderror" name="email"
-                                    autocomplete="email" autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback d-block" role="alert">
+                                <label for="password-field">{{ __('New Password') }}</label>
+                                <input id="password-field" placeholder="••••••••" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    autocomplete="current-password">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                <i class="fa-regular fa-eye eye-click" onclick="changeType()"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password-field">{{ __('Re-enter Password') }}</label>
+
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password">
+
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <i class="fa-regular fa-eye eye-click" onclick="changeType()"></i>
                             </div>
 
                             <div class="form-submit">
-                                <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
-                            </div>
-                            <div class="optional-txt">
-                                <p>Back to <a href="{{ url('/auth-login') }}">Login</a></p>
+                                <button class="btn btn-submit" type="submit">Save</button>
                             </div>
                         </form>
                     </div>
