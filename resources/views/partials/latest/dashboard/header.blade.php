@@ -59,8 +59,8 @@
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         @if (auth()->user()->avatar)
-                            <img src="{{ asset('assets/images/users/' . auth()->user()->avatar) }}"
-                                alt="{{ auth()->user()->name }}" class="img-fluid">
+                            <img src="{{ asset(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
+                                class="img-fluid">
                         @else
                             <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
                         @endif

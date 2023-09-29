@@ -19,8 +19,8 @@ class CreateCoursesTable extends Migration
             $table->integer('user_id')->nullable();
             $table->text('slug')->nullable();
             $table->string('promo_video', 191)->nullable();
-            $table->decimal('price', 10, 2)->nullable()->change();
-            $table->decimal('offer_price', 10, 2)->nullable()->change();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('offer_price', 10, 2)->nullable();
             $table->text('categories')->nullable();
             $table->string('thumbnail', 191)->default('public/assets/images/courses/thumbnail.png');
             $table->longText('short_description')->nullable();

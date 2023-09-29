@@ -35,9 +35,9 @@ class ResetPasswordController extends Controller
         $email = $request->email;
         $subdomain = explode('.', request()->getHost())[0];
         if($subdomain == 'app'){
-            return view('auth/passwords/reset')->with(['token' => $token, 'email' => $email]);
+            return view('custom-auth/passwords/reset')->with(['token' => $token, 'email' => $email]);
         }
-        $instrcutor = User::where('username', $subdomain)->firstOrFail();
+        $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
         $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
 
         if ($instrcutorModuleSettings) {

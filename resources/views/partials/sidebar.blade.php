@@ -4,13 +4,13 @@
         <div class="media">
             @if(Auth()->user()->avatar)
             @if(Auth()->user()->user_role == 'student')
-            <img src="{{ asset('assets/images/users/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
+            <img src="{{ asset(Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
                 class="img-fluid">
             @elseif(Auth()->user()->user_role == 'instructor')
-            <img src="{{ asset('assets/images/users/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
+            <img src="{{ asset(Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
                 class="img-fluid">
             @elseif(Auth()->user()->user_role == 'admin')
-            <img src="{{ asset('assets/images/users/'.Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
+            <img src="{{ asset(Auth()->user()->avatar) }}" alt="{{Auth()->user()->name}}"
                 class="img-fluid">
             @endif
             @else

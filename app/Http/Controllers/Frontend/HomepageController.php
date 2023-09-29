@@ -30,14 +30,14 @@ class HomepageController extends Controller
 
      public function instructorHome()
      {
-         // get username from subdomain
+         // get subdomain from subdomain
          $request = app('request');
          $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.localhost.local")
          $segments = explode('.', $subdomain); // Split the host into segments
-         $username = $segments[0]; // Get the first segment as the subdomain
+         $subdomain = $segments[0]; // Get the first segment as the subdomain
          
-         if ( request()->getHost() != 'app.localhost' && $username != 'app' && !empty($username) ) {
-             $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
+         if ( request()->getHost() != 'app.localhost' && $subdomain != 'app' && !empty($subdomain) ) {
+             $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
              if(!$instructors){
                  return redirect('//app.localhost/login');
              }
@@ -47,7 +47,7 @@ class HomepageController extends Controller
              $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
              $price = isset($_GET['price']) ? $_GET['price'] : '';
  
-             $instructors = User::with(['courses.reviews'])->where('username', $username)->first();
+             $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
  
              if(!empty($title)){
                  $instructors = User::with(['courses' => function ($query) use ($title) {
@@ -71,7 +71,7 @@ class HomepageController extends Controller
              }
              // filter end
  
-             // $instructors = User::with(['courses'])->where('username', $username)->first();
+             // $instructors = User::with(['courses'])->where('subdomain', $subdomain)->first();
  
              $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
              $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
@@ -92,8 +92,8 @@ class HomepageController extends Controller
          }
      }
 
-    public function homeInstructorCourseDetails($username,$slug){
-        $instructor = User::with(['courses'])->where('username', $username)->first();
+    public function homeInstructorCourseDetails($subdomain,$slug){
+        $instructor = User::with(['courses'])->where('subdomain', $subdomain)->first();
         $course = Course::with(['modules.lessons','user'])->where('user_id',$instructor->id)->where('slug',$slug)->first();
         $courses_review = CourseReview::with(['course','user'])->where('course_id',$course->id)->inRandomOrder()->take(5)->get();
 

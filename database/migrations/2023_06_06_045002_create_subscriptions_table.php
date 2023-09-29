@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
-{
+{   
     /**
      * Run the migrations.
      *
@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('instructor_id')->constrained('users');
+            $table->unsignedBigInteger('subscription_packages_id');
+            $table->unsignedBigInteger('instructor_id');
             $table->string('name');
             $table->string('stripe_plan');
             $table->integer('quantity');

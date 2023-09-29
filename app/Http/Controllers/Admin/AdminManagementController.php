@@ -109,7 +109,7 @@ class AdminManagementController extends Controller
         
          $user = User::where('id', $userId)->first(); 
          $user->name = $request->name;
-         $user->username = $user->username;
+         $user->subdomain = $user->subdomain;
          if ($request->email) {
             $user->email =  $user->email;
          }
@@ -129,7 +129,7 @@ class AdminManagementController extends Controller
          if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/users/'.$user->avatar);
+               $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }

@@ -87,7 +87,7 @@
                             <div class="profile-widget-inner">
 
                                 @if (auth()->user()->avatar)
-                                    <img src="{{ asset('assets/images/users/' . auth()->user()->avatar) }}"
+                                    <img src="{{ asset( auth()->user()->avatar) }}"
                                         alt="{{ auth()->user()->name }}" class="img-fluid" width="100">
                                 @else
                                     <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>

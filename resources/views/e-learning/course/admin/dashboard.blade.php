@@ -207,7 +207,7 @@
                                 <div class="messages-item">
                                     <div class="media">
                                         <div class="avatar">
-                                            <img src="{{ asset('assets/images/users/' . $message->user->avatar) }}"
+                                            <img src="{{ asset( $message->user->avatar) }}"
                                                 alt="Avatar" class="img-fluid">
                                             <i class="fas fa-circle"></i>
                                         </div>

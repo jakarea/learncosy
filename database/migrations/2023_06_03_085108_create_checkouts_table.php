@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('instructor_id');
             $table->string('payment_method')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('payment_id')->nullable();
@@ -25,10 +26,6 @@ return new class extends Migration
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->timestamps();
-        
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-
         });
     }
 

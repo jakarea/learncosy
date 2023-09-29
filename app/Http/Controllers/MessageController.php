@@ -35,7 +35,7 @@ class MessageController extends Controller
         foreach ($highLightMessages as $messages) {
             foreach( $messages as $message){
                 if($message->receiver_id == $userId ){
-                    $message['user'] = User::find($message->user_id );
+                    $message['user'] = User::find($message->sender_id );
                 }else{
                     $message['user'] = User::find($message->receiver_id );
                 }
@@ -45,10 +45,10 @@ class MessageController extends Controller
         if($senderId){
             $senderInfo =  User::find($senderId);
             $messages = Message::where(function ($query) use ($senderId, $userId){
-                $query->where('receiver_id', $senderId)->where('user_id', $userId);
+                $query->where('receiver_id', $senderId)->where('sender_id', $userId);
             })
             ->orwhere(function ($query) use ($senderId, $userId){
-                $query->where('receiver_id', $userId)->where('user_id', $senderId);
+                $query->where('receiver_id', $userId)->where('sender_id', $senderId);
             })->get();
         }else{
             $messages = $highLightMessages->first() ? $highLightMessages->first() : [];

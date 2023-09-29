@@ -60,7 +60,7 @@
                         <h3>Recent Payment</h3>
                         @foreach ($payments->slice(0, 4) as $payment)
                             <div class="payment-box">
-                                <h5><img src="{{ asset('assets/images/users/' . $payment->user->avatar) }}" alt="a"
+                                <h5><img src="{{ asset($payment->user->avatar) }}" alt="a"
                                         class="img-fluid"> {{ $payment->user->name }}</h5>
 
                                 <p>

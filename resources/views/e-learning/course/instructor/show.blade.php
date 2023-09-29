@@ -82,7 +82,7 @@
                             @foreach ($course_reviews as $course_review)
                                 <div class="attached-file-box review-box">
                                     <div class="d_flex">
-                                    <h4><img src="{{ asset('assets/images/users/'.$course_review->user->avatar) }}" alt="{{$course_review->user->name}}"
+                                    <h4><img src="{{ asset($course_review->user->avatar) }}" alt="{{$course_review->user->name}}"
                                             class="img-fluid me-1"> {{$course_review->user->name}}</h4>
                                         <ul class="review-box-icon">
                                             @for ($i = 0; $i < $course_review->star; $i++)
@@ -184,7 +184,7 @@
                             @if (count($course_reviews) > 0)
                                 @foreach ($course_reviews as $course_review)
                                     <div class="media">
-                                        <img src="{{ asset('assets/images/users/' . $course_review->user->avatar) }}"
+                                        <img src="{{ asset( $course_review->user->avatar) }}"
                                             alt="Avatar" class="img-fluid">
                                         <div class="media-body">
                                             <h5>{{ $course_review->user->name }}</h5>

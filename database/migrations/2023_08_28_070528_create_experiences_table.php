@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('experiences', function (Blueprint $table) {
-            $table->id();
+        $table->id();
         $table->unsignedBigInteger('user_id');
         $table->string('profession');
         $table->string('company_name');
@@ -24,9 +24,6 @@ return new class extends Migration
         $table->date('retire_date')->nullable();
         $table->text('short_description');
         $table->timestamps();
-
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-    
         });
     }
 

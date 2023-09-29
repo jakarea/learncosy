@@ -58,24 +58,24 @@ Verify Email
                     </a>
                     <h1>Choose Subdomain</h1>
                     <p>Choose your subdomain.</p>
-                    <form action="{{ route('instructor.username.update', Auth::user()->id) }}" method="POST"
+                    <form action="{{ route('instructor.subdomain.update', Auth::user()->id) }}" method="POST"
                         class="profile-form create-form-box ms-0 username-form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="subdomain">Subdomain URL</label>
                         </div>
                         <div class="input-group">
-                            @if (Auth::user()->username)
+                            @if (Auth::user()->subdomain)
                             <input type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
-                                placeholder="write your subdomain" id="subdomain" name="username"
-                                aria-describedby="subdomain" value="{{ old('username') ?? Auth::user()->username }}"
+                                placeholder="write your subdomain" id="subdomain" name="subdomain"
+                                aria-describedby="subdomain" value="{{ old('subdomain') ?? Auth::user()->subdomain }}"
                                 autocomplete="subdomain" readonly autofocus>
                             @else
                             <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
-                                placeholder="write your subdomain" id="subdomain" name="username"
-                                aria-describedby="subdomain" value="{{ old('username') }}" autocomplete="subdomain"
+                                placeholder="write your subdomain" id="subdomain" name="subdomain"
+                                aria-describedby="subdomain" value="{{ old('subdomain') }}" autocomplete="subdomain"
                                 autofocus>
-                            @error('username') <span class="invalid-feedback" role="alert"> <strong>{{ $message
+                            @error('subdomain') <span class="invalid-feedback" role="alert"> <strong>{{ $message
                                     }}</strong> </span> @enderror
                             @endif
                             <span class="input-group-text bg-white" id="subdomain">.learncosy.com</span>
@@ -84,7 +84,7 @@ Verify Email
                             <span>Letter &amp; number only</span>
                         </div>
                         <div class="form-group">
-                            @error('username')
+                            @error('subdomain')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

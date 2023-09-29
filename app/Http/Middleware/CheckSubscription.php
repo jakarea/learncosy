@@ -39,9 +39,9 @@ class CheckSubscription
             //     return $next($request);
             // }
 
-            // Check User have set username or not
-            if (!$user->username) {
-                return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your username to access this feature.');
+            // Check User have set subdomain or not
+            if (!$user->subdomain) {
+                return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your subdomain to access this feature.');
             }
             // else{
             //     return $next($request);

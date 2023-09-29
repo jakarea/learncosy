@@ -58,10 +58,10 @@ class ProfileManagementController extends Controller
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
 
-        if ($user->username) {
-            $user->username = $user->username;
+        if ($user->subdoamin) {
+            $user->subdoamin = $user->subdoamin;
         }else{
-            $user->username =  Str::slug($request->username);
+            $user->subdoamin =  Str::slug($request->subdoamin);
         } 
         $user->short_bio = $request->short_bio;
         $user->social_links = implode(",",$request->social_links);
@@ -78,7 +78,7 @@ class ProfileManagementController extends Controller
         if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/users/'.$user->avatar);
+               $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }

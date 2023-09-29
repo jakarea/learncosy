@@ -49,18 +49,18 @@
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <div class="d-flex mb-2 justify-content-between">
-                                        <label for="username" class="mb-0">Subdomain: <sup class="text-danger">*</sup>
+                                        <label for="subdomain" class="mb-0">Subdomain: <sup class="text-danger">*</sup>
                                         </label>
                                         <span class="can-change mt-0">After set the Subdomain, it's not
                                             changeable.</span>
                                     </div>
 
-                                    <input type="text" placeholder="Enter Subdomain" name="username"
-                                        class="form-control @error('username') is-invalid @enderror"
-                                        value="{{ $instructor->username }}" id="username" {{ $instructor->username ?
+                                    <input type="text" placeholder="Enter Subdomain" name="subdomain"
+                                        class="form-control @error('subdomain') is-invalid @enderror"
+                                        value="{{ $instructor->subdomain }}" id="subdomain" {{ $instructor->subdomain ?
                                     'disabled' : ''}}>
 
-                                    <span class="invalid-feedback">@error('username'){{ $message }}
+                                    <span class="invalid-feedback">@error('subdomain'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                 <div id="imageContainer"> 
                                     <img src="" alt="" class="img-fluid" id="preview">
                                     @if($instructor->avatar)
-                                        <img src="{{ asset('assets/images/users/'.$instructor->avatar) }}" alt="logo" class="img-fluid">
+                                        <img src="{{ asset($instructor->avatar) }}" alt="logo" class="img-fluid">
                                     @endif 
                                    
                                 </div>

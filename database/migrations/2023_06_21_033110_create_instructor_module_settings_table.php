@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('instructor_module_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('instructor_id')->constrainted('users')->onDelete('cascade');
+            $table->unsignedBigInteger('instructor_id');
+            $table->string('app_logo')->nullable();
+            $table->string('favicon')->nullable();
+            $table->string('apple_icon')->nullable();
             $table->longText('value')->nullable();
             $table->string('image')->nullable();
             $table->string('logo')->nullable(); 

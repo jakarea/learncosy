@@ -59,9 +59,9 @@ class StudentHomeController extends Controller
     // catalog course list
     public function catalog(Request $request){
         $host = $request->getHost();   
-        $instructorUserName = explode('.', $host)[0];
+        $subdomain = explode('.', $host)[0];
 
-        $instructor = User::where('username', $instructorUserName)->first();
+        $instructor = User::where('subdomain', $subdomain)->first();
 
         if ( $instructor) { 
             $courses = Course::where('user_id', $instructor->id)->with('user','reviews')->orderBy('id','desc');

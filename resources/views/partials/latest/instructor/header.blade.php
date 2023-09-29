@@ -78,7 +78,7 @@
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         @if (auth()->user()->avatar)
                             @if (auth()->user()->user_role == 'instructor')
-                                <img src="{{ asset('assets/images/users/' . auth()->user()->avatar) }}"
+                                <img src="{{ asset(auth()->user()->avatar) }}"
                                     alt="{{ auth()->user()->name }}" class="img-fluid">
                             @endif
                         @else

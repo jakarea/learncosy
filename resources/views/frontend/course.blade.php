@@ -29,9 +29,9 @@
             <div class="col-lg-7 ordr_2">
                 <div class="breadcumb">
                     <ul>
-                        <li><a href="{{url($instructor->username)}}" class="text-info">Home</a></li>
+                        <li><a href="{{url($instructor->subdomain)}}" class="text-info">Home</a></li>
                         <li><i class="fas fa-angle-right"></i></li>
-                        <li><a href="{{url($instructor->username.'/#course_sec')}}">Course</a></li>
+                        <li><a href="{{url($instructor->subdomain.'/#course_sec')}}">Course</a></li>
                         <li><i class="fas fa-angle-right"></i></li>
                         <li><a href="#">Details</a></li>
                     </ul>
@@ -130,7 +130,7 @@
                 <div class="course-instructor">
                     <div class="thumbnail">
                         @if ($instructor->avatar)
-                        <img src="{{asset('assets/images/users/'.$instructor->avatar)}}" alt="Avatar"
+                        <img src="{{asset($instructor->avatar)}}" alt="Avatar"
                         class="img-fluid">
                         @else
                          <span class="avatar-ins">{!! strtoupper($instructor->name[0]) !!}</span>
@@ -187,7 +187,7 @@
                     @foreach ($courses_review as $review)
                     <div class="student-feeback-box">
                         <div class="media">
-                            <img src="{{asset('assets/images/users/'.$review->user->avatar)}}" alt="a" class="img-fluid">
+                            <img src="{{asset($review->user->avatar)}}" alt="a" class="img-fluid">
                             <div class="media-body">
                                 <p>{{$review->comment}}</p>
 

@@ -140,7 +140,7 @@
                                 <div id="imageContainer">
                                     <span id="closeIcon" onclick="removeImage()">&#10006;</span>
                                     @if ($user->avatar)
-                                    <img src="{{asset('assets/images/users/'.$user->avatar)}}" alt="No Image"
+                                    <img src="{{asset($user->avatar)}}" alt="No Image"
                                         class="img-fluid d-block" id="uploadedImage"> 
                                     @endif 
                                 </div>

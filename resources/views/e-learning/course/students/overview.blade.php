@@ -25,7 +25,7 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset('assets/images/users/'.$course->user->avatar)}}" alt="Place"
+                            <img src="{{asset($course->user->avatar)}}" alt="Place"
                                 class="img-fluid">
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
@@ -163,7 +163,7 @@
 
                             <div class="course-txt-box">
                                 <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                                <p>{{ $course->user->username }}</p>
+                                <p>{{ $course->user->subdomain }}</p>
                                 <ul>
                                     <li><span>{{ $review_avg }}</span></li>
                                     @for ($i = 0; $i<$review_avg; $i++)
