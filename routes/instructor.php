@@ -14,7 +14,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 
 // Route::get('/', function ($instructor) {
 //     // return "Hello from teacher instructor $instructor";
-//     return redirect()->route('instructor.home', ['username' => 'instructor']);
+//     return redirect()->route('instructor.home', ['subdomain' => 'instructor']);
 // });
 Route::get('/', [HomepageController::class, 'instructorHome'])->name('instructor.home');
 Route::get('/courses', [HomepageController::class, 'instructorHome']);

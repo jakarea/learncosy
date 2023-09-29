@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('course_id');
+            $table->string('instructor_id');
             $table->integer('quantity');
             $table->integer('price');
             $table->timestamps();

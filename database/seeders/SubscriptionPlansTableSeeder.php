@@ -29,7 +29,7 @@ class SubscriptionPlansTableSeeder extends Seeder
                 'name' => $faker->unique()->sentence(2),
                 'slug' => $faker->unique()->slug,
                 'amount' => $faker->randomFloat(2, 10, 100),
-                'features' =>  json_encode($features),
+                'features' =>  'Jakarea ',
                 'type' => $faker->randomElement(['monthly', 'yearly']),
                 'status' => $faker->randomElement(['active', 'inactive']),
                 'created_by' => $faker->numberBetween(1, 5), // Assuming user IDs 1 to 5

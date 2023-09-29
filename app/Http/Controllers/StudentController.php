@@ -77,7 +77,7 @@ class StudentController extends Controller
                 })
                 ->editColumn('image', function ($user) { 
                     if($user->avatar){
-                        return '<img src="/assets/images/users/'.$user->avatar.'" width="50" />';
+                        return '<img src="$user->avatar" width="50" />';
                     }else{ 
                         return '<div class="table-avatar">
                                 <span>'.strtoupper($user->name[0]).'</span>
@@ -189,10 +189,10 @@ class StudentController extends Controller
         
          $user = User::where('id', $userId)->first();
          $user->name = $request->name;
-         if ($request->username) {
-            $user->username =  Str::slug($request->username);
+         if ($request->subdomain) {
+            $user->subdomain =  Str::slug($request->subdomain);
          }else{
-            $user->username = $user->username;
+            $user->subdomain = $user->subdomain;
         } 
          if ($request->user_role) {
             $user->user_role = $user->user_role;
@@ -214,7 +214,7 @@ class StudentController extends Controller
          if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/users/'.$user->avatar);
+               $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }

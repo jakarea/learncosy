@@ -66,7 +66,7 @@ class StudentManagementController extends Controller
                 })
                 ->editColumn('image', function ($user) { 
                     if($user->avatar){
-                        return '<img src="/assets/images/users/'.$user->avatar.'" width="50" />';
+                        return '<img src="$user->avatar" width="50" />';
                     }else{ 
                         return '<div class="table-avatar">
                                 <span>'.strtoupper($user->name[0]).'</span>
@@ -173,10 +173,10 @@ class StudentManagementController extends Controller
         
          $user = User::where('id', $userId)->first(); 
          $user->name = $request->name;
-         if ($request->username) {
-            $user->username =  Str::slug($request->username);
+         if ($request->subdomain) {
+            $user->subdomain =  Str::slug($request->subdomain);
          }else{
-            $user->username = $user->username;
+            $user->subdomain = $user->subdomain;
         } 
 
          $user->short_bio = $request->short_bio;
@@ -194,7 +194,7 @@ class StudentManagementController extends Controller
          if ($request->hasFile('avatar')) { 
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/users/'.$user->avatar);
+               $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
@@ -215,7 +215,7 @@ class StudentManagementController extends Controller
          
         $student = User::where('id', $id)->first();
          //delete student avatar
-         $studentOldThumbnail = public_path('/assets/images/users/'.$student->avatar);
+         $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
          } 

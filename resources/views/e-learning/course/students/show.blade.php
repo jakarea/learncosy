@@ -90,7 +90,7 @@
                             <div class="media course-review-input-box">
                                 @if ($course->user->avatar)
                                     @if ($course->user->user_role == 'student')
-                                        <img src="{{ asset('assets/images/users/' . $course->user->avatar) }}"
+                                        <img src="{{ asset( $course->user->avatar) }}"
                                             alt="Place" class="img-fluid">
                                     @endif
                                 @else
@@ -138,7 +138,7 @@
                             @if (count($course_reviews) > 0)
                                 @foreach ($course_reviews as $course_review)
                                     <div class="media">
-                                        <img src="{{ asset('assets/images/users/' . $course_review->user->avatar) }}"
+                                        <img src="{{ asset( $course_review->user->avatar) }}"
                                             alt="Avatar" class="img-fluid">
                                         <div class="media-body">
                                             <h5>{{ $course_review->user->name }}</h5>

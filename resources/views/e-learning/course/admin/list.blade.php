@@ -115,7 +115,7 @@
                                     <div class="course-txt-box">
                                         <a
                                             href="{{ url('admin/courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                                        <p>{{ $course->user->username }}</p>
+                                        <p>{{ $course->user->subdomain }}</p>
                                         <ul>
                                             <li><span>{{ $review_avg }}</span></li>
                                             @for ($i = 0; $i < $review_avg; $i++)

@@ -324,10 +324,10 @@ if (!function_exists('modulesetting')) {
         $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
         if ($sub_domain) {
-            $user = User::where('username', $sub_domain)->first();
+            $user = User::where('subdomain', $sub_domain)->first();
 
             if (!$user) {
-                // Redirect the user to set up their username
+                // Redirect the user to set up their subdomain
                 return redirect()->route('instructor.dashboard.index');
             }
 

@@ -62,7 +62,7 @@ Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
-    $instrcutor = User::where('username', $subdomain)->firstOrFail();
+    $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
 
     if ($instrcutorModuleSettings) {
@@ -93,7 +93,7 @@ Route::get('/auth-register', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
-    $instrcutor = User::where('username', $subdomain)->firstOrFail();
+    $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $registerPageStyle = json_decode($instrcutorModuleSettings->value);
 
@@ -119,7 +119,7 @@ Route::get('/auth/password/reset', function () {
 
 Route::get('/home', function (Request $request) {
     $role = Auth::user()->user_role;
-    $username = Auth::user()->username;
+    // $subdomain = Auth::user()->subdomain;
     $subdomain = explode('.', request()->getHost())[0];
     if ($subdomain == 'app' && $role == 'admin') {
         return redirect('/admin/dashboard');
@@ -200,7 +200,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
     // profile management page routes
     Route::prefix('profile')->controller(DashboardController::class)->group(function () {
-        Route::post('/edit/{id}', 'username')->name('instructor.username.update');
+        Route::post('/edit/{id}', 'subdomain')->name('instructor.subdomain.update');
     });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {

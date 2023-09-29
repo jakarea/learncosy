@@ -31,7 +31,7 @@
                                         <a href="{{ route('message') }}?sender={{ $message[0]->user->id }}">
                                             <div class="media">
                                                 <div class="avatar">
-                                                    <img src="{{ asset('assets/images/users/' . $message[0]->user->avatar) }}"
+                                                    <img src="{{ asset( $message[0]->user->avatar) }}"
                                                         alt="Avatar" class="img-fluid">
                                                     <i class="fas fa-circle"></i>
                                                 </div>
@@ -61,7 +61,7 @@
                                         <!-- chat person -->
                                         <div class="media">
                                             @if ($senderInfo)
-                                                <img src="{{ asset('assets/images/users/' . $senderInfo->avatar) }}"
+                                                <img src="{{ asset($senderInfo->avatar) }}"
                                                     alt="Avatar" class="img-fluid">
                                             @else
                                                 <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
@@ -70,7 +70,7 @@
 
                                             <div class="media-body">
                                                 <h5>{{ $senderInfo ? $senderInfo->name : '' }}</h5>
-                                                <p>@ {{ $senderInfo ? $senderInfo->username : '' }}</p>
+                                                <p>@ {{ $senderInfo ? $senderInfo->subdomain : '' }}</p>
                                             </div>
                                             <a href="#" class="common-bttn">View Profile</a>
                                         </div>

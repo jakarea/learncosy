@@ -83,7 +83,7 @@
             <div class="col-lg-3">
                 <div class="paid-student-name">
                     <div class="avatar">
-                        <img src="{{asset('assets/images/users/'.$payment->user->avatar)}}" alt="a" class="img-fluid">
+                        <img src="{{asset($payment->user->avatar)}}" alt="a" class="img-fluid">
                     </div>
                     <div class="txt">
                         <h5>{{ $payment->user->name}}</h5>

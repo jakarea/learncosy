@@ -17,28 +17,44 @@ class UsersTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 5) as $index) {
-            $username = str_replace(".", "_", $faker->userName);
-            $email = $username.'@yopmail.com';
+        DB::table('users')->insert([
+            'name' => 'Mr Admin',
+            'email' => 'admin1@yopmail.com',
+            'user_role' => 'admin', // Default user role
+            'company_name' => $faker->company,
+            'short_bio' => $faker->sentence,
+            'phone' => $faker->phoneNumber,
+            'avatar' => 'assets/images/users/avatar.png',
+            'description' => $faker->paragraph,
+            'recivingMessage' => 1,
+            'email_verified_at' => now(),
+            'password' => bcrypt(1234567890), // You can set a default password
+            'stripe_secret_key' => null, // Default value
+            'stripe_public_key' => null, // Default value
+            'status' => 'active', // Default user status
+        ]);
+
+        foreach (range(1, 20) as $index) {
+            $subdomain = str_replace(".", "_", $faker->userName);
+            $email = $subdomain.'@yopmail.com';
+
+            $links = "https://facebook.com/".$subdomain.",https://twitter.com/".$subdomain.",https://instagram.com/".$subdomain;
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $email,
-                'user_role' => 'student', // Default user role
+                'avatar' => $index.'.jpg',
+                'subdomain' => $subdomain,
+                'user_role' => 'instructor', // Default user role
                 'company_name' => $faker->company,
                 'short_bio' => $faker->sentence,
                 'phone' => $faker->phoneNumber,
-            
-                'social_links' => json_encode([
-                    'facebook' => $faker->url,
-                    'twitter' => $faker->url,
-                ]),
                 'description' => $faker->paragraph,
-                'recivingMessage' => '0',
+                'recivingMessage' => 1,
+                'avatar' => 'assets/images/users/'.$index.'.jpeg',
                 'email_verified_at' => now(),
                 'password' => bcrypt(1234567890), // You can set a default password
-                'stripe_secret_key' => null, // Default value
-                'stripe_public_key' => null, // Default value
                 'status' => 'active', // Default user status
+                'social_links' => $links
             ]);
         }
     }

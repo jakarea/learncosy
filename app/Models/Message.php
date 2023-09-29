@@ -31,7 +31,7 @@ class Message extends Model
         return $query->whereIn('id', function ($subquery) {
             $subquery->selectRaw('MAX(id)')
                 ->from('messages')
-                ->groupBy('user_id','receiver_id');
+                ->groupBy('sender_id','receiver_id');
         });
     }
 }

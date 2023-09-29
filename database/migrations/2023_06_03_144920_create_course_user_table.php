@@ -17,15 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('instructor_id');
             $table->string('payment_method')->nullable();
             $table->decimal('amount')->nullable();
             $table->boolean('paid')->default(false);
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->timestamps();
-
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

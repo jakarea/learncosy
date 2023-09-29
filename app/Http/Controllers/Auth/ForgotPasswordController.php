@@ -25,7 +25,7 @@ class ForgotPasswordController extends Controller
     {
         $subdomain = explode('.', request()->getHost())[0];
         if($subdomain != 'app'){
-            $instrcutor = User::where('username', $subdomain)->firstOrFail();
+            $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
             $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
 
             if ($instrcutorModuleSettings) {

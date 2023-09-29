@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('subscription_status')->default('one_time'); 
             $table->string('price')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->string('banner')->nullable();
             $table->longText('short_description')->nullable();
             $table->string('status')->default('draft');
             $table->timestamps();

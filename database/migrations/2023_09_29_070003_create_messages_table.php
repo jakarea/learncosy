@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->string('sender_id');
             $table->integer('receiver_id');
-            $table->string('course_id'); 
+            $table->string('course_id');
             $table->longText('message');
-            $table->string('user_id'); 
+            $table->string('attachment');
             $table->timestamps();
         });
     }
@@ -32,4 +33,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('messages');
     }
-};
+}

@@ -19,7 +19,7 @@ class AdminSubscriptionPackageController extends Controller
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
-        $subscription_packages = SubscriptionPackage::orderby('id', 'desc');
+        return $subscription_packages = SubscriptionPackage::orderby('id', 'desc')->get();
         if ($name) {
             $subscription_packages->where('name', 'like', '%' . trim($name) . '%');
         }

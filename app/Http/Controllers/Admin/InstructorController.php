@@ -61,7 +61,7 @@ class InstructorController extends Controller
        // add instructor
        $instructor = new User([
            'name' => $request->name,
-           'username' => $request->username,
+           'subdomain' => $request->subdomain,
            'user_role' => 'instructor',
            'email' => $request->email,
            'phone' => $request->phone,
@@ -123,15 +123,15 @@ class InstructorController extends Controller
        
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
-        if ($request->username) {
-           $user->username =  Str::slug($request->username);
+        if ($request->subdomain) {
+           $user->subdomain =  Str::slug($request->subdomain);
         }
         if ($request->user_role) {
            $user->user_role =  $user->user_role;
         }
         $user->short_bio = $request->short_bio;
         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-        $user->username = $request->username;
+        $user->subdomain = $request->subdomain;
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
@@ -145,7 +145,7 @@ class InstructorController extends Controller
         if ($request->hasFile('avatar')) { 
            // Delete old file
            if ($user->avatar) {
-              $oldFile = public_path('/assets/images/users/'.$user->avatar);
+              $oldFile = public_path($user->avatar);
               if (file_exists($oldFile)) {
                   unlink($oldFile);
               }

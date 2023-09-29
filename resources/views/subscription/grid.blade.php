@@ -82,10 +82,10 @@
                                         <p>{{ $package->type }}</p>
                                     </td>
                                     <td>
-                                        @php  $features = json_decode($package->features); @endphp
-                                        @foreach ($features as $feature)
-                                            <p>{{ $feature }}</p>
-                                        @endforeach
+                                        @php
+                                            //$features = explode(',', $package->features);
+                                        @endphp
+                                        {{ $package }}
 
                                     </td>
                                     <td>

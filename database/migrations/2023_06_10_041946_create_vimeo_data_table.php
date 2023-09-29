@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('client_id')->nullable();
             $table->string('client_secret')->nullable();
             $table->string('access_key')->nullable();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
