@@ -218,12 +218,17 @@ class CourseManagementController extends Controller
         // } else {
         //     return redirect('admin/courses')->with('error', 'Course not found!');
         // }
-
+       
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
+        $relatedCourses = Course::where('id', '!=', $course->id)
+            ->where('user_id', $course->user_id)
+            ->inRandomOrder()
+            ->limit(3)
+        ->get();
         if ($course) {
-            return view('e-learning/course/admin/show', compact('course','course_reviews'));
+            return view('e-learning/course/admin/show', compact('course','course_reviews','relatedCourses'));
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }

@@ -1,10 +1,9 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,33 +14,27 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->text('title'); 
-            $table->string('auto_complete')->nullable()->default(1);
-            $table->string('user_id')->nullable(); 
-            $table->text('sub_title')->nullable(); 
-            $table->text('features')->nullable(); 
+            $table->text('title');
+            $table->tinyInteger('auto_complete')->default(1);
+            $table->integer('user_id')->nullable();
             $table->text('slug')->nullable();
-            $table->text('prerequisites')->nullable();
-            $table->text('outcome')->nullable();
-            $table->string('promo_video')->nullable();
-            $table->string('price')->nullable();
-            $table->string('offer_price')->nullable();
+            $table->string('promo_video', 191)->nullable();
+            $table->decimal('price', 10, 2)->nullable()->change();
+            $table->decimal('offer_price', 10, 2)->nullable()->change();
             $table->text('categories')->nullable();
-            $table->string('thumbnail')->nullable()->default("public/assets/images/courses/thumbnail.png");
-            $table->string('banner')->nullable()->default("suggested-banner.png"); 
+            $table->string('thumbnail', 191)->default('public/assets/images/courses/thumbnail.png');
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->text('meta_keyword')->nullable();
-            $table->string('meta_description', 160)->nullable(); 
-            $table->string('number_of_module')->nullable();
-            $table->string('number_of_lesson')->nullable(); 
-            $table->string('number_of_attachment')->nullable();
-            $table->string('number_of_video')->nullable();
-            $table->string('duration')->nullable();
-            $table->string('hascertificate')->nullable()->default(0);
-            $table->string('sample_certificates')->nullable()->default(""); 
-            $table->string('subscription_status')->default('one_time');
-            $table->string('status')->default('draft');
+            $table->string('meta_description', 160)->nullable();
+            $table->tinyInteger('hascertificate')->default(0);
+            $table->string('sample_certificates', 191)->nullable();
+            $table->string('status', 25)->default('draft');
+            $table->tinyInteger('allow_review')->default(1);
+            $table->string('language', 30)->nullable();
+            $table->string('platform', 50)->nullable();
+            $table->longText('objective')->nullable();
+            $table->longText('objective_details')->nullable();
             $table->timestamps();
         });
     }
@@ -55,4 +48,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('courses');
     }
-};
+}

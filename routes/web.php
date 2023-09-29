@@ -1,44 +1,40 @@
 <?php
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GeneratepdfController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\ExperienceController;
-use App\Http\Controllers\CourseBundleController;
-use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\ModuleSettingController;
-use App\Http\Controllers\CourseCreateStepController;
-use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminManagementController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
+use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Admin\CourseManagementController;
+use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\Admin\LessonManagementController;
+use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\CourseBundleController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseCreateStepController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Instructor\DashboardController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ModuleSettingController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\StudentProfileController;
-
-use App\Http\Controllers\Instructor\DashboardController;
-
-use App\Http\Controllers\Admin\AdminHomeController;
-use App\Http\Controllers\Admin\InstructorController;
-use App\Http\Controllers\Admin\AdminManagementController;
-use App\Http\Controllers\Admin\CourseManagementController;
-use App\Http\Controllers\Admin\LessonManagementController;
-use App\Http\Controllers\Admin\StudentManagementController;
-use App\Http\Controllers\Admin\BundleCourseManagementController;
-use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
-use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\ModuleManagementController;
-
-use App\Models\User; 
+use App\Http\Controllers\SubscriptionController;
 use App\Models\InstructorModuleSetting;
-use App\Http\Controllers\Frontend\HomepageController;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,8 +44,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
+ */
 
 // Route::get('/')->middleware('auth');
 
@@ -57,46 +52,44 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
-
-
 //Start Notification
-Route::get('students/notification-details', [NotificationController::class,'notificationDetails'])->name('notification.details'); 
-Route::post('students/notification-details/destroy/{id}', [NotificationController::class,'destroy'])->name('notification.destroy'); 
+Route::get('students/notification-details', [NotificationController::class, 'notificationDetails'])->name('notification.details');
+Route::post('students/notification-details/destroy/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
 //End Notification
 
-
-
 // custom auth screen route
-Route::get('/auth-login', function(){
+Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
     $instrcutor = User::where('username', $subdomain)->firstOrFail();
-    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
-    $loginPageStyle = json_decode($instrcutorModuleSettings->value);
+    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
+
+    if ($instrcutorModuleSettings) {
+        $loginPageStyle = json_decode($instrcutorModuleSettings->value);
+    } else {
+        $loginPageStyle = json_decode("{'primary_color':','secondary_color':','lp_layout':','meta_title':','meta_desc':'}");
+    }
 
     if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
         if ($loginPageStyle->lp_layout == 'fullwidth') {
-            return view('login/login2');
+            return view('custom-auth/login2');
+        } elseif ($loginPageStyle->lp_layout == 'default') {
+            return view('custom-auth/login3');
+        } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
+            return view('custom-auth/login5');
+        } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {
+            return view('custom-auth/login4');
+        } else {
+            return view('custom-auth/login');
         }
-        elseif($loginPageStyle->lp_layout == 'default'){
-            return view('login/login3');
-        }
-        elseif($loginPageStyle->lp_layout == 'leftsidebar'){
-            return view('login/login5');
-        }
-        elseif($loginPageStyle->lp_layout == 'rightsidebar'){
-            return view('login/login4');
-        }else{
-            return view('auth/login');
-        }
-    }else{
+    } else {
         return view('auth/login');
     }
 
 })->name('tlogin')->middleware('guest');
 
-Route::get('/auth-register', function(){
+Route::get('/auth-register', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
@@ -106,42 +99,38 @@ Route::get('/auth-register', function(){
 
     if ($registerPageStyle) {
         if ($registerPageStyle->lp_layout == 'fullwidth') {
-            return view('register/register2');
-        }
-        elseif($registerPageStyle->lp_layout == 'default'){
-            return view('register/register1');
-        }
-        elseif($registerPageStyle->lp_layout == 'leftsidebar'){
-            return view('register/register3');
-        }
-        elseif($registerPageStyle->lp_layout == 'rightsidebar'){
-            return view('register/register4');
-        }else{
-            return view('auth/register');
+            return view('custom-auth/register2');
+        } elseif ($registerPageStyle->lp_layout == 'default') {
+            return view('custom-auth/register1');
+        } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
+            return view('custom-auth/register3');
+        } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
+            return view('custom-auth/register4');
+        } else {
+            return view('custom-auth/register');
         }
     }
 
 })->name('tregister')->middleware('guest');
 
-Route::get('/auth/password/reset', function(){
+Route::get('/auth/password/reset', function () {
     return view('custom-auth/passwords/email');
 })->name('auth.password.request')->middleware('guest');
 
-
-Route::get('/home', function(Request $request){
+Route::get('/home', function (Request $request) {
     $role = Auth::user()->user_role;
     $username = Auth::user()->username;
     $subdomain = explode('.', request()->getHost())[0];
-    if($subdomain == 'app' && $role == 'admin'){
+    if ($subdomain == 'app' && $role == 'admin') {
         return redirect('/admin/dashboard');
     }
 
-    if($subdomain != 'app' &&  $role == 'student'){
+    if ($subdomain != 'app' && $role == 'student') {
         return redirect('/students/dashboard');
 
     }
 
-    if($subdomain != 'app' &&  $role == 'instructor'){
+    if ($subdomain != 'app' && $role == 'instructor') {
         return redirect('/instructor/dashboard');
     }
 
@@ -179,26 +168,26 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 /* ===================== Instructor Routes ===================== */
 /* ============================================================= */
 Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')->group(function () {
-    Route::get('/profile/step-1/complete', function(){
+    Route::get('/profile/step-1/complete', function () {
         if (Auth::user()->email_verified_at == null) {
             return view('auth.verify');
         } else {
             return redirect('/profile/step-2/complete');
         }
     });
-    Route::get('/profile/step-2/complete', function(){
+    Route::get('/profile/step-2/complete', function () {
         return view('latest-auth.price');
     });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
 
-    Route::get('/profile/step-4/complete', function(){
+    Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');
     });
-    Route::get('/profile/step-5/complete', function(){
+    Route::get('/profile/step-5/complete', function () {
         return view('latest-auth.theme-settings');
     });
-    Route::get('/profile/step-6/complete', function(){
+    Route::get('/profile/step-6/complete', function () {
         return view('latest-auth.make-course');
     });
     // settings page routes
@@ -206,7 +195,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::post('/stripe/request', 'stripeUpdate')->name('instructor.stripe.update');
         Route::post('/vimeo/request', 'vimeoUpdate')->name('instructor.vimeo.update');
     });
-    Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
+    Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function () {
         Route::post('/updateorinsert', 'store')->name('module.setting.update');
     });
     // profile management page routes
@@ -215,14 +204,14 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {
-        Route::get('dashboard', [DashboardController::class,'analytics'])->name('instructor.dashboard.analytics');
-        Route::get('analytics', [DashboardController::class,'index'])->name('instructor.dashboard.index');
+        Route::get('dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
+        Route::get('analytics', [DashboardController::class, 'index'])->name('instructor.dashboard.index');
         // instructor payment history static pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {
             Route::get('/', 'studentsPayment');
 
             Route::get('/{payment_id}', 'details');
-            Route::get('/generate-pdf/{id}','generatePdf')->name('generate-pdf');
+            Route::get('/generate-pdf/{id}', 'generatePdf')->name('generate-pdf');
             Route::get('/platform-fee', 'adminPayment');
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
@@ -231,7 +220,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'index')->name('instructor.courses');
             //Route::get('/create', 'create');
             // Route::post('/create', 'store')->name('course.store');
-            // Route::get('/{slug}', 'show')->name('course.show');
+            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
             // Route::get('/{slug}/edit', 'edit')->name('course.edit');
             // Route::post('/{slug}/edit', 'update')->name('course.update');
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
@@ -266,7 +255,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}/objects', 'courseObjects');
             Route::post('{id}/objects', 'courseObjectsSet');
-
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');
@@ -306,7 +294,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/upload-vimeo', 'uploadVimeoPage')->name('lesson.upload.vimeo');
             Route::post('/upload-vimeo-submit', 'uploadViewToVimeo')->name('lesson.vimeo');
             Route::get('/progress', 'getProgress')->name('upload.progress');
-            Route::get('/upload', function() {
+            Route::get('/upload', function () {
                 return view('e-learning/lesson/instructor/upload_vimeo');
             });
             Route::post('/create', 'store')->name('lesson.store');
@@ -328,7 +316,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
         });
         // theme settings page routes
-        Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function() {
+        Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function () {
             Route::get('/', 'index')->name('module.setting');
             Route::get('/dns', 'dnsTheme')->name('module.setting.dns');
             Route::get('/{id}/edit', 'edit')->name('module.setting.edit');
@@ -344,7 +332,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
         });
         Route::prefix('profile')->controller(ExperienceController::class)->group(function () {
-            Route::post('/experience','store')->name('instructor.profile.experience');
+            Route::post('/experience', 'store')->name('instructor.profile.experience');
         });
 
         // settings page routes
@@ -380,18 +368,18 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
 /* ========================================================== */
-Route::get('/dashboard1', function(){
+Route::get('/dashboard1', function () {
     return 'Student dashboard!';
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes
-    Route::get('/dashboard1', function(){
+    Route::get('/dashboard1', function () {
         return 'Student dashboard from auth!';
     });
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
-    Route::get('/home','catalog')->name('students.catalog.courses');
+    Route::get('/home', 'catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
@@ -404,7 +392,6 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 
     Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
-
 
     // student checkout page routes
     Route::prefix('checkout')->controller(CheckoutController::class)->group(function () {

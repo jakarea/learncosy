@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Hash;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -21,7 +21,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
 
@@ -43,8 +43,8 @@ class LoginController extends Controller
     }
 
     /*
-    * Login
-    */
+     * Login
+     */
 
     public function login(Request $request)
     {
@@ -61,7 +61,7 @@ class LoginController extends Controller
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->username
                     if ($user->username && !$request->is('//app.localhost')) {
-                        return redirect()->to('//' . $user->username .'.'. env('APP_DOMAIN') . '/instructor/dashboard');
+                        return redirect()->to('//' . $user->username . '.' . env('APP_DOMAIN') . '/instructor/dashboard');
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');

@@ -15,18 +15,16 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->string('course_id'); 
-            $table->string('user_id')->nullable(); 
-            $table->string('module_id'); 
-            $table->text('title'); 
-            $table->text('slug'); 
-            $table->string('video_link')->nullable(); 
-            $table->string('thumbnail'); 
-            $table->string('lesson_file')->nullable()->default(''); 
-            $table->text('short_description')->nullable(); 
-            $table->text('meta_keyword')->nullable(); 
-            $table->string('meta_description', 160)->nullable(); 
-            $table->string('status')->default('pending');
+            $table->integer('user_id')->nullable();
+            $table->integer('course_id');
+            $table->integer('module_id');
+            $table->text('title');
+            $table->text('slug');
+            $table->string('video_link', 191)->nullable();
+            $table->string('thumbnail', 191);
+            $table->text('short_description')->nullable();
+            $table->string('status', 30)->default('pending');
+            $table->string('type', 30)->default('video');
             $table->timestamps();
         });
     }
@@ -36,6 +34,7 @@ return new class extends Migration
      *
      * @return void
      */
+    
     public function down()
     {
         Schema::dropIfExists('lessons');

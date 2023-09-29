@@ -4,13 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Course;
-use App\Models\VimeoData;
 use App\Models\Subscription;
+use App\Models\VimeoData;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'user_role',
         'username',
         'short_bio',
+        'email_verified_at',
         'phone',
         'avatar',
         'social_links',
@@ -63,12 +64,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Subscription::class, 'instructor_id');
     }
 
-    public function courses(){
-        return $this->hasMany(Course::class,'user_id');
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'user_id');
     }
 
     /**
-     * vimeo_data 
+     * vimeo_data
      */
     public function vimeo_data()
     {

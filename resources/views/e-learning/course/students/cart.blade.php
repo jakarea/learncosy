@@ -261,7 +261,7 @@ $totalPrice += $item->courses->offer_price;
             </div>
             @else
             <div class="col-12">
-                @include('partials/no-data');
+                @include('partials/no-data')
             </div>
             @endif
         </div>

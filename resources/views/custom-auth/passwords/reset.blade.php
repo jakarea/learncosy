@@ -28,21 +28,13 @@
                         </a>
                         <h1>Welcome back</h1>
                         <p>Welcome back! Please enter your details.</p>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('password.update') }}">
                             @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <input type="hidden" name="email" value="{{ $email }}">
+
                             <div class="form-group">
-                                <label for="email">{{ __('Email') }}</label>
-                                <input type="email" placeholder="Enter Email"
-                                    class="form-control @error('email') is-invalid @enderror" name="email"
-                                    autocomplete="email" autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="password-field">{{ __('Password') }}</label>
+                                <label for="password-field">{{ __('New Password') }}</label>
                                 <input id="password-field" placeholder="••••••••" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     autocomplete="current-password">
@@ -51,29 +43,25 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                <i class="fa-regular fa-eye eye-click" onclick="changeType()"></i>
                             </div>
-                            <div class="d-flex">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="remember">
-                                        Remember for 30 days
-                                    </label>
-                                </div>
-                                <div class="forgot">
-                                    @if (Route::has('password.request'))
-                                        <a href="{{ route('password.request') }}">
-                                            {{ __('Forgot Password?') }}
-                                        </a>
-                                    @endif
-                                </div>
+
+                            <div class="form-group">
+                                <label for="password-field">{{ __('Re-enter Password') }}</label>
+
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password">
+
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <i class="fa-regular fa-eye eye-click" onclick="changeType()"></i>
                             </div>
+
                             <div class="form-submit">
-                                <button class="btn btn-submit" type="submit">Login</button>
-                            </div>
-                            <div class="optional-txt">
-                                <p>Dont't have an account? <a href="{{ url('/auth-register') }}">Register</a></p>
+                                <button class="btn btn-submit" type="submit">Save</button>
                             </div>
                         </form>
                     </div>

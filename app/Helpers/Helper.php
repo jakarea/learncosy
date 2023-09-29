@@ -412,16 +412,15 @@ if (!function_exists('StudentActitviesProgress')) {
         $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
             ->where('user_id', $user_id)
             ->whereNotNull('is_completed')
-            ->count();
-            $totalCompleteLessons = $totalCompleteLessons ? $totalCompleteLessons :1;
-            $totalLessons = $totalLessons ? $totalLessons : 1;
-            
+            ->count();            
         // Calculate the course progress percentage
         $progress = ($totalCompleteLessons / $totalLessons) * 100;
 
         // format the progress percentage
         $progress = number_format($progress, 0);
-
+        if($totalCompleteLessons == 0){
+            $progress = 0;
+        }
         return $progress;
     }
 }

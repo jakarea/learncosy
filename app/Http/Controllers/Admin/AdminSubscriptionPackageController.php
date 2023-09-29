@@ -81,6 +81,7 @@ class AdminSubscriptionPackageController extends Controller
      */
     public function store(Request $request)
     {
+        
         // validate request
         $request->validate([
             'name' => 'required',

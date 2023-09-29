@@ -121,6 +121,11 @@ class StudentHomeController extends Controller
     public function show($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $relatedCourses = Course::where('id', '!=', $course->id)
+        ->where('user_id', $course->user_id)
+        ->inRandomOrder()
+        ->limit(3)
+        ->get();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
@@ -134,7 +139,7 @@ class StudentHomeController extends Controller
         }); 
 
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules'));
+            return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -165,18 +170,18 @@ class StudentHomeController extends Controller
     }
 
       // my course details
-      public function courseDetails($slug){
+        public function courseDetails($slug){
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         
         $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count(); 
         $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray(); 
         foreach ($course->modules as $module) {
-             foreach ($module->lessons as $lesson) { 
-               $completed = in_array($lesson->id, $completes);
-               $lesson->completed =  (int)$completed;
-             }
+            foreach ($module->lessons as $lesson) { 
+                $completed = in_array($lesson->id, $completes);
+                $lesson->completed =  (int)$completed;
+            }
         }
- 
+
         if ($course) {
             return view('e-learning/course/students/myCourse',compact('course','totalReviews'));
         } else {

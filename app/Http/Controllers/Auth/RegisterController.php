@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider; 
-use App\Models\User;
-use Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str; 
 use App\Mail\UserCreated;
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -25,7 +25,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -55,7 +55,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         // return $data;
-        
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'user_role' => ['required', 'string', 'max:255'],
@@ -73,18 +73,20 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // return $data;
-
+        $email_verified_at = null;
+        if ($data['user_role'] == 'student') {
+            $email_verified_at = now()->format('Y-m-d H:i:s');
+        }
         $user = User::create([
-            'name' => $data['name'],  
+            'name' => $data['name'],
             'email' => $data['email'],
-           'company_name' => $data['company_name'],
+            'email_verified_at' => $email_verified_at,
+            'company_name' => $data['company_name'],
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
-        ]); 
-        
+        ]);
         return $user;
     }
-
 
     protected function registered(Request $request, $user)
     {

@@ -37,19 +37,22 @@ class DashboardController extends Controller
         $previousMonthEnrollment = $this->getEnrollmentData(Auth::user()->id, $firstDayOfPreviousMonth, $lastDayOfPreviousMonth);
         $currentMonthTotalSell = $currentMonthEnrollment->sum('amount');
         $previousMonthTotalSell = $previousMonthEnrollment->sum('amount');
-        $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
+        $percentageChange = 0;
+        if($previousMonthTotalSell){
+            $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
+        }
+        
         $formattedPercentageChangeOfEarning = round($percentageChange, 2);
 
         $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                ->whereYear('created_at', '=', now()->year)
-                ->whereMonth('created_at', '=', now()->month)
-                ->get();
+            ->whereYear('created_at', '=', now()->year)
+            ->whereMonth('created_at', '=', now()->month)
+            ->get();
 
         $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
             ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
             ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
             ->get();
-
 
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates($enrolments);
@@ -59,9 +62,9 @@ class DashboardController extends Controller
         $courses = Course::where('user_id', Auth::user()->id)->get();
 
         $currentMonthCourse = Course::where('user_id', Auth::user()->id)
-                ->whereYear('created_at', '=', now()->year)
-                ->whereMonth('created_at', '=', now()->month)
-                ->count();
+            ->whereYear('created_at', '=', now()->year)
+            ->whereMonth('created_at', '=', now()->month)
+            ->count();
 
         $previousMonthCourse = Course::where('user_id', Auth::user()->id)
             ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
