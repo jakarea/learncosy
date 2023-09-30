@@ -58,10 +58,10 @@ class ProfileManagementController extends Controller
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
 
-        if ($user->subdoamin) {
-            $user->subdoamin = $user->subdoamin;
+        if ($user->subdomain) {
+            $user->subdomain = $user->subdomain;
         }else{
-            $user->subdoamin =  Str::slug($request->subdoamin);
+            $user->subdomain =  Str::slug($request->subdomain);
         } 
         $user->short_bio = $request->short_bio;
         $user->social_links = implode(",",$request->social_links);

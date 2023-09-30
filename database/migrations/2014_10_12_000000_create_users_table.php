@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('recivingMessage')->default('0');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('vimeo_data');
             $table->string('stripe_secret_key')->nullable();
             $table->string('stripe_public_key')->nullable();
             $table->string('status')->default('active');
