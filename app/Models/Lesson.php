@@ -10,17 +10,16 @@ class Lesson extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_id', 
-        'user_id',  
-        'module_id',  
-        'title',  
-        'slug',  
-        'video_link',  
-        'thumbnail',   
-        'lesson_file',  
-        'short_description',  
-        'meta_keyword',  
-        'meta_description',  
-        'status', 
+        'user_id',
+        'course_id',
+        'instructor_id',
+        'module_id',
+        'title',
+        'slug',
+        'video_link',
+        'thumbnail',
+        'short_description',
+        'status',
+        'type',
     ];
 }

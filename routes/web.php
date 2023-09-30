@@ -95,7 +95,8 @@ Route::get('/auth-register', function () {
 
     $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
-    $registerPageStyle = json_decode($instrcutorModuleSettings->value);
+    $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
+    $registerPageStyle = json_decode($instrcutorModuleSettings->value ?$instrcutorModuleSettings->value :$value);
 
     if ($registerPageStyle) {
         if ($registerPageStyle->lp_layout == 'fullwidth') {

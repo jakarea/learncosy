@@ -19,41 +19,29 @@ class Course extends Model
 
     protected $fillable = [
         'title',
-        'slug',
-        'short_description',
         'auto_complete',
-        'thumbnail',
-        'banner',
-        'description',
-
-        'sub_title',
         'user_id',
-        'features',
         'slug',
-        'prerequisites',
-        'outcome',
         'promo_video',
         'price',
         'offer_price',
         'categories',
-
+        'thumbnail',
+        'short_description',
+        'description',
         'meta_keyword',
         'meta_description',
-        'number_of_module',
-        'number_of_lesson',
-        'number_of_quiz',
-        'number_of_attachment',
-        'number_of_video',
-        'duration',
         'hascertificate',
         'sample_certificates',
-        'subscription_status',
         'status',
-        'curriculum',
+        'allow_review',
         'language',
         'platform',
         'objective',
+        'curriculum',
+        'objective_details',
     ];
+    
 
     public function user(){
         return $this->hasOne(User::class,'id','user_id');
@@ -92,7 +80,4 @@ class Course extends Model
     public function likes(){
         return $this->hasMany(course_like::class,'course_id','id');
     }
-
-    // get purchased students list based on instructor id
-
 }

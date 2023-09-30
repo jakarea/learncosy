@@ -10,15 +10,12 @@ class Module extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_id', 
-        'user_id', 
-        'title',  
-        'slug',  
-        'number_of_lesson', 
-        'number_of_attachment', 
-        'number_of_video', 
-        'duration',
-        'status', 
+        'course_id',
+        'instructor_id',
+        'user_id',
+        'title',
+        'slug',
+        'status',
     ];
 
     public function lessons(){

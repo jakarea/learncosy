@@ -15,8 +15,8 @@ use Auth;
 class MessageController extends Controller
 {
      // message
-     public function index(Request $request)
-     {
+    public function index(Request $request)
+    {
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $course_id = $request->query('course');
         $senderId = $request->query('sender');
