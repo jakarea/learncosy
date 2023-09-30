@@ -232,10 +232,10 @@ class DashboardController extends Controller
         return $course_wise_payments;
     }
 
-    public function subdomain()
-    { 
-        return view('latest-auth.subdomain');
-    }
+    // public function subdomain()
+    // { 
+    //     return view('latest-auth.subdomain');
+    // }
 
     public function subdomain($user_id, Request $request)
     {

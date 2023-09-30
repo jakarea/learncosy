@@ -34,6 +34,7 @@ class CreateCoursesTable extends Migration
             $table->string('language', 30)->nullable();
             $table->string('platform', 50)->nullable();
             $table->longText('objective')->nullable();
+            $table->string('curriculum', 191)->nullable();
             $table->longText('objective_details')->nullable();
             $table->timestamps();
         });
