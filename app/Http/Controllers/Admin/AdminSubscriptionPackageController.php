@@ -19,7 +19,7 @@ class AdminSubscriptionPackageController extends Controller
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
-        return $subscription_packages = SubscriptionPackage::orderby('id', 'desc')->get();
+        $subscription_packages = SubscriptionPackage::orderby('id', 'desc');
         if ($name) {
             $subscription_packages->where('name', 'like', '%' . trim($name) . '%');
         }
@@ -97,7 +97,7 @@ class AdminSubscriptionPackageController extends Controller
             'amount' => $request->price,
             'type' => $request->type,
             'status' => $request->status,
-            'features' => json_encode($request->feature_list),
+            'features' => implode(',',$request->feature_list),
         ]);
 
         // return back with success message
@@ -153,7 +153,7 @@ class AdminSubscriptionPackageController extends Controller
             $subscription_package->amount = $request->price;
             $subscription_package->type = $request->type;
             $subscription_package->status = $request->status;
-            $subscription_package->features = json_encode($request->feature_list);
+            $subscription_package->features = implode(',',$request->feature_list);
             $subscription_package->save();
 
             // return back with success message

@@ -83,9 +83,13 @@
                                     </td>
                                     <td>
                                         @php
-                                            //$features = explode(',', $package->features);
+                                            $features = explode(',', $package->features);
                                         @endphp
-                                        {{ $package }}
+                                        <ul>
+                                            @foreach ($features as $feature)
+                                                <li>{{ $feature }}</li>
+                                            @endforeach
+                                        </ul>
 
                                     </td>
                                     <td>
