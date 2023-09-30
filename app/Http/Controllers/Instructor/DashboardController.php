@@ -232,12 +232,12 @@ class DashboardController extends Controller
         return $course_wise_payments;
     }
 
-    // public function subdomain()
-    // { 
-    //     return view('latest-auth.subdomain');
-    // }
+    public function subdomain()
+    { 
+        return view('latest-auth.subdomain');
+    }
 
-    public function subdomain($user_id, Request $request)
+    public function checkSubdomain($user_id, Request $request)
     {
         $request->validate([
             // 'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
