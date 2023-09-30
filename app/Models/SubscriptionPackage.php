@@ -19,25 +19,25 @@ class SubscriptionPackage extends Model
         'created_by',
     ];
 
-    protected $casts = [
-        'features' => 'array',
-    ];
+    // protected $casts = [
+    //     'features' => 'array',
+    // ];
 
-    /**
-     * Public boot
-     */
-    public static function boot()
-    {
-        parent::boot();
+    // /**
+    //  * Public boot
+    //  */
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            $model->created_by = auth()->user()->id;
-        });
+    //     static::creating(function ($model) {
+    //         $model->created_by = auth()->user()->id;
+    //     });
 
-        static::updating(function ($model) {
-            $model->created_by = auth()->user()->id;
-        });
-    }
+    //     static::updating(function ($model) {
+    //         $model->created_by = auth()->user()->id;
+    //     });
+    // }
 
     public function subscriptions()
     {
