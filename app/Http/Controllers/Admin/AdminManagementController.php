@@ -6,42 +6,42 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Checkout; 
-use Illuminate\Support\Str;  
-use Illuminate\Support\Facades\Hash; 
+use App\Models\Checkout;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 class AdminManagementController extends Controller
 {
     public function index()
-    {    
-        $user_role = "admin"; 
+    {
+        $user_role = "admin";
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $users = User::where('user_role',$user_role)->orderBy('id', 'desc');
         if (!empty($name)) {
             $users->where('name', 'like', '%' . trim($name) . '%');
         }
         $users = $users->paginate(12);
-        return view('admin/grid',compact('users'));  
+        return view('admin/grid',compact('users'));
     }
 
-     // create page 
+     // create page
      public function create()
-     {  
-         return view('admin/create'); 
+     {
+         return view('admin/create');
      }
 
-     // store page 
+     // store page
     public function store(Request $request)
-    {  
+    {
     //    return $request->all();
     $request->validate([
            'name' => 'required|string',
            'phone' => 'string',
-           'email' => 'required|email|unique:users,email', 
+           'email' => 'required|email|unique:users,email',
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
-       [ 
+       [
            'avatar' => 'Max file size is 5 MB!'
        ]);
 
@@ -50,7 +50,7 @@ class AdminManagementController extends Controller
        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
        // add admin
        $admin = new User([
-           'name' => $request->name,  
+           'name' => $request->name,
            'email' => $request->email,
            'user_role' => 'admin',
            'phone' => $request->phone,
@@ -59,54 +59,57 @@ class AdminManagementController extends Controller
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
-       ]);  
+       ]);
 // $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $adminslug = Str::slug($request->name);
         $image_path = '';
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar'); 
+            $file = $request->file('avatar');
             $image = Image::make($file);
-            $image->encode('webp', 90); 
-            $image_path = 'assets/images/users/'.$adminslug.'-'.uniqid().'.webp'; 
-            $image->save(public_path('assets/images/users/') . $adminslug.'-'.uniqid().'.webp');
+            $uniqueFileName = $adminslug . '-' . uniqid() . '.png';
+            $image->save(public_path('assets/images/users/') . $uniqueFileName);
+            $image_path = 'assets/images/users/' . $uniqueFileName;
         }
+
         $admin->avatar = $image_path;
         $admin->save();
         return redirect('admin/alladmin')->with('success', 'Admin Added Successfully!');
     }
 
-      // show page 
+
+
+      // show page
       public function show($id)
-      {  
-         $user = User::where('id', $id)->first(); 
-         return view('admin/show',compact('user')); 
+      {
+         $user = User::where('id', $id)->first();
+         return view('admin/show',compact('user'));
       }
 
-       // edit page 
+       // edit page
     public function edit($id)
-    {  
+    {
        $user = User::where('id', $id)->first();
-     
+
        return view('admin/edit',compact('user'));
     }
 
     public function update(Request $request,$id)
      {
         //  return $request->all();
- 
-         $userId = $id;  
- 
+
+         $userId = $id;
+
          $this->validate($request, [
-             'name' => 'required|string',  
-             'phone' => 'required|string', 
+             'name' => 'required|string',
+             'phone' => 'required|string',
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
-         [ 
+         [
              'avatar' => 'Max file size is 5 MB!'
          ]);
- 
-        
-         $user = User::where('id', $userId)->first(); 
+
+
+         $user = User::where('id', $userId)->first();
          $user->name = $request->name;
          $user->subdomain = $user->subdomain;
          if ($request->email) {
@@ -118,41 +121,41 @@ class AdminManagementController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         
+
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{
              $user->password = $user->password;
-         } 
- 
-         if ($request->hasFile('avatar')) { 
+         }
+
+         if ($request->hasFile('avatar')) {
             // Delete old file
             if ($user->avatar) {
                $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
-           } 
+           }
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
            $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
-           $user->avatar = $destinationPath . $name; 
+           $user->avatar = $destinationPath . $name;
        }
- 
+
          $user->save();
          return redirect('admin/alladmin')->with('success', 'Admin Profile has been Updated successfully!');
      }
 
      public function destroy($id){
-         
+
         $admin = User::where('id', $id)->first();
          //delete admin avatar
          $adminOldThumbnail = public_path('/assets/images/users/'.$admin->avatar);
          if (file_exists($adminOldThumbnail)) {
              @unlink($adminOldThumbnail);
-         } 
+         }
         $admin->delete();
 
         return redirect('admin/alladmin')->with('success', 'Admin Successfully deleted!');
