@@ -200,7 +200,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
     // profile management page routes
     Route::prefix('profile')->controller(DashboardController::class)->group(function () {
-        Route::post('/edit/{id}', 'subdomain')->name('instructor.subdomain.update');
+        Route::post('/edit/{id}', 'checkSubdomain')->name('instructor.subdomain.update');
     });
     // only subscription instructor can access this route
     Route::group(['middleware' => ['subscription.check']], function () {

@@ -41,7 +41,8 @@
                                 <h3>{{ $user->name }}</h3>
                                 <p>{{ $user->user_role }}</p>
                             </div>
-                            <a href="{{ url('instructor/profile/edit') }}" class="edit-profile">Edit Profile</a>
+                            <a href="{{ url('/instructor/profile/account-settings') }}" class="edit-profile">Edit
+                                Profile</a>
                         </div>
                     </div>
                     @if ($user->short_bio)

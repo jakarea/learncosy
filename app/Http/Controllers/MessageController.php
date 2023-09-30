@@ -22,11 +22,11 @@ class MessageController extends Controller
         $senderId = $request->query('sender');
         $userId = Auth::user()->id;
 
-        $highLightMessages = Message::with(['course'])->where('receiver_id',$userId)->orWhere('user_id',$userId)->get()->groupBy(function($data) use ($userId){
+        $highLightMessages = Message::with(['course'])->where('receiver_id',$userId)->orWhere('sender_id',$userId)->get()->groupBy(function($data) use ($userId){
             if( $data->receiver_id == $userId){
-                return $data->user_id;
+                return $data->sender_id;
             }
-            if( $data->user_id == $userId){
+            if( $data->sender_id == $userId){
                 return $data->receiver_id;
             }
         });
@@ -62,12 +62,12 @@ class MessageController extends Controller
      public function send($courseId)
      {
         $userId = Auth::user()->id;
-        $message = Message::where('user_id', $userId)->where('course_id',$courseId)->first();
+        $message = Message::where('sender_id', $userId)->where('course_id',$courseId)->first();
 
         if(isset($message->receiver_id)){
             $messages = Message::with('course')->where('receiver_id',$message->receiver_id)->get();
         }else{
-            $messages = Message::where('user_id', $userId)->where('course_id',$courseId)->get();
+            $messages = Message::where('sender_id', $userId)->where('course_id',$courseId)->get();
         }
 
         $reciver_info = Course::with('user')->where('id',$courseId)->first();
@@ -80,7 +80,7 @@ class MessageController extends Controller
      public function getChatRoomMessages($chat_room){
         $userId = Auth::user()->id;
         $messages = Message::with('course')->where('receiver_id',$chat_room)->get();
-        $chat_users_fetch = Message::where('receiver_id',$chat_room)->pluck('user_id')->toArray();
+        $chat_users_fetch = Message::where('receiver_id',$chat_room)->pluck('sender_id')->toArray();
         $chat_users = array_unique($chat_users_fetch);
         foreach($chat_users as $chat_user){
             if($chat_user == $userId){
@@ -112,7 +112,7 @@ class MessageController extends Controller
         $message = new Message([
             'receiver_id'   => $chat_room,
             'course_id' => $message->course_id,
-            'user_id'   => $userId,
+            'sender_id'   => $userId,
             'message'   => $request->message
         ]);
         $message->save();
@@ -132,7 +132,7 @@ class MessageController extends Controller
         $message = new Message([
             'receiver_id' => $receiverId->user->id,
             'course_id'   => $course_id,
-            'user_id'     => $userId,
+            'sender_id'     => $userId,
             'message'     => $request->message
         ]);
         $message->save();
@@ -157,7 +157,7 @@ class MessageController extends Controller
         $message = new Message([
             'receiver_id' => $senderId,
             'course_id'   => '',
-            'user_id'     => $userId,
+            'sender_id'     => $userId,
             'message'     => $request->message
         ]);
         $message->save();

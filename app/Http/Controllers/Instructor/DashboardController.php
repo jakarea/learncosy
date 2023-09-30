@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $messages = Message::where('receiver_id',$userId)->orWhere('user_id',$userId)->groupBy('receiver_id','user_id')->take(3)->get();
+        $messages = Message::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
 
         // return "From Instructor Dashboard Controller";
         $categories = [];
@@ -237,7 +237,7 @@ class DashboardController extends Controller
         return view('latest-auth.subdomain');
     }
 
-    public function subdomain($user_id, Request $request)
+    public function checkSubdomain($user_id, Request $request)
     {
         $request->validate([
             // 'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
