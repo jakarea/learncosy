@@ -74,6 +74,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                {{ asset($user->avatar) }}
                                 <div class="avatar">
                                     @if ($user->avatar)
                                         <img src="{{ asset($user->avatar) }}" alt="Avatar" class="img-fluid">

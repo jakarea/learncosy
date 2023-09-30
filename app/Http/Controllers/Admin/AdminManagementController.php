@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Checkout; 
 use Illuminate\Support\Str;  
 use Illuminate\Support\Facades\Hash; 
+use Intervention\Image\Facades\Image;
 
 class AdminManagementController extends Controller
 {
@@ -34,8 +35,7 @@ class AdminManagementController extends Controller
     public function store(Request $request)
     {  
     //    return $request->all();
-
-       $request->validate([
+    $request->validate([
            'name' => 'required|string',
            'phone' => 'string',
            'email' => 'required|email|unique:users,email', 
@@ -60,20 +60,19 @@ class AdminManagementController extends Controller
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
        ]);  
-
-       $adminslug = Str::slug($request->name);
-        //if avatar is valid then save it
-       if ($request->hasFile('avatar')) {
-           $image = $request->file('avatar');
-           $name = $adminslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $admin->avatar = $name;
-       } 
-
-       $admin->save();
-       return redirect('admin/alladmin')->with('success', 'Admin Added Successfully!');
-
+// $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
+    $adminslug = Str::slug($request->name);
+        $image_path = '';
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar'); 
+            $image = Image::make($file);
+            $image->encode('webp', 90); 
+            $image_path = 'assets/images/users/'.$adminslug.'-'.uniqid().'.webp'; 
+            $image->save(public_path('assets/images/users/') . $adminslug.'-'.uniqid().'.webp');
+        }
+        $admin->avatar = $image_path;
+        $admin->save();
+        return redirect('admin/alladmin')->with('success', 'Admin Added Successfully!');
     }
 
       // show page 
@@ -139,7 +138,7 @@ class AdminManagementController extends Controller
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
            $destinationPath = public_path('/assets/images/users');
            $image->move($destinationPath, $name);
-           $user->avatar = $name; 
+           $user->avatar = $destinationPath . $name; 
        }
  
          $user->save();
