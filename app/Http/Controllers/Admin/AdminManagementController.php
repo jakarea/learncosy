@@ -60,7 +60,7 @@ class AdminManagementController extends Controller
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
        ]);  
-
+// $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $adminslug = Str::slug($request->name);
         $image_path = '';
         if ($request->hasFile('avatar')) {
