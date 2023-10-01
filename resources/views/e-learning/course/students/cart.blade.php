@@ -203,11 +203,11 @@ $totalPrice += $item->courses->offer_price;
                     <div class="cart-items-wrap">
                         <div class="d-flex">
                             <div class="media">
-                                <img src="{{asset($item->courses->thumbnail)}}"
-                                    alt="Course Thumbnail" class="img-fluid">
+                                <img src="{{asset($item->courses->thumbnail)}}" alt="Course Thumbnail"
+                                    class="img-fluid">
                                 <div class="media-body">
                                     <h6>{{ Str::limit($item->courses->title, $limit = 30, $end = '...') }}</h6>
-                                    <p>{{ $item->instructor }}</p>
+                                    <p>{{ $item->name }}</p>
 
                                     <ul>
                                         <li><span>{{ $review_avg }}</span></li>

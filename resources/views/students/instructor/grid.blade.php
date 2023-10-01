@@ -13,14 +13,7 @@
 @section('content')
     {{-- ==== Students list page @S ==== --}}
     <main class="user-list-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <form action="" method="GET" id="myForm">
                 <div class="row">
                     <div class="col-lg-7 col-xl-7">
@@ -55,8 +48,7 @@
                         <div class="user-add-box">
                             <a href="{{ url('instructor/students/create') }}"><img
                                     src="{{ asset('latest/assets/images/user-plus.svg') }}" alt="User"
-                                    class="img-fluid"> Add
-                                Students</a>
+                                    class="img-fluid"> Add Students</a>
                         </div>
                     </div>
                 </div>
@@ -87,11 +79,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <ul>
-                                        <li>
-
-                                        </li>
-                                    </ul>
                                 </div>
                                 <div class="avatar">
                                     @if ($user->avatar)
