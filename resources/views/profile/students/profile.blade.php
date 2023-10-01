@@ -14,7 +14,7 @@
     @php
         $social_links = explode(',', $user->social_links);
         use Illuminate\Support\Str;
-        
+
     @endphp
 
     <main class="user-profile-view-page">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="enroll-course-list">
-                        <h4>Enrolled Course List :</h4>
+                        <h4>Enrolled Course List : </h4>
                         <div class="list-wrap">
                             <table>
                                 <tr>
