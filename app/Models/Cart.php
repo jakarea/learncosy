@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
+use App\Models\User;
 
 class Cart extends Model
 {
@@ -20,5 +21,10 @@ class Cart extends Model
     public function courses()
     {
         return $this->belongsTo(Course::class,'course_id');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo(User::class, 'instructor_id', 'id');
     }
 }

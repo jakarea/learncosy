@@ -13,16 +13,16 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->id())->get(); 
-
-        // return $cart;
+        $cart = Cart::where('user_id', auth()->id())
+        ->join('users', 'carts.instructor_id', '=', 'users.id')
+        ->get(['carts.*', 'users.name']);
 
         return view('e-learning/course/students/cart',compact('cart'));
     }
     public function add(Course $course)
     {
         $instructor_id = $course->user_id;
-        $instructor = User::where('id', $instructor_id)->first(); 
+        $instructor = User::where('id', $instructor_id)->firstOrFail(); 
 
         $user = auth()->user();
         $cart = Cart::firstOrNew([
@@ -36,7 +36,7 @@ class CartController extends Controller
 
         $cart->price = $course->price;
         $cart->quantity = 1;
-        $cart->instructor = $instructor->name;
+        $cart->instructor_id = $instructor->id;
         $cart->save();
         return redirect()->route('students.catalog.courses')->with('success', 'Course added to cart.');
     }

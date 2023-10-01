@@ -257,16 +257,57 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonAudio($id,$module_id,$lesson_id){
 
-        return view('e-learning/course/instructor/create/step-4');
+        if(!$id || !$module_id || !$lesson_id){
+            return redirect('instructor/courses');
+        } 
+
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+
+        return view('e-learning/course/instructor/create/step-4',compact('lesson'));
     }
 
-    public function stepLessonAudioSet(Request $request, $id,$module_id,$lesson_id){
+    public function stepLessonAudioSet(Request $request, $id, $module_id, $lesson_id){
 
         if(!$id){
             return redirect('instructor/courses');
+        } 
+
+        $request->validate([
+            'description' => 'string',
+            'audio' => 'required|mimes:mp3,wav', 
+            'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
+        ]);
+
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson->text = $request->input('description'); 
+
+         // Handle audio file upload
+         if ($request->hasFile('audio')) {
+            $audio = $request->file('audio');
+            $audioName = time() . '.' . $audio->getClientOriginalExtension();
+            $audio->move(public_path('audio'), $audioName); 
         }
 
-        // Audio Type Lesson Request here
+        $lesson->audio =  isset($audioName) ? $audioName : null; 
+
+        $uploadedFilenames = [];
+
+        if ($request->hasFile('lesson_file')) {
+            foreach ($request->file('lesson_file') as $file) {
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
+                $file->storeAs('uploads/lessons', $filename);
+                $uploadedFilenames[] = $filename;
+            }
+
+            $lesson->lesson_file = implode(",", $uploadedFilenames);
+        }
+
+        $lesson->save();
+
+        // return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
+
+        return redirect()->back();
+        
     }
 
     public function stepLessonVideo($id,$module_id,$lesson_id){
