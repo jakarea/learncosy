@@ -71,11 +71,11 @@ Course Create - Step 3
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         @if ($lesson->type == 'audio')
-                            <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/audio/'.$lesson->id) }}">Back</a>
-                        @elseif ($lesson->type == 'content')
+                            <a href="{{ url('instructor/courses/create/'.$course->id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
+                        @elseif ($lesson->type == 'text')
                             <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
                         @elseif ($lesson->type == 'video')
-                            <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/video/'.$lesson->id) }}">Back</a>
+                            <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
                         @endif
                          
                         <a href="{{url('instructor/courses/create/'.$course->id)}}">Next</a>

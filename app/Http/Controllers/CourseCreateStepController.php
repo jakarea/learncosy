@@ -239,7 +239,7 @@ class CourseCreateStepController extends Controller
 
         $lesson->save();
 
-        return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
+        return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
     }
 
@@ -274,7 +274,7 @@ class CourseCreateStepController extends Controller
         
         $request->validate([
             'description' => 'string',
-            'audio' => 'required|mimes:mp3,wav|max:50000',
+            'audio' => 'mimes:mp3,wav|max:50000',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
 
         ]);
@@ -313,7 +313,7 @@ class CourseCreateStepController extends Controller
         $lesson->save();
         
 
-        return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully'); 
+        return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
         
     }
 
