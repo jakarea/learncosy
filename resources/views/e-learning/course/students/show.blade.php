@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="download-files-box">
-                            <h4>Download Files</h4>
+                            <h4>Download Files </h4>
                             <div class="files">
                                 <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
                                         alt="clock" title="120MB" class="img-fluid"></a>
@@ -81,6 +81,14 @@
                                         alt="clock" title="120MB" class="img-fluid"></a>
                                 <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
                                         alt="clock" title="120MB" class="img-fluid"></a>
+
+                                @php
+                                $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
+                                @endphp
+
+                                @if ($progress > 90)
+                                    <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="120MB" class="img-fluid"></a>
+                                @endif
                             </div>
                         </div>
                         {{-- course review --}}
