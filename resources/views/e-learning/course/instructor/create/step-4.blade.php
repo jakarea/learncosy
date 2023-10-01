@@ -82,8 +82,8 @@ Course Create - Step 4
                         <input type="file" class="d-none" id="audio" name="audio">
                         <div class="form-group">
                             <textarea class="form-control" id="description" name="description">
-                                @if ($lesson->text)
-                                {!! $lesson->text !!}
+                                @if ($lesson->short_description)
+                                {!! $lesson->short_description !!}
                                 @endif
                             </textarea>
                         </div>

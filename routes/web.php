@@ -252,7 +252,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideo');
             Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
 
-            Route::get('{id}/text/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
+            Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
             Route::post('{id}/objects', 'courseObjectsSet');

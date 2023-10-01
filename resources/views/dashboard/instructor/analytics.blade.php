@@ -5,302 +5,292 @@
 
 @endsection
 @section('content')
-    <main class="dashboard-page-wrap">
-        <div class="container-fluid">
-            <div class="row">
-                {{-- @can('instructor')
-                <div class="col-12">
-                    {!! isInstructorSubscribed(auth()->user()->id) !!}
-                </div>
-                @endcan --}}
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Students</h5>
-                                <h4>  {{ count($students) }} </h4>
-                            </div>
-                        </div>
-                        <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageChangeOfStudentEnroll }}</b> % VS last month</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
-                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
+<main class="dashboard-page-wrap">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="yearly-analitics">
+                    <h1>Yearly Analytics</h1>
+
+                    {{-- yearly filter box --}}
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
+                            aria-expanded="false"><img src="{{ asset('latest/assets/images/icons/filter.svg') }}"
+                                alt="a" class="img-fluid"> Filters</button>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">One Month</a></li>
+                            <li><a class="dropdown-item" href="#">Three Months</a></li>
+                            <li><a class="dropdown-item" href="#">Six Months</a></li>
+                            <li><a class="dropdown-item" href="#">One Year</a></li>
+                        </ul>
                     </div>
-                    <!-- total client @e -->
-                </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Courses</h5>
-                                <h4> {{ count($courses) }} </h4>
-                            </div>
-                        </div>
-                        <p> <b style="color: {{ $formatedPercentageOfCourse >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageOfCourse }}</b> % VS last month</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
-                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
-                    </div>
-                    <!-- total client @e -->
-                </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Earnings</h5>
-                                <h4>{{ count($earningByDates) }} €</h4>
-                            </div>
-                        </div>
-                        <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{ $formattedPercentageChangeOfEarning }}</b> % VS last month</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
-                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
-                    </div>
-                    <!-- total client @e -->
-                </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Sell Rating</h5>
-                                <h4>35%</h4>
-                            </div>
-                        </div>
-                        <p>All time stats</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
-                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
-                    </div>
-                    <!-- total client @e -->
+                    {{-- yearly filter box --}}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="chart-box-wrap mt-15">
-                        <div class="statics-head">
-                            <h5>Earnings by date</h5>
-                        </div>
-                        <div id="earningCh"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="chart-box-wrap mt-15">
-                        <div class="statics-head">
-                            <h5>Monthly Earning </h5>
-                        </div>
-                        <div id="chartEar"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="chart-box-wrap mt-15">
-                        <div class="statics-head">
-                            <h5>Course Earning</h5>
-                        </div>
-                        <div id="course_earning"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="chart-box-wrap mt-15">
-                        <div class="statics-head">
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
                             <h5>Students</h5>
+                            <h4> {{ count($students) }} </h4>
                         </div>
-                        <div id="lineChart"></div>
                     </div>
+                    <p> <b style="color: {{  $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{
+                            number_format($formatedPercentageChangeOfStudentEnroll, 0) }}</b> % VS last month</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-                <div class="col-lg-4">
-                    <div class="top-performing-course mt-15">
-                        <div class="d-flex">
-                            <h5>Message</h5>
-                            <a href="{{ url('course/messages') }}">View All</a>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
+
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Courses</h5>
+                            <h4> {{ count($courses) }} </h4>
                         </div>
-                        <div class="messages-items-wrap">
-                            @foreach ($messages as $message)
-                                <div class="messages-item">
-                                    <div class="media">
-                                        <div class="avatar">
-                                            <img src="{{ asset($message->user->avatar) }}" alt="Avatar"
-                                                class="img-fluid">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <h5>{{ $message->user->name }} <span>{{ $message->created_at->diffForHumans()}}</span></h5>
-                                            <p>{{ $message->message }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                    </div>
+                    <p> <b style="color: {{ $formatedPercentageOfCourse >= 0 ? 'green' : 'red' }}">{{
+                            number_format($formatedPercentageOfCourse,0) }}</b> % VS last month</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
+                </div>
+
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Earnings</h5>
+                            <h4>{{ count($earningByDates) }} €</h4>
                         </div>
+                    </div>
+                    <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
+                            number_format($formattedPercentageChangeOfEarning,0) }}</b> % VS last month</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
+                </div>
+
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Sell Rating</h5>
+                            <h4>35%</h4>
+                        </div>
+                    </div>
+                    <p>All time stats</p>
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mt-15">
+                <div class="chart-box-wrap">
+                    <div class="statics-head">
+                        <h5>Earnings</h5>
+                    </div>
+                    <div id="chart-earnings"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mt-15">
+                <div class="chart-box-wrap">
+                    <div class="statics-head">
+                        <h5>Monthly Earning</h5>
+                    </div>
+                    <div id="monthlyEarningGraph"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-15">
+                <div class="chart-box-wrap">
+                    <div class="statics-head">
+                        <h5>Course Progress</h5>
+                    </div>
+                    <div class="course-progress-box">
+                        <div class="txt">
+                            <h5>{{ count($courses) }}</h5>
+                            <p>Total Courses</p>
+                        </div>
+                        <canvas id="courseProgress"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+        <div class="row">
+            <div class="col-lg-8 mt-15">
+                <div class="chart-box-wrap">
+                    <div class="statics-head">
+                        <h5>Students</h5>
+                    </div>
+                    <div id="studentsGraph"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-15">
+                <div class="top-performing-course">
+                    <div class="d-flex">
+                        <h5>Message</h5>
+                        @if (count($messages) > 0)
+                            <a href="{{ url('course/messages') }}">View All</a>
+                        @endif
+                    </div>
+                    <div class="messages-items-wrap">
+                        @if (count($messages) > 0) 
+                        @foreach ($messages as $message)
+                        <div class="messages-item">
+                            <div class="media">
+                                <div class="avatar">
+                                    <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h5>{{ $message->user->name }} <span>{{
+                                            $message->created_at->diffForHumans()}}</span></h5>
+                                    <p>{{ $message->message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @else 
+                        @include('partials/no-data')
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 @endsection
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{-- <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script> --}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script>
-
-    <script src="{{ asset('dashboard-assets/js/slick.min.js') }}"></script>
-    <script src="{{ asset('dashboard-assets/js/config.js') }}"></script>
-
-    <script>
-        // donut Chart
-        const course_data = @json($course_wise_payments);
-
-        const indexes = [];
-        const values = [];
-
-        for (const [index, value] of Object.entries(course_data)) {
-            indexes.push(index);
-            values.push(value);
-        }
-
+{{-- statudents status start --}}
+<script>
+    const data = @json($activeInActiveStudents);
 
         var options = {
-            series: values,
-            labels: indexes,
-            chart: {
-                type: 'donut',
-                dropShadow: {
-                    enabled: true,
-                    color: '#111',
-                    top: -1,
-                    left: 3,
-                    blur: 3,
-                    opacity: 0.2
-                }
-            },
-            stroke: {
-                width: 0,
-            },
-            plotOptions: {
-                pie: {
-                    donut: {
-                        labels: {
-                            show: true,
-                            total: {
-                                showAlways: true,
-                                show: true
-                            }
-                        }
-                    }
-                }
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        };
-
-        var chart = new ApexCharts(document.querySelector("#course_earning"), options);
-        chart.render();
-    </script>
-
-<script>
-
-const data = @json($activeInActiveStudents);
-
-    var options = {
           series: [{
-            name: "Active Students",
-            data: data.active_students
-        },{
-            name: "Inactive Students",
-            data: data.inactive_students
+          name: 'Active Students',
+          data: data.active_students
+        }, {
+          name: 'Inactive Students',
+          data: data.inactive_students
         }],
           chart: {
           height: 350,
-          type: 'line',
-          zoom: {
-            enabled: false
-          }
+          type: 'area'
         },
-        colors:['#294CFF','#FFAB00'],
         dataLabels: {
           enabled: false
-        },
-        stroke: {
-          curve: 'straight'
-        },
-        title: {
-          text: '',
-          align: 'left'
         },
         grid: {
         show: true,
         borderColor: '#C2C6CE',
-        strokeDashArray: 4,
+        strokeDashArray: 0,
+        xaxis: {
+                lines: {
+                    show: false
+                }
+            },
+        }, 
+        colors:['#00AB55', '#FFAB00'],
+        stroke: {
+          curve: 'smooth'
         },
         xaxis: {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
-        }
-        };
+        },
+        tooltip: {
+          x: {
+            format: 'dd/MM/yy HH:mm'
+          },
+        },
+        }; 
 
-        var chart = new ApexCharts(document.querySelector("#lineChart"), options);
+        var chart = new ApexCharts(document.querySelector("#studentsGraph"), options);
         chart.render();
 </script>
+{{-- statudents status end --}}
 
+{{-- Total earnings start --}}
 <script>
-
     const earningsDate = @json($earningByDates);
 
     var options = {
           series: [{
-            name: "Earning By Date",
-            data: [earningsDate]
+          data: [
+            earningsDate
+          ] 
         }],
           chart: {
+          id: 'area-datetime',
+          type: 'area',
           height: 350,
-          type: 'line',
           zoom: {
-            enabled: false
+            autoScaleYaxis: true
           }
-        },
-        colors:['#294CFF'],
+        }, 
         dataLabels: {
           enabled: false
         },
-        stroke: {
-          curve: 'straight'
+        colors:['#294CFF', '#E7EBFF'],
+        markers: {
+          size: 0,
+          style: 'hollow',
         },
-        title: {
-          text: '',
-          align: 'left'
+        xaxis: {
+          type: 'datetime',
+          min: new Date('01 Mar 2012').getTime(),
+          tickAmount: 6,
+        },
+        tooltip: {
+          x: {
+            format: 'dd MMM yyyy'
+          }
         },
         grid: {
         show: true,
         borderColor: '#C2C6CE',
-        strokeDashArray: 4,
-        },
+        strokeDashArray: 0,
         xaxis: {
-          categories: ['1 Jul', '5 Jul', '10 Jul', '15 Jul', '20 Jul', '25 Jul', '30 Jul'],
-        }
+                lines: {
+                    show: false
+                }
+            },
+        }, 
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 100]
+          }
+        },
         };
 
-        var chart = new ApexCharts(document.querySelector("#earningCh"), options);
-        chart.render();
+        var chart = new ApexCharts(document.querySelector("#chart-earnings"), options);
+        chart.render(); 
+
 </script>
+{{-- Total earnings end --}}
 
+{{-- monthly earning start --}}
 <script>
-
     const earningsByMonths = @json($earningByMonth);
 
     var options = {
           series: [{
-          name: 'Total Sales',
+          name: 'Monthly Earnings',
           data: earningsByMonths
         }],
           chart: {
@@ -311,7 +301,7 @@ const data = @json($activeInActiveStudents);
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '60%',
+            columnWidth: '50%',
             borderRadius: 2,
             endingShape: 'rounded',
 
@@ -355,29 +345,43 @@ const data = @json($activeInActiveStudents);
         }
         };
 
-        var chart = new ApexCharts(document.querySelector("#chartEar"), options);
+        var chart = new ApexCharts(document.querySelector("#monthlyEarningGraph"), options);
         chart.render();
 </script>
+{{-- monthly earning end --}}
 
-    <script>
-        function updateClock() {
-            var currentTime = new Date();
-            var hours = currentTime.getHours();
-            var minutes = currentTime.getMinutes();
-            var amPm = hours >= 12 ? 'PM' : 'AM';
-
-            // Convert hours to 12-hour format
-            hours = hours % 12;
-            hours = hours ? hours : 12; // The hour '0' should be '12'
-
-            // Add leading zeros to minutes if necessary
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-
-            var clockDiv = document.getElementById('clock');
-            clockDiv.innerHTML = hours + '<span class="blink">:</span>' + minutes + ' ' + amPm;
+{{-- course progress chart start --}}
+<script>
+    new Chart(document.getElementById('courseProgress'),{
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Complete',
+                'Inprogress'
+            ],
+            datasets: [{
+                label: 'Course Progress',
+                data: [70, 30],
+                backgroundColor: [
+                '#294CFF',
+                '#FFAB00'
+                ],
+                hoverOffset: 4
+            }]
+	    },
+        options: {
+            title: {
+                display: true,
+                text: 'Chart Donut'
+            },
+            legend: {
+                position: 'bottom'
+            },
+            cutout: '70%',
+            radius: 120
         }
 
-        // Update the clock every second
-        setInterval(updateClock, 1000);
-    </script>
+    })
+</script>
+{{-- course progress chart end --}}
 @endsection
