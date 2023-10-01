@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Student;
-
 use Auth;
 use App\Models\User;
 use App\Models\Course;
@@ -16,8 +15,11 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use App\Http\Controllers\Controller;
+// use Illuminate\Support\Facades\PDF;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+
 
 class StudentHomeController extends Controller
 {
@@ -148,26 +150,50 @@ class StudentHomeController extends Controller
         }
     }
 
-    //download course certificate
-    public function certificateDownload($slug){
+    public function certificateDownload($slug)
+    {
         $course = Course::where('slug', $slug)->first();
         $user = auth()->user();
         $studentName = $user->name;
-        $x = 100;
-        $y = 200;
+        $courseName = $course->title;
+
         $certificateTemplate = Image::make(public_path($course->sample_certificates));
+
+        $templateWidth = $certificateTemplate->width();
+        $templateHeight = $certificateTemplate->height();
+
+        $x = $templateWidth / 2;
+        $y = $templateHeight / 2;
+
+        $courseX = $x;
+        $courseY = $y + 250;
+
         $certificateTemplate->text($studentName, $x, $y, function ($font) {
             $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
-            $font->size(24);
+            $font->size(100);
             $font->color('#000000');
             $font->align('center');
             $font->valign('middle');
         });
+
+        $certificateTemplate->text($courseName, $courseX, $courseY, function ($font) {
+            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->size(150); // Adjust the font size as needed
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
         $certificatePath = storage_path('app/public/certificates/' . $user->id . '_certificate.png');
         $certificateTemplate->save($certificatePath);
-        return response()->download($certificatePath)->deleteFileAfterSend(true);
 
+        // $pdf = PDF::loadView('certificate', compact('certificatePath'));
+
+        // return $pdf->download('certificate')->deleteFileAfterSend(true);
+
+        return response()->download($certificatePath)->deleteFileAfterSend(true);
     }
+
 
     // course overview
     public function overview($slug)
