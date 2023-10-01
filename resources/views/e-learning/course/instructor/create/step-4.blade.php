@@ -41,8 +41,7 @@ Course Create - Step 4
 
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
                 </div> 
-                 
-
+                
                  <div class="course-content-box course-page-edit-box audio-preview">
                     <div class="title">
                         <div class="media">
@@ -56,8 +55,22 @@ Course Create - Step 4
                         </div>
                     </div>
                 </div>
-
                 {{-- uploaded audio preview --}}
+
+                @if ($lesson->audio) 
+                <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-0">
+                    <h4>Uploaded Audio:</h4>
+                    <div class="title">
+                        <div class="media">
+                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid"> 
+                            <div class="media-body">
+                                <h5>{{ $lesson->audio }} </h5> 
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                @endif 
 
                 <div class="lesson-edit-form-wrap mt-4">
                     <h4>Selecting Suitable Plants for Page 2</h4>
