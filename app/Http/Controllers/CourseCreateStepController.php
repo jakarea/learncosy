@@ -279,7 +279,7 @@ class CourseCreateStepController extends Controller
         ]);
         
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
-        $lesson->text = $request->input('description');
+        $lesson->short_description = $request->input('description');
         
         // Handle audio file upload
         if ($request->hasFile('audio')) {

@@ -8,13 +8,27 @@
     <main class="dashboard-page-wrap">
         <div class="container-fluid">
             <div class="row">
-                {{-- @can('instructor')
                 <div class="col-12">
-                    {!! isInstructorSubscribed(auth()->user()->id) !!}
+                    <div class="yearly-analitics">
+                        <h1>Yearly Analytics</h1>
+
+                        {{-- yearly filter box --}}
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-filter" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('latest/assets/images/icons/filter.svg') }}" alt="a" class="img-fluid"> Filters</button>
+
+                            <ul class="dropdown-menu"> 
+                              <li><a class="dropdown-item" href="#">One Month</a></li> 
+                              <li><a class="dropdown-item" href="#">Three Months</a></li>
+                              <li><a class="dropdown-item" href="#">Six Months</a></li>
+                              <li><a class="dropdown-item" href="#">Yearly</a></li>
+                            </ul>
+                          </div>
+                          {{-- yearly filter box --}} 
+                    </div>
                 </div>
-                @endcan --}}
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
+            </div>
+            <div class="row"> 
+                <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                     <div class="total-client-box">
                         <div class="media">
                             <div class="media-body">
@@ -25,11 +39,10 @@
                         <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{ $formatedPercentageChangeOfStudentEnroll }}</b> % VS last month</p>
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
-                    </div>
-                    <!-- total client @e -->
+                    </div> 
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
+                <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
+              
                     <div class="total-client-box">
                         <div class="media">
                             <div class="media-body">
@@ -41,10 +54,9 @@
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
-                    <!-- total client @e -->
+                    
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
+                <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                     <div class="total-client-box">
                         <div class="media">
                             <div class="media-body">
@@ -56,10 +68,9 @@
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
-                    <!-- total client @e -->
+                    
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
+                <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                     <div class="total-client-box">
                         <div class="media">
                             <div class="media-body">
@@ -71,7 +82,7 @@
                         <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                     </div>
-                    <!-- total client @e -->
+                    
                 </div>
             </div>
             <div class="row">
