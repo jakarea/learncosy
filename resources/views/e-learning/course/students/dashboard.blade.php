@@ -16,7 +16,7 @@
     <main class="student-dashboard-page">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                     <div class="status-card-box">
                         <p>Course in Progress</p>
                         <div class="d-flex">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                     <div class="status-card-box">
                         <p>Completed Course</p>
                         <div class="d-flex">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                     <div class="status-card-box">
                         <p>Watching Time</p>
                         <div class="d-flex">
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-xl-3 col-6 col-sm-6">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                     <div class="status-card-box">
                         <p>Certificate Achievement</p>
                         <div class="d-flex">
@@ -119,7 +119,6 @@
                 <div class="col-lg-8">
                     <div class="my-courses-box mt-15">
                         <h3>Liked Courses </h3>
-
                         <div class="course-box-overflown">
                             @foreach ($likeCourses as $likeCourse)
                                 <div class="media">
