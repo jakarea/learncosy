@@ -41,8 +41,30 @@ class StudentHomeController extends Controller
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
         ->get();
-        // dd($timeSpentData);
-        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount','totalTimeSpend','totalHours','totalMinutes','timeSpentData'));
+
+
+        $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
+        ->whereMonth('created_at', now()->month)
+        ->first();
+
+        $previousMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->first();
+
+        if ($currentMonthData && $previousMonthData) {
+            $currentMonthDuration = $currentMonthData->total_duration;
+            $previousMonthDuration = $previousMonthData->total_duration;
+
+            if ($previousMonthDuration != 0) {
+                $percentageChange = (($currentMonthDuration - $previousMonthDuration) / $previousMonthDuration) * 100;
+            } else {
+                $percentageChange = 0;
+            }
+        } else {
+            $percentageChange = 0;
+        }
+
+        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange'));
     }
 
     // dashboard
