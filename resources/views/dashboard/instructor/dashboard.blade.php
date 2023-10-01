@@ -25,8 +25,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="my-courses-box mt-15">
+                <div class="col-lg-6 mt-15">
+                    <div class="my-courses-box">
                         <h3>My Courses</h3>
 
                         <div class="course-box-overflown">
@@ -48,17 +48,17 @@
                                 </div>
                             @endforeach
                         </div>
-
+                        @if (count($courses) > 2)
                         <div class="text-center mt-4">
                             <a href="{{ url('instructor/courses/create') }}" class="common-bttn">Create New Course</a>
                         </div>
-
+                        @endif 
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="recent-payment-box mt-15">
+                <div class="col-lg-6 mt-15">
+                    <div class="recent-payment-box">
                         <h3>Recent Payment</h3>
-                        @foreach ($payments->slice(0, 4) as $payment)
+                        @foreach ($payments->slice(0, 5) as $payment)
                             <div class="payment-box">
                                 <h5><img src="{{ asset($payment->user->avatar) }}" alt="a"
                                         class="img-fluid"> {{ $payment->user->name }}</h5>
@@ -76,16 +76,17 @@
                                 <a href="{{ url('instructor/payments', encrypt($payment->payment_id)) }}">View</a>
                             </div>
                         @endforeach
-
+                        @if (count($payments) > 5)
                         <div class="text-center mt-3">
                             <a href="{{ url('instructor/payments') }}" class="common-bttn">View All Payment</a>
                         </div>
+                        @endif 
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="my-courses-box mt-15 recent-update-box">
+                <div class="col-lg-6 mt-15">
+                    <div class="my-courses-box recent-update-box">
                         <h3>Recent Updates</h3>
 
                         <div class="media">
@@ -161,8 +162,8 @@
 
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="my-courses-box mt-15 recent-update-box">
+                <div class="col-lg-6 mt-15">
+                    <div class="my-courses-box recent-update-box">
                         <h3>System Updates</h3>
 
                         <div class="media">

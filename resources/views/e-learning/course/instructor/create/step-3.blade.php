@@ -52,32 +52,32 @@ Course Create - Step 3
                         </div>
                         <div class="content-type">
                             <h5>Type</h5>
-
                             <div class="d-flex">
                                 <a href="#" class="{{ $lesson->type == 'text' ? 'active' : ''}}"><img src="{{asset('latest/assets/images/icons/file.svg')}}" alt="a" class="img-fluid"> Text</a>
                                 <a href="#" class="{{ $lesson->type == 'audio' ? 'active' : ''}}"><img src="{{asset('latest/assets/images/icons/audio.svg')}}" alt="a" class="img-fluid">Audio</a>
                                 <a href="#" class="{{ $lesson->type == 'video' ? 'active' : ''}}"><img src="{{asset('latest/assets/images/icons/video.svg')}}" alt="a" class="img-fluid">Video</a>
                             </div>
-
                         </div>
-
                         <hr>
-
                         <div class="element-txt">
                             <h6>Element of</h6>
                             <p>Here you can choose whether the page is part of a module of whether it falls under the training as a separate item.</p>
                         </div>
-
                         <div class="form-group">
                             <input id="cls" class="form-control" type="text" value="{{ $course->title }}">
                             <label for="cls">Course Name</label>
                         </div>
-                        
                     </div>
-
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a> 
+                        @if ($lesson->type == 'audio')
+                            <a href="{{ url('instructor/courses/create/'.$course->id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
+                        @elseif ($lesson->type == 'text')
+                            <a href="{{ url('instructor/courses/create/'.$course->id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
+                        @elseif ($lesson->type == 'video')
+                            <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">Back</a>
+                        @endif
+                         
                         <a href="{{url('instructor/courses/create/'.$course->id)}}">Next</a>
                     </div>
                     {{-- step next bttns --}}
