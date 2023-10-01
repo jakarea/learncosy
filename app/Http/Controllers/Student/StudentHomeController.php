@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Student;
-
 use Auth;
 use App\Models\User;
 use App\Models\Course;
@@ -16,6 +15,11 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use App\Http\Controllers\Controller;
+// use Illuminate\Support\Facades\PDF;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+
 
 class StudentHomeController extends Controller
 {
@@ -26,7 +30,7 @@ class StudentHomeController extends Controller
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
 
         // return $likeCourses;
-        
+
         return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount'));
     }
 
@@ -58,12 +62,12 @@ class StudentHomeController extends Controller
 
     // catalog course list
     public function catalog(Request $request){
-        $host = $request->getHost();   
+        $host = $request->getHost();
         $subdomain = explode('.', $host)[0];
 
         $instructor = User::where('subdomain', $subdomain)->first();
 
-        if ( $instructor) { 
+        if ( $instructor) {
             $courses = Course::where('user_id', $instructor->id)->with('user','reviews')->orderBy('id','desc');
         }else{
             $courses = Course::with('user','reviews')->orderBy('id','desc');
@@ -99,7 +103,7 @@ class StudentHomeController extends Controller
             }
         }
         $categories = array_unique($unique_array);
-        $courses = $courses->paginate(12);  
+        $courses = $courses->paginate(12);
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
@@ -117,6 +121,7 @@ class StudentHomeController extends Controller
     }
 
 
+
     // course show
     public function show($slug)
     {
@@ -126,7 +131,7 @@ class StudentHomeController extends Controller
         ->inRandomOrder()
         ->limit(3)
         ->get();
-        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
         if ($course_like ) {
@@ -136,7 +141,7 @@ class StudentHomeController extends Controller
         $totalModules = count($course->modules);
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
-        }); 
+        });
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
@@ -144,6 +149,52 @@ class StudentHomeController extends Controller
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
     }
+
+    public function certificateDownload($slug)
+    {
+        $course = Course::where('slug', $slug)->first();
+        $user = auth()->user();
+        $studentName = $user->name;
+        $courseName = $course->title;
+
+        $certificateTemplate = Image::make(public_path($course->sample_certificates));
+
+        $templateWidth = $certificateTemplate->width();
+        $templateHeight = $certificateTemplate->height();
+
+        $x = $templateWidth / 2;
+        $y = $templateHeight / 2;
+
+        $courseX = $x;
+        $courseY = $y + 250;
+
+        $certificateTemplate->text($studentName, $x, $y, function ($font) {
+            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->size(100);
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
+        $certificateTemplate->text($courseName, $courseX, $courseY, function ($font) {
+            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->size(150); // Adjust the font size as needed
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
+        $certificatePath = storage_path('app/public/certificates/' . $user->id . '_certificate.png');
+        $certificateTemplate->save($certificatePath);
+
+        // $pdf = PDF::loadView('certificate', compact('certificatePath'));
+
+        // return $pdf->download('certificate')->deleteFileAfterSend(true);
+
+        return response()->download($certificatePath)->deleteFileAfterSend(true);
+    }
+
+
     // course overview
     public function overview($slug)
     {
@@ -172,11 +223,11 @@ class StudentHomeController extends Controller
       // my course details
         public function courseDetails($slug){
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
-        
-        $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count(); 
-        $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray(); 
+
+        $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count();
+        $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray();
         foreach ($course->modules as $module) {
-            foreach ($module->lessons as $lesson) { 
+            foreach ($module->lessons as $lesson) {
                 $completed = in_array($lesson->id, $completes);
                 $lesson->completed =  (int)$completed;
             }
