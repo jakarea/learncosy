@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Mail\PasswordChanged;
 use App\Models\Checkout;
+use App\Models\CourseActivity;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -22,8 +23,8 @@ class StudentProfileController extends Controller
         $id = Auth::user()->id;
         $user = User::find($id);
         $checkout = Checkout::where('user_id', $id)->with('course')->get();
-
-        return view('profile/students/profile',compact('user','checkout'));
+        $totalTimeSpend = CourseActivity::where('user_id', $id)->where('is_completed',1)->sum('duration');
+        return view('profile/students/profile',compact('user','checkout','totalTimeSpend'));
     }
 
     // profile edit

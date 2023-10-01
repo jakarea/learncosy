@@ -63,8 +63,8 @@
                         <div class="row align-items-start">
                             <div class="col-lg-10 time-chart col-7">
                                 <h5>Time Spending</h5>
-                                <h3>10<sub class="text-muted">h</sub>
-                                    6<sub class="text-muted">m</sub></h3>
+                                <h3>{{ $totalHours }}<sub class="text-muted">h</sub>
+                                    {{ $totalMinutes }}<sub class="text-muted">m</sub></h3>
                             </div>
                             <div class="col-lg-2 text-lg-end col-5">
                                 <select class="time-chart-select">
@@ -87,8 +87,8 @@
                             <div class="profile-widget-inner">
 
                                 @if (auth()->user()->avatar)
-                                    <img src="{{ asset( auth()->user()->avatar) }}"
-                                        alt="{{ auth()->user()->name }}" class="img-fluid" width="100">
+                                    <img src="{{ asset(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
+                                        class="img-fluid" width="100">
                                 @else
                                     <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
                                 @endif
@@ -345,6 +345,7 @@
 {{-- page script @S --}}
 @section('script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script>
         jQuery(document).ready(function() {
@@ -414,6 +415,47 @@
                 drawNewGraph(graph[i].id);
             }
 
+        });
+    </script>
+
+
+    <script>
+        jQuery(document).ready(function() {
+            var timeSpentData = @json($timeSpentData);
+            var options = {
+                series: [{
+                    name: "Time spend",
+                    data: timeSpentData.map(item => item.time_spent),
+                }],
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    text: 'Time spend by Month',
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: timeSpentData.map(item => item.month),
+                }
+            };
+            var chart = new ApexCharts(document.querySelector("#earningChart"), options);
+            chart.render();
         });
     </script>
 @endsection
