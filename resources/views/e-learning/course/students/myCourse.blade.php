@@ -47,16 +47,24 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="overall-progress">
-                            <h6>Overall Progress</h6>
-                            {{ StudentActitviesProgress(auth()->user()->id, $course->id) }}
+                            <h6>Overall Progress</h6>  
                             <div class="circle-prog-big">
                                 <div class="cards">
                                     <div class="percent">
+                                        @php 
+                                        $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $course->id); 
+                                        $showPercentage = null;
+                                        
+                                        if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){
+                                            $showPercentage = $totalPorgressPercent - 2;
+                                        }
+                                        @endphp 
+
                                         <svg>
                                             <circle cx="73" cy="73" r="65"></circle>
                                             <circle cx="73" cy="73" r="65"
-                                                style="--percent: {{ StudentActitviesProgress(auth()->user()->id, $course->id) }}">
-                                            </circle>
+                                                style="--percent: {{ $showPercentage ? $showPercentage : $totalPorgressPercent }}"> 
+                                            </circle> 
                                         </svg>
 
                                         @php
@@ -71,7 +79,7 @@
                                         @endforeach
 
                                         <div class="number">
-                                            <h5>{{ StudentActitviesProgress(auth()->user()->id, $course->id) }}<span>%</span>
+                                            <h5>{{ $totalPorgressPercent }}<span>%</span>
                                             </h5>
                                             <p>{{ $completedLessons }}/{{ $totalLessons }}</p>
                                         </div>
