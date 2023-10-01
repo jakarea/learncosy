@@ -404,6 +404,7 @@ if (!function_exists('isInstructorSubscribed')) {
 if (!function_exists('StudentActitviesProgress')) {
     function StudentActitviesProgress($user_id, $course_id)
     {
+        $progress = 0;
         // Get the total number of lessons in the course
         $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->count();
         // dd($totalLessons );
@@ -414,13 +415,11 @@ if (!function_exists('StudentActitviesProgress')) {
             ->whereNotNull('is_completed')
             ->count();            
         // Calculate the course progress percentage
-        $progress = ($totalCompleteLessons / $totalLessons) * 100;
+        if($totalLessons && $totalCompleteLessons)
+            $progress = ($totalCompleteLessons / $totalLessons) * 100;
 
         // format the progress percentage
         $progress = number_format($progress, 0);
-        if($totalCompleteLessons == 0){
-            $progress = 0;
-        }
         return $progress;
     }
 }
