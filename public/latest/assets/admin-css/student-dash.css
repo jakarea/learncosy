@@ -79,7 +79,7 @@
 .profile-widget-history li {
   text-align: center;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
-  padding-right: 1.5rem;
+  padding: 0 0.75rem;
 }
 .profile-widget-history li:last-child {
   border-right: 0;
@@ -961,7 +961,7 @@
   border-radius: 0.5rem;
   background: var(--background-light-paper, #FFF);
   box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
-  min-height: 95%;
+  min-height: 100%;
 }
 .course-status-wrap .d-flex {
   align-items: center;
@@ -1073,9 +1073,23 @@
   border-radius: 3.125rem;
   background: #171B3C;
 }
+.course-status-wrap table tr:last-child td {
+  border-bottom: 0px solid transparent;
+}
 
 .hover-item:nth-child(4n) .course-single-item .course-ol-box {
   right: 100% !important;
+}
+
+.fixed-height {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.timeSpendingChart {
+  min-height: 300px !important;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

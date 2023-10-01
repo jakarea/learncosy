@@ -63,6 +63,7 @@ class StudentHomeController extends Controller
         } else {
             $percentageChange = 0;
         }
+        // return $enrolments;
 
         return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange'));
     }
