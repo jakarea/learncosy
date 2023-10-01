@@ -274,8 +274,8 @@ class CourseCreateStepController extends Controller
         
         $request->validate([
             'description' => 'string',
-            'audio' => 'required|mimes:mp3,wav',
-            'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
+            'audio' => 'required|mimes:mp3,wav|max:50000',
+            'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
         ]);
         
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();

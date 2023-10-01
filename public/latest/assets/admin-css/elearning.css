@@ -2275,8 +2275,8 @@ span.stripe-bg i {
   stroke-linecap: round;
 }
 .circle-prog-big .cards svg circle:last-of-type {
-  stroke-dasharray: 390px;
-  stroke-dashoffset: calc(390px - 390px * var(--percent) / 100);
+  stroke-dasharray: 408px;
+  stroke-dashoffset: calc(408px - 408px * var(--percent) / 100);
   stroke: #32BCA3;
 }
 .circle-prog-big .number {
