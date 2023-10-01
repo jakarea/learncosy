@@ -40,9 +40,15 @@
                     <div class="status-card-box">
                         <p>Watching Time</p>
                         <div class="d-flex">
-                            <h5>0</h5>
-                            <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                    class="img-fluid"> 100%</span>
+                            <h5 style="font-size: 25px; font-weight:bold;">{{ secondsToHms($totalTimeSpend)}}</h5>
+                            <span>
+                                @if ($percentageChange > 0)
+                                    <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Up" class="img-fluid">
+                                @elseif ($percentageChange < 0)
+                                    <img src="{{ asset('latest/assets/images/icons/arrow-down.svg') }}" alt="Down" class="img-fluid">
+                                @endif
+                                {{ abs($percentageChange) }}%
+                            </span>
                         </div>
                     </div>
                 </div>

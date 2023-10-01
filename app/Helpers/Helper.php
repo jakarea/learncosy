@@ -11,7 +11,7 @@ if (!function_exists('getSubscriptionPackage')) {
     function getSubscriptionPackage()
     {
         // subscription package
-        
+
         return \App\Models\SubscriptionPackage::where('status', 'active')->get();
     }
 }
@@ -54,7 +54,7 @@ if (!function_exists('isSubscribed')) {
     function isSubscribed($package_id)
     {
         $user = auth()->user();
-        
+
         if ($user) {
             // Retrieve the user's subscription based on instructor_id
             $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->first();
@@ -87,13 +87,13 @@ if (!function_exists('isConnectedWithStripe')) {
         $user = auth()->user();
         $account = null;
         $status = '';
-    
+
         if ($user->stripe_secret_key && $user->stripe_public_key) {
             Stripe::setApiKey($user->stripe_secret_key);
             // Retrieve the user's stripe data based on user_id
             $account = \Stripe\Account::retrieve($user->stripe_account_id);
             $status = 'Connected';
-    
+
             if (!$account) {
                 // Stripe account not found, show alert or redirect
                 $status = 'Not Connected';
@@ -104,9 +104,9 @@ if (!function_exists('isConnectedWithStripe')) {
             $status = 'Not Connected';
             return [$account, $status];
         }
-    
+
         return [$account, $status];
-    }    
+    }
 }
 
 /**
@@ -151,10 +151,10 @@ if (!function_exists('isVimeoConnected')) {
         $user = auth()->user();
         $vimeoData = null;
         $status = '';
-    
+
         if ($user) {
             $vimeoData = \App\Models\VimeoData::where('user_id', $user->id)->first();
-    
+
             if (!$vimeoData) {
                 // Vimeo data not found, show alert or redirect
                 $status = 'Not Connected';
@@ -162,7 +162,7 @@ if (!function_exists('isVimeoConnected')) {
             } else {
                 // Check vimeo data is connected or not to Vimeo API in real-time
                 $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
-                
+
                 try {
                     $response = $vimeo->request('/me');
                     $accountName = $response['body']['name'];
@@ -181,7 +181,7 @@ if (!function_exists('isVimeoConnected')) {
             $status = 'Not Connected';
             return [$vimeoData, $status];
         }
-    
+
         return [$vimeoData, $status, $accountName];
     }
 }
@@ -255,7 +255,7 @@ if (!function_exists('subscriptionCostByInstructor')) {
 
         $amount = 0;
 
-        if( $subscriptionCost->count() > 0 ) { 
+        if( $subscriptionCost->count() > 0 ) {
             $amount = \App\Models\SubscriptionPackage::where('id', $subscriptionCost->pluck('name'))->sum('amount');
         }
         return $amount;
@@ -413,7 +413,7 @@ if (!function_exists('StudentActitviesProgress')) {
         $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
             ->where('user_id', $user_id)
             ->whereNotNull('is_completed')
-            ->count();            
+            ->count();
         // Calculate the course progress percentage
         if($totalLessons && $totalCompleteLessons)
             $progress = ($totalCompleteLessons / $totalLessons) * 100;
@@ -424,6 +424,17 @@ if (!function_exists('StudentActitviesProgress')) {
     }
 }
 
+
+
+if (!function_exists('secondsToHms')) {
+    function secondsToHms($seconds) {
+        $hours = floor($seconds / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+        $seconds = $seconds % 60;
+
+        return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+    }
+}
 
 /**
  * Helper function to studentRadarChart for student with label and progress
@@ -458,7 +469,7 @@ if (!function_exists('studentRadarChart')) {
  */
 if (!function_exists('unseenNotification')) {
     function unseenNotification()
-    { 
+    {
         return \App\Models\Notification::where('status', 'unseen')->where('user_id',Auth::user()->id)->count();
     }
 }
@@ -468,7 +479,7 @@ if (!function_exists('unseenNotification')) {
  */
 if (!function_exists('cartCount')) {
     function cartCount()
-    { 
+    {
         return \App\Models\Cart::where('user_id', auth()->id())->count();
     }
 }
