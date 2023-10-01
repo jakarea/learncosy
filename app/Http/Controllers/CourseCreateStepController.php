@@ -268,45 +268,51 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonAudioSet(Request $request, $id, $module_id, $lesson_id){
 
-        if(!$id){
+        if (!$id) {
             return redirect('instructor/courses');
-        } 
-
+        }
+        
         $request->validate([
             'description' => 'string',
-            'audio' => 'required|mimes:mp3,wav', 
+            'audio' => 'required|mimes:mp3,wav',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
         ]);
-
+        
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
-        $lesson->text = $request->input('description'); 
-
-         // Handle audio file upload
-         if ($request->hasFile('audio')) {
+        $lesson->text = $request->input('description');
+        
+        // Handle audio file upload
+        if ($request->hasFile('audio')) {
+            // Check if a previous audio file exists and delete it
+            if ($lesson->audio) {
+                $previousAudioPath = public_path('assets/audio') . '/' . $lesson->audio;
+                if (file_exists($previousAudioPath)) {
+                    unlink($previousAudioPath);
+                }
+            }
+        
             $audio = $request->file('audio');
-            $audioName = time() . '.' . $audio->getClientOriginalExtension();
-            $audio->move(public_path('audio'), $audioName); 
+            $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
+            $audio->move(public_path('assets/audio'), $audioName);
+            $lesson->audio = $audioName;
         }
-
-        $lesson->audio =  isset($audioName) ? $audioName : null; 
-
+        
         $uploadedFilenames = [];
-
+        
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
                 $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->storeAs('uploads/lessons', $filename);
                 $uploadedFilenames[] = $filename;
             }
-
+        
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
-
+        
         $lesson->save();
+        
 
-        // return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
-
-        return redirect()->back();
+        return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully'); 
         
     }
 
