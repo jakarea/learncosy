@@ -179,22 +179,6 @@ Students Dashboard
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-4">
-                <div class="course-progress-circle mt-15">
-                    <h5>Course Statistics</h5>
-                    @if (count(studentRadarChart(auth()->user()->id)['labels']) > 0)
-                    @foreach (studentRadarChart(auth()->user()->id)['labels'] as $key => $label)
-                    <div class="student_summery_chart">
-                        <figure class="text-center">
-                            <div class="chart" id="graph{{ $key + 1 }}"
-                                data-percent="{{ studentRadarChart(auth()->user()->id)['progress'][$key] }}"
-                                data-color="#4C60FF"></div>
-                        </figure>
-                    </div>
-                    @endforeach
-                    @endif
-                </div>
-            </div> --}}
             <div class="col-lg-4 mt-15">
                 <div class="chart-box-wrap">
                     <div class="statics-head">
@@ -206,24 +190,25 @@ Students Dashboard
                             <p>Total Courses</p>
                         </div>
                         <canvas id="myCourseStatics"></canvas>
+                        <div id="legend"></div>
                     </div>
                 </div>
             </div>
         </div>
- 
+
         <div class="row">
             <div class="col-12 mt-15">
                 <div class="course-status-wrap">
                     <div class="d-flex">
                         <h4>Course Status</h4>
-                        @if (count($enrolments)  > 3)
+                        @if (count($enrolments) > 3)
                         <div>
                             <a href="{{ url('students/dashboard/enrolled') }}" class="me-0">View All</a>
                         </div>
                         @endif
-                        
+
                     </div>
-                    @if (count($enrolments)  > 0) 
+                    @if (count($enrolments) > 0)
                     <table>
                         <tr>
                             <th width="40%">Course Name</th>
@@ -232,49 +217,49 @@ Students Dashboard
                             <th>Start Date</th>
                             <th class="text-end">Action</th>
                         </tr>
-                        @foreach ($enrolments->slice(0, 4) as $enrolment) 
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="avatar">
-                                            <img src="{{ asset($enrolment->course->thumbnail) }}" alt="Thumb"
-                                                class="img-fluid">
-                                        </div>
-                                        <div class="media-body">
-                                            <h5>{{$enrolment->course->title}}</h5>
-                                            <p>{{ $enrolment->course->platform }} </p> 
-                                        </div>
+                        @foreach ($enrolments->slice(0, 4) as $enrolment)
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset($enrolment->course->thumbnail) }}" alt="Thumb"
+                                            class="img-fluid">
                                     </div>
-                                </td>
-                                <td>
-                                    <p>€ {{$enrolment->amount}}</p>
-                                </td>
-                                @php 
-                                    $courseProgress = null;
-                                    $courseProgress = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);  
-                                @endphp
-                                <td>
-                                    <p>{{ $courseProgress }}%</p>
-                                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{ $courseProgress }}"
-                                        aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: {{ $courseProgress }}%"></div>
+                                    <div class="media-body">
+                                        <h5>{{$enrolment->course->title}}</h5>
+                                        <p>{{ $enrolment->course->platform }} </p>
                                     </div>
-                                </td>
-                                <td>
-                                    <p>{{ $enrolment->created_at->format('d-F-Y') }}</p>
-                                </td>
-                                <td class="text-end">
-                                    <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
-                                </td>
-                            </tr> 
+                                </div>
+                            </td>
+                            <td>
+                                <p>€ {{$enrolment->amount}}</p>
+                            </td>
+                            @php
+                            $courseProgress = null;
+                            $courseProgress = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
+                            @endphp
+                            <td>
+                                <p>{{ $courseProgress }}%</p>
+                                <div class="progress" role="progressbar" aria-label="Basic example"
+                                    aria-valuenow="{{ $courseProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: {{ $courseProgress }}%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>{{ $enrolment->created_at->format('d-F-Y') }}</p>
+                            </td>
+                            <td class="text-end">
+                                <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
+                            </td>
+                        </tr>
                         @endforeach
                     </table>
-                    @else 
+                    @else
                     @include('partials/no-data')
                     @endif
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </main>
 @endsection
@@ -284,80 +269,7 @@ Students Dashboard
 @section('script')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
-
-{{-- course statics old start --}}
-<script>
-    jQuery(document).ready(function() {
-
-            var el;
-            var options;
-            var canvas;
-            var span;
-            var ctx;
-            var radius;
-
-            var createCanvasVariable = function(id) { // get canvas
-                el = document.getElementById(id);
-            };
-
-            var createAllVariables = function() {
-                options = {
-                    percent: el.getAttribute('data-percent') || 25,
-                    size: el.getAttribute('data-size') || 120,
-                    lineWidth: el.getAttribute('data-line') || 10,
-                    rotate: el.getAttribute('data-rotate') || 0,
-                    color: el.getAttribute('data-color')
-                };
-
-                canvas = document.createElement('canvas');
-                span = document.createElement('span');
-                span.textContent = options.percent + '%';
-
-                if (typeof(G_vmlCanvasManager) !== 'undefined') {
-                    G_vmlCanvasManager.initElement(canvas);
-                }
-
-                ctx = canvas.getContext('2d');
-                canvas.width = canvas.height = options.size;
-
-                el.appendChild(span);
-                el.appendChild(canvas);
-
-                ctx.translate(options.size / 2, options.size / 2); // change center
-                ctx.rotate((-1 / 2 + options.rotate / 180) * Math.PI); // rotate -90 deg
-
-                radius = (options.size - options.lineWidth) / 2;
-            };
-
-
-            var drawCircle = function(color, lineWidth, percent) {
-                percent = Math.min(Math.max(0, percent || 1), 1);
-                ctx.beginPath();
-                ctx.arc(0, 0, radius, 0, Math.PI * 2 * percent, false);
-                ctx.strokeStyle = color;
-                ctx.lineCap = 'square'; // butt, round or square
-                ctx.lineWidth = lineWidth;
-                ctx.stroke();
-            };
-
-            var drawNewGraph = function(id) {
-                el = document.getElementById(id);
-                createAllVariables();
-                drawCircle('#efefef', options.lineWidth, 100 / 100);
-                drawCircle(options.color, options.lineWidth, options.percent / 100);
-
-
-            };
-            // drawNewGraph('graph1');
-            var graph = document.getElementsByClassName('chart');
-            for (var i = 0; i < graph.length; i++) {
-                drawNewGraph(graph[i].id);
-            }
-
-        });
-</script>
-{{-- course statics old end --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 {{-- time spend chart start --}}
 <script>
@@ -404,7 +316,16 @@ Students Dashboard
 
 {{-- course statics chart start --}}
 <script>
-    new Chart(document.getElementById('myCourseStatics'),{
+    let completedCount = @json($completedCount = 3);
+    let notStartedCount = @json($notStartedCount);
+    let inProgressCount = @json($inProgressCount = 6);
+
+    var data = [completedCount, inProgressCount, notStartedCount];
+    var total = data.reduce((a, b) => a + b, 0);
+    var percentages = data.map((value) => ((value / total) * 100).toFixed(0) + "%");
+
+    var ctx = document.getElementById('myCourseStatics').getContext('2d');
+    var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: [
@@ -414,28 +335,42 @@ Students Dashboard
             ],
             datasets: [{
                 label: 'Course Progress',
-                data: [40, 25,35],
+                data: data,
                 backgroundColor: [
-                '#00B8D9',
-                '#00AB55',
-                '#FFAB00'
+                    '#00AB55',
+                    '#00B8D9',
+                    '#FFAB00'
                 ],
                 hoverOffset: 4
             }]
-	    },
+        },
         options: {
             title: {
                 display: true,
-                text: 'Course Statics'
+                text: 'Course Statistics'
             },
             legend: {
-                position: 'bottom'
+                display: false, // Hide the default legend
+            },
+            tooltips: {
+                enabled: false
             },
             cutout: '88%',
-            radius: 120
-        }
+            radius: 120,
+        },
+    });
 
-    })
+    var legendHtml = "<ul>";
+    for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
+        legendHtml +=
+            '<li>' + '<p> <span style="background-color:' +
+            myDoughnutChart.data.datasets[0].backgroundColor[i] +
+            '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
+            "</li>";
+    }
+    legendHtml += "</ul>";
+
+    document.getElementById("legend").innerHTML = legendHtml;
 </script>
 {{-- course statics chart end --}}
 @endsection

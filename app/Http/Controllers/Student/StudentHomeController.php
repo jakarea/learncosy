@@ -63,9 +63,27 @@ class StudentHomeController extends Controller
         } else {
             $percentageChange = 0;
         }
-        // return $enrolments;
+         
+        //  count course statics
+        $notStartedCount = 0;
+        $inProgressCount = 0;
+        $completedCount = 0;
+        
+        if ($enrolments) {
+            foreach ($enrolments as $enrolment) {
+                $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
+                
+                if ($allCourses == 0) {
+                    $notStartedCount++;
+                } elseif ($allCourses > 0 && $allCourses < 99) {
+                    $inProgressCount++;
+                } elseif ($allCourses == 100) {
+                    $completedCount++;
+                }
+            }
+        }  
 
-        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange'));
+        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
     }
 
     // dashboard
