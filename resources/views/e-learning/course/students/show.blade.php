@@ -223,6 +223,7 @@
                                                                             data-course="{{ $course->id }}"
                                                                             data-module="{{ $module->id }}"
                                                                             data-lesson="{{ $lesson->id }}"
+                                                                            data-duration="{{ $lesson->duration }}"
                                                                             data-user="{{ Auth::user()->id }}"></i>
                                                                     @endif
                                                                 </span>
@@ -381,10 +382,12 @@
                     var lessonId = $(this).data('lesson');
                     var courseId = $(this).data('course');
                     var moduleId = $(this).data('module');
+                    var duration = $(this).data('duration');
                     var data = {
                         courseId: courseId,
                         lessonId: lessonId,
                         moduleId: moduleId
+                        duration: duration
                     };
                     var $element = $(this); // Store reference to $(this) in a variable
 

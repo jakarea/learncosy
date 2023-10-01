@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('course_id');
             $table->unsignedBigInteger('instructor_id');
+            $table->unsignedBigInteger('duration')->default(0);
             $table->integer('module_id');
             $table->text('title');
             $table->text('slug');

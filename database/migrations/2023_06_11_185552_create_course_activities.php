@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lesson_id');
             $table->unsignedBigInteger('user_id');
             $table->tinyInteger('is_completed')->default(0);
+            $table->unsignedBigInteger('duration')->default(0);
             $table->timestamps();
         });
     }

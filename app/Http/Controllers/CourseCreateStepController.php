@@ -308,6 +308,7 @@ class CourseCreateStepController extends Controller
             if ($uri) {
                 $lesson = Lesson::find($lesson_id);
                 $lesson->video_link = $uri;
+                $lesson->duration = $request->duration;
                 $lesson->short_description = $request->description;
                 $lesson->save();
             }

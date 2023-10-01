@@ -21,8 +21,7 @@ class LessonController extends Controller
     // lesson list
     public function index()
     {   
-
-        $title = isset($_GET['title']) ? $_GET['title'] : '';
+         $title = isset($_GET['title']) ? $_GET['title'] : '';
          $status = isset($_GET['status']) ? $_GET['status'] : '';
            $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
          if (!empty($title)) {
@@ -216,6 +215,8 @@ class LessonController extends Controller
         $lesson = Lesson::where('slug', $slug)->first();
         $lesson->course_id = $request->course_id; 
         $lesson->user_id = Auth::user()->id;
+        $lesson->instructor_id = Auth::user()->id;
+        $lesson->duration = $request->duration;
         $lesson->module_id = $request->module_id; 
         $lesson->title = $request->title; 
         $lesson->slug = Str::slug($request->title);
@@ -229,7 +230,7 @@ class LessonController extends Controller
 
         if ($request->hasFile('thumbnail')) { 
              // Delete old file
-             if ($lesson->thumbnail) {
+            if ($lesson->thumbnail) {
                 $oldFile = public_path('/assets/images/lessons/'.$lesson->thumbnail);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
@@ -244,7 +245,7 @@ class LessonController extends Controller
 
         if ($request->hasFile('lesson_file')) { 
              // Delete old file
-             if ($lesson->lesson_file) {
+            if ($lesson->lesson_file) {
                 $oldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);

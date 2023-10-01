@@ -15,5 +15,6 @@ class CourseActivity extends Model
         'lesson_id',
         'user_id',
         'is_completed',
+        'duration'
     ];
 }

@@ -164,8 +164,8 @@
                                     <div class="col-lg-9 col-md-8">
                                         <div class="media">
                                             <div class="course-thumbnail">
-                                                <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}"
-                                                    alt="Course thumbnaik" class="img-fluid">
+                                                <img src="{{ asset($course->thumbnail) }}" alt="Course thumbnaik"
+                                                    class="img-fluid">
                                             </div>
                                             <div class="media-body">
                                                 <h4>{{ $course->title }}</h4>
@@ -181,7 +181,7 @@
                                                 <p>{{ Str::limit($course->short_description, $limit = 158, $end = '...') }}
                                                 </p>
 
-                                                <a href="{{ url($instructors->subdomain . '/courses/' . $course->slug) }}">Read
+                                                <a href="{{ url('/courses/' . $course->slug) }}">Read
                                                     More</a>
                                             </div>
                                         </div>
@@ -218,8 +218,7 @@
                 <div class="col-lg-3 col-md-12">
                     <div class="course-instructor me-md-2 me-lg-0">
                         <div class="thumbnail">
-                            <img src="{{ asset($instructors->avatar) }}" alt="Avatar"
-                                class="img-fluid">
+                            <img src="{{ asset($instructors->avatar) }}" alt="Avatar" class="img-fluid">
                         </div>
                         <div class="txt">
                             <h4>{{ $instructors->name }}</h4>
@@ -273,8 +272,8 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="bundle-course-box">
                             <div class="thumbnail">
-                                <img src="{{ asset('assets/images/courses/' . $bundle_course->thumbnail) }}" alt="a"
-                                    class="img-fluid">
+                                <img src="{{ asset('assets/images/courses/' . $bundle_course->thumbnail) }}"
+                                    alt="a" class="img-fluid">
                             </div>
                             <div class="txt">
                                 <h4>bundle Course title will be here!</h4>
@@ -349,8 +348,7 @@
                         @foreach ($courses_review as $review)
                             <div class="student-feeback-box">
                                 <div class="media">
-                                    <img src="{{ asset($review->user->avatar) }}" alt="a"
-                                        class="img-fluid">
+                                    <img src="{{ asset($review->user->avatar) }}" alt="a" class="img-fluid">
                                     <div class="media-body">
                                         <p>{{ $review->comment }}</p>
 
