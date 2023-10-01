@@ -86,7 +86,7 @@
                                 $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
                                 @endphp
 
-                                @if ($progress > 90)
+                                @if ($progress < 90)
                                     <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="120MB" class="img-fluid"></a>
                                 @endif
                             </div>
