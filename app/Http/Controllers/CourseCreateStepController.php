@@ -276,6 +276,7 @@ class CourseCreateStepController extends Controller
             'description' => 'string',
             'audio' => 'required|mimes:mp3,wav|max:50000',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
+
         ]);
         
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
