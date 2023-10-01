@@ -316,9 +316,9 @@ Students Dashboard
 
 {{-- course statics chart start --}}
 <script>
-    let completedCount = @json($completedCount = 3);
+    let completedCount = @json($completedCount);
     let notStartedCount = @json($notStartedCount);
-    let inProgressCount = @json($inProgressCount = 6);
+    let inProgressCount = @json($inProgressCount);
 
     var data = [completedCount, inProgressCount, notStartedCount];
     var total = data.reduce((a, b) => a + b, 0);
