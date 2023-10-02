@@ -41,7 +41,7 @@ class DashboardController extends Controller
         if($previousMonthTotalSell){
             $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
         }
-        
+
         $formattedPercentageChangeOfEarning = round($percentageChange, 2);
 
         $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
@@ -114,6 +114,7 @@ class DashboardController extends Controller
 
         $categories = array_unique($unique_array);
 
+
         // course active or not count
         $activeCourses = 0;
         $draftCourses = 0; 
@@ -123,7 +124,7 @@ class DashboardController extends Controller
                  
                 if ($course->status == 'draft') {
                     $draftCourses++;
-                } elseif ($course->status == 'draft') {
+                } elseif ($course->status == 'published') {
                     $activeCourses++;
                 }
             }
@@ -131,6 +132,7 @@ class DashboardController extends Controller
 
         // return $earningByDates;
         return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
+
     }
 
 
@@ -248,7 +250,7 @@ class DashboardController extends Controller
     }
 
     public function subdomain()
-    { 
+    {
         return view('latest-auth.subdomain');
     }
 
@@ -263,7 +265,7 @@ class DashboardController extends Controller
 
         $existingUser = User::where('subdomain', $proposedUsername)->first();
 
-        if ($existingUser) { 
+        if ($existingUser) {
             $suggestedUsernames = [];
             $count = rand(10, 99);
 
@@ -275,10 +277,10 @@ class DashboardController extends Controller
                 $count++;
             }
             session(['suggestedUsernames' => $suggestedUsernames]);
- 
+
             return redirect()->back();
 
-        } else { 
+        } else {
             $user = User::find($user_id);
             $user->subdomain = $request->subdomain;
             $user->save();
@@ -290,6 +292,6 @@ class DashboardController extends Controller
             return redirect('instructor/profile/step-4/complete');
         }
 
-  
+
     }
 }

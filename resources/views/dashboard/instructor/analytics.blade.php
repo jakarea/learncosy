@@ -96,7 +96,9 @@
                     <div class="statics-head">
                         <h5>Earnings</h5>
                     </div>
-                    <div id="chart-earnings"></div>
+                    {{-- <div id="chart-earnings"></div> --}}
+                    <div id="chart"></div>
+
                 </div>
             </div>
         </div>
@@ -145,6 +147,7 @@
                     <div class="messages-items-wrap">
                         @if (count($messages) > 0) 
                         @foreach ($messages->slice(0,5) as $message)
+
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
@@ -159,7 +162,7 @@
                             </div>
                         </div>
                         @endforeach
-                        @else 
+                        @else
                         @include('partials/no-data')
                         @endif
                     </div>
@@ -202,7 +205,7 @@
                     show: false
                 }
             },
-        }, 
+        },
         colors:['#00AB55', '#FFAB00'],
         stroke: {
           curve: 'smooth'
@@ -215,7 +218,7 @@
             format: 'dd/MM/yy HH:mm'
           },
         },
-        }; 
+        };
 
         var chart = new ApexCharts(document.querySelector("#studentsGraph"), options);
         chart.render();
@@ -224,64 +227,35 @@
 
 {{-- Total earnings start --}}
 <script>
-    const earningsDate = @json($earningByDates);
+document.addEventListener("DOMContentLoaded", function() {
+        // Get the data passed from the controller
+        const data = @json($earningByDates);
 
-    var options = {
-          series: [{
-          data: [
-            earningsDate
-          ] 
-        }],
-          chart: {
-          id: 'area-datetime',
-          type: 'area',
-          height: 350,
-          zoom: {
-            autoScaleYaxis: true
-          }
-        }, 
-        dataLabels: {
-          enabled: false
-        },
-        colors:['#294CFF', '#E7EBFF'],
-        markers: {
-          size: 0,
-          style: 'hollow',
-        },
-        xaxis: {
-          type: 'datetime',
-          min: new Date('01 Mar 2012').getTime(),
-          tickAmount: 6,
-        },
-        tooltip: {
-          x: {
-            format: 'dd MMM yyyy'
-          }
-        },
-        grid: {
-        show: true,
-        borderColor: '#C2C6CE',
-        strokeDashArray: 0,
-        xaxis: {
-                lines: {
-                    show: false
-                }
+        // Prepare the data for ApexCharts
+        const chartData = Object.keys(data).map((date) => {
+            return {
+                x: new Date(date).getTime(),
+                y: data[date]
+            };
+        });
+
+        var options = {
+            chart: {
+                type: 'line',
+                height: 350,
             },
-        }, 
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.7,
-            opacityTo: 0.9,
-            stops: [0, 100]
-          }
-        },
+            xaxis: {
+                type: 'datetime',
+            },
+            series: [{
+                name: 'Earnings',
+                data: chartData,
+            }],
         };
 
-        var chart = new ApexCharts(document.querySelector("#chart-earnings"), options);
-        chart.render(); 
-
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    });
 </script>
 {{-- Total earnings end --}}
 

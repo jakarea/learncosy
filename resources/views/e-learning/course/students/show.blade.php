@@ -13,7 +13,6 @@
 <meta name="keywords" content="{{ $course->categories . ', ' . $course->meta_keyword }}" />
 <meta name="description" content="{{ $course->meta_description }}" itemprop="description">
 @endsection
-
 @section('content')
 @php
 $i = 0;
@@ -36,10 +35,12 @@ $i = 0;
                                 data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
                         @else
+
                         <div class="video-iframe-vox">
                             <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069"
                                 data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
+
                         @endif
                     </div>
                     @else
@@ -50,11 +51,20 @@ $i = 0;
                     {{-- video player --}}
                     @endif
 
-                    {{-- course title --}}
-                    <div class="media course-title">
-                        <div class="media-body">
-                            <h1>{{ $course->title }}</h1>
-                            <p>{{ $course->user->name }} . {{ $course->user->name }} </p>
+
+                        {{-- course title --}}
+                        <div class="media course-title">
+                            <div class="media-body">
+                                <h1>{{ $course->title }}</h1>
+                                <p>{{ $course->user->name }}  </p>
+                            </div>
+                            {{-- liked course button here --}}
+                            <div class="liked-course-button">
+                                <button class="btn like-btn {{ $liked }}" id="likeBttn">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            {{-- liked course button here --}}
                         </div>
                         {{-- liked course button here --}}
                         <div class="liked-course-button">
@@ -86,10 +96,9 @@ $i = 0;
                             $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
                             @endphp
 
-                            @if ($progress < 90) <a
-                                href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">
-                                Certificate Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
+
+                                @if ($progress > 90)
+                                    <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="120MB" class="img-fluid"></a>
                                 @endif
                         </div>
                     </div>
@@ -341,7 +350,7 @@ $i = 0;
             });
 
             var options = {
-                id: '{{ 305108069 }}',
+                id: '{{ 870001728 }}',
                 // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
                 autoplay: true,
                 loop: true,
