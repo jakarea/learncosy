@@ -138,13 +138,13 @@
                 <div class="top-performing-course">
                     <div class="d-flex">
                         <h5>Message</h5>
-                        @if (count($messages) > 0)
+                        @if (count($messages) > 5)
                             <a href="{{ url('course/messages') }}">View All</a>
                         @endif
                     </div>
                     <div class="messages-items-wrap">
                         @if (count($messages) > 0) 
-                        @foreach ($messages as $message)
+                        @foreach ($messages->slice(0,5) as $message)
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">

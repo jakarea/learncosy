@@ -267,18 +267,18 @@
                         <h3>Related Courses</h3>
                         <div class="row">
                             @if (count($relatedCourses))
-                                @foreach ($relatedCourses as $course)
+                                @foreach ($relatedCourses as $relatedCourse)
                                     <div class="col-md-6 col-12 col-lg-12 col-xl-12">
                                         {{-- item --}}
                                         <div class="course-single-item">
                                             <div class="course-thumb-box">
-                                                <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}"
+                                                <img src="{{ asset($relatedCourse->thumbnail) }}" alt="{{ $relatedCourse->title }}"
                                                     class="img-fluid">
                                             </div>
                                             <div class="course-txt-box">
                                                 <a
-                                                    href="{{ url('instructor/courses', $course->id) }}">{{ $course->title }}</a>
-                                                <p>{{ $course->user->name }}</p>
+                                                    href="{{ url('instructor/courses', $relatedCourse->id) }}">{{ $relatedCourse->title }}</a>
+                                                <p>{{ $relatedCourse->user->name }}</p>
                                                 <ul>
                                                     <li><span>4.0</span></li>
                                                     <li><i class="fas fa-star"></i></li>
@@ -288,7 +288,7 @@
                                                     <li><i class="fas fa-star"></i></li>
                                                     <li><span>(145)</span></li>
                                                 </ul>
-                                                <h5>€ {{ $course->price }} <span>€ {{ $course->offer_price }}</span></h5>
+                                                <h5>€ {{ $relatedCourse->price }} <span>€ {{ $relatedCourse->offer_price }}</span></h5>
                                             </div>
                                         </div>
                                         {{-- item --}}
@@ -394,7 +394,7 @@
                     var data = {
                         courseId: courseId,
                         lessonId: lessonId,
-                        moduleId: moduleId
+                        moduleId: moduleId,
                         duration: duration
                     };
                     var $element = $(this); // Store reference to $(this) in a variable

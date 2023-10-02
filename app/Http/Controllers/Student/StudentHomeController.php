@@ -177,6 +177,7 @@ class StudentHomeController extends Controller
     // course show
     public function show($slug)
     {
+        // return $slug;
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -194,6 +195,7 @@ class StudentHomeController extends Controller
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
         });
+ 
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
