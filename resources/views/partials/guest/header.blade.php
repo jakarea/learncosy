@@ -34,27 +34,27 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto custom_nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#course_sec">Courses</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" class="nav-link" href="#course_sec">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#b_course_sec">Bundle Courses</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" class="nav-link" href="#b_course_sec">Bundle Courses</a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="#feedback_sec">Feedback</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" class="nav-link" href="#feedback_sec">Feedback</a>
                 </li> 
             </ul>
             @if (auth()->user() && auth()->user()->user_role == 'instructor')
                 <div class="d-flex">  
-                    <a href="{{url('/instructor/dashboard')}}">Dashboard</a> 
+                    <a style="color: {{modulesetting('secondary_color')}} href="{{url('/instructor/dashboard')}}">Dashboard</a> 
                 </div>
 			@elseif (auth()->user() && auth()->user()->user_role == 'student')
                 <div class="d-flex">  
-                    <a href="{{url('/students/dashboard')}}">Dashboard</a> 
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/students/dashboard')}}">Dashboard</a> 
                 </div> 
             @else  
-                <div class="d-flex">  
-                    <a href="{{ route('tlogin') }}">Login</a>
-                    <a href="{{ route('tregister') }}">Register</a> 
+                <div class="d-flex" >  
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tlogin') }}">Login</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister') }}">Register</a> 
                 </div>
             @endif
         </div>
