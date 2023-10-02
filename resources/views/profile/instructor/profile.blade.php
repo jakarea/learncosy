@@ -16,14 +16,7 @@
         $social_links = explode(',', $user->social_links);
     @endphp
     <main class="user-profile-view-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             {{-- profile information @S --}}
             <div class="row">
                 <div class="col-lg-8">
