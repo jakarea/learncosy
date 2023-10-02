@@ -45,7 +45,8 @@
           <div class="col-lg-6">
             <div class="header-logo ps-md-3">
               <a href="{{url('/')}}">
-                <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Main logo" class="img-fluid">
+                <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="Main logo" class="img-fluid light-ele">
+                <img src="{{ asset('latest/assets/images/logo-w.svg') }}" alt="Main logo" class="img-fluid dark-ele">
               </a>
             </div>
           </div>

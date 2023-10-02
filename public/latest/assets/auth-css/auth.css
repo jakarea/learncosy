@@ -144,6 +144,20 @@
   margin-top: 1rem;
 }
 
+.light-ele{
+  display: block;
+}
+.dark-ele{
+  display: none;
+}
+
+.dark-mode .light-ele{
+  display: none!important;
+}
+.dark-mode .dark-ele{
+  display: block!important;
+}
+
 .auth-form-wrap .optional-txt p {
   color: #667085;
   font-size: 14px;

@@ -144,37 +144,50 @@ Students Dashboard
             <div class="col-lg-8 mt-15">
                 <div class="my-courses-box">
                     <h3>Liked Courses </h3>
-                    <div class="course-box-overflown">
+                    <div class="course-box-overflown liked-courses">
                         @if (count($likeCourses) > 0)
-                        @foreach ($likeCourses as $likeCourse)
+                        @foreach ($likeCourses as $likeCourse) 
+                        @php
+                         $totalLessons = 0;
+                            foreach ($likeCourse->course->modules as $module) {
+                                $totalLessons = count($module->lessons);
+                            }
+                        @endphp  
                         <div class="media">
                             @if ($likeCourse->course->thumbnail)
-                            <img src="{{ asset($likeCourse->course->thumbnail) }}" alt="a" class="img-fluid me-3"
-                                style="width: 100px; border-radius: 1rem">
+                            <img src="{{ asset($likeCourse->course->thumbnail) }}" alt="a" class="img-fluid me-3 thumab">
                             @else
                             <img src="{{ asset('latest/assets/images/course-small.svg') }}" alt="a"
-                                class="img-fluid me-3">
+                                class="img-fluid me-3 thumab">
                             @endif
                             <div class="media-body">
                                 <h5>{{ $likeCourse->course->title }}</h5>
-                                <p><strong>Fee:</strong>
-
-                                    {{ $likeCourse->course->offer_price ? $likeCourse->course->offer_price :
-                                    $likeCourse->course->price }}
-                                    €
+                                <p class="user"><i class="fa-solid fa-user"></i> {{ $likeCourse->course->user->name }} &nbsp; - &nbsp;{{ $likeCourse->course->platform }}</p>  
+                                <p class="lessons">
+                                    <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
+                                     {{ count($likeCourse->course->modules) }} Modules &nbsp;&nbsp; 
+                                     <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid"> {{ $totalLessons }} Lessons
                                 </p>
-                                <ul class="mt-1">
-                                    <li><i class="fas fa-calendar me-2"></i>
-                                        {{ $likeCourse->course->created_at->format('F j, Y') }}
-                                    </li>
-                                </ul>
                             </div>
-                            <a href="{{ url('students/courses/' . $likeCourse->course->slug) }}"><i
-                                    class="fa-solid fa-ellipsis-vertical"></i></a>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
+                                    aria-expanded="false"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></button>
+        
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <form action="{{ route('students.course.unlike',['course_id' => $likeCourse->course->id, 'ins_id' => $likeCourse->course->user_id]) }}" method="POST" class="d-block">
+                                            @csrf
+                                            <button type="submit" class="btn p-0 dropdown-item">Unlike</button>
+                                        </form> 
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ url('students/courses/'.$likeCourse->course->slug) }}">Play</a></li> 
+                                </ul>
+                            </div> 
                         </div>
                         @endforeach
                         @else
-                        @include('partials/no-data')
+                            @include('partials/no-data')
                         @endif
                     </div>
                 </div>

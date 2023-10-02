@@ -27,6 +27,9 @@ return new class extends Migration
             $table->text('short_description')->nullable();
             $table->string('status', 30)->default('pending');
             $table->string('type', 30)->default('video');
+            $table->string('audio')->nullable(); 
+            $table->string('text')->nullable();
+            $table->string('lesson_file')->nullable();
             $table->timestamps();
         });
     }

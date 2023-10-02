@@ -18,20 +18,19 @@ class LessonSeeder extends Seeder
     {
             $faker = Faker::create();
     
-            foreach (range(1, 500) as $index) {
-                $randomDateTime = date('Y-m-d H:i:s', strtotime('-330 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
+            foreach (range(1, 30) as $index) {
+                $randomDateTime = date('Y-m-d H:i:s', strtotime('-90 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
                 DB::table('lessons')->insert([
-                    'course_id' => $faker->numberBetween(1, 50), 
-                    'instructor_id' => $faker->numberBetween(3, 15), 
-                    'user_id' => $faker->numberBetween(3, 15),
-                    'module_id' => $faker->numberBetween(1, 100),
+                    'course_id' => $faker->numberBetween(1, 5), 
+                    'instructor_id' => $faker->numberBetween(2, 6), 
+                    'user_id' => $faker->numberBetween(2, 6),
+                    'module_id' => $faker->numberBetween(1, 15),
                     'title' => $faker->sentence,
                     'slug' => $faker->slug,
-                    'video_link' => $faker->optional()->url,
-                    'thumbnail' => 'thumbnail1.png',
+                    'video_link' => '',
                     'short_description' => $faker->paragraph,
                     'status' => $faker->randomElement(['pending', 'published']),
-                    'type' => $faker->randomElement(['video', 'text','audio']),
+                    'type' => $faker->randomElement(['video']),
                     'created_at' => $randomDateTime,
                     'updated_at' => now(),
                 ]);
