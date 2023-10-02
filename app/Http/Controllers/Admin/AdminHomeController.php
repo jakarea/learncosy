@@ -143,6 +143,8 @@ class AdminHomeController extends Controller
             ->limit(10)
             ->get();
 
+            // return $earningByMonth;
+
         return view(
             'e-learning/course/admin/dashboard',
             compact(
@@ -205,7 +207,8 @@ class AdminHomeController extends Controller
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
         ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.amount']);
-        $monthlySums = array_fill(0, 12, 0);
+        $curentMonthNumber = date('n');
+        $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
   // Iterate through the data array
   foreach ($data as $item) {

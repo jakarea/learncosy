@@ -13,14 +13,7 @@
 @section('content')
     {{-- ==== subscription list page @S ==== --}}
     <main class="subscription-list-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
@@ -59,6 +52,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="subscription-table-wrap">
+                        @if (count($subscription_packages) > 0) 
                         <table>
                             <tr>
                                 <th>
@@ -118,6 +112,9 @@
                                 </tr>
                             @endforeach
                         </table>
+                        @else 
+                        @include('partials/no-data')
+                        @endif
                     </div>
                 </div>
             </div>

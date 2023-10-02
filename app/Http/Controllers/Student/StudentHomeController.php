@@ -29,10 +29,8 @@ class StudentHomeController extends Controller
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
-
         $totalHours = floor($totalTimeSpend / 3600);
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
-        // return $likeCourses;
 
         $timeSpentData = CourseActivity::select(
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),

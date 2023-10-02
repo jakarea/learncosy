@@ -2,7 +2,7 @@
 @section('title', 'Instructor Dashboard')
 {{-- page style @S --}}
 @section('style')
-
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <main class="instructor-dashboard-page">
@@ -27,37 +27,60 @@
             <div class="row">
                 <div class="col-lg-6 mt-15">
                     <div class="my-courses-box">
-                        <h3>My Courses</h3>
-
-                        <div class="course-box-overflown">
-                            @foreach ($courses as $course)
-                                <div class="media">
-                                    <img src="{{ asset('latest/assets/images/coureses.svg') }}" alt="icon"
-                                        class="img-fluid me-3">
-                                    <div class="media-body">
-                                        <h5>{{ $course->title }}</h5>
-
-                                        <ul class="mt-1">
-                                            <li><img src="{{ asset('latest/assets/images/icons/stack.svg') }}"
-                                                    alt="icon" class="img-fluid"> {{ $course->number_of_module }}
-                                                modules</li>
-                                        </ul>
-                                    </div>
-                                    <a href="{{ url('instructor/courses/' . $course->slug) }}"><i
-                                            class="fa-solid fa-ellipsis-vertical"></i></a>
+                        <h3>My Courses</h3> 
+                        <div class="course-box-overflown liked-courses">
+                            @if (count($courses) > 0)
+                            @foreach ($courses as $myCourses) 
+                            @php
+                             $totalLessons = 0;
+                                foreach ($myCourses->modules as $module) {
+                                    $totalLessons = count($module->lessons);
+                                }
+                            @endphp  
+                            <div class="media">
+                                @if ($myCourses->thumbnail)
+                                <img src="{{ asset($myCourses->thumbnail) }}" alt="Thumbnail" class="img-fluid me-3 thumab">
+                                @else
+                                <img src="{{ asset('latest/assets/images/course-small.svg') }}" alt="a"
+                                    class="img-fluid me-3 thumab">
+                                @endif
+                                <div class="media-body">
+                                    <h5>{{ $myCourses->title }}</h5>
+                                    <p class="user">{{ $myCourses->platform }}</p>  
+                                    <p class="lessons">
+                                        <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
+                                         {{ count($myCourses->modules) }} Modules &nbsp;&nbsp; 
+                                         <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid"> {{ $totalLessons }} Lessons
+                                    </p>
                                 </div>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><i
+                                        class="fa-solid fa-ellipsis-vertical"></i></button>
+            
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <form action="{{ route('course.destroy',$myCourses->id) }}" method="POST" class="d-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn p-0 dropdown-item">Delete</button>
+                                            </form> 
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{ url('instructor/courses/'.$myCourses->slug) }}">View</a></li> 
+                                    </ul>
+                                </div> 
+                            </div>
                             @endforeach
+                            @else
+                                @include('partials/no-data')
+                            @endif
                         </div>
-                        @if (count($courses) > 2)
-                        <div class="text-center mt-4">
-                            <a href="{{ url('instructor/courses/create') }}" class="common-bttn">Create New Course</a>
-                        </div>
-                        @endif 
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">
                     <div class="recent-payment-box">
                         <h3>Recent Payment</h3>
+                        @if (count($payments) > 0) 
                         @foreach ($payments->slice(0, 5) as $payment)
                             <div class="payment-box">
                                 <h5><img src="{{ asset($payment->user->avatar) }}" alt="a"
@@ -81,6 +104,9 @@
                             <a href="{{ url('instructor/payments') }}" class="common-bttn">View All Payment</a>
                         </div>
                         @endif 
+                        @else 
+                        @include('partials/no-data')
+                        @endif
                     </div>
                 </div>
             </div>
