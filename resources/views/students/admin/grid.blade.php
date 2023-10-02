@@ -13,14 +13,7 @@
 @section('content')
     {{-- ==== Students list page @S ==== --}}
     <main class="user-list-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <div class="row">
                 <div class="col-12">
                     <div class="user-title-box">
@@ -120,14 +113,12 @@
                     @endforeach
                 @else
                     <div class="col-12">
-                        <div class="no-result-found">
-                            <h6>No Students Found!</h6>
-                        </div>
+                        @include('partials/no-data')
                     </div>
                 @endif
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 mt-5">
                     {{-- pagginate --}}
                     <div class="paggination-wrap">
                         {{ $users->links('pagination::bootstrap-5') }}

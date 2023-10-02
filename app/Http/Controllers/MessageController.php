@@ -53,14 +53,15 @@ class MessageController extends Controller
         }else{
             $messages = $highLightMessages->first() ? $highLightMessages->first() : [];
             $senderInfo =  User::find($highLightMessages->keys()->first());
-        }
+        } 
 
         return view('e-learning/course/instructor/message-list',compact('highLightMessages','messages','userId','senderInfo','cartCount'));
      }
 
      // instructor message list
      public function send($courseId)
-     {
+     { 
+
         $userId = Auth::user()->id;
         $message = Message::where('sender_id', $userId)->where('course_id',$courseId)->first();
 
@@ -126,16 +127,17 @@ class MessageController extends Controller
         $request->validate([
             'message' => 'required',
         ]);
-
-        $userId = Auth::user()->id;
+ 
         $receiverId = Course::with('user')->where('id',$course_id)->first();
+        
         $message = new Message([
             'receiver_id' => $receiverId->user->id,
             'course_id'   => $course_id,
-            'sender_id'     => $userId,
+            'sender_id'   => Auth::user()->id,
             'message'     => $request->message
-        ]);
-        $message->save();
+        ]);  
+
+        $message->save(); 
 
          // Send email
          Mail::to($receiverId->user->email)->send(new MessageSent($message));

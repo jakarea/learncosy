@@ -262,6 +262,7 @@
     border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
     background: #FFF;
     box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+    position: relative;
 
     h5 {
         color: var(--neutral-color-neutral-80, #1C2636);
@@ -280,6 +281,17 @@
         line-height: 120%;
         margin-top: 0.2rem;
     }
+
+    span {
+        color: var(--success-green, #43B324); 
+        font-size: 1.5rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%; 
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
 }
 
 .earning-table {
@@ -289,7 +301,7 @@
     box-shadow: 0px 4px 8px 0px rgba(145, 158, 171, 0.16);
 }
 
-.package-new-header{
+.package-new-header {
     grid-template-columns: 70% 15% 15%;
 }
 
@@ -325,12 +337,14 @@
         }
     }
 
-    .top-card-box{
+    .top-card-box {
         margin-bottom: 1rem;
-        h5{
+
+        h5 {
             font-size: .8rem;
         }
-        h4{
+
+        h4 {
             font-size: 1rem;
         }
     }
@@ -347,6 +361,7 @@
     .subscription-table-wrap.subs-table table {
         display: block;
     }
+
     .subscription-table-wrap table {
         width: 100%;
         overflow-x: scroll;
@@ -360,11 +375,11 @@
         }
     }
 
-    .top-card-box{
+    .top-card-box {
         margin-bottom: 1rem;
     }
 
-    .payment-table-admin.subscription-table-wrap table{
+    .payment-table-admin.subscription-table-wrap table {
         display: block;
     }
 }
@@ -376,7 +391,7 @@
         grid-gap: 1rem;
     }
 
-    .top-card-box{
+    .top-card-box {
         margin-bottom: 1rem;
     }
 }
@@ -390,9 +405,7 @@
 }
 
 // regular device 
-@include q.responsive(regular) {
-
-}
+@include q.responsive(regular) {}
 
 // large device 
 @include q.responsive(large) {}

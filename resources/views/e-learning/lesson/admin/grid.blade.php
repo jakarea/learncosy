@@ -15,13 +15,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
                 <form action="" method="GET" id="myForm">
                     <div class="package-list-header module-header">
                         <h5>Lesson List</h5>
@@ -57,6 +50,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap module-list-table">
+                    @if (count($lessons) > 0)
                     <table>
                         <tr>
                             <th>
@@ -72,7 +66,7 @@
                                 <h5>{{$lesson->title}}</h5>
                             </td>
                             <td>
-                                <p>{{$lesson->short_description}}</p>
+                                <p>{!! $lesson->short_description !!}</p>
                             </td> 
                             <td class="module-status">
                                 @if ($lesson->status == 'pending')
@@ -96,6 +90,9 @@
                         </tr>
                         @endforeach
                     </table>
+                    @else 
+                        @include('partials/no-data') 
+                    @endif
                 </div>
             </div>
         </div>

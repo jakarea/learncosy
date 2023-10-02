@@ -52,19 +52,11 @@ $i = 0;
                     @endif
 
 
-                        {{-- course title --}}
-                        <div class="media course-title">
-                            <div class="media-body">
-                                <h1>{{ $course->title }}</h1>
-                                <p>{{ $course->user->name }}  </p>
-                            </div>
-                            {{-- liked course button here --}}
-                            <div class="liked-course-button">
-                                <button class="btn like-btn {{ $liked }}" id="likeBttn">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                            {{-- liked course button here --}}
+                    {{-- course title --}}
+                    <div class="media course-title">
+                        <div class="media-body">
+                            <h1>{{ $course->title }}</h1>
+                            <p>{{ $course->user->name }} </p>
                         </div>
                         {{-- liked course button here --}}
                         <div class="liked-course-button">
@@ -73,110 +65,112 @@ $i = 0;
                             </button>
                         </div>
                         {{-- liked course button here --}}
+                    </div> 
+                </div>
+                {{-- course title --}}
+                <hr>
+                <div class="content-txt-box">
+                    <h3>About Course</h3>
+                    <div class="course-desc-txt">
+                        {!! $course->description !!}
                     </div>
-                    {{-- course title --}}
-                    <hr>
-                    <div class="content-txt-box">
-                        <h3>About Course</h3>
-                        <div class="course-desc-txt">
-                            {!! $course->description !!}
-                        </div>
-                    </div>
-                    <div class="download-files-box">
-                        <h4>Download Files </h4>
-                        <div class="files">
-                            <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
+                </div>
+                <div class="download-files-box">
+                    <h4>Download Files </h4>
+                    <div class="files">
+                        <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                title="120MB" class="img-fluid"></a>
+                        <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                title="120MB" class="img-fluid"></a>
+                        <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                title="120MB" class="img-fluid"></a>
 
-                            @php
-                            $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
-                            @endphp
+                        @php
+                        $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
+                        @endphp
 
 
-                                @if ($progress > 90)
-                                    <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="120MB" class="img-fluid"></a>
-                                @endif
-                        </div>
-                    </div>
-                    {{-- course review --}}
-                    <div class="course-review-wrap">
-                        <h3>{{ count($course_reviews) }} Reviews</h3>
-
-                        <div class="media course-review-input-box">
-                            @if ($course->user->avatar)
-                            @if ($course->user->user_role == 'student')
-                            <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
-                            @endif
-                            @else
-                            <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
-                            @endif
-                            <div class="media-body">
-                                <form action="{{ route('students.review.courses', $course->slug) }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <input type="text" name="comment" id="review" placeholder="Write a review">
-                                    </div>
-                                    <div class="form-rev">
-                                        <div id="full-stars">
-                                            <div class="rating-group">
-                                                <label aria-label="1 star" class="rating__label" for="rating-1"><i
-                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
-                                                <input class="rating__input" name="star" id="rating-1" value="1"
-                                                    type="radio">
-                                                <label aria-label="2 stars" class="rating__label" for="rating-2"><i
-                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
-                                                <input class="rating__input" name="star" id="rating-2" value="2"
-                                                    type="radio">
-                                                <label aria-label="3 stars" class="rating__label" for="rating-3"><i
-                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
-                                                <input class="rating__input" name="star" id="rating-3" value="3"
-                                                    type="radio" checked>
-                                                <label aria-label="4 stars" class="rating__label" for="rating-4"><i
-                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
-                                                <input class="rating__input" name="star" id="rating-4" value="4"
-                                                    type="radio">
-                                                <label aria-label="5 stars" class="rating__label" for="rating-5"><i
-                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
-                                                <input class="rating__input" name="star" id="rating-5" value="5"
-                                                    type="radio">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn common-bttn">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        @if (count($course_reviews) > 0)
-                        @foreach ($course_reviews as $course_review)
-                        <div class="media">
-                            <img src="{{ asset( $course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5>{{ $course_review->user->name }}</h5>
-                                <ul>
-                                    @for ($i = 0; $i < $course_review->star; $i++)
-                                        <li><i class="fas fa-star"></i></li>
-                                        @endfor
-                                </ul>
-                                <p>{{ $course_review->comment }}</p>
-                            </div>
-                        </div>
-                        @endforeach
-                        @else
-                        <div class="media">
-                            <div class="media-body">
-                                <p>No Review Found!</p>
-                            </div>
-                        </div>
+                        @if ($progress > 90)
+                        <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate
+                            Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                title="120MB" class="img-fluid"></a>
                         @endif
                     </div>
-                    {{-- course review --}}
                 </div>
+                {{-- course review --}}
+                <div class="course-review-wrap">
+                    <h3>{{ count($course_reviews) }} Reviews</h3>
+
+                    <div class="media course-review-input-box">
+                        @if ($course->user->avatar)
+                        @if ($course->user->user_role == 'student')
+                        <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                        @endif
+                        @else
+                        <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
+                        @endif
+                        <div class="media-body">
+                            <form action="{{ route('students.review.courses', $course->slug) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <input type="text" name="comment" id="review" placeholder="Write a review">
+                                </div>
+                                <div class="form-rev">
+                                    <div id="full-stars">
+                                        <div class="rating-group">
+                                            <label aria-label="1 star" class="rating__label" for="rating-1"><i
+                                                    class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="star" id="rating-1" value="1"
+                                                type="radio">
+                                            <label aria-label="2 stars" class="rating__label" for="rating-2"><i
+                                                    class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="star" id="rating-2" value="2"
+                                                type="radio">
+                                            <label aria-label="3 stars" class="rating__label" for="rating-3"><i
+                                                    class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="star" id="rating-3" value="3"
+                                                type="radio" checked>
+                                            <label aria-label="4 stars" class="rating__label" for="rating-4"><i
+                                                    class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="star" id="rating-4" value="4"
+                                                type="radio">
+                                            <label aria-label="5 stars" class="rating__label" for="rating-5"><i
+                                                    class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                            <input class="rating__input" name="star" id="rating-5" value="5"
+                                                type="radio">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn common-bttn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    @if (count($course_reviews) > 0)
+                    @foreach ($course_reviews as $course_review)
+                    <div class="media">
+                        <img src="{{ asset( $course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                        <div class="media-body">
+                            <h5>{{ $course_review->user->name }}</h5>
+                            <ul>
+                                @for ($i = 0; $i < $course_review->star; $i++)
+                                    <li><i class="fas fa-star"></i></li>
+                                    @endfor
+                            </ul>
+                            <p>{{ $course_review->comment }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                    @else
+                    <div class="media">
+                        <div class="media-body">
+                            <p>No Review Found!</p>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+                {{-- course review --}}
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
@@ -218,7 +212,7 @@ $i = 0;
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                 data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}">
-
+    
                                                 @if ($lesson->type == 'text')
                                                 <i class="fa-regular fa-file-lines"></i>
                                                 @elseif($lesson->type == 'audio')
@@ -250,7 +244,7 @@ $i = 0;
                     </div>
                 </div>
                 {{-- course outline --}}
-
+    
                 @if (isEnrolled($course->id) && $course->user->recivingMessage)
                 <a href="{{ url('course/messages/send/' . $course->id) }}"
                     class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
@@ -264,14 +258,14 @@ $i = 0;
                             class="fas fa-angle-right ms-2"></i></button>
                 </form>
                 @endif
-
+    
                 {{-- related course --}}
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
                     <div class="row">
                         @if (count($relatedCourses))
                         @foreach ($relatedCourses as $relatedCourse)
-                        <div class="col-md-6 col-12 col-lg-12 col-xl-12 mt-15">
+                        <div class="col-md-6 col-12 col-lg-12 col-xl-12 mt-15 px-0">
                             {{-- item --}}
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
@@ -282,7 +276,7 @@ $i = 0;
                                     <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{
                                         $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
-
+    
                                     @php
                                     $review_sum = 0;
                                     $review_avg = 0;
@@ -295,15 +289,21 @@ $i = 0;
                                     $review_avg = $review_sum / $total;
                                     }
                                     @endphp
-
+    
                                     <ul>
                                         <li><span>{{ $review_avg }}</span></li>
                                         @for ($i = 0; $i < $review_avg; $i++) <li><i class="fas fa-star"></i></li>
                                             @endfor
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
-                                    <h5>€ {{ $relatedCourse->price }} <span>€ {{ $relatedCourse->offer_price }}</span>
-                                    </h5>
+                                    @if ($relatedCourse->offer_price)
+                                        <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
+                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
+                                     <h5>Free</h5>
+                                        
+                                        @else 
+                                        <h5>€ {{ $relatedCourse->price }}</h5>
+                                    @endif
                                 </div>
                             </div>
                             {{-- item --}}
@@ -317,7 +317,7 @@ $i = 0;
                 {{-- related course --}}
             </div>
         </div>
-    </div>
+    </div> 
 </main>
 <!-- course details page @E -->
 @endsection

@@ -41,10 +41,13 @@
                 </div>
                 <div class="user-details-box">
                     <h5>About Me</h5>
+                    @if (!$user->short_bio || !$user->description)
+                        @include('partials/no-data')
+                    @else
                     <p>{{ $user->short_bio }}</p>
                     {!! $user->description !!}
+                    @endif
                 </div>
- 
             </div>
             <div class="col-lg-4">
                 <div class="contact-info-box">
@@ -73,10 +76,13 @@
                 </div> 
                 <div class="contact-info-box mt-4">
                     <h4>Social Link</h4>
+                    
                     @php
                     $social_links = explode(",", $user->social_links);
                     use Illuminate\Support\Str;
                     @endphp
+
+                    @if (!$social_links)
 
                     @foreach ($social_links as $social_link)
                     @php
@@ -84,8 +90,9 @@
                     $host = parse_url($url, PHP_URL_HOST);
                     $domain = Str::after($host, 'www.');
                     $domain = Str::before($domain, '.');
-                    @endphp
-
+                    @endphp 
+                    
+                    
                     <div class="media">
                         @if ($domain == 'linkedin')
                         <img src="{{ asset('latest/assets/images/icons/linkedin.svg') }}" alt="linkedin" class="img-fluid">
@@ -108,6 +115,9 @@
                     </div>
                     @endforeach
 
+                    @else 
+                    @include('partials/no-data')
+                    @endif
                 </div>
             </div>
         </div>

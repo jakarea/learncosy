@@ -13,14 +13,7 @@
 @section('content')
     {{-- ==== user list page @S ==== --}}
     <main class="user-list-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <div class="row">
                 <div class="col-12">
                     <div class="user-title-box">
@@ -94,9 +87,7 @@
                     @endforeach
                 @else
                     <div class="col-12">
-                        <div class="no-result-found">
-                            <h6>No Admin Found!</h6>
-                        </div>
+                        @include('partials/no-data')
                     </div>
                 @endif
             </div>

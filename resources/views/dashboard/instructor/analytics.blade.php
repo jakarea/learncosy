@@ -145,23 +145,23 @@
                         @endif
                     </div>
                     <div class="messages-items-wrap">
-                        @if (count($messages) > 0) 
-                        @foreach ($messages->slice(0,5) as $message)
+                        @if (count($messages) > 0)  
+                            @foreach ($messages->slice(0,5) as $message)
 
-                        <div class="messages-item">
-                            <div class="media">
-                                <div class="avatar">
-                                    <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="img-fluid">
-                                    <i class="fas fa-circle"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h5>{{ $message->user->name }} <span>{{
-                                            $message->created_at->diffForHumans()}}</span></h5>
-                                    <p>{{ $message->message }}</p>
+                            <div class="messages-item">
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset($message->user ? $message->user->avatar : '') }}" alt="Avatar" class="img-fluid">
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{ $message->user ? $message->user->name : '' }} <span>{{
+                                                $message->created_at->diffForHumans()}}</span></h5>
+                                        <p>{{ $message->message }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
+                            @endforeach 
                         @else
                         @include('partials/no-data')
                         @endif
