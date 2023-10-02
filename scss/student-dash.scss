@@ -1246,42 +1246,69 @@
 
 #legend {
     ul {
-        @include m.df(space-around);
+        @include m.df(space-around); 
+
+        li {
+            position: relative;
+            &:before{
+                position: absolute;
+                content: "";
+                right: -1rem;
+                top: 0;
+                height: 100%;
+                width: 1px;
+                background: rgba(0, 0, 0, 0.10);
+            }
+
+            &:last-child{
+                &:before{
+                    width: 0;
+                    height: 0;
+                }
+            }
+            p {
+                color: var(--text-light-secondary, #637381);
+                font-size: 0.85rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.125rem;
+                display: flex;
+                align-items: center;
+
+                span {
+                    display: inline-block;
+                    width: 0.75rem;
+                    height: 0.75rem;
+                    border-radius: 50%;
+                    margin-right: 5px;
+                }
+            }
+
+            h6 {
+                color: var(--text-light-primary, #212B36);
+                font-size: 1.2rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 1.5rem;
+                padding-left: 1.1rem;
+            }
+        }
     }
 }
 
-#legend li p {
-    color: var(--text-light-secondary, #637381);
-    font-size: 0.8rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1.125rem;
+.center-legend{
+    ul{
+        justify-content: center!important;
+
+        li{
+            margin: 0 1.5rem;
+
+            &:before{
+                right: -1.5rem!important;
+            }
+        }
+    }
 }
-
-#legend li h6 {
-    color: var(--text-light-primary, #212B36); 
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 1.5rem; 
-    padding-left: 1rem;
-}
-
-#legend li span {
-    display: inline-block;
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-
-
-
-
-
-
-
 
 
 

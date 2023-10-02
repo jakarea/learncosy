@@ -120,7 +120,7 @@
                             <p>Total Courses</p>
                         </div>
                         <canvas id="courseProgress"></canvas>
-                        <div id="legend" class="legend"></div>
+                        <div id="legend" class="legend center-legend"></div>
                     </div> 
                 </div>
             </div>
@@ -353,7 +353,7 @@
 
 {{-- course progress chart start --}}
 <script>
-    var datas = [ {{$activeCourses = 2}}, {{$draftCourses}}];
+    var datas = [ {{$activeCourses}}, {{$draftCourses}}];
     var backgroundColor = ['#FFAB00', '#294CFF'];
     var ctx = document.getElementById('courseProgress').getContext('2d');
     var myDoughnutChart = new Chart(ctx, {
