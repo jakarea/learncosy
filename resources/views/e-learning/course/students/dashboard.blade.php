@@ -345,12 +345,17 @@ Students Dashboard
             }]
         },
         options: {
+            plugins: {
+                legend: {
+                display: false
+                }
+            },
             title: {
                 display: true,
                 text: 'Course Statistics'
             },
             legend: {
-                display: false, // Hide the default legend
+                display: false,
             },
             tooltips: {
                 enabled: false

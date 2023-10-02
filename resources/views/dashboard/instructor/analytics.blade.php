@@ -2,8 +2,9 @@
 @section('title', 'Instructor Analytics')
 {{-- page style @S --}}
 @section('style')
-
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
 @endsection
+
 @section('content')
 <main class="dashboard-page-wrap">
     <div class="container-fluid">
@@ -119,7 +120,8 @@
                             <p>Total Courses</p>
                         </div>
                         <canvas id="courseProgress"></canvas>
-                    </div>
+                        <div id="legend" class="legend"></div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -351,36 +353,54 @@
 
 {{-- course progress chart start --}}
 <script>
-    new Chart(document.getElementById('courseProgress'),{
+    var datas = [ {{$activeCourses = 2}}, {{$draftCourses}}];
+    var backgroundColor = ['#FFAB00', '#294CFF'];
+    var ctx = document.getElementById('courseProgress').getContext('2d');
+    var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: [
-                'Complete',
-                'Inprogress'
-            ],
+            labels: ['Complete', 'Inprogress'],
             datasets: [{
                 label: 'Course Progress',
-                data: [70, 30],
-                backgroundColor: [
-                '#294CFF',
-                '#FFAB00'
-                ],
+                data: datas,
+                backgroundColor: backgroundColor,
                 hoverOffset: 4
             }]
-	    },
+        },
         options: {
+            plugins: {
+                legend: {
+                display: false
+                }
+            },
             title: {
                 display: true,
                 text: 'Chart Donut'
             },
             legend: {
-                position: 'bottom'
+                display: false
             },
             cutout: '70%',
             radius: 120
         }
+    });
 
-    })
+    // Calculate percentages
+    var total = datas.reduce((a, b) => a + b, 0);
+    var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+
+    // Generate and display the custom legend
+    var legendHtml = "<ul>";
+   for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
+        legendHtml +=
+            '<li>' + '<p> <span style="background-color:' +
+            myDoughnutChart.data.datasets[0].backgroundColor[i] +
+            '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
+            "</li>";
+    }
+    legendHtml += "</ul>";
+
+    document.getElementById("legend").innerHTML = legendHtml;
 </script>
 {{-- course progress chart end --}}
 @endsection
