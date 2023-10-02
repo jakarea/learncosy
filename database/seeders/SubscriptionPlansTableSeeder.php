@@ -17,7 +17,7 @@ class SubscriptionPlansTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 10) as $index) {
+        foreach (range(1, 6) as $index) {
 
             $randomDateTime = date('Y-m-d H:i:s', strtotime('-30 days', strtotime(now())) + mt_rand(0, 30 * 24 * 3600));
             $features = [];

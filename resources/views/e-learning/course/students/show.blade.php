@@ -13,7 +13,6 @@
     <meta name="keywords" content="{{ $course->categories . ', ' . $course->meta_keyword }}" />
     <meta name="description" content="{{ $course->meta_description }}" itemprop="description">
 @endsection
-
 @section('content')
     @php
         $i = 0;
@@ -44,7 +43,7 @@
                             </div>
                         @else
                             <a href="#">
-                                <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}" alt="Course"
+                                <img src="{{ asset( $course->thumbnail) }}" alt="Course"
                                     class="img-fluid">
                             </a>
                             {{-- video player --}}
@@ -54,7 +53,7 @@
                         <div class="media course-title">
                             <div class="media-body">
                                 <h1>{{ $course->title }}</h1>
-                                <p>{{ $course->user->name }} . {{ $course->user->name }} </p>
+                                <p>{{ $course->user->name }}  </p>
                             </div>
                             {{-- liked course button here --}}
                             <div class="liked-course-button">
@@ -335,7 +334,7 @@
             });
 
             var options = {
-                id: '{{ 305108069 }}',
+                id: '{{ 870001728 }}',
                 // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
                 autoplay: true,
                 loop: true,
