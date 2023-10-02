@@ -101,7 +101,7 @@ main {
     background: var(--background-light-paper, #FFF);
     box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
     padding: 1rem 1.5rem;
-    min-height: 95%;
+    min-height: 100%;
 
     .d-flex {
         align-items: center;
@@ -357,13 +357,70 @@ main {
     text-align: center;
 
     h6 {
-        color: #000; 
+        color: #000;
         font-size: 1.3125rem;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
     }
 }
+
+.course-progress-box {
+    position: relative;
+    margin-top: 1rem;
+    .txt {
+        position: absolute;
+        left: 0;
+        top: 1rem;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        h5 {
+            color: var(--text-light-primary, #212B36);
+            font-size: 1.5rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 2rem;
+        }
+
+        p {
+            color: var(--text-light-secondary, #637381); 
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.375rem; 
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // responsive css start
 @include q.responsive(phone) {
@@ -412,7 +469,7 @@ main {
         overflow-x: scroll;
     }
 
-    
+
 
     .course-status-box table tr th,
     .course-status-box table tr td {
@@ -420,9 +477,9 @@ main {
         white-space: nowrap;
     }
 
-    
-    .course-status-wrap .d-flex{
-        flex-direction: row!important;
+
+    .course-status-wrap .d-flex {
+        flex-direction: row !important;
     }
 }
 

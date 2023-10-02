@@ -19,7 +19,7 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-
+use Illuminate\Support\Facades\DB;
 
 class StudentHomeController extends Controller
 {
@@ -28,10 +28,62 @@ class StudentHomeController extends Controller
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
+        $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
 
+        $totalHours = floor($totalTimeSpend / 3600);
+        $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
         // return $likeCourses;
 
-        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount'));
+        $timeSpentData = CourseActivity::select(
+            DB::raw('DATE_FORMAT(created_at, "%b") as month'),
+            DB::raw('SUM(duration) as time_spent')
+        )
+        ->groupBy('month')
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+
+        $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
+        ->whereMonth('created_at', now()->month)
+        ->first();
+
+        $previousMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
+            ->whereMonth('created_at', now()->subMonth()->month)
+            ->first();
+
+        if ($currentMonthData && $previousMonthData) {
+            $currentMonthDuration = $currentMonthData->total_duration;
+            $previousMonthDuration = $previousMonthData->total_duration;
+
+            if ($previousMonthDuration != 0) {
+                $percentageChange = (($currentMonthDuration - $previousMonthDuration) / $previousMonthDuration) * 100;
+            } else {
+                $percentageChange = 0;
+            }
+        } else {
+            $percentageChange = 0;
+        }
+         
+        //  count course statics
+        $notStartedCount = 0;
+        $inProgressCount = 0;
+        $completedCount = 0;
+        
+        if ($enrolments) {
+            foreach ($enrolments as $enrolment) {
+                $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
+                
+                if ($allCourses == 0) {
+                    $notStartedCount++;
+                } elseif ($allCourses > 0 && $allCourses < 99) {
+                    $inProgressCount++;
+                } elseif ($allCourses == 100) {
+                    $completedCount++;
+                }
+            }
+        }  
+
+        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
     }
 
     // dashboard

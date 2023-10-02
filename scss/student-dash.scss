@@ -88,7 +88,7 @@
     li {
         text-align: center;
         border-right: 1px solid rgba(0, 0, 0, 0.10);
-        padding-right: 1.5rem;
+        padding: 0 0.75rem;
 
         &:last-child {
             border-right: 0;
@@ -352,8 +352,8 @@
     }
 
     .course-single-item {
-        &:hover{
-            .course-ol-box{
+        &:hover {
+            .course-ol-box {
                 transform: scale(1);
             }
         }
@@ -1084,7 +1084,7 @@
     border-radius: 0.5rem;
     background: var(--background-light-paper, #FFF);
     box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.20);
-    min-height: 95%;
+    min-height: 100%;
 
     .d-flex {
         align-items: center;
@@ -1214,26 +1214,66 @@
                 }
             }
 
+            &:last-child {
+                td {
+                    border-bottom: 0px solid transparent;
+                }
+            }
 
         }
     }
 }
 
 
-.hover-item:nth-child(4n) { 
-    .course-single-item{
-        .course-ol-box{
-            right: 100%!important;
+.hover-item:nth-child(4n) {
+    .course-single-item {
+        .course-ol-box {
+            right: 100% !important;
         }
-    } 
+    }
 }
 
+.fixed-height {
+    @include m.df(space-between);
+    flex-direction: column;
+}
 
+#legend {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
 
+#legend {
+    ul {
+        @include m.df(space-around);
+    }
+}
 
+#legend li p {
+    color: var(--text-light-secondary, #637381);
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.125rem;
+}
 
+#legend li h6 {
+    color: var(--text-light-primary, #212B36); 
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.5rem; 
+    padding-left: 1rem;
+}
 
-
+#legend li span {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    margin-right: 5px;
+}
 
 
 
@@ -1688,27 +1728,28 @@
         margin-top: 1rem;
     }
 
-    .hover-item:nth-child(4n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: -110%!important;
+    .hover-item:nth-child(4n) {
+        .course-single-item {
+            .course-ol-box {
+                right: -110% !important;
             }
-        } 
+        }
     }
 
-    .hover-item:nth-child(3n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: -110%!important;
+    .hover-item:nth-child(3n) {
+        .course-single-item {
+            .course-ol-box {
+                right: -110% !important;
             }
-        } 
+        }
     }
-    .hover-item:nth-child(2n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: 100%!important;
+
+    .hover-item:nth-child(2n) {
+        .course-single-item {
+            .course-ol-box {
+                right: 100% !important;
             }
-        } 
+        }
     }
 }
 
@@ -1722,20 +1763,20 @@
         height: auto;
     }
 
-    .hover-item:nth-child(4n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: -110%!important;
+    .hover-item:nth-child(4n) {
+        .course-single-item {
+            .course-ol-box {
+                right: -110% !important;
             }
-        } 
+        }
     }
 
-    .hover-item:nth-child(3n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: 100%!important;
+    .hover-item:nth-child(3n) {
+        .course-single-item {
+            .course-ol-box {
+                right: 100% !important;
             }
-        } 
+        }
     }
 }
 
@@ -1750,20 +1791,20 @@
         height: auto;
     }
 
-    .hover-item:nth-child(4n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: -110%!important;
+    .hover-item:nth-child(4n) {
+        .course-single-item {
+            .course-ol-box {
+                right: -110% !important;
             }
-        } 
+        }
     }
 
-    .hover-item:nth-child(3n) { 
-        .course-single-item{
-            .course-ol-box{
-                right: 100%!important;
+    .hover-item:nth-child(3n) {
+        .course-single-item {
+            .course-ol-box {
+                right: 100% !important;
             }
-        } 
+        }
     }
 }
 
