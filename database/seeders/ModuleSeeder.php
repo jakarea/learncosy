@@ -17,12 +17,12 @@ class ModuleSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        foreach (range(1, 100) as $index) {
-            $randomDateTime = date('Y-m-d H:i:s', strtotime('-330 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
+        foreach (range(1, 50) as $index) {
+            $randomDateTime = date('Y-m-d H:i:s', strtotime('-180 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
             DB::table('modules')->insert([
-                'course_id' => $faker->numberBetween(1, 50), 
-                'instructor_id' => $faker->numberBetween(3, 15), 
-                'user_id' => $faker->numberBetween(3, 15),
+                'course_id' => $faker->numberBetween(1, 10), 
+                'instructor_id' => $faker->numberBetween(2, 6), 
+                'user_id' => $faker->numberBetween(2, 6),
                 'title' => $faker->sentence,
                 'slug' => $faker->slug,
                 'status' => $faker->randomElement(['draft', 'published']),

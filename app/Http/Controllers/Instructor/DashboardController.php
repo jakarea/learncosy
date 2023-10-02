@@ -114,8 +114,25 @@ class DashboardController extends Controller
 
         $categories = array_unique($unique_array);
 
-        // dd($earningByMonth);
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning'));
+
+        // course active or not count
+        $activeCourses = 0;
+        $draftCourses = 0; 
+        
+        if ($courses) {
+            foreach ($courses as $course) {
+                 
+                if ($course->status == 'draft') {
+                    $draftCourses++;
+                } elseif ($course->status == 'published') {
+                    $activeCourses++;
+                }
+            }
+        } 
+
+        // return $earningByDates;
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
+
     }
 
 

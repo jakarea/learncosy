@@ -159,7 +159,6 @@ class StudentHomeController extends Controller
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
-
         return view('e-learning/course/students/catalog',compact('cartCourses','courses','categories', 'bundleCourse'));
     }
 
@@ -172,11 +171,10 @@ class StudentHomeController extends Controller
         return view('settings/students/account-management',compact('user', 'checkout'));
     }
 
-
-
     // course show
     public function show($slug)
-    {
+    { 
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -194,6 +192,7 @@ class StudentHomeController extends Controller
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
         });
+ 
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
@@ -414,7 +413,19 @@ class StudentHomeController extends Controller
             $status = 'liked';
         }
 
-
         return response()->json(['message' => $status]);
+    }
+
+    public function courseUnLike($course_id, $ins_id)
+    {
+
+        $course_liked = course_like::where('course_id', $course_id)->where('instructor_id', $ins_id)->first();
+
+        if ($course_liked) {
+             $course_liked->delete();
+             $status = 'unliked';
+        }
+
+        return redirect()->back()->with('success', 'Course Unlike Successfully Done!');
     }
 }

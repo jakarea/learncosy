@@ -140,7 +140,15 @@
                                     </div>
                                 </div>
                                 <div class="course-txt-box">
-                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                    @if ($course->offer_price)
+                                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                     @elseif(!$course->offer_price && !$course->price)
+                                     <h5>Free</h5>
+                                        
+                                        @else 
+                                        <h5>€ {{ $course->price }}</h5>
+                                    @endif
+                                    
                                 </div>
                             </div>
                         </div>

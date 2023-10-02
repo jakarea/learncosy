@@ -32,7 +32,7 @@ class SubscriptionPlansTableSeeder extends Seeder
                 'features' =>  implode(',',$features),
                 'type' => $faker->randomElement(['monthly', 'yearly']),
                 'status' => $faker->randomElement(['active', 'inactive']),
-                'created_by' => $faker->numberBetween(1, 5), // Assuming user IDs 1 to 5
+                'created_by' => 1,
                 'created_at' => $randomDateTime,
                 'updated_at' => now(),
             ]);

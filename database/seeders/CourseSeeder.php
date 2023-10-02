@@ -19,17 +19,17 @@ class CourseSeeder extends Seeder
         {
             $faker = Faker::create();
     
-            foreach (range(1, 100) as $index) {
-                $randomDateTime = date('Y-m-d H:i:s', strtotime('-330 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
+            foreach (range(1, 10) as $index) {
+                $randomDateTime = date('Y-m-d H:i:s', strtotime('-180 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
                 DB::table('courses')->insert([
                     'title' => $faker->sentence,
                     'auto_complete' => $faker->boolean,
-                    'user_id' => $faker->numberBetween(3, 15), // Replace with your user ID range
+                    'user_id' => $faker->numberBetween(2, 6), // Replace with your user ID range
                     'slug' => $faker->slug,
                     'price' => $faker->randomFloat(2, 20, 100),
-                    'offer_price' => $faker->randomFloat(2, 10, 50),
+                    'offer_price' => $faker->randomFloat(2, 15, 50),
                     'categories' => $faker->words(2, true),
-                    'thumbnail' => 'thumbnail1.png',
+                    'thumbnail' => 'thumbnail'.$index.'.png',
                     'short_description' => $faker->paragraph,
                     'description' => $faker->paragraphs(3, true),
                     'meta_keyword' => $faker->words(3, true),

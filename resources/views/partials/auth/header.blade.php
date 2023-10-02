@@ -3,14 +3,13 @@
       <div class="row align-items-center">
         <div class="col-6 col-md-6 col-lg-6 px-0">
           <div class="header-left-part">
-            <!-- header logo @S -->
+            {{-- header logo --}}
             <div class="header-logo-wrap">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('assets/images/learncosy-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid" style="width: 11rem" /> 
+                    <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="Logo" title="Learncosy" class="img-fluid" style="width: 11rem"> 
                 </a> 
-            </div>
-            <!-- header logo @E -->
-   
+            </div> 
+             {{-- header logo --}}
           </div>
         </div>
         <div class="col-6 col-md-6 col-lg-6 px-0">
