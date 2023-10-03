@@ -131,8 +131,8 @@ class AdminProfileController extends Controller
         $students = [];
         $todaysStudents = [];
 
-        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
-        $enrolments = Checkout::orderBy('id', 'desc')->get();
+        //$payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
+        $enrolments = Checkout::with('course','user')->orderBy('id', 'desc')->get();
 
 
         $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();
@@ -159,7 +159,7 @@ class AdminProfileController extends Controller
         $totalEnrollToday = $this->getEnrollmentDataToday();
         $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
 
-        return view('payments/admin/grid-admin-payment', compact('payments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
+        return view('payments/admin/grid-admin-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
     }
 
     private function getEnrollmentData()

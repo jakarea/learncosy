@@ -371,6 +371,7 @@ $i = 0;
                     var lessonId = $(this).data('lesson-id');
                     var moduleId = $(this).data('modules-id');
                     var videoUrl = $(this).attr('href');
+                    console.log({videoUrl})
                     videoUrl = videoUrl.replace('/videos/', '');
                     player.loadVideo(videoUrl);
                     // add bold class to current lesson

@@ -83,7 +83,7 @@ Top Perform Courses
                                     </ul>
                                 </div>
                             </div>
-                            <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}" alt="Course Thumbanil"
+                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
