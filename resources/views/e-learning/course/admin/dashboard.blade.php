@@ -162,12 +162,23 @@ Home Page
         <div class="row">
             <div class="col-xl-8 mt-15">
                 <div class="course-status-wrap">
-                    <div class="d-flex">
+                    <div class="d-flex py-0 pe-0">
                         <h4>Course Status</h4>
-                        <div>
+                        <div class="d-flex">
                            @if (count($courses) > 5)
                            <a href="{{ url('admin/courses') }}" class="me-0">View All</a>
-                           @endif
+                           @endif 
+                           
+                            <div class="dropdown course-status-filter">
+                                <button type="button" class="btn" data-bs-toggle="dropdown"
+                                    aria-expanded="false">This month <i class="fas fa-angle-down"></i></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">Three Months</a></li>
+                                    <li><a class="dropdown-item" href="#">Six Months</a></li>
+                                    <li><a class="dropdown-item" href="#">One Year</a></li>
+                                </ul>
+                            </div> 
                         </div>
                     </div>
                     @if (count($courses) > 0)
@@ -297,4 +308,5 @@ Home Page
         });
 </script>
 {{-- time spend chart end --}}
+  
 @endsection

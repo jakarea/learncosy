@@ -15,7 +15,8 @@
 
 @section('content')
 <main class="course-overview-page">
-    <div class="overview-banner-box" style="background-image: url({{asset('assets/images/courseds/'.$course->banner)}});">
+    <div class="overview-banner-box"
+        style="background-image: url({{asset('assets/images/courseds/'.$course->banner)}});">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-lg-8">
@@ -25,16 +26,29 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset($course->user->avatar)}}" alt="Place"
-                                class="img-fluid">
+                            <img src="{{asset($course->user->avatar)}}" alt="Place" class="img-fluid">
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
-                                <h6>{{ $course->user->user_role }}</h6>
+                                <h6 class="text-capitalize">{{ $course->user->user_role }}</h6>
                             </div>
                         </div>
                         @endif
-                        <h4>{{ $course->duration }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course . {{
-                            count($course_reviews) }} Reviews</h4>
+
+                        {{-- course lesson duration calculation --}}
+                        @php
+                        $totalDuration = 0;
+                        @endphp
+                        @foreach($course->modules as $module)
+                        @foreach($module->lessons as $lesson)
+                        @php
+                        $totalDuration += $lesson->duration;
+                        @endphp
+                        @endforeach
+                        @endforeach
+                        {{-- course lesson duration calculation --}}
+
+                        <h4>{{ $totalDuration }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
+                            . {{ count($course_reviews) }} Reviews</h4>
 
                     </div>
                 </div>
@@ -46,8 +60,8 @@
             <div class="col-lg-8 col-12 order-2 order-lg-1">
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
-                    @php 
-                        $objectives = explode(",", $course->objective);
+                    @php
+                    $objectives = explode(",", $course->objective);
                     @endphp
 
                     <ul>
@@ -57,8 +71,8 @@
                     </ul>
                 </div>
                 <div class="common-header">
-                    <h3>Course Content</h3>
-                </div> 
+                    <h3 class="mb-0">Course Content</h3>
+                </div>
                 {{-- course outline --}}
                 <div class="course-outline-wrap course-content">
                     <div class="accordion" id="accordionExample">
@@ -103,19 +117,18 @@
                         @endforeach
                     </div>
                 </div>
-                {{-- course outline --}} 
+                {{-- course outline --}}
                 <div class="common-header">
-                    <h3>Student Review's</h3>
+                    <h3 class="mb-0">Student Review's</h3>
                     <span>Total {{ count($course_reviews) }} Reviews</span>
-                </div> 
+                </div>
                 <div class="row">
                     @if(count($course_reviews) > 0)
                     @foreach($course_reviews as $course_review)
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset($course_review->user->avatar) }}"
-                                    alt="Avatar" class="img-fluid">
+                                <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
                                     <h6>{{$course_review->created_at}}</h6>
@@ -135,110 +148,132 @@
                         <p>No Review Found!</p>
                     </div>
                     @endif
-                </div> 
+                </div>
                 <div class="common-header">
-                    <h3>Similar Course</h3>
-                </div> 
+                    <h3 class="mb-0">Similar Course</h3>
+                </div>
                 <div class="row">
 
-                    @foreach ($related_course as $course) 
-                        @php 
-                            $review_sum = 0;
-                            $review_avg = 0;
-                            $total = 0;
-                            foreach($course->reviews as $review){
-                                $total++;
-                                $review_sum += $review->star;
-                            }
-                            if($total)
-                                $review_avg = $review_sum / $total;
-                        @endphp
-                        {{-- course single box start --}}
-            
+                    @foreach ($related_course as $course)
+                    @php
+                    $review_sum = 0;
+                    $review_avg = 0;
+                    $total = 0;
+                    foreach($course->reviews as $review){
+                    $total++;
+                    $review_sum += $review->star;
+                    }
+                    if($total)
+                    $review_avg = $review_sum / $total;
+                    @endphp
+                    {{-- course single box start --}}
+
                     <div class="col-lg-5 col-sm-6">
-                        <div class="course-single-item"> 
+                        <div class="course-single-item">
                             <div class="course-thumb-box">
-                            <img src="{{asset($course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
+                                <img src="{{asset($course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
                             </div>
 
                             <div class="course-txt-box">
-                                <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
+                                    40, $end = '..') }}</a>
                                 <p>{{ $course->user->subdomain }}</p>
                                 <ul>
                                     <li><span>{{ $review_avg }}</span></li>
-                                    @for ($i = 0; $i<$review_avg; $i++)
-                                    <li><i class="fas fa-star"></i></li>
-                                    @endfor
-                                    <li><span>({{ $total }})</span></li>
+                                    @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                        @endfor
+                                        <li><span>({{ $total }})</span></li>
                                 </ul>
                                 @if($course->offer_price)
-                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5> 
-                                    @else
-                                    <h5> {{ $course->price > 0 ? '€ '.$course->price: 'Free' }} </h5> 
+                                <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                @else
+                                <h5> {{ $course->price > 0 ? '€ '.$course->price: 'Free' }} </h5>
                                 @endif
                             </div>
                         </div>
                     </div>
                     {{-- course single box end --}}
                     @endforeach
-                </div> 
+                </div>
             </div>
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid">
-                        <h2>€ {{ $course->offer_price }}</h2> 
+
+                        <div class="d-flex">
+                            <div>
+                                @if ($course->offer_price)
+                                <h2>€ {{ $course->offer_price }}</h2>
+                                @elseif(!$course->offer_price && $course->price)
+                                <h2>€ {{ $course->price }}</h2>
+                                @else
+                                <h2>Free</h2>
+                                @endif
+                            </div> 
+                        </div>
+
                         @if ( !isEnrolled($course->id) )
                         <form action="{{route('students.checkout', $course->slug)}}" method="GET">
                             <input type="hidden" name="course_id" value="{{$course->id}}">
                             <input type="hidden" name="price" value="{{$course->price}}">
                             <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
                             <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
-                        </form>  
-                        
+                        </form>
+
                         <form action="{{ route('cart.add', $course) }}" method="POST">
                             @csrf
                             @if ($cartCourses->pluck('course_id')->contains($course->id))
-                                <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>Already Added to Cart</button>
-                            @else 
+                            <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>Already
+                                Added to Cart</button>
+                            @else
                             <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
                             @endif
-                        </form> 
-                        @endif 
+                        </form>
+                        @endif
                     </div>
                     <div class="course-desc-txt">
-                        <h4>Course Description</h4> 
+                        <h4>Course Description</h4>
                         <p>{{ $course->short_description }}</p>
                     </div>
                     <div class="course-details-txt">
-                        <h4>Course Details</h4> 
+                        <h4>Course Details</h4>
                         @if ($course->curriculum)
-                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
+                        @endif
                         @if ($course->platform)
-                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->platform }}</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid">
+                            {{ $course->platform }}</p>
+                        @endif
                         @if ($course->language)
-                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid"> {{ $course->language }}</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid">
+                            {{ $course->language }}</p>
+                        @endif
                         @if ($course->duration)
-                        <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid">
+                            {{ $course->duration }} Minutes to Completed</p>
+                        @endif
                         @if ($course->number_of_module)
-                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_module}} Modules</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                class="img-fluid"> {{ $course->number_of_module}} Modules</p>
+                        @endif
                         @if ($course->number_of_lesson)
-                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
+                        @endif
                         @if ($course->number_of_attachment)
-                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_attachment}} Attachemnt</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid">
+                            {{ $course->number_of_attachment}} Attachemnt</p>
+                        @endif
                         @if ($course->number_of_video)
-                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid"> {{ $course->number_of_video}} Videos</p>
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid">
+                            {{ $course->number_of_video}} Videos</p>
+                        @endif
                         @if ($course->hascertificate)
-                            <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid"> Certificate of Completion</p> 
-                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid">
+                            Certificate of Completion</p>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -36,7 +36,21 @@
                                     </div>
                                 </div>
                             @endif
-                            <h4>{{ $course->duration }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+
+                            {{-- course lesson duration calculation --}}
+                        @php
+                        $totalDuration = 0;
+                        @endphp
+                        @foreach($course->modules as $module)
+                        @foreach($module->lessons as $lesson)
+                        @php
+                        $totalDuration += $lesson->duration;
+                        @endphp
+                        @endforeach
+                        @endforeach
+                        {{-- course lesson duration calculation --}}
+
+                            <h4>{{ $totalDuration }} Minutes to Complete . {{ count($course->modules) }} Moduls in
                                 Course
                                 . {{ $totalReviews }} Reviews</h4>
 
@@ -199,13 +213,13 @@
                                                 @elseif($lesson->type == 'audio')
                                                     <i class="fa-solid fa-headphones text-dark ms-2"></i>
                                                 @elseif($lesson->type == 'video')
-                                                    <i class="fa-solid fa-play text-dark ms-2"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="icon"
+                                                class="img-fluid ms-2">
                                                 @endif
                                             @endif
                                         </div>
                                     </li>
-                                @endforeach
-
+                                @endforeach 
                                 {{-- @php print_r($course_activities) @endphp --}}
                             </ul>
 
