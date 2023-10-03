@@ -78,12 +78,6 @@ class InstructorController extends Controller
        $insSlugs = Str::slug($request->name);
 
         if ($request->hasFile('avatar')) { 
-            if ($instructor->avatar) {
-               $oldFile = public_path($instructor->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
             $file = $request->file('avatar');
             $image = Image::make($file);
             $uniqueFileName = $insSlugs . '-' . uniqid() . '.png';
