@@ -90,7 +90,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}"
+                                    <img src="{{ asset($course->thumbnail) }}"
                                         alt="Course Thumbanil" class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
@@ -107,11 +107,11 @@
                                 </div>
                             </div>
                             <div class="course-txt-box">
-                                @if ($course->offer_price)
-                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                                @else
-                                    <h5>€ {{ $course->price }} </h5>
-                                @endif
+                                <h5>
+                                {{ ($course->offer_price ? ($price = $course->offer_price) : ($price =
+                                    $course->price)) ? '€' . $price : 'Free' }}
+                                </h5>
+                                 
                             </div>
                         </div>
                     </div>

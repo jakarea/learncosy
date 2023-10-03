@@ -105,39 +105,42 @@
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap payment-table-admin">
-                    @if (count($payments) > 0) 
+                    @if (count($enrolments) > 0) 
                     <table>
                         <tr>
                             <th>No</th>
-                            <th>Payment ID</th>
-                            <th>Instructor Email</th>
-                            <th>Payment Amount</th>
-                            <th>Start At</th>
-                            <th>End At</th>
-                            <th>Duration</th>
+                            <th>Course Name</th>
+                            <th>Student Name</th>
+                            <th>Payment Date</th>
+                            <th>Payment Type</th>
+                            <th>Amount</th>
+                            <th>Status</th>
                         </tr>
-                        @foreach ($payments as $key => $payment)
+                        @foreach ($enrolments as $key => $payment)
                         <tr>
                             <td>
                                 {{ $key + 1 }}
                             </td>
                             <td>
-                                <h5>{{$payment->stripe_plan}}</h5>
+                                <h5>{{(strlen($payment->course->title) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
                             </td>
                             <td>
-                                <p>{{$payment->instructor->email}}</p>
+                                <p>{{$payment->user->name}}</p>
+                            </td>
+                            <td>
+                                <p>{{$payment->payment_method}}</p>
                             </td>
                             <td>
                                 <p>{{$payment->amount}}</p>
                             </td>
                             <td>
-                                <p>{{$payment->start_at}}</p>
+                                <p>{{$payment->status}}</p>
                             </td>
                             <td>
-                                <p>{{$payment->end_at}}</p>
-                            </td>
-                            <td>
-                                <p>{{$payment->trial_ends_at}}</p>
+                                <ul>
+                                    <li>Export</li>
+                                    <li>View</li>
+                                </ul>
                             </td>
                         </tr>
                         @endforeach
@@ -151,7 +154,7 @@
         <div class="row">
             {{-- pagginate --}}
             <div class="paggination-wrap mt-4">
-                {{ $payments->links('pagination::bootstrap-5') }}
+                
             </div>
             {{-- pagginate --}}
         </div>
