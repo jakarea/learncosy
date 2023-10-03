@@ -17,13 +17,11 @@ Home Page
             <div class="col-12">
                 <div class="yearly-analitics">
                     <h1>Yearly Analytics</h1>
-
                     {{-- yearly filter box --}}
                     <div class="dropdown">
                         <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
                             aria-expanded="false"><img src="{{ asset('latest/assets/images/icons/filter.svg') }}"
                                 alt="a" class="img-fluid"> Filters</button>
-
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">One Month</a></li>
                             <li><a class="dropdown-item" href="#">Three Months</a></li>
@@ -143,13 +141,11 @@ Home Page
                         if ($course->sale_count < $sale_count && $sn < 3) { $sale_count=$course->sale_count;
                             $sn++;
                             }
-
                             @endphp
                             <div class="media">
                                 <img src="{{ asset($course->thumbnail) }}" alt="Avatar" class="img-fluid">
                                 <div class="media-body">
-                                    <h5><a href="{{ url('admin/courses', $course->slug) }}">
-                                            {{ substr($course->title, 0, 20) . '...' }}</a></h5>
+                                    <h5><a href="{{ url('admin/courses', $course->slug) }}">{{ substr($course->title, 0, 20) . '...' }}</a></h5>
                                     <p> {{ $course->categories }} </p>
                                 </div>
                                 <img src="{{ asset('latest/assets/images/tofy-' . $sn . '.svg') }}" alt="Avatar"
@@ -157,7 +153,7 @@ Home Page
                             </div>
                             @endforeach
                             @else
-                            @include('partials/no-data')
+                                @include('partials/no-data')
                             @endif
                     </div>
                 </div>
@@ -196,15 +192,13 @@ Home Page
                                     </div>
                                 </div>
                             </td>
-
                             <td>
                                 <p>{{ ($course->offer_price ? ($price = $course->offer_price) : ($price =
                                     $course->price)) ? '€' . $price : 'Free' }}
                                 </p>
                             </td>
                             <td>
-                                <p><i class="fas fa-star" style="color: #F8AA00;"></i>
-                                    {{ number_format($course->avg_rating, 1) }}</p>
+                                <p><i class="fas fa-star" style="color: #F8AA00;"></i>{{ number_format($course->avg_rating, 1) }}</p>
                             </td>
                             <td>
                                 <p>€{{ $course->sum_amount ? $course->sum_amount : 0 }}</p>
@@ -216,7 +210,7 @@ Home Page
                         @endforeach
                     </table>
                     @else 
-                    @include('partials/no-data')
+                        @include('partials/no-data')
                     @endif
                 </div>
             </div>
@@ -247,7 +241,7 @@ Home Page
                        </div>
                        @endforeach
                        @else 
-                       @include('partials/no-data')
+                        @include('partials/no-data')
                        @endif
                     </div>
                 </div>
