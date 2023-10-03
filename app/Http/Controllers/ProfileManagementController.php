@@ -37,10 +37,8 @@ class ProfileManagementController extends Controller
         $editExp = '';
         if($experience_id){
             $editExp = Experience::where('id', $experience_id)->first();
-        }
-        // return $editExp;
+        } 
         $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
-        // dd($user);
         return view('profile/instructor/edit',compact('user','experiences','editExp'));
     }
 
@@ -75,33 +73,18 @@ class ProfileManagementController extends Controller
             $user->password = Hash::make($request->password);
         }else{
             $user->password = $user->password;
-        }
-
-    //     if ($request->hasFile('avatar')) {
-    //         // Delete old file
-    //         if ($user->avatar) {
-    //            $oldFile = public_path($user->avatar);
-    //            if (file_exists($oldFile)) {
-    //                unlink($oldFile);
-    //            }
-    //        }
-    //        $slugg = Str::slug($request->name);
-    //        $image = $request->file('avatar');
-    //        $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-    //        $destinationPath = public_path('/assets/images/users');
-    //        $image->move($destinationPath, $name);
-    //        $user->avatar = $name;
-    //    }
-       $image_path = '';
+        } 
+         
        if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $image = Image::make($file);
             $slugg = Str::slug($request->name);
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
-            $image->save(public_path('assets/images/users/') . $uniqueFileName);
-            $image_path = 'assets/images/users/' . $uniqueFileName;
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+            $user->avatar = $image_path;
         }
-        $user->avatar = $image_path;
+       
         $user->save();
 
         // Send email

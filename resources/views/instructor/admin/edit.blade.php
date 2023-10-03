@@ -96,13 +96,25 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio
-                                    </label>
-                                    <textarea name="short_bio" id="short_bio"
-                                        class="form-control @error('short_bio') is-invalid @enderror"
-                                        placeholder="Enter short bio">{{ $instructor->short_bio }}</textarea>
+                                    <label for="company_name">Company name </label>
 
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                    <input type="text" name="company_name" id="company_name" value="{{  $instructor->company_name }}"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        placeholder="Company Name">
+
+                                    <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group form-error">
+                                    <label for="website">Website </label>
+
+                                    <input type="url" name="website" id="website" value="{{  $instructor->short_bio }}"
+                                        class="form-control @error('website') is-invalid @enderror"
+                                        placeholder="Enter Website">
+
+                                    <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
@@ -150,26 +162,25 @@
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*" onchange="previewImage()"
-                                    class="form-control d-none  @error('avatar') is-invalid @enderror">
-                                    <span class="invalid-feedback">@error('avatar'){{ $message }} @enderror</span>
- 
+                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
+                                        onchange="displayImage(event)" class="d-none">
+                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
+                                            @enderror</span>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="">Uploaded Image</label>
                                 </div>
-                                
-                                <div id="imageContainer"> 
-                                    <img src="" alt="" class="img-fluid" id="preview">
-                                    @if($instructor->avatar)
-                                        <img src="{{ asset($instructor->avatar) }}" alt="logo" class="img-fluid">
+                                <div id="imageContainer">
+                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
+                                    @if ($instructor->avatar)
+                                    <img src="{{asset($instructor->avatar)}}" alt="No Image"
+                                        class="img-fluid d-block" id="uploadedImage"> 
                                     @endif 
-                                   
                                 </div>
-                            </div>
+                            </div> 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
@@ -235,24 +246,7 @@
 <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
 </script>
 <script src="{{asset('assets/js/tinymce.js')}}"></script>
-<script>
-    function previewImage() {
-        var preview = document.getElementById('preview');
-        var fileInput = document.getElementById('imageInput');
-        var file = fileInput.files[0];
-        
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        } else {
-            preview.style.display = 'none';
-        }
-    } 
-</script>
+<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
     let extraFields = document.querySelector('.url-extra-field');

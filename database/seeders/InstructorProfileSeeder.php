@@ -33,7 +33,7 @@ class InstructorProfileSeeder extends Seeder
                     'phone' => $faker->phoneNumber,
                     'description' => $faker->paragraph,
                     'recivingMessage' => 1,
-                    'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 25).'.jpeg',
+                    'avatar' => 'uploads/users/'.$faker->numberBetween(1, 25).'.jpeg',
                     'email_verified_at' => now(),
                     'password' => bcrypt(1234567890), // You can set a default password
                     'status' => 'active', // Default user status
@@ -86,7 +86,7 @@ class InstructorProfileSeeder extends Seeder
                         'phone' => $faker->phoneNumber,
                         'description' => $faker->paragraph,
                         'recivingMessage' => 1,
-                        'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 25).'.jpeg',
+                        'avatar' => 'uploads/users/'.$faker->numberBetween(1, 25).'.jpeg',
                         'email_verified_at' => now(),
                         'password' => bcrypt(1234567890), // You can set a default password
                         'status' => 'active', // Default user status

@@ -24,6 +24,16 @@
                 </div>
             </div>
         </div>
+        @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
         <div class="row">
             <div class="col-12">
                 <div class="user-add-form-wrap">
@@ -77,19 +87,18 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio
-                                    </label>
-                                    <textarea name="short_bio" id="short_bio"
-                                        class="form-control @error('short_bio') is-invalid @enderror"
-                                        placeholder="Enter short bio">{{ $user->short_bio }}</textarea>
+                                    <label for="website">Website </label>
+                                    <input type="url" placeholder="Enter Web Address" name="website"
+                                        class="form-control @error('website') is-invalid @enderror"
+                                        value="{{ $user->short_bio }}" id="website"> 
 
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                    <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="features" class="mb-1">Social Media </label>
+                                    <label for="social_links" class="mb-1">Social Media </label>
                                     @php $socialLinks = explode(",",$user->social_links); @endphp
                                     
                                     <div class="url-extra-field">
@@ -132,6 +141,9 @@
                                     </label>
                                     <input type="file" name="avatar" id="imageInput" accept="image/*"
                                         onchange="displayImage(event)" class="d-none">
+
+                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
+                                            @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">

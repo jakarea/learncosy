@@ -10,20 +10,13 @@
 {{-- page content @S --}}
 @section('content')
 <main class="user-profile-view-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         {{-- profile information @S --}}
         <div class="row">
             <div class="col-lg-8">
                 <div class="user-profile-picture">
                     <div class="cover-img">
-                        <img src="{{ asset('latest/assets/images/cover.png') }}" alt="Cover" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/cover.svg') }}" alt="Cover" class="img-fluid">
                     </div>
                     <div class="media">
                         @if($user->avatar)
@@ -34,17 +27,15 @@
                         @endif
                         <div class="media-body">
                             <h3>{{$user->name}}</h3>
-                            <p>{{$user->user_role}}</p>
-                        </div>
-                        <a href="{{url('admin/profile/edit')}}" class="edit-profile">Edit Profile</a>
+                            <p class="text-capitalize">{{$user->user_role}}</p>
+                        </div> 
                     </div>
                 </div>
                 <div class="user-details-box">
                     <h5>About Me</h5>
-                    @if (!$user->short_bio || !$user->description)
+                    @if (!$user->description)
                         @include('partials/no-data')
-                    @else
-                    <p>{{ $user->short_bio }}</p>
+                    @else 
                     {!! $user->description !!}
                     @endif
                 </div>
@@ -69,7 +60,7 @@
                     <div class="media">
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         <div class="media-body">
-                            <h6>Bio</h6>
+                            <h6>Website</h6>
                             <a href="#">{{$user->short_bio ? $user->short_bio : '--'}}</a>
                         </div>
                     </div> 
@@ -80,9 +71,7 @@
                     @php
                     $social_links = explode(",", $user->social_links);
                     use Illuminate\Support\Str;
-                    @endphp
-
-                    @if (!$social_links)
+                    @endphp 
 
                     @foreach ($social_links as $social_link)
                     @php
@@ -92,7 +81,6 @@
                     $domain = Str::before($domain, '.');
                     @endphp 
                     
-                    
                     <div class="media">
                         @if ($domain == 'linkedin')
                         <img src="{{ asset('latest/assets/images/icons/linkedin.svg') }}" alt="linkedin" class="img-fluid">
@@ -101,7 +89,7 @@
                         @elseif ($domain == 'twitter')
                         <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
                         @elseif ($domain == 'facebook')
-                        <i class="fa-brands fa-facebook-f" style="color: #1C1C1C; font-size: 1rem; margin-right: 1rem; width: 24px;
+                        <i class="fa-brands fa-facebook-square" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
                         height: 24px;
                         margin-top: 0.5rem;"></i>
                         @else
@@ -109,15 +97,12 @@
                         @endif
                         
                         <div class="media-body">
-                            <h6>{{ $domain ? $domain : '' }}</h6>
+                            <h6 class="text-capitalize">{{ $domain ? $domain : '' }}</h6>
                             <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '' }}</a>
                         </div>
                     </div>
                     @endforeach
-
-                    @else 
-                    @include('partials/no-data')
-                    @endif
+ 
                 </div>
             </div>
         </div>

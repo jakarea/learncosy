@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'description' => $faker->paragraph,
                 'recivingMessage' => 1,
-                'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 20).'.jpeg',
+                'avatar' => 'uploads/users/'.$faker->numberBetween(1, 20).'.jpeg',
                 'email_verified_at' => now(),
                 'password' => bcrypt(1234567890), // You can set a default password
                 'status' => 'active', // Default user status
@@ -80,7 +80,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'description' => $faker->paragraph,
                 'recivingMessage' => 1,
-                'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 20).'.jpeg',
+                'avatar' => 'uploads/users/'.$faker->numberBetween(1, 20).'.jpeg',
                 'email_verified_at' => now(),
                 'password' => bcrypt(1234567890), // You can set a default password
                 'status' => 'active', // Default user status

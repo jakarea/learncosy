@@ -37,7 +37,7 @@ class AdminManagementController extends Controller
     //    return $request->all();
     $request->validate([
            'name' => 'required|string',
-           'phone' => 'string',
+           'phone' => 'required|string', 
            'email' => 'required|email|unique:users,email',
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
@@ -47,6 +47,7 @@ class AdminManagementController extends Controller
 
        // initial password for admin if admin create profile
        $initialPass = 1234567890;
+
        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
        // add admin
        $admin = new User([
@@ -54,29 +55,28 @@ class AdminManagementController extends Controller
            'email' => $request->email,
            'user_role' => 'admin',
            'phone' => $request->phone,
-           'short_bio' => $request->short_bio,
+           'short_bio' => $request->website,
+           'company_name' => $request->company_name,
            'social_links' => trim($social_links,','),
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
        ]);
-// $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
-    $adminslug = Str::slug($request->name);
-        $image_path = '';
+ 
+        $adminslug = Str::slug($request->name);
+
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $image = Image::make($file);
             $uniqueFileName = $adminslug . '-' . uniqid() . '.png';
-            $image->save(public_path('assets/images/users/') . $uniqueFileName);
-            $image_path = 'assets/images/users/' . $uniqueFileName;
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+            $admin->avatar = $image_path;
         }
 
-        $admin->avatar = $image_path;
         $admin->save();
         return redirect('admin/alladmin')->with('success', 'Admin Added Successfully!');
     }
-
-
 
       // show page
       public function show($id)
@@ -116,7 +116,8 @@ class AdminManagementController extends Controller
             $user->email =  $user->email;
          }
          $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-         $user->short_bio = $request->short_bio;
+         $user->company_name = $request->company_name;
+         $user->short_bio = $request->website;
          $user->social_links = trim($social_links,',');
          $user->phone = $request->phone;
          $user->description = $request->description;
@@ -128,20 +129,21 @@ class AdminManagementController extends Controller
              $user->password = $user->password;
          }
 
-         if ($request->hasFile('avatar')) {
-            // Delete old file
+         $slugg = Str::slug($request->name);
+
+        if ($request->hasFile('avatar')) { 
             if ($user->avatar) {
                $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
            }
-           $slugg = Str::slug($request->name);
-           $image = $request->file('avatar');
-           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $user->avatar = $destinationPath . $name;
+            $file = $request->file('avatar');
+            $image = Image::make($file);
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+           $user->avatar = $image_path;
        }
 
          $user->save();
@@ -152,7 +154,7 @@ class AdminManagementController extends Controller
 
         $admin = User::where('id', $id)->first();
          //delete admin avatar
-         $adminOldThumbnail = public_path('/assets/images/users/'.$admin->avatar);
+         $adminOldThumbnail = public_path('uploads/users/'.$admin->avatar);
          if (file_exists($adminOldThumbnail)) {
              @unlink($adminOldThumbnail);
          }

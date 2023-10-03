@@ -261,22 +261,7 @@ class CourseController extends Controller
             $destinationPath = public_path('/assets/images/courses');
             $image->move($destinationPath, $name);
             $course->thumbnail = $name; 
-        }
-
-        if ($request->hasFile('banner')) { 
-             // Delete old file
-             if ($course->banner) {
-                $oldFile = public_path('/assets/images/courses/'.$course->banner);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
-                }
-            } 
-            $image = $request->file('banner');
-            $name = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $course->banner = $name; 
-        }
+        } 
 
         if ($request->hasFile('sample_certificates')) { 
              // Delete old file
