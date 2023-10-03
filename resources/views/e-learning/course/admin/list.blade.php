@@ -1,30 +1,21 @@
 @extends('layouts.latest.admin')
-@section('title')
-    All Courses
-@endsection
+@section('title','All Courses')
 
 {{-- style section @S --}}
-@section('style')
-    <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
+@section('style') 
+    <link href="{{ asset('latest/assets/admin-css/elearning.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/user.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 
 @section('content')
     <main class="courses-lists-pages">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <form action="" method="GET" id="myForm">
                 <div class="row">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-xl-8 col-md-8">
+                            <div class="col-12 col-md-12 col-lg-7 col-xl-8">
                                 <div class="user-search-box-wrap">
                                     <div class="form-group">
                                         <i class="fas fa-search"></i>
@@ -34,34 +25,34 @@
                                     <input type="hidden" name="status" id="inputField">
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-4">
-                                <div class="filter-dropdown-box">
-                                    <div class="dropdown">
-                                        <button class="btn" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false" id="dropdownBttn">
-                                            All
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item filterItem" href="#">All</a></li>
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="best_rated">Best Rated</a></li>
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="most_purchased">Most Purchased</a></li>
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="newest">Newest</a></li>
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="oldest">Oldest</a></li>
-                                        </ul>
+                            <div class="col-12 col-lg-5 col-xl-4">
+                                <div class="d-flex course-filter-header">
+                                    <div class="filter-dropdown-box">
+                                        <div class="dropdown">
+                                            <button class="btn" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false" id="dropdownBttn">
+                                                All
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                                <li><a class="dropdown-item filterItem" href="#"
+                                                        data-value="best_rated">Best Rated</a></li>
+                                                <li><a class="dropdown-item filterItem" href="#"
+                                                        data-value="most_purchased">Most Purchased</a></li>
+                                                <li><a class="dropdown-item filterItem" href="#"
+                                                        data-value="newest">Newest</a></li>
+                                                <li><a class="dropdown-item filterItem" href="#"
+                                                        data-value="oldest">Oldest</a></li>
+                                            </ul>
+                                        </div>
+                                        <i class="fas fa-angle-down"></i>
                                     </div>
-                                    <i class="fas fa-angle-down"></i>
+                                    <div class="user-add-box">
+                                        <button type="submit" class="btn text-white"><i
+                                                class="fas fa-search text-white me-2"></i> Search</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-1 col-md-5">
-                                <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                    <button type="submit" class="btn text-white"><i
-                                            class="fas fa-search text-white me-2"></i> Search</button>
-                                </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>

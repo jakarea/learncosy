@@ -1248,6 +1248,12 @@
   border: 1px solid #000A39;
   background: #191919;
 }
+.dark-mode .top-card-box span {
+  color: #4BC828 !important;
+}
+.dark-mode .top-card-box span.red {
+  color: #EF6E79 !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

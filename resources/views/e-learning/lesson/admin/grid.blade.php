@@ -98,7 +98,7 @@
         </div>
         <div class="row">
             {{-- pagginate --}}
-            <div class="paggination-wrap mt-4">
+            <div class="paggination-wrap mt-5">
                 {{ $lessons->links('pagination::bootstrap-5') }}
             </div>
             {{-- pagginate --}}

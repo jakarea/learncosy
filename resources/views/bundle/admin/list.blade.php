@@ -15,7 +15,7 @@
             <div class="col-12">
                 <form action="" method="GET" id="myForm">
                     <div class="row">
-                        <div class="col-xl-8 col-md-8">
+                        <div class="col-12 col-md-12 col-lg-7 col-xl-8">
                             <div class="user-search-box-wrap">
                                 <div class="form-group">
                                     <i class="fas fa-search"></i>
@@ -25,47 +25,48 @@
                             </div>
                             <input type="hidden" name="status" id="inputField">
                         </div>
-                        <div class="col-xl-3 col-md-4">
-                            <div class="filter-dropdown-box">
-                                <div class="dropdown">
-                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                        id="dropdownBttn">
-                                        All Bundle
-                                    </button> 
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item filterItem" href="#">All Bundle</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated Bundle</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased Bundle</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest Bundle</a></li>
-                                        <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest Bundle</a></li>
-                                    </ul>
+                        <div class="col-12 col-lg-5 col-xl-4">
+                            <div class="d-flex course-filter-header">
+                                <div class="filter-dropdown-box">
+                                    <div class="dropdown">
+                                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                            id="dropdownBttn">
+                                            All Bundle
+                                        </button> 
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item filterItem" href="#">All Bundle</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="best_rated">Best Rated Bundle</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="most_purchased">Most Purchased Bundle</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="newest">Newest Bundle</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="oldest">Oldest Bundle</a></li>
+                                        </ul>
+                                    </div>
+                                    <i class="fas fa-angle-down"></i>
                                 </div>
-                                <i class="fas fa-angle-down"></i>
+                                <div class="user-add-box">
+                                    <button type="submit" class="btn text-white"><i
+                                            class="fas fa-search text-white me-2"></i> Search</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xl-1 col-md-5">
-                            <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
-                                <button type="submit" class="btn text-white"><i
-                                        class="fas fa-search text-white me-2"></i> Search</button>
-                            </div>
-                        </div>
+                            
+                        </div> 
                     </div>
                 </form>
             </div>
         </div>
         <div class="row">
             @if (count($bundleCourses) > 0)
-            @foreach ($bundleCourses as $course)
+            @foreach ($bundleCourses as $bundleCourse)
             {{-- course single box start --}}
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                 <div class="course-single-item">
                     <div>
                         <div class="course-thumb-box">
-                            @if ($course->status == 'pending')
+                            @if ($bundleCourse->status == 'pending')
                             <span class="badge text-bg-danger">Pending</span>
-                            @elseif ($course->status == 'draft')
+                            @elseif ($bundleCourse->status == 'draft')
                             <span class="badge text-bg-warning">Draft</span>
-                            @elseif ($course->status == 'published')
+                            @elseif ($bundleCourse->status == 'published')
                             <span class="badge text-bg-primary">Publish</span>
                             @endif
     
@@ -77,10 +78,10 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item"
-                                                href="{{url('admin/bundle/courses/'.$course->slug)}}">View</a></li>
+                                                href="{{url('admin/bundle/courses/'.$bundleCourse->slug)}}">View</a></li>
                                         <li>
                                             <form method="post" class="d-inline"
-                                                action="{{ url('admin/bundle/courses/'.$course->slug.'/destroy') }}">
+                                                action="{{ url('admin/bundle/courses/'.$bundleCourse->slug.'/destroy') }}">
                                                 @csrf
                                                 @method("DELETE")
                                                 <button type="submit" class="dropdown-item btn text-danger">Delete </button>
@@ -89,13 +90,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="Course Thumbanil"
+                            <img src="{{asset('assets/images/courses/'.$bundleCourse->thumbnail)}}" alt="Course Thumbanil"
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
-                            <a href="{{url('admin/bundle/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
+                            <a href="{{url('admin/bundle/courses/'.$bundleCourse->slug)}}">{{ Str::limit($bundleCourse->title, $limit =
                                 45, $end = '..') }}</a>
-                            <p>{{ Str::limit($course->short_description, $limit = 36, $end = '...') }}</p>
+                            <p>{{ Str::limit($bundleCourse->short_description, $limit = 36, $end = '...') }}</p>
                             <ul>
                                 <li><span>4.0</span></li>
                                 <li><i class="fas fa-star"></i></li>
@@ -103,12 +104,12 @@
                                 <li><i class="fas fa-star"></i></li>
                                 <li><i class="fas fa-star"></i></li>
                                 <li><i class="fas fa-star"></i></li>
-                                <li><span>(145)</span></li>
+                                <li><span>(15)</span></li>
                             </ul> 
                         </div>
                     </div>
                     <div class="course-txt-box">
-                        <h5>€ {{ $course->price }} </h5>
+                        <h5>€ {{ $bundleCourse->price }} </h5>
                     </div>
                 </div>
             </div>

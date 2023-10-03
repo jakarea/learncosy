@@ -11,14 +11,7 @@
 @section('content')
 <!-- === package add page @S === -->
 <main class="subscription-add-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <div class="package-list-header package-header-2">
@@ -37,7 +30,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-error">
-                                    <label for="name">Name <sup class="text-danger">*</sup>
+                                    <label for="name">Name 
                                     </label>
                                     <input type="text" placeholder="Enter name" name="name"
                                         class="form-control @error('name') is-invalid @enderror"
@@ -48,7 +41,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-error">
-                                    <label for="amount">Price <sup class="text-danger">*</sup>
+                                    <label for="amount">Regular Price 
                                     </label>
                                     <input type="number" placeholder="Enter Amount" name="price"
                                         class="form-control @error('price') is-invalid @enderror"
@@ -59,30 +52,43 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-error">
-                                    <label for="type">Subscription Type <sup class="text-danger">*</sup>
+                                    <label for="amount">Sales Price 
+                                    </label>
+                                    <input type="number" placeholder="Enter Amount" name="price"
+                                        class="form-control @error('price') is-invalid @enderror"
+                                        value="{{ old('price') }}" id="price">
+                                    <span class="invalid-feedback">@error('price'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-error form-selecting">
+                                    <label for="type">Subscription Type 
                                     </label>
                                     <select name="type" id="type"
                                         class="form-control @error('type') is-invalid @enderror">
-                                        <option value="">Select Subscription Type</option>
+                                        <option value="">Select</option>
                                         <option value="monthly" {{ old('type') == 'monthly' ? 'selected' : '' }}>
                                             Monthly</option>
                                         <option value="yearly" {{ old('type') == 'yearly' ? 'selected' : '' }}>
                                             Yearly</option>
                                     </select>
+                                    <i class="fas fa-angle-down"></i>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group form-error">
-                                    <label for="status">Subscription Status <sup class="text-danger">*</sup>
+                            <div class="col-md-6">
+                                <div class="form-group form-error form-selecting">
+                                    <label for="status">Subscription Status 
                                     </label>
                                     <select name="status" id="status"
                                         class="form-control @error('status') is-invalid @enderror">
-                                        <option value="">Select Subscription Status</option>
+                                        <option value="">Select </option>
                                         <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>
                                             Active</option>
                                         <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
                                             Inactive</option>
                                     </select>
+                                    <i class="fas fa-angle-down"></i>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -99,7 +105,7 @@
                                     <span class="invalid-feedback">@error('feature_list'){{ $message }}
                                         @enderror</span>
                                     <div class="text-end mt-3">
-                                        <a href="javascript:void(0)" id="feature_increment"><i class="fas fa-plus"></i> Add</a>
+                                        <a href="javascript:void(0)" id="feature_increment"><i class="fas fa-plus"></i> Add Feature</a>
                                     </div>
                                 </div>
                             </div>  

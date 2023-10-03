@@ -73,7 +73,7 @@
                                         <p>€ {{ $package->amount }}</p>
                                     </td>
                                     <td>
-                                        <p>{{ $package->type }}</p>
+                                        <p class="text-capitalize">{{ $package->type }}</p>
                                     </td>
                                     <td>
                                         @php
@@ -81,7 +81,7 @@
                                         @endphp
                                         <ul>
                                             @foreach ($features as $feature)
-                                                <li>{{ $feature }}</li>
+                                                <li class="text-capitalize">{{ Str::limit($feature, $limit1 = 35, $end1 = '...') }}</li>
                                             @endforeach
                                         </ul>
 

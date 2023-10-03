@@ -273,7 +273,7 @@ $i = 0;
                                         class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{
+                                    <a href="{{ url('instructor/courses', $relatedCourse->slug) }}">{{
                                         $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
     

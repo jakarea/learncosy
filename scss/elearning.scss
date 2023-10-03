@@ -2633,6 +2633,13 @@ span.stripe-bg {
     height: 1.375rem;
 }
 
+.course-filter-header{
+    justify-content: space-between;
+    .filter-dropdown-box{
+        width: 64%!important;
+        margin-right: 1rem!important;
+    } 
+}
 
 
 

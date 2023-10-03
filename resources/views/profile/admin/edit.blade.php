@@ -23,16 +23,7 @@
                     <a href="{{url('admin/profile/change-password')}}"> <i class="fas fa-lock-open me-2"></i> Update Password </a>
                 </div>
             </div>
-        </div>
-        @if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        </div> 
 
         <div class="row">
             <div class="col-12">
@@ -87,10 +78,23 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
+                                    <label for="company_name">Company name </label>
+
+                                    <input type="text" name="company_name" id="company_name" value="{{  $user->company_name }}"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        placeholder="Company Name">
+
+                                    <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group form-error">
                                     <label for="website">Website </label>
-                                    <input type="url" placeholder="Enter Web Address" name="website"
+
+                                    <input type="url" name="website" id="website" value="{{  $user->short_bio }}"
                                         class="form-control @error('website') is-invalid @enderror"
-                                        value="{{ $user->short_bio }}" id="website"> 
+                                        placeholder="Enter Website">
 
                                     <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>

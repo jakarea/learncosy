@@ -174,7 +174,7 @@ $i = 0;
                                         class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{ $relatedCourse->title }}</a>
+                                    <a href="{{ url('instructor/courses', $relatedCourse->slug) }}">{{ $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
 
                                     @php
@@ -200,7 +200,6 @@ $i = 0;
                                     <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
                                     <h5>Free</h5>
-
                                     @else
                                     <h5>€ {{ $relatedCourse->price }}</h5>
                                     @endif

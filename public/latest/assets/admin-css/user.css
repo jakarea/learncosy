@@ -1649,6 +1649,15 @@
   padding: 0.625rem 1.125rem;
 }
 
+.view-course-bttn {
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem;
+  display: inline-block;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .user-profile-picture .media {
     padding: 1rem;

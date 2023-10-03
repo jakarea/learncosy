@@ -177,7 +177,7 @@ class InstructorController extends Controller
          
         $instructor = User::where('id', $id)->first();
          //delete instructor avatar
-         $instructorOldAvatar = public_path('/uploads/users/'.$instructor->avatar);
+         $instructorOldAvatar = public_path($instructor->avatar);
          if (file_exists($instructorOldAvatar)) {
              @unlink($instructorOldAvatar);
          }
@@ -189,6 +189,7 @@ class InstructorController extends Controller
          \App\Models\InstructorModuleSetting::where('instructor_id', $id)->delete();
          \App\Models\Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
          \App\Models\Module::where('user_id', $id)->delete();
+         \App\Models\Lesson::where('user_id', $id)->delete();
          \App\Models\Subscription::where('instructor_id', $id)->delete();
          \App\Models\VimeoData::where('user_id', $id)->delete();
 

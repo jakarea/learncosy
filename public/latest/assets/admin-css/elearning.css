@@ -2324,6 +2324,14 @@ span.stripe-bg i {
   height: 1.375rem;
 }
 
+.course-filter-header {
+  justify-content: space-between;
+}
+.course-filter-header .filter-dropdown-box {
+  width: 64% !important;
+  margin-right: 1rem !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

@@ -102,7 +102,7 @@
                     <div class="list-wrap">
                         <table>
                             <tr>
-                                <th width="5%">No</th>
+                                <th width="2%">No</th>
                                 <th>Payment ID</th> 
                                 <th>Course Name</th>
                                 <th>Course Instructor</th>
@@ -115,10 +115,10 @@
                             @foreach($checkout as $key => $value)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$value->payment_id}}</td>
-                                <td>{{$value->course->title}}</td>
+                                <td>{{ Str::limit($value->payment_id, $limit1 = 18, $end1 = '...') }}</td>
+                                <td>{{ Str::limit($value->course->title, $limit2 = 18, $end2 = '...') }}</td>
                                 <td>{{$value->course->user->name}}</td>
-                                <td>{{$value->created_at}}</td>
+                                <td>{{ strftime('%a %b %Y', strtotime($value->created_at)) }}</td>
                                 <td>€ {{$value->amount}}</td>
                                 <td>
                                     @if($value->status == 'completed')
@@ -128,7 +128,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('admin/courses/'.$value->course->slug)}}" class="common-bttn text-white">View</a>
+                                    <a href="{{ url('admin/courses/'.$value->course->slug)}}" class="view-course-bttn">View Course</a>
                                 </td>
                             </tr> 
                             @endforeach 

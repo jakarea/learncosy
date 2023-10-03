@@ -36,8 +36,6 @@ class HomeController extends Controller
     public function studentsPayment()
     {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-
-        // get all payments of the students who are enrolled in the courses of the instructor
         $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id);
     
 
