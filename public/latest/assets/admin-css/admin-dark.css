@@ -868,7 +868,7 @@
 }
 .dark-mode .course-content-box .dropdown-menu {
   border: 1.5px dashed var(--others-dark-stroke, #7C7C7C) !important;
-  background: #0D0D0D !important;
+  background: #1E1E1E !important;
   box-shadow: none !important;
 }
 .dark-mode .course-content-box .dropdown-menu .dropdown-item {
@@ -1154,10 +1154,15 @@
   background-color: transparent !important;
   border-color: #fff !important;
 }
-.dark-mode .filter-dropdown-box .dropdown .dropdown-menu,
 .dark-mode .filter-dropdown-box .dropdown .btn {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(145, 158, 171, 0.32);
+  background: #0D0D0D;
+  color: #fff !important;
+}
+.dark-mode .filter-dropdown-box .dropdown .dropdown-menu {
   border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
-  background: #0D0D0D !important;
+  background: #1E1E1E !important;
   color: #fff !important;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
 }
@@ -1227,7 +1232,7 @@
 }
 .dark-mode .yearly-analitics .dropdown-menu {
   border: 1px solid #1A1A1A !important;
-  background: #0D0D0D !important;
+  background: #1E1E1E !important;
   box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
 }
 .dark-mode .yearly-analitics .dropdown-menu a {
@@ -1235,6 +1240,9 @@
 }
 .dark-mode .yearly-analitics .dropdown-menu a:hover {
   background-color: #313A49;
+}
+.dark-mode .brdr-bottom-1 {
+  border-color: #1A1A1A;
 }
 
 .dark-mode-bttn {

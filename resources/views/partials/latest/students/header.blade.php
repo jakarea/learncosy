@@ -16,13 +16,13 @@
             @can('student')
             <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                    <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard*')  ? ' active' : '' }} nav-link">Dashboard</a>
+                    <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('students/home*')  ? ' active' : '' }} nav-link" href="{{ url('students/home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ url('students/dashboard/enrolled') }}">My Course</a>
+                    <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ url('students/dashboard/enrolled') }}">My Courses</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('students/courses-certificate*')  ? ' active' : '' }} nav-link" href="{{ url('students/courses-certificate') }}">Certificate</a>
