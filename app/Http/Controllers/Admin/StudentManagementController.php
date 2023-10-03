@@ -143,21 +143,22 @@ class StudentManagementController extends Controller
              $user->password = $user->password;
          } 
  
+         $slugg = Str::slug($request->name);
+
          if ($request->hasFile('avatar')) { 
-            // Delete old file
-            if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           } 
-           $slugg = Str::slug($request->name);
-           $image = $request->file('avatar');
-           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $user->avatar = $name; 
-       }
+             if ($user->avatar) {
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+             $file = $request->file('avatar');
+             $image = Image::make($file);
+             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+             $image->save(public_path('uploads/users/') . $uniqueFileName);
+             $image_path = 'uploads/users/' . $uniqueFileName;
+            $user->avatar = $image_path;
+        }
  
          $user->save();
          return redirect()->route('admin.allStudents')->with('success', 'Students Profile has been Updated successfully!');
