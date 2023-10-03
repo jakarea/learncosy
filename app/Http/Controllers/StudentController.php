@@ -222,7 +222,7 @@ class StudentController extends Controller
            $slugg = Str::slug($request->name);
            $image = $request->file('avatar');
            $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
+           $destinationPath = public_path('uploads/users/');
            $image->move($destinationPath, $name);
            $user->avatar = $name; 
        }
@@ -235,7 +235,7 @@ class StudentController extends Controller
          
         $student = User::where('id', $id)->first();
          //delete student avatar
-         $studentOldThumbnail = public_path('/assets/images/users/'.$student->avatar);
+         $studentOldThumbnail = public_path('uploads/users/'.$student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
          } 

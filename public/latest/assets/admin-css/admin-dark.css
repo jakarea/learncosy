@@ -1170,7 +1170,7 @@
   color: #d7def4;
 }
 .dark-mode .filter-dropdown-box .dropdown .dropdown-menu li .dropdown-item:hover {
-  background-color: #66768E !important;
+  background-color: #111 !important;
 }
 .dark-mode .no-data-found {
   border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
@@ -1243,6 +1243,10 @@
 }
 .dark-mode .brdr-bottom-1 {
   border-color: #1A1A1A;
+}
+.dark-mode .sold-item {
+  border: 1px solid #000A39;
+  background: #191919;
 }
 
 .dark-mode-bttn {
