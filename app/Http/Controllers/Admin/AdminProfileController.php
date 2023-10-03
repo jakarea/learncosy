@@ -132,7 +132,7 @@ class AdminProfileController extends Controller
         $todaysStudents = [];
 
         //$payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
-        $enrolments = Checkout::with('course','user')->orderBy('id', 'desc')->get();
+        $enrolments = Checkout::with('course','user')->latest()->take(20)->get();
 
 
         $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();
