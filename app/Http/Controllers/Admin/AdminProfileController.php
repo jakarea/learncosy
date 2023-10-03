@@ -149,7 +149,7 @@ class AdminProfileController extends Controller
         foreach ($todaysEnrolments as $enrolment) {
             $todaysStudents[$enrolment->user_id] = $enrolment->created_at;
         }
-
+        
         $totalEnrollment =  count($students);
         $todaysEnrollment =  count($todaysStudents);
 
