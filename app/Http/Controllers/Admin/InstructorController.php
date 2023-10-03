@@ -170,12 +170,16 @@ class InstructorController extends Controller
     }
 
     public function destroy($id){
+
+        if (!$id) {
+            return redirect('admin/instructor')->with('error', 'Failed to delete this Instructor!');
+        }
          
         $instructor = User::where('id', $id)->first();
          //delete instructor avatar
-         $instructorOldThumbnail = public_path('/uploads/users/'.$instructor->avatar);
-         if (file_exists($instructorOldThumbnail)) {
-             @unlink($instructorOldThumbnail);
+         $instructorOldAvatar = public_path('/uploads/users/'.$instructor->avatar);
+         if (file_exists($instructorOldAvatar)) {
+             @unlink($instructorOldAvatar);
          }
          
          \App\Models\BundleCourse::where('user_id', $id)->delete();
@@ -183,10 +187,11 @@ class InstructorController extends Controller
          \App\Models\Course::where('user_id', $id)->delete();
          \App\Models\CourseActivity::where('user_id', $id)->delete();
          \App\Models\InstructorModuleSetting::where('instructor_id', $id)->delete();
-         \App\Models\Message::where('user_id', $id)->delete();
+         \App\Models\Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
          \App\Models\Module::where('user_id', $id)->delete();
          \App\Models\Subscription::where('instructor_id', $id)->delete();
          \App\Models\VimeoData::where('user_id', $id)->delete();
+
         $instructor->delete();
 
         return redirect('admin/instructor')->with('success', 'Instructor Successfully deleted!');
