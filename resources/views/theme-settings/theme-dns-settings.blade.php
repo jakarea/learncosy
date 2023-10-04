@@ -451,7 +451,7 @@ Account Management
                                 </div>
                                 <div class="dns-main-body">
                                     {{-- add domain start --}}
-                                    <div class="add-domain-box">
+                                    <div class="add-domain-box d-block">
                                         <form action="">
                                             <h1>Add a domain</h1>
                                             <p>If you already own a domain like learncosy.com, you can add it to your
@@ -471,7 +471,7 @@ Account Management
                                     {{-- add domain end --}}
 
                                     {{-- verification domain start --}}
-                                    <div class="add-domain-box domain-verify-box">
+                                    <div class="add-domain-box domain-verify-box d-none">
                                         <form action="">
                                             <h2>How do you want to verify your domain?</h2>
                                             <p>Before we can set up your domain, we need to verify that you are the
@@ -516,7 +516,7 @@ Account Management
                                     {{-- verification domain end --}}
 
                                     {{-- connect your domain start --}}
-                                    <div class="add-domain-box domain-verify-box">
+                                    <div class="add-domain-box domain-verify-box d-none">
                                         <form action="">
                                             <h2>Connect your domain</h2>
                                             <h3>Sign in to your DNS hosting provider and add this record to your
@@ -606,7 +606,7 @@ Account Management
                                     {{-- connect your domain end --}}
 
                                     {{-- add dns record --}}
-                                    <div class="add-domain-box domain-verify-box">
+                                    <div class="add-domain-box domain-verify-box d-none">
                                         <form action="">
                                             <h2>Add DNS records</h2>
                                             <h3>To add these records for learncosy.com, go to your DNS hosting provider.
@@ -657,7 +657,7 @@ Account Management
                                     {{-- add dns record --}}
 
                                     {{-- domain setup finish --}}
-                                    <div class="add-domain-box finish-txt">
+                                    <div class="add-domain-box finish-txt d-none">
                                         <form action="">
                                             <h2><img src="{{ asset('latest/assets/images/icons/gren-chehck.svg') }}"
                                                     alt="gren-chehck" class="img-fluid"> Domain Setup is Complete</h2>
