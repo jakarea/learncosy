@@ -214,7 +214,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
         Route::get('analytics', [DashboardController::class, 'index'])->name('instructor.dashboard.index');
-        // instructor payment history static pages
+        // instructor payment history pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {
             Route::get('/', 'studentsPayment');
 
@@ -235,7 +235,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
-
             // add course static route
             Route::get('/', 'start')->name('course.create.step-1');
             Route::post('created/', 'startSet')->name('course.create.start');
@@ -262,7 +261,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet');
+            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');

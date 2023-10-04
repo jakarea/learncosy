@@ -33,8 +33,8 @@ class AdminManagementController extends Controller
 
      // store page
     public function store(Request $request)
-    {
-    //    return $request->all();
+    { 
+        
     $request->validate([
            'name' => 'required|string',
            'phone' => 'required|string', 

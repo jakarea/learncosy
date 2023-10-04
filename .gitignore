@@ -4,8 +4,10 @@
 /public/storage
 /public/assets/images/courses/*
 /public/assets/images/courses/*
+/public/uploads/*
 /public/uploads/users/*
 /public/uploads/users/*
+/public/uploads/themes/*
 /public/assets/images/lessons/*
 /public/assets/images/modules/*
 /public/assets/images/setting/*

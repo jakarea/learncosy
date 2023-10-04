@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Mail\PackageSubscribe;
 use Stripe\Checkout\Session; 
 use App\Mail\PackageSubscribeCancle;
+use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\SubscriptionPackage; 
 use PDF;
@@ -29,13 +30,12 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        //
-        return view('package.index', [
-            'packages' => SubscriptionPackage::all(),
-            'courses' => Course::all(),
-            'subscriptions' => Subscription::where('instructor_id', auth()->user()->id)->get(),
-        ])
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        $packages = SubscriptionPackage::where('status','active')->get();
+        $insPackage = Subscription::where('instructor_id', Auth::id())->first();
+
+        $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
+
+        return view('subscription/instructor/list',compact('packages','activePackageId'));
     }
 
     /**

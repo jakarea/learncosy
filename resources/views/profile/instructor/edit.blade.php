@@ -12,14 +12,7 @@
 @section('content')
 {{-- student update page @S --}}
 <main class="student-profile-update-page instructor-profile-update-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <div class="own-profile-box account-settings-box">
@@ -134,9 +127,9 @@
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="short_bio"
-                                                            name="short_bio" value="{{ $user->short_bio }}" required>
-                                                        <label for="short_bio">Bio</label>
+                                                        <input type="url" class="form-control" id="website"
+                                                            name="website" value="{{ $user->short_bio }}" required>
+                                                        <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('short_bio'){{ $message }}
                                                             @enderror</span>
                                                     </div>

@@ -99,6 +99,16 @@
                                 </div>
                             </div>
                         @endif 
+                        @if ($user->short_bio)
+                            <div class="media">
+                                <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email"
+                                    class="img-fluid">
+                                <div class="media-body">
+                                    <h6>Website</h6>
+                                    <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                                </div>
+                            </div>
+                        @endif 
                         @php
                         $social_links = explode(",", $user->social_links);
                         use Illuminate\Support\Str;

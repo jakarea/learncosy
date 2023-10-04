@@ -50,9 +50,12 @@ class ProfileManagementController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'short_bio' => 'required|string',
+            'short_bio' => 'string',
             'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [
+            'avatar' => 'Max file size is 5 MB!'
         ]);
 
         $user = User::where('id', $userId)->first();
@@ -63,7 +66,7 @@ class ProfileManagementController extends Controller
         }else{
             $user->subdomain =  Str::slug($request->subdomain);
         }
-        $user->short_bio = $request->short_bio;
+        $user->short_bio = $request->website;
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
         $user->description = $request->description;
@@ -111,8 +114,6 @@ class ProfileManagementController extends Controller
 
     public function postChangePassword(Request $request)
     {
-        //  return $request->all();
-
         //validate password and confirm password
         $this->validate($request, [
             'password' => 'required|confirmed|min:6|string',

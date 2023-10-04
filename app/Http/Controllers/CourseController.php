@@ -292,17 +292,17 @@ class CourseController extends Controller
         $course = Course::where(['id'=> $id,'user_id' => Auth::user()->id])->first();
         if ($course) {
             //delete thumbnail
-            $oldThumbnail = public_path('/assets/images/courses/'.$course->thumbnail);
+            $oldThumbnail = public_path($course->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
             }
             //delete banner
-            $oldBanner = public_path('/assets/images/courses/'.$course->banner);
+            $oldBanner = public_path($course->banner);
             if (file_exists($oldBanner)) {
                 @unlink($oldBanner);
             }
             //delete certficate
-            $oldCertificate = public_path('/assets/images/courses/'.$course->sample_certificates);
+            $oldCertificate = public_path($course->sample_certificates);
             if (file_exists($oldCertificate)) {
                 @unlink($oldCertificate);
             }
@@ -313,12 +313,12 @@ class CourseController extends Controller
                 $lessons = Lesson::where('module_id', $module->id)->get();
                 foreach ($lessons as $lesson) {
                     //delete lesson thumbnail
-                    $lessonOldThumbnail = public_path('/assets/images/lessons/'.$lesson->thumbnail);
+                    $lessonOldThumbnail = public_path($lesson->thumbnail);
                     if (file_exists($lessonOldThumbnail)) {
                         @unlink($lessonOldThumbnail);
                     }
                     //delete lesson file
-                    $lessonOldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
+                    $lessonOldFile = public_path($lesson->lesson_file);
                     if (file_exists($lessonOldFile)) {
                         @unlink($lessonOldFile);
                     }

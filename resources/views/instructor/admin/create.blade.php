@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
+                                    <input type="url" placeholder="Enter Social Link" name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">
 

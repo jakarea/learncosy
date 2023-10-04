@@ -60,7 +60,7 @@ Account Management
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <label for="imageInput" class="file-upload-area pb-2"
+                                                            <label for="imageInput" class="file-upload-area p-0"
                                                                 id="file-upload-area">
 
                                                                 @if (isset($module_settings->logo) ||

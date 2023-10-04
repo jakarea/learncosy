@@ -83,7 +83,7 @@
                         @if (count($payments) > 0) 
                         @foreach ($payments->slice(0, 5) as $payment)
                             <div class="payment-box">
-                                <h5><img src="{{ asset($payment->user->avatar) }}" alt="a"
+                                <h5><img src="{{ asset($payment->user->avatar) }}" alt="Avatar"
                                         class="img-fluid"> {{ $payment->user->name }}</h5>
 
                                 <p>

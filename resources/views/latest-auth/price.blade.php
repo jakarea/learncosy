@@ -1,7 +1,7 @@
 @extends('layouts.latest.auth')
 
 @section('title')
-    Verify Email
+    Subscribe Package
 @endsection
 
 @section('style')
@@ -12,18 +12,6 @@
     <!-- pricing plan page start -->
     <section class="pricing-plan-sec">
         <div class="container">
-            {{-- <div class="row">
-            <div class="col-6">
-                <div class="top-bttn">
-                    <a href="profile/step-1/complete">Back</a>
-                </div>
-            </div> 
-            <div class="col-6">
-                <div class="top-bttn text-end">
-                    <a href="#" class="skipp_btn">Skip</a>
-                </div>
-            </div>
-        </div> --}}
             <div class="row">
                 <div class="col-lg-12">
                     {{-- verify step start --}}

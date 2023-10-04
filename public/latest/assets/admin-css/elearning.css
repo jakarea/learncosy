@@ -2330,6 +2330,7 @@ span.stripe-bg i {
 .course-filter-header .filter-dropdown-box {
   width: 64% !important;
   margin-right: 1rem !important;
+  color: #f4f8fc;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

@@ -35,7 +35,7 @@ Home Page
         </div>
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                <!-- total client @s -->
+                
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -50,10 +50,10 @@ Home Page
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-                <!-- total client @e -->
+                
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                <!-- total client @s -->
+                
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -61,8 +61,7 @@ Home Page
                             <h4> {{ $instructorsCount }}</h4>
                         </div>
                     </div>
-
-                    <p> <b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
+                    <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfInstructor >= 0 ? '+' . $percentageChangeOfInstructor :
                             $percentageChangeOfInstructor }}%</b>
                         VS last month</p>
@@ -70,10 +69,10 @@ Home Page
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-                <!-- total client @e -->
+                
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                <!-- total client @s -->
+                
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -88,10 +87,10 @@ Home Page
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-                <!-- total client @e -->
+                
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                <!-- total client @s -->
+                
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -106,7 +105,7 @@ Home Page
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-                <!-- total client @e -->
+                
             </div>
         </div>
         <div class="row">
