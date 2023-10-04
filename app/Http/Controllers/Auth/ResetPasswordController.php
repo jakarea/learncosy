@@ -50,7 +50,7 @@ class ResetPasswordController extends Controller
             if ($loginPageStyle->lp_layout == 'fullwidth') {
                 return view('custom-auth/passwords/reset2')->with(['token' => $token, 'email' => $email]);
             } elseif ($loginPageStyle->lp_layout == 'default') {
-                return view('custom-auth/passwords/reset3')->with(['token' => $token, 'email' => $email]);
+                return view('custom-auth/passwords/reset')->with(['token' => $token, 'email' => $email]);
             } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
                 return view('custom-auth/passwords/reset5')->with(['token' => $token, 'email' => $email]);
             } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {

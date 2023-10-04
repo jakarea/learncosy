@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Login Page</title>
+    <title>LearnCosy Authintication | Password Reset Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
@@ -34,9 +34,13 @@
         <div class="container">
             <div class="logo">
                 <a href="{{ url('/') }}">
+                    @if (modulesetting('logo'))
+                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
+                    @else
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo"
                         class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
+                    @endif 
                 </a>
                 <a href="{{ url('/auth-register') }}" class="signup-bttn">
                     SIGN UP
@@ -47,18 +51,25 @@
 
     <section class="login-page-wrapper login-four-page-wrap">
         <div class="bg-olg">
+            @if (modulesetting('lp_bg_image')) 
+                <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
+            title="Login BG" class="" style="max-height: 100vh; object-fit:cover">
+            @else 
             <img src="{{ asset('latest/assets/images/learncosy-bg.svg') }}" alt="" class="img-fluid light-ele">
             <img src="{{ asset('latest/assets/images/learncosy-bg-2.svg') }}" alt="" class="img-fluid dark-ele">
+            @endif
         </div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-7 col-xl-6 col-sm-9">
                     <div class="login-box-wrap">
+                        {{-- session alert --}}
+                        @include('custom-auth/session-alert')
+                        {{-- session alert --}}
+                        <h1>Password Reset</h1>
+                        <p>Welcome back! Please enter your emal address.</p>
 
-                        <h1>Sign in to Learn Cosy</h1>
-                        <p>Welcome back! Please enter your details.</p>
-
-                        <form method="POST" action="{{ route('login') }}" class="login-from">
+                        <form method="POST" action="{{ route('password.email') }}" class="login-from">
                             @csrf
                             <div class="form-group">
                                 <label>Enter your email address</label>
@@ -70,48 +81,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Enter your Password</label>
-                                <input id="password-field" placeholder="••••••••" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
-                                    autocomplete="current-password">
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                                <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
-                            </div>
-                            <div class="checbox-wrap">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember me for 30 days') }}
-                                    </label>
-                                </div>
-                                @if (Route::has('password.request'))
-                                    <a href="{{ route('password.request') }}">
-                                        {{ __('Forgot Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                            </div>  
                             <div class="submit-button">
-                                <button class="btn btn-submit" type="submit">Next</button>
+                                <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
                             </div>
-                        </form>
-
-                        <h6 class="or">or</h6>
-
-                        <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
-                                    class="img-fluid"></a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
-                                    alt="google" class="img-fluid"></a>
-                        </div>
+                        </form> 
 
                     </div>
                 </div>
@@ -136,24 +110,6 @@
         </label>
     </div>
     {{-- dark mode button end --}}
-
-    <script>
-        function changeType() {
-            var field = document.getElementById("password-field");
-            var clickk = document.getElementById("eye-click");
-
-            if (field.type === "password") {
-                field.type = "text";
-                clickk.classList.add('fa-eye-slash');
-                clickk.classList.remove('fa-eye');
-            } else {
-                field.type = "password";
-                clickk.classList.remove('fa-eye-slash');
-                clickk.classList.add('fa-eye');
-            }
-
-        }
-    </script>
 
     <script>
         // darkMode.js

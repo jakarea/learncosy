@@ -74,16 +74,23 @@ class ProfileManagementController extends Controller
         }else{
             $user->password = $user->password;
         } 
-         
-       if ($request->hasFile('avatar')) {
+
+        $slugg = Str::slug($request->name);
+
+        if ($request->hasFile('avatar')) { 
+            if ($user->avatar) {
+               $oldFile = public_path($user->avatar);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           }
             $file = $request->file('avatar');
             $image = Image::make($file);
-            $slugg = Str::slug($request->name);
-            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $uniqueFileName = $slugg . '-' . uniqid() . '.webp';
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
-            $user->avatar = $image_path;
-        }
+           $user->avatar = $image_path;
+       }
        
         $user->save();
 

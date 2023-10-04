@@ -10,23 +10,13 @@
             <div class="row">
                 <div class="col-lg-6 px-0">
                     <div class="auth-form-wrap">
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Success!</strong> {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error!</strong> {{ session('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
+                         {{-- session alert --}}
+                         @include('custom-auth/session-alert')
+                         {{-- session alert --}}
                         <a href="#">
                             <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
                         </a>
-                        <h1>Welcome back</h1>
+                        <h1>Password Reset</h1>
                         <p>Welcome back! Please enter your details.</p>
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
