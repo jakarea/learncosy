@@ -115,6 +115,7 @@
                             <th>Payment Type</th>
                             <th>Amount</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         @foreach ($enrolments as $key => $payment)
                         <tr>
@@ -128,9 +129,13 @@
                                 <p>{{$payment->user->name}}</p>
                             </td>
                             <td>
+                                <p>{{ $payment->created_at->format('M j, Y') }}</p>
+                            </td>
+                            <td>
                                 <p>{{$payment->payment_method}}</p>
                             </td>
                             <td>
+                                <!-- <p>{{$payment->status}}</p> -->
                                 <p>{{$payment->amount}}</p>
                             </td>
                             <td>
@@ -138,8 +143,8 @@
                             </td>
                             <td>
                                 <ul>
-                                    <li>Export</li>
-                                    <li>View</li>
+                                    <a href="{{ route('export',encrypt($payment->payment_id)) }}" class="btn-view">Export</a>
+                                    <a href="{{ route('view',encrypt($payment->payment_id)) }}" class="btn-view">View</a>
                                 </ul>
                             </td>
                         </tr>
