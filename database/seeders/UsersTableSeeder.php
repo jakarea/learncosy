@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'company_name' => $faker->company,
             'short_bio' => $faker->sentence,
             'phone' => $faker->phoneNumber,
-            'avatar' => 'assets/images/users/avatar.png',
+            'avatar' => 'assets/images/avatar.png',
             'description' => $faker->paragraph,
             'recivingMessage' => 1,
             'email_verified_at' => now(),
@@ -33,12 +33,12 @@ class UsersTableSeeder extends Seeder
             'stripe_secret_key' => null, // Default value
             'stripe_public_key' => null, // Default value
             'status' => 'active', // Default user status
-            'social_links' => $links,
+            //'social_links' => $links,
             'created_at' => $randomDateTime,
             'updated_at' => now(),
         ]);
 
-        foreach (range(1, 20) as $index) {
+        foreach (range(1, 5) as $index) {
          $randomDateTime = date('Y-m-d H:i:s', strtotime('-330 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
             $subdomain = $faker->userName;
             $email = 'instructor'.$index.'@yopmail.com';
@@ -54,23 +54,23 @@ class UsersTableSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'description' => $faker->paragraph,
                 'recivingMessage' => 1,
-                'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 25).'.jpeg',
+                'avatar' => 'uploads/users/'.$faker->numberBetween(1, 20).'.jpeg',
                 'email_verified_at' => now(),
                 'password' => bcrypt(1234567890), // You can set a default password
                 'status' => 'active', // Default user status
-                'social_links' => $links,
+                //'social_links' => $links,
                 'created_at' => $randomDateTime,
                 'updated_at' => now(),
 
             ]);
         }
 
-        foreach (range(1, 100) as $index) {
+        foreach (range(1, 20) as $index) {
             $randomDateTime = date('Y-m-d H:i:s', strtotime('-330 days', strtotime(now())) + mt_rand(0, 330 * 24 * 3600));
             $subdomain = str_replace(".", "_", $faker->userName);
             $email = 'student'.$index.'@yopmail.com';
 
-            $links = "https://facebook.com/".$subdomain.",https://twitter.com/".$subdomain.",https://instagram.com/".$subdomain;
+            //$links = "https://facebook.com/".$subdomain.",https://twitter.com/".$subdomain.",https://instagram.com/".$subdomain;
             DB::table('users')->insert([
                 'name' => $faker->name,
                 'email' => $email,
@@ -80,7 +80,7 @@ class UsersTableSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'description' => $faker->paragraph,
                 'recivingMessage' => 1,
-                'avatar' => 'assets/images/users/'.$faker->numberBetween(1, 25).'.jpeg',
+                'avatar' => 'uploads/users/'.$faker->numberBetween(1, 20).'.jpeg',
                 'email_verified_at' => now(),
                 'password' => bcrypt(1234567890), // You can set a default password
                 'status' => 'active', // Default user status

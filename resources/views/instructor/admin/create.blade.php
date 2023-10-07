@@ -92,12 +92,12 @@
                                     <h5>Other Information </h5> 
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="company_name">Company Name 
                                     </label>
                                         
-                                        <input type="text" placeholder="Enter Company Name" name="company_name"
+                                        <input type="text" placeholder="Company Name" name="company_name"
                                             class="form-control @error('company_name') is-invalid @enderror"
                                             value="{{ old('company_name') }}" id="company_name">
                                      
@@ -105,32 +105,19 @@
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group form-error">
-                                    <label for="company_website">Website 
-                                    </label>
-                                        
-                                        <input type="url" placeholder="Enter Website URL" name="company_website"
-                                            class="form-control @error('company_website') is-invalid @enderror"
-                                            value="{{ old('company_website') }}" id="company_website">
-                                     
-                                    <span class="invalid-feedback">@error('company_website'){{ $message }}
-                                        @enderror</span>
-                                </div>
-                            </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio 
+                                    <label for="website">Website 
                                     </label>
                                         
-                                        <textarea name="short_bio" id="short_bio"
-                                            class="form-control @error('short_bio') is-invalid @enderror"
-                                            placeholder="Enter short bio">{{ old('short_bio') }}</textarea>
-                                   
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                        <input type="url" placeholder="Enter Web Address" name="website"
+                                            class="form-control @error('website') is-invalid @enderror"
+                                            value="{{ old('website') }}" id="website">
+                                     
+                                    <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
@@ -173,6 +160,9 @@
                                     </label>
                                     <input type="file" name="avatar" id="imageInput" accept="image/*"
                                         onchange="displayImage(event)" class="d-none">
+
+                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
+                                            @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">

@@ -52,13 +52,10 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
-                        <!-- person list @e -->
-                        <!-- chat-main-body box @s -->
+                        </div> 
                             <div class="chat-main-body-box">
                                 @if (count($messages) > 0)
-                                    <div class="chat-room-head">
-                                        <!-- chat person -->
+                                    <div class="chat-room-head"> 
                                         <div class="media">
                                             @if ($senderInfo)
                                                 <img src="{{ asset($senderInfo->avatar) }}"
@@ -73,8 +70,7 @@
                                                 <p>@ {{ $senderInfo ? $senderInfo->subdomain : '' }}</p>
                                             </div>
                                             <a href="#" class="common-bttn">View Profile</a>
-                                        </div>
-                                        <!-- chat person -->
+                                        </div> 
                                     </div>
 
                                     <div class="main-chat-room">

@@ -223,6 +223,7 @@
   border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
   background: #FFF;
   box-shadow: 0px 1px 2px 0px rgba(145, 158, 171, 0.16);
+  position: relative;
 }
 .top-card-box h5 {
   color: var(--neutral-color-neutral-80, #1C2636);
@@ -239,6 +240,16 @@
   font-weight: 500;
   line-height: 120%;
   margin-top: 0.2rem;
+}
+.top-card-box span {
+  color: var(--success-green, #43B324);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }
 
 .earning-table {

@@ -10,14 +10,7 @@
 {{-- page content @S --}}
 @section('content')
 <main class="user-profile-view-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         {{-- profile information @S --}}
         <div class="row">
             <div class="col-lg-8">
@@ -40,7 +33,12 @@
                 </div>
                 <div class="user-details-box">
                     <h5>About Me</h5>
-                    {!! $user->description !!}
+                    @if (!$user->description)
+                        @include('partials/no-data')
+                    @else
+                        {!! $user->description !!}
+                    @endif
+                   
                 </div>
             </div>
             <div class="col-lg-4">
@@ -90,6 +88,10 @@
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
                         <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        @elseif ($domain == 'facebook')
+                        <i class="fa-brands fa-facebook-square" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
+                        height: 24px;
+                        margin-top: 0.5rem;"></i>
                         @else
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         @endif

@@ -29,10 +29,8 @@ class StudentHomeController extends Controller
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
-
         $totalHours = floor($totalTimeSpend / 3600);
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
-        // return $likeCourses;
 
         $timeSpentData = CourseActivity::select(
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),
@@ -63,8 +61,27 @@ class StudentHomeController extends Controller
         } else {
             $percentageChange = 0;
         }
+         
+        //  count course statics
+        $notStartedCount = 0;
+        $inProgressCount = 0;
+        $completedCount = 0;
+        
+        if ($enrolments) {
+            foreach ($enrolments as $enrolment) {
+                $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
+                
+                if ($allCourses == 0) {
+                    $notStartedCount++;
+                } elseif ($allCourses > 0 && $allCourses < 99) {
+                    $inProgressCount++;
+                } elseif ($allCourses == 100) {
+                    $completedCount++;
+                }
+            }
+        }  
 
-        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','cartCount','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange'));
+        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
     }
 
     // dashboard
@@ -140,7 +157,6 @@ class StudentHomeController extends Controller
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
-
         return view('e-learning/course/students/catalog',compact('cartCourses','courses','categories', 'bundleCourse'));
     }
 
@@ -153,11 +169,10 @@ class StudentHomeController extends Controller
         return view('settings/students/account-management',compact('user', 'checkout'));
     }
 
-
-
     // course show
     public function show($slug)
-    {
+    { 
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -175,6 +190,7 @@ class StudentHomeController extends Controller
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
         });
+ 
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
@@ -395,7 +411,19 @@ class StudentHomeController extends Controller
             $status = 'liked';
         }
 
-
         return response()->json(['message' => $status]);
+    }
+
+    public function courseUnLike($course_id, $ins_id)
+    {
+
+        $course_liked = course_like::where('course_id', $course_id)->where('instructor_id', $ins_id)->first();
+
+        if ($course_liked) {
+             $course_liked->delete();
+             $status = 'unliked';
+        }
+
+        return redirect()->back()->with('success', 'Course Unlike Successfully Done!');
     }
 }

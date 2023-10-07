@@ -55,6 +55,7 @@
 
 .course-box-overflown {
   max-height: 19.4375rem;
+  min-height: 19.4375rem;
   overflow-y: scroll;
 }
 .course-box-overflown .media {

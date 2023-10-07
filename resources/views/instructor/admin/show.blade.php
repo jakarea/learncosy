@@ -10,14 +10,7 @@
 {{-- page content @S --}}
 @section('content')
 <main class="user-profile-view-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         {{-- profile information @S --}}
         <div class="row">
             <div class="col-lg-8">
@@ -39,39 +32,42 @@
                     </div>
                 </div>
                 <div class="user-details-box">
-                    <h5>About Me</h5>
-                    <p>{{ $instructor->short_bio }}</p>
+                    <h5>About Me</h5> 
                     {!! $instructor->description !!}
                 </div>
 
                 <div class="user-expperience-box">
-                    <h4>Experiences</h4>  
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4>Experiences</h4>
+                        
+                    </div>
+                    @if (count($experiences) > 0)
+                        @foreach ($experiences as $experience)
+                            <div class="media brdr-bttm">
+                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img"
+                                    class="img-fluid">
+                                <div class="media-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h5>{{ $experience->profession }}</h5>
+                                        <div>
+                                            <a href="{{ url('instructor/profile/edit?id=' . $experience->id) }}"><img
+                                                    src=" {{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                    alt="img" class="img-fluid"></a>
+                                        </div>
+                                    </div>
 
-                    <div class="media brdr-bttm">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
-                        <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
+                                    <h6>{{ $experience->company_name }} <i class="fas fa-circle"></i>
+                                        {{ $experience->job_type }} <i class="fas fa-circle"></i>
+                                        {{ $experience->experience }}</h6>
+                                    <p>{{ $experience->short_description }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div>
+                            @include('partials/no-data')
                         </div>
-                    </div>
-                    <div class="media brdr-bttm">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
-                        <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/experience-img.svg') }}" alt="experience-img" class="img-fluid">
-                        <div class="media-body">
-                            <h5>UI/UX Design</h5>
-                            <h6>Learn Cosy <i class="fas fa-circle"></i> Full-Time <i class="fas fa-circle"></i> Jul 2018 - Present (5y 3m)</h6>
-                            <p>Created and executed website for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.</p>
-                        </div>
-                    </div>
-
+                    @endif
                 </div>
             </div>
             <div class="col-lg-4">
@@ -95,7 +91,7 @@
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
                         <div class="media-body">
                             <h6>Website</h6>
-                            <a href="#">{{$instructor->company_name ? $instructor->company_name : '--'}}</a>
+                            <a href="#">{{$instructor->short_bio ? $instructor->short_bio : '--'}}</a>
                         </div>
                     </div>
                 </div>

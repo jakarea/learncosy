@@ -12,14 +12,7 @@
 @section('content')
 {{-- ==== module list page @S ==== --}}
 <main class="module-list-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <form action="" method="GET" id="myForm">
@@ -57,6 +50,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap module-list-table">
+                    @if (count($modules) > 0)
                     <table>
                         <tr>
                             <th>
@@ -104,6 +98,9 @@
                         </tr>
                         @endforeach
                     </table>
+                    @else 
+                        @include('partials/no-data') 
+                    @endif
                 </div>
             </div>
         </div>

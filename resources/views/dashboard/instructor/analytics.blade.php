@@ -2,8 +2,9 @@
 @section('title', 'Instructor Analytics')
 {{-- page style @S --}}
 @section('style')
-
+<link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
 @endsection
+
 @section('content')
     <main class="dashboard-page-wrap">
         <div class="container-fluid">
@@ -123,8 +124,14 @@
                         <div class="statics-head">
                             <h5>Monthly Earning</h5>
                         </div>
+<<<<<<< HEAD
                         <div id="monthlyEarningGraph"></div>
                     </div>
+=======
+                        <canvas id="courseProgress"></canvas>
+                        <div id="legend" class="legend center-legend"></div>
+                    </div> 
+>>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
                 </div>
                 <div class="col-lg-4 mt-15">
                     <div class="chart-box-wrap">
@@ -141,6 +148,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="row">
                 <div class="col-lg-8 mt-15">
                     <div class="chart-box-wrap">
@@ -181,6 +189,37 @@
                                 @include('partials/no-data')
                             @endif
                         </div>
+=======
+            <div class="col-lg-4 mt-15">
+                <div class="top-performing-course">
+                    <div class="d-flex">
+                        <h5>Message</h5>
+                        @if (count($messages) > 5)
+                            <a href="{{ url('course/messages') }}">View All</a>
+                        @endif
+                    </div>
+                    <div class="messages-items-wrap">
+                        @if (count($messages) > 0)  
+                            @foreach ($messages->slice(0,5) as $message)
+
+                            <div class="messages-item">
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset($message->user ? $message->user->avatar : '') }}" alt="Avatar" class="img-fluid">
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{ $message->user ? $message->user->name : '' }} <span>{{
+                                                $message->created_at->diffForHumans()}}</span></h5>
+                                        <p>{{ $message->message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach 
+                        @else
+                        @include('partials/no-data')
+                        @endif
+>>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
                     </div>
                 </div>
             </div>
@@ -188,10 +227,16 @@
     </main>
 @endsection
 @section('script')
+<<<<<<< HEAD
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {{-- <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script> --}}
+=======
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+>>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
 
     {{-- statudents status start --}}
     <script>
@@ -339,6 +384,7 @@
     </script>
     {{-- monthly earning end --}}
 
+<<<<<<< HEAD
     {{-- course progress chart start --}}
     <script>
         new Chart(document.getElementById('courseProgress'), {
@@ -405,4 +451,58 @@
         });
     </script>
 
+=======
+{{-- course progress chart start --}}
+<script>
+    var datas = [ {{$activeCourses}}, {{$draftCourses}}];
+    var backgroundColor = ['#FFAB00', '#294CFF'];
+    var ctx = document.getElementById('courseProgress').getContext('2d');
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Complete', 'Inprogress'],
+            datasets: [{
+                label: 'Course Progress',
+                data: datas,
+                backgroundColor: backgroundColor,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                display: false
+                }
+            },
+            title: {
+                display: true,
+                text: 'Chart Donut'
+            },
+            legend: {
+                display: false
+            },
+            cutout: '70%',
+            radius: 120
+        }
+    });
+
+    // Calculate percentages
+    var total = datas.reduce((a, b) => a + b, 0);
+    var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+
+    // Generate and display the custom legend
+    var legendHtml = "<ul>";
+   for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
+        legendHtml +=
+            '<li>' + '<p> <span style="background-color:' +
+            myDoughnutChart.data.datasets[0].backgroundColor[i] +
+            '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
+            "</li>";
+    }
+    legendHtml += "</ul>";
+
+    document.getElementById("legend").innerHTML = legendHtml;
+</script>
+{{-- course progress chart end --}}
+>>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
 @endsection

@@ -14,6 +14,7 @@ use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class AdminProfileController extends Controller
 {
@@ -54,16 +55,19 @@ class AdminProfileController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'short_bio' => 'required|string',
+            'website' => 'string',
             'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [ 
+            'avatar' => 'Max file size is 5 MB!'
         ]);
 
 
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
         $user->subdomain =  Str::slug($request->subdomain);
-        $user->short_bio = $request->short_bio;
+        $user->short_bio = $request->website;
         $user->social_links = $request->social_links ? implode(",",$request->social_links) : '';
         $user->phone = $request->phone;
         $user->description = $request->description;
@@ -75,20 +79,23 @@ class AdminProfileController extends Controller
             $user->password = $user->password;
         }
 
+        $slugg = Str::slug($request->name);
+
         if ($request->hasFile('avatar')) {
             // Delete old file
             if ($user->avatar) {
-               $oldFile = public_path('/assets/images/users/'.$user->avatar);
+               $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
            }
-           $slugg = Str::slug($request->name);
-           $image = $request->file('avatar');
-           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $user->avatar = $name;
+            $file = $request->file('avatar');
+            $image = Image::make($file);
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+           $user->avatar = $image_path;
        }
 
         $user->save();
@@ -131,8 +138,8 @@ class AdminProfileController extends Controller
         $students = [];
         $todaysStudents = [];
 
-        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
-        $enrolments = Checkout::orderBy('id', 'desc')->get();
+        //$payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
+        $enrolments = Checkout::with('course','user')->latest()->take(20)->get();
 
 
         $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();
@@ -149,7 +156,7 @@ class AdminProfileController extends Controller
         foreach ($todaysEnrolments as $enrolment) {
             $todaysStudents[$enrolment->user_id] = $enrolment->created_at;
         }
-
+        
         $totalEnrollment =  count($students);
         $todaysEnrollment =  count($todaysStudents);
 
@@ -159,7 +166,7 @@ class AdminProfileController extends Controller
         $totalEnrollToday = $this->getEnrollmentDataToday();
         $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
 
-        return view('payments/admin/grid-admin-payment', compact('payments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
+        return view('payments/admin/grid-admin-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
     }
 
     private function getEnrollmentData()

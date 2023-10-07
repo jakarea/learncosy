@@ -162,7 +162,7 @@ class ModuleSettingController extends Controller
 
         $item = InstructorModuleSetting::findOrFail($id);
 
-        $value = ["primary_color" => "","secondary_color"=>"","lp_layout"=>"","meta_title"=>"","meta_desc"=>""];
+        $value = ["primary_color" => "#f4f8fc","secondary_color"=>"#294cff","lp_layout"=>"","meta_title"=>"","meta_desc"=>""];
         $item->value = json_encode($value);
         $item->logo = null;
         $item->lp_bg_image = null;

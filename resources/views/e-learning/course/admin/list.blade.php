@@ -138,9 +138,7 @@
                     @endforeach
                 @else
                     <div class="col-12">
-                        <div class="no-result-found">
-                            <h6>No Course Found!</h6>
-                        </div>
+                        @include('partials/no-data')
                     </div>
                 @endif
             </div>

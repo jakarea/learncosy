@@ -78,8 +78,8 @@ class StudentProfileController extends Controller
             $file = $request->file('avatar');
             $image = Image::make($file);
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
-            $image->save(public_path('assets/images/users/') . $uniqueFileName);
-            $image_path = 'assets/images/users/' . $uniqueFileName;
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
 
            $user->avatar = $image_path;
        }

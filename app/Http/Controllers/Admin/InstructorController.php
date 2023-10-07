@@ -6,12 +6,14 @@ use Auth;
 use DataTables;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Experience;
 use App\Models\Lesson;
 use Illuminate\Support\Str;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class InstructorController extends Controller
 {
@@ -65,25 +67,28 @@ class InstructorController extends Controller
            'user_role' => 'instructor',
            'email' => $request->email,
            'phone' => $request->phone,
-           'short_bio' => $request->short_bio,
+           'short_bio' => $request->website,
+           'company_name' => $request->company_name,
            'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
            'password' => Hash::make($initialPass),
        ]);  
 
-       $instructorslug = Str::slug($request->name);
-        //if avatar is valid then save it
-       if ($request->hasFile('avatar')) {
-           $image = $request->file('avatar');
-           $name = $instructorslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $instructor->avatar = $name;
-       } 
+       $insSlugs = Str::slug($request->name);
+
+        if ($request->hasFile('avatar')) { 
+            $file = $request->file('avatar');
+            $image = Image::make($file);
+            $uniqueFileName = $insSlugs . '-' . uniqid() . '.png';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+           $instructor->avatar = $image_path;
+       }
+
 
        $instructor->save();
-       return redirect('admin/instructor')->with('success', 'instructor Added Successfully!');
+       return redirect('admin/instructor')->with('success', 'Instructor Added Successfully!');
 
     }
 
@@ -91,10 +96,10 @@ class InstructorController extends Controller
     public function show($id)
      {  
         $instructor = User::where('id', $id)->first();
-
+        $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
         $subscription = Subscription::where('instructor_id', $id)->get();
     
-        return view('instructor/admin/show',compact('instructor', 'subscription')); 
+        return view('instructor/admin/show',compact('instructor', 'subscription','experiences')); 
      }
 
       // show page 
@@ -129,7 +134,8 @@ class InstructorController extends Controller
         if ($request->user_role) {
            $user->user_role =  $user->user_role;
         }
-        $user->short_bio = $request->short_bio;
+        $user->short_bio = $request->website;
+        $user->company_name = $request->company_name;
         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
         $user->subdomain = $request->subdomain;
         $user->phone = $request->phone;
@@ -142,33 +148,38 @@ class InstructorController extends Controller
             $user->password = $user->password;
         } 
 
+        $insSlugg = Str::slug($request->name);
+
         if ($request->hasFile('avatar')) { 
-           // Delete old file
-           if ($user->avatar) {
-              $oldFile = public_path($user->avatar);
-              if (file_exists($oldFile)) {
-                  unlink($oldFile);
-              }
-          } 
-          $slugg = Str::slug($request->name);
-          $image = $request->file('avatar');
-          $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-          $destinationPath = public_path('/assets/images/users');
-          $image->move($destinationPath, $name);
-          $user->avatar = $name; 
-      }
+            if ($user->avatar) {
+               $oldFile = public_path($user->avatar);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           }
+            $file = $request->file('avatar');
+            $image = Image::make($file);
+            $uniqueFileName = $insSlugg . '-' . uniqid() . '.png';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+           $user->avatar = $image_path;
+       }
 
         $user->save();
         return redirect('admin/instructor')->with('success', 'Instructor Profile has been Updated successfully!');
     }
 
     public function destroy($id){
+
+        if (!$id) {
+            return redirect('admin/instructor')->with('error', 'Failed to delete this Instructor!');
+        }
          
         $instructor = User::where('id', $id)->first();
          //delete instructor avatar
-         $instructorOldThumbnail = public_path('/assets/images/users/'.$instructor->avatar);
-         if (file_exists($instructorOldThumbnail)) {
-             @unlink($instructorOldThumbnail);
+         $instructorOldAvatar = public_path('/uploads/users/'.$instructor->avatar);
+         if (file_exists($instructorOldAvatar)) {
+             @unlink($instructorOldAvatar);
          }
          
          \App\Models\BundleCourse::where('user_id', $id)->delete();
@@ -176,10 +187,11 @@ class InstructorController extends Controller
          \App\Models\Course::where('user_id', $id)->delete();
          \App\Models\CourseActivity::where('user_id', $id)->delete();
          \App\Models\InstructorModuleSetting::where('instructor_id', $id)->delete();
-         \App\Models\Message::where('user_id', $id)->delete();
+         \App\Models\Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
          \App\Models\Module::where('user_id', $id)->delete();
          \App\Models\Subscription::where('instructor_id', $id)->delete();
          \App\Models\VimeoData::where('user_id', $id)->delete();
+
         $instructor->delete();
 
         return redirect('admin/instructor')->with('success', 'Instructor Successfully deleted!');

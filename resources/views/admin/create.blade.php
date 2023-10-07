@@ -74,17 +74,28 @@
                                     <hr>
                                     <h5>Other Information </h5>
                                 </div>
-                            </div> 
+                            </div>  
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Bio
-                                    </label>
+                                    <label for="company_name">Company name </label>
 
-                                    <input type="text" name="short_bio" id="short_bio" value="{{ old('short_bio') }}"
-                                        class="form-control @error('short_bio') is-invalid @enderror"
-                                        placeholder="Enter Bio "/>
+                                    <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
+                                        class="form-control @error('company_name') is-invalid @enderror"
+                                        placeholder="Company Name">
 
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                    <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group form-error">
+                                    <label for="website">Website </label>
+
+                                    <input type="url" name="website" id="website" value="{{ old('website') }}"
+                                        class="form-control @error('website') is-invalid @enderror"
+                                        placeholder="Enter Website">
+
+                                    <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
@@ -92,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="text" placeholder="Enter Social Link" name="social_links[]"
+                                    <input type="url" placeholder="Enter Social Link" name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">
 
@@ -130,6 +141,9 @@
                                     </label>
                                     <input type="file" name="avatar" id="imageInput" accept="image/*"
                                         onchange="displayImage(event)" class="d-none">
+
+                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
+                                            @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">

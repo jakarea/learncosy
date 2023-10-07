@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash; 
+use Intervention\Image\Facades\Image;
 
 class StudentManagementController extends Controller
 {
@@ -31,60 +32,7 @@ class StudentManagementController extends Controller
         $users = $users->paginate(12);
         
         return view('students/admin/grid',compact('users'));  
-    }
-
-    // data table getData
-    public function studentsDataTable()
-    {       $user_role = "student";
-            $user = User::where('user_role',$user_role)->get();
-          
-            return Datatables::of($user)
-                ->addColumn('action', function($user){ 
-                     
-                    $actions = '<div class="action-dropdown">
-                        <div class="dropdown">
-                            <a class="btn btn-drp" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="bttns-wrap"> 
-                                    <a class="dropdown-item" href="/admin/students/profile/'.$user->id.'"> <i class="fas fa-eye"></i></a>  
-                                    <a class="dropdown-item" href="/admin/students/'.$user->id.'/edit"> <i class="fas fa-pen"></i></a>  
-                                    <form method="post" class="d-inline btn btn-danger" action="/admin/students/'.$user->id.'/destroy">  
-                                    '.csrf_field().'
-                                    '.method_field("DELETE").'
-                                        <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                    </form>    
-                                </div>
-                            </div> 
-                        </div>
-                    </div>';
-
-                    return $actions;
-
-                })
-                ->editColumn('image', function ($user) { 
-                    if($user->avatar){
-                        return '<img src="$user->avatar" width="50" />';
-                    }else{ 
-                        return '<div class="table-avatar">
-                                <span>'.strtoupper($user->name[0]).'</span>
-                            </div>';
-                    } 
-            })
-            ->editColumn('status', function ($user) {
-                if($user->recivingMessage == 1){
-                    return '<label class="badge bg-success">'.__('Enabled').'</label>';
-                }
-                if($user->recivingMessage == 0){
-                    return '<label class="badge bg-danger">'.__('Disabled').'</label>';
-                } 
-             })
-            ->addIndexColumn()
-            ->rawColumns(['action', 'image','status'])
-            ->make(true);
-    }
+    } 
 
      // create page 
     public function create()
@@ -111,27 +59,30 @@ class StudentManagementController extends Controller
         // initial password for student if instructor create profile
         $initialPass = 1234567890;
 
+        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
         // add student
         $student = new User([
             'name' => $request->name, 
             'email' => $request->email,
             'phone' => $request->phone,
-            'short_bio' => $request->short_bio,
-            'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
+            'short_bio' => $request->website,
+            'company_name' => $request->company_name,
+            'social_links' => trim($social_links,','),
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
             'password' => Hash::make($initialPass),
         ]);  
 
-        $studentslug = Str::slug($request->name);
-         //if avatar is valid then save it
+        $stuSlug = Str::slug($request->name);
+
         if ($request->hasFile('avatar')) {
-            $image = $request->file('avatar');
-            $name = $studentslug.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/users');
-            $image->move($destinationPath, $name);
-            $student->avatar = $name;
-        } 
+            $file = $request->file('avatar');
+            $image = Image::make($file);
+            $uniqueFileName = $stuSlug . '-' . uniqid() . '.png';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+            $student->avatar = $image_path;
+        }
 
         $student->save();
         return redirect('admin/students')->with('success', 'Student Added Successfully!');
@@ -179,7 +130,8 @@ class StudentManagementController extends Controller
             $user->subdomain = $user->subdomain;
         } 
 
-         $user->short_bio = $request->short_bio;
+         $user->short_bio = $request->website;
+         $user->company_name = $request->company_name;
          $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
          $user->phone = $request->phone;
          $user->description = $request->description;
@@ -191,21 +143,22 @@ class StudentManagementController extends Controller
              $user->password = $user->password;
          } 
  
+         $slugg = Str::slug($request->name);
+
          if ($request->hasFile('avatar')) { 
-            // Delete old file
-            if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           } 
-           $slugg = Str::slug($request->name);
-           $image = $request->file('avatar');
-           $name = $slugg.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-           $destinationPath = public_path('/assets/images/users');
-           $image->move($destinationPath, $name);
-           $user->avatar = $name; 
-       }
+             if ($user->avatar) {
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+             $file = $request->file('avatar');
+             $image = Image::make($file);
+             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+             $image->save(public_path('uploads/users/') . $uniqueFileName);
+             $image_path = 'uploads/users/' . $uniqueFileName;
+            $user->avatar = $image_path;
+        }
  
          $user->save();
          return redirect()->route('admin.allStudents')->with('success', 'Students Profile has been Updated successfully!');

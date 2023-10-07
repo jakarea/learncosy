@@ -394,6 +394,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
 
     Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
+    Route::post('/course-unlike/{course_id}/{ins_id}', 'courseUnLike')->name('students.course.unlike');
 
     // student checkout page routes
     Route::prefix('checkout')->controller(CheckoutController::class)->group(function () {

@@ -17,7 +17,7 @@ class SubscriptionPlansTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 10) as $index) {
+        foreach (range(1, 6) as $index) {
 
             $randomDateTime = date('Y-m-d H:i:s', strtotime('-30 days', strtotime(now())) + mt_rand(0, 30 * 24 * 3600));
             $features = [];
@@ -32,7 +32,7 @@ class SubscriptionPlansTableSeeder extends Seeder
                 'features' =>  implode(',',$features),
                 'type' => $faker->randomElement(['monthly', 'yearly']),
                 'status' => $faker->randomElement(['active', 'inactive']),
-                'created_by' => $faker->numberBetween(1, 5), // Assuming user IDs 1 to 5
+                'created_by' => 1,
                 'created_at' => $randomDateTime,
                 'updated_at' => now(),
             ]);
