@@ -214,6 +214,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
         Route::get('analytics', [DashboardController::class, 'index'])->name('instructor.dashboard.index');
+        Route::get('manage-access', [DashboardController::class, 'manageAccess'])->name('instructor.manage.access');
+        Route::post('manage-access', [DashboardController::class, 'pageAccess'])->name('instructor.manage.pages');
         // instructor payment history pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {
             Route::get('/', 'studentsPayment');

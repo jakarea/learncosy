@@ -88,6 +88,7 @@
                         <li><a class="dropdown-item" href="{{ url('/instructor/profile/account-settings') }}">Account Settings</a></li>
                         <li><a class="dropdown-item" href="{{ url('/instructor/subscription') }}">Subscription Plan</a></li>
                         <li><a class="dropdown-item" href="{{ url('/instructor/theme/setting/dns') }}">Theme Setting</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/instructor/manage-access') }}">Manage Pages</a></li>
                         <li><a class="dropdown-item" href="{{ route('module.setting.dns', ['tab' => 'dns']) }}">DNS</a>
                         </li>
                         <li> <a class="dropdown-item" href="{{ route('logout') }}"
