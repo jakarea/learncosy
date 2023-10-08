@@ -11,9 +11,9 @@ use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AdminHomeController extends Controller
-
 {
 
     private $currentMonthStart;
@@ -30,13 +30,13 @@ class AdminHomeController extends Controller
     }
 
     // dashboard
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $categories = [];
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
-            
+
         $TopPerformingCourses = Course::select(
             'courses.id',
             'courses.title',
@@ -66,6 +66,7 @@ class AdminHomeController extends Controller
         $previousMonthStart = $this->previousMonthStart;
         $previousMonthEnd = $this->previousMonthEnd;
 
+
         $currentMonthStudentCount = User::where('user_role', 'student')
             ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
             ->count();
@@ -81,18 +82,56 @@ class AdminHomeController extends Controller
             ->count();
         $percentageChangeOfStudent = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfStudent = (int)((($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100);
+            $percentageChangeOfStudent = (int) ((($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100);
         }
 
         $percentageChangeOfInstructor = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfInstructor = (int)((($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100);
+            $percentageChangeOfInstructor = (int) ((($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100);
+        }
+
+
+        if ($request->has('duration')) {
+            $duration = $request->query('duration');
+            if ($duration === 'one_month') {
+                $firstDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->endOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')
+                    ->whereBetween('created_at', [$firstDayOfCurrentMonth, $lastDayOfCurrentMonth])
+                    ->get();
+
+            } elseif ($duration === 'three_months') {
+                $firstDayOfCurrentMonth = Carbon::now()->subMonth(3)->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth(6)->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth(3)->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')
+                    ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            } elseif ($duration === 'six_months') {
+                $firstDayOfCurrentMonth = Carbon::now()->subMonth(6)->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth(12)->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth(6)->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            } elseif ($duration === 'one_year') {
+                $firstDayOfCurrentMonth = Carbon::now()->startOfYear();
+                $lastDayOfCurrentMonth = Carbon::now()->endOfYear();
+                $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear();
+                $lastDayOfPreviousMonth = Carbon::now()->subYear()->endOfYear();
+                $enrolments = Checkout::orderBy('id', 'desc')->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            }
+        } else {
+            $enrolments = Checkout::orderBy('id', 'desc')->get();
         }
 
         $instructorsCount = User::where('user_role', 'instructor')->count();
         $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
 
-        $enrolments = Checkout::orderBy('id', 'desc')->get();
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates();
         $earningByMonth = $this->getEarningByMonth();
@@ -119,6 +158,23 @@ class AdminHomeController extends Controller
             $students[$enrolment->user_id] = $enrolment->created_at;
         }
 
+
+        // if ($request->has('duration')) {
+        //     $duration = $request->query('duration');
+        //     if ($duration === 'one_month') {
+
+        //     } elseif ($duration === 'three_months') {
+
+        //     } elseif ($duration === 'six_months') {
+
+        //     } elseif ($duration === 'one_year') {
+
+        //     }
+
+        // }else{
+
+        // }
+
         $categories = array_unique($unique_array_categories);
 
         $totalEarnings = $this->getTotalEarningViaSubscription();
@@ -143,7 +199,7 @@ class AdminHomeController extends Controller
             ->limit(10)
             ->get();
 
-            // return $earningByMonth;
+        // return $earningByMonth;
 
         return view(
             'e-learning/course/admin/dashboard',
@@ -170,11 +226,12 @@ class AdminHomeController extends Controller
         );
     }
 
-    public function perform(){ 
+    public function perform()
+    {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
-        $TopPerformingCourses = Course::select('courses.id','courses.price','courses.offer_price','courses.user_id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+        $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')
             ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
@@ -194,34 +251,34 @@ class AdminHomeController extends Controller
                 $TopPerformingCourses->whereDate('courses.created_at', '>=', $oneYearAgo);
             }
         } else {
-            $TopPerformingCourses->orderByDesc('sale_count'); 
+            $TopPerformingCourses->orderByDesc('sale_count');
         }
 
         $TopPerformingCourses = $TopPerformingCourses->paginate(12);
 
-            
-        return view('e-learning/course/admin/top-perform',compact('TopPerformingCourses'));
+
+        return view('e-learning/course/admin/top-perform', compact('TopPerformingCourses'));
     }
 
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.amount']);
+            ->get(['subscriptions.start_at', 'subscriptions.created_at', 'subscription_packages.amount']);
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
-  // Iterate through the data array
-  foreach ($data as $item) {
-    // print_r($item);
-    // Extract the month from the created_at value
-    $createdAt = Carbon::parse($item['created_at']);
-    $month = intval($createdAt->format('m'));
+        // Iterate through the data array
+        foreach ($data as $item) {
+            // print_r($item);
+            // Extract the month from the created_at value
+            $createdAt = Carbon::parse($item['created_at']);
+            $month = intval($createdAt->format('m'));
 
-    // Add the amount to the corresponding month's sum
-    $monthlySums[$month - 1] += $item['amount'];
-  }
+            // Add the amount to the corresponding month's sum
+            $monthlySums[$month - 1] += $item['amount'];
+        }
 
-  return $monthlySums;
+        return $monthlySums;
 
     }
 
@@ -284,7 +341,7 @@ class AdminHomeController extends Controller
         } else {
             $percentageChange = ($currentMonthTotal > 0) ? 100 : 0;
         }
-        return (int)$percentageChange;
+        return (int) $percentageChange;
     }
 
 

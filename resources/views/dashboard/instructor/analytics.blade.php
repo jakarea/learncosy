@@ -2,7 +2,7 @@
 @section('title', 'Instructor Analytics')
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -66,7 +66,8 @@
                         <p> <b
                                 style="color: {{ $formatedPercentageOfCourse >= 0 ? 'green' : 'red' }}">{{ number_format($formatedPercentageOfCourse, 0) }}</b>
                             % VS last month</p>
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart"
+                            class="img-fluid light-ele">
                         <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart"
                             class="img-fluid dark-ele">
                     </div>
@@ -124,14 +125,9 @@
                         <div class="statics-head">
                             <h5>Monthly Earning</h5>
                         </div>
-<<<<<<< HEAD
-                        <div id="monthlyEarningGraph"></div>
-                    </div>
-=======
                         <canvas id="courseProgress"></canvas>
                         <div id="legend" class="legend center-legend"></div>
-                    </div> 
->>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
+                    </div>
                 </div>
                 <div class="col-lg-4 mt-15">
                     <div class="chart-box-wrap">
@@ -148,48 +144,6 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="row">
-                <div class="col-lg-8 mt-15">
-                    <div class="chart-box-wrap">
-                        <div class="statics-head">
-                            <h5>Students</h5>
-                        </div>
-                        <div id="studentsGraph"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-15">
-                    <div class="top-performing-course">
-                        <div class="d-flex">
-                            <h5>Message</h5>
-                            @if (count($messages) > 0)
-                                <a href="{{ url('course/messages') }}">View All</a>
-                            @endif
-                        </div>
-                        <div class="messages-items-wrap">
-                            @if (count($messages) > 0)
-                                @foreach ($messages as $message)
-                                    <div class="messages-item">
-                                        <div class="media">
-                                            <div class="avatar">
-                                                <img src="{{ asset($message->user->avatar) }}" alt="Avatar"
-                                                    class="img-fluid">
-                                                <i class="fas fa-circle"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h5>{{ $message->user->name }}
-                                                    <span>{{ $message->created_at->diffForHumans() }}</span>
-                                                </h5>
-                                                <p>{{ $message->message }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                @include('partials/no-data')
-                            @endif
-                        </div>
-=======
             <div class="col-lg-4 mt-15">
                 <div class="top-performing-course">
                     <div class="d-flex">
@@ -199,27 +153,26 @@
                         @endif
                     </div>
                     <div class="messages-items-wrap">
-                        @if (count($messages) > 0)  
-                            @foreach ($messages->slice(0,5) as $message)
-
-                            <div class="messages-item">
-                                <div class="media">
-                                    <div class="avatar">
-                                        <img src="{{ asset($message->user ? $message->user->avatar : '') }}" alt="Avatar" class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>{{ $message->user ? $message->user->name : '' }} <span>{{
-                                                $message->created_at->diffForHumans()}}</span></h5>
-                                        <p>{{ $message->message }}</p>
+                        @if (count($messages) > 0)
+                            @foreach ($messages->slice(0, 5) as $message)
+                                <div class="messages-item">
+                                    <div class="media">
+                                        <div class="avatar">
+                                            <img src="{{ asset($message->user ? $message->user->avatar : '') }}"
+                                                alt="Avatar" class="img-fluid">
+                                            <i class="fas fa-circle"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5>{{ $message->user ? $message->user->name : '' }}
+                                                <span>{{ $message->created_at->diffForHumans() }}</span></h5>
+                                            <p>{{ $message->message }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            @endforeach 
+                            @endforeach
                         @else
-                        @include('partials/no-data')
+                            @include('partials/no-data')
                         @endif
->>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
                     </div>
                 </div>
             </div>
@@ -227,16 +180,9 @@
     </main>
 @endsection
 @section('script')
-<<<<<<< HEAD
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{-- <script src="{{ asset('dashboard-assets/js/clients-projects-chart.js') }}"></script> --}}
-=======
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
->>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
 
     {{-- statudents status start --}}
     <script>
@@ -384,7 +330,6 @@
     </script>
     {{-- monthly earning end --}}
 
-<<<<<<< HEAD
     {{-- course progress chart start --}}
     <script>
         new Chart(document.getElementById('courseProgress'), {
@@ -422,23 +367,19 @@
 
     <script>
         $(document).ready(function() {
-            // Event listener for filter options
             $(".filter-option").click(function(e) {
                 e.preventDefault();
                 var duration = $(this).data("duration");
 
-                // Update the URL with the selected filter duration as a query parameter
                 var currentUrl = window.location.href;
                 var updatedUrl = updateQueryStringParameter(currentUrl, 'duration', duration);
                 history.pushState({
                     path: updatedUrl
                 }, '', updatedUrl);
 
-                // Reload the page or perform other actions as needed
                 window.location.reload();
             });
 
-            // Function to update query parameters in the URL
             function updateQueryStringParameter(uri, key, value) {
                 var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
                 var separator = uri.indexOf('?') !== -1 ? "&" : "?";
@@ -451,58 +392,56 @@
         });
     </script>
 
-=======
-{{-- course progress chart start --}}
-<script>
-    var datas = [ {{$activeCourses}}, {{$draftCourses}}];
-    var backgroundColor = ['#FFAB00', '#294CFF'];
-    var ctx = document.getElementById('courseProgress').getContext('2d');
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Complete', 'Inprogress'],
-            datasets: [{
-                label: 'Course Progress',
-                data: datas,
-                backgroundColor: backgroundColor,
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            plugins: {
+    {{-- course progress chart start --}}
+    <script>
+        var datas = [{{ $activeCourses }}, {{ $draftCourses }}];
+        var backgroundColor = ['#FFAB00', '#294CFF'];
+        var ctx = document.getElementById('courseProgress').getContext('2d');
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Complete', 'Inprogress'],
+                datasets: [{
+                    label: 'Course Progress',
+                    data: datas,
+                    backgroundColor: backgroundColor,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Chart Donut'
+                },
                 legend: {
-                display: false
-                }
-            },
-            title: {
-                display: true,
-                text: 'Chart Donut'
-            },
-            legend: {
-                display: false
-            },
-            cutout: '70%',
-            radius: 120
+                    display: false
+                },
+                cutout: '70%',
+                radius: 120
+            }
+        });
+
+        // Calculate percentages
+        var total = datas.reduce((a, b) => a + b, 0);
+        var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+
+        // Generate and display the custom legend
+        var legendHtml = "<ul>";
+        for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
+            legendHtml +=
+                '<li>' + '<p> <span style="background-color:' +
+                myDoughnutChart.data.datasets[0].backgroundColor[i] +
+                '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
+                "</li>";
         }
-    });
+        legendHtml += "</ul>";
 
-    // Calculate percentages
-    var total = datas.reduce((a, b) => a + b, 0);
-    var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
-
-    // Generate and display the custom legend
-    var legendHtml = "<ul>";
-   for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
-        legendHtml +=
-            '<li>' + '<p> <span style="background-color:' +
-            myDoughnutChart.data.datasets[0].backgroundColor[i] +
-            '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
-            "</li>";
-    }
-    legendHtml += "</ul>";
-
-    document.getElementById("legend").innerHTML = legendHtml;
-</script>
-{{-- course progress chart end --}}
->>>>>>> 8aaece55afc530e42c6a1bd5101bc9db2c27f543
+        document.getElementById("legend").innerHTML = legendHtml;
+    </script>
+    {{-- course progress chart end --}}
 @endsection
