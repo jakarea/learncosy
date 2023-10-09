@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\App;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -125,5 +126,29 @@ class HomeController extends Controller
         );
         $pdf = Pdf::loadView('invoice',$data);
         return $pdf->download('invoice-'.$payment_id.'.pdf');
+    }
+
+    public function invoiceMail($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment,
+            'mail' => $payment->user->email,
+            'payment_id' => 'invoice-'.$payment_id.'.pdf',
+        );
+        $pdf = Pdf::loadView('invoice',$data);
+        if($data['mail'] != '')
+        {
+            Mail::send('invoice', $data, function($message) use ($data,$pdf) {
+                        $message->to($data['mail'])
+                                ->subject('Payment Invoice')
+                                ->attachData($pdf->output(),$data['payment_id']);
+            });
+            return redirect()->back()->with('success', 'Payment Invoice sent to mail successfully.');
+        }
+        else
+        {
+            return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
+        }
     }
 }
