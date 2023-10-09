@@ -138,6 +138,7 @@
                             <th>Amount</th>
                             <th>Payent Status</th>
                             <th width="8%" class="text-start">Actions</th>
+
                         </tr>
                         @foreach ($enrolments as $key => $payment)
                         <tr>
@@ -158,6 +159,7 @@
                             </td>
                             <td>
                                 <p>€{{$payment->amount}}</p>
+
                             </td>
                             <td>
                                 @if ($payment->status == 'completed')
@@ -167,10 +169,11 @@
                                 @endif 
                             </td>
                             <td>
-                                <div class="d-flex">
-                                    <a href="#" class="btn-export btn-view">Export</a>
-                                    <a href="#" class="btn-view ms-2">View</a>
-                                </div> 
+
+                                <ul>
+                                    <a href="{{ route('export',encrypt($payment->payment_id)) }}" class="btn-view">Export</a>
+                                    <a href="{{ route('view',encrypt($payment->payment_id)) }}" class="btn-view">View</a>
+                                </ul>
                             </td>
                         </tr>
                         @endforeach

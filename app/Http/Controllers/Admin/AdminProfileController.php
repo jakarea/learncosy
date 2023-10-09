@@ -9,6 +9,9 @@ use App\Models\Subscription;
 use App\Models\Checkout;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\App;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\PasswordChanged;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
@@ -180,8 +183,59 @@ class AdminProfileController extends Controller
 
         $totalEnrollToday = $this->getEnrollmentDataToday();
         $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
-
+        // return $enrolments;
         return view('payments/admin/grid-admin-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
+    }
+
+    public function export($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment
+        );
+        $pdf = Pdf::loadView('adminInvoice',$data);
+        return $pdf->download('invoice-'.$payment_id.'.pdf');
+    }
+
+    public function view($payment_id)
+    {
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        return view('payments/admin/view', compact('payment'));
+    }
+
+    public function generatePdf($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment
+        );
+        $pdf = Pdf::loadView('adminInvoice',$data);
+        return $pdf->download('invoice-'.$payment_id.'.pdf');
+    }
+
+    public function mailInvoice($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment,
+            'mail' => $payment->user->email,
+            'payment_id' => 'invoice-'.$payment_id.'.pdf',
+        );
+        $pdf = Pdf::loadView('adminInvoice',$data);
+        if($data['mail'] != '')
+        {
+            Mail::send('adminInvoice', $data, function($message) use ($data,$pdf) {
+                        $message->to($data['mail'])
+                                ->subject('Payment Invoice')
+                                ->attachData($pdf->output(),$data['payment_id']);
+            });
+            return redirect()->back()->with('success', 'Payment Invoice sent to mail successfully.');
+        }
+        else
+        {
+            return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
+        }
     }
 
     private function getEnrollmentData()

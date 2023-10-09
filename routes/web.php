@@ -222,6 +222,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('/{payment_id}', 'details');
             Route::get('/generate-pdf/{id}', 'generatePdf')->name('generate-pdf');
+            Route::get('/invoice-mail/{id}', 'invoiceMail')->name('invoice-mail');
             Route::get('/platform-fee', 'adminPayment');
             Route::get('/platform-fee/data', 'adminPaymentData')->name('instructor.admin-payment');
         });
@@ -541,6 +542,10 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
             Route::get('/platform-fee', 'adminPayment');
             Route::get('/platform-fee/data', 'adminPaymentData')->name('admin.admin-payment');
+            Route::get('/export/{id}', 'export')->name('export');
+            Route::get('/view/{id}', 'view')->name('view');
+            Route::get('/pdf-generate/{id}', 'generatePdf')->name('pdf-generate');
+            Route::get('/mail-invoice/{id}', 'mailInvoice')->name('mail-invoice');
         });
     });
 });

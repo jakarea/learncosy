@@ -11,9 +11,9 @@ use App\Models\Checkout;
 use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AdminHomeController extends Controller
-
 {
 
     private $currentMonthStart;
@@ -30,15 +30,16 @@ class AdminHomeController extends Controller
     }
 
     // dashboard
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $categories = [];
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
 
+
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-            
+
         $TopPerformingCourses = Course::select(
             'courses.id',
             'courses.title',
@@ -83,26 +84,115 @@ class AdminHomeController extends Controller
             ->count();
         $percentageChangeOfStudent = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfStudent = (int)((($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100);
+            $percentageChangeOfStudent = (int) ((($currentMonthStudentCount - $previousMonthStudentCount) / abs($previousMonthStudentCount)) * 100);
         }
 
         $percentageChangeOfInstructor = 0;
         if ($previousMonthStudentCount !== 0) {
-            $percentageChangeOfInstructor = (int)((($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100);
+            $percentageChangeOfInstructor = (int) ((($currentMonthInstructorCount - $previousMonthInstructorCount) / abs($previousMonthInstructorCount)) * 100);
+        }
+
+
+        if ($request->has('duration')) {
+            $duration = $request->query('duration');
+            if ($duration === 'one_month') {
+                $firstDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->endOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')
+                    ->whereBetween('created_at', [$firstDayOfCurrentMonth, $lastDayOfCurrentMonth])
+                    ->get();
+
+            } elseif ($duration === 'three_months') {
+                $firstDayOfCurrentMonth = Carbon::now()->subMonth(3)->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth(6)->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth(3)->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')
+                    ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            } elseif ($duration === 'six_months') {
+                $firstDayOfCurrentMonth = Carbon::now()->subMonth(6)->startOfMonth();
+                $lastDayOfCurrentMonth = Carbon::now()->startOfMonth();
+                $firstDayOfPreviousMonth = Carbon::now()->subMonth(12)->startOfMonth();
+                $lastDayOfPreviousMonth = Carbon::now()->subMonth(6)->endOfMonth();
+                $enrolments = Checkout::orderBy('id', 'desc')->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            } elseif ($duration === 'one_year') {
+                $firstDayOfCurrentMonth = Carbon::now()->startOfYear();
+                $lastDayOfCurrentMonth = Carbon::now()->endOfYear();
+                $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear();
+                $lastDayOfPreviousMonth = Carbon::now()->subYear()->endOfYear();
+                $enrolments = Checkout::orderBy('id', 'desc')->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])->get();
+
+            }
+        } else {
+            $enrolments = Checkout::orderBy('id', 'desc')->get();
         }
 
         $instructorsCount = User::where('user_role', 'instructor')->count();
         $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
 
-        $enrolments = Checkout::orderBy('id', 'desc')->get();
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates();
         $earningByMonth = $this->getEarningByMonth();
-        $courses = Course::get();
+
+
+        if ($request->has('duration')) {
+            $duration = $request->query('duration');
+            if ($duration === 'one_month') {
+                $currentDate = Carbon::now();
+                $currentMonthStartDate = $currentDate->startOfMonth();
+                $currentMonthEndDate = $currentDate->endOfMonth();
+                $previousMonthStartDate = $currentDate->copy()->subMonth()->startOfMonth();
+                $previousMonthEndDate = $currentDate->copy()->subMonth()->endOfMonth();
+
+                $courses = Course::whereBetween('created_at', [$previousMonthStartDate, $currentMonthEndDate])->get();
+                $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStartDate, $currentMonthEndDate])->count();
+                $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStartDate, $previousMonthEndDate])->count();
+            } elseif ($duration === 'three_months') {
+                $currentDate = Carbon::now();
+                $currentMonthStartDate = $currentDate->startOfMonth();
+                $currentMonthEndDate = $currentDate->endOfMonth();
+                $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+                $threeMonthsAgoEndDate = $currentDate->subMonths(2)->endOfMonth();
+                $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+
+                $courses = Course::whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])->get();
+                $currentMonthCourseCount = Course::whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])->count();
+                $previousMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $threeMonthsAgoEndDate])->count();
+            } elseif ($duration === 'six_months') {
+                $currentDate = Carbon::now();
+                $currentMonthStartDate = $currentDate->startOfMonth();
+                $currentMonthEndDate = $currentDate->endOfMonth();
+                $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+                $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+                $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth();
+
+                $courses = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])->get();
+                $currentMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])->count();
+                $previousMonthCourseCount = Course::whereBetween('created_at', [$previousSixMonthsAgoStartDate, $sixMonthsAgoStartDate])->count();
+            } elseif ($duration === 'one_year') {
+                $firstdayOfCurrentYear = Carbon::now()->startOfYear();
+                $lastDayOfCurrentYear = Carbon::now()->endOfYear();
+                $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear();
+                $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear();
+
+
+                $courses = Course::whereBetween('created_at', [$firstDayOfPreviousYear, $lastDayOfCurrentYear])->get();
+                $currentMonthCourseCount = Course::whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])->count();
+                $previousMonthCourseCount = Course::whereBetween('created_at', [$firstDayOfPreviousYear, $lastDayOfPreviousYear])->count();
+            }
+
+        } else {
+            $courses = Course::get();
+            $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
+            $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
+        }
+
         $courseCount = count($courses);
 
-        $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
-        $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
         $percentageChangeOfCourse = 0;
         if ($previousMonthCourseCount !== 0) {
             $percentageChangeOfCourse = (($currentMonthCourseCount - $previousMonthCourseCount) / abs($previousMonthCourseCount)) * 100;
@@ -121,10 +211,33 @@ class AdminHomeController extends Controller
             $students[$enrolment->user_id] = $enrolment->created_at;
         }
 
+
+
         $categories = array_unique($unique_array_categories);
 
-        $totalEarnings = $this->getTotalEarningViaSubscription();
-        $earningParcentage = $this->getEarningParcentageViaSubscription();
+        if ($request->has('duration')) {
+            $duration = $request->query('duration');
+            if ($duration === 'one_month') {
+                $totalEarnings = $this->getTotalEarningViaSubscription($duration);
+                $earningParcentage = $this->getEarningParcentageViaSubscription($duration);
+
+            } elseif ($duration === 'three_months') {
+                $totalEarnings = $this->getTotalEarningViaSubscription($duration);
+                $earningParcentage = $this->getEarningParcentageViaSubscription($duration);
+
+            } elseif ($duration === 'six_months') {
+                $totalEarnings = $this->getTotalEarningViaSubscription($duration);
+                $earningParcentage = $this->getEarningParcentageViaSubscription($duration);
+
+            } elseif ($duration === 'one_year') {
+                $totalEarnings = $this->getTotalEarningViaSubscription($duration);
+                $earningParcentage = $this->getEarningParcentageViaSubscription($duration);
+
+            }
+        } else {
+            $totalEarnings = $this->getTotalEarningViaSubscription(null);
+            $earningParcentage = $this->getEarningParcentageViaSubscription(null);
+        }
 
         $courses = Course::select(
             'courses.id',
@@ -159,6 +272,7 @@ class AdminHomeController extends Controller
         
         $courses = $courses->get();     
 
+
         return view(
             'e-learning/course/admin/dashboard',
             compact(
@@ -184,11 +298,12 @@ class AdminHomeController extends Controller
         );
     }
 
-    public function perform(){ 
+    public function perform()
+    {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
-        $TopPerformingCourses = Course::select('courses.id','courses.price','courses.offer_price','courses.user_id','courses.title','courses.categories','courses.thumbnail','courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+        $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')
             ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
@@ -208,42 +323,90 @@ class AdminHomeController extends Controller
                 $TopPerformingCourses->whereDate('courses.created_at', '>=', $oneYearAgo);
             }
         } else {
-            $TopPerformingCourses->orderByDesc('sale_count'); 
+            $TopPerformingCourses->orderByDesc('sale_count');
         }
 
         $TopPerformingCourses = $TopPerformingCourses->paginate(12);
 
-            
-        return view('e-learning/course/admin/top-perform',compact('TopPerformingCourses'));
+
+        return view('e-learning/course/admin/top-perform', compact('TopPerformingCourses'));
     }
 
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
         ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price']);
+
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
-  // Iterate through the data array
-  foreach ($data as $item) {
-    // print_r($item);
-    // Extract the month from the created_at value
-    $createdAt = Carbon::parse($item['created_at']);
-    $month = intval($createdAt->format('m'));
+        // Iterate through the data array
+        foreach ($data as $item) {
+            // print_r($item);
+            // Extract the month from the created_at value
+            $createdAt = Carbon::parse($item['created_at']);
+            $month = intval($createdAt->format('m'));
 
-    // Add the amount to the corresponding month's sum
-    $monthlySums[$month - 1] += $item['amount'];
-  }
+            // Add the amount to the corresponding month's sum
+            $monthlySums[$month - 1] += $item['amount'];
+        }
 
-  return $monthlySums;
+        return $monthlySums;
 
     }
 
-    private function getTotalEarningViaSubscription()
+    private function getTotalEarningViaSubscription($duration)
     {
-        $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+
+        if ($duration == null) {
+            $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
             ->first();
+        } elseif ($duration == 'one_month') {
+            $currentDate = Carbon::now();
+            $previousMonthStartDate = $currentDate->copy()->subMonth()->startOfMonth();
+            $previousMonthEndDate = $currentDate->copy()->subMonth()->endOfMonth();
+
+            $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.created_at', [$previousMonthStartDate, $previousMonthEndDate])
+                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->first();
+        } elseif ($duration == 'three_months') {
+            $currentDate = Carbon::now();
+            $currentMonthStartDate = $currentDate->startOfMonth();
+            $currentMonthEndDate = $currentDate->endOfMonth();
+            $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+            $threeMonthsAgoEndDate = $currentDate->subMonths(2)->endOfMonth();
+            $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+
+            $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
+                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->first();
+        } elseif ($duration == 'six_months') {
+            $currentDate = Carbon::now();
+            $currentMonthStartDate = $currentDate->startOfMonth();
+            $currentMonthEndDate = $currentDate->endOfMonth();
+            $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+            $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+            $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth();
+
+
+            $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])
+                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->first();
+        } elseif ($duration == 'one_year') {
+            $firstdayOfCurrentYear = Carbon::now()->startOfYear();
+            $lastDayOfCurrentYear = Carbon::now()->endOfYear();
+            $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear();
+            $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear();
+
+            $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.created_at', [$firstDayOfPreviousYear, $lastDayOfCurrentYear])
+                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->first();
+        }
 
         if ($totalPayment) {
             $totalPaymentAmount = $totalPayment->total_payment;
@@ -279,26 +442,77 @@ class AdminHomeController extends Controller
     }
 
 
-    private function getEarningParcentageViaSubscription()
+    private function getEarningParcentageViaSubscription($duration)
     {
         $currentMonthStart = $this->currentMonthStart;
         $currentMonthEnd = $this->currentMonthEnd;
         $previousMonthStart = $this->previousMonthStart;
         $previousMonthEnd = $this->previousMonthEnd;
 
-        $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+        if ($duration == null) {
+        
+           $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->whereBetween('subscriptions.start_at', [$currentMonthStart, $currentMonthEnd])
             ->sum('subscription_packages.sales_price');
-        $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+          $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->whereBetween('subscriptions.start_at', [$previousMonthStart, $previousMonthEnd])
             ->sum('subscription_packages.sales_price');
+          
+        } elseif ($duration == 'one_month') {
+            $currentDate = Carbon::now();
+            $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$currentMonthStart, $currentMonthEnd])
+                ->sum('subscription_packages.amount');
+            $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$previousMonthStart, $previousMonthEnd])
+                ->sum('subscription_packages.amount');
+        } elseif ($duration == 'three_months') {
+            $currentDate = Carbon::now();
+            $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+            $threeMonthsAgoEndDate = $currentDate->subMonths(2)->endOfMonth();
+            $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+
+            $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$threeMonthsAgoStartDate, $currentMonthEnd])
+                ->sum('subscription_packages.amount');
+            $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$sixMonthsAgoStartDate, $threeMonthsAgoStartDate])
+                ->sum('subscription_packages.amount');
+        } elseif ($duration == 'six_months') {
+            $currentDate = Carbon::now();
+            $currentMonthStartDate = $currentDate->startOfMonth();
+            $currentMonthEndDate = $currentDate->endOfMonth();
+            $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
+            $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+            $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth();
+
+
+            $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])
+                ->sum('subscription_packages.amount');
+            $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$previousSixMonthsAgoStartDate, $sixMonthsAgoStartDate])
+                ->sum('subscription_packages.amount');
+        } elseif ($duration == 'one_year') {
+            $firstdayOfCurrentYear = Carbon::now()->startOfYear();
+            $lastDayOfCurrentYear = Carbon::now()->endOfYear();
+            $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear();
+            $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear();
+
+            $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])
+                ->sum('subscription_packages.amount');
+            $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+                ->whereBetween('subscriptions.start_at', [$firstDayOfPreviousYear, $lastDayOfPreviousYear])
+                ->sum('subscription_packages.amount');
+        }
 
         if ($previousMonthTotal !== 0) {
             $percentageChange = (($currentMonthTotal - $previousMonthTotal) / abs($previousMonthTotal)) * 100;
         } else {
             $percentageChange = ($currentMonthTotal > 0) ? 100 : 0;
         }
-        return (int)$percentageChange;
+        return (int) $percentageChange;
     }
 
 
