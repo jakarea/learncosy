@@ -41,23 +41,22 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-error">
-                                    <label for="amount">Regular Price 
+                                    <label for="regular_price">Regular Price 
                                     </label>
-                                    <input type="number" placeholder="Enter Amount" name="price"
-                                        class="form-control @error('price') is-invalid @enderror"
-                                        value="{{ old('price') }}" id="price">
-                                    <span class="invalid-feedback">@error('price'){{ $message }}
+                                    <input type="number" placeholder="€ Enter Amount" name="regular_price"
+                                        class="form-control @error('regular_price') is-invalid @enderror"
+                                        value="{{ old('regular_price') }}" id="regular_price">
+                                    <span class="invalid-feedback">@error('regular_price'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-error">
-                                    <label for="amount">Sales Price 
-                                    </label>
-                                    <input type="number" placeholder="Enter Amount" name="price"
-                                        class="form-control @error('price') is-invalid @enderror"
-                                        value="{{ old('price') }}" id="price">
-                                    <span class="invalid-feedback">@error('price'){{ $message }}
+                                    <label for="sales_price">Sales Price </label>
+                                    <input type="number" placeholder="€ Enter Amount" name="sales_price"
+                                        class="form-control @error('sales_price') is-invalid @enderror"
+                                        value="{{ old('sales_price') }}" id="sales_price">
+                                    <span class="invalid-feedback">@error('sales_price'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>

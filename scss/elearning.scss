@@ -2663,7 +2663,8 @@ span.stripe-bg {
         top: -14px;
         background: #3D5CFF;
         z-index: 99;
-        i{
+
+        i {
             color: #fff;
         }
     }
@@ -2696,24 +2697,104 @@ span.stripe-bg {
 
 .logo-upload-box:hover {
     .upload-overflow-box {
-        opacity: 1!important;
+        opacity: 1 !important;
     }
 }
 
-.rounded_custom{
+.rounded_custom {
     border-radius: 50%;
 }
 
-.no-bg{
-    background-color: transparent!important;
-    padding: 0!important;
-    box-shadow: none!important;
+.no-bg {
+    background-color: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
 }
 
-.file-upload-area{
-    border-width: 2px!important;
+.file-upload-area {
+    border-width: 2px !important;
 }
 
+.overview-modal-box .modal-content {
+    border-radius: 1rem;
+    background: #FFF;
+    width: 33.3125rem;
+
+    .modal-body {
+        padding: 1.5rem !important;
+
+        .media {
+            margin-bottom: 1rem;
+
+            h5 {
+                color: var(--primary-color-blue-light, #3D5CFF);
+                font-size: 0.875rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 155%;
+            }
+
+            h4 {
+                color: var(--neutral-color-neutral-90, #101C2D);
+                font-size: 1.25rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 1.5rem;
+                margin-top: 0.6rem;
+            }
+        }
+    }
+
+    .intro-video-box{
+        margin-bottom: 1.5rem;
+    }
+
+    .free-sample-video-list {
+        h5 {
+            color: var(--neutral-color-neutral-80, #1C2636);
+            font-size: 1.125rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 155%; 
+        }
+
+        .d-flex {
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0rem;
+            border-bottom: 1px solid var(--gray-200, #E4E7EC);
+
+            img.icon{
+                color: rgba(0, 0, 0, 0.10);
+                margin-right: 1rem;
+            }
+
+            h4 {
+                color: var(--neutral-color-neutral-90, #101C2D);
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 1.5rem;
+            }
+
+            img.thumb {
+                width: 2.95713rem;
+                height: 2.25rem;
+                border-radius: 0.125rem;
+                margin-right: 1rem;
+            }
+
+            span {
+                display: inline-block;
+                color: var(--neutral-color-neutral-90, #101C2D);
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 1.5rem;
+            }
+        }
+    }
+}
 
 
 

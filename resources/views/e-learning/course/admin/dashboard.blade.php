@@ -35,7 +35,6 @@ Home Page
         </div>
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -160,6 +159,9 @@ Home Page
         </div>
         <div class="row">
             <div class="col-xl-8 mt-15">
+                <form action="" method="GET" id="myForm">
+                    <input type="hidden" name="status" id="inputField">
+                </form>
                 <div class="course-status-wrap">
                     <div class="d-flex py-0 pe-0">
                         <h4>Course Status</h4>
@@ -169,13 +171,14 @@ Home Page
                            @endif 
                            
                             <div class="dropdown course-status-filter">
-                                <button type="button" class="btn" data-bs-toggle="dropdown"
-                                    aria-expanded="false">This month <i class="fas fa-angle-down"></i></button>
+                                <button type="button" class="btn" id="dropdownBttn" data-bs-toggle="dropdown"
+                                    aria-expanded="false">All <i class="fas fa-angle-down"></i></button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">Three Months</a></li>
-                                    <li><a class="dropdown-item" href="#">Six Months</a></li>
-                                    <li><a class="dropdown-item" href="#">One Year</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)">All</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="one">This Month</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="three">Three Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="six">Six Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="year">One Year</a></li>
                                 </ul>
                             </div> 
                         </div>
@@ -208,7 +211,7 @@ Home Page
                                 </p>
                             </td>
                             <td>
-                                <p><i class="fas fa-star" style="color: #F8AA00;"></i>{{ number_format($course->avg_rating, 1) }}</p>
+                                <p><i class="fas fa-star me-2" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p>
                             </td>
                             <td>
                                 <p>€{{ $course->sum_amount ? $course->sum_amount : 0 }}</p>
@@ -264,6 +267,42 @@ Home Page
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+{{-- course status filter --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString); 
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if (status == "one") {
+            dropbtn.innerHTML = 'This Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "three") {
+            dropbtn.innerHTML = 'Three Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "six") {
+            dropbtn.innerHTML = 'Six Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "year") {
+            dropbtn.innerHTML = 'One Year' + '<i class="fas fa-angle-down"></i>';
+        }
+        inputField.value = status;
+
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit();
+            });
+        });
+    });
+</script>
 
 {{-- time spend chart start --}}
 <script>

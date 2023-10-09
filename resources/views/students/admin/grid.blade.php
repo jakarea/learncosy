@@ -134,34 +134,34 @@
 
 {{-- page script @S --}}
 @section('script')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let inputField = document.getElementById("inputField");
-            let dropbtn = document.getElementById("dropdownBttn");
-            let form = document.getElementById("myForm");
-            let queryString = window.location.search;
-            let urlParams = new URLSearchParams(queryString);
-            let name = urlParams.get('name');
-            let status = urlParams.get('status');
-            let dropdownItems = document.querySelectorAll(".filterItem");
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        let name = urlParams.get('name');
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
 
-            if (status == "active") {
-                dropbtn.innerText = 'Active Students';
-            }
-            if (status == "inactive") {
-                dropbtn.innerText = 'Inactive Students';
-            }
-            inputField.value = status;
+        if (status == "active") {
+            dropbtn.innerText = 'Active Students';
+        }
+        if (status == "inactive") {
+            dropbtn.innerText = 'Inactive Students';
+        }
+        inputField.value = status;
 
-            dropdownItems.forEach(item => {
-                item.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    inputField.value = this.getAttribute("data-value");
-                    dropbtn.innerText = item.innerText;
-                    form.submit();
-                });
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit();
             });
         });
-    </script>
+    });
+</script>
 @endsection
 {{-- page script @E --}}

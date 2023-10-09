@@ -36,6 +36,8 @@ class AdminHomeController extends Controller
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
+
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
             
         $TopPerformingCourses = Course::select(
             'courses.id',
@@ -139,11 +141,23 @@ class AdminHomeController extends Controller
             ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
             ->leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
             ->groupBy('courses.id')
-            ->orderByDesc('courses.id')
-            ->limit(10)
-            ->get();
-
-            // return $earningByMonth;
+            ->orderByDesc('courses.id');
+        
+        if (!empty($status)) {
+            $today = now();
+            if ($status == 'one') {
+                $courses->whereYear('courses.created_at', '=', $today->year)
+                    ->whereMonth('courses.created_at', '=', $today->month);
+            } elseif ($status == 'three') {
+                $courses->where('courses.created_at', '>=', $today->subMonths(3));
+            } elseif ($status == 'six') {
+                $courses->where('courses.created_at', '>=', $today->subMonths(6));
+            } elseif ($status == 'year') {
+                $courses->where('courses.created_at', '>=', $today->subYear(1));
+            }
+        }
+        
+        $courses = $courses->get();     
 
         return view(
             'e-learning/course/admin/dashboard',
@@ -206,7 +220,7 @@ class AdminHomeController extends Controller
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.amount']);
+        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price']);
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
@@ -228,7 +242,7 @@ class AdminHomeController extends Controller
     private function getTotalEarningViaSubscription()
     {
         $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-            ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+            ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
             ->first();
 
         if ($totalPayment) {
@@ -244,7 +258,7 @@ class AdminHomeController extends Controller
     private function getTotalEarningViaSubscriptionTotal()
     {
         $earningDetails = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-            ->get(['subscriptions.start_at', 'subscription_packages.amount']);
+            ->get(['subscriptions.start_at', 'subscription_packages.sales_price']);
         $earningsByDate = [];
 
         foreach ($earningDetails as $record) {
@@ -274,10 +288,10 @@ class AdminHomeController extends Controller
 
         $currentMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->whereBetween('subscriptions.start_at', [$currentMonthStart, $currentMonthEnd])
-            ->sum('subscription_packages.amount');
+            ->sum('subscription_packages.sales_price');
         $previousMonthTotal = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
             ->whereBetween('subscriptions.start_at', [$previousMonthStart, $previousMonthEnd])
-            ->sum('subscription_packages.amount');
+            ->sum('subscription_packages.sales_price');
 
         if ($previousMonthTotal !== 0) {
             $percentageChange = (($currentMonthTotal - $previousMonthTotal) / abs($previousMonthTotal)) * 100;
@@ -336,7 +350,7 @@ class AdminHomeController extends Controller
     private function getEarningByDates()
     {
         $earningDetails = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-            ->get(['subscriptions.start_at', 'subscription_packages.amount']);
+            ->get(['subscriptions.start_at', 'subscription_packages.sales_price']);
         $earningsByDate = [];
 
         foreach ($earningDetails as $record) {

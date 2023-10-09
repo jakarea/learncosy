@@ -69,8 +69,12 @@
                                     <td>
                                         <h5>{{ $package->name }}</h5>
                                     </td>
-                                    <td>
-                                        <p>€ {{ $package->amount }}</p>
+                                    <td>  
+                                        @if ($package->sales_price)
+                                            <p>€ {{ $package->sales_price }}</p>
+                                        @else
+                                            <p> {{ $package->regular_price > 0 ? '€ ' . $package->regular_price : 'Free' }} </p>
+                                        @endif 
                                     </td>
                                     <td>
                                         <p class="text-capitalize">{{ $package->type }}</p>

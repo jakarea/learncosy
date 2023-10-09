@@ -138,7 +138,7 @@
                                     @endphp
                                     <ul>
                                         @foreach ($limitedItems as $object)
-                                            <li><i class="fas fa-check"></i>{{ Str::limit($object, 36) }}</li>
+                                            <li><i class="fas fa-check"></i>{{ Str::limit($object, 34) }}</li>
                                         @endforeach
                                     </ul>
                                     @if (!isEnrolled($course->id)) 

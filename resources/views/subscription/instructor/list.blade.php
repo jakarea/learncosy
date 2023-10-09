@@ -61,7 +61,17 @@
                                 
                                 <div class="txt">
                                     <h5>{{ $package->name }}</h5>
-                                    <h3>€{{ str_replace('.00', '', $package->amount) }}<span>/{{ $package->type[0]
+                                    <h3>
+                                        
+                                        @if ($package->sales_price)
+                                        €
+                                        {{ str_replace('.00', '', $package->sales_price) }} 
+                                        @else
+                                        €
+                                            {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
+                                        @endif 
+
+                                        <span>/{{ $package->type[0]
                                             }}</span>
                                     </h3>
                                     <h6>Billed {{ $package->type }}</h6>
@@ -115,7 +125,17 @@
                                 </div>
                                 <div class="txt">
                                     <h5>{{ $package->name }}</h5>
-                                    <h3>€{{ str_replace('.00', '', $package->amount) }}<span>/{{ $package->type[0] }}</span>
+                                    <h3> 
+
+                                        @if ($package->sales_price)
+                                        €
+                                             {{ str_replace('.00', '', $package->sales_price) }} 
+                                        @else
+                                        €
+                                            {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
+                                        @endif 
+                                        
+                                        <span>/{{ $package->type[0] }}</span>
                                     </h3>
                                     <h6>Billed {{ $package->type }}</h6> 
                                     <ul>

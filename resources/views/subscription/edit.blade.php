@@ -49,11 +49,11 @@
                                     <div class="form-group form-error">
                                         <label for="regular_price">Regular Price 
                                         </label>
-                                        <input type="number" placeholder="Enter regular price" name="price"
-                                            class="form-control @error('price') is-invalid @enderror"
-                                            value="{{ old('price', $package->amount) }}" id="price">
+                                        <input type="number" placeholder="€ Enter Amount" name="regular_price"
+                                            class="form-control @error('regular_price') is-invalid @enderror"
+                                            value="{{ old('regular_price', $package->regular_price) }}" id="regular_price">
                                         <span class="invalid-feedback">
-                                            @error('price')
+                                            @error('regular_price')
                                                 {{ $message }}
                                             @enderror
                                         </span>
@@ -61,13 +61,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group form-error">
-                                        <label for="amount">Sales Price 
+                                        <label for="regular_price">Sales Price 
                                         </label>
-                                        <input type="number" placeholder="Enter Amount" name="price"
-                                            class="form-control @error('price') is-invalid @enderror"
-                                            value="{{ old('price', $package->amount) }}" id="price">
+                                        <input type="number" placeholder="€ Enter Amount" name="sales_price"
+                                            class="form-control @error('sales_price') is-invalid @enderror"
+                                            value="{{ old('sales_price', $package->sales_price) }}" id="sales_price">
                                         <span class="invalid-feedback">
-                                            @error('price')
+                                            @error('sales_price')
                                                 {{ $message }}
                                             @enderror
                                         </span>

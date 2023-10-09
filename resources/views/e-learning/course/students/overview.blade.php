@@ -92,13 +92,28 @@
                                 aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
+
+                                        @php 
+                                            $totalDuration = 0;
+
+                                            foreach ($module->lessons as $lesson) {
+                                                if (isset($lesson->duration) && is_numeric($lesson->duration)) {
+                                                    $totalDuration += $lesson->duration;
+                                                }
+                                            } 
+                                        @endphp 
+
+                                        <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
                                         @foreach($module->lessons as $lesson)
                                         <li>
                                             @if ( !isEnrolled($course->id) )
                                             <a href="{{route('students.checkout', $course->slug)}}"
-                                                class="video_list_play d-inline-block">
-                                                <i class="fas fa-lock"></i>
-                                                {{$lesson->title}}
+                                                class="video_list_play d-flex">
+                                                <div>
+                                                    <img src="{{asset('latest/assets/images/icons/lok.svg')}}" alt="a" class="img-fluid me-2">
+                                                    {{$lesson->title}}
+                                                </div>
+                                                <p class="common-para"> {{$lesson->duration}}</p>
                                             </a>
                                             @else
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
@@ -201,7 +216,7 @@
                     <div class="course-main-thumb">
                         <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid">
 
-                        <div class="d-flex">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 @if ($course->offer_price)
                                 <h2>€ {{ $course->offer_price }}</h2>
@@ -210,7 +225,9 @@
                                 @else
                                 <h2>Free</h2>
                                 @endif
-                            </div> 
+                            </div>
+                            <button type="button" class="btn btn-preview" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Preview</button>
                         </div>
 
                         @if ( !isEnrolled($course->id) )
@@ -224,10 +241,15 @@
                         <form action="{{ route('cart.add', $course) }}" method="POST">
                             @csrf
                             @if ($cartCourses->pluck('course_id')->contains($course->id))
-                            <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>Already
-                                Added to Cart</button>
+                            <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>
+                                Already Added to Cart</button>
                             @else
-                            <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
+                                <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>
                             @endif
                         </form>
                         @endif
@@ -280,4 +302,117 @@
         </div>
     </div>
 </main>
+
+{{-- overview tab modal start --}}
+<div class="overview-modal-box">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="overview-box-wrap">
+                        {{-- header --}}
+                        <div class="media">
+                            <div class="media-body">
+                                <h5>Course Preview</h5>
+                                <h4>Figma UI UX Design Basic to Advance</h4>
+                            </div>
+                            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
+                                <i class="fas fa-close"></i>
+                            </button>
+                        </div>
+                        {{-- header --}}
+
+                        {{-- intro video --}}
+                        <div class="intro-video-box">
+                            <img src="{{ asset('latest/assets/images/video-thumb.png') }}" alt="video-thumb" class="img-fluid thumb">
+                        </div>
+                        {{-- intro video --}}
+
+                        {{-- free sample video --}}
+                        <div class="free-sample-video-list">
+                            <h5>Free Sample Videos:</h5>
+
+                            {{-- item --}}
+                            <div class="d-flex">
+                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
+                                        class="img-fluid thumb"> <img src="{{ asset('latest/assets/images/icons/icon-play.svg') }}" alt="video-thumb" class="img-fluid icon"> Figma UI UX Design Essentials</h4>
+                                <span>2:15</span>
+                            </div>
+                            {{-- item --}}
+                            {{-- item --}}
+                            <div class="d-flex">
+                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
+                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
+                                <span>2:15</span>
+                            </div>
+                            {{-- item --}}
+                            {{-- item --}}
+                            <div class="d-flex">
+                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
+                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
+                                <span>2:15</span>
+                            </div>
+                            {{-- item --}}
+                            {{-- item --}}
+                            <div class="d-flex">
+                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
+                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
+                                <span>2:15</span>
+                            </div>
+                            {{-- item --}}
+                            {{-- item --}}
+                            <div class="d-flex">
+                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
+                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
+                                <span>2:15</span>
+                            </div>
+                            {{-- item --}}
+                        </div>
+                        {{-- free sample video --}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- overview tab modal end --}}
+
 @endsection
+
+{{-- js --}}
+@section('script')
+<script>
+    let currentURL = window.location.href;
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+        const likeBttn = document.getElementById('likeBttn');
+
+        likeBttn.addEventListener('click', (e) => {
+
+            const course_id = {{ $course->id }};
+            const ins_id = {{ $course->user_id }};
+
+            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'liked') {
+                        likeBttn.classList.add('active');
+
+                    } else {
+                        likeBttn.classList.remove('active');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+        });
+</script>
+@endsection
+{{-- js --}}

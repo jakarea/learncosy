@@ -37,13 +37,13 @@ class StudentProfileController extends Controller
 
     public function update(Request $request)
     {
-        // return $request->all();
+        
 
         $userId = Auth()->user()->id;
 
         $this->validate($request, [
             'name' => 'required|string',
-            'short_bio' => 'required|string',
+            'short_bio' => 'string',
             'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ]);
@@ -52,7 +52,8 @@ class StudentProfileController extends Controller
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
         $user->subdomain =  Str::slug($request->subdomain);
-        $user->short_bio = $request->short_bio;
+        $user->company_name = $request->company_name;
+        $user->short_bio = $request->website;
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
         $user->description = $request->description;

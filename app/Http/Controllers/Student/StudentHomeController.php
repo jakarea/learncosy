@@ -251,6 +251,13 @@ class StudentHomeController extends Controller
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+
+        $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
+        $liked = '';
+        if ($course_like ) {
+            $liked = 'active';
+        }
+
         $related_course = [];
         if ($course) {
             if($course->categories){
@@ -263,7 +270,7 @@ class StudentHomeController extends Controller
                 $related_course = $query->take(4)->get();
             }
 
-            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCourses'));
+            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCourses','liked'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

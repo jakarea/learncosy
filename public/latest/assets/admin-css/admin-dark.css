@@ -1292,6 +1292,14 @@
   color: #fff;
   border-color: #7289FF;
 }
+.dark-mode .course-status-filter .btn {
+  color: #fff;
+}
+.dark-mode .course-status-filter .dropdown-menu {
+  border: 1px solid #1A1A1A !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;
