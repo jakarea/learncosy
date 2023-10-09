@@ -991,7 +991,7 @@
   width: 100%;
 }
 .course-status-wrap table tr th {
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 1.5rem;
   color: var(--neutral-color-neutral-60, #66768E);
   font-size: 0.8125rem;
   font-style: normal;
@@ -1159,7 +1159,8 @@
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 1.5rem */
+  line-height: 150%;
+  /* 1.5rem */
 }
 .liked-courses .media p.lessons {
   color: var(--neutral-color-neutral-60, #66768E);
@@ -1195,6 +1196,66 @@
 }
 .liked-courses .dropdown .dropdown-menu li:last-child a {
   color: #08B595;
+}
+
+.btn-preview {
+  border-radius: 6.25rem;
+  border: 1px solid var(--primary-color-blue, #294CFF);
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  padding: 0.5rem 1.5rem;
+  display: inline-block;
+  text-align: center;
+  transition: ease-in-out 0.3s;
+}
+.btn-preview:hover {
+  background-color: #294CFF;
+  color: #fff;
+}
+
+.btn-heart {
+  display: flex;
+  width: 4.5rem;
+  height: 3.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--primary-color-blue, #294CFF);
+  margin-top: 1rem;
+  margin-left: 1rem;
+  transition: ease-in-out 0.3s;
+}
+.btn-heart i {
+  font-size: 1.3rem;
+  transition: ease-in-out 0.3s;
+  color: #294CFF;
+}
+.btn-heart:hover {
+  background-color: #294CFF;
+  color: #fff;
+}
+.btn-heart:hover i {
+  color: #fff;
+}
+
+.btn-heart.active {
+  background-color: #294CFF;
+  color: #fff;
+}
+.btn-heart.active i {
+  color: #fff;
+}
+
+.common-para {
+  color: var(--neutral-70, #7C7C7C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 155%;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

@@ -34,8 +34,12 @@
         <div class="container">
             <div class="logo">
                 <a href="{{url('/')}}">
+                    @if (modulesetting('logo'))
+                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
+                    @else
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
+                    @endif 
                 </a>
             </div>
         </div>
@@ -53,8 +57,13 @@
                             world. Unlock a world of knowledge and growth with us today!</p>
                     </div>
                     <div class="login-promo-image">
-                        <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
-                            title="Leancosy white logo" class="login2-logo" />
+                        @if (modulesetting('lp_bg_image')) 
+                        <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
+                        title="Login BG" class="login2-logo rounded" style="max-width: 25rem">
+                        @else 
+                            <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
+                                title="Leancosy white logo" class="login2-logo" />
+                        @endif 
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -77,13 +77,25 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
-                                    <label for="short_bio">Short Bio 
+                                    <label for="company_name">Company Name
                                     </label> 
-                                        <textarea name="short_bio" id="short_bio"
-                                            class="form-control @error('short_bio') is-invalid @enderror"
-                                            placeholder="Enter short bio">{{ $student->short_bio }}</textarea>
+                                        <input type="text" name="company_name" id="company_name"
+                                            class="form-control @error('company_name') is-invalid @enderror"
+                                            placeholder="Enter company name" value="{{ $student->company_name }}">
                                      
-                                    <span class="invalid-feedback">@error('short_bio'){{ $message }}
+                                    <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group form-error">
+                                    <label for="website">Website
+                                    </label> 
+                                        <input type="url" name="website" id="website"
+                                            class="form-control @error('website') is-invalid @enderror"
+                                            placeholder="Enter web address" value="{{ $student->short_bio }}">
+                                     
+                                    <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>

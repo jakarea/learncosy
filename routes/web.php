@@ -73,15 +73,15 @@ Route::get('/auth-login', function () {
 
     if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
         if ($loginPageStyle->lp_layout == 'fullwidth') {
-            return view('custom-auth/login2');
+            return view('custom-auth/login/login2');
         } elseif ($loginPageStyle->lp_layout == 'default') {
-            return view('custom-auth/login3');
+            return view('custom-auth/login/login');
         } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
-            return view('custom-auth/login5');
+            return view('custom-auth/login/login5');
         } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {
-            return view('custom-auth/login4');
+            return view('custom-auth/login/login4');
         } else {
-            return view('custom-auth/login');
+            return view('custom-auth/login/login');
         }
     } else {
         return view('auth/login');
@@ -89,6 +89,8 @@ Route::get('/auth-login', function () {
 
 })->name('tlogin')->middleware('guest');
 
+
+// theme settings register page
 Route::get('/auth-register', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
@@ -100,22 +102,27 @@ Route::get('/auth-register', function () {
 
     if ($registerPageStyle) {
         if ($registerPageStyle->lp_layout == 'fullwidth') {
-            return view('custom-auth/register2');
+            return view('custom-auth/register/register2');
         } elseif ($registerPageStyle->lp_layout == 'default') {
-            return view('custom-auth/register1');
+            return view('custom-auth/register/register1');
         } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
-            return view('custom-auth/register3');
+            return view('custom-auth/register/register3');
         } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
-            return view('custom-auth/register4');
+            return view('custom-auth/register/register4');
         } else {
-            return view('custom-auth/register');
+            return view('custom-auth/register/register');
         }
+    } else {
+        return view('auth/register');
     }
 
 })->name('tregister')->middleware('guest');
 
+// password reset
 Route::get('/auth/password/reset', function () {
+
     return view('custom-auth/passwords/email');
+    
 })->name('auth.password.request')->middleware('guest');
 
 Route::get('/home', function (Request $request) {
@@ -207,7 +214,9 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::group(['middleware' => ['subscription.check']], function () {
         Route::get('dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
         Route::get('analytics', [DashboardController::class, 'index'])->name('instructor.dashboard.index');
-        // instructor payment history static pages
+        Route::get('manage-access', [DashboardController::class, 'manageAccess'])->name('instructor.manage.access');
+        Route::post('manage-access', [DashboardController::class, 'pageAccess'])->name('instructor.manage.pages');
+        // instructor payment history pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {
             Route::get('/', 'studentsPayment');
 
@@ -229,7 +238,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
 
         Route::prefix('courses/create')->controller(CourseCreateStepController::class)->group(function () {
-
             // add course static route
             Route::get('/', 'start')->name('course.create.step-1');
             Route::post('created/', 'startSet')->name('course.create.start');
@@ -256,7 +264,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet');
+            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');

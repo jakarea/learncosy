@@ -20,7 +20,7 @@
                     <img src="{{asset('latest/assets/images/icons/ear-01-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Total Earnings</h5> 
 
-                    <span style="color: {{ $formattedPercentageChangeOfEarningByMonth < 0 ? 'red' : '' }}"> 
+                    <span class="{{ $formattedPercentageChangeOfEarningByMonth < 0 ? 'red' : '' }}"> 
                         @if ($formattedPercentageChangeOfEarningByMonth < 0 )
                         <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
                         @else 
@@ -29,7 +29,7 @@
                         {{ number_format(floatval($formattedPercentageChangeOfEarningByMonth), 0, '.', '') }}%
                     </span>
 
-                    <h4>${{$totalEnrollmentSell}}</h4>
+                    <h4>€{{$totalEnrollmentSell}}</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -39,7 +39,7 @@
                     <h5>Earnings Today</h5>
 
 
-                    <span style="color: {{ $formattedPercentageChangeOfEarningByDay < 0 ? 'red' : '' }}"> 
+                    <span class="{{ $formattedPercentageChangeOfEarningByDay < 0 ? 'red' : '' }}"> 
                         @if ($formattedPercentageChangeOfEarningByDay < 0 )
                         <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
                         @else 
@@ -48,7 +48,7 @@
                         {{ number_format(floatval($formattedPercentageChangeOfEarningByDay), 0, '.', '') }}%
                     </span> 
 
-                    <h4>${{$todaysTotalEnrollmentSell}}</h4>
+                    <h4>€{{$todaysTotalEnrollmentSell}}</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -56,7 +56,7 @@
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
 
-                    <span style="color: {{ $formatedPercentageChangeOfStudentEnrollByMonth < 0 ? 'red' : '' }}"> 
+                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByMonth < 0 ? 'red' : '' }}"> 
                         @if ($formatedPercentageChangeOfStudentEnrollByMonth < 0 )
                         <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
                         @else 
@@ -74,7 +74,7 @@
                     <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
 
-                    <span style="color: {{ $formatedPercentageChangeOfStudentEnrollByDay < 0 ? 'red' : '' }}"> 
+                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByDay < 0 ? 'red' : '' }}"> 
                         @if ($formatedPercentageChangeOfStudentEnrollByDay < 0 )
                         <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
                         @else 
@@ -106,16 +106,39 @@
             <div class="col-12">
                 <div class="subscription-table-wrap payment-table-admin">
                     @if (count($enrolments) > 0) 
+                    {{-- filter form --}}
+            <form action="" method="GET" id="myForm">
+                <input type="hidden" name="status" id="inputField">
+            </form>
+            {{-- filter form --}}
                     <table>
                         <tr>
                             <th>No</th>
-                            <th>Course Name</th>
+                            <th class="d-flex justify-content-between">
+                                <span>Course Name</span>
+                                <div class="filter-sort-box">
+                                    <div class="dropdown">
+                                        <button class="btn p-0" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false" id="dropdownBttn">
+                                            <img src="{{ asset('latest/assets/images/icons/sort-icon.svg') }}"
+                                                alt="a" class="img-fluid">
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="asc">In order A-Z</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="desc">In order Z-A</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </th>
                             <th>Student Name</th>
                             <th>Payment Date</th>
-                            <th>Payment Type</th>
+                            <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Payent Status</th>
+                            <th width="8%" class="text-start">Actions</th>
+
                         </tr>
                         @foreach ($enrolments as $key => $payment)
                         <tr>
@@ -129,19 +152,24 @@
                                 <p>{{$payment->user->name}}</p>
                             </td>
                             <td>
-                                <p>{{ $payment->created_at->format('M j, Y') }}</p>
+                                <p>{{ $payment->created_at->format('d M Y') }}</p>
                             </td>
                             <td>
                                 <p>{{$payment->payment_method}}</p>
                             </td>
                             <td>
-                                <!-- <p>{{$payment->status}}</p> -->
-                                <p>{{$payment->amount}}</p>
+                                <p>€{{$payment->amount}}</p>
+
                             </td>
                             <td>
-                                <p>{{$payment->status}}</p>
+                                @if ($payment->status == 'completed')
+                                <p style="color: #2A920B;" class="text-capitalize">{{ $payment->status }}</p>
+                                @else
+                                <p style="color: #ED5763;" class="text-capitalize">{{ $payment->status }}</p>
+                                @endif 
                             </td>
                             <td>
+
                                 <ul>
                                     <a href="{{ route('export',encrypt($payment->payment_id)) }}" class="btn-view">Export</a>
                                     <a href="{{ route('view',encrypt($payment->payment_id)) }}" class="btn-view">View</a>
@@ -159,7 +187,7 @@
         <div class="row">
             {{-- pagginate --}}
             <div class="paggination-wrap mt-4">
-                
+                {{ $enrolments->links('pagination::bootstrap-5') }}
             </div>
             {{-- pagginate --}}
         </div>
@@ -168,3 +196,24 @@
 {{-- ==== admin payment list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
+
+
+{{-- page script @S --}}
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+            let inputField = document.getElementById("inputField");
+            let form = document.getElementById("myForm");
+            let dropdownItems = document.querySelectorAll(".filterItem");
+
+            dropdownItems.forEach(item => {
+                item.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    inputField.value = this.getAttribute("data-value");
+                    form.submit();
+                });
+            });
+        });
+</script>
+@endsection
+{{-- page script @E --}}

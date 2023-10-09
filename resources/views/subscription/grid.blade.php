@@ -69,11 +69,15 @@
                                     <td>
                                         <h5>{{ $package->name }}</h5>
                                     </td>
-                                    <td>
-                                        <p>€ {{ $package->amount }}</p>
+                                    <td>  
+                                        @if ($package->sales_price)
+                                            <p>€ {{ $package->sales_price }}</p>
+                                        @else
+                                            <p> {{ $package->regular_price > 0 ? '€ ' . $package->regular_price : 'Free' }} </p>
+                                        @endif 
                                     </td>
                                     <td>
-                                        <p>{{ $package->type }}</p>
+                                        <p class="text-capitalize">{{ $package->type }}</p>
                                     </td>
                                     <td>
                                         @php
@@ -81,7 +85,7 @@
                                         @endphp
                                         <ul>
                                             @foreach ($features as $feature)
-                                                <li>{{ $feature }}</li>
+                                                <li class="text-capitalize">{{ Str::limit($feature, $limit1 = 35, $end1 = '...') }}</li>
                                             @endforeach
                                         </ul>
 

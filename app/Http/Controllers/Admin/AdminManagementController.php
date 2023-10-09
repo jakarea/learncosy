@@ -33,8 +33,8 @@ class AdminManagementController extends Controller
 
      // store page
     public function store(Request $request)
-    {
-    //    return $request->all();
+    { 
+        
     $request->validate([
            'name' => 'required|string',
            'phone' => 'required|string', 
@@ -68,7 +68,7 @@ class AdminManagementController extends Controller
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $image = Image::make($file);
-            $uniqueFileName = $adminslug . '-' . uniqid() . '.png';
+            $uniqueFileName = $adminslug . '-' . uniqid() . '.webp';
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
             $admin->avatar = $image_path;
@@ -140,7 +140,7 @@ class AdminManagementController extends Controller
            }
             $file = $request->file('avatar');
             $image = Image::make($file);
-            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $uniqueFileName = $slugg . '-' . uniqid() . '.webp';
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
            $user->avatar = $image_path;

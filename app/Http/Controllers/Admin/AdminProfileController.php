@@ -71,6 +71,7 @@ class AdminProfileController extends Controller
         $user->name = $request->name;
         $user->subdomain =  Str::slug($request->subdomain);
         $user->short_bio = $request->website;
+        $user->company_name = $request->company_name;
         $user->social_links = $request->social_links ? implode(",",$request->social_links) : '';
         $user->phone = $request->phone;
         $user->description = $request->description;
@@ -82,10 +83,9 @@ class AdminProfileController extends Controller
             $user->password = $user->password;
         }
 
-        $slugg = Str::slug($request->name);
+        $adSlugg = Str::slug($request->name);
 
-        if ($request->hasFile('avatar')) {
-            // Delete old file
+        if ($request->hasFile('avatar')) { 
             if ($user->avatar) {
                $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
@@ -94,7 +94,7 @@ class AdminProfileController extends Controller
            }
             $file = $request->file('avatar');
             $image = Image::make($file);
-            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.png';
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
 
@@ -141,8 +141,23 @@ class AdminProfileController extends Controller
         $students = [];
         $todaysStudents = [];
 
-        //$payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->paginate(12);
-        $enrolments = Checkout::with('course','user')->latest()->take(20)->get();
+        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+        
+        $enrolments = Checkout::with('course','user');
+
+        if ($status) {
+            if ($status == 'asc') {
+                $enrolments->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'desc') {
+                $enrolments->orderBy('id', 'desc');
+            }
+        }else{
+            $enrolments->orderBy('id', 'desc'); 
+        }
+
+        $enrolments = $enrolments->paginate(12);
 
 
         $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();

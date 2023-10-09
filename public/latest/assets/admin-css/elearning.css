@@ -2324,6 +2324,156 @@ span.stripe-bg i {
   height: 1.375rem;
 }
 
+.course-filter-header {
+  justify-content: space-between;
+}
+.course-filter-header .filter-dropdown-box {
+  width: 64% !important;
+  margin-right: 1rem !important;
+  color: #f4f8fc;
+}
+
+.logo-upload-box {
+  position: relative;
+  margin-top: 1rem;
+  transition: ease-in-out 0.3s;
+  border: 1.5px solid var(--primary-color-blue-light, #3D5CFF);
+  border-radius: 0.5rem;
+  display: block;
+  width: 100%;
+}
+.logo-upload-box #close-button5,
+.logo-upload-box #close-button4,
+.logo-upload-box #close-button3,
+.logo-upload-box #close-button2,
+.logo-upload-box #close-button {
+  display: none;
+  position: absolute;
+  right: -12px;
+  top: -14px;
+  background: #3D5CFF;
+  z-index: 99;
+}
+.logo-upload-box #close-button5 i,
+.logo-upload-box #close-button4 i,
+.logo-upload-box #close-button3 i,
+.logo-upload-box #close-button2 i,
+.logo-upload-box #close-button i {
+  color: #fff;
+}
+
+.upload-ol-box {
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 7.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: ease-in-out 0.3s;
+}
+.upload-ol-box span {
+  color: var(--common-white, #FFF);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.logo-upload-box:hover .upload-overflow-box {
+  opacity: 1 !important;
+}
+
+.rounded_custom {
+  border-radius: 50%;
+}
+
+.no-bg {
+  background-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.file-upload-area {
+  border-width: 2px !important;
+}
+
+.overview-modal-box .modal-content {
+  border-radius: 1rem;
+  background: #FFF;
+  width: 33.3125rem;
+}
+.overview-modal-box .modal-content .modal-body {
+  padding: 1.5rem !important;
+}
+.overview-modal-box .modal-content .modal-body .media {
+  margin-bottom: 1rem;
+}
+.overview-modal-box .modal-content .modal-body .media h5 {
+  color: var(--primary-color-blue-light, #3D5CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+}
+.overview-modal-box .modal-content .modal-body .media h4 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  margin-top: 0.6rem;
+}
+.overview-modal-box .modal-content .intro-video-box {
+  margin-bottom: 1.5rem;
+}
+.overview-modal-box .modal-content .free-sample-video-list h5 {
+  color: var(--neutral-color-neutral-80, #1C2636);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 155%;
+}
+.overview-modal-box .modal-content .free-sample-video-list .d-flex {
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0rem;
+  border-bottom: 1px solid var(--gray-200, #E4E7EC);
+}
+.overview-modal-box .modal-content .free-sample-video-list .d-flex img.icon {
+  color: rgba(0, 0, 0, 0.1);
+  margin-right: 1rem;
+}
+.overview-modal-box .modal-content .free-sample-video-list .d-flex h4 {
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+.overview-modal-box .modal-content .free-sample-video-list .d-flex img.thumb {
+  width: 2.95713rem;
+  height: 2.25rem;
+  border-radius: 0.125rem;
+  margin-right: 1rem;
+}
+.overview-modal-box .modal-content .free-sample-video-list .d-flex span {
+  display: inline-block;
+  color: var(--neutral-color-neutral-90, #101C2D);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

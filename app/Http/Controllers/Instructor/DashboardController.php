@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Message;
+use App\Models\ManagePage;
 use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -303,9 +304,7 @@ class DashboardController extends Controller
                     $activeCourses++;
                 }
             }
-        }
-
-        // return $messages;
+        } 
 
         return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
 
@@ -468,6 +467,44 @@ class DashboardController extends Controller
             return redirect('instructor/profile/step-4/complete');
         }
 
+    }
 
+    public function manageAccess(){
+
+       $managePage = ManagePage::where('instructor_id',Auth::user()->id)->first();
+
+       if ($managePage) {
+            $permission = json_decode($managePage->pagePermissions); 
+       }else{
+            $permission = '{"dashboard":0,"homePage":0,"messagePage":0,"certificatePage":0}';
+       }
+       
+        return view('dashboard/instructor/access-page',compact('permission'));
+    }
+
+    public function pageAccess(Request $request){
+        
+        $validatedData = $request->validate([
+            'dashboard' => 'boolean',
+            'homePage' => 'boolean',
+            'messagePage' => 'boolean',
+            'certificatePage' => 'boolean',
+        ]);
+    
+        $permissions = [
+            'dashboard' => $request->input('dashboard', 0),
+            'homePage' => $request->input('homePage', 0),
+            'messagePage' => $request->input('messagePage', 0),
+            'certificatePage' => $request->input('certificatePage', 0),
+        ];
+        
+        $permissionsJson = json_encode($permissions);
+        
+        $managePage = ManagePage::updateOrCreate(
+            ['instructor_id' => Auth::user()->id],
+            ['pagePermissions' => $permissionsJson]  
+        );
+
+        return redirect()->back()->with('success', 'Access permissions updated successfully');
     }
 }

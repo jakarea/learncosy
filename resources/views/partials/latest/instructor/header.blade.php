@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             @if (modulesetting('logo'))
-                <img src="{{ asset('assets/images/setting/' . modulesetting('logo')) }}" alt="Logo" class="img-fluid">
+                <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid">
             @else
                 <img src="{{ asset('latest/assets/images/black-logo.svg') }}" alt="Logo" class="img-fluid light-ele">
                 <img src="{{ asset('latest/assets/images/dark-logo.svg') }}" alt="Logo" class="img-fluid dark-ele">
@@ -16,8 +16,7 @@
             @can('instructor')
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item">
-                        <a href="{{ url('instructor/dashboard') }}"
-                            class="{{ Request::is('instructor/dashboard*') ? ' active' : '' }} nav-link">Dashboard</a>
+                        <a href="{{ url('instructor/dashboard') }}" class="{{ Request::is('instructor/dashboard*') ? ' active' : '' }} nav-link">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="{{ Request::is('instructor/analytics*') ? ' active' : '' }} nav-link"
@@ -66,13 +65,12 @@
             @endcan
             <div class="d-flex">
                 <a href="#" class="bttn">
-                    <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="S" class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="icon" class="img-fluid">
                 </a>
                 <a href="#" class="bttn">
-                    <img src="{{ asset('latest/assets/images/icons/notification.svg') }}" alt="S"
+                    <img src="{{ asset('latest/assets/images/icons/notification.svg') }}" alt="icon"
                         class="img-fluid">
                     {{-- <span>0</span> --}}
-
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,10 +85,10 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ url('/instructor/profile/myprofile') }}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/profile/account-settings') }}">Account
-                                Settings</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/theme/setting/dns') }}">Theme
-                                Setting</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/instructor/profile/account-settings') }}">Account Settings</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/instructor/subscription') }}">Subscription Plan</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/instructor/theme/setting/dns') }}">Theme Setting</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/instructor/manage-access') }}">Manage Pages</a></li>
                         <li><a class="dropdown-item" href="{{ route('module.setting.dns', ['tab' => 'dns']) }}">DNS</a>
                         </li>
                         <li> <a class="dropdown-item" href="{{ route('logout') }}"

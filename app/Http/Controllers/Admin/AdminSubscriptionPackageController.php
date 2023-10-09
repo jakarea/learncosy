@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionPackage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 class AdminSubscriptionPackageController extends Controller
 {
@@ -29,38 +30,7 @@ class AdminSubscriptionPackageController extends Controller
         $subscription_packages = $subscription_packages->paginate(12);
 
         return view('subscription/grid',compact('subscription_packages'));  
-    }
-
-    /**
-     * Data table for subscription package
-     */
-    public function subscriptionDataTable(Request $request)
-    {
-        return $request;
-        $subscription_packages = SubscriptionPackage::select('*');
-        return datatables()->of($subscription_packages)
-            ->addColumn('action', function ($subscription_package) {
-                $action = '<a href="' . route('admin.subscription.edit', $subscription_package->id) . '" class="btn  "><i class="fas fa-edit"></i></a>';
-                $action .= '<a href="' . route('admin.subscription.destroy', $subscription_package->id) . '" class="btn  delete_data" data-id="'.$subscription_package->id.'"><i class="fas fa-trash text-danger"></i></a>';
-                return $action;
-            })
-            ->addColumn('status', function ($subscription_package) {
-                $status = $subscription_package->status == 'active' ? 'Active' : 'Inactive';
-                $status_class = $subscription_package->status == 'active' ? 'success' : 'danger';
-                return '<span class="badge badge-' . $status_class . ' bg-' .$status_class. '">' . $status . '</span>';
-            })
-            ->addColumn('features', function ($subscription_package) {
-                $features = json_decode($subscription_package->features);
-                $feature_list = '<ul>';
-                foreach ($features as $feature) {
-                    $feature_list .= '<li>' . $feature . '</li>';
-                }
-                $feature_list .= '</ul>';
-                return $feature_list;
-            })
-            ->rawColumns(['action', 'status', 'features'])
-            ->make(true);
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -85,7 +55,6 @@ class AdminSubscriptionPackageController extends Controller
         // validate request
         $request->validate([
             'name' => 'required',
-            'price' => 'required',
             'type' => 'required',
             'status' => 'required',
             // 'feature_list' => 'required',
@@ -94,7 +63,9 @@ class AdminSubscriptionPackageController extends Controller
         // create subscription package and store feature_list as json array
         $subscription_package = SubscriptionPackage::create([
             'name' => $request->name,
-            'amount' => $request->price,
+            'slug' => Str::slug($request->input('name')),
+            'regular_price' => $request->regular_price,
+            'sales_price' => $request->sales_price,
             'type' => $request->type,
             'status' => $request->status,
             'features' => implode(',',$request->feature_list),
@@ -140,8 +111,7 @@ class AdminSubscriptionPackageController extends Controller
         //
             // validate request
             $request->validate([
-                'name' => 'required|unique:subscription_packages,name,'.$id.',id',
-                'price' => 'required',
+                'name' => 'required|unique:subscription_packages,name,'.$id.',id', 
                 'type' => 'required',
                 'status' => 'required',
                 // 'feature_list' => 'required',
@@ -150,7 +120,9 @@ class AdminSubscriptionPackageController extends Controller
             // update subscription package and store feature_list as json array
             $subscription_package = SubscriptionPackage::findOrFail($id);
             $subscription_package->name = $request->name;
-            $subscription_package->amount = $request->price;
+            $subscription_package->slug = Str::slug( $request->name);
+            $subscription_package->regular_price = $request->regular_price;
+            $subscription_package->sales_price = $request->sales_price;
             $subscription_package->type = $request->type;
             $subscription_package->status = $request->status;
             $subscription_package->features = implode(',',$request->feature_list);

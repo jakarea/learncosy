@@ -38,7 +38,7 @@ class ForgotPasswordController extends Controller
                 if ($loginPageStyle->lp_layout == 'fullwidth') {
                     return view('custom-auth/passwords/email2');
                 } elseif ($loginPageStyle->lp_layout == 'default') {
-                    return view('custom-auth/passwords/email3');
+                    return view('custom-auth/passwords/email');
                 } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
                     return view('custom-auth/passwords/email5');
                 } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {

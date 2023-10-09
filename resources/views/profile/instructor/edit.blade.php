@@ -12,14 +12,7 @@
 @section('content')
 {{-- student update page @S --}}
 <main class="student-profile-update-page instructor-profile-update-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <div class="own-profile-box account-settings-box">
@@ -91,10 +84,10 @@
                                         </div>
                                     </div>
                                     <div class="col-xl-9 col-lg-8">
-                                        <div class="content-settings-form-wrap profile-text-box-2">
+                                        <div class="content-settings-form-wrap profile-text-box-2 pt-0">
                                             <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group mt-0">
                                                         <input type="text" class="form-control" id="name" name="name"
                                                             value="{{ $user->name }}" required>
                                                         <label for="name">Name</label>
@@ -122,35 +115,50 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="social_links"
-                                                            name="social_links[]" value="{{ $user->social_links }}"
-                                                            required>
-                                                        <label for="social_links">Instagram</label>
-                                                        <span class="invalid-feedback">@error('social_links'){{ $message
-                                                            }}
+                                                        <input type="text" class="form-control" id="company_name"
+                                                            name="company_name" value="{{ $user->company_name }}" required>
+                                                        <label for="company_name">Company Name</label>
+                                                        <span class="invalid-feedback">@error('company_name'){{ $message }}
                                                             @enderror</span>
                                                     </div>
-
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="url" class="form-control" id="website"
+                                                            name="website" value="{{ $user->short_bio }}" required>
+                                                        <label for="website">Website</label>
+                                                        <span class="invalid-feedback">@error('website'){{ $message }}
+                                                            @enderror</span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="short_bio"
-                                                            name="short_bio" value="{{ $user->short_bio }}" required>
-                                                        <label for="short_bio">Bio</label>
-                                                        <span class="invalid-feedback">@error('short_bio'){{ $message }}
-                                                            @enderror</span>
+                                                    @php  $socialLinks = explode(',',$user->social_links) @endphp
+                                                   <div class="form-group">
+                                                    <label for="social_links" style="top: -6px; background: #fff!important; z-index: 999">Social Media</label>
+                                                   </div>
+                                                    @foreach ($socialLinks as $socialLink) 
+                                                    <div class="social-extra-field">
+                                                        <div class="form-group">
+                                                            <input type="url" class="form-control" id="social_links"
+                                                                name="social_links[]" value="{{ $socialLink }}" >
+                                                            
+                                                            <span class="invalid-feedback">@error('social_links'){{ $message }}  @enderror</span>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    @endforeach
+                                                    <div class="text-end mt-3">
+                                                        <a href="javascript:void(0)" id="social_increment"><i class="fas fa-plus"></i>
+                                                            Add</a>
+                                                    </div>
+                                                </div> 
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror"
-                                                            required>{{ $user->description }}</textarea>
+                                                            required>{!! $user->description !!}</textarea>
 
                                                         <label for="description">About</label>
-                                                        <span class="invalid-feedback">@error('description'){{ $message
-                                                            }}
-                                                            @enderror</span>
+                                                        <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -962,6 +970,59 @@
 
 {{-- page script @S --}}
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"></script>
+<script src="{{asset('assets/js/tinymce.js')}}"></script>
+
+{{-- add extra filed js --}}
+<script>
+    const urlBttn = document.querySelector('#social_increment');
+    let extraFields = document.querySelector('.social-extra-field');
+
+    const createField = () => {
+        let div = document.createElement("div");
+        let node = document.createElement("input");
+        node.setAttribute("class",
+            "form-control @error('social_links') is-invalid @enderror"
+            );
+        node.setAttribute("multiple", "");
+        node.setAttribute("type", "url");
+        node.setAttribute("placeholder", "Enter URL");
+        node.setAttribute("name", "social_links[]");
+
+        let link = document.createElement("a");
+        link.innerHTML = "<i class='fas fa-minus'></i>";
+        link.addEventListener("click", () => removeField(div));
+
+        div.appendChild(node);
+        div.appendChild(link);
+
+        extraFields.appendChild(div);
+    }
+
+    const removeField = (element) => {
+        extraFields.removeChild(element);
+    }
+
+    urlBttn.addEventListener('click', createField, true);
+
+    // Show the minus icon for the existing input fields in the loop
+    const existingInputs = document.querySelectorAll('.social-extra-field input');
+    for (const input of existingInputs) {
+        let div = document.createElement("div");
+        div.appendChild(input);
+
+        let link = document.createElement("a");
+        link.innerHTML = "<i class='fas fa-minus'></i>";
+        link.addEventListener("click", () => removeField(div));
+
+        div.appendChild(link);
+
+        extraFields.appendChild(div);
+    }
+</script>
+
+{{-- upload image preview  --}}
 <script>
     function previewImage() {
         var preview = document.getElementById('preview');
@@ -981,6 +1042,7 @@
     } 
 </script>
 
+{{-- experience form --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('experience-form');
@@ -997,6 +1059,7 @@
     });
 </script>
 
+{{-- certificate preview --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll(".cert-bttn");

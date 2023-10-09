@@ -51,12 +51,9 @@ class CourseCreateStepController extends Controller
 
     public function step1c(Request $request, $id){
 
-        // return $request->all();
-
         if(!$id){
             return redirect('instructor/courses');
         }
-
 
         $request->validate([
             'title' => 'required',
@@ -74,8 +71,7 @@ class CourseCreateStepController extends Controller
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
         $platform = $request->input('platform');
-
-        // Check for unique slug
+ 
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
@@ -286,7 +282,7 @@ class CourseCreateStepController extends Controller
         if ($request->hasFile('audio')) {
             // Check if a previous audio file exists and delete it
             if ($lesson->audio) {
-                $previousAudioPath = public_path('assets/audio') . '/' . $lesson->audio;
+                $previousAudioPath = public_path('uploads/audio') . '/' . $lesson->audio;
                 if (file_exists($previousAudioPath)) {
                     unlink($previousAudioPath);
                 }
@@ -294,7 +290,7 @@ class CourseCreateStepController extends Controller
         
             $audio = $request->file('audio');
             $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
-            $audio->move(public_path('assets/audio'), $audioName);
+            $audio->move(public_path('uploads/audio/'), $audioName);
             $lesson->audio = $audioName;
         }
         
@@ -303,7 +299,7 @@ class CourseCreateStepController extends Controller
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
                 $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs('uploads/lessons', $filename);
+                $file->storeAs('uploads/lessons/', $filename);
                 $uploadedFilenames[] = $filename;
             }
         
@@ -465,22 +461,28 @@ class CourseCreateStepController extends Controller
 
         $request->validate([
             'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg|max:5121',
+        ],
+        [
+            'avatar' => 'Max file size is 5 MB!'
         ]);
 
-
-        $image_path = '';
-        if ($request->hasFile('thumbnail')) {
+        if ($request->hasFile('thumbnail')) { 
+            if ($user->thumbnail) {
+               $oldFile = public_path($user->thumbnail);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           }
             $file = $request->file('thumbnail');
             $image = Image::make($file);
-            $image->encode('png', 90);
-            $image_path = 'assets/images/courses/thumbnail_'.$course->slug . '.png';
-            $image->save(public_path('assets/images/courses/thumbnail_') . $course->slug . '.png');
-        }
-        $course->thumbnail = $image_path;
+            $uniqueFileName = $slugg . '-' . uniqid() . '.webp';
+            $image->save(public_path('uploads/courses/') . $uniqueFileName);
+            $image_path = 'uploads/courses/' . $uniqueFileName;
+           $user->thumbnail = $image_path;
+       }
         $course->save();
 
-
-        return redirect('instructor/courses/create/'.$course->id.'/certificate')->with('success', 'Course Design Set successfully');
+        return redirect('instructor/courses/create/'.$course->id.'/certificate')->with('success', 'Course Thumbnail Set successfully');
     }
 
 

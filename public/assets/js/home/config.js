@@ -8,3 +8,4 @@ $('.feedback-slider').slick({
   centerMode: false,
   dots: true,
 });
+ 

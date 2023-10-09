@@ -6,7 +6,7 @@
 					{{-- header logo @S --}}
 					<div class="header-logo-wrap">
 						<a href="{{url('/')}}">
-						<img src="{{ asset('assets/images/learncosy-logo.png') }}" alt="Logo" title="Giopio" class="img-fluid logo-width" /> 
+						<img src="{{ asset('assets/images/logo-d.svg') }}" alt="Logo" title="Learncosy" class="img-fluid logo-width" /> 
 						</a>
 						<div class="d-flex align-items-center">
 							<a href="javascript:void(0)" id="toggle-bar">

@@ -476,6 +476,7 @@
   box-shadow: none;
   padding: 1.5rem;
   margin-top: 1rem;
+  min-height: 70vh;
 }
 .user-add-form-wrap-2 .form-group {
   position: relative;
@@ -1647,6 +1648,54 @@
   text-align: center;
   margin-top: 2rem;
   padding: 0.625rem 1.125rem;
+}
+
+.view-course-bttn {
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem;
+  display: inline-block;
+}
+
+#social_increment {
+  border-radius: 0.25rem;
+  background: #F3F5FF;
+  color: var(--primary-color-blue, #294CFF);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  transition: all linear 0.3s;
+}
+#social_increment:hover {
+  background-color: #66768E;
+  color: #fff;
+}
+
+.social-extra-field div {
+  position: relative;
+  margin-top: 1rem;
+}
+.social-extra-field div a {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  top: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid #667085;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.social-extra-field div a i {
+  font-size: 0.875rem;
+  color: #667085;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

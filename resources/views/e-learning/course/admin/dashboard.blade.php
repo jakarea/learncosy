@@ -40,15 +40,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Students</h5>
-                                <h4> {{ $studentsCount }}</h4>
-                            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Students</h5>
+                            <h4> {{ $studentsCount }}</h4>
                         </div>
                         <p> <b
                                 style="color: {{ $percentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfStudent >= 0 ? '+' . $percentageChangeOfStudent : $percentageChangeOfStudent }}%</b>
@@ -59,35 +59,46 @@
                     </div>
                     <!-- total client @e -->
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Instructors</h5>
-                                <h4> {{ $instructorsCount }}</h4>
-                            </div>
+                
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Instructors</h5>
+                            <h4> {{ $instructorsCount }}</h4>
                         </div>
+                    </div>
+                    <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
+                            $percentageChangeOfInstructor >= 0 ? '+' . $percentageChangeOfInstructor :
+                            $percentageChangeOfInstructor }}%</b>
+                        VS last month</p>
 
-                        <p> <b
-                                style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfInstructor >= 0 ? '+' . $percentageChangeOfInstructor : $percentageChangeOfInstructor }}%</b>
-                            VS last month</p>
-
-                        <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart"
-                            class="img-fluid light-ele">
-                        <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart"
-                            class="img-fluid dark-ele">
+                    <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
+                    <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
+                </div>
+                
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Course</h5>
+                            <h4> {{ $courseCount }}</h4>
+                        </div>
                     </div>
                     <!-- total client @e -->
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
-                    <!-- total client @s -->
-                    <div class="total-client-box">
-                        <div class="media">
-                            <div class="media-body">
-                                <h5>Course</h5>
-                                <h4> {{ $courseCount }}</h4>
-                            </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+                
+                <div class="total-client-box">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5>Earnings</h5>
+                            <h4>€ {{ $totalEarnings }} </h4>
                         </div>
                         <p> <b
                                 style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{ $percentageChangeOfCourse >= 0 ? '+' . $percentageChangeOfCourse : $percentageChangeOfCourse }}%</b>
@@ -99,7 +110,11 @@
                     </div>
                     <!-- total client @e -->
                 </div>
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 mt-15"> 
+                
                     <!-- total client @s -->
                     <div class="total-client-box">
                         <div class="media">
@@ -169,8 +184,79 @@
                             @else
                                 @include('partials/no-data')
                             @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 mt-15">
+                <form action="" method="GET" id="myForm">
+                    <input type="hidden" name="status" id="inputField">
+                </form>
+                <div class="course-status-wrap">
+                    <div class="d-flex py-0 pe-0">
+                        <h4>Course Status</h4>
+                        <div class="d-flex">
+                           @if (count($courses) > 5)
+                           <a href="{{ url('admin/courses') }}" class="me-0">View All</a>
+                           @endif 
+                           
+                            <div class="dropdown course-status-filter">
+                                <button type="button" class="btn" id="dropdownBttn" data-bs-toggle="dropdown"
+                                    aria-expanded="false">All <i class="fas fa-angle-down"></i></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)">All</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="one">This Month</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="three">Three Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="six">Six Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="year">One Year</a></li>
+                                </ul>
+                            </div> 
                         </div>
                     </div>
+                    @if (count($courses) > 0)
+                    <table>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Price</th>
+                            <th>Rating</th>
+                            <th>Earning</th>
+                            <th class="text-end">Sell</th>
+                        </tr>
+                        @foreach ($courses->slice(0,6) as $course)
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="avatar">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="c-status" class="img-fluid">
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>{{ substr($course->title, 0, 35) }}</h5>
+                                        <p> {{ $course->categories }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p>{{ ($course->offer_price ? ($price = $course->offer_price) : ($price =
+                                    $course->price)) ? '€' . $price : 'Free' }}
+                                </p>
+                            </td>
+                            <td>
+                                <p><i class="fas fa-star me-2" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p>
+                            </td>
+                            <td>
+                                <p>€{{ $course->sum_amount ? $course->sum_amount : 0 }}</p>
+                            </td>
+                            <td class="text-end">
+                                <p>{{ $course->sale_count }}</p>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    @else 
+                        @include('partials/no-data')
+                    @endif
+
                 </div>
             </div>
             <div class="row">
@@ -272,9 +358,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    {{-- time spend chart start --}}
-    <script>
-        jQuery(document).ready(function() {
+
+{{-- course status filter --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let inputField = document.getElementById("inputField");
+        let dropbtn = document.getElementById("dropdownBttn");
+        let form = document.getElementById("myForm");
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString); 
+        let status = urlParams.get('status');
+        let dropdownItems = document.querySelectorAll(".filterItem");
+
+        if (status == "one") {
+            dropbtn.innerHTML = 'This Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "three") {
+            dropbtn.innerHTML = 'Three Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "six") {
+            dropbtn.innerHTML = 'Six Month' + '<i class="fas fa-angle-down"></i>';
+        }
+        if (status == "year") {
+            dropbtn.innerHTML = 'One Year' + '<i class="fas fa-angle-down"></i>';
+        }
+        inputField.value = status;
+
+        dropdownItems.forEach(item => {
+            item.addEventListener("click", function(e) {
+                e.preventDefault();
+                inputField.value = this.getAttribute("data-value");
+                dropbtn.innerText = item.innerText;
+                form.submit();
+            });
+        });
+    });
+</script>
+
+{{-- time spend chart start --}}
+<script>
+    jQuery(document).ready(function() {
             var timeSpentData = @json($earningByMonth);
             var options = {
                 series: [{

@@ -13,10 +13,12 @@ class SubscriptionPackage extends Model
 
     protected $fillable = [
         'name',
-        'amount',
+        'slug',
+        'regular_price',
+        'sales_price',
         'features',
         'status',
-        'created_by',
+        'created_by'
     ];
 
     // protected $casts = [

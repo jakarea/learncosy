@@ -17,7 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique()->nullable();
             $table->string('slug')->unique()->nullable();
-            $table->decimal('amount', 10, 2);
+            $table->decimal('regular_price', 10, 2)->nullable();
+            $table->decimal('sales_price', 10, 2)->nullable();
             $table->longText('features');
             $table->enum('type', ['monthly', 'yearly'])->default('monthly');
             $table->enum('status', ['active', 'inactive'])->default('active');

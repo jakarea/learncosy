@@ -38,8 +38,7 @@
 
                 <div class="user-expperience-box">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4>Experiences</h4>
-                        
+                        <h4>Experiences</h4> 
                     </div>
                     @if (count($experiences) > 0)
                         @foreach ($experiences as $experience)
