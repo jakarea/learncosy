@@ -60,29 +60,10 @@ Account Management
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <label for="imageInput" class="file-upload-area p-0"
-                                                                id="file-upload-area">
-
-                                                                @if (isset($module_settings->logo) ||
-                                                                $module_settings->logo != null)
-                                                                <img src="{{ asset($module_settings->logo) }}"
-                                                                    alt="" class="img-fluid rounded mt-2">
-                                                                @else
+                                                            <label for="" class="logo-upload-box">
                                                                 <img src="{{ asset('latest/assets/images/logo-view.svg') }}"
-                                                                    alt="" class="img-fluid">
-                                                                @endif
-                                                                <img src="" alt="" class="img-fluid rounded mt-2"
-                                                                    id="preview">
+                                                                alt="Upload Preview" class="img-fluid">
                                                             </label>
-
-                                                            <input type="file" name="logo" id="imageInput"
-                                                                accept="image/*" onchange="previewImage()"
-                                                                class="form-control d-none  @error('logo') is-invalid @enderror">
-                                                            <span class="invalid-feedback">
-                                                                @error('logo')
-                                                                {{ $message }}
-                                                                @enderror
-                                                            </span>
 
                                                             <h6 class="mt-3">App Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
