@@ -2621,11 +2621,11 @@ span.stripe-bg {
     border-radius: 0.125rem;
     border: 1px solid #DFE4FF;
     background: #E7EBFF;
-    color: #596BC3; 
+    color: #596BC3;
     font-size: 0.625rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 150%; 
+    line-height: 150%;
     display: inline-flex;
     align-items: center;
     padding: 0rem 0.5rem;
@@ -2633,20 +2633,86 @@ span.stripe-bg {
     height: 1.375rem;
 }
 
-.course-filter-header{
+.course-filter-header {
     justify-content: space-between;
-    .filter-dropdown-box{
-        width: 64%!important;
-        margin-right: 1rem!important;
+
+    .filter-dropdown-box {
+        width: 64% !important;
+        margin-right: 1rem !important;
         color: #f4f8fc;
-    } 
+    }
 }
 
+.logo-upload-box {
+    position: relative;
+    margin-top: 1rem;
+    transition: ease-in-out .3s;
+    border: 1.5px solid var(--primary-color-blue-light, #3D5CFF);
+    border-radius: 0.5rem;
+    display: block;
+    width: 100%;
 
+    #close-button5,
+    #close-button4,
+    #close-button3,
+    #close-button2,
+    #close-button {
+        display: none;
+        position: absolute;
+        right: -12px;
+        top: -14px;
+        background: #3D5CFF;
+        z-index: 99;
+        i{
+            color: #fff;
+        }
+    }
+}
 
+.upload-ol-box {
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 7.875rem;
+    @include m.df(center);
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    transition: ease-in-out .3s;
 
+    span {
+        color: var(--common-white, #FFF);
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.125rem;
+        display: block;
+        margin-top: 0.5rem;
+    }
+}
 
+.logo-upload-box:hover {
+    .upload-overflow-box {
+        opacity: 1!important;
+    }
+}
 
+.rounded_custom{
+    border-radius: 50%;
+}
+
+.no-bg{
+    background-color: transparent!important;
+    padding: 0!important;
+    box-shadow: none!important;
+}
+
+.file-upload-area{
+    border-width: 2px!important;
+}
 
 
 

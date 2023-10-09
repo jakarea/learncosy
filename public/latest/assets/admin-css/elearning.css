@@ -2333,6 +2333,79 @@ span.stripe-bg i {
   color: #f4f8fc;
 }
 
+.logo-upload-box {
+  position: relative;
+  margin-top: 1rem;
+  transition: ease-in-out 0.3s;
+  border: 1.5px solid var(--primary-color-blue-light, #3D5CFF);
+  border-radius: 0.5rem;
+  display: block;
+  width: 100%;
+}
+.logo-upload-box #close-button5,
+.logo-upload-box #close-button4,
+.logo-upload-box #close-button3,
+.logo-upload-box #close-button2,
+.logo-upload-box #close-button {
+  display: none;
+  position: absolute;
+  right: -12px;
+  top: -14px;
+  background: #3D5CFF;
+  z-index: 99;
+}
+.logo-upload-box #close-button5 i,
+.logo-upload-box #close-button4 i,
+.logo-upload-box #close-button3 i,
+.logo-upload-box #close-button2 i,
+.logo-upload-box #close-button i {
+  color: #fff;
+}
+
+.upload-ol-box {
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 7.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: ease-in-out 0.3s;
+}
+.upload-ol-box span {
+  color: var(--common-white, #FFF);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.logo-upload-box:hover .upload-overflow-box {
+  opacity: 1 !important;
+}
+
+.rounded_custom {
+  border-radius: 50%;
+}
+
+.no-bg {
+  background-color: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.file-upload-area {
+  border-width: 2px !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
