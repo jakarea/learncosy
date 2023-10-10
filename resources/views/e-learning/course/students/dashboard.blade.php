@@ -187,7 +187,7 @@ Students Dashboard
                         </div>
                         @endforeach
                         @else
-                            @include('partials/no-data')
+                            <p class="common-para">No Course Found!</p>
                         @endif
                     </div>
                 </div>
@@ -268,7 +268,7 @@ Students Dashboard
                         @endforeach
                     </table>
                     @else
-                    @include('partials/no-data')
+                        <p class="common-para">No Course Found!</p>
                     @endif
                 </div>
             </div>
