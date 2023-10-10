@@ -36,8 +36,6 @@ class AdminHomeController extends Controller
         $students = [];
         $users = 0;
         $enrolmentStudents = 0;
-
-
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
         $TopPerformingCourses = Course::select(
@@ -268,7 +266,11 @@ class AdminHomeController extends Controller
             }
         }
         
-        $courses = $courses->get();     
+        $courses = $courses->get();   
+        
+        // static monthly earning just for show the graph - need to remove later (start)
+        $earningByMonth = [2,4,6,2,1,9,7,5,5,3];
+            // static monthly earning just for show the graph - need to remove later (end)
 
         return view(
             'e-learning/course/admin/dashboard',

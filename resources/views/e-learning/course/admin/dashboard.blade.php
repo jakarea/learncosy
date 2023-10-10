@@ -114,6 +114,9 @@ Home Page
                         <div class="col-lg-12">
                             <div class="d-flex align-items-center">
                                 <h5>Revenue</h5>
+                                <p class="common-para ms-3"> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
+                                    '+' . $earningParcentage : $earningParcentage }}%</b>
+                                VS last month</p>
                             </div>
                         </div>
                     </div>
