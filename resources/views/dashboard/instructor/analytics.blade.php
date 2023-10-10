@@ -54,7 +54,6 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
-
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
@@ -68,14 +67,13 @@
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
-
             </div>
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                 <div class="total-client-box">
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4>{{ count($earningByDates) }} €</h4>
+                            <h4>€{{ count($earningByDates) }}</h4>
                         </div>
                     </div>
                     <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
@@ -103,12 +101,14 @@
         <div class="row">
             <div class="col-12 mt-15">
                 <div class="chart-box-wrap">
-                    <div class="statics-head">
+                    <div class="statics-head d-flex align-items-center">
                         <h5>Earnings</h5>
+                        <p class="common-para ms-3"> <b
+                                style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
+                                number_format($formattedPercentageChangeOfEarning, 0) }}</b>
+                            % VS last month</p>
                     </div>
-                    {{-- <div id="chart-earnings"></div> --}}
-                    <div id="chart"></div>
-
+                    <div id="earningChart"></div>
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
                             </div>
                             <div>
                                 <span style="background-color: #FFAB00;"></span> Inactive
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div id="studentsGraph"></div>
@@ -258,36 +258,100 @@
 
 {{-- Total earnings start --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-            const data = @json($earningByDates);
 
-            const chartData = Object.keys(data).map((date) => {
-                return {
-                    x: new Date(date).getTime(),
-                    y: data[date]
-                };
-            });
+    let newdata = @json($earningByDates);
 
-            var options = {
-                chart: {
-                    type: 'line',
-                    height: 350,
-                    toolbar: {
-                        show: false
-                    },
-                },
-                xaxis: {
-                    type: 'datetime',
-                },
-                series: [{
-                    name: 'Earnings',
-                    data: chartData,
-                }],
-            };
+// let newdata = {
+//     "2023-10-02": 33,
+//     "2023-10-05": 28,
+//     "2023-10-10": 42,
+//     "2023-10-15": 56,
+//     "2023-10-20": 33,
+//     "2023-10-25": 72,
+//     "2023-10-30": 39,
+//     "2023-10-02": 33,
+//     "2023-10-05": 28,
+//     "2023-10-10": 42,
+//     "2023-10-15": 56,
+//     "2023-10-20": 33,
+//     "2023-10-25": 72,
+//     "2023-10-30": 39,
+//     "2023-04-01": 12,
+//     "2023-08-23": 17
+// };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
-        });
+// Create an object to store data for the current month
+const currentMonthData = {};
+
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth() + 1; // JavaScript months are zero-based
+
+// Iterate through the data and filter it for the current month
+for (const date in newdata) {
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+
+    if (year === currentYear && month === currentMonth) {
+        currentMonthData[date] = newdata[date];
+    }
+}
+
+const chartData = Object.keys(currentMonthData).map((date) => {
+    return {
+        x: new Date(date).getTime(),
+        y: currentMonthData[date]
+    };
+});
+
+var options = {
+    series: [{
+        data: chartData
+    }],
+    chart: {
+        id: 'area-datetime',
+        type: 'area',
+        height: 350,
+        toolbar: {
+            show: false
+        },
+        zoom: {
+            autoScaleYaxis: true
+        }
+    }, 
+    dataLabels: {
+        enabled: false
+    },
+    markers: {
+        size: 0,
+        style: 'hollow',
+    },
+    xaxis: {
+        type: 'datetime',
+        tickAmount: 6,
+    },
+    colors: ['#294CFF'],
+    tooltip: {
+        x: {
+            format: 'dd MMM yyyy'
+        }
+    },
+    fill: {
+        type: 'gradient',
+        gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.7,
+            opacityTo: 0.9,
+            stops: [0, 100]
+        }
+    },
+};
+
+var chart = new ApexCharts(document.querySelector("#earningChart"), options);
+chart.render();
+
+
 </script>
 {{-- Total earnings end --}}
 
@@ -327,12 +391,7 @@
             },
             xaxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            },
-            yaxis: {
-                title: {
-                    text: '$ (thousands)'
-                }
-            },
+            }, 
             fill: {
                 opacity: 1
             },

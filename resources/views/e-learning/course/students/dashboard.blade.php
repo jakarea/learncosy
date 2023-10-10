@@ -288,6 +288,7 @@ Students Dashboard
 <script>
     jQuery(document).ready(function() {
             var timeSpentData = @json($timeSpentData);
+            
             var options = {
                 series: [{
                     name: "Time spend",
