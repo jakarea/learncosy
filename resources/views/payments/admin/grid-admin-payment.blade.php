@@ -136,8 +136,8 @@
                             <th>Payment Date</th>
                             <th>Payment Method</th>
                             <th>Amount</th>
-                            <th>Payent Status</th>
-                            <th width="8%" class="text-start">Actions</th>
+                            <th>Status</th>
+                            <th width="14%" class="text-start">Action</th>
 
                         </tr>
                         @foreach ($enrolments as $key => $payment)
@@ -171,7 +171,7 @@
                             <td>
 
                                 <ul>
-                                    <a href="{{ route('export',encrypt($payment->payment_id)) }}" class="btn-view">Export</a>
+                                    <a href="{{ route('export',encrypt($payment->payment_id)) }}" class="btn-view btn-export">Export</a>
                                     <a href="{{ route('view',encrypt($payment->payment_id)) }}" class="btn-view">View</a>
                                 </ul>
                             </td>

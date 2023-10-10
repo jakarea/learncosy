@@ -76,8 +76,9 @@
                     </table>
                     <div class="download-inv-box">
                         <a href="{{url('instructor/payments')}}">Back</a>
+                        <a href="{{ route('invoice-mail',encrypt($payment->payment_id)) }}" class="ms-3 d-inline-flex align-items-center"><img src="{{asset('latest/assets/images/icons/email.svg')}}" alt="a" class="img-fluid me-2"> Mail Invoice</a>
                         <a href="{{route('generate-pdf',encrypt($payment->payment_id))}}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
-                        <a href="{{ route('invoice-mail',encrypt($payment->payment_id)) }}"> Mail Invoice</a>
+                        
                     </div>
                 </div>
             </div>

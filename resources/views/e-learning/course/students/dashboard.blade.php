@@ -42,8 +42,7 @@ Students Dashboard
                     <p>Course in Progress</p>
                     <div class="d-flex">
                         <h5>0</h5>
-                        <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                class="img-fluid"> 100%</span>
+                        <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid"> 100%</span>
                     </div>
                 </div>
             </div>
@@ -61,7 +60,8 @@ Students Dashboard
                 <div class="status-card-box">
                     <p>Watching Time</p>
                     <div class="d-flex">
-                        <h5 style="font-size: 25px; font-weight:bold;">{{ secondsToHms($totalTimeSpend)}}</h5>
+                        {{-- <h5>{{ secondsToHms($totalTimeSpend)}}</h5> --}}
+                        <h5>{{ $totalHours }}h <b style="font-size: 1.25rem; font-weight:600">{{ $totalMinutes }}m</b></h5>
                         <span>
                             @if ($percentageChange > 0)
                             <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Up"
@@ -288,6 +288,7 @@ Students Dashboard
 <script>
     jQuery(document).ready(function() {
             var timeSpentData = @json($timeSpentData);
+            
             var options = {
                 series: [{
                     name: "Time spend",
@@ -296,6 +297,9 @@ Students Dashboard
                 chart: {
                     height: 280,
                     type: 'line',
+                    toolbar: {
+                        show: false
+                    },
                     zoom: {
                         enabled: false
                     }

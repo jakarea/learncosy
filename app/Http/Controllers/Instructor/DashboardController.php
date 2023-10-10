@@ -26,7 +26,6 @@ class DashboardController extends Controller
           $currentMonthEnrolledStudents = [];
           $previousMonthEnrolledStudents = [];
 
-
             if ($request->has('duration')) {
                 $duration = $request->query('duration');
                 if($duration === 'one_month'){
@@ -268,8 +267,6 @@ class DashboardController extends Controller
               }
           }
 
-
-
           foreach ($currentMonthEnrollments as $enrolment) {
               $currentMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
           }
@@ -305,6 +302,8 @@ class DashboardController extends Controller
                 }
             }
         } 
+ 
+        // return $earningByDates;
 
         return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
 
