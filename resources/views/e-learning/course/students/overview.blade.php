@@ -65,7 +65,7 @@
                     @endphp
 
                     <ul>
-                        @foreach ($objectives as $object)
+                        @foreach ($objectives as $object) 
                         <li><i class="fas fa-check"></i> {{$object}} </li>
                         @endforeach
                     </ul>
@@ -87,23 +87,24 @@
                                         <i class="fas fa-angle-down"></i>
                                     </div>
                                 </button>
+                                {{-- lessons total minutes --}}
+                                @php 
+                                    $totalDuration = 0;
+
+                                    foreach ($module->lessons as $lesson) {
+                                        if (isset($lesson->duration) && is_numeric($lesson->duration)) {
+                                            $totalDuration += $lesson->duration;
+                                        }
+                                    } 
+                                @endphp 
+
+                                <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
+                                {{-- lessons total minutes --}}
                             </div>
                             <div id="collapse_{{$module->id}}" class="accordion-collapse collapse "
                                 aria-labelledby="heading_{{$module->id}}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
-
-                                        @php 
-                                            $totalDuration = 0;
-
-                                            foreach ($module->lessons as $lesson) {
-                                                if (isset($lesson->duration) && is_numeric($lesson->duration)) {
-                                                    $totalDuration += $lesson->duration;
-                                                }
-                                            } 
-                                        @endphp 
-
-                                        <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
                                         @foreach($module->lessons as $lesson)
                                         <li>
                                             @if ( !isEnrolled($course->id) )

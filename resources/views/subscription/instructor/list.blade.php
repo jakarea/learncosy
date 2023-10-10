@@ -55,8 +55,8 @@
                             @endif
                             <div>
                                 <div class="pricing-icon">
-                                    <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici"
-                                        class="img-fluid">
+                                    <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                    <img src="{{ asset('latest/assets/images/icons/pricing-01-d.svg') }}" alt="Prici" class="img-fluid dark-ele mx-auto">
                                 </div>
                                 
                                 <div class="txt">
@@ -78,8 +78,9 @@
                                     
                                     <ul>
                                         @foreach ($package_featurelist as $feature)
-                                        <li><img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}"
-                                                alt="Prici" class="img-fluid">
+                                        <li>
+                                            <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                            <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
                                             <span>{{ $feature }}</span>
                                         </li>
                                         @endforeach
@@ -120,8 +121,8 @@
                             @endif
                             <div>
                                 <div class="pricing-icon">
-                                    <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici"
-                                        class="img-fluid">
+                                    <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                    <img src="{{ asset('latest/assets/images/icons/pricing-01-d.svg') }}" alt="Prici" class="img-fluid dark-ele mx-auto">
                                 </div>
                                 <div class="txt">
                                     <h5>{{ $package->name }}</h5>
@@ -140,8 +141,9 @@
                                     <h6>Billed {{ $package->type }}</h6> 
                                     <ul>
                                         @foreach ($package_featurelist as $feature)
-                                        <li><img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}"
-                                                alt="Prici" class="img-fluid">
+                                        <li> 
+                                            <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                            <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
                                             <span>{{ $feature }}</span>
                                         </li>
                                         @endforeach

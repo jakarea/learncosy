@@ -38,17 +38,17 @@
                             @endif
 
                             {{-- course lesson duration calculation --}}
-                        @php
-                        $totalDuration = 0;
-                        @endphp
-                        @foreach($course->modules as $module)
-                        @foreach($module->lessons as $lesson)
-                        @php
-                        $totalDuration += $lesson->duration;
-                        @endphp
-                        @endforeach
-                        @endforeach
-                        {{-- course lesson duration calculation --}}
+                            @php
+                            $totalDuration = 0;
+                            @endphp
+                            @foreach($course->modules as $module)
+                            @foreach($module->lessons as $lesson)
+                            @php
+                            $totalDuration += $lesson->duration;
+                            @endphp
+                            @endforeach
+                            @endforeach
+                            {{-- course lesson duration calculation --}}
 
                             <h4>{{ $totalDuration }} Minutes to Complete . {{ count($course->modules) }} Moduls in
                                 Course
@@ -214,7 +214,9 @@
                                                     <i class="fa-solid fa-headphones text-dark ms-2"></i>
                                                 @elseif($lesson->type == 'video')
                                                 <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="icon"
-                                                class="img-fluid ms-2">
+                                                class="img-fluid ms-2 light-ele">
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon-d.svg') }}" alt="icon"
+                                                class="img-fluid ms-2 dark-ele">
                                                 @endif
                                             @endif
                                         </div>

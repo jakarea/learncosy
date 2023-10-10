@@ -1415,7 +1415,7 @@
     }
 
     &:hover {
-        background-color: #294CFF;
+        background-color: #fe251b;
         color: #fff;
 
         i {
@@ -1425,7 +1425,8 @@
 }
 
 .btn-heart.active {
-    background-color: #294CFF;
+    background-color: #fe251b;
+    border-color: #fe251b;
     color: #fff;
 
     i {
