@@ -455,6 +455,35 @@
   color: #fff;
 }
 
+.header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.header-flex div {
+  color: var(--text-light-primary, #212B36);
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.125rem;
+  margin-left: 2rem;
+  display: inline-flex;
+  align-items: center;
+}
+.header-flex div span {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.custom-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .access-page-box .page-box {
     flex-direction: column;

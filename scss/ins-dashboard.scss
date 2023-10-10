@@ -519,8 +519,31 @@
 }
 
 
+.header-flex {
+    @include m.df(flex-end);
 
+    div {
+        color: var(--text-light-primary, #212B36);
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.125rem;
+        margin-left: 2rem;
+        display: inline-flex;
+        align-items: center;
+        span {
+            display: inline-block;
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+    }
+}
 
+.custom-flex {
+    @include m.df(space-between);
+}
 
 
 
@@ -548,29 +571,30 @@
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
-    
+
             .media {
                 flex-direction: column;
                 align-items: flex-start;
                 width: 100%;
                 max-width: 100%;
-    
-                h5{
+
+                h5 {
                     margin-top: 1rem;
                     margin-bottom: 0.5rem;
                 }
             }
-    
-            .action{
+
+            .action {
                 margin-top: 1.5rem;
             }
         }
+
         .save-bttns .btn-cancel,
         .save-bttns .btn-submit {
             font-size: 0.875rem;
             height: 3rem;
             padding: 0.625rem 1rem;
-            margin-left: 0.5rem; 
+            margin-left: 0.5rem;
         }
     }
 
@@ -649,29 +673,30 @@
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
-    
+
             .media {
                 flex-direction: column;
                 align-items: flex-start;
                 width: 100%;
                 max-width: 100%;
-    
-                h5{
+
+                h5 {
                     margin-top: 1rem;
                     margin-bottom: 0.5rem;
                 }
             }
-    
-            .action{
+
+            .action {
                 margin-top: 1.5rem;
             }
         }
+
         .save-bttns .btn-cancel,
         .save-bttns .btn-submit {
             font-size: 0.875rem;
             height: 3rem;
             padding: 0.625rem 1rem;
-            margin-left: 0.5rem; 
+            margin-left: 0.5rem;
         }
     }
 }
