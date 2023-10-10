@@ -29,6 +29,7 @@
                             <h3>{{$instructor->name}}</h3>
                             <p>{{$instructor->user_role}}</p>
                         </div>
+                        <a href="#" class="edit-profile">Login as {{ $instructor->name }}</a>
                     </div>
                 </div>
                 <div class="user-details-box">

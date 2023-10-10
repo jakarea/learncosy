@@ -157,7 +157,7 @@ class AdminProfileController extends Controller
             $enrolments->orderBy('id', 'desc'); 
         }
 
-        $enrolments = $enrolments->paginate(12);
+        $enrolments = $enrolments->paginate(6);
 
 
         $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();
