@@ -223,15 +223,17 @@ class CourseCreateStepController extends Controller
         $uploadedFilenames = [];
 
         if ($request->hasFile('lesson_file')) {
-
+            $uploadedFilenames = [];
+        
             foreach ($request->file('lesson_file') as $file) {
                 $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs('uploads/lessons', $filename);
+                $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-
+        
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
+        
 
         $lesson->save();
 
