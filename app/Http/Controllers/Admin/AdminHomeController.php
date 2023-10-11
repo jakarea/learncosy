@@ -270,7 +270,7 @@ class AdminHomeController extends Controller
         
         // static monthly earning just for show the graph - need to remove later (start)
         $earningByMonth = [2,4,6,2,1,9,7,5,5,3];
-            // static monthly earning just for show the graph - need to remove later (end)
+        // static monthly earning just for show the graph - need to remove later (end)
 
         return view(
             'e-learning/course/admin/dashboard',

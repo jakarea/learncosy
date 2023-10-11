@@ -61,7 +61,8 @@ Account Management
                                                             <h6>Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <input type="file" name="logo" id="logo" accept="image/*" class="d-none @error('logo') is-invalid @enderror">
+                                                            <input type="file" name="logo" id="logo" accept="image/*"
+                                                                class="d-none @error('logo') is-invalid @enderror">
                                                             <span class="invalid-feedback">
                                                                 @error('logo')
                                                                 {{ $message }}
@@ -95,7 +96,9 @@ Account Management
                                                             <h6 class="mt-3">App Logo</h6>
                                                             <p>The logo visible within your Learn Cosy App.</p>
 
-                                                            <input type="file" name="app_logo" id="app_logo" accept="image/*" class="d-none @error('app_logo') is-invalid @enderror">
+                                                            <input type="file" name="app_logo" id="app_logo"
+                                                                accept="image/*"
+                                                                class="d-none @error('app_logo') is-invalid @enderror">
                                                             <span class="invalid-feedback">
                                                                 @error('app_logo')
                                                                 {{ $message }}
@@ -106,15 +109,15 @@ Account Management
                                                                 <img src="{{ asset('latest/assets/images/app_logo.png') }}"
                                                                     alt="Upload Preview" class="img-fluid"
                                                                     id="app_logo-preview">
-                                                                    <button class="btn" type="button" id="close-button2"><i
+                                                                <button class="btn" type="button" id="close-button2"><i
                                                                         class="fas fa-close"></i></button>
-                                                            </label> 
-                                                            
+                                                            </label>
+
                                                             @if (isset($module_settings->app_logo) ||
                                                             $module_settings->app_logo != null)
                                                             <label for="app_logo" class="logo-upload-box">
                                                                 <img src="{{ asset($module_settings->app_logo) }}"
-                                                                    alt="Upload Preview" class="img-fluid rounded"> 
+                                                                    alt="Upload Preview" class="img-fluid rounded">
                                                             </label>
                                                             @endif
 
@@ -268,24 +271,30 @@ Account Management
                                                                 </div>
                                                             </label>
                                                         </div>
-                                                        <div
-                                                            class="certificate-style-box login-page-theme-box border-0" style="padding: 1rem 1.5rem 0!important;">
+                                                        <div class="certificate-style-box login-page-theme-box border-0"
+                                                            style="padding: 1rem 1.5rem 0!important;">
                                                             <div class="media mt-0" style="padding: 0!important;">
-                                                                <label for="lp_bg_image" class="file-upload-area file-upload-2">
-                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg') }}" alt="a" class="img-fluid mx-auto light-ele">
-                                                                    <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="a" class="img-fluid mx-auto dark-ele">
-                                                                    <p class="mt-2"><span>Click to upload</span> or drag and drop</p>
-                                                                </label> 
+                                                                <label for="lp_bg_image"
+                                                                    class="file-upload-area file-upload-2">
+                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg') }}"
+                                                                        alt="a" class="img-fluid mx-auto light-ele">
+                                                                    <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}"
+                                                                        alt="a" class="img-fluid mx-auto dark-ele">
+                                                                    <p class="mt-2"><span>Click to upload</span> or drag
+                                                                        and drop</p>
+                                                                </label>
 
                                                                 <div>
-                                                                    <input type="file" name="lp_bg_image" id="lp_bg_image" accept="image/*" class="d-none @error('lp_bg_image') is-invalid @enderror">
-                                                                <span class="invalid-feedback">
-                                                                    @error('lp_bg_image')
-                                                                    {{ $message }}
-                                                                    @enderror
-                                                                </span>
+                                                                    <input type="file" name="lp_bg_image"
+                                                                        id="lp_bg_image" accept="image/*"
+                                                                        class="d-none @error('lp_bg_image') is-invalid @enderror">
+                                                                    <span class="invalid-feedback">
+                                                                        @error('lp_bg_image')
+                                                                        {{ $message }}
+                                                                        @enderror
+                                                                    </span>
                                                                 </div>
-                                                            
+
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Upload Login Page Background Image</h6>
@@ -293,16 +302,21 @@ Account Management
                                                                     <p>SVG, PNG, JPG, or GIF (max. 1200x900px)</p>
                                                                 </div>
                                                             </div>
-                                                            
-                                                            <label for="lp_bg_image" class="logo-upload-box mt-2 border-0">
-                                                                <img src="" alt="" class="img-fluid rounded" id="lp_logo-preview">
-                                                                <button class="btn" type="button" id="close-button3"><i class="fas fa-close"></i></button>
+
+                                                            <label for="lp_bg_image"
+                                                                class="logo-upload-box mt-2 border-0">
+                                                                <img src="" alt="" class="img-fluid rounded"
+                                                                    id="lp_logo-preview">
+                                                                <button class="btn" type="button" id="close-button3"><i
+                                                                        class="fas fa-close"></i></button>
                                                             </label>
-                                                            
-                                                            @if (isset($module_settings->lp_bg_image) || $module_settings->lp_bg_image != null)
+
+                                                            @if (isset($module_settings->lp_bg_image) ||
+                                                            $module_settings->lp_bg_image != null)
                                                             <label for="lp_bg_image" class="logo-upload-box">
-                                                                <img src="{{ asset($module_settings->lp_bg_image) }}" alt="Uploaded" class="img-fluid rounded">
-                                                                
+                                                                <img src="{{ asset($module_settings->lp_bg_image) }}"
+                                                                    alt="Uploaded" class="img-fluid rounded">
+
                                                             </label>
                                                             @endif
 
@@ -352,21 +366,27 @@ Account Management
                                                                     (max. 300x300px)</p>
                                                             </label>
 
-                                                            <input type="file" name="favicon" id="favicon" accept="image/*" class="d-none @error('favicon') is-invalid @enderror">
+                                                            <input type="file" name="favicon" id="favicon"
+                                                                accept="image/*"
+                                                                class="d-none @error('favicon') is-invalid @enderror">
                                                             <span class="invalid-feedback">
                                                                 @error('favicon')
                                                                 {{ $message }}
                                                                 @enderror
                                                             </span>
 
-                                                            <label for="favicon"  class="logo-upload-box mt-2 border-0">
-                                                                <img src="" alt="" class="img-fluid rounded" id="favicon-preview">
-                                                                <button class="btn" type="button" id="close-button4"><i class="fas fa-close"></i></button>
+                                                            <label for="favicon" class="logo-upload-box mt-2 border-0">
+                                                                <img src="" alt="" class="img-fluid rounded"
+                                                                    id="favicon-preview">
+                                                                <button class="btn" type="button" id="close-button4"><i
+                                                                        class="fas fa-close"></i></button>
                                                             </label>
-                                                            
-                                                            @if (isset($module_settings->favicon) || $module_settings->favicon != null)
+
+                                                            @if (isset($module_settings->favicon) ||
+                                                            $module_settings->favicon != null)
                                                             <label for="favicon" class="logo-upload-box">
-                                                                <img src="{{ asset($module_settings->favicon) }}" alt="Uploaded" class="img-fluid rounded"> 
+                                                                <img src="{{ asset($module_settings->favicon) }}"
+                                                                    alt="Uploaded" class="img-fluid rounded">
                                                             </label>
                                                             @endif
 
@@ -392,21 +412,27 @@ Account Management
                                                             </label>
 
                                                             <input type="file" name="apple_icon" id="apple_icon"
-                                                                accept="image/*" class="d-none @error('apple_icon') is-invalid @enderror">
+                                                                accept="image/*"
+                                                                class="d-none @error('apple_icon') is-invalid @enderror">
                                                             <span class="invalid-feedback">
                                                                 @error('apple_icon')
                                                                 {{ $message }}
                                                                 @enderror
                                                             </span>
 
-                                                            <label for="apple_icon" class="logo-upload-box mt-2 border-0">
-                                                                <img src="" alt="" class="img-fluid rounded" id="apple_icon-preview">
-                                                                <button class="btn" type="button" id="close-button5"><i class="fas fa-close"></i></button>
+                                                            <label for="apple_icon"
+                                                                class="logo-upload-box mt-2 border-0">
+                                                                <img src="" alt="" class="img-fluid rounded"
+                                                                    id="apple_icon-preview">
+                                                                <button class="btn" type="button" id="close-button5"><i
+                                                                        class="fas fa-close"></i></button>
                                                             </label>
-                                                            
-                                                            @if (isset($module_settings->apple_icon) || $module_settings->apple_icon != null)
+
+                                                            @if (isset($module_settings->apple_icon) ||
+                                                            $module_settings->apple_icon != null)
                                                             <label for="apple_icon" class="logo-upload-box">
-                                                                <img src="{{ asset($module_settings->apple_icon) }}" alt="Uploaded" class="img-fluid rounded">
+                                                                <img src="{{ asset($module_settings->apple_icon) }}"
+                                                                    alt="Uploaded" class="img-fluid rounded">
                                                             </label>
                                                             @endif
 
@@ -415,7 +441,8 @@ Account Management
                                                     <div class="col-12">
                                                         <div class="save-bttns pb-5">
                                                             <button type="button" class="btn btn-cancel"
-                                                                id="deleteButton">Reset</button>
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#resetThemeModal">Reset</button>
                                                             <button type="submit" class="btn btn-submit">Save</button>
                                                         </div>
                                                     </div>
@@ -701,6 +728,35 @@ Account Management
         </div>
     </div>
 </main>
+
+{{-- popup modal --}}
+<div class="reset-modal">
+    <div class="modal fade" id="resetThemeModal" tabindex="-1" aria-labelledby="resetThemeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-titles">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5>Are you sure! to reset the theme?</h5>
+                            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-close"></i>
+                            </button>
+                        </div>
+                        <p>Your all preference and settings will be reset and can not be Undo!</p>
+                    </div>
+                    <div class="modal-bttnss">
+                        <button class="btn btn-no" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-yes" type="button" data-value="yes" id="resetBttn"
+                            data-bs-dismiss="modal">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- popup modal --}}
+
 {{-- student update page @e --}}
 @endsection
 {{-- page content @E --}}
@@ -846,19 +902,16 @@ Account Management
 
 {{-- theme reset ajax request with featch --}}
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
     let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+        const resetBttn = document.getElementById('resetBttn');
 
-        const deleteButton = document.getElementById('deleteButton');
-
-        deleteButton.addEventListener('click', () => {
-            const confirmation = window.confirm(
-                'If you Reset Settings! All of your preferrence will be deleted and can not be undo!');
-
-            if (confirmation) {
+        resetBttn.addEventListener('click', () => {
+            const confirmation =  resetBttn.getAttribute('data-value');
+            if (confirmation == 'yes') {
                 const moduleId = {{ $module_settings->id }};
-
-
                 fetch(`${baseUrl}/instructor/theme/setting/reset/${moduleId}`, {
                         method: 'POST',
                         headers: {
@@ -891,6 +944,7 @@ Account Management
                     });
             }
         });
+    });
 </script>
 
 {{-- tab open js --}}
