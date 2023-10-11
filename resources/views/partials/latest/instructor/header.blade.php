@@ -40,8 +40,8 @@
                             <li><a href="{{ url('instructor/bundle/courses') }}"
                                     class="{{ Request::is('instructor/bundle/courses') ? ' active' : '' }}"> All Bundle
                                     Courses</a></li>
-                            <li><a href="{{ url('instructor/bundle/courses/select/course/1') }}"
-                                    class="{{ Request::is('instructor/bundle/courses/create') ? ' active' : '' }}">Add New
+                            <li><a href="{{ url('instructor/bundle/courses/select') }}"
+                                    class="{{ Request::is('instructor/bundle/courses/select') ? ' active' : '' }}">Add New
                                     Bundle Course</a></li>
                         </ul>
                     </li>

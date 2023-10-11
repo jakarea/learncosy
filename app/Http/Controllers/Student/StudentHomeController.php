@@ -172,7 +172,7 @@ class StudentHomeController extends Controller
         $instructor = User::where('subdomain', $subdomain)->first();
 
         if ( $instructor) {
-            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews')->orderBy('id','desc');
+            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews')->orderBy('id','desc'); 
         }else{
             $courses = Course::with('user','reviews')->where('status','published')->orderBy('id','desc');
         }

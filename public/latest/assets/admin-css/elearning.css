@@ -2474,6 +2474,35 @@ span.stripe-bg i {
   line-height: 1.5rem;
 }
 
+.course-single-item .bundle-course-thumb {
+  position: relative;
+  transition: ease-in-out 0.3s;
+}
+.course-single-item .bundle-course-thumb .remove-bundle {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 99;
+  transition: ease-in-out 0.3s;
+}
+.course-single-item .bundle-course-thumb .remove-bundle .btn-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #fe251b;
+  transition: ease-in-out 0.3s;
+  opacity: 0;
+}
+.course-single-item .bundle-course-thumb .remove-bundle .btn-remove i {
+  color: #fff;
+}
+.course-single-item:hover .bundle-course-thumb .remove-bundle .btn-remove {
+  opacity: 1;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

@@ -148,7 +148,6 @@
                                         @else 
                                         <h5>€ {{ $course->price }}</h5>
                                     @endif
-                                    
                                 </div>
                             </div>
                         </div>

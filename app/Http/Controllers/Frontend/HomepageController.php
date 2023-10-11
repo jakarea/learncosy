@@ -76,7 +76,7 @@ class HomepageController extends Controller
              $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
              $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
              $students = User::where('user_role','student')->get();
-             $bundle_courses = BundleCourse::where('user_id',$instructors->id)->get();
+             $bundle_courses = BundleCourse::where('instructor_id',$instructors->id)->get();
  
              foreach ($bundle_courses as $course) {
                  $courses_id = explode(",", $course->selected_course);
