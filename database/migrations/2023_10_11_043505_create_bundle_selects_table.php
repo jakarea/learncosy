@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bundle_courses', function (Blueprint $table) {
+        Schema::create('bundle_selects', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id'); 
-            $table->text('title'); 
+            $table->string('course_id');
+            $table->text('title')->nullable();
+            $table->integer('instructor_id')->nullable();
             $table->text('slug')->nullable(); 
-            $table->string('selected_course'); 
-            $table->string('subscription_status')->default('one_time'); 
-            $table->string('price')->nullable();
-            $table->string('thumbnail')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('offer_price', 10, 2)->nullable();
+            $table->string('thumbnail', 191)->default('public/assets/images/courses/thumbnail.png');
             $table->longText('short_description')->nullable();
-            $table->string('status')->default('draft');
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bundle_courses');
+        Schema::dropIfExists('bundle_selects');
     }
 };

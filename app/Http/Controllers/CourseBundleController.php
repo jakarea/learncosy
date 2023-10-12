@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\BundleCourse;
+use App\Models\BundleSelect;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use DataTables;
+use Illuminate\Http\Request; 
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 use Auth;
 
 class CourseBundleController extends Controller
@@ -18,7 +20,7 @@ class CourseBundleController extends Controller
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-        $bundleCourses = BundleCourse::where('user_id', Auth::user()->id);
+        $bundleCourses = BundleCourse::where('instructor_id', Auth::user()->id);
 
         if ($title) {
             $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
@@ -40,185 +42,164 @@ class CourseBundleController extends Controller
  
          return view('bundle/instructor/list',compact('bundleCourses')); 
      }
- 
-     // course bundle create
-     public function create()
-     {  
-        $userId = Auth::user()->id;
-        $courses = Course::where('user_id', $userId)->get();
-        return view('bundle/instructor/create',compact('courses')); 
-     }
 
      public function step1()
      {
-        $userId = Auth::user()->id;
-        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-        return view('bundle/instructor/step-1',compact('bundleCourses')); 
+        $courses = Course::where('user_id', Auth::user()->id);
+        $bundleSelected = BundleSelect::where('instructor_id', Auth::user()->id)->get();
+
+        if ($title) {
+            $courses->where('title', 'like', '%' . trim($title) . '%');
+        }
+
+        if ($status) {
+            if ($status == 'oldest') {
+                $courses->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'newest') {
+                $courses->orderBy('id', 'desc');
+            }
+        }else{
+            $courses->orderBy('id', 'desc'); 
+        }
+
+        $courses = $courses->paginate(12);
+
+        return view('bundle/instructor/step-1',compact('courses','bundleSelected')); 
      }
-     public function step2()
+
+
+     public function selectBundle($course_id)
      {
         $userId = Auth::user()->id;
-        $bundleCourses = BundleCourse::where('user_id', $userId)->paginate(12);
+        $course = Course::where('id',$course_id)->firstOrFail();
+        
+        $bundleSelect = BundleSelect::firstOrNew([
+            'instructor_id' => $userId,
+            'course_id' => $course->id,
+        ]);
 
-        return view('bundle/instructor/step-2',compact('bundleCourses')); 
+        if ($bundleSelect->exists) { 
+            return redirect('instructor/bundle/courses/select')->with('warning','Course has already been included in the bundle.'); 
+        }
+        
+        $bundleSelect->title = $course->title;
+        $bundleSelect->slug = $course->slug;
+        $bundleSelect->price = $course->price;
+        $bundleSelect->offer_price = $course->offer_price;
+        $bundleSelect->price = $course->price;
+        $bundleSelect->short_description = $course->short_description;
+        $bundleSelect->thumbnail = $course->thumbnail;
+        $bundleSelect->save();
+
+        return response()->json(['message' => 'DONE']);
+        
      }
 
-     // course bundle store
-    public function store(Request $request)
-    {  
+     public function step2()
+     { 
+        $userId = Auth::user()->id; 
+        $bundleSelected = BundleSelect::where('instructor_id', Auth::user()->id)->with('reviews')->get();
+
+        $selectedCourses = count($bundleSelected);
+
+        if ( $selectedCourses < 1) {
+            return redirect('instructor/bundle/courses/select')->with('warning','Please select a minimum of two courses to create a bundle'); 
+        }
+
+        return view('bundle/instructor/step-2',compact('bundleSelected','selectedCourses')); 
+
+     }
+
+     public function createBundle(Request $request)
+     { 
+
         // return $request->all();
- 
+
+        $userId = Auth::user()->id;
+
+       $totalSelected = BundleSelect::where('instructor_id',$userId)->count();
+
+       if ($totalSelected < 2) {
+            return redirect('instructor/bundle/courses/select')->with('warning','Please select a minimum of two courses to create a bundle'); 
+       }
+
         $request->validate([
             'title' => 'required',
             'selected_course' => 'required',
-            'price' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000'
+        ],
+        [
+            'thumbnail' => 'Max file size is 5 MB!'
         ]);
 
-        $userId = Auth::user()->id;
-
-        //save bundle course
-        $bundleCourse = new BundleCourse([
-            'user_id' => $userId, 
-            'title' => $request->title, 
-            'slug' => Str::slug($request->title),
-            'selected_course' => is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course,
-            'price' => $request->price,
-            'subscription_status' => $request->subscription_status,
-            'short_description' => $request->short_description, 
-            'status' => $request->status,
-        ]);  
- 
+       
         
-        $bundleCourse->slug = $bundleCourse->slug . '-';
-         //if thumbnail is valid then save it
-        if ($request->hasFile('thumbnail')) {
-            $image = $request->file('thumbnail');
-            $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $bundleCourse->thumbnail = $name;
-        } 
-
-        //if banner is valid then save it
-        if ($request->hasFile('banner')) {
-            $image = $request->file('banner');
-            $name2 = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name2);
-            $bundleCourse->banner = $name2;
-        }
-         
-        $bundleCourse->save();
-        return redirect('instructor/bundle/courses')->with('success', 'Bundle Course saved!');
-    }
-
-    // course bundle show
-    public function show($slug)
-    {    
-        $bundleCourse = BundleCourse::where('slug', $slug)->first();
-        $slectedCourses = explode(",",$bundleCourse->selected_course);
-        $courses = Course::whereIn('id', $slectedCourses)->get();
-        if ($bundleCourse) {
-            return view('bundle/instructor/show', compact('bundleCourse', 'courses'));
-        } else {
-            return redirect('instructor/bundle/courses')->with('error', 'Course not found!');
-        }
-    }
-    // course bundle edit
-    public function edit($slug)
-    {   
-        $userId = Auth::user()->id;
-        $courses = Course::where('user_id', $userId)->get();
-        $bundleCourse = BundleCourse::where('slug', $slug)->first();
-        if ($bundleCourse) {
-            return view('bundle/instructor/edit', compact('bundleCourse','courses'));
-        } else {
-            return redirect('instructor/bundle/courses')->with('error', 'Course not found!');
-        } 
-    }
-
-    // course update
-    public function update(Request $request, $slug)
-    {   
-        //   return $request->all();
-
-          $request->validate([
-            'title' => 'required',
-            'selected_course' => 'required',
-            'price' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
+        $bundleCourse = new BundleCourse([
+            'instructor_id' => $userId, 
+            'title' => $request->title, 
+            'sub_title' => $request->sub_title, 
+            'slug' => Str::slug($request->title),
+            'selected_course' => $request->selected_course,
+            'regular_price' => $request->regular_price,
+            'sales_price' => $request->sales_price,
+            'description' => $request->description
         ]);
 
-        $userId = Auth::user()->id;
-
-        $bundleCourse = BundleCourse::where('slug', $slug)->first();
-        $bundleCourse->user_id = $userId; 
-        $bundleCourse->title = $request->title; 
-        $bundleCourse->slug = Str::slug($request->title);
-        $bundleCourse->selected_course = is_array($request->selected_course) ? implode(",",$request->selected_course) : $request->selected_course;
-        $bundleCourse->price = $request->price;
-        $bundleCourse->subscription_status = $request->subscription_status;
-        $bundleCourse->short_description = $request->short_description;  
-        $bundleCourse->status = $request->status;
-        $bundleCourse->save();
+        $insSlug = Str::slug(Auth::user()->name);
 
         if ($request->hasFile('thumbnail')) { 
-             // Delete old file
-             if ($bundleCourse->thumbnail) {
-                $oldFile = public_path('/assets/images/courses/'.$bundleCourse->thumbnail);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
-                }
-            } 
-            $image = $request->file('thumbnail');
-            $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $bundleCourse->thumbnail = $name; 
-        }
-
-        if ($request->hasFile('banner')) { 
-             // Delete old file
-             if ($bundleCourse->banner) {
-                $oldFile = public_path('/assets/images/courses/'.$bundleCourse->banner);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
-                }
-            } 
-            $image = $request->file('banner');
-            $name = $bundleCourse->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $bundleCourse->banner = $name; 
-        } 
-
+            if ($bundleCourse->thumbnail) {
+               $oldFile = public_path($bundleCourse->thumbnail);
+               if (file_exists($oldFile)) {
+                   unlink($oldFile);
+               }
+           }
+            $file = $request->file('thumbnail');
+            $image = Image::make($file);
+            $image->encode('jpg', 40);
+            $uniqueFileName = $insSlug . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/bundle-courses/') . $uniqueFileName);
+            $image_path = 'uploads/bundle-courses/' . $uniqueFileName;
+           $bundleCourse->thumbnail = $image_path;
+       }
+        
         $bundleCourse->save();
 
-        return redirect('instructor/bundle/courses')->with('success', 'Bundle Course Updated!');
-    }
+        // delete Bundle select table
+        if ($bundleCourse->save()) {
+            BundleSelect::where('instructor_id',$userId)->delete();
+        }
 
-    public function destroy($slug)
-    {
-        $bundleCourse = BundleCourse::where('slug', $slug)->first();
-        if ($bundleCourse) {
-            //delete thumbnail
-            $oldThumbnail = public_path('/assets/images/courses/'.$bundleCourse->thumbnail);
+        return redirect('instructor/bundle/courses')->with('success','Bundle Created Successfully');
+     }
+
+     public function removeSelect($course_id)
+     {  
+        $selectedBundle = BundleSelect::where('course_id',$course_id)->firstOrFail();
+
+        $selectedBundle->delete();
+
+        return response()->json(['message' => 'DONE']);
+     }
+
+     public function delete($bundleId)
+     {   
+
+         $bundleCourse = BundleCourse::where('id', $bundleId)->first();
+        if ($bundleCourse) { 
+            $oldThumbnail = public_path($bundleCourse->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            }
-            //delete banner
-            $oldBanner = public_path('/assets/images/courses/'.$bundleCourse->banner);
-            if (file_exists($oldBanner)) {
-                @unlink($oldBanner);
-            }
+            } 
             $bundleCourse->delete();
-            return redirect('instructor/bundle/courses')->with('success', 'Bundle Course deleted!');
+            return redirect('instructor/bundle/courses')->with('success', 'Bundle Course deleted successfully!');
         } else {
             return redirect('instructor/courses')->with('error', 'Bundle Course not found!');
         }
-    }
+     }
 }

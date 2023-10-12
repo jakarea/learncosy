@@ -317,14 +317,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
-            Route::get('/create', 'create');
-            Route::get('/select/course/1', 'step1');
-            Route::get('/select/course/2', 'step2');
-            Route::post('/create', 'store')->name('course.bundle.store');
-            Route::get('/{slug}', 'show')->name('course.bundle.show');
-            Route::get('/{slug}/edit', 'edit')->name('course.bundle.edit');
-            Route::post('/{slug}/edit', 'update')->name('course.bundle.update');
-            Route::delete('/{slug}/destroy', 'destroy')->name('course.bundle.destroy');
+            Route::get('/select', 'step1');
+            Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
+            Route::get('/create', 'step2');
+            Route::post('/create', 'createBundle')->name('create.bundle.course');
+            Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
+            Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
         });
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function () {

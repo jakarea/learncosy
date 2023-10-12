@@ -462,25 +462,28 @@ class CourseCreateStepController extends Controller
         $course = Course::where('id', $id)->firstOrFail();
 
         $request->validate([
-            'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg|max:5121',
+            'thumbnail' => 'nullable|file|mimes:jpg,png,jpg|max:5121',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
+            'thumbnail' => 'Max file size is 5 MB!'
         ]);
 
+        $slugg = Str::slug(Auth::user()->name);
+
         if ($request->hasFile('thumbnail')) { 
-            if ($user->thumbnail) {
-               $oldFile = public_path($user->thumbnail);
+            if ($course->thumbnail) {
+               $oldFile = public_path($course->thumbnail);
                if (file_exists($oldFile)) {
                    unlink($oldFile);
                }
            }
             $file = $request->file('thumbnail');
             $image = Image::make($file);
-            $uniqueFileName = $slugg . '-' . uniqid() . '.webp';
+            $image->encode('jpg', 40);
+            $uniqueFileName = $slugg . '-' . uniqid() . '.jpg';
             $image->save(public_path('uploads/courses/') . $uniqueFileName);
             $image_path = 'uploads/courses/' . $uniqueFileName;
-           $user->thumbnail = $image_path;
+           $course->thumbnail = $image_path;
        }
         $course->save();
 
@@ -507,18 +510,18 @@ class CourseCreateStepController extends Controller
         $course = Course::where('id', $id)->firstOrFail();
 
         $request->validate([
-            'sample_certificates' => 'nullable|file|mimes:jpeg,png,pdf,svg|max:5121',
+            'sample_certificates' => 'nullable|file|mimes:jpg,png,pdf,svg|max:5121',
             'hascertificate' => 'required',
         ]);
 
-        $image_path = 'assets/images/courses/sample_certificates.png';
+        $image_path = 'assets/images/courses/sample_certificates.jpg';
 
         if ($request->hasFile('sample_certificates')) {
             $file = $request->file('sample_certificates');
             $image = Image::make($file);
-            $image->encode('png', 90); // Convert to WebP with 90% quality
-            $image_path = 'assets/images/courses/sample_certificates_'.$course->slug . '.png';
-            $image->save(public_path('assets/images/courses/sample_certificates_') . $course->slug . '.png');
+            $image->encode('jpg', 40); 
+            $image_path = 'assets/images/courses/sample_certificates_'.$course->slug . '.jpg';
+            $image->save(public_path('assets/images/courses/sample_certificates_') . $course->slug . '.jpg');
         }
 
         // Store other form data
