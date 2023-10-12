@@ -315,7 +315,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
         });
 
-        // course bundle page routes
+        // course bundle page routes latest
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view');

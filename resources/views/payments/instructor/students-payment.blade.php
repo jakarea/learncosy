@@ -14,14 +14,7 @@ Payment From Student
 @section('content')
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <div class="top-card-box">
@@ -113,7 +106,7 @@ Payment From Student
                             <th width="12%">Payment Type</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th width="15%">Action</th>
                         </tr>
                         @foreach ($payments as $payment)
                         <tr>
