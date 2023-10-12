@@ -336,6 +336,7 @@ class CourseCreateStepController extends Controller
             'video_link.required' => 'Video file is required!',
             'video_link' => 'Max file size is 1 GB!',
         ]);
+        
         $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();

@@ -317,13 +317,20 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
+            Route::get('/{slug}/view', 'view');
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
             Route::get('/create', 'step2');
             Route::post('/create', 'createBundle')->name('create.bundle.course');
+            Route::get('/{slug}/edit', 'edit1')->name('select.again.bundle.course');
+            Route::post('/{id}/select-update', 'update1')->name('select.update.bundle.course');
+            Route::get('/{slug}/edit-final', 'edit2');
+            Route::post('/{id}/create-update', 'update2')->name('create.update.bundle.course');
             Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
+            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('remove.new.select.bundle');
             Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
         });
+
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function () {
             Route::get('/', 'index')->name('module.setting');
@@ -332,6 +339,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });
+
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
@@ -340,6 +348,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
         });
+
         Route::prefix('profile')->controller(ExperienceController::class)->group(function () {
             Route::post('/experience', 'store')->name('instructor.profile.experience');
         });
