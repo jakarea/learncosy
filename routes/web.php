@@ -265,8 +265,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet'); 
-            Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
+            Route::post('{id}/objects', 'courseObjectsSet');
+            Route::post('{id}/delete-objects/{array_index}', 'deleteObjective')->name('course.delete-objective');
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');

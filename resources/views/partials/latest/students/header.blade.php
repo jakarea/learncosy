@@ -19,7 +19,7 @@
                     <a href="{{ url('students/dashboard') }}" class="{{ Request::is('students/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/home*')  ? ' active' : '' }} nav-link" href="{{ url('students/home') }}">Home</a>
+                    <a class="{{ Request::is('students/home*') || Request::is('students/courses*')  ? ' active' : '' }} nav-link" href="{{ url('students/home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link" href="{{ url('students/dashboard/enrolled') }}">My Courses</a>

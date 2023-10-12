@@ -89,7 +89,7 @@
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/bundle/courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
+                                    <a href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
                                 
                                     @php

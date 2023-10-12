@@ -75,16 +75,15 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($today['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$today['thumbnail'])}}"
-                                            alt="Thumbnail" class="img-fluid">
-                                        @else
+                                        <img src="{{asset($today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
+                                        @else 
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
-                                    </div>
+                                    </div> 
                                     <div class="media-body">
-                                        <h5>{{$today['type']}}</h5>
+                                        <h5>{{$today['type']}} </h5>
                                         <p>{{$today['message']}}</p>
                                     </div>
                                 </div>
@@ -113,7 +112,7 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($yestarday['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$yestarday['thumbnail'])}}"
+                                        <img src="{{asset($yestarday['thumbnail'])}}"
                                             alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
@@ -151,7 +150,7 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($sevenDay['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$sevenDay['thumbnail'])}}"
+                                        <img src="{{asset($sevenDay['thumbnail'])}}"
                                             alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
@@ -190,7 +189,7 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($thirtyDay['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$thirtyDay['thumbnail'])}}"
+                                        <img src="{{asset($thirtyDay['thumbnail'])}}"
                                             alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
@@ -229,7 +228,7 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($lastOneYear['thumbnail'])
-                                        <img src="{{asset('assets/images/courses/'.$lastOneYear['thumbnail'])}}"
+                                        <img src="{{asset($lastOneYear['thumbnail'])}}"
                                             alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"

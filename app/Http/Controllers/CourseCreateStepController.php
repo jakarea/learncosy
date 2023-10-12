@@ -321,9 +321,10 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
         $course = Course::where('id', $id)->firstOrFail();
 
-        return view('e-learning/course/instructor/create/step-5',compact('course'));
+        return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
 
     public function stepLessonVideoSet(Request $request, $id,$module_id,$lesson_id)
@@ -331,13 +332,32 @@ class CourseCreateStepController extends Controller
 
         $request->validate([
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
+            'description' => 'string', 
+            'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
             'video_link' => 'Max file size is 1 GB!',
         ]);
         
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->firstOrFail(); 
+
+        $lesson->short_description = $request->input('description');
+
+        $uploadedFilenames = [];
+        
+        if ($request->hasFile('lesson_file')) {
+            foreach ($request->file('lesson_file') as $file) {
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
+                $file->storeAs('uploads/lessons/', $filename);
+                $uploadedFilenames[] = $filename;
+            }
+        
+            $lesson->lesson_file = implode(",", $uploadedFilenames);
+        }
+
+        $lesson->save();
+
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
 
@@ -376,8 +396,8 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
-        // return $course->objective;
+        $course = Course::where('id', $id)->firstOrFail(); 
+
         return view('e-learning/course/instructor/create/objects',compact('course'));
     }
 
@@ -385,30 +405,51 @@ class CourseCreateStepController extends Controller
 
         // return $request->all();
 
-        if(!$id){
-            return redirect('instructor/courses');
-        }
-
-        $course = Course::where('id', $id)->firstOrFail();
-
         $request->validate([
-            'objective' => 'array', // Ensure 'objective' is an array
-            'objective_details' => 'string',
-        ]);
+            'objective' => 'required',
+        ]);  
 
+        $course = Course::findOrFail($id); 
+        $existingObjectives = explode(',', $course->objective); 
         $newObjectives = $request->input('objective');
-        if (is_array($newObjectives)) {
-            $storeAgain =  implode(', ', $newObjectives);
-        }else{
-            $storeAgain =  $newObjectives;
-        }
-
-        $objectiveDetails = $request->input('objective_details');
-        $course->objective = $storeAgain;
-        $course->objective_details = $objectiveDetails;
+ 
+        $allObjectives = array_merge($existingObjectives, $newObjectives);
+ 
+        $uniqueObjectives = array_unique(array_filter($allObjectives));
+ 
+        $newObjectiveString = implode(',', $uniqueObjectives);
+ 
+        $course->objective = $newObjectiveString;
         $course->save();
 
         return redirect()->back()->with('success', 'Course Objecttive Set successfully');
+    }
+
+    public function deleteObjective(Request $request, $id,$index)
+    { 
+
+        $course = Course::findOrFail($id);
+        $existingObjectives = explode(',', $course->objective);
+ 
+        if (isset($existingObjectives[$index])) { 
+            unset($existingObjectives[$index]);
+             
+            $existingObjectives = array_values($existingObjectives);
+ 
+            $course->objective = implode(',', $existingObjectives);
+            $course->save();
+
+            return response()->json([
+                'message' => 'DONE',
+                'remainingObjectives' => $existingObjectives
+            ]);
+
+        } else {
+            return response()->json([
+                'message' => 'Invalid index',
+            ], 422);
+        }
+
 
     }
 
