@@ -149,4 +149,14 @@ class HomeController extends Controller
             return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
         }
     }
+
+    public function export($payment_id){
+        $payment_id = Crypt::decrypt($payment_id);
+        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
+        $data = array(
+            'payment' => $payment
+        );
+        $pdf = Pdf::loadView('adminInvoice',$data);
+        return $pdf->download('invoice-'.$payment_id.'.pdf');
+    }
 }

@@ -172,7 +172,7 @@ class StudentHomeController extends Controller
         $instructor = User::where('subdomain', $subdomain)->first();
 
         if ( $instructor) {
-            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews')->orderBy('id','desc'); 
+            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews')->orderBy('id','desc');
         }else{
             $courses = Course::with('user','reviews')->where('status','published')->orderBy('id','desc');
         }
@@ -302,6 +302,17 @@ class StudentHomeController extends Controller
     public function overview($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+        
         $cartCourses = Cart::where('user_id', auth()->id())->get();
        
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
@@ -325,8 +336,7 @@ class StudentHomeController extends Controller
                 }
                 $related_course = $query->take(4)->get();
             }
-
-            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
+            return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
