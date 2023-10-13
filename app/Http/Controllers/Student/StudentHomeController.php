@@ -302,11 +302,24 @@ class StudentHomeController extends Controller
     public function overview($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+        
         $cartCourses = Cart::where('user_id', auth()->id())->get();
-
+       
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
+
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
         $liked = '';
         if ($course_like ) {
             $liked = 'active';
@@ -323,8 +336,7 @@ class StudentHomeController extends Controller
                 }
                 $related_course = $query->take(4)->get();
             }
-
-            return view('e-learning/course/students/overview', compact('course','course_reviews','related_course','cartCourses','liked'));
+            return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -333,6 +345,7 @@ class StudentHomeController extends Controller
       // my course details
         public function courseDetails($slug){
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
 
         $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count();
         $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray();
@@ -344,7 +357,7 @@ class StudentHomeController extends Controller
         }
 
         if ($course) {
-            return view('e-learning/course/students/myCourse',compact('course','totalReviews'));
+            return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

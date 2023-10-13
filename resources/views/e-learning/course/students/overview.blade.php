@@ -36,18 +36,18 @@
 
                         {{-- course lesson duration calculation --}}
                         @php
-                        $totalDuration = 0;
+                        $totalDurationMinutes = 0;
                         @endphp
                         @foreach($course->modules as $module)
                         @foreach($module->lessons as $lesson)
                         @php
-                        $totalDuration += $lesson->duration;
+                        $totalDurationMinutes += $lesson->duration;
                         @endphp
                         @endforeach
                         @endforeach
                         {{-- course lesson duration calculation --}}
 
-                        <h4>{{ $totalDuration }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
+                        <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
                             . {{ count($course_reviews) }} Reviews</h4>
 
                     </div>
@@ -215,8 +215,10 @@
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
-                        <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid">
-
+                        <!-- <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid"> -->
+                        @if ($promo_video_link != '')
+                            <iframe width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                        @endif
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 @if ($course->offer_price)
@@ -242,8 +244,13 @@
                         <form action="{{ route('cart.add', $course) }}" method="POST">
                             @csrf
                             @if ($cartCourses->pluck('course_id')->contains($course->id))
-                            <button type="button" class="btn add-cart-bttn bg-secondary text-white" disabled>
-                                Already Added to Cart</button>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn add-cart-bttn bg-secondary text-white border-0" disabled>
+                                    Already in cart</button>
+                                <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                            </div>  
                             @else
                             <div class="d-flex justify-content-between align-items-center">
                                 <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
@@ -260,39 +267,25 @@
                         <p>{{ $course->short_description }}</p>
                     </div>
                     <div class="course-details-txt">
-                        <h4>Course Details</h4>
-                        @if ($course->curriculum)
+                        <h4>Course Details</h4> 
+
+                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
+                            class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
+                        <p><img src="{{asset('latest/assets/images/icons/alerm.svg')}}" alt="users"
+                            class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
+
                         <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
-                                class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
-                        @endif
-                        @if ($course->platform)
-                        <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid">
-                            {{ $course->platform }}</p>
-                        @endif
+                                class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
                         @if ($course->language)
                         <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid">
                             {{ $course->language }}</p>
                         @endif
-                        @if ($course->duration)
-                        <p><img src="{{asset('latest/assets/images/icons/clock-2.svg')}}" alt="users" class="img-fluid">
-                            {{ $course->duration }} Minutes to Completed</p>
-                        @endif
-                        @if ($course->number_of_module)
-                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
-                                class="img-fluid"> {{ $course->number_of_module}} Modules</p>
-                        @endif
-                        @if ($course->number_of_lesson)
-                        <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
-                                class="img-fluid"> {{ $course->number_of_lesson}} Lessons</p>
-                        @endif
-                        @if ($course->number_of_attachment)
-                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid">
-                            {{ $course->number_of_attachment}} Attachemnt</p>
-                        @endif
-                        @if ($course->number_of_video)
-                        <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users" class="img-fluid">
-                            {{ $course->number_of_video}} Videos</p>
-                        @endif
+                        @if ($course->platform)
+                        <p><img src="{{asset('latest/assets/images/icons/platform.svg')}}" alt="platform" class="img-fluid">
+                            {{ $course->platform }}</p>
+                        @endif 
+                        <p><img src="{{asset('latest/assets/images/icons/loop.svg')}}" alt="users"
+                            class="img-fluid">  Full Lifetime Access</p>
                         @if ($course->hascertificate)
                         <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid">
                             Certificate of Completion</p>

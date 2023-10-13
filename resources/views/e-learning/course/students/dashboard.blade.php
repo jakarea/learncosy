@@ -59,8 +59,7 @@ Students Dashboard
             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="status-card-box">
                     <p>Watching Time</p>
-                    <div class="d-flex">
-                        {{-- <h5>{{ secondsToHms($totalTimeSpend)}}</h5> --}}
+                    <div class="d-flex"> 
                         <h5>{{ $totalHours }}h <b style="font-size: 1.25rem; font-weight:600">{{ $totalMinutes }}m</b></h5>
                         <span>
                             @if ($percentageChange > 0)
@@ -187,7 +186,7 @@ Students Dashboard
                         </div>
                         @endforeach
                         @else
-                            <p class="common-para">No Course Found!</p>
+                            @include('partials/no-data')
                         @endif
                     </div>
                 </div>
@@ -268,7 +267,7 @@ Students Dashboard
                         @endforeach
                     </table>
                     @else
-                        <p class="common-para">No Course Found!</p>
+                        @include('partials/no-data')
                     @endif
                 </div>
             </div>

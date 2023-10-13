@@ -131,6 +131,7 @@ Payment From Student
                                 @endif
                             </td>
                             <td>
+                                <a href="{{ route('instructor-export',encrypt($payment->payment_id)) }}" class="btn-view btn-export">Export</a>
                                 <a href="{{ url('instructor/payments', encrypt($payment->payment_id)) }}"
                                     class="btn-view">View</a>
                             </td>

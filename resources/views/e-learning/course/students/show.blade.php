@@ -76,7 +76,8 @@ $i = 0;
                     </div>
                 </div>
                 <div class="download-files-box">
-                    <h4>Download Files </h4>
+                    <h4>Download Files </h4> 
+
                     <div class="files">
                         <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
                                 title="120MB" class="img-fluid"></a>
@@ -88,7 +89,6 @@ $i = 0;
                         @php
                         $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
                         @endphp
-
 
                         @if ($progress > 90)
                         <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate
@@ -289,7 +289,6 @@ $i = 0;
                                     $review_avg = $review_sum / $total;
                                     }
                                     @endphp
-    
                                     <ul>
                                         <li><span>{{ $review_avg }}</span></li>
                                         @for ($i = 0; $i < $review_avg; $i++) <li><i class="fas fa-star"></i></li>

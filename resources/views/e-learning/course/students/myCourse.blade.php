@@ -39,18 +39,18 @@
 
                             {{-- course lesson duration calculation --}}
                             @php
-                            $totalDuration = 0;
+                            $totalDurationMinutes = 0;
                             @endphp
                             @foreach($course->modules as $module)
                             @foreach($module->lessons as $lesson)
                             @php
-                            $totalDuration += $lesson->duration;
+                            $totalDurationMinutes += $lesson->duration;
                             @endphp
                             @endforeach
                             @endforeach
                             {{-- course lesson duration calculation --}}
 
-                            <h4>{{ $totalDuration }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
                                 Course
                                 . {{ $totalReviews }} Reviews</h4>
 
@@ -120,44 +120,31 @@
                         <h4>Course Details</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                @if ($course->curriculum)
-                                    <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                            class="img-fluid"> Total {{ $course->curriculum }} curriculum</p>
-                                @endif
-                                @if ($course->platform)
-                                    <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->platform }}</p>
-                                @endif
-                                @if ($course->language)
-                                    <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->language }}</p>
-                                @endif
-                                @if ($course->duration)
-                                    <p><img src="{{ asset('latest/assets/images/icons/clock-2.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->duration }} Minutes to Completed</p>
-                                @endif
-                                @if ($course->number_of_module)
-                                    <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->number_of_module }} Modules</p>
-                                @endif
+                                <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
+                                    class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
+                                
+                                <p><img src="{{asset('latest/assets/images/icons/alerm.svg')}}" alt="users"
+                                        class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
+
+                                <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                            class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+
+                                @if ($course->hascertificate)
+                                <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid">
+                                    Certificate of Completion</p>
+                                @endif 
                             </div>
                             <div class="col-lg-6">
-                                @if ($course->number_of_lesson)
-                                    <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->number_of_lesson }} Lessons</p>
+                                @if ($course->language)
+                                <p><img src="{{asset('latest/assets/images/icons/english.svg')}}" alt="users" class="img-fluid">
+                                    {{ $course->language }}</p>
                                 @endif
-                                @if ($course->number_of_attachment)
-                                    <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->number_of_attachment }} Attachemnt</p>
+                                @if ($course->platform)
+                                <p><img src="{{asset('latest/assets/images/icons/platform.svg')}}" alt="platform" class="img-fluid">
+                                    {{ $course->platform }}</p>
                                 @endif
-                                @if ($course->number_of_video)
-                                    <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                            class="img-fluid"> {{ $course->number_of_video }} Videos</p>
-                                @endif
-                                @if ($course->hascertificate)
-                                    <p><img src="{{ asset('latest/assets/images/icons/trophy.svg') }}" alt="users"
-                                            class="img-fluid"> Certificate of Completion</p>
-                                @endif
+                                <p><img src="{{asset('latest/assets/images/icons/loop.svg')}}" alt="users"
+                                    class="img-fluid">  Full Lifetime Access</p>
                             </div>
                         </div>
                     </div>
@@ -221,8 +208,7 @@
                                             @endif
                                         </div>
                                     </li>
-                                @endforeach 
-                                {{-- @php print_r($course_activities) @endphp --}}
+                                @endforeach  
                             </ul>
 
                             @if (count($module->lessons) > 3)
