@@ -45,7 +45,7 @@
             </ul>
             @if (auth()->user() && auth()->user()->user_role == 'instructor')
                 <div class="d-flex">  
-                    <a style="color: {{modulesetting('secondary_color')}} href="{{url('/instructor/dashboard')}}">Dashboard</a> 
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/instructor/dashboard')}}">Dashboard</a> 
                 </div>
 			@elseif (auth()->user() && auth()->user()->user_role == 'student')
                 <div class="d-flex">  

@@ -154,14 +154,14 @@ class DashboardController extends Controller
                 ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
                 ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
                 ->get();
-           }
-          $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
-          $earningByDates = $this->getEarningByDates($enrolments);
-          $earningByMonth = $this->getEarningByMonth($enrolments);
-          $course_wise_payments = $this->getCourseWisePayments($enrolments);
+            }
+            $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
+            $earningByDates = $this->getEarningByDates($enrolments);
+            $earningByMonth = $this->getEarningByMonth($enrolments);
+            $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
-        //   $courses = Course::where('user_id', Auth::user()->id)->get();
-          foreach ($enrolments as $enrolment) {
+        //$courses = Course::where('user_id', Auth::user()->id)->get();
+        foreach ($enrolments as $enrolment) {
                 $students[$enrolment->user_id] = $enrolment->created_at;
             }
 
@@ -171,8 +171,8 @@ class DashboardController extends Controller
                 if ($duration === 'one_month') {
 
                     $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->startOfMonth();
-                    $currentMonthEndDate = $currentDate->endOfMonth();
+                    $currentMonthStartDate = $currentDate->copy()->subDays(0);
+                    $currentMonthEndDate = $currentDate->copy()->subDays(30);
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereYear('created_at', '=', now()->year)
@@ -188,10 +188,12 @@ class DashboardController extends Controller
                 } elseif ($duration === 'three_months') {
 
                     $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->startOfMonth();
-                    $currentMonthEndDate = $currentDate->endOfMonth();
-                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
-                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
+                    $currentMonthStartDate = $currentDate->copy()->subDays(0);
+                    $currentMonthEndDate = $currentDate->copy()->subDays(90);
+                   
+
+                    $threeMonthsAgoStartDate = $currentDate->copy()->subDays(90);
+                    $sixMonthsAgoStartDate = $currentDate->copy()->subDays(180);
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
@@ -233,7 +235,7 @@ class DashboardController extends Controller
                         ->whereBetween('created_at', [$firstDayOfPreviousYear, $lastDayOfPreviousYear])
                         ->count();
 
-                    $courses = Course::where('user_id', Auth::user()->id)->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])->get();
+                $courses = Course::where('user_id', Auth::user()->id)->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])->get();
 
                 }
 
@@ -302,8 +304,6 @@ class DashboardController extends Controller
                 }
             }
         } 
- 
-        // return $earningByDates;
 
         return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
 

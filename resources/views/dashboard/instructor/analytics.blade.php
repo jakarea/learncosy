@@ -453,6 +453,7 @@ chart.render();
 {{-- course progress chart start --}}
 <script>
     var datas = [{{ $activeCourses }}, {{ $draftCourses }}];
+
         var backgroundColor = ['#FFAB00', '#294CFF'];
         var ctx = document.getElementById('courseProgress').getContext('2d');
         var myDoughnutChart = new Chart(ctx, {
@@ -486,8 +487,16 @@ chart.render();
 
         // Calculate percentages
         var total = datas.reduce((a, b) => a + b, 0);
-        var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+        // var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+        var percentages = datas.map((value) => {
+            if (value === 0 || total === 0) {
+                return "0%";
+            } else {
+                return ((value / total) * 100).toFixed(0) + "%";
+            }
+        });
 
+        console.log({ percentages, total })
         // Generate and display the custom legend
         var legendHtml = "<ul>";
         for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
@@ -498,7 +507,6 @@ chart.render();
                 "</li>";
         }
         legendHtml += "</ul>";
-
         document.getElementById("legend").innerHTML = legendHtml;
 </script>
 {{-- course progress chart end --}}
