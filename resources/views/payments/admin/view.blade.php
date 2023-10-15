@@ -71,7 +71,6 @@
                         <a href="{{url('admin/profile/platform-fee')}}">Back</a>
                         <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}" class="mx-3"> Mail Invoice</a>
                         <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}" class="ms-0"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid">Download Invoice</a>
-                       
                     </div>
                 </div>
             </div>

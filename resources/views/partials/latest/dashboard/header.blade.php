@@ -36,8 +36,8 @@
                         <ul class="submenu-box">
                             <li><a href="{{ url('admin/courses') }}">All Courses</a></li>
                             <li><a href="{{ url('admin/bundle/courses') }}">All Bundle Courses</a></li>
-                            <li><a href="{{ url('admin/modules') }}">All Modules</a></li>
-                            <li><a href="{{ url('admin/lessons') }}">All Lessons</a></li>
+                            <!-- <li><a href="{{ url('admin/modules') }}">All Modules</a></li>
+                            <li><a href="{{ url('admin/lessons') }}">All Lessons</a></li> -->
                         </ul>
                     </li>
                     <li class="nav-item">

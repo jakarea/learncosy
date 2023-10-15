@@ -48,6 +48,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $url = env('LIVE_DOAMIN', 'localhost');
         $this->validateLogin($request);
 
         $user = User::where('email', $request->email)->first();
@@ -60,7 +61,7 @@ class LoginController extends Controller
                     return redirect()->route('admin.dashboard');
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
-                    if ($user->subdomain && !$request->is('//app.localhost')) {
+                    if ($user->subdomain && !$request->is('//app.',$url)) {
                         return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/instructor/dashboard');
                     } else {
                         // return redirect('/instructor/dashboard');
