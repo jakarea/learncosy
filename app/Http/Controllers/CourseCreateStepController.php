@@ -556,14 +556,14 @@ class CourseCreateStepController extends Controller
             'hascertificate' => 'required',
         ]);
 
-        $image_path = 'assets/images/courses/sample_certificates.jpg';
+        $image_path = 'uploads/courses/sample_certificates.jpg';
 
         if ($request->hasFile('sample_certificates')) {
             $file = $request->file('sample_certificates');
             $image = Image::make($file);
             $image->encode('jpg', 40); 
-            $image_path = 'assets/images/courses/sample_certificates_'.$course->slug . '.jpg';
-            $image->save(public_path('assets/images/courses/sample_certificates_') . $course->slug . '.jpg');
+            $image_path = 'uploads/courses/sample_certificates_'.$course->slug . '.jpg';
+            $image->save(public_path('uploads/courses/sample_certificates_') . $course->slug . '.jpg');
         }
 
         // Store other form data

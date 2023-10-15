@@ -514,7 +514,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view');
-            Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
+            Route::post('/delete/{bundle_id}', 'delete')->name('admin.delete.bundle.course');
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {
