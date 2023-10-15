@@ -94,7 +94,7 @@
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
-                            <a href="{{url('admin/bundle/courses/'.$bundleCourse->slug)}}">{{ Str::limit($bundleCourse->title, $limit =
+                            <a href="{{url('admin/bundle/courses/'.$bundleCourse->slug.'/view')}}">{{ Str::limit($bundleCourse->title, $limit =
                                 45, $end = '..') }}</a>
                             <p>{{ Str::limit($bundleCourse->short_description, $limit = 36, $end = '...') }}</p>
                             <ul>

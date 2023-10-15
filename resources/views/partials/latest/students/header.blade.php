@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{url('/')}}">
+        <a class="navbar-brand" href="{{url('students/dashboard')}}">
             @if ( modulesetting('logo') )
                     <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else

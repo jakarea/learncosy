@@ -410,6 +410,7 @@ class CourseCreateStepController extends Controller
         ]);  
 
         $course = Course::findOrFail($id); 
+        
         $existingObjectives = explode(',', $course->objective); 
         $newObjectives = $request->input('objective');
  
@@ -422,7 +423,7 @@ class CourseCreateStepController extends Controller
         $course->objective = $newObjectiveString;
         $course->save();
 
-        return redirect()->back()->with('success', 'Course Objecttive Set successfully');
+        return redirect()->back()->with('success', 'Course Objecttive Set Successfully');
     }
 
     public function deleteObjective(Request $request, $id,$index)
@@ -449,7 +450,6 @@ class CourseCreateStepController extends Controller
                 'message' => 'Invalid index',
             ], 422);
         }
-
 
     }
 
