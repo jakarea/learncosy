@@ -1,4 +1,4 @@
-@extends('layouts.latest.instructor')
+@extends('layouts.latest.admin')
 @section('title') Payment From Student @endsection
 
 {{-- page style @S --}}
@@ -76,7 +76,7 @@
                     </table>
                     <div class="download-inv-box">
                         <a href="{{url('admin/profile/platform-fee')}}">Back</a>
-                        <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
+                        <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}" style="margin-left:1.3rem "><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
                         <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}"> Mail Invoice</a>
                     </div>
                 </div>

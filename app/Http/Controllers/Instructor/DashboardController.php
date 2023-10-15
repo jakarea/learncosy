@@ -136,8 +136,8 @@ class DashboardController extends Controller
           $earningByMonth = $this->getEarningByMonth($enrolments);
           $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
-        //   $courses = Course::where('user_id', Auth::user()->id)->get();
-          foreach ($enrolments as $enrolment) {
+        //$courses = Course::where('user_id', Auth::user()->id)->get();
+        foreach ($enrolments as $enrolment) {
                 $students[$enrolment->user_id] = $enrolment->created_at;
             }
 
@@ -208,7 +208,7 @@ class DashboardController extends Controller
                         ->whereBetween('created_at', [$firstDayOfPreviousYear, $lastDayOfPreviousYear])
                         ->count();
 
-                    $courses = Course::where('user_id', Auth::user()->id)->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])->get();
+                $courses = Course::where('user_id', Auth::user()->id)->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])->get();
 
                 }
 
