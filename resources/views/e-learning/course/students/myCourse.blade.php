@@ -17,8 +17,7 @@
 
 @section('content')
     <main class="course-overview-page">
-        <div class="overview-banner-box"
-            style="background-image: url({{ asset('assets/images/courseds/' . $course->banner) }});">
+        <div class="overview-banner-box">
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-8">

@@ -12,14 +12,7 @@
 @section('content')
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <div class="payment-details-title">
@@ -76,8 +69,8 @@
                     </table>
                     <div class="download-inv-box">
                         <a href="{{url('admin/profile/platform-fee')}}">Back</a>
-                        <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}" style="margin-left:1.3rem "><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
-                        <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}"> Mail Invoice</a>
+                        <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}" class="mx-3"> Mail Invoice</a>
+                        <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}" class="ms-0"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid">Download Invoice</a>
                     </div>
                 </div>
             </div>

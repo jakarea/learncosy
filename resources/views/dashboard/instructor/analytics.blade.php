@@ -43,7 +43,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>Students</h5>
-                            <h4> {{ count($students) }} </h4>
+                            <h4> {{ $currentMonthEnrolledStudentsCount }} </h4>
                         </div>
                     </div>
                     <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{
@@ -199,7 +199,7 @@
 {{-- statudents status start --}}
 <script>
     const data = @json($activeInActiveStudents);
-    
+
         var options = {
             series: [
                 {
@@ -250,7 +250,7 @@
                 show: false // Hide the top toolbar
             }
         };
-    
+
         var chart = new ApexCharts(document.querySelector("#studentsGraph"), options);
         chart.render();
 </script>
@@ -319,7 +319,7 @@ var options = {
         zoom: {
             autoScaleYaxis: true
         }
-    }, 
+    },
     dataLabels: {
         enabled: false
     },
@@ -391,7 +391,7 @@ chart.render();
             },
             xaxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            }, 
+            },
             fill: {
                 opacity: 1
             },

@@ -46,7 +46,7 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3">
                 <div class="course-single-item"> 
                     <div class="course-thumb-box">
-                        <img src="{{asset('assets/images/courses/'.$course->thumbnail)}}" alt="thumb" class="img-fluid"> 
+                        <img src="{{asset($course->thumbnail)}}" alt="thumb" class="img-fluid"> 
                     </div> 
                     <div class="course-txt-box">
                         <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>

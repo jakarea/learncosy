@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Bundle Course Select
+Bundle Course Update Select
 @endsection
 
 {{-- style section @S --}}
@@ -11,6 +11,14 @@ Bundle Course Select
 {{-- style section @E --}}
 
 @section('content')
+{{-- get seleted course from session --}}
+@php 
+ $bundleSelected = [];
+ if (session()->has('bundleSelected')) {
+    $bundleSelected = session('bundleSelected');
+ }
+@endphp
+{{-- get seleted course from session --}}
 <main class="courses-lists-pages">
     <div class="container-fluid"> 
         <div class="row">
@@ -50,15 +58,15 @@ Bundle Course Select
         <div class="row">
             <div class="col-lg-7">
                 <div class="select-bundle-title mb-2">
-                    <h1>Select courses to create a bundle</h1>
+                    <h1>Select courses to update this bundle</h1>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="select-bundle-title mb-2 text-end"> 
-                        <a href="{{ url('instructor/bundle/courses/create') }}" class="btn d-inline">
+                        <a href="{{ url('instructor/bundle/courses/'.$bundleCourse->slug.'/edit-final') }}" class="btn d-inline">
                             <span class="counter">{{ count($bundleSelected) }}</span>
                             <img src="{{ asset('latest/assets/images/icons/cart.svg') }}" alt="Course Thumbanil"
-                                class="img-fluid"> <b class="counter2" style="font-weight: 400">{{ count($bundleSelected) }} </b> Courses Selected
+                                class="img-fluid"><b class="counter2" style="font-weight: 400">{{ count($bundleSelected) }} </b> Courses Selected
                         </a> 
                 </div>
             </div>
@@ -107,7 +115,7 @@ Bundle Course Select
                         @endif
 
                         <div class="bundle-create-bttn">
-                            @if ($bundleSelected->pluck('course_id')->contains($course->id))
+                            @if ($bundleSelected->pluck('id')->contains($course->id))
                             <button type="button" class="btn border-0" disabled style="background: #ccc!important; color: #101010"><i class="fas fa-check"></i> Added</button>
                             @else 
                             <button type="button" class="btn select-bundle" data-course-id="{{ $course->id }}" ><i
@@ -195,7 +203,7 @@ Bundle Course Select
                 let courseId = item.getAttribute('data-course-id');  
                  
                     if (courseId) {
-                        fetch(`${baseUrl}/instructor/bundle/courses/select/${courseId}`, {
+                        fetch(`${baseUrl}/instructor/bundle/courses/${courseId}/select-update`, {
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -226,8 +234,6 @@ Bundle Course Select
                             });
                     }
                 });
-
-
             });
         });
          

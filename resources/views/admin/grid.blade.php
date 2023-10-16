@@ -1,6 +1,6 @@
 @extends('layouts.latest.admin')
 @section('title')
-    All Admin List
+    Admin List Page
 @endsection
 
 {{-- page style @S --}}

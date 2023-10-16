@@ -72,9 +72,9 @@
                                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">View</a>
+                                                <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">View</a>
                                                 </li>
-                                                <li><a class="dropdown-item" href="#">Edit</a>
+                                                <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
                                                 </li>
                                                 <li>
                                                     <form method="POST" class="d-inline" action="{{ route('delete.bundle.course', $course->id) }}">
@@ -89,24 +89,48 @@
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a
-                                        href="{{ url('instructor/bundle/courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
+                                    <a href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
+                                
+                                    @php
+                                    $courseIds = explode(',', $course->selected_course); 
+                                    $bundleSelected = App\Models\Course::whereIn('id', $courseIds)
+                                        ->where('user_id', Auth::user()->id)
+                                        ->with('reviews')
+                                        ->get();
+                                
+                                    $review_sum = 0;
+                                    $total = 0;
+                                    @endphp
+                                
+                                    @foreach ($bundleSelected as $selectedCourse)
+                                        @foreach ($selectedCourse->reviews as $review)
+                                            @php
+                                            $total++;
+                                            $review_sum += $review->star;
+                                            @endphp
+                                        @endforeach
+                                    @endforeach
+                                
+                                    @php
+                                    $review_avg = ($total > 0) ? $review_sum / $total : 0;
+                                    @endphp
+                                
                                     <ul>
-                                        <li><span>4.0</span></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><i class="fas fa-star"></i></li>
-                                        <li><span>(145)</span></li>
+                                        <li><span>{{ $review_avg }}</span></li>
+                                        @for ($i = 0; $i < $review_avg; $i++)
+                                            <li><i class="fas fa-star"></i></li>
+                                        @endfor
+                                        <li><span>({{ $total }})</span></li>
                                     </ul>
+                                
                                     @if ($course->sales_price)
                                         <h5>€ {{ $course->sales_price }} <span>€ {{ $course->regular_price }}</span></h5>
                                     @else
-                                        <h5> {{ $course->regular_price > 0 ? '€ ' . $course->regular_price : 'Free' }} </h5>
+                                        <h5>{{ $course->regular_price > 0 ? '€ ' . $course->regular_price : 'Free' }}</h5>
                                     @endif
                                 </div>
+                                
                             </div>
                         </div>
                         {{-- course single box end --}}
@@ -128,7 +152,6 @@
             </div>
         </div>
     </main>
-
 @endsection
 
 

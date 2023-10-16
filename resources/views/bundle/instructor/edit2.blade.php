@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Bundle Course create
+Bundle Course Update
 @endsection
 
 {{-- style section @S --}}
@@ -32,12 +32,23 @@ Bundle Course create
 {{-- style section @E --}}
 
 @section('content')
+
+@php 
+ $bundleSelected = [];
+ if (session()->has('bundleSelected')) {
+    $bundleSelected = session('bundleSelected');
+
+    $selectedCourses = count($bundleSelected);
+
+ }
+@endphp
+
 <main class="courses-lists-pages">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-7">
                 <div class="select-bundle-title mt-0">
-                    <h1>Bundle course details</h1>
+                    <h1>Bundle course update</h1>
                 </div>
             </div>
             <div class="col-lg-5">
@@ -60,7 +71,7 @@ Bundle Course create
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                     <div class="remove-bundle">
                                         <button type="button" class="btn btn-remove"
-                                            data-course-id="{{ $course->course_id }}">
+                                            data-course-id="{{ $course->id }}">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </div>
@@ -105,7 +116,7 @@ Bundle Course create
                     </div>
                 </div>
                 <div class="bundle-create-form-wrap">
-                    <form action="{{ route('create.bundle.course') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('create.update.bundle.course',$bundleCourse->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
@@ -121,31 +132,38 @@ Bundle Course create
                                         <label for="title">Bundle Title</label>
                                         <input type="text" placeholder="Enter title" name="title"
                                             class="form-control @error('title') is-invalid @enderror"
-                                            value="{{ old('title') }}" id="title">
+                                            value="{{ $bundleCourse->title }}" id="title">
                                         <span class="invalid-feedback">@error('title'){{ $message }} @enderror</span>
                                     </div>
 
                                     @php
-                                    $bundledCourseIds = $bundleSelected->pluck('course_id')->toArray();
-                                    $serializedCourseIds = implode(',', $bundledCourseIds);
+                                    if (is_array($bundleSelected)) {
+                                        $bundledCourseIds = array_map(function($item) {
+                                            return $item['id'];
+                                        }, $bundleSelected);
+
+                                        $serializedCourseIds = implode(',', $bundledCourseIds);
+
+                                    } else {
+                                        $bundledCourseIds = $bundleSelected->pluck('id')->toArray();
+                                        $serializedCourseIds = implode(',', $bundledCourseIds);
+                                    } 
                                     @endphp
 
-                                    <input type="hidden" value="{{ $serializedCourseIds }}" name="selected_course"
-                                        id="selectedCourseId">
+                                    <input type="hidden" value="{{ $serializedCourseIds }}" name="selected_course" id="selectedCourseId">
 
                                     <div class="form-group form-error">
                                         <label for="sub_title">Bundle Subtitle</label>
                                         <input type="text" placeholder="Enter subtitle" name="sub_title"
                                             class="form-control @error('sub_title') is-invalid @enderror"
-                                            value="{{ old('sub_title') }}" id="sub_title">
+                                            value="{{ $bundleCourse->sub_title }}" id="sub_title">
                                         <span class="invalid-feedback">@error('sub_title'){{ $message }}
                                             @enderror</span>
                                     </div>
                                     <div class="form-group form-error">
                                         <label for="description">Bundle Description</label>
                                         <textarea placeholder="Enter description" name="description"
-                                            class="form-control @error('description') is-invalid @enderror"
-                                            value="{{ old('description') }}" id="description"></textarea>
+                                            class="form-control @error('description') is-invalid @enderror" id="description">{{ $bundleCourse->description }}</textarea>
                                         <span class="invalid-feedback">@error('description'){{ $message }}
                                             @enderror</span>
                                     </div>
@@ -160,16 +178,23 @@ Bundle Course create
                                     <div class="form-group">
                                         <label for="thumbnail">Thumbnail Preview</label>
                                         <label for="thumbnail" class="image-area">
-                                            <img src="" alt="No Image Uploaded" class="img-fluid rounded" id="thumbnailImage">
+                                            <img src="" alt="" class="img-fluid rounded" id="thumbnailImage">
                                             <button class="btn" type="button" id="close-button"><i class="fas fa-close"></i></button>
                                         </label>
+
+                                        @if (isset($bundleCourse->thumbnail))
+                                            <label for="thumbnail" class="logo-upload-box">
+                                                <img src="{{ asset($bundleCourse->thumbnail) }}" alt="Uploaded" class="img-fluid rounded">
+                                            </label>
+                                        @endif
+
                                     </div>
                                     <div class="input-group">
                                         <label for="regular_price">Regular Price</label>
                                         <span class="input-group-text" id="regular_price">€</span>
                                         <input type="text" placeholder="0" name="regular_price"
                                             class="form-control @error('regular_price') is-invalid @enderror"
-                                            value="{{ old('regular_price') }}" id="regular_price"
+                                            value="{{ $bundleCourse->regular_price }}" id="regular_price"
                                             aria-label="regular_price" aria-describedby="regular_price">
                                     </div>
                                     <div class="input-group">
@@ -177,7 +202,7 @@ Bundle Course create
                                         <span class="input-group-text" id="sales_price">€</span>
                                         <input type="text" placeholder="0" name="sales_price"
                                             class="form-control @error('sales_price') is-invalid @enderror"
-                                            value="{{ old('sales_price') }}" id="sales_price" aria-label="sales_price"
+                                            value="{{ $bundleCourse->sales_price }}" id="sales_price" aria-label="sales_price"
                                             aria-describedby="sales_price">
                                     </div>
                                     <div class="form-submit-bttns">
@@ -249,7 +274,7 @@ Bundle Course create
                 let courseId = item.getAttribute('data-course-id');  
                  
                     if (courseId) {
-                        fetch(`${baseUrl}/instructor/bundle/courses/remove/${courseId}`, {
+                        fetch(`${baseUrl}/instructor/bundle/courses/remove-new/${courseId}`, {
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -266,7 +291,10 @@ Bundle Course create
                                      
                                     // redirecet to select page
                                     if (countDisplay.textContent < 1) { 
-                                        window.location.reload();
+                                        var slug = @json($bundleCourse->slug);
+                                        var routeUrl = '{{ route('select.again.bundle.course', ['slug' => ':slug']) }}';
+                                        routeUrl = routeUrl.replace(':slug', slug);
+                                        window.location.href = routeUrl;
                                     }
 
                                     // item display hide

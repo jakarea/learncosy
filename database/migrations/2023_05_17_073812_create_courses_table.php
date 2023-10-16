@@ -22,7 +22,7 @@ class CreateCoursesTable extends Migration
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('offer_price', 10, 2)->nullable();
             $table->text('categories')->nullable();
-            $table->string('thumbnail', 191)->default('public/assets/images/courses/thumbnail.png');
+            $table->string('thumbnail', 191)->default('latest/assets/images/courses/thumbnail.png');
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->text('meta_keyword')->nullable();
@@ -34,8 +34,7 @@ class CreateCoursesTable extends Migration
             $table->string('language', 30)->nullable();
             $table->string('platform', 50)->nullable();
             $table->longText('objective')->nullable();
-            $table->string('curriculum', 191)->nullable();
-            $table->longText('objective_details')->nullable();
+            $table->string('curriculum', 191)->nullable(); 
             $table->timestamps();
         });
     }
