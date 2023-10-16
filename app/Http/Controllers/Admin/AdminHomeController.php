@@ -134,7 +134,7 @@ class AdminHomeController extends Controller
 
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates();
-        $earningByMonth = $this->getEarningByMonth();
+       $earningByMonth = $this->getEarningByMonth();
 
 
         if ($request->has('duration')) {
@@ -330,8 +330,10 @@ class AdminHomeController extends Controller
 
     private function getEarningByMonth()
     {
-        $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price','subscription_packages.regular_price']);
+        // $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+        // ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price','subscription_packages.regular_price']);
+
+        $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')->get();
 
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
@@ -340,7 +342,7 @@ class AdminHomeController extends Controller
         foreach ($data as $item) { 
             $createdAt = Carbon::parse($item['created_at']);
             $month = intval($createdAt->format('m')); 
-            $monthlySums[$month - 1] += $item['sales_price'] ? $item['sales_price'] : $item['regular_price'];
+            $monthlySums[$month - 1] += $item['amount'];
         }
 
         return $monthlySums;

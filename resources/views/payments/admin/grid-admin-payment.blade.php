@@ -113,32 +113,31 @@
             {{-- filter form --}}
                     <table>
                         <tr>
-                            <th>No</th>
+                            <th width="3%">No</th>
                             <th class="d-flex justify-content-between">
                                 <span>Course Name</span>
                                 <div class="filter-sort-box">
                                     <div class="dropdown">
                                         <button class="btn p-0" type="button" data-bs-toggle="dropdown"
                                             aria-expanded="false" id="dropdownBttn">
-                                            <img src="{{ asset('latest/assets/images/icons/sort-icon.svg') }}"
-                                                alt="a" class="img-fluid">
+                                            <img src="{{ asset('latest/assets/images/icons/sort-icon.svg') }}" alt="a"
+                                                class="img-fluid">
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="asc">In order A-Z</a></li>
-                                            <li><a class="dropdown-item filterItem" href="#"
-                                                    data-value="desc">In order Z-A</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="asc">In order
+                                                    A-Z</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#" data-value="desc">In order
+                                                    Z-A</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </th>
-                            <th>Student Name</th>
-                            <th>Payment Date</th>
-                            <th>Payment Method</th>
+                            <th width="12%">Student Name</th>
+                            <th width="12%">Payment Date</th>
+                            <th width="12%">Payment Type</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th width="14%" class="text-start">Action</th>
-
+                            <th width="15%">Action</th>
                         </tr>
                         @foreach ($enrolments as $key => $payment)
                         <tr>
@@ -146,7 +145,9 @@
                                 {{ $key + 1 }}
                             </td>
                             <td>
-                                <h5>{{(strlen($payment->course->title) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
+                                @if ($payment->course)
+                                    <h5>{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
+                                @endif
                             </td>
                             <td>
                                 <p>{{$payment->user->name}}</p>

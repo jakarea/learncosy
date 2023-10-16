@@ -68,8 +68,8 @@
                         </tr>
                     </table>
                     <div class="download-inv-box">
-                        <a href="{{url('admin/profile/platform-fee')}}">Back</a>
-                        <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}" class="mx-3"> Mail Invoice</a>
+                        <a href="{{url('admin/profile/platform-fee')}}">Back</a> 
+                        <a href="{{ route('mail-invoice',encrypt($payment->payment_id)) }}" class="mx-3 d-inline-flex align-items-center"><img src="{{asset('latest/assets/images/icons/email.svg')}}" alt="a" class="img-fluid me-2"> Mail Invoice</a>
                         <a href="{{ route('pdf-generate',encrypt($payment->payment_id)) }}" class="ms-0"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid">Download Invoice</a>
                     </div>
                 </div>
@@ -88,9 +88,27 @@
                         <ul>
                             <li><img src="{{asset('latest/assets/images/icons/p-1.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->email }}</li>
                             <li><img src="{{asset('latest/assets/images/icons/p-2.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->phone }}</li>
+
+                            @php
+                            $social_links = explode(",", $payment->user->social_links);
+                            use Illuminate\Support\Str;
+                            @endphp 
+
+                            @foreach ($social_links as $social_link)
+                            @php
+                            $url = $social_link;
+                            $host = parse_url($url, PHP_URL_HOST);
+                            $domain = Str::after($host, 'www.');
+                            $domain = Str::before($domain, '.');
+                            @endphp
+
                             <li>
-                                <a href="{{ $payment->user->social_links }}" target="_blank"><img src="{{asset('latest/assets/images/icons/p-3.svg')}}" alt="a" class="img-fluid"> {{ $payment->user->social_links }}</a>
+                                @if ($domain == 'instagram') 
+                                <a href="{{ $social_link ? $social_link : '#' }}" target="_blank" style="word-break: break-all">
+                                    <img src="{{asset('latest/assets/images/icons/p-3.svg')}}" alt="a" class="img-fluid">{{ $social_link ? $social_link : '' }}</a>
+                                @endif
                             </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
