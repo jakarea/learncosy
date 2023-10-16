@@ -31,53 +31,7 @@ class ModuleManagementController extends Controller
 
 
         return view('e-learning/module/admin/grid',compact('modules')); 
-    }
-
-     // data table getData
-     public function modulesDataTable()
-     { 
-             $module = Module::select('id','title','slug','number_of_lesson','duration','number_of_attachment','status')->get();
-           
-             return Datatables::of($module)
-                 ->addColumn('action', function($module){ 
-                      
-                     $actions = '<div class="action-dropdown">
-                         <div class="dropdown">
-                             <a class="btn btn-drp" href="#" role="button"
-                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                 <i class="fa-solid fa-ellipsis"></i>
-                             </a>
-                             <div class="dropdown-menu">
-                                 <div class="bttns-wrap"> 
-                                     <a class="dropdown-item" href="/admin/modules/'.$module->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                     <form method="post" class="d-inline btn btn-danger" action="/admin/modules/'.$module->slug.'/destroy">  
-                                     '.csrf_field().'
-                                    '.method_field("DELETE").'
-                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                     </form>    
-                                 </div>
-                             </div> 
-                         </div>
-                     </div>';
- 
-                     return $actions;
- 
-                 })
-             ->editColumn('status', function ($module) {
-                 if($module->status == 'published'){
-                     return '<label class="badge bg-success">'.__('Published').'</label>';
-                 }
-                 if($module->status == 'draft'){
-                     return '<label class="badge bg-info">'.__('Draft').'</label>';
-                 }
-                 if($module->status == 'pending'){
-                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
-                 } 
-              })
-             ->addIndexColumn()
-             ->rawColumns(['action','status'])
-             ->make(true);
-     }
+    } 
 
      // module create
     public function create()

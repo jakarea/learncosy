@@ -61,37 +61,25 @@
     </div>
     {{-- dark mode button end --}}
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
   
-      
-    <script>
-        // darkMode.js
+      {{-- dark mode js --}}
+    <script> 
         const modeBttn = document.getElementById("darkModeBttn");
-        const htmlBody = document.querySelector("body");
-
-        // Function to toggle between dark and light mode
+        const htmlBody = document.querySelector("body"); 
         function toggleMode() {
-            htmlBody.classList.toggle('dark-mode');
-
-            // Store user preference in local storage
+            htmlBody.classList.toggle('dark-mode'); 
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
             localStorage.setItem('dark-mode', mode);
-        }
-
-        // Check the initial state from local storage
+        } 
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
             htmlBody.classList.add('dark-mode');
-        }
-
-        // Attach event listener to the checkbox
+        } 
         modeBttn.addEventListener('change', toggleMode);
-
-    
     </script>
 
     @yield('script')
 </body>
-
 </html>

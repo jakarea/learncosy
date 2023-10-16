@@ -1,4 +1,4 @@
-@extends('layouts/guest')
+@extends('partials/guest/guest')
 @section('title')
     Guest Home - Page
 @endsection
@@ -76,7 +76,7 @@
                             <img src="{{ asset('assets/images/setting/' . modulesetting('image')) }}" alt="home-page-hero"
                                 class="img-fluid">
                         @else
-                            <img src="{{ asset('assets/images/home-page-hero.png') }}" alt="home-page-hero"
+                            <img src="{{ asset('latest/assets/images/login-3-image.png') }}" alt="home-page-hero"
                                 class="img-fluid">
                         @endif
                     </div>
@@ -362,11 +362,7 @@
             </div>
         </div>
     </section>
-    {{-- review section @e --}}
-
-    {{-- get start @s --}}
-    @include('partials/guest/get-start')
-    {{-- get start @e --}}
+    {{-- review section @e --}} 
 
     {{-- footer @s --}}
     @include('partials/guest/footer')

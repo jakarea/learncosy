@@ -32,12 +32,10 @@
                             href="{{ route('admin.subscription') }}">Memberships</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">E-Learning <i class="fas fa-angle-down"></i></a>
+                        <a class="{{ Request::is('admin/courses*') || Request::is('admin/bundle/courses*') ? ' active' : '' }} nav-link" href="#">E-Learning <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
                             <li><a href="{{ url('admin/courses') }}">All Courses</a></li>
                             <li><a href="{{ url('admin/bundle/courses') }}">All Bundle Courses</a></li>
-                            <!-- <li><a href="{{ url('admin/modules') }}">All Modules</a></li>
-                            <li><a href="{{ url('admin/lessons') }}">All Lessons</a></li> -->
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -54,7 +52,7 @@
                 <a href="#" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/notification.svg') }}" alt="Notification icon"
                         class="img-fluid">
-                    <span>5</span>
+                    <span>0</span>
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">

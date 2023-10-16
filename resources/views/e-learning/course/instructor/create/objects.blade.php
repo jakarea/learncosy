@@ -65,47 +65,40 @@ Course Create - Step 3
                     <div class="content-settings-form-wrap">
                         <h4>What You'll Learn</h4>
 
-                        <div class="object-list-wrap"> 
+                        <div class="object-list-wrap">
                             @if (!empty($course->objective))
-                            @foreach (explode(', ', $course->objective) as $objective)
+                            @foreach (explode(',', $course->objective) as $index => $objective)
                             <div class="item">
                                 <i class="fas fa-check"></i>
-                                <input type="text" value="{{ $objective }}" class="form-control" name="objective[]">
+                                <input type="text" value="{{ $objective }}" class="form-control" disabled>
                                 <div class="actions">
-                                    <a href="#" class="me-2 edit">
-                                        <img src="{{asset('latest/assets/images/icons/pen-m.svg')}}" alt="Edit"
+                                    <a href="#" class="me-2 edit-item" data-index="{{ $index }}">
+                                        <img src="{{ asset('latest/assets/images/icons/pen-m.svg') }}" alt="Edit"
                                             class="img-fluid">
                                     </a>
-                                    <a href="#" class="delete-item">
-                                        <img src="{{asset('latest/assets/images/icons/minus-m.svg')}}" alt="Add"
+                                    <a href="#" class="delete-item" data-index="{{ $index }}">
+                                        <img src="{{ asset('latest/assets/images/icons/minus-m.svg') }}" alt="Delete"
                                             class="img-fluid">
                                     </a>
                                 </div>
                             </div>
-                            @endforeach 
-                            @else 
-                            <div class="item">
-                                <i class="fas fa-check"></i>
-                                <input type="text" value="{{ old('objective') }}" class="form-control" name="objective[]" placeholder="Enter object name here">
-                                 
-                            </div>
+                            @endforeach
                             @endif
-                            <div id="container-for-items">
-                                {{-- Input Filed from js will append here --}}
-                            </div>
-                        </div> 
+
+                        </div>
                         <div class="form-group">
-                            <h6>Object Details</h6>
-                            <textarea class="form-control" name="objective_details"
-                                id="description">{{ $course->objective_details ? $course->objective_details :  old('objective_details') }}</textarea>
+                            <h6>Object Title</h6>
+                            <textarea class="form-control" name="objective[]" placeholder="Enter objective"
+                                id="objective">{{ old('objective') }}</textarea>
                         </div>
                         <div class="submit-bttns-box">
                             <button class="btn btn-cancel" type="reset">Cancel</button>
                             <button class="btn btn-submit" type="submit">Save</button>
-                        </div> 
-                        <div class="add-object">
-                            <button class="btn btn-add" type="button" id="add-item-button"><i class="fas fa-plus"></i> Add Object</button>
-                        </div>  
+                        </div>
+                        {{-- <div class="add-object">
+                            <button class="btn btn-add" type="button" id="add-item-button"><i class="fas fa-plus"></i>
+                                Add Object</button>
+                        </div> --}}
                     </div>
 
                     {{-- step next bttns --}}
@@ -121,51 +114,49 @@ Course Create - Step 3
 @endsection
 {{-- page content @E --}}
 
+{{-- script js --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{asset('assets/js/tinymce.js')}}" type="text/javascript"></script>
-
 <script> 
-// append new input filed
-   document.getElementById('add-item-button').addEventListener('click', function() {
-    var newItem = document.createElement('div');
-    newItem.classList.add('item'); 
-    newItem.innerHTML = `
-        <i class="fas fa-check"></i>
-        <input type="text" value="" class="form-control" name="objective[]" placeholder="Enter object name here">
-        <div class="actions"> 
-            <a href="#" class="close-item ms-2">
-                <img src="{{asset('latest/assets/images/icons/minus-m.svg')}}" alt="Remove" class="img-fluid">
-            </a>
-        </div>
-    `; 
-    document.getElementById('container-for-items').appendChild(newItem); 
-    newItem.querySelector('.close-item').addEventListener('click', function(e) {
-        e.preventDefault();
-        newItem.remove();
-    });
-});
 
-// on click delete items
-let itemsd = document.querySelectorAll('.delete-item');
-itemsd.forEach(itemd => {
-    itemd.addEventListener('click', (e) => {  
-        e.preventDefault();
-        itemd.parentNode.parentNode.remove();
-    });
-});
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentURL = window.location.href;
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
+        const deleteItem = document.querySelectorAll('.delete-item');
+ 
+        deleteItem.forEach(item => {
+            item.addEventListener('click', function() {
 
-// add active class on click
-let itemsz = document.querySelectorAll('.edit');
-itemsz.forEach(itemz => {
-    itemz.addEventListener('click', (e) => {  
-        e.preventDefault();
-        itemsz.forEach(i => i.parentNode.parentNode.classList.remove('active')); 
-        itemz.parentNode.parentNode.classList.add('active');
-    });
-});
+                item.parentNode.parentNode.style.display = 'none'; 
+                let courseId = @json($course->id);  
+                let dataIndex = item.getAttribute('data-index');  
+                 
+                    if (courseId) {
+                        fetch(`${baseUrl}/instructor/courses/create/${courseId}/delete-objects/${dataIndex}`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message === 'DONE') {
+                                    item.parentNode.parentNode.style.display = 'none'; 
+
+                                } else {
+                                    item.parentNode.parentNode.style.display = 'block'; 
+                                }
+                            })
+                            .catch(error => {
+                                item.parentNode.parentNode.style.display = 'block'; 
+                            });
+                    }
+                });
+
+
+            });
+        });
+         
 </script>
-
 @endsection
+{{-- script js --}}

@@ -1,7 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title')
-Home Page
-@endsection
+@section('title','Admin Dashboard')
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
