@@ -14,10 +14,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        $url = env('LIVE_DOAMIN', 'localhost');
+        $domain = env('APP_DOMAIN', 'learncosy.com');
         if (!$request->expectsJson()) {
             $host = $request->getHost();
-            if (strpos($host, 'app.'.$url) !== false) {
+            if (strpos($host, 'app.'.$domain) !== false) {
                 return route('login');
             } else {
                 return route('tlogin');
