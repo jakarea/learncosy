@@ -266,12 +266,9 @@ class AdminHomeController extends Controller
             }
         }
         
-        $courses = $courses->get();   
-        
-        // static monthly earning just for show the graph - need to remove later (start)
-        $earningByMonth = [2,4,6,2,1,9,7,5,5,3];
-        // static monthly earning just for show the graph - need to remove later (end)
+        $courses = $courses->get();    
 
+         
         return view(
             'e-learning/course/admin/dashboard',
             compact(
@@ -334,20 +331,16 @@ class AdminHomeController extends Controller
     private function getEarningByMonth()
     {
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price']);
+        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price','subscription_packages.regular_price']);
 
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
         // Iterate through the data array
-        foreach ($data as $item) {
-            // print_r($item);
-            // Extract the month from the created_at value
+        foreach ($data as $item) { 
             $createdAt = Carbon::parse($item['created_at']);
-            $month = intval($createdAt->format('m'));
-
-            // Add the amount to the corresponding month's sum
-            $monthlySums[$month - 1] += $item['amount'];
+            $month = intval($createdAt->format('m')); 
+            $monthlySums[$month - 1] += $item['sales_price'] ? $item['sales_price'] : $item['regular_price'];
         }
 
         return $monthlySums;
@@ -439,7 +432,6 @@ class AdminHomeController extends Controller
         return $earningsByDate;
 
     }
-
 
     private function getEarningParcentageViaSubscription($duration)
     {

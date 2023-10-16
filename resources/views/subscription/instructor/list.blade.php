@@ -71,8 +71,7 @@
                                             {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
                                         @endif 
 
-                                        <span>/{{ $package->type[0]
-                                            }}</span>
+                                        <span>/{{ $package->type[0] }}</span>
                                     </h3>
                                     <h6>Billed {{ $package->type }}</h6>
                                     
@@ -89,7 +88,7 @@
                             </div>
                             <div class="bttn">
                                 @if ($activePackageId == $package->id)
-                                <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                <a href="{{ route('instructor.subscription.status', $package->id) }}"
                                     class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                 @else
                                 <a href="{{ route('instructor.subscription.create', $package->id) }}"
@@ -152,7 +151,7 @@
                             </div>
                             <div class="bttn">
                                 @if ($activePackageId == $package->id)
-                                <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                <a href="{{ route('instructor.subscription.status', $package->id) }}"
                                     class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                 @else
                                 <a href="{{ route('instructor.subscription.create', $package->id) }}"

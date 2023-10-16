@@ -356,15 +356,12 @@
         });
 </script>
 
-
-
 <script>
     $(document).ready(function() {
             $(".filter-option").click(function(e) {
                 e.preventDefault();
                 var duration = $(this).data("duration");
-
-                // Update the URL with the selected filter duration as a query parameter
+ 
                 var currentUrl = window.location.href;
                 var updatedUrl = updateQueryStringParameter(currentUrl, 'duration', duration);
                 history.pushState({

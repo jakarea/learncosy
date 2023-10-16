@@ -14,10 +14,12 @@ class Subscription extends Model
         'subscription_packages_id',
         'name',
         'stripe_plan',
+        'amount',
         'quantity',
         'start_at',
         'end_at',
         'trial_ends_at',
+        'status',
     ];
 
     protected $casts = [

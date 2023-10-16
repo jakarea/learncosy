@@ -19,48 +19,29 @@ class CheckSubscription
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        // $user = auth::user()->user_role('instructor')->first();
+    { 
         $user = auth::user();
+        $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if (Auth::user()->user_role == 'instructor') {
                         
             // Retrieve the user's subscription based on instructor_id
-            $subscription = Subscription::where('instructor_id', $user->id)->first();
-            if ($subscription && $subscription->ends_at && now() > $subscription->ends_at) {
+            $subscription = Subscription::where('instructor_id', $user->id)->latest('created_at')->first();
+
+            if ($subscription->status == 'cancel') {
+                return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
+            }elseif ($subscription && $subscription->ends_at && now() > $subscription->ends_at) {
                 // Subscription expired, show alert or redirect
-                return back()->with('error', 'Your subscription has expired. Please renew your subscription to access this feature.');
-            }
-    
-            if (!$subscription) {
+                return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
+            }elseif (!$subscription) {
                 // Subscription not found, show alert or redirect
-                return redirect('instructor/profile/step-2/complete')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
-            }
-            // else{
-            //     return $next($request);
-            // }
-
-            // Check User have set subdomain or not
-            if (!$user->subdomain) {
+                return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
+            }elseif (!$user->subdomain) {
                 return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your subdomain to access this feature.');
-            }
-            // else{
-            //     return $next($request);
-            // }
-
-            // Check Vimeo Data and Stripe Data
-            if (!$user->vimeo_data && !$user->stripe_secret_key && !$user->stripe_public_key) {
+            }elseif (!$user->vimeo_data && !$user->stripe_secret_key && !$user->stripe_public_key) {
                 return redirect('instructor/profile/step-4/complete')->with('error', 'Please complete your profile to access this feature.');
-            }
-            // else{
-            //     return $next($request);
-            // }
-
-            // Check Module data for instructor
-            $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
-            if (!$modules) {
+            }elseif (!$modules) {
                 return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
-            }
-            else{
+            }else{
                 return $next($request);
             }    
         }

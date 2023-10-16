@@ -102,7 +102,7 @@ $i = 0;
                 <div class="course-outline-wrap">
                     <div class="header">
                         <h3>Modules</h3>
-                        <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
+                        <h6>{{ count($course->modules) }} Modules . 0 Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)

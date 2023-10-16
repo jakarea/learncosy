@@ -369,14 +369,16 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
             Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
         });
-    });
-    // SubscriptionController
-    Route::prefix('subscription')->controller(SubscriptionController::class)->group(function () {
-        Route::get('/', 'index')->name('instructor.subscription');
-        Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
-        Route::get('success', 'success')->name('instructor.subscription.success');
-        Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
-    });
+    }); 
+});
+
+// SubscriptionController
+Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
+    Route::get('/', 'index')->name('instructor.subscription');
+    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    Route::get('success', 'success')->name('instructor.subscription.success');
+    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
+    Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
 });
 
 // review page routes
@@ -386,10 +388,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
-/* ========================================================== */
-Route::get('/dashboard1', function () {
-    return 'Student dashboard!';
-});
+/* ========================================================== */ 
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes

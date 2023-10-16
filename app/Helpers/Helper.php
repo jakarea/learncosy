@@ -59,7 +59,7 @@ if (!function_exists('isSubscribed')) {
             // Retrieve the user's subscription based on instructor_id
             $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->first();
 
-            if ($subscription && $subscription->end_at && now() > $subscription->end_at) {
+            if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cencel')) { 
                 // Subscription expired
                 return false;
             }

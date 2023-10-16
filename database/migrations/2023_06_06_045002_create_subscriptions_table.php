@@ -19,10 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('instructor_id');
             $table->string('name');
             $table->string('stripe_plan');
+            $table->integer('amount');
             $table->integer('quantity');
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->timestamp('trial_ends_at')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
