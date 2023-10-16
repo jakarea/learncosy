@@ -30,10 +30,6 @@ class StudentHomeController extends Controller
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
 
-        // dummy data start - need to remove later
-        $totalTimeSpend = 6000;
-         // dummy data end - need to remove later
-
         $totalHours = floor($totalTimeSpend / 3600);
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
  
@@ -44,53 +40,7 @@ class StudentHomeController extends Controller
         )
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
-        ->get();
-
-        // dummy data start - need to remove later 
-        $timeSpentData = [];
-
-        $timeSpentData[] = [
-            "month" => "Jan",
-            "time_spent" => "20"
-        ];
-        $timeSpentData[] = [
-            "month" => "Feb",
-            "time_spent" => "50"
-        ];
-        $timeSpentData[] = [
-            "month" => "Mar",
-            "time_spent" => "70"
-        ]; 
-        $timeSpentData[] = [
-            "month" => "Apr",
-            "time_spent" => "20"
-        ];
-        $timeSpentData[] = [
-            "month" => "May",
-            "time_spent" => "45"
-        ];
-        $timeSpentData[] = [
-            "month" => "Jun",
-            "time_spent" => "36"
-        ];
-        $timeSpentData[] = [
-            "month" => "Jul",
-            "time_spent" => "76"
-        ];
-        $timeSpentData[] = [
-            "month" => "Aug",
-            "time_spent" => "24"
-        ];
-        $timeSpentData[] = [
-            "month" => "Sep",
-            "time_spent" => "65"
-        ];
-        $timeSpentData[] = [
-            "month" => "Oct",
-            "time_spent" => "4"
-        ]; 
-
-         // dummy data end - need to remove later 
+        ->get(); 
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
