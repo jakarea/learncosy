@@ -48,7 +48,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $url = env('LIVE_DOAMIN', 'localhost');
+        $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
         $user = User::where('email', $request->email)->first();
@@ -61,8 +61,8 @@ class LoginController extends Controller
                     return redirect()->route('admin.dashboard');
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
-                    if ($user->subdomain && !$request->is('//app.',$url)) {
-                        return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/instructor/dashboard');
+                    if ($user->subdomain && !$request->is('//app.',$domain)) {
+                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/instructor/dashboard');
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');
