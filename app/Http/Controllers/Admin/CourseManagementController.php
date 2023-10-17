@@ -44,65 +44,7 @@ class CourseManagementController extends Controller
  
         return view('e-learning/course/admin/list',compact('courses'));  
     }
-
-     // data table getData
-     public function courseDataTable()
-     {  
-         $course = Course::all();
  
-         // return $course;
-           
-             return Datatables::of($course)
-                 ->addColumn('action', function($row){ 
-                      
-                     $actions = '<div class="action-dropdown">
-                         <div class="dropdown">
-                             <a class="btn btn-drp" href="#" role="button"
-                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                 <i class="fa-solid fa-ellipsis"></i>
-                             </a>
-                             <div class="dropdown-menu">
-                                 <div class="bttns-wrap">
-                                     <a class="dropdown-item" href="/admin/courses/'.$row->slug.'"><i class="fas fa-eye"></i></a>
-                                     <a class="dropdown-item" href="/admin/courses/'.$row->slug.'/edit"> <i class="fas fa-pen"></i></a>  
-                                     <form method="post" class="d-inline btn btn-danger" action="/admin/courses/'.$row->slug.'/destroy">  
-                                     '.csrf_field().'
-                                     '.method_field("DELETE").'
-                                         <button type="submit" class="btn p-0"><i class="fas fa-trash text-white"></i></button>
-                                     </form>    
-                                 </div>
-                             </div> 
-                         </div>
-                     </div>';
- 
-                     return $actions;
- 
-                 })
-                 ->editColumn('image', function ($row) {
-                 return '<img src="/assets/images/courses/'.$row->thumbnail.'" width="50" />';
-             })
-             ->editColumn('status', function ($row) {
-                 if($row->status == 'published'){
-                     return '<label class="badge bg-success">'.__('Published').'</label>';
-                 }
-                 if($row->status == 'draft'){
-                     return '<label class="badge bg-info">'.__('Draft').'</label>';
-                 }
-                 if($row->status == 'pending'){
-                     return '<label class="badge bg-danger">'.__('Pending').'</label>';
-                 } 
-              })->editColumn('categorie', function ($row) {
-                 if($row->categories){
-                     $cateogires = explode(",",$row->categories); 
-                     foreach ($cateogires as $key => $category) {
-                         return '<span class="badge text-bg-primary">'.$category.'</span>'; 
-                     } 
-                 }
-             })
-             ->addIndexColumn()
-             ->rawColumns(['action', 'image','status','categorie'])
-             ->make(true);
-     }
 
     // course create
     public function create()
@@ -207,17 +149,7 @@ class CourseManagementController extends Controller
 
     // course show
     public function show($slug)
-    {   
-        // $lessons = Lesson::orderby('id', 'desc')->paginate(10);
-        // $modules = Module::orderby('id', 'desc')->paginate(10);
-        // $course = Course::where('slug', $slug)->first(); 
- 
-
-        // if ($course) {
-        //     return view('e-learning/course/admin/show', compact('course','modules','lessons'));
-        // } else {
-        //     return redirect('admin/courses')->with('error', 'Course not found!');
-        // }
+    {    
        
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();

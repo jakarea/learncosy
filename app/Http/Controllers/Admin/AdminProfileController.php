@@ -261,7 +261,6 @@ class AdminProfileController extends Controller
     }
 
 
-
     private function getEnrollmentDataToday()
     {
         return Checkout::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();

@@ -43,7 +43,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>Students</h5>
-                            <h4> {{ count($students) }} </h4>
+                            <h4> {{ $currentMonthEnrolledStudentsCount }} </h4>
                         </div>
                     </div>
                     <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{
@@ -199,7 +199,7 @@
 {{-- statudents status start --}}
 <script>
     const data = @json($activeInActiveStudents);
-    
+
         var options = {
             series: [
                 {
@@ -250,7 +250,7 @@
                 show: false // Hide the top toolbar
             }
         };
-    
+
         var chart = new ApexCharts(document.querySelector("#studentsGraph"), options);
         chart.render();
 </script>
@@ -319,7 +319,7 @@ var options = {
         zoom: {
             autoScaleYaxis: true
         }
-    }, 
+    },
     dataLabels: {
         enabled: false
     },
@@ -391,7 +391,7 @@ chart.render();
             },
             xaxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            }, 
+            },
             fill: {
                 opacity: 1
             },
@@ -453,6 +453,7 @@ chart.render();
 {{-- course progress chart start --}}
 <script>
     var datas = [{{ $activeCourses }}, {{ $draftCourses }}];
+
         var backgroundColor = ['#FFAB00', '#294CFF'];
         var ctx = document.getElementById('courseProgress').getContext('2d');
         var myDoughnutChart = new Chart(ctx, {
@@ -486,8 +487,16 @@ chart.render();
 
         // Calculate percentages
         var total = datas.reduce((a, b) => a + b, 0);
-        var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+        // var percentages = datas.map((value) => ((value / total) * 100).toFixed(0) + "%");
+        var percentages = datas.map((value) => {
+            if (value === 0 || total === 0) {
+                return "0%";
+            } else {
+                return ((value / total) * 100).toFixed(0) + "%";
+            }
+        });
 
+        console.log({ percentages, total })
         // Generate and display the custom legend
         var legendHtml = "<ul>";
         for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
@@ -498,7 +507,6 @@ chart.render();
                 "</li>";
         }
         legendHtml += "</ul>";
-
         document.getElementById("legend").innerHTML = legendHtml;
 </script>
 {{-- course progress chart end --}}

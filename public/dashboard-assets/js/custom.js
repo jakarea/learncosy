@@ -1,1 +1,0 @@
-tabPane.forEach(tab => tab.classList.remove() );

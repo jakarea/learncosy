@@ -1,6 +1,6 @@
 @extends('layouts/latest/students')
 @section('title')
-Students Dashboard
+Student Dashboard
 @endsection
 
 {{-- page style @S --}}

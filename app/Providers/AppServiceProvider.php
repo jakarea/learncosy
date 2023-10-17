@@ -33,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         ini_set('post_max_size', '1G');
         ini_set('upload_max_filesize', '1G');
+
+        // \Debugbar::disable();
     }
 }
