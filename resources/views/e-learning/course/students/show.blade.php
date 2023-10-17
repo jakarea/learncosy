@@ -75,9 +75,9 @@ $i = 0;
                         {!! $course->description !!}
                     </div>
                 </div>
+                @if(!empty($group_files))
                 <div class="download-files-box">
                     <h4>Download Files </h4> 
-
                     <div class="files">
                         @foreach($group_files as $fileExtension)
                             <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
@@ -95,6 +95,7 @@ $i = 0;
                         @endif
                     </div>
                 </div>
+                @endif
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
