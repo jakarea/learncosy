@@ -79,17 +79,10 @@ $i = 0;
                     <h4>Download Files </h4> 
 
                     <div class="files">
-                        @foreach($group_files as $group_file)
-                            @if($group_file == 'xlsx')
-                                <a href="{{ route('course.download.excel', $course->id) }}">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                    title="120MB" class="img-fluid"></a>
-                            @elseif($group_file == 'docx')
-                                <a href="{{ route('course.download.word', $course->id) }}">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                    title="120MB" class="img-fluid"></a>
-                            @elseif($group_file == 'pdf')
-                                <a href="{{ route('course.download.pdf', $course->id) }}">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                    title="120MB" class="img-fluid"></a>
-                            @endif
+                        @foreach($group_files as $fileExtension)
+                            <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
+                                {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
+                            </a>
                         @endforeach
                         @php
                         $progress = StudentActitviesProgress(auth()->user()->id, $course->id);

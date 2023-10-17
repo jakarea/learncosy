@@ -283,20 +283,18 @@ class StudentHomeController extends Controller
         }
     }
 
-    public function cousreDownloadExcel($course_id){
-        // Start zip file
+    public function fileDownload($course_id,$file_extension){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             $file_name = $lesson_file->file;
             $file_arr = explode('.', $lesson_file->file);  
-            $extention = $file_arr[1];
-            if($extention == 'xlsx'){
+            $extension = $file_arr[1];
+            if($file_extension == $extension){
                 $files[] = public_path('uploads/lessons/'.$file_name);
            }
         }
-
         $zip = new ZipArchive;
-        $zipFileName = 'EXCEL_'.time().'.zip';
+        $zipFileName = $file_extension.'_'.time().'.zip';
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             foreach ($files as $file) {
                 $zip->addFile($file, basename($file));
@@ -319,43 +317,6 @@ class StudentHomeController extends Controller
             echo 'Failed to create the zip file.';
         }
     } 
-
-    public function cousreDownloadWord($course_id){
-        // Start zip file
-        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
-        foreach($lesson_files as $lesson_file){
-            $file_name = $lesson_file->file;
-            $file_arr = explode('.', $lesson_file->file);  
-            $extention = $file_arr[1];
-            if($extention == 'docx'){
-                $files[] = public_path('uploads/lessons/'.$file_name);
-           }
-        }
-
-        $zip = new ZipArchive;
-        $zipFileName = 'WORD_'.time().'.zip';
-        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-            foreach ($files as $file) {
-                $zip->addFile($file, basename($file));
-            }
-            $zip->close();
-
-            // Set appropriate headers for the download
-            header('Content-Type: application/zip');
-            header("Content-Disposition: attachment; filename=" . $zipFileName);
-            header('Content-Length: ' . filesize($zipFileName));
-            header("Pragma: no-cache");
-            header("Expires: 0");
-            readfile($zipFileName);
-
-            // Delete the zip file after download
-            unlink($zipFileName);
-            exit;
-        } else {
-            // Handle the case when the zip file could not be created
-            echo 'Failed to create the zip file.';
-        }
-    }
 
     public function cousreDownloadPDF($course_id){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();

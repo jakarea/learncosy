@@ -265,8 +265,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet');
-            Route::post('{id}/delete-objects/{array_index}', 'deleteObjective')->name('course.delete-objective');
+            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
 
             Route::get('{id}/price', 'coursePrice');
             Route::post('{id}/price', 'coursePriceSet');
@@ -315,23 +315,16 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
         });
 
-        // course bundle page routes latest
+        // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
-            Route::get('/{slug}/view', 'view');
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
             Route::get('/create', 'step2');
             Route::post('/create', 'createBundle')->name('create.bundle.course');
-            Route::get('/{slug}/edit', 'edit1')->name('select.again.bundle.course');
-            Route::post('/{id}/select-update', 'update1')->name('select.update.bundle.course');
-            Route::get('/{slug}/edit-final', 'edit2');
-            Route::post('/{id}/create-update', 'update2')->name('create.update.bundle.course');
             Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
-            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('remove.new.select.bundle');
             Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
         });
-
         // theme settings page routes
         Route::prefix('theme/setting')->controller(ModuleSettingController::class)->group(function () {
             Route::get('/', 'index')->name('module.setting');
@@ -340,7 +333,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/reset/{id}', 'reset')->name('module.theme.reset');
             // Route::post('/updateorinsert', 'store')->name('module.setting.update');
         });
-
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
@@ -349,7 +341,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
         });
-
         Route::prefix('profile')->controller(ExperienceController::class)->group(function () {
             Route::post('/experience', 'store')->name('instructor.profile.experience');
         });
@@ -401,9 +392,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/home', 'catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
-    Route::get('/course-download-xl/{course_id}', 'cousreDownloadExcel')->name('course.download.excel');
-    Route::get('/course-download-word/{course_id}', 'cousreDownloadWord')->name('course.download.word');
-    Route::get('/course-download-pdf/{course_id}', 'cousreDownloadPDF')->name('course.download.pdf');
+    Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
     Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
@@ -516,8 +505,13 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // course bundle page routes for admin
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
             Route::get('/', 'index');
-            Route::get('/{slug}/view', 'view');
-            Route::post('/delete/{bundle_id}', 'delete')->name('admin.delete.bundle.course');
+            Route::get('/datatable', 'bundleDataTable')->name('admin.bundle.data.table');
+            Route::get('/create', 'create');
+            Route::post('/create', 'store')->name('admin.course.bundle.store');
+            Route::get('/{slug}', 'show')->name('admin.course.bundle.show');
+            Route::get('/{slug}/edit', 'edit')->name('admin.course.bundle.edit');
+            Route::post('/{slug}/edit', 'update')->name('admin.course.bundle.update');
+            Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.bundle.destroy');
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {
