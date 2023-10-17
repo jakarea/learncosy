@@ -31,9 +31,13 @@ class SubscriptionController extends Controller
     public function index()
     {
         $packages = SubscriptionPackage::where('status','active')->get();
-        $insPackage = Subscription::where('instructor_id', Auth::id())->first();
-
-        $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
+        $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
+        
+        if ($insPackage->status == 'cancel') {
+            $activePackageId = null;
+        }else{
+            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
+        }
 
         return view('subscription/instructor/list',compact('packages','activePackageId'));
     }
@@ -60,7 +64,7 @@ class SubscriptionController extends Controller
                 [
                     'price_data' => [
                         'currency' => 'usd',
-                        'unit_amount' => $package->amount * 100,
+                        'unit_amount' => $package->sales_price ? $package->sales_price * 100 : $package->regular_price  * 100,
                         'product_data' => [
                             'name' => $package->name,
                         ],
@@ -116,7 +120,8 @@ class SubscriptionController extends Controller
         $subscription = Subscription::create([
             'subscription_packages_id' => $request->package_id,
             'instructor_id' => auth()->user()->id,
-            'name' => $package->id,
+            'name' => $package->name,
+            'amount' => $package->sales_price ? $package->sales_price : $package->regular_price,
             'stripe_plan' => $session->payment_intent,
             'quantity' => 1,
             'start_at' => date('Y-m-d H:i:s'),
@@ -135,7 +140,7 @@ class SubscriptionController extends Controller
         });
 
         // return back with success message
-        return redirect()->route('instructor.dashboard.index')->with('success', 'Subscription created successfully');
+        return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
 
 
     }
@@ -148,8 +153,17 @@ class SubscriptionController extends Controller
      */
     public function cancel()
     {
-        //
+        // 
         return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
+    }
+    public function status($id)
+    {
+        // 
+        $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();
+        $subscription->status = 'cancel';
+        $subscription->save();
+        
+        return redirect()->back()->with('error', 'Subscription Cancelled');
     }
 
     /**
