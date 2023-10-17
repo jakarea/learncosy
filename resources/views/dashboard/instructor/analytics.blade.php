@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="yearly-analitics">
-                    <h1>Yearly Analytics</h1>
+                    <h1>{{$analytics_title}}</h1>
 
                     {{-- yearly filter box --}}
                     <div class="dropdown">
@@ -48,7 +48,7 @@
                     </div>
                     <p> <b style="color: {{ $formatedPercentageChangeOfStudentEnroll >= 0 ? 'green' : 'red' }}">{{
                             number_format($formatedPercentageChangeOfStudentEnroll, 0) }}</b>
-                        % VS last month</p>
+                        % VS last {{$compear}}</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -63,7 +63,7 @@
                     </div>
                     <p> <b style="color: {{ $formatedPercentageOfCourse >= 0 ? 'green' : 'red' }}">{{
                             number_format($formatedPercentageOfCourse, 0) }}</b>
-                        % VS last month</p>
+                        % VS last {{$compear}}</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -78,7 +78,7 @@
                     </div>
                     <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
                             number_format($formattedPercentageChangeOfEarning, 0) }}</b>
-                        % VS last month</p>
+                        % VS last {{$compear}}</p>
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
                 </div>
@@ -106,7 +106,7 @@
                         <p class="common-para ms-3"> <b
                                 style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
                                 number_format($formattedPercentageChangeOfEarning, 0) }}</b>
-                            % VS last month</p>
+                            % VS last {{$compear}}</p>
                     </div>
                     <div id="earningChart"></div>
                 </div>

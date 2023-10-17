@@ -29,8 +29,8 @@
                             <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses') ? ' active' : '' }}">All Courses</a></li>
                             <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create') ? ' active' : '' }}">Add New Course</a></li>
 
-                            <li><a href="{{ url('instructor/modules') }}" class="{{ Request::is('instructor/modules*') ? ' active' : '' }}">All Modules</a></li>
-                            <li><a href="{{ url('instructor/lessons') }}" class="{{ Request::is('instructor/lessons*') ? ' active' : '' }}">All Lessons</a></li>
+                            <!-- <li><a href="{{ url('instructor/modules') }}" class="{{ Request::is('instructor/modules*') ? ' active' : '' }}">All Modules</a></li>
+                            <li><a href="{{ url('instructor/lessons') }}" class="{{ Request::is('instructor/lessons*') ? ' active' : '' }}">All Lessons</a></li> -->
                         </ul>
                     </li>
                     <li class="nav-item">
