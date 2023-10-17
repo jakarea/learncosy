@@ -29,45 +29,45 @@ class DashboardController extends Controller
             if ($request->has('duration')) {
                 $duration = $request->query('duration');
                 if($duration === 'one_month'){
-                    $firstDayOfCurrentMonth =  Carbon::now()->startOfMonth();
-                    $lastDayOfCurrentMonth =  Carbon::now()->endOfMonth();
-                    $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
-                    $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
+                    $firstDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfCurrentMonth =  Carbon::now()->endOfMonth()->format('Y-m-d H:i:s');
+                    $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
                     $enrolments = Checkout::where('instructor_id', Auth::user()->id)
                                     ->whereBetween('created_at', [$firstDayOfCurrentMonth, $lastDayOfCurrentMonth])
                                     ->orderBy('id', 'desc')->get();
 
                 }elseif ($duration === 'three_months') {
-                    $firstDayOfCurrentMonth =  Carbon::now()->subMonth(3)->startOfMonth();
-                    $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth();
-                    $firstDayOfPreviousMonth = Carbon::now()->subMonth(6)->startOfMonth();
-                    $lastDayOfPreviousMonth = Carbon::now()->subMonth(3)->endOfMonth();
+                    $firstDayOfCurrentMonth =  Carbon::now()->subMonth(3)->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+                    $firstDayOfPreviousMonth = Carbon::now()->subMonth(6)->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfPreviousMonth = Carbon::now()->subMonth(3)->endOfMonth()->format('Y-m-d H:i:s');
                     $enrolments = Checkout::where('instructor_id', Auth::user()->id)
                                     ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])
                                     ->orderBy('id', 'desc')->get();
 
                 } elseif ($duration === 'six_months') {
-                    $firstDayOfCurrentMonth =  Carbon::now()->subMonth(6)->startOfMonth();
-                    $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth();
-                    $firstDayOfPreviousMonth = Carbon::now()->subMonth(12)->startOfMonth();
-                    $lastDayOfPreviousMonth = Carbon::now()->subMonth(6)->endOfMonth();
+                    $firstDayOfCurrentMonth =  Carbon::now()->subMonth(6)->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+                    $firstDayOfPreviousMonth = Carbon::now()->subMonth(12)->startOfMonth()->format('Y-m-d H:i:s');
+                    $lastDayOfPreviousMonth = Carbon::now()->subMonth(6)->endOfMonth()->format('Y-m-d H:i:s');
                     $enrolments = Checkout::where('instructor_id', Auth::user()->id)
                                 ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])
                                 ->orderBy('id', 'desc')->get();
                 } elseif ($duration === 'one_year') {
-                    $firstDayOfCurrentMonth =  Carbon::now()->startOfYear();
-                    $lastDayOfCurrentMonth =  Carbon::now()->endOfYear();
-                    $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear();
-                    $lastDayOfPreviousMonth = Carbon::now()->subYear()->endOfYear();
+                    $firstDayOfCurrentMonth =  Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
+                    $lastDayOfCurrentMonth =  Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
+                    $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
+                    $lastDayOfPreviousMonth = Carbon::now()->subYear()->endOfYear()->format('Y-m-d H:i:s');
                     $enrolments = Checkout::where('instructor_id', Auth::user()->id)
                                 ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])
                                 ->orderBy('id', 'desc')->get();
                 }
            }else{
-            $firstDayOfCurrentMonth = Carbon::now()->startOfMonth();
-            $lastDayOfCurrentMonth = Carbon::now()->endOfMonth();
-            $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth();
-            $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth();
+            $firstDayOfCurrentMonth = Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
+            $lastDayOfCurrentMonth = Carbon::now()->endOfMonth()->format('Y-m-d H:i:s');
+            $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d H:i:s');
+            $lastDayOfPreviousMonth = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
             $enrolments = Checkout::where('instructor_id', Auth::user()->id)->orderBy('id', 'desc')->get();
            }
 
@@ -80,71 +80,46 @@ class DashboardController extends Controller
           if($previousMonthTotalSell){
               $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
           }
-
           $formattedPercentageChangeOfEarning = round($percentageChange, 2);
+           if ($request->has('duration')) {
+            $duration = $request->query('duration');
+            $currentDate = Carbon::now();
+            $currentMonthStartDate = $currentDate->startOfMonth();
+            $currentMonthEndDate = $currentDate->endOfMonth();
+            if ($duration === 'three_months' || $duration === 'six_months') {
+                $monthsAgo = $duration === 'three_months' ? 2 : 5;
+                $previousMonthsAgo = $duration === 'three_months' ? 3 : 11;
+                $threeMonthsAgoStartDate = $currentDate->subMonths($monthsAgo)->startOfMonth()->format('Y-m-d H:i:s');
+                $previousMonthsAgoStartDate = $currentDate->subMonths($previousMonthsAgo)->startOfMonth()->format('Y-m-d H:i:s');
+                $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereBetween('created_at', [ $currentMonthEndDate , $threeMonthsAgoStartDate])
+                    ->get();
+                $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereBetween('created_at', [$previousMonthsAgoStartDate, $threeMonthsAgoStartDate])
+                    ->get();
+            } elseif ($duration === 'one_year') {
+                $firstdayOfCurrentYear = $currentDate->startOfYear()->format('Y-m-d H:i:s');
+                $lastDayOfCurrentYear = $currentDate->endOfYear()->format('Y-m-d H:i:s');
+                $firstDayOfPreviousYear = $currentDate->subYear()->startOfYear()->format('Y-m-d H:i:s');
+                $lastDayOfPreviousYear = $currentDate->subYear()->endOfYear()->format('Y-m-d H:i:s');
+                $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereBetween('created_at', [ $firstdayOfCurrentYear, $lastDayOfCurrentYear])
+                    ->get();
+                $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereBetween('created_at', [$lastDayOfPreviousYear, $firstDayOfPreviousYear])
+                    ->get();
+            } else {
+                $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereYear('created_at', '=', now()->year)
+                    ->whereMonth('created_at', '=', now()->month)
+                    ->get();
 
-
-              if ($request->has('duration')) {
-                $duration = $request->query('duration');
-                if($duration === 'one_month'){
-                    $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                        ->whereYear('created_at', '=', now()->year)
-                        ->whereMonth('created_at', '=', now()->month)
-                        ->get();
-
-                    $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                        ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
-                        ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
-                        ->get();
-                }elseif ($duration === 'three_months') {
-
-                    $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->startOfMonth();
-                    $currentMonthEndDate = $currentDate->endOfMonth();
-                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
-                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
-
-                    $currentMonthEnrollments =  Checkout::where('instructor_id', Auth::user()->id)
-                                    ->whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
-                                    ->get();
-
-                    $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                                        ->whereBetween('created_at', [$sixMonthsAgoStartDate, $threeMonthsAgoStartDate])
-                                        ->get();
-                } elseif ($duration === 'six_months') {
-
-                    $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->startOfMonth();
-                    $currentMonthEndDate = $currentDate->endOfMonth();
-                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
-                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
-                    $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth();
-
-
-                    $currentMonthEnrollments =  Checkout::where('instructor_id', Auth::user()->id)
-                                    ->whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
-                                    ->get();
-
-                    $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                                        ->whereBetween('created_at', [$previousSixMonthsAgoStartDate, $sixMonthsAgoStartDate])
-                                        ->get();
-
-                } elseif ($duration === 'one_year') {
-                    $firstdayOfCurrentYear =  Carbon::now()->startOfYear();
-                    $lastDayOfCurrentYear =  Carbon::now()->endOfYear();
-                    $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear();
-                    $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear();
-
-                    $currentMonthEnrollments =  Checkout::where('instructor_id', Auth::user()->id)
-                                    ->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])
-                                    ->get();
-
-                    $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
-                                        ->whereBetween('created_at', [$firstDayOfPreviousYear, $lastDayOfPreviousYear])
-                                        ->get();
-
-                }
-           }else{
+                $previousMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
+                    ->whereYear('created_at', '=', now()->subMonth()->year)
+                    ->whereMonth('created_at', '=', now()->subMonth()->month)
+                    ->get();
+            }
+        }else{
             $currentMonthEnrollments = Checkout::where('instructor_id', Auth::user()->id)
                 ->whereYear('created_at', '=', now()->year)
                 ->whereMonth('created_at', '=', now()->month)
@@ -154,11 +129,12 @@ class DashboardController extends Controller
                 ->whereYear('created_at', '=', date('Y', strtotime('-1 month')))
                 ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
                 ->get();
-            }
-            $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
-            $earningByDates = $this->getEarningByDates($enrolments);
-            $earningByMonth = $this->getEarningByMonth($enrolments);
-            $course_wise_payments = $this->getCourseWisePayments($enrolments);
+        }
+
+          $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
+          $earningByDates = $this->getEarningByDates($enrolments);
+          $earningByMonth = $this->getEarningByMonth($enrolments);
+          $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
         //$courses = Course::where('user_id', Auth::user()->id)->get();
         foreach ($enrolments as $enrolment) {
@@ -169,10 +145,9 @@ class DashboardController extends Controller
                 $duration = $request->query('duration');
 
                 if ($duration === 'one_month') {
-
                     $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->copy()->subDays(0);
-                    $currentMonthEndDate = $currentDate->copy()->subDays(30);
+                    $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
+                    $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereYear('created_at', '=', now()->year)
@@ -188,12 +163,10 @@ class DashboardController extends Controller
                 } elseif ($duration === 'three_months') {
 
                     $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->copy()->subDays(0);
-                    $currentMonthEndDate = $currentDate->copy()->subDays(90);
-                   
-
-                    $threeMonthsAgoStartDate = $currentDate->copy()->subDays(90);
-                    $sixMonthsAgoStartDate = $currentDate->copy()->subDays(180);
+                    $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
+                    $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
+                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth()->format('Y-m-d H:i:s');
+                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth()->format('Y-m-d H:i:s');
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
@@ -207,11 +180,11 @@ class DashboardController extends Controller
                 } elseif ($duration === 'six_months') {
 
                     $currentDate = Carbon::now();
-                    $currentMonthStartDate = $currentDate->startOfMonth();
-                    $currentMonthEndDate = $currentDate->endOfMonth();
-                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth();
-                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth();
-                    $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth();
+                    $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
+                    $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
+                    $threeMonthsAgoStartDate = $currentDate->subMonths(2)->startOfMonth()->format('Y-m-d H:i:s');
+                    $sixMonthsAgoStartDate = $currentDate->subMonths(5)->startOfMonth()->format('Y-m-d H:i:s');
+                    $previousSixMonthsAgoStartDate = $currentDate->subMonths(11)->startOfMonth()->format('Y-m-d H:i:s');
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
@@ -223,10 +196,10 @@ class DashboardController extends Controller
                     $courses = Course::where('user_id', Auth::user()->id)->whereBetween('created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])->get();
 
                 } elseif ($duration === 'one_year') {
-                    $firstdayOfCurrentYear =  Carbon::now()->startOfYear();
-                    $lastDayOfCurrentYear =  Carbon::now()->endOfYear();
-                    $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear();
-                    $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear();
+                    $firstdayOfCurrentYear =  Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
+                    $lastDayOfCurrentYear =  Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
+                    $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
+                    $lastDayOfPreviousYear = Carbon::now()->subYear()->endOfYear()->format('Y-m-d H:i:s');
 
                     $currentMonthCourse = Course::where('user_id', Auth::user()->id)
                         ->whereBetween('created_at', [$firstdayOfCurrentYear, $lastDayOfCurrentYear])
@@ -269,15 +242,17 @@ class DashboardController extends Controller
               }
           }
 
+
           foreach ($currentMonthEnrollments as $enrolment) {
               $currentMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
           }
-
           foreach ($previousMonthEnrollments as $enrolment) {
               $previousMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
           }
 
           $currentMonthEnrolledStudentsCount = count($currentMonthEnrolledStudents);
+        //   dd($currentMonthEnrolledStudentsCount);
+
           $previousMonthEnrolledStudentsCount = count($previousMonthEnrolledStudents);
 
           if ($previousMonthEnrolledStudentsCount === 0) {
@@ -303,9 +278,11 @@ class DashboardController extends Controller
                     $activeCourses++;
                 }
             }
-        } 
+        }
 
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses'));
+        // return $earningByDates;
+
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount'));
 
     }
 
@@ -473,35 +450,35 @@ class DashboardController extends Controller
        $managePage = ManagePage::where('instructor_id',Auth::user()->id)->first();
 
        if ($managePage) {
-            $permission = json_decode($managePage->pagePermissions); 
+            $permission = json_decode($managePage->pagePermissions);
        }else{
             $permission = '{"dashboard":0,"homePage":0,"messagePage":0,"certificatePage":0}';
        }
-       
+
         return view('dashboard/instructor/access-page',compact('permission'));
     }
 
     public function pageAccess(Request $request){
-        
+
         $validatedData = $request->validate([
             'dashboard' => 'boolean',
             'homePage' => 'boolean',
             'messagePage' => 'boolean',
             'certificatePage' => 'boolean',
         ]);
-    
+
         $permissions = [
             'dashboard' => $request->input('dashboard', 0),
             'homePage' => $request->input('homePage', 0),
             'messagePage' => $request->input('messagePage', 0),
             'certificatePage' => $request->input('certificatePage', 0),
         ];
-        
+
         $permissionsJson = json_encode($permissions);
-        
+
         $managePage = ManagePage::updateOrCreate(
             ['instructor_id' => Auth::user()->id],
-            ['pagePermissions' => $permissionsJson]  
+            ['pagePermissions' => $permissionsJson]
         );
 
         return redirect()->back()->with('success', 'Access permissions updated successfully');
