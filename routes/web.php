@@ -392,6 +392,9 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/home', 'catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
+    Route::get('/course-download-xl/{course_id}', 'cousreDownloadExcel')->name('course.download.excel');
+    Route::get('/course-download-word/{course_id}', 'cousreDownloadWord')->name('course.download.word');
+    Route::get('/course-download-pdf/{course_id}', 'cousreDownloadPDF')->name('course.download.pdf');
     Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');

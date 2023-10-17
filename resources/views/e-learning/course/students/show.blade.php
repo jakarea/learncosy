@@ -79,13 +79,18 @@ $i = 0;
                     <h4>Download Files </h4> 
 
                     <div class="files">
-                        <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-                        <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-                        <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-
+                        @foreach($group_files as $group_file)
+                            @if($group_file == 'xlsx')
+                                <a href="{{ route('course.download.excel', $course->id) }}">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                    title="120MB" class="img-fluid"></a>
+                            @elseif($group_file == 'docx')
+                                <a href="{{ route('course.download.word', $course->id) }}">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                    title="120MB" class="img-fluid"></a>
+                            @elseif($group_file == 'pdf')
+                                <a href="{{ route('course.download.pdf', $course->id) }}">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                    title="120MB" class="img-fluid"></a>
+                            @endif
+                        @endforeach
                         @php
                         $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
                         @endphp
