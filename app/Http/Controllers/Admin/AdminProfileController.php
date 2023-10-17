@@ -183,7 +183,7 @@ class AdminProfileController extends Controller
 
         $totalEnrollToday = $this->getEnrollmentDataToday();
         $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
-        // return $enrolments;
+        // return $enrolments; 
         return view('payments/admin/grid-admin-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
     }
 
