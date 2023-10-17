@@ -140,11 +140,11 @@ Student Dashboard
                                 <p>Rank</p>
                             </li>
                             <li>
-                                <h6>2h</h6>
+                                <h6>{{ $total_hr }}h:{{ $total_min }}m</h6>
                                 <p>Avr. hour</p>
                             </li>
                             <li>
-                                <h6>12</h6>
+                                <h6>{{ $enrolled }}</h6>
                                 <p>Enrolled</p>
                             </li>
                         </ul>

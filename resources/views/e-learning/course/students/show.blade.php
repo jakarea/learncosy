@@ -79,13 +79,11 @@ $i = 0;
                     <h4>Download Files </h4> 
 
                     <div class="files">
-                        <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-                        <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-                        <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
-                                title="120MB" class="img-fluid"></a>
-
+                        @foreach($group_files as $fileExtension)
+                            <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
+                                {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
+                            </a>
+                        @endforeach
                         @php
                         $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
                         @endphp
