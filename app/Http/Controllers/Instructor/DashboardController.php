@@ -19,7 +19,8 @@ class DashboardController extends Controller
     {
         $userId = Auth::user()->id;
         $messages = Message::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
-
+        $analytics_title = 'Yearly Analytics';
+        $compear = '1 year';
           $categories = [];
           $courses = 0;
           $students = [];
@@ -29,6 +30,8 @@ class DashboardController extends Controller
             if ($request->has('duration')) {
                 $duration = $request->query('duration');
                 if($duration === 'one_month'){
+                    $analytics_title = 'Monthly Analytics';
+                    $compear = ' month';
                     $firstDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
                     $lastDayOfCurrentMonth =  Carbon::now()->endOfMonth()->format('Y-m-d H:i:s');
                     $firstDayOfPreviousMonth = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d H:i:s');
@@ -38,6 +41,8 @@ class DashboardController extends Controller
                                     ->orderBy('id', 'desc')->get();
 
                 }elseif ($duration === 'three_months') {
+                    $analytics_title = 'Quarterly Analytics';
+                    $compear = '3 month';
                     $firstDayOfCurrentMonth =  Carbon::now()->subMonth(3)->startOfMonth()->format('Y-m-d H:i:s');
                     $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
                     $firstDayOfPreviousMonth = Carbon::now()->subMonth(6)->startOfMonth()->format('Y-m-d H:i:s');
@@ -47,6 +52,8 @@ class DashboardController extends Controller
                                     ->orderBy('id', 'desc')->get();
 
                 } elseif ($duration === 'six_months') {
+                    $analytics_title = 'Biannually Analytics';
+                    $compear = '6 month';
                     $firstDayOfCurrentMonth =  Carbon::now()->subMonth(6)->startOfMonth()->format('Y-m-d H:i:s');
                     $lastDayOfCurrentMonth =  Carbon::now()->startOfMonth()->format('Y-m-d H:i:s');
                     $firstDayOfPreviousMonth = Carbon::now()->subMonth(12)->startOfMonth()->format('Y-m-d H:i:s');
@@ -55,6 +62,7 @@ class DashboardController extends Controller
                                 ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])
                                 ->orderBy('id', 'desc')->get();
                 } elseif ($duration === 'one_year') {
+                   
                     $firstDayOfCurrentMonth =  Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
                     $lastDayOfCurrentMonth =  Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
                     $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -81,7 +89,7 @@ class DashboardController extends Controller
               $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
           }
           $formattedPercentageChangeOfEarning = round($percentageChange, 2);
-           if ($request->has('duration')) {
+            if ($request->has('duration')) {
             $duration = $request->query('duration');
             $currentDate = Carbon::now();
             $currentMonthStartDate = $currentDate->startOfMonth();
@@ -98,6 +106,7 @@ class DashboardController extends Controller
                     ->whereBetween('created_at', [$previousMonthsAgoStartDate, $threeMonthsAgoStartDate])
                     ->get();
             } elseif ($duration === 'one_year') {
+                
                 $firstdayOfCurrentYear = $currentDate->startOfYear()->format('Y-m-d H:i:s');
                 $lastDayOfCurrentYear = $currentDate->endOfYear()->format('Y-m-d H:i:s');
                 $firstDayOfPreviousYear = $currentDate->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -281,7 +290,7 @@ class DashboardController extends Controller
         }
  
 
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear'));
 
     }
 

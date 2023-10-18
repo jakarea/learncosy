@@ -37,7 +37,8 @@ class AdminHomeController extends Controller
         $users = 0;
         $enrolmentStudents = 0;
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-
+        $analytics_title = 'Yearly Analytics';
+        $compear = '1 year';
         $TopPerformingCourses = Course::select(
             'courses.id',
             'courses.title',
@@ -146,6 +147,8 @@ class AdminHomeController extends Controller
         if ($request->has('duration')) {
             $duration = $request->query('duration');
             if ($duration === 'one_month') {
+                $analytics_title = 'Monthly Analytics';
+                $compear = ' month';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -159,6 +162,8 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStartDateFormatted, $previousMonthEndDate])->count();
             } elseif ($duration === 'three_months') {
+                $analytics_title = 'Quarterly Analytics';
+                $compear = '3 months';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -170,6 +175,8 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $threeMonthsAgoEndDate])->count();
             } elseif ($duration === 'six_months') {
+                $analytics_title = 'Biannually Analytics';
+                $compear = '6 months';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -181,6 +188,7 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$previousSixMonthsAgoStartDate, $sixMonthsAgoStartDate])->count();
             } elseif ($duration === 'one_year') {
+                $compear = ' year';
                 $firstdayOfCurrentYear = Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
                 $lastDayOfCurrentYear = Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
                 $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -297,7 +305,9 @@ class AdminHomeController extends Controller
                 'percentageChangeOfStudent',
                 'percentageChangeOfInstructor',
                 'percentageChangeOfCourse',
-                'earningParcentage'
+                'earningParcentage',
+                'analytics_title',
+                'compear'
             )
         );
     }

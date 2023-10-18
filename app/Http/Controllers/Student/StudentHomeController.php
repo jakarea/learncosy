@@ -199,14 +199,18 @@ class StudentHomeController extends Controller
         //start group file
         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
         $group_files = [];
+       
         foreach($lesson_files as $lesson_file){
-            $file_name = $lesson_file->file;
-            $file_arr = explode('.', $lesson_file->file);  
-            $extention = $file_arr[1];
-            if (!in_array($extention, $group_files)) {
-                $group_files[] = $extention;
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $lesson_file->file);  
+                $extention = $file_arr[1];
+                if (!in_array($extention, $group_files)) {
+                    $group_files[] = $extention;
+                }
             }
         }
+        
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -236,18 +240,30 @@ class StudentHomeController extends Controller
     public function fileDownload($course_id,$file_extension){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
-            $file_name = $lesson_file->file;
-            $file_arr = explode('.', $lesson_file->file);  
-            $extension = $file_arr[1];
-            if($file_extension == $extension){
-                $files[] = public_path('uploads/lessons/'.$file_name);
-           }
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $file_name); 
+                $extension = $file_arr['1'];
+                if($file_extension == $extension){
+                    $files[] = public_path('uploads/lessons/'.$file_name);
+               }
+            }
         }
+
         $zip = new ZipArchive;
         $zipFileName = $file_extension.'_'.time().'.zip';
+        $is_have_file = '';
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             foreach ($files as $file) {
-                $zip->addFile($file, basename($file));
+                if(file_exists($file)){
+                    $zip->addFile($file, basename($file));
+                }else{
+                   $is_have_file = 'There are no files in your storage!!!!';
+                   break;
+                }
+            }
+            if(!empty($is_have_file)){
+              return $is_have_file;  
             }
             $zip->close();
 
