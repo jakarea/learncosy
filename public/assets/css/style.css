@@ -677,6 +677,16 @@ main {
   transform: scale(1);
 }
 
+.clickable-div {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.clicked {
+    background-color: lightgray;
+}
+
 .product-filter-wrapper {
   margin-top: 1.2rem;
   margin-bottom: 1.5rem;
