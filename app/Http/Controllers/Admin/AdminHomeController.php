@@ -362,7 +362,7 @@ class AdminHomeController extends Controller
 
         if ($duration == null) {
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-            ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+            ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
             ->first();
         } elseif ($duration == 'one_month') {
             $currentDate = Carbon::now();
@@ -370,7 +370,7 @@ class AdminHomeController extends Controller
             $previousMonthEndDate = $currentDate->copy()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
                 ->whereBetween('subscriptions.created_at', [$previousMonthStartDate, $previousMonthEndDate])
-                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
                 ->first();
         } elseif ($duration == 'three_months') {
             $currentDate = Carbon::now();

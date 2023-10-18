@@ -503,14 +503,9 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // course bundle page routes for admin
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/datatable', 'bundleDataTable')->name('admin.bundle.data.table');
-            Route::get('/create', 'create');
-            Route::post('/create', 'store')->name('admin.course.bundle.store');
-            Route::get('/{slug}', 'show')->name('admin.course.bundle.show');
-            Route::get('/{slug}/edit', 'edit')->name('admin.course.bundle.edit');
-            Route::post('/{slug}/edit', 'update')->name('admin.course.bundle.update');
-            Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.bundle.destroy');
+            Route::get('/', 'index'); 
+            Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show'); 
+            Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {

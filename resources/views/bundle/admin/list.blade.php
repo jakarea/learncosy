@@ -75,8 +75,9 @@
                                                 <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">View</a>
                                                 </li> 
                                                 <li>
-                                                    <form method="POST" class="d-inline" action="{{ route('admin.delete.bundle.course', $course->id) }}">
+                                                    <form method="POST" class="d-inline" action="{{ route('admin.course.bundle.destroy', $course->id) }}">
                                                         @csrf 
+                                                        @method('DELETE')
                                                         <button type="submit" class="dropdown-item btn text-danger">Delete
                                                         </button>
                                                     </form>
