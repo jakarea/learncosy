@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         ini_set('post_max_size', '1G');
         ini_set('upload_max_filesize', '1G');
 
-        // \Debugbar::disable();
+        if(env('APP_DEBUG',false))
+            \Debugbar::enable();
     }
 }

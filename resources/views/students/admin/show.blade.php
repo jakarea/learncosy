@@ -74,7 +74,7 @@
                         @elseif ($domain == 'instagram')
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
-                        <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/icons/x.svg') }}" width="22" alt="x" class="img-fluid">
                         @elseif ($domain == 'facebook')
                         <i class="fa-brands fa-facebook-square" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
                         height: 24px;
@@ -84,7 +84,7 @@
                         @endif 
                         <div class="media-body">
                             <h6>{{ $domain ? $domain : '--' }}</h6>
-                            <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
+                            <a target="_blank" href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '--' }}</a>
                         </div>
                     </div>
                     @endforeach

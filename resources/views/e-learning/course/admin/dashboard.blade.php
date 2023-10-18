@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="yearly-analitics">
-                    <h1>Yearly Analytics</h1>
+                    <h1>{{ $analytics_title }}</h1>
                     {{-- yearly filter box --}}
                     <div class="dropdown">
                         <button type="button" class="btn btn-filter" data-bs-toggle="dropdown" aria-expanded="false"
@@ -50,7 +50,7 @@
                     <p> <b style="color: {{ $percentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfStudent >= 0 ? '+' . $percentageChangeOfStudent :
                             $percentageChangeOfStudent }}%</b>
-                        VS last month</p>
+                        VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -66,7 +66,7 @@
                     </div>
                     <p><b style="color: {{ $percentageChangeOfInstructor >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfInstructor >= 0 ? '+' . $percentageChangeOfInstructor :
-                            $percentageChangeOfInstructor }}%</b> VS last month</p>
+                            $percentageChangeOfInstructor }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -82,7 +82,7 @@
                     </div>
                     <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfCourse >= 0 ? '+' . $percentageChangeOfCourse :
-                            $percentageChangeOfCourse }}%</b> VS last month</p>
+                            $percentageChangeOfCourse }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -98,7 +98,7 @@
                     </div>
                     <p> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
                             '+' . $earningParcentage : $earningParcentage }}%</b>
-                        VS last month</p>
+                        VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -114,7 +114,7 @@
                                 <h5>Revenue</h5>
                                 <p class="common-para ms-3"> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
                                     '+' . $earningParcentage : $earningParcentage }}%</b>
-                                VS last month</p>
+                                VS last {{$compear}}</p>
                             </div>
                         </div>
                     </div>
