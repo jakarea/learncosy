@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Admin\LessonManagementController;
@@ -58,6 +59,8 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 //End Notification
 
 // custom auth screen route
+Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
+
 Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
@@ -152,13 +155,6 @@ Route::get('/home', function (Request $request) {
 
 })->name('home')->middleware('auth');
 
-// Route::group(['prefix' => 'home'], function () {
-//     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
-//      Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
-//     Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
-//     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
-//     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
-// });
 // auth route
 Auth::routes(['verify' => true]);
 

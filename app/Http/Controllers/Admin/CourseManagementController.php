@@ -116,8 +116,8 @@ class CourseManagementController extends Controller
                    break;
                 }
             }
-            if(!empty($is_have_file)){
-              return $is_have_file;  
+            if(!empty($is_have_file)){ 
+              return redirect('admin/courses')->with('error', $is_have_file);
             }
             $zip->close();
 

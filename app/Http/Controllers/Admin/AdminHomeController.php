@@ -606,4 +606,5 @@ class AdminHomeController extends Controller
         }
         return $course_wise_payments;
     } 
+
 }

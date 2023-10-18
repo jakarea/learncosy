@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('vimeo_data');
             $table->string('stripe_secret_key')->nullable();
             $table->string('stripe_public_key')->nullable();
+            $table->string('session_id')->nullable();
             $table->string('status')->default('active');
             $table->rememberToken();
             $table->timestamps();

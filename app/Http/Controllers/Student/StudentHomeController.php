@@ -262,7 +262,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-              return $is_have_file;  
+                return redirect('students/dashboard')->with('error', $is_have_file);  
             }
             $zip->close();
 
