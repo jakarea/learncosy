@@ -189,6 +189,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
 
+
     Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');
     });
@@ -445,6 +446,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
         Route::get('/top-perform/courses', 'perform');
+        
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin');
@@ -457,8 +459,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // admin instructor routes
         Route::prefix('instructor')->controller(InstructorController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/datatable', 'instructorDataTable')->name('instructor.data.table');
+            Route::get('/', 'index'); 
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('instructor.add');
             Route::get('/profile/{id}', 'show')->name('instructorProfile');
@@ -481,8 +482,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // course page routes for admin
         Route::prefix('courses')->controller(CourseManagementController::class)->group(function () {
             Route::get('/', 'index')->name('admin.courses');
-            // data table route
-            Route::get('/datatable', 'courseDataTable')->name('admin.courses.data.table');
+            Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('admin.file.download');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.course.store');
             Route::get('/{slug}', 'show')->name('admin.course.show');

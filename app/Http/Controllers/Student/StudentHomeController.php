@@ -228,7 +228,6 @@ class StudentHomeController extends Controller
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
         });
-       
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
@@ -412,6 +411,8 @@ class StudentHomeController extends Controller
                 $lesson->completed =  (int)$completed;
             }
         }
+
+ 
 
         if ($course) {
             return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber'));

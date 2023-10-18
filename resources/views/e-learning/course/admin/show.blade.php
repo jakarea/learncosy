@@ -54,17 +54,18 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
+                    @if(!empty($group_files))
                     <div class="download-files-box">
-                        <h4>Download Files</h4>
+                        <h4>Download Files </h4> 
                         <div class="files">
-                            <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
+                            @foreach($group_files as $fileExtension)
+                                <a href="{{ route('admin.file.download', [$course->id,$fileExtension]) }}">
+                                    {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
+                                </a>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
                     {{-- course review --}}
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -103,7 +104,7 @@ $i = 0;
                 <div class="course-outline-wrap">
                     <div class="header">
                         <h3>Modules</h3>
-                        <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
+                        <h6>{{ $totalModules }} Modules . {{ $totalLessons }} Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
@@ -143,11 +144,10 @@ $i = 0;
                 {{-- related course --}}
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
-
                     <div class="row">
                         @if (count($relatedCourses))
                         @foreach ($relatedCourses as $relatedCourse)
-                        <div class="col-md-6 col-12 col-lg-12 col-xl-12">
+                        <div class="col-md-6 col-12 col-lg-12 col-xl-12 mt-15">
                             {{-- item --}}
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
