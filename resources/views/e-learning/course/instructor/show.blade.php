@@ -54,17 +54,18 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
+                    @if(!empty($group_files))
                     <div class="download-files-box">
-                        <h4>Download Files</h4>
+                        <h4>Download Files </h4> 
                         <div class="files">
-                            <a href="#">Excel <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">Word <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
-                            <a href="#">PDF <img src="{{ asset('latest/assets/images/icons/download.svg') }}"
-                                    alt="clock" title="120MB" class="img-fluid"></a>
+                            @foreach($group_files as $fileExtension)
+                                <a href="{{ route('instructor.file.download', [$course->id,$fileExtension]) }}">
+                                    {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
+                                </a>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
                     {{-- course review --}}
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -102,7 +103,7 @@ $i = 0;
                 <div class="course-outline-wrap">
                     <div class="header">
                         <h3>Modules</h3>
-                        <h6>{{ count($course->modules) }} Modules . 0 Lessons</h6>
+                        <h6>{{ $totalModules }} Modules . {{$totalLessons}} Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)

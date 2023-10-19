@@ -137,7 +137,6 @@ class StudentHomeController extends Controller
                 ->selectRaw('COUNT(checkouts.course_id) as course_count')
                 ->groupBy('checkouts.course_id')
                 ->orderBy('course_count', 'desc');
-
                  
             } elseif ($status == 'newest') {
                 $enrolments->orderBy('id', 'desc');

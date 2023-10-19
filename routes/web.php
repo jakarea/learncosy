@@ -227,11 +227,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course page routes
         Route::prefix('courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'index')->name('instructor.courses');
-            //Route::get('/create', 'create');
-            // Route::post('/create', 'store')->name('course.store');
-            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
-            // Route::get('/{slug}/edit', 'edit')->name('course.edit');
-            // Route::post('/{slug}/edit', 'update')->name('course.update');
+            Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('instructor.file.download');
+            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+'); 
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
         });
 
