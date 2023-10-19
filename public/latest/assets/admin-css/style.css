@@ -299,3 +299,9 @@ body {
 .fl-main-container .fl-container.fl-success .fl-progress-bar .fl-progress {
   background-color: #294CFF !important;
 }
+
+@media (min-width: 320px) and (max-width: 574px) {
+  .filter-dropdown-box {
+    margin-bottom: 1rem;
+  }
+}

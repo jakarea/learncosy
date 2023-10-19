@@ -41,10 +41,10 @@ $i = 0;
                             <h1>{{ $course->title }}</h1>
                             <p class="text-capitalize">{{ $course->user->name }} . {{ $course->user->user_role }}</p>
                         </div>
-                        <a href="#">
+                        {{-- <a href="#">
                             <img src="{{ asset('latest/assets/images/icons/favorit.svg') }}" alt="clock" title="12:00"
                                 class="img-fluid">
-                        </a>
+                        </a> --}}
                     </div>
                     {{-- course title --}}
                     <hr>

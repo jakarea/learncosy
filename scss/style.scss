@@ -240,7 +240,11 @@
 
 
 // responsive css start
-@include q.responsive(phone) {}
+@include q.responsive(phone) {
+    .filter-dropdown-box{
+        margin-bottom: 1rem;
+    }
+}
 
 @include q.responsive(landphone) {}
 

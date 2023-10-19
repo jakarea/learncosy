@@ -556,6 +556,23 @@
 }
 
 @media (min-width: 320px) and (max-width: 574px) {
+  .yearly-analitics {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .yearly-analitics h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .yearly-analitics .dropdown {
+    width: 100%;
+  }
+  .yearly-analitics .dropdown button {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
   .access-page-box .page-box {
     flex-direction: column;
     align-items: flex-start;
