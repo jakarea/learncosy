@@ -316,7 +316,6 @@ class AdminHomeController extends Controller
     {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-
         $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')

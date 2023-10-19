@@ -38,7 +38,16 @@ class BundleCourseManagementController extends Controller
                     ->groupBy('bundle_courses.id')
                     ->orderBy('total_star', 'desc');
             } elseif ($status == 'most_purchased') {
-                // Your code for most purchased
+
+                $bundleCourses->select('bundle_courses.*')
+                ->selectRaw('COUNT(checkouts.course_id) as course_count')
+                ->leftJoin('checkouts', function ($join) {
+                    $join->on('checkouts.course_id', '=', DB::raw("FIND_IN_SET(checkouts.course_id, bundle_courses.selected_course)"));
+                })
+                ->groupBy('bundle_courses.id')
+                ->orderBy('course_count', 'desc');
+
+
             } elseif ($status == 'newest') {
                 $bundleCourses->orderBy('id', 'desc');
             }
