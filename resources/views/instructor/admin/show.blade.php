@@ -104,7 +104,7 @@
                     <h4>Payment Log</h4> 
 
                     @if (count($subscription) > 0)
-                        @foreach($subscription as $key => $payment)
+                        @foreach($subscription->slice(0,3) as $key => $payment)
                             <div class="media flex-column"> 
                                 <div class="media-body mb-2">
                                     <h6>Payment ID:</h6>

@@ -17,7 +17,7 @@
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
                         <div class="row">
-                            <div class="col-xl-7 col-md-8">
+                            <div class="col-xl-9 col-lg-8 col-md-7">
                                 <div class="user-search-box-wrap">
                                     <div class="form-group">
                                         <i class="fas fa-search"></i>
@@ -27,7 +27,7 @@
                                     <input type="hidden" name="status" id="inputField">
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-md-4">
+                            <div class="col-xl-3 col-lg-4 col-md-5">
                                 <div class="filter-dropdown-box">
                                     <div class="dropdown">
                                         <button class="btn" type="button" data-bs-toggle="dropdown"
@@ -49,12 +49,12 @@
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </div>
-                            <div class="col-xl-2 ps-0 col-md-5">
+                            {{-- <div class="col-xl-2 ps-0 col-md-5">
                                 <div class="user-add-box text-xl-end mb-lg-3 mb-xl-0">
                                     <a href="{{ url('admin/courses') }}"><i
                                             class="fas fa-list me-2"></i> See all Courses</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
                 </div>
@@ -94,7 +94,6 @@
                                     @php
                                     $courseIds = explode(',', $course->selected_course); 
                                     $bundleSelected = App\Models\Course::whereIn('id', $courseIds)
-                                        ->where('user_id', Auth::user()->id)
                                         ->with('reviews')
                                         ->get();
                                 

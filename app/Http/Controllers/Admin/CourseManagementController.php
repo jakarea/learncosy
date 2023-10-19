@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\Module;
-use Illuminate\Support\Str; 
+use App\Models\Checkout;
 use App\Models\CourseReview;
+use App\Models\Module;
+use Illuminate\Support\Str;  
 use App\Mail\CourseUpdated;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
@@ -23,16 +24,32 @@ class CourseManagementController extends Controller
     public function index(){  
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $status = isset($_GET['status']) ? $_GET['status'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+
         $courses = Course::with('user','reviews')->where('status','published');
 
         if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
-        }
+        } 
 
         if ($status) {
             if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
+            }
+
+            if ($status == 'best_rated') { 
+                $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+                ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
+                ->groupBy('courses.id')
+                ->orderBy('avg_star', 'desc');
+            }
+
+            if ($status == 'most_purchased') {
+                $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                ->select('courses.*')
+                ->groupBy('courses.id')
+                ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+
             }
             
             if ($status == 'newest') {

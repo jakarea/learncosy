@@ -315,6 +315,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
+            Route::get('/{slug}/view', 'view'); 
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
             Route::get('/create', 'step2');

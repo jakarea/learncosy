@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Course;
+use App\Models\Checkout;
 
 class BundleCourse extends Model
 {
@@ -20,4 +22,15 @@ class BundleCourse extends Model
         'thumbnail', 
         'description'
     ];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'id', 'course_id');
+    }
+
+    // In Course model
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class, 'course_id', 'id');
+    }
 }
