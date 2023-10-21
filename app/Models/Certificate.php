@@ -15,4 +15,7 @@ class Certificate extends Model
         'logo',
         'signature',
     ];
+
+
+
 }
