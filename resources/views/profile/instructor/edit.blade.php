@@ -325,7 +325,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
                                     <div class="certificate-header-tab">
-                                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                        {{-- <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="pills-add_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
@@ -339,7 +339,7 @@
                                                     aria-selected="false"><i class="fas fa-plus"></i> Custom
                                                     Certificate</button>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                     <div class="cert-body-tab">
                                         <div class="tab-content" id="pills-tabContent">
@@ -352,7 +352,7 @@
                                                                 @csrf
                                                                 <div class="row">
                                                                     <div class="col-lg-9">
-                                                                        <div class="certificate-name">
+                                                                        {{-- <div class="certificate-name">
                                                                             <h6>Course/ Certificate Name </h6>
                                                                             <input type="text"
                                                                                 placeholder="Professional UI/UX Design Course"
@@ -384,7 +384,7 @@
                                                                                         alt="Color"
                                                                                         class="img-fluid"></a>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> --}}
                                                                         <div class="certificate-style-box">
                                                                             <h6>Select Certificate Style</h6>
 
@@ -406,8 +406,9 @@
                                                                                 <div class="media-body clickable-div" data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1</h6>
-                                                                                        <span>Active Certificate</span>
-                                                                                    </div>
+                                                                                        @if ($certificate && $certificate->style == 1)
+                                                                                            <span>Active Certificate</span>
+                                                                                        @endif                                                                                    </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
                                                                                         opties, mokkeljk te gebruken en
@@ -434,6 +435,9 @@
                                                                                 <div class="media-body clickable-div" data-value="2">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 2</h6>
+                                                                                        @if ($certificate && $certificate->style == 2)
+                                                                                            <span>Active Certificate</span>
+                                                                                        @endif
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -461,6 +465,9 @@
                                                                                 <div class="media-body clickable-div" data-value="3">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 3</h6>
+                                                                                        @if ($certificate && $certificate->style == 3)
+                                                                                            <span>Active Certificate</span>
+                                                                                        @endif
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -474,13 +481,8 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-3">
-                                                                        <div class="certificate-asset-upload">
+                                                                        {{-- <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                            {{-- <input type="file" name="favicon"
-                                                                                id="favicon1"
-                                                                                class="form-control d-none @error('favicon') is-invalid @enderror"
-                                                                                onchange="handleFileUpload(this, 'uploadedFileContainer1', 'file-upload-area1')"> --}}
-
                                                                                 <input type="file" name="logo" id="logoInput" accept="image/*"
                                                                                     onchange="previewLogo()"
                                                                                     class="form-control d-none @error('logo') is-invalid @enderror">
@@ -488,7 +490,7 @@
                                                                                 <label for="logoInput"
                                                                                     class="upload-media-box"
                                                                                     id="file-upload-area1">
-                                                                                    <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    <img src="{{ ($certificate && $certificate->logo) ? asset( $certificate->logo):asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                                         alt="Color"
                                                                                         class="img-fluid light-ele" id="logoPreview">
                                                                                     <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
@@ -497,12 +499,7 @@
                                                                                     <span>Click to upload</span> or drag and
                                                                                     drop SVG, PNG or JPG (max. 300x300px)
                                                                                 </label>
-
-
-                                                                            {{-- <div id="uploadedFileContainer1"
-                                                                                class="uploaded-file-container"></div> --}}
-
-                                                                        </div>
+                                                                        </div> --}}
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
                                                                             <input type="file" name="instructor_signature" id="signatureInput" accept="image/*"
@@ -510,7 +507,7 @@
                                                                                 class="form-control d-none @error('instructor_signature') is-invalid @enderror">
 
                                                                             <label for="signatureInput" class="upload-media-box" id="signature-upload-area">
-                                                                                <img src="{{ asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview">
+                                                                                <img src="{{ ($certificate && $certificate->signature) ?  asset($certificate->signature): asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview">
                                                                                 <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="Color" class="img-fluid dark-ele" id="signaturePreview">
                                                                                 <span>Click to upload Instructor Signature</span>
                                                                                 <span>or drag and drop SVG, PNG or JPG (max. 300x300px)</span>
