@@ -361,14 +361,16 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
             Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
         });
-    });
-    // SubscriptionController
-    Route::prefix('subscription')->controller(SubscriptionController::class)->group(function () {
-        Route::get('/', 'index')->name('instructor.subscription');
-        Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
-        Route::get('success', 'success')->name('instructor.subscription.success');
-        Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
-    });
+    }); 
+});
+
+// SubscriptionController
+Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
+    Route::get('/', 'index')->name('instructor.subscription');
+    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    Route::get('success', 'success')->name('instructor.subscription.success');
+    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
+    Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
 });
 
 // review page routes
@@ -378,10 +380,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
-/* ========================================================== */
-Route::get('/dashboard1', function () {
-    return 'Student dashboard!';
-});
+/* ========================================================== */ 
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes
@@ -393,6 +392,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/home', 'catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
+    Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
     Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');

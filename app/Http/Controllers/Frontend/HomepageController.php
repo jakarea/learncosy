@@ -31,16 +31,16 @@ class HomepageController extends Controller
      public function instructorHome()
      {
          // get subdomain from subdomain
-         $url = env('LIVE_DOAMIN', 'localhost');
+         $domain = env('APP_DOMAIN', 'learncosy.com');
          $request = app('request');
          $subdomain = $request->getHost(); // Get the host (e.g., "instructor.learncosy.com")
          $segments = explode('.', $subdomain); // Split the host into segments
          $subdomain = $segments[0]; // Get the first segment as the subdomain
          
-         if ( request()->getHost() != 'app.'.$url && $subdomain != 'app' && !empty($subdomain) ) {
+         if ( request()->getHost() != 'app.'.$domain && $subdomain != 'app' && !empty($subdomain) ) {
              $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
              if(!$instructors){
-                 return redirect('//app.'.$url.'/login');
+                 return redirect('//app.'.$domain.'/login');
              }
              // filter course
              $title = isset($_GET['title']) ? $_GET['title'] : '';
@@ -89,7 +89,7 @@ class HomepageController extends Controller
  
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students'));
             }else{
-             return redirect('//app.'.$url.'/login');
+             return redirect('//app.'.$domain.'/login');
          }
      }
 

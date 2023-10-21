@@ -182,7 +182,7 @@ class InstructorController extends Controller
              @unlink($instructorOldAvatar);
          }
          
-         \App\Models\BundleCourse::where('user_id', $id)->delete();
+         \App\Models\BundleCourse::where('instructor_id', $id)->delete();
          \App\Models\Checkout::where('instructor_id', $id)->delete();
          \App\Models\Course::where('user_id', $id)->delete();
          \App\Models\CourseActivity::where('user_id', $id)->delete();

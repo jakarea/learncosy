@@ -15,6 +15,7 @@ use App\Models\BundleCourse;
 use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
+use Carbon\CarbonInterval;
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\PDF;
 use Intervention\Image\Facades\Image;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Storage;
 // use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use File;
+use ZipArchive;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 class StudentHomeController extends Controller
 {
     // dashboard
@@ -30,10 +35,6 @@ class StudentHomeController extends Controller
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
-
-        // dummy data start - need to remove later
-        $totalTimeSpend = 6000;
-         // dummy data end - need to remove later
 
         $totalHours = floor($totalTimeSpend / 3600);
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
@@ -45,6 +46,7 @@ class StudentHomeController extends Controller
         )
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
+
         ->get();
 
         // dummy data start - need to remove later
@@ -91,7 +93,7 @@ class StudentHomeController extends Controller
             "time_spent" => "4"
         ];
 
-         // dummy data end - need to remove later
+        // ->get();
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
@@ -132,11 +134,25 @@ class StudentHomeController extends Controller
                     $completedCount++;
                 }
             }
+
         }
 
-        // return $timeSpentData;
+        // Avr hr
+        $sum_of_duration = CourseActivity::selectRaw('SUM(duration) as total_duration')
+                                            ->where('user_id', auth()->user()->id)
+                                            ->first();
+        $total_hr = 0;
+        $total_min = 0;
+        $total_hr = floor($sum_of_duration->total_duration / 3600);
+        $total_min = floor(($sum_of_duration->total_duration % 3600) / 60);
+        // Enrolled
+        $total_enrolled = DB::table('course_user')
+                    ->where('user_id', auth()->user()->id)
+                    ->selectRaw('COUNT(id) as enrolled')
+                    ->first();
+        $enrolled = $total_enrolled->enrolled;
 
-        return view('e-learning/course/students/dashboard', compact('enrolments','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
+        return view('e-learning/course/students/dashboard', compact('enrolments','total_hr','total_min','enrolled','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
     }
 
     // dashboard
@@ -229,6 +245,22 @@ class StudentHomeController extends Controller
     {
 
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        //start group file
+        $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
+        $group_files = [];
+
+        foreach($lesson_files as $lesson_file){
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $lesson_file->file);
+                $extention = $file_arr[1];
+                if (!in_array($extention, $group_files)) {
+                    $group_files[] = $extention;
+                }
+            }
+        }
+
+        //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
         ->inRandomOrder()
@@ -246,11 +278,84 @@ class StudentHomeController extends Controller
             return count($module->lessons);
         });
 
-
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
+            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
+        }
+    }
+
+    public function fileDownload($course_id,$file_extension){
+        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
+        foreach($lesson_files as $lesson_file){
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $file_name);
+                $extension = $file_arr['1'];
+                if($file_extension == $extension){
+                    $files[] = public_path('uploads/lessons/'.$file_name);
+               }
+            }
+        }
+
+        $zip = new ZipArchive;
+        $zipFileName = $file_extension.'_'.time().'.zip';
+        $is_have_file = '';
+        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+            foreach ($files as $file) {
+                if(file_exists($file)){
+                    $zip->addFile($file, basename($file));
+                }else{
+                   $is_have_file = 'There are no files in your storage!!!!';
+                   break;
+                }
+            }
+            if(!empty($is_have_file)){
+              return $is_have_file;
+            }
+            $zip->close();
+
+            // Set appropriate headers for the download
+            header('Content-Type: application/zip');
+            header("Content-Disposition: attachment; filename=" . $zipFileName);
+            header('Content-Length: ' . filesize($zipFileName));
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            readfile($zipFileName);
+
+            // Delete the zip file after download
+            unlink($zipFileName);
+            exit;
+        } else {
+            // Handle the case when the zip file could not be created
+            echo 'Failed to create the zip file.';
+        }
+    }
+
+    public function cousreDownloadPDF($course_id){
+        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
+        foreach($lesson_files as $lesson_file){
+            $file_name = $lesson_file->file;
+            $file_arr = explode('.', $lesson_file->file);
+            $extention = $file_arr[1];
+            if($extention == 'pdf'){
+                $pdfFiles[] = $file_name;
+           }
+        }
+
+        $zipFileName = 'PDF_'.time().'.zip';
+        $zip = new ZipArchive;
+
+        if ($zip->open(public_path('uploads/lessons/'.$zipFileName), ZipArchive::CREATE) === TRUE) {
+            foreach ($pdfFiles as $file) {
+                if (file_exists(public_path('uploads/lessons/'.$file))) {
+                    $zip->addFile(public_path('uploads/lessons/'.$file), basename($file));
+                }
+            }
+            $zip->close();
+            return response()->download(public_path('uploads/lessons/'.$zipFileName))->deleteFileAfterSend(true);
+        } else {
+            // handle error here
         }
     }
 
@@ -351,9 +456,6 @@ class StudentHomeController extends Controller
 
         return $pdf->download('certificate.pdf');
     }
-
-
-
 
     // course overview
     public function overview($slug)

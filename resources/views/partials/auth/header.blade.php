@@ -30,19 +30,11 @@
                   </ul>
               </div>
               <!-- header navbar @E -->
-  
-              <!-- header right icon @S -->
+   
               <div class="header-right-icon-wrap d-none d-sm-block">
-                  <ul class="icon-nav">
-                      {{-- <li>
-                          <div class="dark-mode-bttn">
-                              <i class="fa-solid fa-moon"></i>
-                              <span>Dark</span>
-                          </div>
-                      </li>  --}}
+                  <ul class="icon-nav"> 
                   </ul>
-              </div>
-              <!-- header right icon @E -->
+              </div> 
             </div>
         </div>
       </div>

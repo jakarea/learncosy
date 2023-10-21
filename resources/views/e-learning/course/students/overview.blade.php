@@ -214,10 +214,9 @@
             </div>
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
-                    <div class="course-main-thumb">
-                        <!-- <img src="{{asset($course->thumbnail)}}" alt="Course" class="img-fluid"> -->
+                    <div class="course-main-thumb"> 
                         @if ($promo_video_link != '')
-                            <iframe width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
                         @endif
                         <div class="d-flex justify-content-between align-items-center">
                             <div>

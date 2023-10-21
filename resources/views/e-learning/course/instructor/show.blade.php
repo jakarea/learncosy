@@ -102,7 +102,7 @@ $i = 0;
                 <div class="course-outline-wrap">
                     <div class="header">
                         <h3>Modules</h3>
-                        <h6>{{ count($course->modules) }} Modules . 23 Lessons</h6>
+                        <h6>{{ count($course->modules) }} Modules . 0 Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
@@ -145,7 +145,7 @@ $i = 0;
                                         @endforeach
                                     </ul>
                                     <div class="text-center add-lesson-bttn">
-                                        <a href="{{ url('instructor/courses/create', $course->id) }}"
+                                        <a href="{{ url('instructor/lessons/create') }}"
                                             class="add_lesson_bttn">Add Lesson</a>
                                     </div>
                                 </div>
@@ -153,8 +153,7 @@ $i = 0;
                         </div>
                         @endforeach
                         <div class="text-center add-lesson-bttn mt-2">
-                            <a href="{{ url('instructor/courses/create/', $course->id) }}" class="add_lesson_bttn">Add
-                                Module</a>
+                            <a href="{{ url('instructor/modules/create') }}" class="add_lesson_bttn">Add Module</a>
                         </div>
                     </div>
                 </div>

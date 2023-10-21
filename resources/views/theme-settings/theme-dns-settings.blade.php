@@ -285,8 +285,7 @@ Account Management
                                                                 </label>
 
                                                                 <div>
-                                                                    <input type="file" name="lp_bg_image"
-                                                                        id="lp_bg_image" accept="image/*"
+                                                                    <input type="file" name="lp_bg_image" id="lp_bg_image" accept="image/*"
                                                                         class="d-none @error('lp_bg_image') is-invalid @enderror">
                                                                     <span class="invalid-feedback">
                                                                         @error('lp_bg_image')

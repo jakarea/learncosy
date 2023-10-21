@@ -37,7 +37,8 @@ class AdminHomeController extends Controller
         $users = 0;
         $enrolmentStudents = 0;
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-
+        $analytics_title = 'Yearly Analytics';
+        $compear = '1 year';
         $TopPerformingCourses = Course::select(
             'courses.id',
             'courses.title',
@@ -140,12 +141,14 @@ class AdminHomeController extends Controller
 
         $activeInActiveStudents = $this->getActiveInActiveStudents($enrolments);
         $earningByDates = $this->getEarningByDates();
-        $earningByMonth = $this->getEarningByMonth();
+       $earningByMonth = $this->getEarningByMonth();
 
 
         if ($request->has('duration')) {
             $duration = $request->query('duration');
             if ($duration === 'one_month') {
+                $analytics_title = 'Monthly Analytics';
+                $compear = ' month';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -159,6 +162,8 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$currentMonthStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$previousMonthStartDateFormatted, $previousMonthEndDate])->count();
             } elseif ($duration === 'three_months') {
+                $analytics_title = 'Quarterly Analytics';
+                $compear = '3 months';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -170,6 +175,8 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $threeMonthsAgoEndDate])->count();
             } elseif ($duration === 'six_months') {
+                $analytics_title = 'Biannually Analytics';
+                $compear = '6 months';
                 $currentDate = Carbon::now();
                 $currentMonthStartDate = $currentDate->startOfMonth()->format('Y-m-d H:i:s');
                 $currentMonthEndDate = $currentDate->endOfMonth()->format('Y-m-d H:i:s');
@@ -181,6 +188,7 @@ class AdminHomeController extends Controller
                 $currentMonthCourseCount = Course::whereBetween('created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])->count();
                 $previousMonthCourseCount = Course::whereBetween('created_at', [$previousSixMonthsAgoStartDate, $sixMonthsAgoStartDate])->count();
             } elseif ($duration === 'one_year') {
+                $compear = ' year';
                 $firstdayOfCurrentYear = Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
                 $lastDayOfCurrentYear = Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
                 $firstDayOfPreviousYear = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -274,12 +282,8 @@ class AdminHomeController extends Controller
                 $courses->where('courses.created_at', '>=', $today->subYear(1));
             }
         }
-
-        $courses = $courses->get();
-
-        // static monthly earning just for show the graph - need to remove later (start)
-        $earningByMonth = [2,4,6,2,1,9,7,5,5,3];
-        // static monthly earning just for show the graph - need to remove later (end)
+        
+        $courses = $courses->get();    
 
         return view(
             'e-learning/course/admin/dashboard',
@@ -301,7 +305,9 @@ class AdminHomeController extends Controller
                 'percentageChangeOfStudent',
                 'percentageChangeOfInstructor',
                 'percentageChangeOfCourse',
-                'earningParcentage'
+                'earningParcentage',
+                'analytics_title',
+                'compear'
             )
         );
     }
@@ -342,20 +348,18 @@ class AdminHomeController extends Controller
 
     private function getEarningByMonth()
     {
-        $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-        ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price']);
+        // $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
+        // ->get(['subscriptions.start_at','subscriptions.created_at', 'subscription_packages.sales_price','subscription_packages.regular_price']);
+
+        $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')->get();
 
         $curentMonthNumber = date('n');
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
         // Iterate through the data array
-        foreach ($data as $item) {
-            // print_r($item);
-            // Extract the month from the created_at value
+        foreach ($data as $item) { 
             $createdAt = Carbon::parse($item['created_at']);
-            $month = intval($createdAt->format('m'));
-
-            // Add the amount to the corresponding month's sum
+            $month = intval($createdAt->format('m')); 
             $monthlySums[$month - 1] += $item['amount'];
         }
 
@@ -449,7 +453,6 @@ class AdminHomeController extends Controller
 
     }
 
-
     private function getEarningParcentageViaSubscription($duration)
     {
         $currentMonthStart = $this->currentMonthStart;
@@ -522,11 +525,6 @@ class AdminHomeController extends Controller
         }
         return (int) $percentageChange;
     }
-
-
-
-
-
 
     private function getActiveInActiveStudents($data)
     {
@@ -607,29 +605,5 @@ class AdminHomeController extends Controller
             }
         }
         return $course_wise_payments;
-    }
-
-    // public function dashboard(){
-    //     $courses = 0;
-    //     $users = 0;
-    //     $enrolmentStudents = 0;
-
-    //     $courses = Course::count();
-    //     $users = User::where('user_role', 'students')->orWhere('user_role', 'instructor')->count();
-    //     $enrolmentStudents = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->count();
-
-    // $userCounts = User::select('user_role', \DB::raw('count(*) as total'))
-    //     ->groupBy('user_role')
-    //     ->pluck('total', 'user_role');
-
-    //     foreach ($userCounts as $role => $count) {
-    //         if($role == 'student')
-    //             $students = $count;
-
-    //         if($role == 'instructor')
-    //             $instructors = $count;
-    //     }
-
-    //     return view('e-learning/course/admin/dashboard',compact('courses','users','enrolmentStudents'));
-    // }
+    } 
 }

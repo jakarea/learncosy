@@ -26,15 +26,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         $this->configureRateLimiting();
 
         $this->routes(function () {
-
+            $domain = env('APP_DOMAIN', 'learncosy.com');
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::domain('{instructor}.' . env('APP_DOMAIN'))
+            Route::domain('{instructor}.' . $domain)
                 ->middleware('web')
                 ->namespace('App\Http\Controllers\Instructor')
                 ->group(base_path('routes/instructor.php'));

@@ -1,7 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title')
-Home Page
-@endsection
+@section('title','Admin Dashboard')
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
@@ -16,7 +14,7 @@ Home Page
         <div class="row">
             <div class="col-12">
                 <div class="yearly-analitics">
-                    <h1>Yearly Analytics</h1>
+                    <h1>{{ $analytics_title }}</h1>
                     {{-- yearly filter box --}}
                     <div class="dropdown">
                         <button type="button" class="btn btn-filter" data-bs-toggle="dropdown" aria-expanded="false"
@@ -52,7 +50,7 @@ Home Page
                     <p> <b style="color: {{ $percentageChangeOfStudent >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfStudent >= 0 ? '+' . $percentageChangeOfStudent :
                             $percentageChangeOfStudent }}%</b>
-                        VS last month</p>
+                        VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -68,7 +66,7 @@ Home Page
                     </div>
                     <p><b style="color: {{ $percentageChangeOfInstructor >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfInstructor >= 0 ? '+' . $percentageChangeOfInstructor :
-                            $percentageChangeOfInstructor }}%</b> VS last month</p>
+                            $percentageChangeOfInstructor }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -84,7 +82,7 @@ Home Page
                     </div>
                     <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
                             $percentageChangeOfCourse >= 0 ? '+' . $percentageChangeOfCourse :
-                            $percentageChangeOfCourse }}%</b> VS last month</p>
+                            $percentageChangeOfCourse }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -100,7 +98,7 @@ Home Page
                     </div>
                     <p> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
                             '+' . $earningParcentage : $earningParcentage }}%</b>
-                        VS last month</p>
+                        VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -116,7 +114,7 @@ Home Page
                                 <h5>Revenue</h5>
                                 <p class="common-para ms-3"> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
                                     '+' . $earningParcentage : $earningParcentage }}%</b>
-                                VS last month</p>
+                                VS last {{$compear}}</p>
                             </div>
                         </div>
                     </div>
@@ -358,15 +356,12 @@ Home Page
         });
 </script>
 
-
-
 <script>
     $(document).ready(function() {
             $(".filter-option").click(function(e) {
                 e.preventDefault();
                 var duration = $(this).data("duration");
-
-                // Update the URL with the selected filter duration as a query parameter
+ 
                 var currentUrl = window.location.href;
                 var updatedUrl = updateQueryStringParameter(currentUrl, 'duration', duration);
                 history.pushState({

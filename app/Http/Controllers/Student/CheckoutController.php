@@ -63,7 +63,7 @@ class CheckoutController extends Controller
                     'unit_amount' => $course_price * 100,
                     'product_data' => [
                         'name' => $course->title,
-                        'images' => [asset('assets/images/courses/' . $course->thumbnail)],
+                        'images' => [asset('uploads/courses/' . $course->thumbnail)],
                     ],
                 ],
                 'quantity' => 1,
@@ -116,7 +116,7 @@ class CheckoutController extends Controller
                     'unit_amount' => $course_price * 100,
                     'product_data' => [
                         'name' => $courseNames,
-                        'images' => [asset('assets/images/courses/new-budle-course-64cb5712834ef.jpg')],
+                        'images' => [asset('uploads/courses/new-budle-course-64cb5712834ef.jpg')],
                     ],
                 ],
                 'quantity' => 1,

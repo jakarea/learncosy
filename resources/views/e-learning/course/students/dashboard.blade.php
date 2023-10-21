@@ -1,6 +1,6 @@
 @extends('layouts/latest/students')
 @section('title')
-Students Dashboard
+Student Dashboard
 @endsection
 
 {{-- page style @S --}}
@@ -41,8 +41,15 @@ Students Dashboard
                 <div class="status-card-box">
                     <p>Course in Progress</p>
                     <div class="d-flex">
-                        <h5>0</h5>
-                        <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid"> 100%</span>
+                        <h5>{{ $inProgressCount }}</h5>
+                        @php 
+                            $totalCoureses = count($enrolments);
+                            $progPercentage = ($inProgressCount / $totalCoureses) * 100;
+                        @endphp 
+                        <span>
+                            <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
+                            {{$progPercentage}}%
+                        </span>
                     </div>
                 </div>
             </div>
@@ -50,9 +57,15 @@ Students Dashboard
                 <div class="status-card-box">
                     <p>Completed Course</p>
                     <div class="d-flex">
-                        <h5>0</h5>
-                        <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                class="img-fluid"> 100%</span>
+                        <h5>{{ $completedCount }}</h5>
+                        @php 
+                            $totalCoureses = count($enrolments);
+                            $cmpltPercentage = ($completedCount / $totalCoureses) * 100;
+                        @endphp 
+                        <span>
+                            <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
+                            {{$cmpltPercentage}}%
+                        </span>
                     </div>
                 </div>
             </div>
@@ -69,7 +82,7 @@ Students Dashboard
                                 src="{{ asset('latest/assets/images/icons/arrow-down.svg') }}" alt="Down"
                                 class="img-fluid">
                                 @endif
-                                {{ abs($percentageChange) }}%
+                                {{ number_format(abs($percentageChange), 2) }}%
                         </span>
                     </div>
                 </div>
@@ -127,11 +140,11 @@ Students Dashboard
                                 <p>Rank</p>
                             </li>
                             <li>
-                                <h6>2h</h6>
+                                <h6>{{ $total_hr }}h:{{ $total_min }}m</h6>
                                 <p>Avr. hour</p>
                             </li>
                             <li>
-                                <h6>12</h6>
+                                <h6>{{ $enrolled }}</h6>
                                 <p>Enrolled</p>
                             </li>
                         </ul>
