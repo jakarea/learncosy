@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Certificate;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Checkout;
@@ -41,10 +42,14 @@ class Course extends Model
         'curriculum',
         'objective_details',
     ];
-    
+
 
     public function user(){
         return $this->hasOne(User::class,'id','user_id');
+    }
+
+    public function certificate(){
+        return $this->hasOne(Certificate::class,'instructor_id','user_id');
     }
 
     public function modules(){

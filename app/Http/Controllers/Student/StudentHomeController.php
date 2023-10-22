@@ -8,20 +8,21 @@ use App\Models\Lesson;
 use App\Models\course_like;
 use App\Models\Module;
 use App\Models\Checkout;
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\CourseLog;
 use App\Models\BundleCourse;
 use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
-use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\PDF;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 use File;
 use ZipArchive;
 use RecursiveIteratorIterator;
@@ -37,7 +38,7 @@ class StudentHomeController extends Controller
 
         $totalHours = floor($totalTimeSpend / 3600);
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
- 
+
 
         $timeSpentData = CourseActivity::select(
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),
@@ -45,7 +46,54 @@ class StudentHomeController extends Controller
         )
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
-        ->get(); 
+
+        ->get();
+
+        // dummy data start - need to remove later
+        $timeSpentData = [];
+
+        $timeSpentData[] = [
+            "month" => "Jan",
+            "time_spent" => "20"
+        ];
+        $timeSpentData[] = [
+            "month" => "Feb",
+            "time_spent" => "50"
+        ];
+        $timeSpentData[] = [
+            "month" => "Mar",
+            "time_spent" => "70"
+        ];
+        $timeSpentData[] = [
+            "month" => "Apr",
+            "time_spent" => "20"
+        ];
+        $timeSpentData[] = [
+            "month" => "May",
+            "time_spent" => "45"
+        ];
+        $timeSpentData[] = [
+            "month" => "Jun",
+            "time_spent" => "36"
+        ];
+        $timeSpentData[] = [
+            "month" => "Jul",
+            "time_spent" => "76"
+        ];
+        $timeSpentData[] = [
+            "month" => "Aug",
+            "time_spent" => "24"
+        ];
+        $timeSpentData[] = [
+            "month" => "Sep",
+            "time_spent" => "65"
+        ];
+        $timeSpentData[] = [
+            "month" => "Oct",
+            "time_spent" => "4"
+        ];
+
+        // ->get();
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
@@ -68,16 +116,16 @@ class StudentHomeController extends Controller
         } else {
             $percentageChange = 0;
         }
-         
+
         //  count course statics
         $notStartedCount = 0;
         $inProgressCount = 0;
         $completedCount = 0;
-        
+
         if ($enrolments) {
             foreach ($enrolments as $enrolment) {
                 $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
-                
+
                 if ($allCourses == 0) {
                     $notStartedCount++;
                 } elseif ($allCourses > 0 && $allCourses < 99) {
@@ -86,8 +134,9 @@ class StudentHomeController extends Controller
                     $completedCount++;
                 }
             }
-        }  
-        
+
+        }
+
         // Avr hr
         $sum_of_duration = CourseActivity::selectRaw('SUM(duration) as total_duration')
                                             ->where('user_id', auth()->user()->id)
@@ -193,24 +242,24 @@ class StudentHomeController extends Controller
 
     // course show
     public function show($slug)
-    { 
+    {
 
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         //start group file
         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
         $group_files = [];
-       
+
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
-                $file_arr = explode('.', $lesson_file->file);  
+                $file_arr = explode('.', $lesson_file->file);
                 $extention = $file_arr[1];
                 if (!in_array($extention, $group_files)) {
                     $group_files[] = $extention;
                 }
             }
         }
-        
+
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -228,7 +277,6 @@ class StudentHomeController extends Controller
         $totalLessons = $course->modules->sum(function ($module) {
             return count($module->lessons);
         });
-       
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
@@ -242,7 +290,7 @@ class StudentHomeController extends Controller
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
-                $file_arr = explode('.', $file_name); 
+                $file_arr = explode('.', $file_name);
                 $extension = $file_arr['1'];
                 if($file_extension == $extension){
                     $files[] = public_path('uploads/lessons/'.$file_name);
@@ -263,7 +311,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-              return $is_have_file;  
+              return $is_have_file;
             }
             $zip->close();
 
@@ -282,13 +330,13 @@ class StudentHomeController extends Controller
             // Handle the case when the zip file could not be created
             echo 'Failed to create the zip file.';
         }
-    } 
+    }
 
     public function cousreDownloadPDF($course_id){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             $file_name = $lesson_file->file;
-            $file_arr = explode('.', $lesson_file->file);  
+            $file_arr = explode('.', $lesson_file->file);
             $extention = $file_arr[1];
             if($extention == 'pdf'){
                 $pdfFiles[] = $file_name;
@@ -317,21 +365,59 @@ class StudentHomeController extends Controller
         $user = auth()->user();
         $studentName = $user->name;
         $courseName = $course->title;
+        $style = $course->certificate->style;
 
-        $certificateTemplate = Image::make(public_path($course->sample_certificates));
-
+        $certificateTemplate = Image::make(public_path("uploads/certificates/{$style}.png"));
         $templateWidth = $certificateTemplate->width();
         $templateHeight = $certificateTemplate->height();
 
-        $x = $templateWidth / 2;
-        $y = $templateHeight / 2;
+        // $studentNameX = $templateWidth / 2;
+        // $studentNameY = $templateHeight / 2;
 
-        $courseX = $x;
-        $courseY = $y + 250;
+        if ($style == 1) {
+            $studentNameX = $templateWidth / 2;
+            $studentNameY = $templateHeight / 2;
 
-        $certificateTemplate->text($studentName, $x, $y, function ($font) {
+            $courseX = $studentNameX;
+            $courseY = $studentNameY + 40;
+
+            $imageX =  50;
+            $imageY = $studentNameY + 150;
+
+            $datetimeX = 580;
+            $datetimeY = $datetimeX - 80;
+        } elseif ($style == 2) {
+            $studentNameX = $templateWidth / 2;
+            $studentNameY = $templateHeight / 2;
+
+            $courseX = $studentNameX;
+            $courseY = $studentNameY + 40;
+
+            $imageX =  50;
+            $imageY = $studentNameY + 150;
+
+            $datetimeX = 580;
+            $datetimeY = $datetimeX - 80;
+        } elseif ($style == 3) {
+            $studentNameX = $templateWidth / 2;
+            $studentNameY = $templateHeight / 2;
+
+            $courseX = $studentNameX;
+            $courseY = $studentNameY + 40;
+
+            $imageX =  50;
+            $imageY = $studentNameY + 150;
+
+            $datetimeX = 580;
+            $datetimeY = $datetimeX - 80;
+        }
+
+        // $courseX = $studentNameX;
+        // $courseY = $studentNameY + 40;
+
+        $certificateTemplate->text($studentName, $studentNameX, $studentNameY, function ($font) {
             $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
-            $font->size(100);
+            $font->size(20);
             $font->color('#000000');
             $font->align('center');
             $font->valign('middle');
@@ -339,7 +425,22 @@ class StudentHomeController extends Controller
 
         $certificateTemplate->text($courseName, $courseX, $courseY, function ($font) {
             $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
-            $font->size(150); // Adjust the font size as needed
+            $font->size(15);
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+
+        $customImage = Image::make(public_path('uploads/instructor_signature/65304b5d8b3f9.jpg'));
+        // $imageX =  50;
+        // $imageY = $studentNameY + 150;
+
+        $certificateTemplate->insert($customImage, 'top-left' , $imageX, $imageY);
+
+
+        $certificateTemplate->text(Carbon::now()->format('Y-m-d'), $datetimeX, $datetimeY, function ($font) {
+            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->size(20);
             $font->color('#000000');
             $font->align('center');
             $font->valign('middle');
@@ -348,11 +449,12 @@ class StudentHomeController extends Controller
         $certificatePath = storage_path('app/public/certificates/' . $user->id . '_certificate.png');
         $certificateTemplate->save($certificatePath);
 
-        // $pdf = PDF::loadView('certificate', compact('certificatePath'));
+        $pdf = PDF::loadView('pdf.certificate', [
+            'certificateImage' => $certificatePath,
+        ]);
+        // $pdf->setPaper([0, 0, 750, 550], 'landscape');
 
-        // return $pdf->download('certificate')->deleteFileAfterSend(true);
-
-        return response()->download($certificatePath)->deleteFileAfterSend(true);
+        return $pdf->download('certificate.pdf');
     }
 
     // course overview
@@ -369,9 +471,9 @@ class StudentHomeController extends Controller
             $ytcode=$ytendarray[0];
             $promo_video_link = $ytcode;
         }
-        
+
         $cartCourses = Cart::where('user_id', auth()->id())->get();
-       
+
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
 

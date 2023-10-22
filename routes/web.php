@@ -122,7 +122,7 @@ Route::get('/auth-register', function () {
 Route::get('/auth/password/reset', function () {
 
     return view('custom-auth/passwords/email');
-    
+
 })->name('auth.password.request')->middleware('guest');
 
 Route::get('/home', function (Request $request) {
@@ -265,7 +265,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('{id}/objects', 'courseObjectsSet');
             Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
 
             Route::get('{id}/price', 'coursePrice');
@@ -337,6 +337,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
             Route::get('/account-settings', 'edit')->name('account.settings');
+            Route::post('/certificate-settings', 'certificateUpdate')->name('certificate.update');
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
