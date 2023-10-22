@@ -1,12 +1,10 @@
 @extends('layouts.latest.instructor')
-@section('title')
-Payment From Student
-@endsection
+@section('title','Payment From Student')
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/subscription.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -16,44 +14,77 @@ Payment From Student
 <main class="admin-payment-list-page">
     <div class="container-fluid"> 
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
-                    <img src="{{ asset('latest/assets/images/icons/ear-01.svg') }}" alt="ear-01"
-                        class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/icons/ear-01-d.svg') }}" alt="ear-01"
-                        class="img-fluid dark-ele">
-                    <h5>Total Earnings</h5>
-                    <h4>€ {{ $totalEarnings }}</h4>
+                    <img src="{{asset('latest/assets/images/icons/ear-01.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-01-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
+                    <h5>Total Earnings</h5> 
+
+                    <span class="{{ $formattedPercentageChangeOfEarningByMonth < 0 ? 'red' : '' }}"> 
+                        @if ($formattedPercentageChangeOfEarningByMonth < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ number_format(floatval($formattedPercentageChangeOfEarningByMonth), 0, '.', '') }}%
+                    </span>
+
+                    <h4>€{{$totalEnrollmentSell}}</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
-                    <img src="{{ asset('latest/assets/images/icons/ear-02.svg') }}" alt="ear-01"
-                        class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/icons/ear-02-d.svg') }}" alt="ear-01"
-                        class="img-fluid dark-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-02.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-02-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
                     <h5>Earnings Today</h5>
-                    <h4>€ {{ $todaysEarnings }}</h4>
+
+
+                    <span class="{{ $formattedPercentageChangeOfEarningByDay < 0 ? 'red' : '' }}"> 
+                        @if ($formattedPercentageChangeOfEarningByDay < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ number_format(floatval($formattedPercentageChangeOfEarningByDay), 0, '.', '') }}%
+                    </span> 
+
+                    <h4>€{{$todaysTotalEnrollmentSell}}</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
-                    <img src="{{ asset('latest/assets/images/icons/ear-03.svg') }}" alt="ear-01"
-                        class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/icons/ear-03-d.svg') }}" alt="ear-01"
-                        class="img-fluid dark-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
+
+                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByMonth < 0 ? 'red' : '' }}"> 
+                        @if ($formatedPercentageChangeOfStudentEnrollByMonth < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ number_format(floatval($formatedPercentageChangeOfStudentEnrollByMonth), 0, '.', '') }}%
+                    </span> 
+ 
                     <h5>Total Enrollments</h5>
-                    <h4>{{ $totalEnrolment }} Students</h4>
+                    <h4>{{$totalEnrollment}} Students</h4>
                 </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                 <div class="top-card-box">
-                    <img src="{{ asset('latest/assets/images/icons/ear-03.svg') }}" alt="ear-01"
-                        class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/icons/ear-03-d.svg') }}" alt="ear-01"
-                        class="img-fluid dark-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03.svg')}}" alt="ear-01" class="img-fluid light-ele">
+                    <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01" class="img-fluid dark-ele">
+
+                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByDay < 0 ? 'red' : '' }}"> 
+                        @if ($formatedPercentageChangeOfStudentEnrollByDay < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ number_format(floatval($formatedPercentageChangeOfStudentEnrollByDay), 0, '.', '') }}%
+                    </span> 
+ 
                     <h5>Enrolled Today</h5>
-                    <h4>{{ $todaysEnrolment }} Students</h4>
+                    <h4>{{$todaysEnrollment}} Students</h4>
                 </div>
             </div>
         </div>
@@ -65,21 +96,21 @@ Payment From Student
             </div>
         </div>
         <div class="row">
-            <div class="col-12 mt-15">
+            <div class="col-12 mt-3">
                 <div class="package-list-header" style="grid-template-columns: 100%">
                     <h5>Payment Information:</h5>
                 </div>
             </div>
         </div>
-        @if (count($payments) > 0)
         <div class="row">
-            {{-- filter form --}}
+            <div class="col-12">
+                <div class="subscription-table-wrap payment-table-admin">
+                    @if (count($enrolments) > 0) 
+                    {{-- filter form --}}
             <form action="" method="GET" id="myForm">
                 <input type="hidden" name="status" id="inputField">
             </form>
             {{-- filter form --}}
-            <div class="col-12">
-                <div class="subscription-table-wrap earning-table subs-table">
                     <table>
                         <tr>
                             <th width="3%">No</th>
@@ -108,20 +139,35 @@ Payment From Student
                             <th>Status</th>
                             <th width="15%">Action</th>
                         </tr>
-                        @foreach ($payments as $payment)
+                        @foreach ($enrolments as $key => $payment)
                         <tr>
-                            <td>{{ $loop->iteration }} </td>
-                            <td>{{ Str::limit($payment->course->title, $limit = 46, $end = '..') }}</td>
-                            <td>{{ $payment->user->name }} </td>
-                            <td>{{ $payment->created_at->format('d M Y') }} </td>
-                            <td>{{ $payment->payment_method }} </td>
-                            <td>€ {{ $payment->amount }}</td>
+                            <td>
+                                {{ $key + 1 }}
+                            </td>
+                            <td>
+                                @if ($payment->course)
+                                    <h5>{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
+                                @endif
+                            </td>
+                            <td>
+                                <p>{{$payment->user->name}}</p>
+                            </td>
+                            <td>
+                                <p>{{ $payment->created_at->format('d M Y') }}</p>
+                            </td>
+                            <td>
+                                <p>{{$payment->payment_method}}</p>
+                            </td>
+                            <td>
+                                <p>€{{$payment->amount}}</p>
+
+                            </td>
                             <td>
                                 @if ($payment->status == 'completed')
-                                <span style="color: #2A920B;">{{ $payment->status }}</span>
+                                <p style="color: #2A920B;" class="text-capitalize">{{ $payment->status }}</p>
                                 @else
-                                <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
-                                @endif
+                                <p style="color: #ED5763;" class="text-capitalize">{{ $payment->status }}</p>
+                                @endif 
                             </td>
                             <td>
                                 <a href="{{ route('instructor-export',encrypt($payment->payment_id)) }}" class="btn-view btn-export">Export</a>
@@ -131,28 +177,25 @@ Payment From Student
                         </tr>
                         @endforeach
                     </table>
+                    @else 
+                    @include('partials/no-data')
+                    @endif
                 </div>
-            </div>
-            <div class="col-12">
-                {{-- pagginate --}}
-                <div class="paggination-wrap">
-                    {{ $payments->links('pagination::bootstrap-5') }}
-                </div>
-                {{-- pagginate --}}
             </div>
         </div>
-        @else
         <div class="row">
-            <div class="col-12">
-                @include('partials/no-data')
+            {{-- pagginate --}}
+            <div class="paggination-wrap mt-4">
+                {{ $enrolments->links('pagination::bootstrap-5') }}
             </div>
+            {{-- pagginate --}}
         </div>
-        @endif
     </div>
 </main>
 {{-- ==== admin payment list page @E ==== --}}
 @endsection
 {{-- page content @E --}}
+
 
 {{-- page script @S --}}
 @section('script')

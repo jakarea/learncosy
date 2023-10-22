@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 3
+Course Create - Add Objective
 @endsection
 {{-- page style @S --}}
 @section('style')

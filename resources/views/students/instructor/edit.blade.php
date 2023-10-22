@@ -1,5 +1,5 @@
 @extends('layouts.latest.instructor')
-@section('title') Student Profile Edit Page @endsection
+@section('title') Student Profile Edit @endsection
 
 {{-- page style @S --}}
 @section('style')
