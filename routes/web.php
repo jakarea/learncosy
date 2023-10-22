@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\InstructorController;
 use App\Http\Controllers\Admin\LessonManagementController;
@@ -58,6 +59,8 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 //End Notification
 
 // custom auth screen route
+Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
+
 Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
@@ -152,13 +155,6 @@ Route::get('/home', function (Request $request) {
 
 })->name('home')->middleware('auth');
 
-// Route::group(['prefix' => 'home'], function () {
-//     Route::get('/', 'App\Http\Controllers\Frontend\HomepageController@index')->name('home');
-//      Route::get('/{id}', 'App\Http\Controllers\Frontend\HomepageController@show')->name('home.instructor.course');
-//     Route::get('/instructor/{id}', 'App\Http\Controllers\Frontend\HomepageController@instructorHome')->name('home.instructor.details');
-//     Route::get('/instructor/{id}/course', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetails')->name('home.instructor.details');
-//     Route::get('/instructor/{id}/course/{slug}', 'App\Http\Controllers\Frontend\HomepageController@instructorCourseDetailsWithSlug')->name('home.instructor.details.course.slug');
-// });
 // auth route
 Auth::routes(['verify' => true]);
 
@@ -188,6 +184,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+
 
     Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');
@@ -230,11 +227,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course page routes
         Route::prefix('courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'index')->name('instructor.courses');
-            //Route::get('/create', 'create');
-            // Route::post('/create', 'store')->name('course.store');
-            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
-            // Route::get('/{slug}/edit', 'edit')->name('course.edit');
-            // Route::post('/{slug}/edit', 'update')->name('course.update');
+            Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('instructor.file.download');
+            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+'); 
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
         });
 
@@ -265,7 +259,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
             Route::get('{id}/objects', 'courseObjects');
-            Route::post('{id}/objects', 'courseObjectsSet');
+
+            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('/{courseId}/delete-objects/{dataIndex}', 'deleteObjective');
+
             Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
 
             Route::get('{id}/price', 'coursePrice');
@@ -318,6 +315,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
+            Route::get('/{slug}/view', 'view'); 
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
             Route::get('/create', 'step2');
@@ -446,6 +444,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
         Route::get('/top-perform/courses', 'perform');
+        
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin');
@@ -458,8 +457,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // admin instructor routes
         Route::prefix('instructor')->controller(InstructorController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/datatable', 'instructorDataTable')->name('instructor.data.table');
+            Route::get('/', 'index'); 
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('instructor.add');
             Route::get('/profile/{id}', 'show')->name('instructorProfile');
@@ -482,8 +480,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // course page routes for admin
         Route::prefix('courses')->controller(CourseManagementController::class)->group(function () {
             Route::get('/', 'index')->name('admin.courses');
-            // data table route
-            Route::get('/datatable', 'courseDataTable')->name('admin.courses.data.table');
+            Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('admin.file.download');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.course.store');
             Route::get('/{slug}', 'show')->name('admin.course.show');
@@ -504,14 +501,9 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // course bundle page routes for admin
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/datatable', 'bundleDataTable')->name('admin.bundle.data.table');
-            Route::get('/create', 'create');
-            Route::post('/create', 'store')->name('admin.course.bundle.store');
-            Route::get('/{slug}', 'show')->name('admin.course.bundle.show');
-            Route::get('/{slug}/edit', 'edit')->name('admin.course.bundle.edit');
-            Route::post('/{slug}/edit', 'update')->name('admin.course.bundle.update');
-            Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.bundle.destroy');
+            Route::get('/', 'index'); 
+            Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show'); 
+            Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {

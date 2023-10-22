@@ -316,7 +316,6 @@ class AdminHomeController extends Controller
     {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-
         $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')
@@ -372,7 +371,7 @@ class AdminHomeController extends Controller
 
         if ($duration == null) {
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
-            ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+            ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
             ->first();
         } elseif ($duration == 'one_month') {
             $currentDate = Carbon::now();
@@ -380,7 +379,7 @@ class AdminHomeController extends Controller
             $previousMonthEndDate = $currentDate->copy()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
                 ->whereBetween('subscriptions.created_at', [$previousMonthStartDate, $previousMonthEndDate])
-                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
                 ->first();
         } elseif ($duration == 'three_months') {
             $currentDate = Carbon::now();
@@ -392,7 +391,7 @@ class AdminHomeController extends Controller
 
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
                 ->whereBetween('subscriptions.created_at', [$threeMonthsAgoStartDate, $currentMonthEndDate])
-                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
                 ->first();
         } elseif ($duration == 'six_months') {
             $currentDate = Carbon::now();
@@ -405,7 +404,7 @@ class AdminHomeController extends Controller
 
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
                 ->whereBetween('subscriptions.created_at', [$sixMonthsAgoStartDate, $currentMonthEndDate])
-                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
                 ->first();
         } elseif ($duration == 'one_year') {
             $firstdayOfCurrentYear = Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
@@ -415,7 +414,7 @@ class AdminHomeController extends Controller
 
             $totalPayment = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')
                 ->whereBetween('subscriptions.created_at', [$firstDayOfPreviousYear, $lastDayOfCurrentYear])
-                ->selectRaw('SUM(subscription_packages.amount) as total_payment')
+                ->selectRaw('SUM(subscription_packages.sales_price) as total_payment')
                 ->first();
         }
 
@@ -605,5 +604,5 @@ class AdminHomeController extends Controller
             }
         }
         return $course_wise_payments;
-    } 
+    }
 }

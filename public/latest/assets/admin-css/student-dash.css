@@ -1023,6 +1023,8 @@
 }
 .course-status-wrap table tr td .media .avatar {
   margin-right: 1rem;
+  display: flex;
+  flex-shrink: 0;
 }
 .course-status-wrap table tr td .media .avatar img {
   width: 2.4rem;
@@ -1396,16 +1398,28 @@
     display: block;
     overflow-x: scroll;
   }
+  .course-status-wrap {
+    padding-top: 1rem;
+  }
   .course-status-wrap .d-flex {
     padding: 0.8rem;
     flex-direction: column;
     align-items: flex-start;
   }
   .course-status-wrap .d-flex div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     margin-top: 0.5rem;
+    width: 100%;
+    display: grid !important;
+    align-items: center;
+    grid-template-columns: 50% 50% !important;
+  }
+  .course-status-wrap .d-flex div a {
+    display: block;
+    width: 100%;
+    margin-top: 0 !important;
+  }
+  .course-status-wrap .d-flex div .dropdown.course-status-filter {
+    margin-top: 0 !important;
   }
   .course-status-wrap table tr th,
   .course-status-wrap table tr td {

@@ -48,8 +48,7 @@ class StudentController extends Controller
         // return $request->all();
 
         $request->validate([
-            'name' => 'required|string', 
-            'short_bio' => 'string',
+            'name' => 'required|string',  
             'phone' => 'string',
             'email' => 'required|email|unique:users,email', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
@@ -118,8 +117,7 @@ class StudentController extends Controller
          $userId = $id;  
  
          $this->validate($request, [
-             'name' => 'required|string', 
-             'short_bio' => 'required|string',
+             'name' => 'required|string',  
              'phone' => 'required|string',  
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
@@ -177,7 +175,7 @@ class StudentController extends Controller
      public function destroy($id){
          
         $student = User::where('id', $id)->first();
-         //delete student avatar
+         //delete student avatar 
          $studentOldThumbnail = public_path('uploads/users/'.$student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);

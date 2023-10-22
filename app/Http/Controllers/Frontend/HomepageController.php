@@ -8,6 +8,9 @@ use App\Models\Course;
 use App\Models\CourseReview;
 use App\Models\BundleCourse;
 use App\Models\User;
+use Auth;
+use Illuminate\Support\Facades\Crypt;
+
 class HomepageController extends Controller
 {
     /**
@@ -173,4 +176,34 @@ class HomepageController extends Controller
     {
         //
     }
+    public function loginAsInstructor($userSessionId, $userId, $insId)
+    {
+        if (!$userId || !$userSessionId) {
+            return redirect('/login')->with('error', 'Failed to Login as Instructor');
+        }
+
+        $adminUserId = Crypt::decrypt($userId);
+        $adminUser = User::find($adminUserId);
+
+        if (!$adminUser) {
+            return redirect('/login')->with('error', 'Failed to Login as Instructor');
+        }
+
+        $reqSessionId = Crypt::decrypt($userSessionId);
+        $dbSessionId = Crypt::decrypt($adminUser->session_id);
+
+        if ($reqSessionId === $dbSessionId && $insId) {
+            $instructorUserId = Crypt::decrypt($insId);
+            $instructorUser = User::find($instructorUserId);
+
+            if ($instructorUser) {
+                Auth::login($instructorUser);
+
+                return redirect('instructor/dashboard')->with('success', 'You have successfully logged into the profile of '.$instructorUser->name);
+            }
+        }
+
+        return redirect('/login')->with('error', 'Failed to Login as Instructor');
+    }
+
 }

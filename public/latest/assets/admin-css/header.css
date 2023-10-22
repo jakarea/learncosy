@@ -29,6 +29,9 @@
 .header-area .dropdown-menu .dropdown-item:hover {
   background: var(--neutral-color-neutral-20, #F1F4F9);
 }
+.header-area .dropdown-menu .active.dropdown-item {
+  background: var(--neutral-color-neutral-20, #F1F4F9) !important;
+}
 .header-area .navbar-brand img {
   max-width: 8.5rem;
   max-height: 3rem;

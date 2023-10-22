@@ -71,6 +71,11 @@
                                 </div> 
                             </div>
                             @endforeach
+                            @if (count($courses) > 5)
+                            <div class="text-center mt-3">
+                                <a href="{{ url('instructor/courses') }}" class="common-bttn">All Courses</a>
+                            </div>
+                            @endif
                             @else
                                 @include('partials/no-data')
                             @endif

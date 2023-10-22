@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class InstructorController extends Controller
 {
@@ -98,8 +99,21 @@ class InstructorController extends Controller
         $instructor = User::where('id', $id)->first();
         $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
         $subscription = Subscription::where('instructor_id', $id)->get();
-    
-        return view('instructor/admin/show',compact('instructor', 'subscription','experiences')); 
+     
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+        
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand()); 
+
+        $adminUser = User::where('id',Auth::user()->id)->first();
+        $adminUser->session_id = $value;
+        $adminUser->save();
+ 
+       $userId = Crypt::encrypt($adminUser->id);
+       $insId = Crypt::encrypt($id);
+
+       return view('instructor/admin/show',compact('instructor', 'subscription','experiences','userSessionId','userId','insId')); 
      }
 
       // show page 

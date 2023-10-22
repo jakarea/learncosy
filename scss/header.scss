@@ -36,6 +36,9 @@
                 background: var(--neutral-color-neutral-20, #F1F4F9);
             }
         }
+        .active.dropdown-item {
+            background: var(--neutral-color-neutral-20, #F1F4F9)!important;
+        }
     }
 
     .navbar-brand {

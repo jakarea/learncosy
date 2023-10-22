@@ -347,7 +347,7 @@ $i = 0;
             });
 
             var options = {
-                id: '{{ 870001728 }}',
+                id: '{{ 305108069 }}',
                 // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
                 autoplay: true,
                 loop: true,

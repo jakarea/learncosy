@@ -16,8 +16,7 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use Carbon\CarbonInterval;
-use App\Http\Controllers\Controller;
-// use Illuminate\Support\Facades\PDF;
+use App\Http\Controllers\Controller;  
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 // use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
@@ -158,8 +157,45 @@ class StudentHomeController extends Controller
     // dashboard
     public function enrolled(){
 
-        $enrolments = Checkout::with('course.reviews')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
+        $enrolments = Checkout::with('course.reviews')->where('checkouts.user_id', Auth::user()->id);
         $cartCount = Cart::where('user_id', auth()->id())->count();
+
+        if (!empty($title)) {
+            $enrolments->whereHas('course', function ($query) use ($title) {
+                $query->where('title', 'LIKE', '%' . $title . '%');
+            });
+        }
+
+        if ($status) {
+            if ($status == 'oldest') {
+                $enrolments->orderBy('id', 'asc');
+            } elseif ($status == 'best_rated') {
+                $enrolments->select('checkouts.*')
+                    ->selectRaw('SUM(course_reviews.star) as total_star')
+                    ->leftJoin('course_reviews', function ($join) {
+                        $join->on('course_reviews.course_id', '=', DB::raw("FIND_IN_SET(course_reviews.course_id, checkouts.course_id)"));
+                    })
+                    ->groupBy('checkouts.id')
+                    ->orderBy('total_star', 'desc');
+            } elseif ($status == 'most_purchased') {
+
+                $enrolments->select('checkouts.*')
+                ->selectRaw('COUNT(checkouts.course_id) as course_count')
+                ->groupBy('checkouts.course_id')
+                ->orderBy('course_count', 'desc');
+                 
+            } elseif ($status == 'newest') {
+                $enrolments->orderBy('id', 'desc');
+            }
+        } else {
+            $enrolments->orderBy('id', 'desc');
+        }
+
+        $enrolments = $enrolments->paginate(12); 
+
         return view('e-learning/course/students/enrolled',compact('enrolments','cartCount'));
     }
 
@@ -189,9 +225,9 @@ class StudentHomeController extends Controller
         $instructor = User::where('subdomain', $subdomain)->first();
 
         if ( $instructor) {
-            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews')->orderBy('id','desc');
+            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews');
         }else{
-            $courses = Course::with('user','reviews')->where('status','published')->orderBy('id','desc');
+            $courses = Course::with('user','reviews')->where('status','published');
         }
 
         $bundleCourse = BundleCourse::orderBy('id','desc')->get();
@@ -199,6 +235,7 @@ class StudentHomeController extends Controller
 
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
         $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
         if(!empty($title)){
             $titles = explode( ' ', $title);
@@ -209,6 +246,39 @@ class StudentHomeController extends Controller
                 $bundleCourse->where('title','like','%'.trim($titles[1]).'%');
             }
         }
+
+        if ($status == 'best_rated') { 
+            $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+                ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
+                ->groupBy('courses.id')
+                ->where('courses.user_id', $instructor->id)
+                ->where('status','published')
+                ->orderBy('avg_star', 'desc');
+            
+        }
+
+        if ($status == 'most_purchased') {
+            $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                ->select('courses.*')
+                ->groupBy('courses.id')
+                ->where('courses.user_id', $instructor->id)
+                ->where('courses.status','published')
+                ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+
+        }
+
+        if ($status) {
+            if ($status == 'oldest') {
+                $courses->orderBy('id', 'asc');
+            } 
+            
+            if ($status == 'newest') {
+                $courses->orderBy('id', 'desc');
+            }
+        }else{
+            $courses->orderBy('id', 'desc'); 
+        }
+
         if(!empty($cat)){
             $cats = explode( ' ', $cat);
             $courses->where('categories','like','%'.trim($cats[0]).'%');
@@ -311,7 +381,8 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-              return $is_have_file;
+                return redirect('students/dashboard')->with('error', $is_have_file);  
+              //return $is_have_file;
             }
             $zip->close();
 
@@ -514,6 +585,8 @@ class StudentHomeController extends Controller
                 $lesson->completed =  (int)$completed;
             }
         }
+
+ 
 
         if ($course) {
             return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber'));

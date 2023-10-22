@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\BundleCourse;
 use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\DB;
 use DataTables;
 use Auth;
 
@@ -15,10 +16,11 @@ class BundleCourseManagementController extends Controller
     // course bundle list
     public function index()
      {   
+
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-        $bundleCourses = BundleCourse::query();
+        $bundleCourses = BundleCourse::with('courses.checkouts');
 
         if ($title) {
             $bundleCourses->where('title', 'like', '%' . trim($title) . '%');
@@ -27,18 +29,35 @@ class BundleCourseManagementController extends Controller
         if ($status) {
             if ($status == 'oldest') {
                 $bundleCourses->orderBy('id', 'asc');
-            }
-            
-            if ($status == 'newest') {
+            } elseif ($status == 'best_rated') {
+                $bundleCourses->select('bundle_courses.*')
+                    ->selectRaw('SUM(course_reviews.star) as total_star')
+                    ->leftJoin('course_reviews', function ($join) {
+                        $join->on('course_reviews.course_id', '=', DB::raw("FIND_IN_SET(course_reviews.course_id, bundle_courses.selected_course)"));
+                    })
+                    ->groupBy('bundle_courses.id')
+                    ->orderBy('total_star', 'desc');
+            } elseif ($status == 'most_purchased') {
+
+                $bundleCourses->select('bundle_courses.*')
+                ->selectRaw('COUNT(checkouts.course_id) as course_count')
+                ->leftJoin('checkouts', function ($join) {
+                    $join->on('checkouts.course_id', '=', DB::raw("FIND_IN_SET(checkouts.course_id, bundle_courses.selected_course)"));
+                })
+                ->groupBy('bundle_courses.id')
+                ->orderBy('course_count', 'desc');
+
+
+            } elseif ($status == 'newest') {
                 $bundleCourses->orderBy('id', 'desc');
             }
-        }else{
-            $bundleCourses->orderBy('id', 'desc'); 
+        } else {
+            $bundleCourses->orderBy('id', 'desc');
         }
 
         $bundleCourses = $bundleCourses->paginate(12);
- 
-         return view('bundle/admin/list',compact('bundleCourses')); 
+
+        return view('bundle/admin/list', compact('bundleCourses')); 
      }
 
      public function view($bundleSlug)
