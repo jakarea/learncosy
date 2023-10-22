@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('bundle_courses', function (Blueprint $table) {
             $table->id();
-            $table->string('instructor_id'); 
-            $table->text('title'); 
-            $table->text('sub_title')->nullable(); 
-            $table->text('slug')->nullable(); 
+            $table->string('instructor_id');
+            $table->text('title');
+            $table->text('sub_title')->nullable();
+            $table->text('slug')->nullable();
             $table->string('selected_course');
             $table->string('regular_price')->nullable();
             $table->string('sales_price')->nullable();

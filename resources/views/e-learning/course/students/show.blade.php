@@ -65,7 +65,7 @@ $i = 0;
                             </button>
                         </div>
                         {{-- liked course button here --}}
-                    </div> 
+                    </div>
                 </div>
                 {{-- course title --}}
                 <hr>
@@ -77,7 +77,7 @@ $i = 0;
                 </div>
                 @if(!empty($group_files))
                 <div class="download-files-box">
-                    <h4>Download Files </h4> 
+                    <h4>Download Files </h4>
                     <div class="files">
                         @foreach($group_files as $fileExtension)
                             <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
@@ -92,7 +92,7 @@ $i = 0;
                         <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate
                             Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
                                 title="120MB" class="img-fluid"></a>
-                        @endif
+                        @endifs
                     </div>
                 </div>
                 @endif
@@ -211,7 +211,7 @@ $i = 0;
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                 data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}">
-    
+
                                                 @if ($lesson->type == 'text')
                                                 <i class="fa-regular fa-file-lines"></i>
                                                 @elseif($lesson->type == 'audio')
@@ -243,7 +243,7 @@ $i = 0;
                     </div>
                 </div>
                 {{-- course outline --}}
-    
+
                 @if (isEnrolled($course->id) && $course->user->recivingMessage)
                 <a href="{{ url('course/messages/send/' . $course->id) }}"
                     class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
@@ -257,7 +257,7 @@ $i = 0;
                             class="fas fa-angle-right ms-2"></i></button>
                 </form>
                 @endif
-    
+
                 {{-- related course --}}
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
@@ -275,7 +275,7 @@ $i = 0;
                                     <a href="{{ url('instructor/courses', $relatedCourse->slug) }}">{{
                                         $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
-    
+
                                     @php
                                     $review_sum = 0;
                                     $review_avg = 0;
@@ -298,7 +298,7 @@ $i = 0;
                                         <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
                                      @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
                                      <h5>Free</h5>
-                                        @else 
+                                        @else
                                         <h5>€ {{ $relatedCourse->price }}</h5>
                                     @endif
                                 </div>
@@ -314,7 +314,7 @@ $i = 0;
                 {{-- related course --}}
             </div>
         </div>
-    </div> 
+    </div>
 </main>
 <!-- course details page @E -->
 @endsection
