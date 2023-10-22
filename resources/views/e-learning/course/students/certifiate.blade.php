@@ -21,6 +21,7 @@
                 </div>
             </div>
         </div>
+        @if (count($certificateCourses) > 0 ) 
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap activity-table">
@@ -66,10 +67,10 @@
                                 </p>
                             </td>   
                             <td>
-                                <p>1000</p>
+                                <p>0</p>
                             </td>  
                             <td>
-                                <p>600</p>
+                                <p>0</p>
                             </td>  
                             @php 
                             $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id); 
@@ -83,7 +84,7 @@
                                 @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
                                     <span>Completed</span>
                                 @elseif($totalPorgressPercent < 1)
-                                    <span>Not Started</span>
+                                    <span class="danger">Not Started</span>
                                 @elseif($totalPorgressPercent > 0 && $totalPorgressPercent < 99)
                                     <span>Inprogress</span>
                                 @endif
@@ -137,6 +138,13 @@
                 </div>
             </div>
         </div>
+        @else 
+        <div class="row">
+            <div class="col-12">
+                @include('partials/no-data')
+            </div>
+        </div>
+        @endif
         <div class="row">
             {{-- pagginate --}}
             <div class="paggination-wrap mt-4">
