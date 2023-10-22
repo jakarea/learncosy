@@ -8,6 +8,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Experience;
+use App\Models\Certificate;
 use Illuminate\Support\Str;
 use App\Mail\ProfileUpdated;
 use App\Mail\PasswordChanged;
@@ -37,9 +38,11 @@ class ProfileManagementController extends Controller
         $editExp = '';
         if($experience_id){
             $editExp = Experience::where('id', $experience_id)->first();
-        } 
+        }
         $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
-        return view('profile/instructor/edit',compact('user','experiences','editExp'));
+        $certificate = Certificate::where('instructor_id', $userId)->first();
+
+        return view('profile/instructor/edit',compact('user','experiences','editExp','certificate'));
     }
 
     public function update(Request $request)
@@ -76,11 +79,11 @@ class ProfileManagementController extends Controller
             $user->password = Hash::make($request->password);
         }else{
             $user->password = $user->password;
-        } 
+        }
 
         $slugg = Str::slug($request->name);
 
-        if ($request->hasFile('avatar')) { 
+        if ($request->hasFile('avatar')) {
             if ($user->avatar) {
                $oldFile = public_path($user->avatar);
                if (file_exists($oldFile)) {
@@ -94,7 +97,7 @@ class ProfileManagementController extends Controller
             $image_path = 'uploads/users/' . $uniqueFileName;
            $user->avatar = $image_path;
        }
-       
+
         $user->save();
 
         // Send email
@@ -102,6 +105,64 @@ class ProfileManagementController extends Controller
 
         return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
+
+
+    public function certificateUpdate(Request $request)
+    {
+        $userId = auth()->user()->id;
+        $certificate = Certificate::where('instructor_id', $userId)->first();
+
+        if ($certificate) {
+            $certificate->style = $request->input('certificate_value');
+
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $image = Image::make($file);
+                $uniqueFileName = uniqid() . '.jpg';
+                $image->save(public_path('uploads/logo/') . $uniqueFileName);
+                $image_path = 'uploads/logo/' . $uniqueFileName;
+                $certificate->logo = $image_path;
+            }
+
+            if ($request->hasFile('instructor_signature')) {
+                $file = $request->file('instructor_signature');
+                $image = Image::make($file);
+                $uniqueFileName = uniqid() . '.jpg';
+                $image->save(public_path('uploads/instructor_signature/') . $uniqueFileName);
+                $image_path = 'uploads/instructor_signature/' . $uniqueFileName;
+                $certificate->signature = $image_path;
+            }
+
+            $certificate->save();
+        } else {
+            $newCertificate = new Certificate();
+            $newCertificate->instructor_id = $userId;
+            $newCertificate->style = $request->input('certificate_value');
+
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $image = Image::make($file);
+                $uniqueFileName = uniqid() . '.jpg';
+                $image->save(public_path('uploads/logo/') . $uniqueFileName);
+                $image_path = 'uploads/logo/' . $uniqueFileName;
+                $newCertificate->logo = $image_path;
+            }
+
+            if ($request->hasFile('instructor_signature')) {
+                $file = $request->file('instructor_signature');
+                $image = Image::make($file);
+                $uniqueFileName = uniqid() . '.jpg';
+                $image->save(public_path('uploads/instructor_signature/') . $uniqueFileName);
+                $image_path = 'uploads/instructor_signature/' . $uniqueFileName;
+                $newCertificate->signature = $image_path;
+            }
+
+            $newCertificate->save();
+        }
+
+        return redirect()->route('account.settings')->with('success', 'Your certificate has been updated successfully!');
+    }
+
 
     // password update
     public function passwordUpdate()
