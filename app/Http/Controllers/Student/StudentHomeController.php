@@ -529,6 +529,9 @@ class StudentHomeController extends Controller
                 }
                 $related_course = $query->take(4)->get();
             }
+ 
+             
+             
             return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
