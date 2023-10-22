@@ -36,8 +36,7 @@ class StudentHomeController extends Controller
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
 
         $totalHours = floor($totalTimeSpend / 3600);
-        $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
-
+        $totalMinutes = floor(($totalTimeSpend % 3600) / 60); 
 
         $timeSpentData = CourseActivity::select(
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),
@@ -45,54 +44,7 @@ class StudentHomeController extends Controller
         )
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
-
-        ->get();
-
-        // dummy data start - need to remove later
-        $timeSpentData = [];
-
-        $timeSpentData[] = [
-            "month" => "Jan",
-            "time_spent" => "20"
-        ];
-        $timeSpentData[] = [
-            "month" => "Feb",
-            "time_spent" => "50"
-        ];
-        $timeSpentData[] = [
-            "month" => "Mar",
-            "time_spent" => "70"
-        ];
-        $timeSpentData[] = [
-            "month" => "Apr",
-            "time_spent" => "20"
-        ];
-        $timeSpentData[] = [
-            "month" => "May",
-            "time_spent" => "45"
-        ];
-        $timeSpentData[] = [
-            "month" => "Jun",
-            "time_spent" => "36"
-        ];
-        $timeSpentData[] = [
-            "month" => "Jul",
-            "time_spent" => "76"
-        ];
-        $timeSpentData[] = [
-            "month" => "Aug",
-            "time_spent" => "24"
-        ];
-        $timeSpentData[] = [
-            "month" => "Sep",
-            "time_spent" => "65"
-        ];
-        $timeSpentData[] = [
-            "month" => "Oct",
-            "time_spent" => "4"
-        ];
-
-        // ->get();
+        ->get(); 
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
@@ -151,7 +103,12 @@ class StudentHomeController extends Controller
                     ->first();
         $enrolled = $total_enrolled->enrolled;
 
-        return view('e-learning/course/students/dashboard', compact('enrolments','total_hr','total_min','enrolled','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount'));
+        // certificate count
+
+        $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
+        $certificateCourses = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);
+
+        return view('e-learning/course/students/dashboard', compact('enrolments','total_hr','total_min','enrolled','likeCourses','totalTimeSpend','totalHours','totalMinutes','timeSpentData','percentageChange','notStartedCount','inProgressCount','completedCount','certificateCourses'));
     }
 
     // dashboard
@@ -643,7 +600,7 @@ class StudentHomeController extends Controller
     /**
      * Student activties lesson complete
      */
-    public function storeActivities( Request $request )
+    public function storeActivities()
     {
  
         // // Update or insert to course activities
@@ -666,8 +623,6 @@ class StudentHomeController extends Controller
         $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
 
         $courseActivities = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);
-
-
         return view('e-learning/course/students/activity', compact('courseActivities'));
     }
 

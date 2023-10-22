@@ -73,7 +73,7 @@
                                 <p>0</p>
                             </td>  
                             @php 
-                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id); 
+                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);  
                             $showPercentage = null;
                             
                             if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){

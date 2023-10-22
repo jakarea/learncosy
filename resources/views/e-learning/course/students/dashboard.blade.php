@@ -1,7 +1,5 @@
 @extends('layouts/latest/students')
-@section('title')
-Student Dashboard
-@endsection
+@section('title','Student Dashboard')
 
 {{-- page style @S --}}
 @section('style')
@@ -86,14 +84,31 @@ Student Dashboard
                         </span>
                     </div>
                 </div>
-            </div>
+            </div>   
+
             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="status-card-box">
                     <p>Certificate Achievement</p>
+
+                    @php
+                    $totalEnrolledCourses = count($certificateCourses);
+                    $completedCoursesCount = 0;
+                    @endphp
+
+                    @foreach ($certificateCourses as $certificateCourse)
+                        @php 
+                        $totalProgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);
+
+                        if ($totalProgressPercent >= 100) {
+                            $completedCoursesCount++;
+                        }
+                        @endphp
+                    @endforeach
+
                     <div class="d-flex">
-                        <h5>0</h5>
+                        <h5>{{ $completedCoursesCount }}</h5>
                         <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                class="img-fluid"> 100%</span>
+                                class="img-fluid"> {{ $totalEnrolledCourses > 0 ? ($completedCoursesCount / $totalEnrolledCourses) * 100 : 0 }}%</span>
                     </div>
                 </div>
             </div>
