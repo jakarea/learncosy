@@ -36,20 +36,21 @@
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                <a href="{{ route('cart.index') }}" class="bttn">
+                <a href="{{ route('cart.index') }}" class="bttn {{ Request::is('students/cart*')  ? ' active' : '' }}">
+
                     <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="Cart" class="img-fluid">
 
                     @if (cartCount() >= 1)
                     <span id="cart-count">{{ cartCount() }}</span>
                     @endif
                 </a>
-                <a href="{{ url('students/notification-details') }}" class="bttn">
+                <a href="{{ url('students/notification-details') }}" class="bttn {{ Request::is('students/notification-details*')  ? ' active' : '' }}">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
                    
                     @if (unseenNotification() >= 1)
                     <span>{{ unseenNotification() }}</span>
                     @endif
-                     
+                    
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,8 +65,8 @@
 
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url('students/profile/myprofile')}}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ url('students/profile/edit') }}">Account Setting</a></li>
+                        <li><a class="dropdown-item {{ Request::is('students/profile/myprofile*')  ? ' active' : '' }}" href="{{url('students/profile/myprofile')}}">Profile</a></li>
+                        <li><a class="dropdown-item {{ Request::is('students/profile/edit*')  ? ' active' : '' }}" href="{{ url('students/profile/edit') }}">Account Setting</a></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">Logout
