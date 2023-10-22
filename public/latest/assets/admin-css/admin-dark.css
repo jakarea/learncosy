@@ -1417,6 +1417,9 @@
 .dark-mode .reset-modal .modal-content .btn i {
   color: #fff !important;
 }
+.dark-mode .header-area .d-flex a.bttn.active {
+  background-color: #7289FF !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

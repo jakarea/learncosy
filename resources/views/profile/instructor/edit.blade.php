@@ -527,6 +527,8 @@
                                                             <div class="title">
                                                                 <h4>All Certificates</h4>
                                                             </div>
+                                                            @foreach ($certificate as $singleCertificate)  
+ 
                                                             <div class="media brdr-bttm">
                                                                 <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
                                                                     alt="experience-img" class="img-fluid">
@@ -553,59 +555,9 @@
                                                                         outreach, engagement,
                                                                         and leads.</p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="media brdr-bttm">
-                                                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                                    alt="experience-img" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <h5>UI/UX Design</h5>
-                                                                        <div>
-                                                                            <a href="#"><img
-                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
-                                                                                    alt="img" class="img-fluid"></a>
-                                                                            <a href="#"><img
-                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
-                                                                                    alt="img" class="img-fluid"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
-                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
-                                                                        - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands
-                                                                        utilizing multiple
-                                                                        features and content types to increase brand
-                                                                        outreach, engagement,
-                                                                        and leads.</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="media">
-                                                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                                    alt="experience-img" class="img-fluid">
-                                                                <div class="media-body">
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-between">
-                                                                        <h5>UI/UX Design</h5>
-                                                                        <div>
-                                                                            <a href="#"><img
-                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
-                                                                                    alt="img" class="img-fluid"></a>
-                                                                            <a href="#"><img
-                                                                                    src="{{ asset('latest/assets/images/icons/pen.svg') }}"
-                                                                                    alt="img" class="img-fluid"></a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
-                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
-                                                                        - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands
-                                                                        utilizing multiple
-                                                                        features and content types to increase brand
-                                                                        outreach, engagement,
-                                                                        and leads.</p>
-                                                                </div>
-                                                            </div>
+                                                            </div> 
+                                                            @endforeach
+
                                                         </div>
 
                                                     </div>

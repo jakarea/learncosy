@@ -432,12 +432,18 @@ class StudentHomeController extends Controller
 
     public function certificateDownload($slug)
     {
-        $course = Course::where('slug', $slug)->first();
+       $course = Course::where('slug', $slug)->with('certificate')->first();
         $user = auth()->user();
         $studentName = $user->name;
         $courseName = $course->title;
-        $style = $course->certificate->style;
 
+        $style=null;
+        if (!empty($course->certificate)) {
+            $style = $course->certificate->style;
+        }else{
+            return redirect()->back()->with('error',"No Certifcate Found for this course");
+        }
+        
         $certificateTemplate = Image::make(public_path("uploads/certificates/{$style}.png"));
         $templateWidth = $certificateTemplate->width();
         $templateHeight = $certificateTemplate->height();
@@ -687,14 +693,16 @@ class StudentHomeController extends Controller
 
     public function certificate()
     {
-        $cartCount = Cart::where('user_id', auth()->id())->count();
-        return view('e-learning/course/students/certifiate', compact('cartCount'));
+        $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
+
+        $certificateCourses = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);
+
+        return view('e-learning/course/students/certifiate',compact('certificateCourses'));
     }
 
     public function message()
-    {
-        $cartCount = Cart::where('user_id', auth()->id())->count();
-        return view('e-learning/course/students/message-2', compact('cartCount'));
+    { 
+        return view('e-learning/course/students/message-2');
     }
 
     public function courseLike($course_id, $ins_id)

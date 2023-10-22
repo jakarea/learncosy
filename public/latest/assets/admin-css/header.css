@@ -141,6 +141,12 @@
   line-height: 1.25rem;
   /* 181.818% */
 }
+.header-area .d-flex a.bttn.active {
+  background-color: #294CFF;
+}
+.header-area .d-flex a.bttn.active img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
 .header-area .d-flex .btn.avatar img {
   width: 2.5rem;
   height: 2.5rem;
