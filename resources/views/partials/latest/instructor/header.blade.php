@@ -46,8 +46,8 @@
                         <a class="{{ Request::is('instructor/students*') ? ' active' : '' }} nav-link"
                             href="#">Students <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
-                            <li><a href="{{ url('instructor/students') }}">All Students</a></li>
-                            <li><a href="{{ url('instructor/students/create') }}">Add New Students</a></li>
+                            <li><a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students') ? ' active' : '' }}">All Students</a></li>
+                            <li><a href="{{ url('instructor/students/create') }}" class="{{ Request::is('instructor/students/create') ? ' active' : '' }}">Add New Students</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
