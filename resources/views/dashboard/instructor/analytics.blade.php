@@ -86,10 +86,20 @@
             </div>
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                 <div class="total-client-box">
+                    @php 
+                    $totalCombinedCourses = $activeCourses + $draftCourses;
+
+                    if ($totalCombinedCourses > 0) {
+                        $percentageActiveCourses = ($activeCourses / $totalCombinedCourses) * 100;
+                    } else {
+                        $percentageActiveCourses = 0;
+                    }
+                    @endphp 
+
                     <div class="media">
                         <div class="media-body">
                             <h5>Sell Rating</h5>
-                            <h4>35%</h4>
+                            <h4>{{ $percentageActiveCourses }}%</h4>
                         </div>
                     </div>
                     <p>All time stats</p>
@@ -401,9 +411,6 @@ chart.render();
 {{-- monthly earning end --}}
 
 {{-- course progress chart start --}}
-
-
-{{-- top filter --}}
 <script>
     $(document).ready(function() {
             $(".filter-option").click(function(e) {
