@@ -117,27 +117,24 @@
                             </td>
                             <td>
                                 @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
-                                <a href="{{url('students/courses-certificate/'.$certificateCourse->slug)}}">
+                                <a href="{{url('students/certificate-download/'.$certificateCourse->slug)}}">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
+                                </a>
+                                <a href="{{url('students/certificate-view/'.$certificateCourse->slug)}}" target="_blank">
+                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 @else
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                                @endif
-
-
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
+                                @endif 
+                               
                             </td>
                         </tr>
                         @endforeach
-                        <tr>
-                            <td colspan="7">
-                                <a href="{{url('students/certificate-download/laboriosam-quisquam-libero-nam-odio')}}" class="btn btn-primary">Test Download</a>
-                            </td>
-                        </tr>
                     </table>
                 </div>
             </div>

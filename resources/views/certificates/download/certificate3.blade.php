@@ -59,19 +59,19 @@
 
         .name-box {
             position: absolute;
-            left: 45%;
-            top: 45%;
+            left: 0%;
+            top: 43%;
             z-index: 9999;
-            transform: translate(-45%, -45%);
+            width: 100%;
+            text-align: center;
         }
 
         .name-box h1 {
-            color: #047580;
+            color: #4F8AC0;
             text-align: center;
             font-size: 2rem;
             font-style: normal;
-            line-height: normal;
-            letter-spacing: 0.29rem;
+            line-height: normal; 
             font-weight: 400;
             text-transform: uppercase;
             font-family: Rakkas;
@@ -79,14 +79,14 @@
 
         .course-name {
             position: absolute;
-            left: 49%;
+            left: 54%;
             top: 54%;
             z-index: 9999; 
         }
 
         .course-name h4 {
             color: var(--neutral-color-neutral-70, #2F3A4C);
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-style: normal;
             line-height: 110%; 
             font-family: Rakkas;
@@ -96,36 +96,36 @@
 
         .course-date {
             position: absolute;
-            left: 42%;
-            top: 63%;
-            z-index: 9999;
-            transform: translate(-42%, -63%);
+            left: 38.5%;
+            top: 58%;
+            z-index: 9999; 
         }
 
         .course-date h4 {
             color: var(--neutral-color-neutral-70, #2F3A4C);
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-style: normal;
-            line-height: 150%; 
+            line-height: 120%; 
             font-weight: 400;
             font-family: Rakkas;
         }
 
         .signature {
             position: absolute;
-            left: 15%;
-            bottom: 16%;
+            left: 17%;
+            bottom: 22%;
             z-index: 9999;
         }
 
         .signature img {
             max-width: 6.375rem;
+            mix-blend-mode: darken;
         }
 
         .date-bottom {
             position: absolute;
-            right: 24%;
-            bottom: 16%;
+            right: 18%;
+            bottom: 22%;
             z-index: 9999;
         }
 
@@ -153,7 +153,7 @@
     <div class="main-wrapper">
         <div class="container">
             <div class="certificate-box">
-                <img src="{{ public_path('latest/assets/images/certificate/one.png') }}" alt="Certificate-bg"
+                <img src="{{ public_path('latest/assets/images/certificate/three.png') }}" alt="Certificate-bg"
                     class="img-fluid main-certificate">
 
                 <div class="name-box">
@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="signature">
-                    <img src="{{ public_path('latest/assets/images/certificate/signature.png') }}" alt="Signature"
+                    <img src="{{ public_path($signature) }}" alt="Signature"
                         class="img-fluid">
                 </div>
 

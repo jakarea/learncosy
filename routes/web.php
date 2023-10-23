@@ -393,6 +393,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
     // Route::get('/courses-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
     Route::get('/certificate-download/{slug}', 'certificateDownload2')->name('courses.certificate.download');
+    Route::get('/certificate-view/{slug}', 'certificateView')->name('courses.certificate.view');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
