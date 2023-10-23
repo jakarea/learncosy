@@ -202,9 +202,11 @@ class StudentHomeController extends Controller
         foreach($lesson_files as $lesson_file){
             $file_name = $lesson_file->file;
             $file_arr = explode('.', $lesson_file->file);  
-            $extention = $file_arr[1];
-            if (!in_array($extention, $group_files)) {
-                $group_files[] = $extention;
+            if($file_name){
+                $extention = $file_arr[1];
+                if (!in_array($extention, $group_files)) {
+                    $group_files[] = $extention;
+                }
             }
         }
         //end group file
