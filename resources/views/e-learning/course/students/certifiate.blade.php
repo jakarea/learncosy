@@ -73,20 +73,18 @@
                                 <p>600</p>
                             </td>
                             @php
-                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);
-
-                            $showPercentage = null;
-
-                            if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){
-                                $showPercentage = $totalPorgressPercent - 2;
+                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);  
+                            $showPercentage = null; 
+                            if($totalPorgressPercent > 92 && $totalPorgressPercent < 100){
+                                $showPercentage = $totalPorgressPercent - 4;
                             }
                             @endphp
                             <td>
-                                @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
+                                @if($totalPorgressPercent >= 100)
                                     <span>Completed</span>
                                 @elseif($totalPorgressPercent < 1)
                                     <span class="danger">Not Started</span>
-                                @elseif($totalPorgressPercent > 0 && $totalPorgressPercent < 99)
+                                @elseif($totalPorgressPercent >= 0 && $totalPorgressPercent <= 99)
                                     <span>Inprogress</span>
                                 @endif
                             </td>
@@ -119,19 +117,21 @@
                             </td>
                             <td>
                                 @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
-                                <a href="{{url('students/courses-certificate/'.$certificateCourse->slug)}}">
+                                <a href="{{url('students/certificate-download/'.$certificateCourse->slug)}}">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
+                                </a>
+                                <a href="{{url('students/certificate-view/'.$certificateCourse->slug)}}" target="_blank">
+                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 @else
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                                @endif
-
-
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
+                                @endif 
+                               
                             </td>
                         </tr>
                         @endforeach
