@@ -16,7 +16,7 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use Carbon\CarbonInterval;
-use App\Http\Controllers\Controller;  
+use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 // use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
@@ -143,7 +143,7 @@ class StudentHomeController extends Controller
                 ->selectRaw('COUNT(checkouts.course_id) as course_count')
                 ->groupBy('checkouts.course_id')
                 ->orderBy('course_count', 'desc');
-                 
+
             } elseif ($status == 'newest') {
                 $enrolments->orderBy('id', 'desc');
             }
@@ -151,7 +151,7 @@ class StudentHomeController extends Controller
             $enrolments->orderBy('id', 'desc');
         }
 
-        $enrolments = $enrolments->paginate(12); 
+        $enrolments = $enrolments->paginate(12);
 
         return view('e-learning/course/students/enrolled',compact('enrolments','cartCount'));
     }
@@ -204,14 +204,14 @@ class StudentHomeController extends Controller
             }
         }
 
-        if ($status == 'best_rated') { 
+        if ($status == 'best_rated') {
             $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
                 ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
                 ->groupBy('courses.id')
                 ->where('courses.user_id', $instructor->id)
                 ->where('status','published')
                 ->orderBy('avg_star', 'desc');
-            
+
         }
 
         if ($status == 'most_purchased') {
@@ -227,13 +227,13 @@ class StudentHomeController extends Controller
         if ($status) {
             if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
-            } 
-            
+            }
+
             if ($status == 'newest') {
                 $courses->orderBy('id', 'desc');
             }
         }else{
-            $courses->orderBy('id', 'desc'); 
+            $courses->orderBy('id', 'desc');
         }
 
         if(!empty($cat)){
@@ -338,7 +338,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-                return redirect('students/dashboard')->with('error', $is_have_file);  
+                return redirect('students/dashboard')->with('error', $is_have_file);
               //return $is_have_file;
             }
             $zip->close();
@@ -389,7 +389,7 @@ class StudentHomeController extends Controller
 
     public function certificateDownload($slug)
     {
-       $course = Course::where('slug', $slug)->with('certificate')->first();
+        $course = Course::where('slug', $slug)->with('certificate')->first();
         $user = auth()->user();
         $studentName = $user->name;
         $courseName = $course->title;
@@ -400,7 +400,7 @@ class StudentHomeController extends Controller
         }else{
             return redirect()->back()->with('error',"No Certifcate Found for this course");
         }
-        
+
         $certificateTemplate = Image::make(public_path("uploads/certificates/{$style}.png"));
         $templateWidth = $certificateTemplate->width();
         $templateHeight = $certificateTemplate->height();
@@ -450,7 +450,7 @@ class StudentHomeController extends Controller
         // $courseY = $studentNameY + 40;
 
         $certificateTemplate->text($studentName, $studentNameX, $studentNameY, function ($font) {
-            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
             $font->size(20);
             $font->color('#000000');
             $font->align('center');
@@ -458,7 +458,7 @@ class StudentHomeController extends Controller
         });
 
         $certificateTemplate->text($courseName, $courseX, $courseY, function ($font) {
-            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
             $font->size(15);
             $font->color('#000000');
             $font->align('center');
@@ -473,7 +473,7 @@ class StudentHomeController extends Controller
 
 
         $certificateTemplate->text(Carbon::now()->format('Y-m-d'), $datetimeX, $datetimeY, function ($font) {
-            $font->file(public_path('assets/fonts/Gilroy-Black.ttf'));
+            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
             $font->size(20);
             $font->color('#000000');
             $font->align('center');
@@ -552,7 +552,7 @@ class StudentHomeController extends Controller
             }
         }
 
- 
+
 
         if ($course) {
             return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber'));
@@ -663,7 +663,7 @@ class StudentHomeController extends Controller
     }
 
     public function message()
-    { 
+    {
         return view('e-learning/course/students/message-2');
     }
 

@@ -228,7 +228,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'index')->name('instructor.courses');
             Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('instructor.file.download');
-            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+'); 
+            Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
         });
 
@@ -260,7 +260,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
             Route::get('{id}/objects', 'courseObjects');
 
-            Route::post('{id}/objects', 'courseObjectsSet'); 
+            Route::post('{id}/objects', 'courseObjectsSet');
             Route::post('/{courseId}/delete-objects/{dataIndex}', 'deleteObjective');
 
             Route::post('/updateObjectives/{id}', 'updateObjectives')->name('updateObjectives');
@@ -315,7 +315,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
-            Route::get('/{slug}/view', 'view'); 
+            Route::get('/{slug}/view', 'view');
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
             Route::get('/create', 'step2');
@@ -359,7 +359,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
             Route::delete('/{id}/destroy', 'destroy')->name('student.destroy');
         });
-    }); 
+    });
 });
 
 // SubscriptionController
@@ -378,7 +378,7 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
-/* ========================================================== */ 
+/* ========================================================== */
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     // Student routes
@@ -444,7 +444,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
         Route::get('/top-perform/courses', 'perform');
-        
+
         // all admin profile manage routes for admin
         Route::prefix('alladmin')->controller(AdminManagementController::class)->group(function () {
             Route::get('/', 'index')->name('allAdmin');
@@ -457,7 +457,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // admin instructor routes
         Route::prefix('instructor')->controller(InstructorController::class)->group(function () {
-            Route::get('/', 'index'); 
+            Route::get('/', 'index');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('instructor.add');
             Route::get('/profile/{id}', 'show')->name('instructorProfile');
@@ -501,8 +501,8 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // course bundle page routes for admin
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
-            Route::get('/', 'index'); 
-            Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show'); 
+            Route::get('/', 'index');
+            Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show');
             Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
         });
         // module page routes for admin
