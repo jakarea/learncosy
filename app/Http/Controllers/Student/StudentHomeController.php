@@ -10,6 +10,7 @@ use App\Models\Module;
 use App\Models\Checkout;
 use Carbon\Carbon;
 use App\Models\Cart;
+use App\Models\Certificate;
 use App\Models\CourseLog;
 use App\Models\BundleCourse;
 use App\Models\CourseReview;
@@ -395,6 +396,7 @@ class StudentHomeController extends Controller
         $courseName = $course->title;
 
         $style=null;
+
         if (!empty($course->certificate)) {
             $style = $course->certificate->style;
         }else{
@@ -489,6 +491,41 @@ class StudentHomeController extends Controller
         // $pdf->setPaper([0, 0, 750, 550], 'landscape');
 
         return $pdf->download('certificate.pdf');
+    }
+
+    public function certificateDownload2($slug)
+    {
+            $course = Course::where('slug', $slug)
+            ->with('certificate')
+            ->first();
+
+            $courseDate = CourseActivity::where('user_id', Auth::user()->id)
+            ->where('is_completed', 1)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+            
+            $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
+
+            if ($certStyle) {
+                if ($certStyle->style == 1) {
+                    $certificate_path = 'certificates/certificate1';
+                     
+                }elseif ($certStyle->style == 2) {
+                    $certificate_path = 'certificates/certificate2';
+    
+                }elseif ($certStyle->style == 3) {
+                    $certificate_path = 'certificates/certificate3';
+                }else{
+                    return redirect()->back()->with('error','There is no Style found for this Course');
+                }
+
+                $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $certStyle->signature]);
+            
+                return $pdf->download('certificate.pdf');
+            }else{
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+            
     }
 
     // course overview
