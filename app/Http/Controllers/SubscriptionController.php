@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Stripe\Stripe;
@@ -7,11 +6,11 @@ use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Mail\PackageSubscribe;
-use Stripe\Checkout\Session; 
+use Stripe\Checkout\Session;
 use App\Mail\PackageSubscribeCancle;
 use Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Models\SubscriptionPackage; 
+use App\Models\SubscriptionPackage;
 use PDF;
 class SubscriptionController extends Controller
 {
@@ -32,8 +31,8 @@ class SubscriptionController extends Controller
     {
         $packages = SubscriptionPackage::where('status','active')->get();
         $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
-        
-        if ($insPackage->status == 'cancel') {
+
+        if ($insPackage && $insPackage->status == 'cancel') {
             $activePackageId = null;
         }else{
             $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
@@ -153,16 +152,16 @@ class SubscriptionController extends Controller
      */
     public function cancel()
     {
-        // 
+        //
         return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
     }
     public function status($id)
     {
-        // 
+        //
         $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();
         $subscription->status = 'cancel';
         $subscription->save();
-        
+
         return redirect()->back()->with('error', 'Subscription Cancelled');
     }
 
