@@ -13,7 +13,8 @@ class CartController extends Controller
 {
     public function index()
     {
-
+        //$courseIds = Cart::where('user_id', auth()->id())->pluck('course_id')->toArray();
+        //return $courses = Course::whereIn('id', $courseIds)->get();
         $cart = Cart::where('user_id', auth()->id())
         ->join('users', 'carts.instructor_id', '=', 'users.id')
         ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key', 'users.id']);
