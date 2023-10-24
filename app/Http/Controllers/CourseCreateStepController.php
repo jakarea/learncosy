@@ -428,6 +428,7 @@ class CourseCreateStepController extends Controller
 
     public function deleteObjective(Request $request, $id,$index)
     { 
+        // return  $index;
 
         $course = Course::findOrFail($id);
         $existingObjectives = explode(',', $course->objective);

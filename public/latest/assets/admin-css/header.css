@@ -29,6 +29,9 @@
 .header-area .dropdown-menu .dropdown-item:hover {
   background: var(--neutral-color-neutral-20, #F1F4F9);
 }
+.header-area .dropdown-menu .active.dropdown-item {
+  background: var(--neutral-color-neutral-20, #F1F4F9) !important;
+}
 .header-area .navbar-brand img {
   max-width: 8.5rem;
   max-height: 3rem;
@@ -137,6 +140,12 @@
   font-weight: 400;
   line-height: 1.25rem;
   /* 181.818% */
+}
+.header-area .d-flex a.bttn.active {
+  background-color: #294CFF;
+}
+.header-area .d-flex a.bttn.active img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }
 .header-area .d-flex .btn.avatar img {
   width: 2.5rem;

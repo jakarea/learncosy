@@ -23,7 +23,7 @@ class LessonController extends Controller
     {   
          $title = isset($_GET['title']) ? $_GET['title'] : '';
          $status = isset($_GET['status']) ? $_GET['status'] : '';
-           $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
+        $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
          if (!empty($title)) {
              $lessons->where('title', 'like', '%' . trim($title) . '%');
          }

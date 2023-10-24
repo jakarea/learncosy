@@ -635,6 +635,24 @@
 // small phone device
 @include q.responsive(phone) {
 
+    .yearly-analitics{
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        h1{
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .dropdown{
+            width: 100%;
+            button{
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+
     .access-page-box {
         .page-box {
             flex-direction: column;

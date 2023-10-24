@@ -16,268 +16,140 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
                 <div class="package-list-header" style="grid-template-columns: 100%">
-                    <h5>Certificate</h5>  
+                    <h5>Certificate</h5>
                 </div>
             </div>
         </div>
+        @if (count($certificateCourses) > 0 ) 
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap activity-table">
                     <table>
-                        <tr> 
+                        <tr>
                             <th>Course Title</th>
-                            <th>Duration</th> 
-                            <th>Quiz</th>
+                            <th>Duration</th>
                             <th>Total Point</th>
                             <th>Your Point</th>
                             <th>Status</th>
                             <th>Progress</th>
                             <th>Actions</th>
-                        </tr>  
-                        <tr> 
+                        </tr>
+                        @foreach ($certificateCourses as $certificateCourse)
+                        <tr>
                             <td>
                                 <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body"> 
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
-                            <td>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                               <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
+                                    <img src="{{ asset($certificateCourse->thumbnail) }}" alt="a" class="img-fluid">
                                     <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
+                                        <h5><a href="{{url('students/courses/'.$certificateCourse->slug)}}">
+                                            {{ Str::limit($certificateCourse->title, $limit = 45, $end = '..') }}
+                                        </a></h5>
+                                        <h6>{{ $certificateCourse->categories }}</h6>
                                     </div>
                                 </div>
-                            </td>  
+                            </td>
+
+                            {{-- course lesson duration calculation --}}
+                            @php
+                            $totalDurationMinutes = 0;
+                            @endphp
+                            @foreach($certificateCourse->modules as $module)
+                            @foreach($module->lessons as $lesson)
+                            @php
+                            $totalDurationMinutes += $lesson->duration;
+                            @endphp
+                            @endforeach
+                            @endforeach
+                            {{-- course lesson duration calculation --}}
+
                             <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
+                                <p>{{ number_format($totalDurationMinutes /60, 2) }} h
+                                </p>
+                            </td>
                             <td>
                                 <p>1000</p>
-                            </td>  
+                            </td>
                             <td>
                                 <p>600</p>
-                            </td>  
+                            </td>
+                            @php
+                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);
+
+                            $showPercentage = null;
+
+                            if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){
+                                $showPercentage = $totalPorgressPercent - 2;
+                            }
+                            @endphp
                             <td>
-                                <p>Complete</p>
-                            </td>  
+                                @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
+                                    <span>Completed</span>
+                                @elseif($totalPorgressPercent < 1)
+                                    <span class="danger">Not Started</span>
+                                @elseif($totalPorgressPercent > 0 && $totalPorgressPercent < 99)
+                                    <span>Inprogress</span>
+                                @endif
+                            </td>
                             <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
+
+                                <div class="circle-prog">
+                                    <div class="cards">
+                                        <div class="percent">
+                                            <svg>
+                                                <circle cx="27" cy="30" r="25"></circle>
+                                                <circle cx="27" cy="30" r="25"
+                                                    style="--percent: {{ $showPercentage ? $showPercentage : $totalPorgressPercent }}"></circle>
+                                            </svg>
+                                            @php
+                                                $totalLessons = 0;
+                                                $completedLessons = 0;
+                                            @endphp
+                                            @foreach ($certificateCourse->modules as $module)
+                                                @php
+                                                    $totalLessons += count($module->lessons);
+                                                    $completedLessons += $module->lessons->where('completed', 1)->count();
+                                                @endphp
+                                            @endforeach
+                                            <div class="number" style="left: 37%">
+                                                <h6>{{ $totalPorgressPercent }}<b style="font-size: 14px">%</b></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                             <td>
+                                @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
+                                <a href="{{url('students/courses-certificate/'.$certificateCourse->slug)}}">
+                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
+                                </a>
+                                @else
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
+                                @endif
+
+
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                               <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
-                            <td>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                               <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
-                            <td>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                               <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
-                            <td>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                            </td>   
-                        </tr> 
-                        <tr> 
-                            <td>
-                               <div class="media">
-                                    <img src="{{ asset('latest/assets/images/small-logo.png') }}" alt="a" class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>Figma Course Part 1</h5>
-                                        <h6>UI/UX Design</h6>
-                                    </div>
-                                </div>
-                            </td>  
-                            <td>
-                                <p>6h</p>
-                            </td>  
-                            <td>
-                                <p>1</p>
-                            </td>  
-                            <td>
-                                <p>1000</p>
-                            </td>  
-                            <td>
-                                <p>600</p>
-                            </td>  
-                            <td>
-                                <p>Complete</p>
-                            </td>  
-                            <td>
-                                <img src="{{asset('latest/assets/images/stack.svg')}}" alt="a" class="img-fluid light-ele">
-                                <img src="{{asset('latest/assets/images/circle-2.svg')}}" alt="a" class="img-fluid dark-ele">
-                            </td>  
-                            <td>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                                <a href="#">
-                                    <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
-                                </a>
-                            </td>   
-                        </tr> 
+                            </td>
+                        </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>
         </div>
+        @else 
+        <div class="row">
+            <div class="col-12">
+                @include('partials/no-data')
+            </div>
+        </div>
+        @endif
         <div class="row">
             {{-- pagginate --}}
             <div class="paggination-wrap mt-4">
-                {{-- {{ $courseActivities->links('pagination::bootstrap-5') }} --}}
+                {{ $certificateCourses->links('pagination::bootstrap-5') }}
             </div>
             {{-- pagginate --}}
         </div>

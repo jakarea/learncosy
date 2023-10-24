@@ -28,8 +28,13 @@
                         <div class="media-body">
                             <h3>{{$instructor->name}}</h3>
                             <p>{{$instructor->user_role}}</p>
-                        </div>
-                        <a href="#" class="edit-profile">Login as {{ $instructor->name }}</a>
+                        </div> 
+                        @php 
+                            $domain = env('APP_DOMAIN', 'learncosy.com');
+                            $url = '//'.$instructor->subdomain.'.'.$domain.'/login-as-instructor/'.$userSessionId.'/'.$userId.'/'.$insId;
+ 
+                        @endphp  
+                        <a href="{{$url}}" class="edit-profile">Login as {{ $instructor->name }}</a>
                     </div>
                 </div>
                 <div class="user-details-box">
@@ -99,7 +104,7 @@
                     <h4>Payment Log</h4> 
 
                     @if (count($subscription) > 0)
-                        @foreach($subscription as $key => $payment)
+                        @foreach($subscription->slice(0,3) as $key => $payment)
                             <div class="media flex-column"> 
                                 <div class="media-body mb-2">
                                     <h6>Payment ID:</h6>

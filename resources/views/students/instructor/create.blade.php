@@ -91,7 +91,7 @@
 
                                     <input type="url" name="website" id="website" value="{{ old('website') }}"
                                         class="form-control @error('website') is-invalid @enderror"
-                                        placeholder="Enter Website">
+                                        placeholder="Enter Web address">
 
                                     <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>

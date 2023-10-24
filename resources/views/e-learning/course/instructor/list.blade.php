@@ -12,14 +12,7 @@
 
 @section('content')
     <main class="courses-lists-pages">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">

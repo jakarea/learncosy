@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\Module;
-use Illuminate\Support\Str; 
+use App\Models\Checkout;
 use App\Models\CourseReview;
+use App\Models\Module;
+use Illuminate\Support\Str;  
 use App\Mail\CourseUpdated;
 use Illuminate\Support\Facades\Mail;
-use DataTables;
-use Auth;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF; 
 use File;
+use ZipArchive;
+use Auth; 
 
 class CourseManagementController extends Controller
 {
@@ -21,16 +23,32 @@ class CourseManagementController extends Controller
     public function index(){  
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $status = isset($_GET['status']) ? $_GET['status'] : '';
-        $courses = Course::with('user','reviews');
+        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+
+        $courses = Course::with('user','reviews')->where('status','published');
 
         if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
-        }
+        } 
 
         if ($status) {
-            if ($status == 'óldest') {
+            if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
+            }
+
+            if ($status == 'best_rated') { 
+                $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
+                ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
+                ->groupBy('courses.id')
+                ->orderBy('avg_star', 'desc');
+            }
+
+            if ($status == 'most_purchased') {
+                $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                ->select('courses.*')
+                ->groupBy('courses.id')
+                ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+
             }
             
             if ($status == 'newest') {
@@ -44,114 +62,30 @@ class CourseManagementController extends Controller
  
         return view('e-learning/course/admin/list',compact('courses'));  
     }
- 
-
-    // course create
-    public function create()
-    {   
-        $unique_array = [];
-        $courses = Course::all();
-        $mainCategories = $courses->pluck('categories'); 
-
-        foreach($mainCategories as $category){ 
-            $cats = explode(",", $category);
-            foreach($cats as $cat){
-               $unique_array[] = strtolower($cat);
-            }
-        }
-
-        $categories = array_unique($unique_array);
-
-        return view('e-learning/course/admin/create',compact('categories')); 
-    }
-
-    // course store
-    public function store(Request $request)
-    {  
-        // return $request->all();
- 
-        $request->validate([
-            'title' => 'required',
-            'features' => 'required',
-            'price' => 'required',
-            'categories' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',  
-        ],
-        [
-            'thumbnail.required' => 'You have to choose the file!',
-            'thumbnail' => 'Max file size is 5 MB!',
-            'banner' => 'Max file size is 5 MB!',
-            'sample_certificates' => 'Max file size is 5 MB!'
-        ]);
-
-        $user_id = Auth::user()->id;
-
-        //save course
-        $course = new Course([
-            'title' => $request->title,
-            'user_id' => $user_id,
-            'sub_title' => $request->sub_title,
-            'slug' => Str::slug($request->title),
-            'features' => is_array($request->features) ? implode(",",$request->features) : $request->features,
-            'prerequisites' => $request->prerequisites,
-            'outcome' => $request->outcome,
-            'promo_video' => $request->promo_video,
-            'price' => $request->price,
-            'offer_price' => $request->offer_price,
-            'categories' => is_array($request->categories) ? implode(",",$request->categories) : $request->categories,
-            'short_description' => $request->short_description, 
-            'description' => $request->description, 
-            'meta_keyword' => is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword,
-            'meta_description' => $request->meta_description, 
-            'number_of_module' => $request->number_of_module, 
-            'number_of_lesson' => $request->number_of_lesson,  
-            'number_of_attachment' => $request->number_of_attachment, 
-            'number_of_video' => $request->number_of_video, 
-            'duration' => $request->duration,
-            'hascertificate' => $request->hascertificate,
-            'subscription_status' => $request->subscription_status, 
-            'status' => $request->status,
-        ]); 
-        
-        $course->slug = $course->slug . '-';
-         //if thumbnail is valid then save it
-        if ($request->hasFile('thumbnail')) {
-            $image = $request->file('thumbnail');
-            $name = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $course->thumbnail = $name;
-        } 
-
-        //if banner is valid then save it
-        if ($request->hasFile('banner')) {
-            $image = $request->file('banner');
-            $name2 = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name2);
-            $course->banner = $name2;
-        }
-
-        //if sample_certificates is valid then save it
-        if ($request->hasFile('sample_certificates')) {
-            $image = $request->file('sample_certificates');
-            $name3 = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name3);
-            $course->sample_certificates = $name3;
-        }
-        // return $course;
-        $course->save();
-        return redirect('admin/courses')->with('success', 'Course saved Successfully!');
-    }
 
     // course show
     public function show($slug)
     {    
        
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+
+        //start group file
+        $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
+        $group_files = [];
+       
+        foreach($lesson_files as $lesson_file){
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $lesson_file->file);  
+                $extention = $file_arr[1];
+                if (!in_array($extention, $group_files)) {
+                    $group_files[] = $extention;
+                }
+            }
+        }
+        
+        //end group file
+
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
         $relatedCourses = Course::where('id', '!=', $course->id)
@@ -159,140 +93,96 @@ class CourseManagementController extends Controller
             ->inRandomOrder()
             ->limit(3)
         ->get();
+
+        $totalModules = count($course->modules);
+        $totalLessons = $course->modules->sum(function ($module) {
+            return count($module->lessons);
+        });
+
         if ($course) {
-            return view('e-learning/course/admin/show', compact('course','course_reviews','relatedCourses'));
+            return view('e-learning/course/admin/show', compact('course','course_reviews','relatedCourses','group_files','totalModules','totalLessons'));
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
     }
 
-    
 
-     // course edit
-     public function edit($slug)
-     {   
-         $course = Course::where('slug', $slug)->first();
-         
-        $unique_array = [];
-        $courses = Course::all();
-        $mainCategories = $courses->pluck('categories'); 
-
-        foreach($mainCategories as $category){ 
-            $cats = explode(",", $category);
-            foreach($cats as $cat){
-               $unique_array[] = strtolower($cat);
+    public function fileDownload($course_id,$file_extension){
+        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
+        foreach($lesson_files as $lesson_file){
+            if(!empty($lesson_file->file)){
+                $file_name = $lesson_file->file;
+                $file_arr = explode('.', $file_name); 
+                $extension = $file_arr['1'];
+                if($file_extension == $extension){
+                    $files[] = public_path('uploads/lessons/'.$file_name);
+               }
             }
         }
 
-        $categories = array_unique($unique_array);
-
-        
-
-         if ($course) {
-             return view('e-learning/course/admin/edit', compact('course','categories'));
-         } else {
-             return redirect('admin/courses')->with('error', 'Course not found!');
-         } 
-     }
-
-     // course update
-    public function update(Request $request, $slug)
-    {   
-          // return $request->all();
-
-          $request->validate([
-            'title' => 'required',
-            'features' => 'required',
-            'price' => 'required',
-            'categories' => 'required',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-            'sample_certificates' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000', 
-        ],
-        [ 
-            'thumbnail' => 'Max file size is 5 MB!',
-            'banner' => 'Max file size is 5 MB!',
-            'sample_certificates' => 'Max file size is 5 MB!'
-        ]);
-
-        $course = Course::where('slug', $slug)->first();
-        $course->title = $request->title;
-        $course->sub_title = $request->sub_title;
-        $course->features = is_array($request->features) ? implode(",",$request->features) : $request->features;
-        $course->slug = Str::slug($request->title);
-        $course->prerequisites = $request->prerequisites;
-        $course->outcome = $request->outcome;
-        $course->promo_video = $request->promo_video;
-        $course->offer_price = $request->offer_price;
-        $course->categories = is_array($request->categories) ? implode(",",$request->categories) : $request->categories; 
-        $course->short_description = $request->short_description;
-        $course->description = $request->description;
-        $course->meta_keyword = is_array($request->meta_keyword) ? implode(",",$request->meta_keyword) : $request->meta_keyword;
-        $course->meta_description = $request->meta_description;
-        $course->number_of_module = $request->number_of_module;
-        $course->number_of_lesson = $request->number_of_lesson; 
-        $course->number_of_attachment = $request->number_of_attachment;
-        $course->number_of_video = $request->number_of_video;
-        $course->duration = $request->duration;
-        $course->hascertificate = $request->hascertificate; 
-        $course->subscription_status = $request->subscription_status;
-        $course->status = $request->status;
-        $course->save();
-
-
-        if ($request->hasFile('thumbnail')) { 
-             // Delete old file
-             if ($course->thumbnail) {
-                $oldFile = public_path('/assets/images/courses/'.$course->thumbnail);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
+        $zip = new ZipArchive;
+        $zipFileName = $file_extension.'_'.time().'.zip';
+        $is_have_file = '';
+        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+            foreach ($files as $file) {
+                if(file_exists($file)){
+                    $zip->addFile($file, basename($file));
+                }else{
+                   $is_have_file = 'There are no files in your storage!!!!';
+                   break;
                 }
-            } 
-            $image = $request->file('thumbnail');
-            $name = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $course->thumbnail = $name; 
+            }
+            if(!empty($is_have_file)){ 
+              return redirect('admin/courses')->with('error', $is_have_file);
+            }
+            $zip->close();
+
+            // Set appropriate headers for the download
+            header('Content-Type: application/zip');
+            header("Content-Disposition: attachment; filename=" . $zipFileName);
+            header('Content-Length: ' . filesize($zipFileName));
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            readfile($zipFileName);
+
+            // Delete the zip file after download
+            unlink($zipFileName);
+            exit;
+        } else {
+            // Handle the case when the zip file could not be created
+            echo 'Failed to create the zip file.';
+        }
+    } 
+
+    public function cousreDownloadPDF($course_id){
+        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
+        foreach($lesson_files as $lesson_file){
+            $file_name = $lesson_file->file;
+            $file_arr = explode('.', $lesson_file->file);  
+            $extention = $file_arr[1];
+            if($extention == 'pdf'){
+                $pdfFiles[] = $file_name;
+           }
         }
 
-        if ($request->hasFile('banner')) { 
-             // Delete old file
-             if ($course->banner) {
-                $oldFile = public_path('/assets/images/courses/'.$course->banner);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
+        $zipFileName = 'PDF_'.time().'.zip';
+        $zip = new ZipArchive;
+
+        if ($zip->open(public_path('uploads/lessons/'.$zipFileName), ZipArchive::CREATE) === TRUE) {
+            foreach ($pdfFiles as $file) {
+                if (file_exists(public_path('uploads/lessons/'.$file))) {
+                    $zip->addFile(public_path('uploads/lessons/'.$file), basename($file));
                 }
-            } 
-            $image = $request->file('banner');
-            $name = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $course->banner = $name; 
+            }
+            $zip->close();
+            return response()->download(public_path('uploads/lessons/'.$zipFileName))->deleteFileAfterSend(true);
+        } else {
+            // handle error here
         }
-
-        if ($request->hasFile('sample_certificates')) { 
-             // Delete old file
-             if ($course->sample_certificates) {
-                $oldFile = public_path('/assets/images/courses/'.$course->sample_certificates);
-                if (file_exists($oldFile)) {
-                    unlink($oldFile);
-                }
-            } 
-            $image = $request->file('sample_certificates');
-            $name = $course->slug.uniqid().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/assets/images/courses');
-            $image->move($destinationPath, $name);
-            $course->sample_certificates = $name; 
-        }
-
-        $course->save();
-
-        // Send email
-        // Mail::to('email-here')->send(new CourseUpdated($course));
-        // students email who are enrolled with this course
-
-        return redirect('admin/courses')->with('success', 'Course Updated!');
     }
+
+    
+ 
 
     public function destroy($slug)
     {

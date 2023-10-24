@@ -1,6 +1,6 @@
 @extends('layouts/latest/students')
 @section('title')
-    Course Home Page
+    Home Page
 @endsection
 
 @section('seo')
@@ -24,7 +24,7 @@
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-7 col-xl-8">
+                            <div class="col-12 col-md-12 col-lg-8 col-xl-9">
                                 <div class="user-search-box-wrap">
                                     <div class="form-group">
                                         <i class="fas fa-search"></i>
@@ -34,33 +34,27 @@
                                     <input type="hidden" name="status" id="inputField">
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-5 col-xl-4">
-                                <div class="d-flex course-filter-header">
-                                    <div class="filter-dropdown-box">
-                                        <div class="dropdown">
-                                            <button class="btn" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false" id="dropdownBttn">
-                                                All
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item filterItem" href="#">All</a></li>
-                                                <li><a class="dropdown-item filterItem" href="#"
-                                                        data-value="best_rated">Best Rated</a></li>
-                                                <li><a class="dropdown-item filterItem" href="#"
-                                                        data-value="most_purchased">Most Purchased</a></li>
-                                                <li><a class="dropdown-item filterItem" href="#"
-                                                        data-value="newest">Newest</a></li>
-                                                <li><a class="dropdown-item filterItem" href="#"
-                                                        data-value="oldest">Oldest</a></li>
-                                            </ul>
-                                        </div>
-                                        <i class="fas fa-angle-down"></i>
+                            <div class="col-12 col-lg-4 col-xl-3">
+                                <div class="filter-dropdown-box">
+                                    <div class="dropdown">
+                                        <button class="btn" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false" id="dropdownBttn">
+                                            All
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item filterItem" href="#">All</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="best_rated">Best Rated</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="most_purchased">Most Purchased</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="newest">Newest</a></li>
+                                            <li><a class="dropdown-item filterItem" href="#"
+                                                    data-value="oldest">Oldest</a></li>
+                                        </ul>
                                     </div>
-                                    <div class="user-add-box">
-                                        <button type="submit" class="btn btn-search"><i
-                                                class="fas fa-search text-white me-2"></i> Search</button>
-                                    </div>
-                                </div> 
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
                             </div> 
                         </div>
                     </form>

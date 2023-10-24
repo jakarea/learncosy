@@ -57,8 +57,7 @@ class AdminProfileController extends Controller
         $userId = Auth()->user()->id;
 
         $this->validate($request, [
-            'name' => 'required|string',
-            'website' => 'string',
+            'name' => 'required|string', 
             'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
@@ -244,7 +243,6 @@ class AdminProfileController extends Controller
     }
 
 
-
     private function getEnrollmentByDateRange($startDate, $endDate)
     {
         return Checkout::whereBetween('created_at', [$startDate, $endDate])
@@ -285,7 +283,6 @@ class AdminProfileController extends Controller
             })
             ->rawColumns(['action', 'status', 'features'])
             ->make(true);
-
 
     }
 

@@ -27,10 +27,7 @@
                             <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
                             <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses') ? ' active' : '' }}">All Courses</a></li>
-                            <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create') ? ' active' : '' }}">Add New Course</a></li>
-
-                            <!-- <li><a href="{{ url('instructor/modules') }}" class="{{ Request::is('instructor/modules*') ? ' active' : '' }}">All Modules</a></li>
-                            <li><a href="{{ url('instructor/lessons') }}" class="{{ Request::is('instructor/lessons*') ? ' active' : '' }}">All Lessons</a></li> -->
+                            <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create') ? ' active' : '' }}">Add New Course</a></li> 
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -49,8 +46,8 @@
                         <a class="{{ Request::is('instructor/students*') ? ' active' : '' }} nav-link"
                             href="#">Students <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
-                            <li><a href="{{ url('instructor/students') }}">All Students</a></li>
-                            <li><a href="{{ url('instructor/students/create') }}">Add New Students</a></li>
+                            <li><a href="{{ url('instructor/students') }}" class="{{ Request::is('instructor/students') ? ' active' : '' }}">All Students</a></li>
+                            <li><a href="{{ url('instructor/students/create') }}" class="{{ Request::is('instructor/students/create') ? ' active' : '' }}">Add New Students</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -84,12 +81,12 @@
                         @endif
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('/instructor/profile/myprofile') }}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/profile/account-settings') }}">Account Settings</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/subscription') }}">Subscription Plan</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/theme/setting/dns') }}">Theme Setting</a></li>
-                        <li><a class="dropdown-item" href="{{ url('/instructor/manage-access') }}">Manage Pages</a></li>
-                        <li><a class="dropdown-item" href="{{ route('module.setting.dns', ['tab' => 'dns']) }}">DNS</a>
+                        <li><a class="dropdown-item {{ Request::is('instructor/profile/myprofile*') ? ' active' : '' }}" href="{{ url('/instructor/profile/myprofile') }}">Profile</a></li>
+                        <li><a class="dropdown-item {{ Request::is('instructor/profile/account-settings*') ? ' active' : '' }}" href="{{ url('/instructor/profile/account-settings') }}">Account Settings</a></li>
+                        <li><a class="dropdown-item {{ Request::is('instructor/subscription*') ? ' active' : '' }}" href="{{ url('/instructor/subscription') }}">Subscription Plan</a></li>
+                        <li><a class="dropdown-item {{ Request::is('instructor/theme/setting/dns') ? ' active' : '' }}" href="{{ url('/instructor/theme/setting/dns') }}">Theme Setting</a></li>
+                        <li><a class="dropdown-item  {{ Request::is('instructor/manage-access*') ? ' active' : '' }}" href="{{ url('/instructor/manage-access') }}">Manage Pages</a></li>
+                        <li><a class="dropdown-item {{ Request::is('instructor/theme/setting/dns') ? 'active' : '' }}" href="{{ route('module.setting.dns', ['tab' => 'dns']) }}">DNS</a>
                         </li>
                         <li> <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

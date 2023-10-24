@@ -86,10 +86,20 @@
             </div>
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                 <div class="total-client-box">
+                    @php 
+                    $totalCombinedCourses = $activeCourses + $draftCourses;
+
+                    if ($totalCombinedCourses > 0) {
+                        $percentageActiveCourses = ($activeCourses / $totalCombinedCourses) * 100;
+                    } else {
+                        $percentageActiveCourses = 0;
+                    }
+                    @endphp 
+
                     <div class="media">
                         <div class="media-body">
                             <h5>Sell Rating</h5>
-                            <h4>35%</h4>
+                            <h4>{{ $percentageActiveCourses }}%</h4>
                         </div>
                     </div>
                     <p>All time stats</p>
@@ -259,26 +269,7 @@
 {{-- Total earnings start --}}
 <script>
 
-    // let newdata = @json($earningByDates);
-
-    let newdata = {
-        "2023-10-02": 33,
-        "2023-10-05": 28,
-        "2023-10-10": 42,
-        "2023-10-15": 56,
-        "2023-10-20": 33,
-        "2023-10-25": 72,
-        "2023-10-30": 39,
-        "2023-10-02": 33,
-        "2023-10-05": 28,
-        "2023-10-10": 42,
-        "2023-10-15": 56,
-        "2023-10-20": 33,
-        "2023-10-25": 72,
-        "2023-10-30": 39,
-        "2023-04-01": 12,
-        "2023-08-23": 17
-    };
+    let newdata = @json($earningByDates);
 
 // Create an object to store data for the current month
 const currentMonthData = {};
@@ -420,9 +411,6 @@ chart.render();
 {{-- monthly earning end --}}
 
 {{-- course progress chart start --}}
-
-
-{{-- top filter --}}
 <script>
     $(document).ready(function() {
             $(".filter-option").click(function(e) {

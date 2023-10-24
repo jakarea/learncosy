@@ -198,7 +198,7 @@
                         @foreach ($courses->slice(0,6) as $course)
                         <tr>
                             <td>
-                                <div class="media">
+                                <div class="media me-4 me-lg-0">
                                     <div class="avatar">
                                         <img src="{{ asset($course->thumbnail) }}" alt="c-status" class="img-fluid">
                                     </div>
@@ -228,7 +228,6 @@
                     @else 
                         @include('partials/no-data')
                     @endif
-
                 </div>
             </div>
             <div class="col-xl-4 mt-15">

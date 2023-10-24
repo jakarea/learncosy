@@ -123,8 +123,8 @@
   padding: 0.2rem 0.6rem;
 }
 .subscription-table-wrap table tr td span.danger {
-  background-color: #F0783C !important;
-  color: #fff !important;
+  background: rgba(240, 120, 60, 0.1);
+  color: #F0783C !important;
 }
 .subscription-table-wrap table tr td a {
   display: inline-block;

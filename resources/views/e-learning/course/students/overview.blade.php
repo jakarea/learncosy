@@ -1,5 +1,6 @@
 @extends('layouts/latest/students')
-@section('title') Course Overview @endsection
+@section('title','Course Overview') 
+
 
 {{-- style section @S --}}
 @section('style')
@@ -217,6 +218,8 @@
                     <div class="course-main-thumb"> 
                         @if ($promo_video_link != '')
                             <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                        @else 
+                        <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -307,7 +310,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h5>Course Preview</h5>
-                                <h4>Figma UI UX Design Basic to Advance</h4>
+                                <h4>{{$course->title}}</h4>
                             </div>
                             <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
                                 <i class="fas fa-close"></i>
@@ -317,49 +320,35 @@
 
                         {{-- intro video --}}
                         <div class="intro-video-box">
-                            <img src="{{ asset('latest/assets/images/video-thumb.png') }}" alt="video-thumb" class="img-fluid thumb">
+                            @if ($promo_video_link != '')
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            @else 
+                            <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
+                            @endif
                         </div>
                         {{-- intro video --}}
 
                         {{-- free sample video --}}
                         <div class="free-sample-video-list">
-                            <h5>Free Sample Videos:</h5>
+                            <h5 class="mb-4">Course Videos:</h5>
 
-                            {{-- item --}}
-                            <div class="d-flex">
-                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
-                                        class="img-fluid thumb"> <img src="{{ asset('latest/assets/images/icons/icon-play.svg') }}" alt="video-thumb" class="img-fluid icon"> Figma UI UX Design Essentials</h4>
-                                <span>2:15</span>
-                            </div>
-                            {{-- item --}}
-                            {{-- item --}}
-                            <div class="d-flex">
-                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
-                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
-                                <span>2:15</span>
-                            </div>
-                            {{-- item --}}
-                            {{-- item --}}
-                            <div class="d-flex">
-                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
-                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
-                                <span>2:15</span>
-                            </div>
-                            {{-- item --}}
-                            {{-- item --}}
-                            <div class="d-flex">
-                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
-                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
-                                <span>2:15</span>
-                            </div>
-                            {{-- item --}}
-                            {{-- item --}}
-                            <div class="d-flex">
-                                <h4><img src="{{asset('latest/assets/images/thumb-big.png')}}" alt="thumb"
-                                        class="img-fluid thumb"> Figma UI UX Design Essentials</h4>
-                                <span>2:15</span>
-                            </div>
-                            {{-- item --}}
+                            @foreach ($course->modules as $module)
+                                @foreach ($module->lessons as $lesson)  
+                                    @if ($lesson->type == 'video') 
+                                        {{-- item --}}
+                                        <div class="media d-flex py-2">
+                                            <img src="{{ asset('latest/assets/images/icons/icon-play.svg') }}" alt="video-thumb" class="img-fluid icon">
+                                            <div class="media-body">
+                                                
+                                                <h4 class="mt-0">{{$lesson->title}}</h4>
+                                            </div>
+                                            <img src="{{ asset('latest/assets/images/icons/lok.svg') }}" alt="video-thumb" class="img-fluid icon">
+                                        </div> 
+                                    {{-- item --}} 
+                                    @endif
+                                @endforeach
+                            @endforeach
+
                         </div>
                         {{-- free sample video --}}
 

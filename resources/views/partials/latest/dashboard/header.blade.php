@@ -13,7 +13,7 @@
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item">
                         <a href="{{ url('admin/dashboard') }}"
-                            class="{{ Request::is('admin/dashboard*') ? ' active' : '' }} nav-link">Dashboard</a>
+                            class="{{ Request::is('admin/dashboard*') || Request::is('admin/top-perform/courses*') ? ' active' : '' }} nav-link">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="{{ Request::is('admin/alladmin*') ? ' active' : '' }} nav-link"
@@ -34,12 +34,12 @@
                     <li class="nav-item">
                         <a class="{{ Request::is('admin/courses*') || Request::is('admin/bundle/courses*') ? ' active' : '' }} nav-link" href="#">E-Learning <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
-                            <li><a href="{{ url('admin/courses') }}">All Courses</a></li>
-                            <li><a href="{{ url('admin/bundle/courses') }}">All Bundle Courses</a></li>
+                            <li><a href="{{ url('admin/courses') }}" class="{{ Request::is('admin/courses*') ? ' active' : '' }} ">All Courses</a></li>
+                            <li><a href="{{ url('admin/bundle/courses') }}" class="{{ Request::is('admin/bundle/courses*') ? ' active' : '' }} ">All Bundle Courses</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ Request::is('admin/profile/platform-fee*') ? ' active' : '' }} nav-link"
+                        <a class="{{ Request::is('admin/profile/platform-fee*') || Request::is('admin/profile/view*') ? ' active' : '' }} nav-link"
                             href="{{ url('/admin/profile/platform-fee') }}">Platform Fee</a>
                     </li>
                 </ul>
@@ -52,7 +52,7 @@
                 <a href="#" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/notification.svg') }}" alt="Notification icon"
                         class="img-fluid">
-                    <span>0</span>
+                    {{-- <span>0</span> --}}
                 </a>
                 <div class="dropdown">
                     <button class="btn avatar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,8 +64,8 @@
                         @endif
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('admin/profile/myprofile') }}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{{ url('admin/profile/edit') }}">Account Settings</a></li>
+                        <li><a class="dropdown-item {{ Request::is('admin/profile/myprofile') ? ' active' : '' }}" href="{{ url('admin/profile/myprofile') }}">Profile</a></li>
+                        <li><a class="dropdown-item {{ Request::is('admin/profile/edit') || Request::is('admin/profile/change-password') ? ' active' : '' }}" href="{{ url('admin/profile/edit') }}">Account Settings</a></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
