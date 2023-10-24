@@ -1,40 +1,41 @@
 <?php
-use App\Http\Controllers\Admin\AdminHomeController;
-use App\Http\Controllers\Admin\AdminManagementController;
-use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
-use App\Http\Controllers\Admin\BundleCourseManagementController;
-use App\Http\Controllers\Frontend\HomepageController;
-use App\Http\Controllers\Admin\CourseManagementController;
-use App\Http\Controllers\Admin\InstructorController;
-use App\Http\Controllers\Admin\LessonManagementController;
-use App\Http\Controllers\Admin\ModuleManagementController;
-use App\Http\Controllers\Admin\StudentManagementController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CourseBundleController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\CourseCreateStepController;
-use App\Http\Controllers\ExperienceController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Instructor\DashboardController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\ModuleSettingController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileManagementController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\Student\CheckoutBundleController;
-use App\Http\Controllers\Student\CheckoutController;
-use App\Http\Controllers\Student\StudentHomeController;
-use App\Http\Controllers\Student\StudentProfileController;
-use App\Http\Controllers\SubscriptionController;
-use App\Models\InstructorModuleSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\InstructorModuleSetting;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\CourseBundleController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ModuleSettingController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Admin\InstructorController;
+use App\Http\Controllers\CourseCreateStepController;
+use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Instructor\DashboardController;
+use App\Http\Controllers\Admin\AdminManagementController;
+use App\Http\Controllers\Admin\CourseManagementController;
+use App\Http\Controllers\Admin\LessonManagementController;
+use App\Http\Controllers\Admin\ModuleManagementController;
+use App\Http\Controllers\Student\CheckoutBundleController;
+use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Admin\StudentManagementController;
+use App\Http\Controllers\Admin\BundleCourseManagementController;
+use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,16 @@ use Illuminate\Support\Facades\Route;
  */
 
 // Route::get('/')->middleware('auth');
+
+
+
+
+Route::post('/students/stripe-process-payment', [PaymentController::class, 'processPayment'])->name('process-payment');
+
+
+
+
+
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
@@ -391,9 +402,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
-    // Route::get('/courses-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
-    Route::get('/certificate-download/{slug}', 'certificateDownload2')->name('courses.certificate.download');
-    Route::get('/certificate-view/{slug}', 'certificateView')->name('courses.certificate.view');
+    Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
@@ -558,3 +567,6 @@ Route::get('/logout', function () {
 Route::fallback(function () {
     return redirect()->route('tlogin');
 });
+
+
+
