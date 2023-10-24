@@ -10,6 +10,7 @@ use App\Models\Module;
 use App\Models\Checkout;
 use Carbon\Carbon;
 use App\Models\Cart;
+use App\Models\Certificate;
 use App\Models\CourseLog;
 use App\Models\BundleCourse;
 use App\Models\CourseReview;
@@ -395,12 +396,13 @@ class StudentHomeController extends Controller
         $courseName = $course->title;
 
         $style=null;
+
         if (!empty($course->certificate)) {
             $style = $course->certificate->style;
         }else{
             return redirect()->back()->with('error',"No Certifcate Found for this course");
         }
-return $style;
+
         $certificateTemplate = Image::make(public_path("uploads/certificates/{$style}.png"));
         $templateWidth = $certificateTemplate->width();
         $templateHeight = $certificateTemplate->height();
@@ -489,6 +491,107 @@ return $style;
         // $pdf->setPaper([0, 0, 750, 550], 'landscape');
 
         return $pdf->download('certificate.pdf');
+    }
+
+    public function certificateDownload2($slug)
+    {
+            $course = Course::where('slug', $slug)
+            ->with('certificate')
+            ->first();
+
+            if (!$course) {
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+
+            $courseDate = CourseActivity::where('user_id', Auth::user()->id)
+            ->where('is_completed', 1)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+            if (!$courseDate) {
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+            
+            $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
+
+            if ($certStyle) {
+                if ($certStyle->style == 3) {
+                    $certificate_path = 'certificates/download/certificate1';
+                     
+                }elseif ($certStyle->style == 2) {
+                    $certificate_path = 'certificates/download/certificate2';
+    
+                }elseif ($certStyle->style == 1) {
+                    $certificate_path = 'certificates/download/certificate3';
+                }else{
+                    return redirect()->back()->with('error','There is no Style found for this Course');
+                }
+
+                $signature = '';
+
+                if (!empty($certStyle->signature)) {
+                   $signature = $certStyle->signature;
+                }else{
+                    $signature = 'latest/assets/images/certificate/signature.png';
+                }
+
+                $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
+            
+                return $pdf->download('certificate.pdf');
+            }else{
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+            
+    }
+
+    public function certificateView($slug)
+    {
+            $course = Course::where('slug', $slug)
+            ->with('certificate')
+            ->first();
+
+            if (!$course) {
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+
+            $courseDate = CourseActivity::where('user_id', Auth::user()->id)
+            ->where('is_completed', 1)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+            if (!$courseDate) {
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+            
+            $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
+
+            if ($certStyle) {
+                if ($certStyle->style == 3) {
+                    $certificate_show_path = 'certificates/show/certificate1';
+                     
+                }elseif ($certStyle->style == 2) {
+                    $certificate_show_path = 'certificates/show/certificate2';
+    
+                }elseif ($certStyle->style == 1) {
+                    $certificate_show_path = 'certificates/show/certificate3';
+                }else{
+                    return redirect()->back()->with('error','There is no Style found for this Course');
+                }
+
+                $signature = '';
+
+                if (!empty($certStyle->signature)) {
+                   $signature = $certStyle->signature;
+                }else{
+                    $signature = 'latest/assets/images/certificate/signature.png';
+                }
+
+                return view($certificate_show_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
+ 
+            }else{
+                return redirect()->back()->with('error','There is no certificate found for this Course');
+            }
+            
     }
 
     // course overview
