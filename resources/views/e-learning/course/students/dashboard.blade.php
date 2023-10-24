@@ -131,7 +131,7 @@ Student Dashboard
                             <img src="{{ asset(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
                                 class="img-fluid" width="100">
                             @else
-                            <span class="avatar-user">{!! strtoupper(auth()->user()->name[0]) !!}</span>
+                            <span class="avatar-user" style="width: 5rem; height: 5rem; border-radius: 50%; background: #ccc; display: inline-flex; align-items: center; justify-content:center; padding-right:0; font-size: 2rem; font-weight: 700;">{!! strtoupper(auth()->user()->name[0]) !!}</span>
                             @endif
                             <div class="profile-widget-info mt-2">
                                 <h6 class="text-small">{{ auth()->user()->name }}</h6>
@@ -399,16 +399,22 @@ Student Dashboard
     });
 
     var legendHtml = "<ul>";
-    for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
-        legendHtml +=
-            '<li>' + '<p> <span style="background-color:' +
-            myDoughnutChart.data.datasets[0].backgroundColor[i] +
-            '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentages[i] + '</h6>' +
-            "</li>";
+for (var i = 0; i < myDoughnutChart.data.labels.length; i++) {
+    var percentage = percentages[i];
+    if (percentage === "NaN%") {
+        percentage = "0%";
     }
-    legendHtml += "</ul>";
+    legendHtml +=
+        '<li>' + '<p> <span style="background-color:' +
+        myDoughnutChart.data.datasets[0].backgroundColor[i] +
+        '"></span> ' + myDoughnutChart.data.labels[i] + '</p>' + '<h6>' + percentage + '</h6>' +
+        "</li>";
+}
+legendHtml += "</ul>";
 
-    document.getElementById("legend").innerHTML = legendHtml;
+document.getElementById("legend").innerHTML = legendHtml;
+
+
 </script>
 {{-- course statics chart end --}}
 @endsection
