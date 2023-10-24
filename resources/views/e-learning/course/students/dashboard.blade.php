@@ -1,5 +1,7 @@
 @extends('layouts/latest/students')
-@section('title','Student Dashboard')
+@section('title')
+Student Dashboard
+@endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -40,10 +42,12 @@
                     <p>Course in Progress</p>
                     <div class="d-flex">
                         <h5>{{ $inProgressCount }}</h5>
-                        @php 
+                        @php
+                            $progPercentage = 0;
                             $totalCoureses = count($enrolments);
-                            $progPercentage = ($inProgressCount / $totalCoureses) * 100;
-                        @endphp 
+                            if($totalCoureses> 0 && $inProgressCount > 0)
+                                $progPercentage = ($inProgressCount / $totalCoureses) * 100;
+                        @endphp
                         <span>
                             <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
                             {{$progPercentage}}%
@@ -56,10 +60,12 @@
                     <p>Completed Course</p>
                     <div class="d-flex">
                         <h5>{{ $completedCount }}</h5>
-                        @php 
+                        @php
+                            $cmpltPercentage = 0;
                             $totalCoureses = count($enrolments);
+                            if($totalCoureses> 0 && $completedCount > 0)
                             $cmpltPercentage = ($completedCount / $totalCoureses) * 100;
-                        @endphp 
+                        @endphp
                         <span>
                             <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
                             {{$cmpltPercentage}}%
@@ -70,7 +76,7 @@
             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="status-card-box">
                     <p>Watching Time</p>
-                    <div class="d-flex"> 
+                    <div class="d-flex">
                         <h5>{{ $totalHours }}h <b style="font-size: 1.25rem; font-weight:600">{{ $totalMinutes }}m</b></h5>
                         <span>
                             @if ($percentageChange > 0)
@@ -84,31 +90,14 @@
                         </span>
                     </div>
                 </div>
-            </div>   
-
+            </div>
             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                 <div class="status-card-box">
                     <p>Certificate Achievement</p>
-
-                    @php
-                    $totalEnrolledCourses = count($certificateCourses);
-                    $completedCoursesCount = 0;
-                    @endphp
-
-                    @foreach ($certificateCourses as $certificateCourse)
-                        @php 
-                        $totalProgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);
-
-                        if ($totalProgressPercent >= 100) {
-                            $completedCoursesCount++;
-                        }
-                        @endphp
-                    @endforeach
-
                     <div class="d-flex">
-                        <h5>{{ $completedCoursesCount }}</h5>
+                        <h5>0</h5>
                         <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                class="img-fluid"> {{ $totalEnrolledCourses > 0 ? ($completedCoursesCount / $totalEnrolledCourses) * 100 : 0 }}%</span>
+                                class="img-fluid"> 100%</span>
                     </div>
                 </div>
             </div>
@@ -173,13 +162,13 @@
                     <h3>Liked Courses </h3>
                     <div class="course-box-overflown liked-courses">
                         @if (count($likeCourses) > 0)
-                        @foreach ($likeCourses as $likeCourse) 
+                        @foreach ($likeCourses as $likeCourse)
                         @php
                          $totalLessons = 0;
                             foreach ($likeCourse->course->modules as $module) {
                                 $totalLessons = count($module->lessons);
                             }
-                        @endphp  
+                        @endphp
                         <div class="media">
                             @if ($likeCourse->course->thumbnail)
                             <img src="{{ asset($likeCourse->course->thumbnail) }}" alt="a" class="img-fluid me-3 thumab">
@@ -189,10 +178,10 @@
                             @endif
                             <div class="media-body">
                                 <h5>{{ $likeCourse->course->title }}</h5>
-                                <p class="user"><i class="fa-solid fa-user"></i> {{ $likeCourse->course->user->name }} &nbsp; - &nbsp;{{ $likeCourse->course->platform }}</p>  
+                                <p class="user"><i class="fa-solid fa-user"></i> {{ $likeCourse->course->user->name }} &nbsp; - &nbsp;{{ $likeCourse->course->platform }}</p>
                                 <p class="lessons">
                                     <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
-                                     {{ count($likeCourse->course->modules) }} Modules &nbsp;&nbsp; 
+                                     {{ count($likeCourse->course->modules) }} Modules &nbsp;&nbsp;
                                      <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid"> {{ $totalLessons }} Lessons
                                 </p>
                             </div>
@@ -200,17 +189,17 @@
                                 <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></button>
-        
+
                                 <ul class="dropdown-menu">
                                     <li>
                                         <form action="{{ route('students.course.unlike',['course_id' => $likeCourse->course->id, 'ins_id' => $likeCourse->course->user_id]) }}" method="POST" class="d-block">
                                             @csrf
                                             <button type="submit" class="btn p-0 dropdown-item">Unlike</button>
-                                        </form> 
+                                        </form>
                                     </li>
-                                    <li><a class="dropdown-item" href="{{ url('students/courses/'.$likeCourse->course->slug) }}">Play</a></li> 
+                                    <li><a class="dropdown-item" href="{{ url('students/courses/'.$likeCourse->course->slug) }}">Play</a></li>
                                 </ul>
-                            </div> 
+                            </div>
                         </div>
                         @endforeach
                         @else
@@ -315,11 +304,11 @@
 <script>
     jQuery(document).ready(function() {
             var timeSpentData = @json($timeSpentData);
-            
+
             var options = {
                 series: [{
                     name: "Time spend",
-                    data: timeSpentData.map(item => item.time_spent), 
+                    data: timeSpentData.map(item => item.time_spent),
                 }],
                 chart: {
                     height: 280,

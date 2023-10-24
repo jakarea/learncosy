@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Auth;
@@ -19,15 +18,17 @@ class CheckSubscription
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    { 
-        $user = auth::user();
+    {
+        // Changes by Jakaria vai
+        $user = auth()->user();
+
         $modules = InstructorModuleSetting::where('instructor_id', $user->id)->first();
         if (Auth::user()->user_role == 'instructor') {
-                        
+
             // Retrieve the user's subscription based on instructor_id
             $subscription = Subscription::where('instructor_id', $user->id)->latest('created_at')->first();
 
-            if ($subscription->status == 'cancel') {
+            if ($subscription && $subscription->status == 'cancel') {
                 return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
             }elseif ($subscription && $subscription->ends_at && now() > $subscription->ends_at) {
                 // Subscription expired, show alert or redirect
@@ -43,9 +44,9 @@ class CheckSubscription
                 return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
             }else{
                 return $next($request);
-            }    
+            }
         }
-    
+
         return $next($request);
     }
 }

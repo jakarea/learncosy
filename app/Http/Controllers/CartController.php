@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Course;
@@ -13,16 +13,18 @@ class CartController extends Controller
 {
     public function index()
     {
+
         $cart = Cart::where('user_id', auth()->id())
         ->join('users', 'carts.instructor_id', '=', 'users.id')
-        ->get(['carts.*', 'users.name']);
+        ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key', 'users.id']);
+
 
         return view('e-learning/course/students/cart',compact('cart'));
     }
     public function add(Course $course)
     {
         $instructor_id = $course->user_id;
-        $instructor = User::where('id', $instructor_id)->firstOrFail(); 
+        $instructor = User::where('id', $instructor_id)->firstOrFail();
 
         $user = auth()->user();
         $cart = Cart::firstOrNew([
@@ -43,7 +45,7 @@ class CartController extends Controller
 
     public function remove($id){
 
-        $cart = Cart::where('id', $id)->first(); 
+        $cart = Cart::where('id', $id)->first();
 
         $cart->delete();
 
