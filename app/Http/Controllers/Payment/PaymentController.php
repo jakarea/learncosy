@@ -15,7 +15,6 @@ class PaymentController extends Controller
 
     public function processPayment(Request $request) {
 
-        // dd( $request->all());
 
             // $courseIds = Cart::where('user_id', auth()->id())->pluck('course_id')->toArray();
             // $courses = Course::whereIn('id', $courseIds)->get();
@@ -72,7 +71,7 @@ class PaymentController extends Controller
 
             // dd( $instructor);
 
-            Stripe::setApiKey($instructor->stripe_secret_key);
+            //Stripe::setApiKey($instructor->stripe_secret_key);
             try {
                 $charge = Charge::create([
                     'amount'      => $request->amount * 100, // Amount in cents
@@ -80,6 +79,9 @@ class PaymentController extends Controller
                     'source'      => $request->stripeToken,
                     'description' => 'Example Charge',
                 ]);
+
+                dd($charge);
+
                 return redirect(route('students.catalog.courses'))->with('success', 'You have successfully enrolled in this course');;
             } catch (\Exception $e) {
                 return redirect()->route('students.catalog.courses')->with('error', $e->getMessage());

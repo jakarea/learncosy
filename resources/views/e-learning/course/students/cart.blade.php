@@ -261,11 +261,11 @@ $totalPrice += $item->courses->offer_price;
                             </div>
 
                             <div class="cart-checkout-bttn-wrap">
-                                <a href="{{ route('students.checkout.cart') }}" class="common-bttn">Pay €{{ $totalPrice }} with
+                                <!-- <a href="{{ route('students.checkout.cart') }}" class="common-bttn">Pay €{{ $totalPrice }} with
                                     <span class="stripe-bg">
                                         <i class="fa-brands fa-stripe"></i>
                                     </span>
-                                </a>
+                                </a> -->
 
 
                                 <button class="text-white" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
@@ -307,7 +307,6 @@ $totalPrice += $item->courses->offer_price;
     <script src="https://js.stripe.com/v2/"></script>
 
     <script>
-        // $(function() {
         $(document).ready(function() {
             var $form = $(".require-validation");
 
@@ -319,7 +318,7 @@ $totalPrice += $item->courses->offer_price;
             $form.on('submit', function(e) {
                 e.preventDefault();
 
-                document.getElementById('stripe-pay-now').disabled = true;
+                //document.getElementById('stripe-pay-now').disabled = true;
 
                 var first_name = $('#first_name').val();
                 var last_name = $('#last_name').val();
@@ -329,8 +328,7 @@ $totalPrice += $item->courses->offer_price;
                 var inputSelector = 'input[type=email], input[type=password], input[type=text], input[type=file], textarea,select',
                     $inputs = $form.find('.required').find(inputSelector),
 
-
-                $errorMessage = $form.find('div.error');
+                    $errorMessage = $form.find('div.error');
 
                 $errorMessage.addClass('hide');
 
@@ -339,7 +337,7 @@ $totalPrice += $item->courses->offer_price;
                 $('.invalid-feedback').removeClass('invalid-feedback');
 
                 $inputs.each(function(i, el) {
-                var $input = $(el);
+                    var $input = $(el);
                     if ($input.val() === '') {
                         $input.closest('.required').addClass('invalid-feedback');
 
@@ -363,7 +361,7 @@ $totalPrice += $item->courses->offer_price;
                         if (response.error) {
                             $errorMessage.removeClass('hide');
                             $errorMessage.find('.alert').text(response.error.message);
-                            document.getElementById('stripe-pay-now').disabled = true;
+                            //document.getElementById('stripe-pay-now').disabled = true;
                         } else {
                             var token = response.id;
                             $form.find('input[type=text]').val(''); // Clear sensitive data
