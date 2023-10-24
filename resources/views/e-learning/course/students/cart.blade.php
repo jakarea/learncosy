@@ -116,7 +116,7 @@ $totalPrice += $item->courses->offer_price;
                                     <div class="col-lg-6">
                                         <div class="form-group required">
                                             <input type="text" class="form-control card-number" id="card_number" name="card_number"
-                                                placeholder="">
+                                                placeholder="" maxlength="16">
                                             <label for="card_number">Card Number </label>
                                             {{-- <span class="invalid-feedback">@error('card_number'){{
                                                 $message }}
@@ -126,7 +126,7 @@ $totalPrice += $item->courses->offer_price;
                                     <div class="col-lg-6">
                                         <div class="form-group required">
                                             <input type="text" class="form-control card-cvc" id="card_cvv" name="card_cvv"
-                                                placeholder="">
+                                                placeholder="" maxlength="3">
                                             <label for="card_cvv">CVV </label>
                                             {{-- <span class="invalid-feedback">@error('card_cvv'){{
                                                 $message }}
@@ -172,14 +172,6 @@ $totalPrice += $item->courses->offer_price;
                                                 @enderror</span> --}}
                                         </div>
                                     </div>
-
-                                    <div class='col-lg-12'>
-                                        <div class='form-group error hide'>
-                                            <div class='alert-danger alert'>Please correct the errors and try
-                                                again.
-                                            </div>
-                                        </div>
-                                    </div>
                                     {{-- <div class='col-lg-12'>
                                         <div class="form-group">
                                             <button id="stripe-pay-now" class="btn btn-primary btn-lg btn-block" type="submit">Pay Now</button>
@@ -193,9 +185,7 @@ $totalPrice += $item->courses->offer_price;
                     </div>
                     <div class="col-lg-5">
                         <div class="cart-right-wrap">
-
                             @foreach ($cart as $item)
-
                             @php
                             $review_sum = 0;
                             $review_avg = 0;
@@ -209,7 +199,6 @@ $totalPrice += $item->courses->offer_price;
                             @endphp
 
                             {{-- cart item start here --}}
-
                             <div class="cart-items-wrap">
                                 <div class="d-flex">
                                     <div class="media">
@@ -260,13 +249,7 @@ $totalPrice += $item->courses->offer_price;
                                 </table>
                             </div>
 
-                            <div class="cart-checkout-bttn-wrap">
-                                <!-- <a href="{{ route('students.checkout.cart') }}" class="common-bttn">Pay €{{ $totalPrice }} with
-                                    <span class="stripe-bg">
-                                        <i class="fa-brands fa-stripe"></i>
-                                    </span>
-                                </a> --> 
-
+                            <div class="cart-checkout-bttn-wrap"> 
                                 <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
                                     <span class="stripe-bg">
                                         <i class="fa-brands fa-stripe"></i>
@@ -378,7 +361,6 @@ $totalPrice += $item->courses->offer_price;
             });
         });
     </script>
-
 
 @endsection
 
