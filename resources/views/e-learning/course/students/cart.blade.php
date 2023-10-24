@@ -265,8 +265,7 @@ $totalPrice += $item->courses->offer_price;
                                     <span class="stripe-bg">
                                         <i class="fa-brands fa-stripe"></i>
                                     </span>
-                                </a> -->
-
+                                </a> --> 
 
                                 <button class="text-white" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
                                     <span class="stripe-bg">

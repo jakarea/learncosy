@@ -50,7 +50,7 @@ Student Dashboard
                         @endphp
                         <span>
                             <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
-                            {{$progPercentage}}%
+                            {{number_format(abs($progPercentage), 2)}}%
                         </span>
                     </div>
                 </div>
