@@ -753,7 +753,6 @@ class StudentHomeController extends Controller
         }
 
         return redirect()->route('students.show.courses',$slug)->with('message', 'comment submitted successfully!');
-
     }
 
     public function certificate()
