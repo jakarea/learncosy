@@ -60,14 +60,14 @@ Course Create - Add Objective
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="" method="POST">
+                <form action="" method="POST" id="objectForm">
                     @csrf
                     <div class="content-settings-form-wrap">
                         <h4>What You'll Learn</h4>
 
                         <div class="object-list-wrap">
                             @if (!empty($course->objective))
-                            @foreach (explode(',', $course->objective) as $index => $objective)
+                            @foreach (explode('[objective]', $course->objective) as $index => $objective)
                             <div class="item">
                                 <i class="fas fa-check"></i>
                                 <input type="text" value="{{ $objective }}" class="form-control" disabled>
@@ -84,8 +84,9 @@ Course Create - Add Objective
                             </div>
                             @endforeach
                             @endif
-
+                            <div id="appendItems"></div>
                         </div>
+                        <input type="hidden" id="itemIndex" value="">
                         <div class="form-group">
                             <h6>Object Title</h6>
                             <textarea class="form-control" name="objective[]" placeholder="Enter objective"
@@ -116,15 +117,17 @@ Course Create - Add Objective
 
 {{-- script js --}}
 @section('script')
-<script> 
 
+{{-- delete object ajax js --}}
+<script> 
     document.addEventListener('DOMContentLoaded', function () {
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
         const deleteItem = document.querySelectorAll('.delete-item');
  
         deleteItem.forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
 
                 item.parentNode.parentNode.style.display = 'none'; 
                 let courseId = @json($course->id);  
@@ -158,5 +161,100 @@ Course Create - Add Objective
         });
          
 </script>
+
+{{-- frontend value assigned object js --}}
+<script> 
+    document.addEventListener('DOMContentLoaded', function () { 
+        let editItem = document.querySelectorAll('.edit-item');
+        let itemIndex = document.querySelector('#itemIndex');
+        let objectiveTextArea = document.querySelector('#objective');
+ 
+        editItem.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                let dataIndex = item.getAttribute('data-index');
+                itemIndex.value = dataIndex; 
+                objectiveTextArea.value = item.parentNode.parentNode.querySelector('input').value;
+                objectiveTextArea.focus(); 
+                });
+            });
+        });
+         
+</script>
+
+{{-- add object ajax js --}}
+<script> 
+    document.addEventListener('DOMContentLoaded', function () {
+        let currentURL = window.location.href;
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
+        const objectForm = document.querySelector('#objectForm');
+        let itemIndex = document.querySelector('#itemIndex');
+        let objectiveTextArea = document.querySelector('#objective');
+  
+        objectForm.addEventListener('submit', function(e) {
+
+            e.preventDefault();
+ 
+                let courseId = @json($course->id);  
+                let dataIndex = itemIndex.value;  
+                 
+                    if (courseId) {
+
+                        const requestBody = JSON.stringify({
+                            dataIndex: dataIndex,
+                            objective: objectiveTextArea.value,
+                        });
+
+
+                        fetch(`${baseUrl}/instructor/courses/create/${courseId}/objects`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: requestBody,
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message === 'ADDED') {  
+
+                                    let appendItems = document.querySelector('#appendItems'); 
+
+                                    const newItem = document.createElement('div');
+                                    newItem.className = 'item';
+                                    newItem.innerHTML = `
+                                        <i class="fas fa-check"></i>
+                                        <input type="text" value="${objectiveTextArea.value}" class="form-control" disabled>
+                                        <div class="actions">
+                                            <span class="badge text-bg-success">New</span>
+                                        </div>
+                                    `;
+
+                                    // Append the new item to the container
+                                    appendItems.appendChild(newItem);
+
+                                    objectiveTextArea.value = '';
+
+                                } else if(data.message === 'UPDATED') {  
+
+                                    let updatedItems = e.target.querySelectorAll('.edit-item');
+
+                                    updatedItems.forEach(itm => {
+                                        if (itm.getAttribute('data-index') == dataIndex) {
+                                            itm.parentNode.parentNode.querySelector('input').value = objectiveTextArea.value;
+                                        }
+                                    });
+
+                                    objectiveTextArea.value = '';
+                                }
+                            })
+                            .catch(error => { 
+                            });
+                    }
+                });
+
+            });          
+</script>
+
 @endsection
 {{-- script js --}}

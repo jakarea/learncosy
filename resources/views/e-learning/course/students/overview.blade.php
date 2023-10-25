@@ -62,7 +62,7 @@
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
                     @php
-                    $objectives = explode(",", $course->objective);
+                    $objectives = explode("[objective]", $course->objective);
                     @endphp
 
                     <ul>
