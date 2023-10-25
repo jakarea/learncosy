@@ -65,10 +65,7 @@ Course Create - Step 7
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <form action="" method="POST" >
                     @csrf
-                    <div class="content-settings-form-wrap">
-                        {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
+                    <div class="content-settings-form-wrap"> 
                         <h4>Select Price</h4>
                         <div class="form-group">
                             <input id="price" class="form-control" name="price" value="{{ $course->price ? $course->price : old('price')  }}" type="text" >
@@ -79,6 +76,7 @@ Course Create - Step 7
                         <div class="form-group">
                             <input id="offer_price" class="form-control" name="offer_price" value="{{ $course->offer_price ? $course->offer_price : old('offer_price')  }}" type="text" >
                             <label for="offer_price">Sales Price</label>
+                            {{-- <span>€</span> --}}
                             <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
                             <span class="invalid-feedback d-block">@error('offer_price'){{ $message }}
                                         @enderror</span>

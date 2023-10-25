@@ -547,6 +547,8 @@ class CourseCreateStepController extends Controller
             $image_path = 'uploads/courses/' . $uniqueFileName;
            $course->thumbnail = $image_path;
        }
+
+        $course->promo_video = $request->input('promo_video');
         $course->save();
 
         return redirect('instructor/courses/create/'.$course->id.'/certificate')->with('success', 'Course Thumbnail Set successfully');
