@@ -339,7 +339,7 @@ $i = 0;
                 method: 'GET',
                 data: data,
                 success: function(response) {
-                    console.log('response', response)
+                    // console.log('response', response)
                 },
                 error: function(xhr, status, error) {
                     // Handle errors, if any
@@ -368,7 +368,7 @@ $i = 0;
                     var lessonId = $(this).data('lesson-id');
                     var moduleId = $(this).data('modules-id');
                     var videoUrl = $(this).attr('href');
-                    console.log({videoUrl})
+                    // console.log({videoUrl})
                     videoUrl = videoUrl.replace('/videos/', '');
                     player.loadVideo(videoUrl);
                     // add bold class to current lesson
@@ -388,7 +388,7 @@ $i = 0;
                     method: 'GET',
                     data: data,
                     success: function(response) {
-                        console.log('response', response)
+                        // console.log('response', response)
                     },
                     error: function(xhr, status, error) {
                         // Handle errors, if any
@@ -422,7 +422,7 @@ $i = 0;
                                 'spinner-border spinner-border-sm');
                         },
                         success: function(response) {
-                            console.log('response', response);
+                            // console.log('response', response);
                             // Change icon to success checkmark
                             $element.removeClass('spinner-border spinner-border-sm').addClass(
                                 'fa-solid fa-circle-play text-success');

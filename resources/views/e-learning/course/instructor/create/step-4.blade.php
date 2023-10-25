@@ -110,8 +110,6 @@ Course Create - Step 4
                         <div class="form-group form-upload">
                             <label for="file-input" class="txt">Uploaded Files</label>
                         </div>
-                        @endif
-
                         @foreach ($uploadedFilenames as $filename)
                         <div class="course-content-box course-page-edit-box">
                             <div class="title">
@@ -126,6 +124,9 @@ Course Create - Step 4
                             </div>
                         </div>
                         @endforeach
+                        @endif
+
+                        
                         {{-- course page file box end --}}
 
                 </div>

@@ -28,7 +28,8 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
+        
         $packages = SubscriptionPackage::where('status','active')->get();
         $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
 

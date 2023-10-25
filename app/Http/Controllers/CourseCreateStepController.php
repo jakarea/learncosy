@@ -25,12 +25,13 @@ class CourseCreateStepController extends Controller
 
         $course = new Course();
         $course->user_id = Auth::user()->id;
+        $course->instructor_id = Auth::user()->id;
         $course->save();
 
         if($request->input('module_name')){
             $module = new Module();
             $module->course_id = $course->id;
-            $module->user_id = Auth::user()->id;
+            $module->instructor_id = Auth::user()->id;
             $module->title = $request->input('module_name');
             $module->slug = Str::slug($request->input('module_name'));
             $module->save();
@@ -44,7 +45,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id',Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-1',compact('course'));
     }
@@ -102,7 +103,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $modules = Module::with('lessons')->where('course_id', $id)->get();
+        $modules = Module::with('lessons')->where('course_id', $id)->where('instructor_id', Auth::user()->id)->get();
         return view('e-learning/course/instructor/create/step-6',compact('modules'));
     }
 
@@ -119,7 +120,7 @@ class CourseCreateStepController extends Controller
 
         $lesson = new Lesson();
         $lesson->course_id = $id;
-        $lesson->user_id = Auth::user()->id;
+        $lesson->instructor_id = Auth::user()->id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
@@ -141,7 +142,7 @@ class CourseCreateStepController extends Controller
 
         $module = new Module();
         $module->course_id = $id;
-        $module->user_id = Auth::user()->id;
+        $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();
@@ -161,9 +162,9 @@ class CourseCreateStepController extends Controller
 
         $module_id = $request->input('module_id');
 
-        $module = Module::where('id', $module_id)->firstOrFail();
+        $module = Module::where('id', $module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $module->course_id = $id;
-        $module->user_id = Auth::user()->id;
+        $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();
@@ -183,10 +184,10 @@ class CourseCreateStepController extends Controller
         ]);
 
         $lesson_id = $request->input('lesson_id');
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $lesson->course_id = $request->input('course_id');
-        $lesson->user_id = Auth::user()->id;
+        $lesson->instructor_id = Auth::user()->id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
@@ -202,7 +203,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
     }
@@ -213,7 +214,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $lesson->text = $request->input('text');
 
         $request->validate([
@@ -247,8 +248,8 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-3',compact('course','lesson'));
     }
@@ -259,7 +260,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         } 
 
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-4',compact('lesson'));
     }
@@ -277,7 +278,7 @@ class CourseCreateStepController extends Controller
 
         ]);
         
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $lesson->short_description = $request->input('description');
         
         // Handle audio file upload
@@ -300,8 +301,8 @@ class CourseCreateStepController extends Controller
         
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs('uploads/lessons/', $filename);
+                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
         
@@ -317,12 +318,14 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideo($id,$module_id,$lesson_id){
 
+        // return 2345;
+
         if(!$id){
             return redirect('instructor/courses');
         }
 
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail();
-        $course = Course::where('id', $id)->firstOrFail();
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
@@ -340,7 +343,7 @@ class CourseCreateStepController extends Controller
             'video_link' => 'Max file size is 1 GB!',
         ]);
         
-        $lesson = Lesson::where('id', $lesson_id)->firstOrFail(); 
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
 
         $lesson->short_description = $request->input('description');
 
@@ -348,8 +351,8 @@ class CourseCreateStepController extends Controller
         
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs('uploads/lessons/', $filename);
+                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
         
@@ -396,7 +399,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail(); 
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
 
         return view('e-learning/course/instructor/create/objects',compact('course'));
     }
@@ -417,8 +420,10 @@ class CourseCreateStepController extends Controller
         $existingObjectives[$dataIndex] = $dataObjective;
 
         $updatedObjectiveString = implode('[objective]', $existingObjectives);
+
+        $trimmedStringUp = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $updatedObjectiveString);
     
-        $course->objective = $updatedObjectiveString;
+        $course->objective = $trimmedStringUp;
         $course->save(); 
 
         return response()->json([
@@ -435,8 +440,10 @@ class CourseCreateStepController extends Controller
             $allObjectives = array_merge($existingObjectives, $newObjectives); 
     
             $newObjectiveString = implode('[objective]', $allObjectives);
+
+            $trimmedString = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $newObjectiveString);
     
-            $course->objective = $newObjectiveString;
+            $course->objective = $trimmedString;
             $course->save();
 
             return response()->json([
@@ -479,7 +486,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-7',compact('course'));
     }
 
@@ -489,7 +496,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
             'price' => 'required|numeric',
@@ -510,7 +517,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-8',compact('course'));
     }
@@ -521,7 +528,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
             'thumbnail' => 'nullable|file|mimes:jpg,png,jpg|max:5121',
@@ -560,7 +567,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-9',compact('course'));
     }
@@ -571,7 +578,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
             'sample_certificates' => 'nullable|file|mimes:jpg,png,pdf,svg|max:5121',
@@ -601,7 +608,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-10',compact('course'));
     }
@@ -611,7 +618,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
             'status' => 'required',
@@ -645,7 +652,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-11',compact('course'));
     }
