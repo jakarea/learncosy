@@ -59,9 +59,7 @@ $totalPrice += $item->courses->offer_price;
                                             <input type="text" class="form-control" id="first_name" name="first_name"
                                                 placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[0] : '' }}">
                                             <label for="first_name">First Name</label>
-                                            {{-- <span class="invalid-feedback">@error('first_name'){{
-                                                $message }}
-                                                @enderror</span> --}}
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -69,24 +67,20 @@ $totalPrice += $item->courses->offer_price;
                                             <input type="text" class="form-control" id="last_name" name="last_name"
                                                 placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[1] : '' }}">
                                             <label for="last_name">Last Name</label>
-                                            {{-- <span class="invalid-feedback">@error('last_name'){{
-                                                $message }}
-                                                @enderror</span> --}}
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="{{ Auth::check() ? Auth::user()->phone : '' }}">
-                                            <label for="phone">+880 Phone</label>
-                                            {{-- <span class="invalid-feedback">@error('phone'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <label for="phone">+31 Phone</label>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
-                                            <label for="email">Email</label>
+å                                            <label for="email">Email</label>
                                             {{-- <span class="invalid-feedback">@error('email'){{
                                                 $message }}
                                                 @enderror</span> --}}
@@ -270,11 +264,8 @@ $totalPrice += $item->courses->offer_price;
         });
     });
 </script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://js.stripe.com/v2/"></script>
-
     <script>
         $(document).ready(function() {
 
