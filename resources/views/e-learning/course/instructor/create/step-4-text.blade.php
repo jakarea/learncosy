@@ -14,15 +14,11 @@ Course Create - Lesson Text Content Add
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-4 col-xl-3">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                {{-- course step --}}  
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid"> --}}
+                             
                         </span>
                         <p>Content</p>
                     </div>
@@ -72,8 +68,6 @@ Course Create - Lesson Text Content Add
                         <div class="form-group form-upload">
                             <label for="file-input" class="txt">Uploaded Files</label> 
                         </div>
-                        @endif
-
                         @foreach ($uploadedFilenames as $filename)
                         <div class="course-content-box course-page-edit-box">
                             <div class="title">
@@ -88,6 +82,9 @@ Course Create - Lesson Text Content Add
                             </div>
                         </div>
                         @endforeach
+                        @endif
+
+                        
                         {{-- course page file box end --}}
                 </div>
 

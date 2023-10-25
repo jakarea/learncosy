@@ -11,8 +11,7 @@ class Module extends Model
 
     protected $fillable = [
         'course_id',
-        'instructor_id',
-        'user_id',
+        'instructor_id', 
         'title',
         'slug',
         'status',

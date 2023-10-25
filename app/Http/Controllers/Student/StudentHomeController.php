@@ -321,7 +321,7 @@ class StudentHomeController extends Controller
                 $file_arr = explode('.', $file_name);
                 $extension = $file_arr['1'];
                 if($file_extension == $extension){
-                    $files[] = public_path('uploads/lessons/'.$file_name);
+                    $files[] = public_path('uploads/lessons/files/'.$file_name);
                }
             }
         }
@@ -375,14 +375,14 @@ class StudentHomeController extends Controller
         $zipFileName = 'PDF_'.time().'.zip';
         $zip = new ZipArchive;
 
-        if ($zip->open(public_path('uploads/lessons/'.$zipFileName), ZipArchive::CREATE) === TRUE) {
+        if ($zip->open(public_path('uploads/lessons/files/'.$zipFileName), ZipArchive::CREATE) === TRUE) {
             foreach ($pdfFiles as $file) {
-                if (file_exists(public_path('uploads/lessons/'.$file))) {
-                    $zip->addFile(public_path('uploads/lessons/'.$file), basename($file));
+                if (file_exists(public_path('uploads/lessons/files/'.$file))) {
+                    $zip->addFile(public_path('uploads/lessons/files/'.$file), basename($file));
                 }
             }
             $zip->close();
-            return response()->download(public_path('uploads/lessons/'.$zipFileName))->deleteFileAfterSend(true);
+            return response()->download(public_path('uploads/lessons/files/'.$zipFileName))->deleteFileAfterSend(true);
         } else {
             // handle error here
         }
