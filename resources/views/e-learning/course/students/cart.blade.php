@@ -294,6 +294,7 @@ $totalPrice += $item->courses->offer_price;
                     var fieldValue = $(field).val();
                     var label = $(field).data('label');
 
+
                     var fieldValue = $(field).val();
                     if (!fieldValue) {
                         errorField.text('This field is required');
