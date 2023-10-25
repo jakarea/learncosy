@@ -42,7 +42,7 @@ $totalPrice += $item->courses->offer_price;
             method="post"
             class="require-validation needs-validation"
             data-cc-on-file="false"
-            data-stripe-publishable-key="{{ $cart[0]->stripe_public_key }}"
+            data-stripe-publishable-key="{{ $cart[0]->stripe_public_key ?? "" }}"
             id="payment-form">
             @csrf
             <div class="row">
@@ -64,8 +64,9 @@ $totalPrice += $item->courses->offer_price;
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+
                                             <input type="text" class="form-control" id="last_name" name="last_name"
-                                                placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[1] : '' }}">
+                                                placeholder="" value="{{ Auth::check() ? (isset(explode(' ', Auth::user()->name)[1]) ? explode(' ', Auth::user()->name)[1] : '') : '' }}">
                                             <label for="last_name">Last Name</label>
 
                                         </div>
@@ -81,9 +82,6 @@ $totalPrice += $item->courses->offer_price;
                                         <div class="form-group">
                                             <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
 å                                            <label for="email">Email</label>
-                                            {{-- <span class="invalid-feedback">@error('email'){{
-                                                $message }}
-                                                @enderror</span> --}}
                                         </div>
                                     </div>
                                     <h2 class="mt-3">Payment Method</h2>
@@ -200,10 +198,13 @@ $totalPrice += $item->courses->offer_price;
                                         </div>
                                     </div>
                                     <div class="cart-close">
-                                        <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                        {{-- <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><i class="fas fa-close"></i></button>
-                                        </form>
+                                        </form> --}}
+
+                                        <a href="javascript:;" class="btn remove-item" data-item-id="{{ $item->id }}"><i class="fas fa-close"></i></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -245,6 +246,10 @@ $totalPrice += $item->courses->offer_price;
                 @endif
             </div>
         </form>
+
+         {{-- <form id="cartItemRemove" action="{{ route('cart.remove', $item->id) }}" method="POST">
+            @csrf
+        </form> --}}
     </div>
 </main>
 
@@ -282,6 +287,7 @@ $totalPrice += $item->courses->offer_price;
                 e.preventDefault();
 
                 function validateField(field, errorField) {
+                    // console.log(field, errorField)
                     var fieldValue = $(field).val();
                     var label = $(field).data('label');
 
@@ -357,7 +363,7 @@ $totalPrice += $item->courses->offer_price;
                             $form.append("<input type='hidden' name='email' value='" + email + "'/>");
                             $form.append("<input type='hidden' name='phone' value='" + phone + "'/>");
                             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                            $form.append('<input type="hidden" name="instructorId" value="{{ $cart[0]->id }}"/>');
+                            $form.append('<input type="hidden" name="instructorId" value="{{ $cart[0]->id ?? "" }}"/>');
                             $form.get(0).submit(); // Submit the form with the token
                         }
                     });
@@ -380,6 +386,31 @@ $totalPrice += $item->courses->offer_price;
             }
         });
     </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $(".remove-item").click(function (e) {
+                e.preventDefault();
+                var itemId = $(this).data("item-id");
+
+                $.ajax({
+                    type: "post",
+                    url: "/cart/item/remove/" + itemId,
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        $(this).closest("a").remove();
+                    },
+                    error: function () {
+                        alert("Error removing the item from the cart.");
+                    }
+                });
+            });
+        });
+    </script>
+
 
 @endsection
 

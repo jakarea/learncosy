@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
@@ -373,10 +374,21 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
 });
 
+
+// SubscriptionPaymentController
+
+
+Route::prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
+    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+});
+
+
+
+
 // SubscriptionController
 Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
     Route::get('/', 'index')->name('instructor.subscription');
-    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
     Route::get('success', 'success')->name('instructor.subscription.success');
     Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
     Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
@@ -446,6 +458,10 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/cart', 'index')->name('cart.index');
     Route::post('/cart/add/{course}', 'add')->name('cart.add');
     Route::post('/cart/remove/{id}', 'remove')->name('cart.remove');
+
+    // This code is nedded for any time
+    Route::post('/cart/item/remove/{id}', 'removeItemFromCart')->name('cart.item-remove');
+
 });
 
 /* ======================================================== */

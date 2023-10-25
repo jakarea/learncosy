@@ -58,23 +58,23 @@
                                     <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici" class="img-fluid light-ele">
                                     <img src="{{ asset('latest/assets/images/icons/pricing-01-d.svg') }}" alt="Prici" class="img-fluid dark-ele mx-auto">
                                 </div>
-                                
+
                                 <div class="txt">
                                     <h5>{{ $package->name }}</h5>
                                     <h3>
-                                        
+
                                         @if ($package->sales_price)
                                         €
-                                        {{ str_replace('.00', '', $package->sales_price) }} 
+                                        {{ str_replace('.00', '', $package->sales_price) }}
                                         @else
                                         €
                                             {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
-                                        @endif 
+                                        @endif
 
                                         <span>/{{ $package->type[0] }}</span>
                                     </h3>
                                     <h6>Billed {{ $package->type }}</h6>
-                                    
+
                                     <ul>
                                         @foreach ($package_featurelist as $feature)
                                         <li>
@@ -125,22 +125,22 @@
                                 </div>
                                 <div class="txt">
                                     <h5>{{ $package->name }}</h5>
-                                    <h3> 
+                                    <h3>
 
                                         @if ($package->sales_price)
                                         €
-                                             {{ str_replace('.00', '', $package->sales_price) }} 
+                                             {{ str_replace('.00', '', $package->sales_price) }}
                                         @else
                                         €
                                             {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
-                                        @endif 
-                                        
+                                        @endif
+
                                         <span>/{{ $package->type[0] }}</span>
                                     </h3>
-                                    <h6>Billed {{ $package->type }}</h6> 
+                                    <h6>Billed {{ $package->type }}</h6>
                                     <ul>
                                         @foreach ($package_featurelist as $feature)
-                                        <li> 
+                                        <li>
                                             <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
                                             <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
                                             <span>{{ $feature }}</span>
@@ -156,7 +156,7 @@
                                 @else
                                 <a href="{{ route('instructor.subscription.create', $package->id) }}"
                                     class="will-subscribe">Get started</a>
-                                @endif 
+                                @endif
                             </div>
                         </div>
                     </div>
