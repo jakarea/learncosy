@@ -30,7 +30,7 @@
                         <h3>My Courses</h3> 
                         <div class="course-box-overflown liked-courses">
                             @if (count($courses) > 0)
-                            @foreach ($courses as $myCourses) 
+                            @foreach ($courses->slice(0, 5) as $myCourses) 
                             @php
                              $totalLessons = 0;
                                 foreach ($myCourses->modules as $module) {
@@ -70,16 +70,17 @@
                                     </ul>
                                 </div> 
                             </div>
-                            @endforeach
-                            @if (count($courses) > 5)
-                            <div class="text-center mt-3">
-                                <a href="{{ url('instructor/courses') }}" class="common-bttn">All Courses</a>
-                            </div>
-                            @endif
+                            @endforeach 
                             @else
                                 @include('partials/no-data')
                             @endif
                         </div>
+
+                        @if (count($courses) > 5)
+                            <div class="text-center mt-4">
+                                <a href="{{ url('instructor/courses') }}" class="common-bttn">All Courses</a>
+                            </div>
+                            @endif
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">
