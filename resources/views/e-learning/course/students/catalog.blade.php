@@ -127,7 +127,7 @@
                                     <span>Last Update: {{ date('M d Y ', strtotime($course->updated_at)) }}</span>
                                     <h6>{{ Str::limit($course->short_description, $limit = 120, $end = '...') }}</h6>
                                     @php
-                                        $objective = explode(',', $course->objective);
+                                        $objective = explode('[objective]', $course->objective);
                                         $limitedItems = array_slice($objective, 0, 4);
                                     @endphp
                                     <ul>

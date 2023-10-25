@@ -33,7 +33,7 @@ Course Create - Video Upload Step
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <div class="row">
                     {{-- main video upload area start --}}
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="highlighted-area-upload text-center">
                             <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
 
@@ -41,18 +41,7 @@ Course Create - Video Upload Step
                                 video</p>
                         </div>
                     </div>
-                    {{-- main video upload area end --}}
-
-                    {{-- intro video upload area start --}}
-                    <div class="col-lg-6">
-                        <div class="highlighted-area-upload text-center">
-                            <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
-
-                            <p style="font-size: 1rem"><label for="introVideo">Click here</label> to upload preview
-                                video</p>
-                        </div>
-                    </div>
-                    {{-- intro video upload area end --}}
+                    {{-- main video upload area end --}} 
                 </div>
                 <form id="uploadForm" action="" method="POST" class="create-form-box custom-select"
                     enctype="multipart/form-data">

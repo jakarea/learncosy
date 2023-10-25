@@ -69,9 +69,12 @@ Course Create - Design Step
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="top-image-upload-box">
-                        {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
+                        <h4>Promo Video URL <sup>(youtube)</sup> </h4>
+                        <input type="url" class="mt-2 form-control" name="promo_video" placeholder="Video URL" value="{{ $course->promo_video ? $course->promo_video : old('promo_video')  }}">
+                        <span class="invalid-feedback d-block">@error('promo_video'){{ $message }}
+                            @enderror</span>
+                    </div>
+                    <div class="top-image-upload-box mt-2">
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Image</h4>
                         <input type="file" class="d-none" id="thumbnail" name="thumbnail">
                         <label for="thumbnail" class="file-up-box">
@@ -80,6 +83,7 @@ Course Create - Design Step
                             <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
+                    
                     <div class="top-image-upload-box mt-2">
                         <img id="previewImage" src="" alt="" class="img-fluid rounded">
                         @if ($course->thumbnail)

@@ -403,27 +403,46 @@ class CourseCreateStepController extends Controller
 
     public function courseObjectsSet(Request $request, $id){
 
-        // return $request->all();
 
-        $request->validate([
-            'objective' => 'required',
-        ]);  
+       $data = $request->json()->all(); 
+ 
+       if ($data['dataIndex'] != null) {
+
+        $dataIndex = $data['dataIndex'];
+        $dataObjective = $data['objective'];
 
         $course = Course::findOrFail($id); 
-        
-        $existingObjectives = explode(',', $course->objective); 
-        $newObjectives = $request->input('objective');
- 
-        $allObjectives = array_merge($existingObjectives, $newObjectives);
- 
-        $uniqueObjectives = array_unique(array_filter($allObjectives));
- 
-        $newObjectiveString = implode(',', $uniqueObjectives);
- 
-        $course->objective = $newObjectiveString;
-        $course->save();
+            
+        $existingObjectives = explode('[objective]', $course->objective); 
+        $existingObjectives[$dataIndex] = $dataObjective;
 
-        return redirect()->back()->with('success', 'Course Objecttive Set Successfully');
+        $updatedObjectiveString = implode('[objective]', $existingObjectives);
+    
+        $course->objective = $updatedObjectiveString;
+        $course->save(); 
+
+        return response()->json([
+            'message' => 'UPDATED'
+        ]);
+
+       }else{ 
+
+            $course = Course::findOrFail($id); 
+            
+            $existingObjectives = explode('[objective]', $course->objective); 
+            $newObjectives = [$data['objective']];
+    
+            $allObjectives = array_merge($existingObjectives, $newObjectives); 
+    
+            $newObjectiveString = implode('[objective]', $allObjectives);
+    
+            $course->objective = $newObjectiveString;
+            $course->save();
+
+            return response()->json([
+                'message' => 'ADDED'
+            ]);
+       } 
     }
 
     public function deleteObjective(Request $request, $id,$index)
@@ -431,14 +450,14 @@ class CourseCreateStepController extends Controller
         // return  $index;
 
         $course = Course::findOrFail($id);
-        $existingObjectives = explode(',', $course->objective);
+        $existingObjectives = explode('[objective]', $course->objective);
  
         if (isset($existingObjectives[$index])) { 
             unset($existingObjectives[$index]);
              
             $existingObjectives = array_values($existingObjectives);
  
-            $course->objective = implode(',', $existingObjectives);
+            $course->objective = implode('[objective]', $existingObjectives);
             $course->save();
 
             return response()->json([
@@ -528,6 +547,8 @@ class CourseCreateStepController extends Controller
             $image_path = 'uploads/courses/' . $uniqueFileName;
            $course->thumbnail = $image_path;
        }
+
+        $course->promo_video = $request->input('promo_video');
         $course->save();
 
         return redirect('instructor/courses/create/'.$course->id.'/certificate')->with('success', 'Course Thumbnail Set successfully');
