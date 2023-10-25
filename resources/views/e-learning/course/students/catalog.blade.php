@@ -19,7 +19,7 @@
 {{-- page content @S --}}
 @section('content')
     <main class="student-courses-lists-pages">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
@@ -55,7 +55,7 @@
                                     </div>
                                     <i class="fas fa-angle-down"></i>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -74,7 +74,7 @@
                             if ($total) {
                                 $review_avg = $review_sum / $total;
                             }
-                            
+
                             $desc = $course->short_description;
                             $max_length = 205;
                             if (strlen($desc) > $max_length) {
@@ -117,8 +117,8 @@
                                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                                      @elseif(!$course->offer_price && !$course->price)
                                      <h5>Free</h5>
-                                        
-                                        @else 
+
+                                        @else
                                         <h5>€ {{ $course->price }}</h5>
                                     @endif
                                 </div>
@@ -135,7 +135,7 @@
                                             <li><i class="fas fa-check"></i>{{ Str::limit($object, 34) }}</li>
                                         @endforeach
                                     </ul>
-                                    @if (!isEnrolled($course->id)) 
+                                    @if (!isEnrolled($course->id))
                                         <form action="{{ route('cart.add', $course) }}" method="POST">
                                             @csrf
                                             @if ($cartCourses->pluck('course_id')->contains($course->id))

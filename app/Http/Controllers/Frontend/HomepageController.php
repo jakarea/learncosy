@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\CourseReview;
-use App\Models\BundleCourse;
-use App\Models\User;
 use Auth;
+use App\Models\Cart;
+use App\Models\User;
+use App\Models\Course;
+use App\Models\BundleCourse;
+use App\Models\CourseReview;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 
 class HomepageController extends Controller
@@ -21,7 +22,7 @@ class HomepageController extends Controller
     public function index()
     {
         // get all user who are instructor use auth service provider
-        
+
         return view('instructor/admin/chart');
     }
 
@@ -39,7 +40,7 @@ class HomepageController extends Controller
          $subdomain = $request->getHost(); // Get the host (e.g., "instructor.learncosy.com")
          $segments = explode('.', $subdomain); // Split the host into segments
          $subdomain = $segments[0]; // Get the first segment as the subdomain
-         
+
          if ( request()->getHost() != 'app.'.$domain && $subdomain != 'app' && !empty($subdomain) ) {
              $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
              if(!$instructors){
@@ -50,9 +51,9 @@ class HomepageController extends Controller
              $categories = isset($_GET['categories']) ? $_GET['categories'] : '';
              $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
              $price = isset($_GET['price']) ? $_GET['price'] : '';
- 
+
              $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
- 
+
              if(!empty($title)){
                  $instructors = User::with(['courses' => function ($query) use ($title) {
                      $query->where('title', 'like', '%' . $title . '%');
@@ -74,23 +75,24 @@ class HomepageController extends Controller
                  }])->first();
              }
              // filter end
- 
+
              // $instructors = User::with(['courses'])->where('subdomain', $subdomain)->first();
- 
+
              $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
              $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
              $students = User::where('user_role','student')->get();
              $bundle_courses = BundleCourse::where('instructor_id',$instructors->id)->get();
- 
+
              foreach ($bundle_courses as $course) {
                  $courses_id = explode(",", $course->selected_course);
                  $course_info = Course::whereIn('id',$courses_id)->get();
                  $course['courses'] =  $course_info;
              }
- 
+
              // return $courses_review;
- 
-             return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students'));
+             $cartCourses = Cart::where('user_id', auth()->id())->get();
+
+             return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
             }else{
              return redirect('//app.'.$domain.'/login');
          }
@@ -117,7 +119,7 @@ class HomepageController extends Controller
         //
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *

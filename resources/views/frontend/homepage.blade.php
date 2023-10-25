@@ -202,9 +202,19 @@
                                             <div class="bttns">
                                                 <a href="{{ url($instructors->subdomain . '/courses/' . $course->slug) }}">More
                                                     Details</a>
-                                                <a href="{{ url('/students/dashboard/enrolled') }}"
+                                                {{-- <a href="{{ url('/students/dashboard/enrolled') }}"
                                                     style="background: {{ modulesetting('secondary_color') }}">Enroll
-                                                    Now!</a>
+                                                    Now!</a> --}}
+
+                                                    <form action="{{ route('cart.add', $course) }}" method="POST">
+                                                        @csrf
+                                                        @if ($cartCourses->pluck('course_id')->contains($course->id))
+                                                            <button type="button" class="btn add-to-cart-button bg-secondary"
+                                                                disabled>Already Added to Cart</button>
+                                                        @else
+                                                            <button type="submit" class="btn add-to-cart-button">Add to Cart</button>
+                                                        @endif
+                                                    </form>
                                             </div>
                                         </div>
                                     </div>
@@ -361,7 +371,7 @@
             </div>
         </div>
     </section>
-    {{-- review section @e --}} 
+    {{-- review section @e --}}
 
     {{-- footer @s --}}
     @include('partials/guest/footer')
