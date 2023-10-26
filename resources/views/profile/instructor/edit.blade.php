@@ -5,6 +5,11 @@
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<style>
+    .select-style-div{
+        cursor: pointer;
+    }
+</style>
 @endsection
 {{-- page style @S --}}
 
@@ -41,6 +46,7 @@
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
+                        {{-- profile tab start --}}
                         <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
@@ -172,6 +178,8 @@
                                 {{-- profile edit form end --}}
                             </form>
                         </div>
+                        {{-- profile tab end --}}
+                        {{-- experience tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="row">
@@ -320,12 +328,14 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- experience tab end --}}
+                        {{-- certificate tab start --}} 
                         <div class="tab-pane tab-con fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
                                     <div class="certificate-header-tab">
-                                        {{-- <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="pills-add_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
@@ -339,7 +349,7 @@
                                                     aria-selected="false"><i class="fas fa-plus"></i> Custom
                                                     Certificate</button>
                                             </li>
-                                        </ul> --}}
+                                        </ul>
                                     </div>
                                     <div class="cert-body-tab">
                                         <div class="tab-content" id="pills-tabContent">
@@ -352,11 +362,20 @@
                                                                 @csrf
                                                                 <div class="row">
                                                                     <div class="col-lg-9">
-                                                                        {{-- <div class="certificate-name">
+                                                                        <div class="certificate-name">
                                                                             <h6>Course/ Certificate Name </h6>
-                                                                            <input type="text"
+
+                                                                            <div class="form-group">
+                                                                                <select name="course_id" class="form-control">
+                                                                                    @foreach ($courses as $course)
+                                                                                        <option value="{{ $course->id }}">{{ $course->title }}</option>
+                                                                                    @endforeach  
+                                                                                </select>
+                                                                            </div>
+
+                                                                            {{-- <input type="text"
                                                                                 placeholder="Professional UI/UX Design Course"
-                                                                                class="form-control">
+                                                                                class="form-control"> --}}
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color.svg')}}"
                                                                                     alt="Color" class="img-fluid">
@@ -366,10 +385,16 @@
                                                                                         bar. Your logo should look good
                                                                                         on this.</p>
                                                                                 </div>
-                                                                                <a href="#"><img
-                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid"></a>
+                                                                                <div class="color-position">
+                                                                                    <input type="color" class="form-control p-0"
+                                                                                        name="certificate_clr" id="certificate_clr"
+                                                                                        value="#ffffff">
+            
+                                                                                    <label for="certificate_clr">
+                                                                                        <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                    </label>
+                                                                                </div> 
                                                                             </div>
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -379,12 +404,18 @@
                                                                                     <p>The accent color is used to
                                                                                         accentuate visual elements.</p>
                                                                                 </div>
-                                                                                <a href="#"><img
-                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid"></a>
+                                                                                <div class="color-position">
+                                                                                    <input type="color" class="form-control p-0"
+                                                                                        name="accent_clr" id="accent_clr"
+                                                                                        value="#ffffff">
+            
+                                                                                    <label for="accent_clr">
+                                                                                        <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                    </label>
+                                                                                </div> 
                                                                             </div>
-                                                                        </div> --}}
+                                                                        </div>
                                                                         <div class="certificate-style-box">
                                                                             <h6>Select Certificate Style</h6>
 
@@ -403,12 +434,11 @@
                                                                                     <img src="{{asset('latest/assets/images/certificate-01.png')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </a>
-                                                                                <div class="media-body clickable-div" data-value="1">
+                                                                                <div class="media-body select-style-div active" data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1</h6>
-                                                                                        @if ($certificate && $certificate->style == 1)
-                                                                                            <span>Active Certificate</span>
-                                                                                        @endif                                                                                    </div>
+                                                                                        <span>Selected Certificate</span>
+                                                                                    </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
                                                                                         opties, mokkeljk te gebruken en
@@ -432,12 +462,10 @@
                                                                                 <img src="{{asset('latest/assets/images/certificate-02.png')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </a>
-                                                                                <div class="media-body clickable-div" data-value="2">
+                                                                                <div class="media-body select-style-div" data-value="2">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 2</h6>
-                                                                                        @if ($certificate && $certificate->style == 2)
-                                                                                            <span>Active Certificate</span>
-                                                                                        @endif
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -462,12 +490,10 @@
                                                                                     <img src="{{asset('latest/assets/images/certificate-03.png')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </a>
-                                                                                <div class="media-body clickable-div" data-value="3">
+                                                                                <div class="media-body select-style-div" data-value="3">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 3</h6>
-                                                                                        @if ($certificate && $certificate->style == 3)
-                                                                                            <span>Active Certificate</span>
-                                                                                        @endif
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -476,12 +502,12 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
-                                                                            <input type="hidden" name="certificate_value" id="certificate-value" value="">
+                                                                            <input type="hidden" name="certificate_style" id="certificateStyle" value="">
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-3">
-                                                                        {{-- <div class="certificate-asset-upload">
+                                                                        <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
                                                                                 <input type="file" name="logo" id="logoInput" accept="image/*"
                                                                                     onchange="previewLogo()"
@@ -489,25 +515,28 @@
 
                                                                                 <label for="logoInput"
                                                                                     class="upload-media-box"
-                                                                                    id="file-upload-area1">
-                                                                                    <img src="{{ ($certificate && $certificate->logo) ? asset( $certificate->logo):asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid light-ele" id="logoPreview">
+                                                                                    id="file-upload-area1"> 
+                                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele" id="logoPreview">
+                                                                               
                                                                                     <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
                                                                                         alt="Color"
                                                                                         class="img-fluid dark-ele" id="logoPreview">
                                                                                     <span>Click to upload</span> or drag and
                                                                                     drop SVG, PNG or JPG (max. 300x300px)
                                                                                 </label>
-                                                                        </div> --}}
+                                                                        </div>
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
-                                                                            <input type="file" name="instructor_signature" id="signatureInput" accept="image/*"
+                                                                            <input type="file" name="signature" id="signatureInput" accept="image/*"
                                                                                 onchange="previewSignature()"
-                                                                                class="form-control d-none @error('instructor_signature') is-invalid @enderror">
+                                                                                class="form-control d-none @error('signature') is-invalid @enderror">
 
                                                                             <label for="signatureInput" class="upload-media-box" id="signature-upload-area">
-                                                                                <img src="{{ ($certificate && $certificate->signature) ?  asset($certificate->signature): asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview">
+                                                                                 
+                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview">
+                                                                                 
                                                                                 <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="Color" class="img-fluid dark-ele" id="signaturePreview">
                                                                                 <span>Click to upload Instructor Signature</span>
                                                                                 <span>or drag and drop SVG, PNG or JPG (max. 300x300px)</span>
@@ -517,7 +546,7 @@
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
-                                                                            <button type="submit" class="common-bttn">Save</button>
+                                                                            <button type="submit" class="common-bttn border-0">Save</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -526,40 +555,57 @@
                                                         <div class="user-expperience-box user-expperience-box-2">
                                                             <div class="title">
                                                                 <h4>All Certificates</h4>
-                                                            </div>
-                                                            @foreach ($certificate as $singleCertificate)  
- 
+                                                            </div>  
+                                                            @if (count($certificates) > 0) 
+                                                            @foreach ($certificates as $certificate)  
                                                             <div class="media brdr-bttm">
-                                                                <img src="{{ asset('latest/assets/images/experience-img.svg') }}"
-                                                                    alt="experience-img" class="img-fluid">
+                                                                @if ($certificate->style == 1) 
+                                                                <img src="{{ asset('latest/assets/images/certificate-01.png') }}"
+                                                                alt="experience-img" class="img-fluid rounded"> 
+                                                                @elseif($certificate->style == 2)
+                                                                <img src="{{ asset('latest/assets/images/certificate-02.png') }}"
+                                                                alt="experience-img" class="img-fluid rounded">
+                                                                @elseif($certificate->style == 3)
+                                                                <img src="{{ asset('latest/assets/images/certificate-03.png') }}"
+                                                                alt="experience-img" class="img-fluid rounded">
+                                                                @endif 
                                                                 <div class="media-body">
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
-                                                                        <h5>UI/UX Design</h5>
-                                                                        <div>
-                                                                            <a href="#"><img
-                                                                                    src="{{ asset('latest/assets/images/icons/plus.svg') }}"
-                                                                                    alt="img" class="img-fluid"></a>
+                                                                        <h5>{{ $certificate->course->title }}</h5>
+                                                                        <div>  
                                                                             <a href="#"><img
                                                                                     src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
+
+                                                                            <form class="d-inline" action="{{route('certificate.delete',$certificate->id)}}" method="post">
+                                                                                @csrf 
+
+                                                                                <button type="submit" class="btn p-0"><img src="{{ asset('latest/assets/images/icons/minus.svg') }}"
+                                                                                    alt="img" class="img-fluid"></button> 
+                                                                            </form> 
                                                                         </div>
                                                                     </div>
 
-                                                                    <h6>Learn Cosy <i class="fas fa-circle"></i>
-                                                                        Full-Time <i class="fas fa-circle"></i> Jul 2018
-                                                                        - Present (5y 3m)</h6>
-                                                                    <p>Created and executed website for 10 brands
-                                                                        utilizing multiple
-                                                                        features and content types to increase brand
-                                                                        outreach, engagement,
-                                                                        and leads.</p>
+                                                                    <h6>
+                                                                        @if ($certificate->style == 1)
+                                                                            Certificate Style 1
+                                                                        @elseif($certificate->style == 2)
+                                                                            Certificate Style 2
+                                                                        @elseif($certificate->style == 3)
+                                                                            Certificate Style 3
+                                                                        @endif
+                                                                        
+                                                                        <i class="fas fa-circle"></i> {{ $certificate->updated_at->format('d F Y') }}</h6>
+                                                                    <p>{{$certificate->course->short_description}}</p>
                                                                 </div>
-                                                            </div> 
+                                                            </div>  
                                                             @endforeach
 
+                                                            @else 
+                                                            @include('partials/no-data')
+                                                            @endif
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -668,7 +714,7 @@
                                                                                 <div class="media-body clickable-div" data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1 ---</h6>
-                                                                                        <span>Active Certificate</span>
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -868,6 +914,8 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- certificate tab end --}}
+                        {{-- password tab start --}}
                         <div class="tab-pane tab-con fade active-bg" id="pills-password" role="tabpanel"
                             aria-labelledby="pills-password-tab" tabindex="0">
                             {{-- password tab start --}}
@@ -922,6 +970,7 @@
                             </div>
                             {{-- password tab end --}}
                         </div>
+                        {{-- password tab start --}}
                     </div>
                 </div>
             </div>
@@ -1092,45 +1141,23 @@
     });
 
 });
-</script>
-{{-- <script>
-    $(document).ready(function() {
-        $('.clickable-div').click(function() {
-            var value = $(this).data('value');
-            $('#certificate-value').val(value);
+</script>   
 
-            // You can also submit the form here if needed
-            // $('form').submit();
+<script>
+    const clickDivs = document.querySelectorAll(".select-style-div");
+    const certificateStyle = document.querySelector("#certificateStyle");
+
+    clickDivs.forEach(function(div) {
+        div.addEventListener("click", function(e) {
+            e.preventDefault();
+            certificateStyle.value = div.getAttribute('data-value');
+
+            clickDivs.forEach(c => c.classList.remove("active"));
+            this.classList.add("active")
+
         });
     });
-</script> --}}
-
-<style>
-    .clickable-div {
-        cursor: pointer;
-        padding: 10px;
-        /* border: 1px solid #ccc; */
-    }
-
-    .clicked {
-        background-color: lightgray;
-    }
-</style>
-<script>
-   $(document).ready(function() {
-            $('.clickable-div').click(function() {
-                // Remove the "clicked" class from all divs
-                $('.clickable-div').removeClass('clicked');
-
-                // Add the "clicked" class to the clicked div
-                $(this).addClass('clicked');
-
-                var value = $(this).data('value');
-                console.log('value', value)
-                $('#certificate-value').val(value);
-
-            });
-        });
+     
 </script>
 
 {{-- tab open js --}}

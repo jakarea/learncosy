@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('instructor_id');
-            $table->integer('style');
-            $table->string('logo', 191);
-            $table->string('signature', 191);
+            $table->integer('course_id');
+            $table->string('certificate_clr')->nullable();
+            $table->string('accent_clr')->nullable();
+            $table->integer('style')->defult(1);
+            $table->string('logo')->nullable();
+            $table->string('signature')->nullable();
             $table->timestamps();
         });
     }

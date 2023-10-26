@@ -40,9 +40,10 @@ class ProfileManagementController extends Controller
             $editExp = Experience::where('id', $experience_id)->first();
         }
         $experiences = Experience::where('user_id', Auth::user()->id)->orderBy('id','desc')->get();
-        $certificate = Certificate::where('instructor_id', $userId)->first();
+        $courses = Course::where('instructor_id', $userId)->get();
+        $certificates = Certificate::where('instructor_id', $userId)->with('course')->orderBy('id','desc')->get();
 
-        return view('profile/instructor/edit',compact('user','experiences','editExp','certificate'));
+        return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
     public function update(Request $request)
@@ -104,63 +105,6 @@ class ProfileManagementController extends Controller
         Mail::to($user->email)->send(new ProfileUpdated($user));
 
         return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
-    }
-
-
-    public function certificateUpdate(Request $request)
-    {
-        $userId = auth()->user()->id;
-        $certificate = Certificate::where('instructor_id', $userId)->first();
-
-        if ($certificate) {
-            $certificate->style = $request->input('certificate_value');
-
-            if ($request->hasFile('logo')) {
-                $file = $request->file('logo');
-                $image = Image::make($file);
-                $uniqueFileName = uniqid() . '.jpg';
-                $image->save(public_path('uploads/logo/') . $uniqueFileName);
-                $image_path = 'uploads/logo/' . $uniqueFileName;
-                $certificate->logo = $image_path;
-            }
-
-            if ($request->hasFile('instructor_signature')) {
-                $file = $request->file('instructor_signature');
-                $image = Image::make($file);
-                $uniqueFileName = uniqid() . '.jpg';
-                $image->save(public_path('uploads/instructor_signature/') . $uniqueFileName);
-                $image_path = 'uploads/instructor_signature/' . $uniqueFileName;
-                $certificate->signature = $image_path;
-            }
-
-            $certificate->save();
-        } else {
-            $newCertificate = new Certificate();
-            $newCertificate->instructor_id = $userId;
-            $newCertificate->style = $request->input('certificate_value');
-
-            if ($request->hasFile('logo')) {
-                $file = $request->file('logo');
-                $image = Image::make($file);
-                $uniqueFileName = uniqid() . '.jpg';
-                $image->save(public_path('uploads/logo/') . $uniqueFileName);
-                $image_path = 'uploads/logo/' . $uniqueFileName;
-                $newCertificate->logo = $image_path;
-            }
-
-            if ($request->hasFile('instructor_signature')) {
-                $file = $request->file('instructor_signature');
-                $image = Image::make($file);
-                $uniqueFileName = uniqid() . '.jpg';
-                $image->save(public_path('uploads/instructor_signature/') . $uniqueFileName);
-                $image_path = 'uploads/instructor_signature/' . $uniqueFileName;
-                $newCertificate->signature = $image_path;
-            }
-
-            $newCertificate->save();
-        }
-
-        return redirect()->route('account.settings')->with('success', 'Your certificate has been updated successfully!');
     }
 
 
