@@ -23,21 +23,21 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- all css start -->
     <!-- App css -->
-    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/style.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/header.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    
-    @yield('style') 
+
+    @yield('style')
     <link href="{{ asset('latest/assets/admin-css/ins-responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
     @yield('seo')
 </head>
 
-<body> 
+<body>
     {{-- Main Root Wrapper @S --}}
 
         {{-- header start --}}
@@ -63,23 +63,33 @@
 
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
-  
+
       {{-- dark mode js --}}
-    <script> 
+    <script>
         const modeBttn = document.getElementById("darkModeBttn");
-        const htmlBody = document.querySelector("body"); 
+        const htmlBody = document.querySelector("body");
         function toggleMode() {
-            htmlBody.classList.toggle('dark-mode'); 
+            htmlBody.classList.toggle('dark-mode');
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
             localStorage.setItem('dark-mode', mode);
-        } 
+        }
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
             htmlBody.classList.add('dark-mode');
-        } 
+        }
         modeBttn.addEventListener('change', toggleMode);
     </script>
 
     @yield('script')
+
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
+    <script>
+        var userIdentifier = uuidv4();
+        var domainParts = window.location.hostname.split('.');
+        var topLevelDomain = domainParts[domainParts.length - 2] + '.' + domainParts[domainParts.length - 1];
+
+        document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + topLevelDomain + "; secure; samesite=Strict";
+    </script>
+
 </body>
 </html>

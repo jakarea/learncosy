@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Auth;
 use Hash;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -48,10 +49,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $userIdentifier = $_COOKIE['userIdentifier'];
+
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
         $user = User::where('email', $request->email)->first();
+
+        $carts = Cart::where('user_identifier', $userIdentifier)->get();
+
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 // Auth::login($user);
@@ -68,6 +74,11 @@ class LoginController extends Controller
                         return redirect()->intended('/instructor/dashboard');
                     }
                 } elseif ($user->user_role == 'student') {
+                    $carts = Cart::where('user_identifier', $userIdentifier)->get();
+                    foreach ($carts as $cart) {
+                        $cart->user_id = Auth::id();
+                        $cart->save();
+                    }
                     return redirect('/students/dashboard');
                 }
             } else {

@@ -90,7 +90,14 @@ class HomepageController extends Controller
              }
 
              // return $courses_review;
-             $cartCourses = Cart::where('user_id', auth()->id())->get();
+
+            $userIdentifier = $_COOKIE['userIdentifier'];
+            $cartCourses = Cart::where(function ($query) use ($userIdentifier) {
+                $query->where('user_id', auth()->id());
+                $query->orWhere('user_identifier', $userIdentifier);
+            })->get();
+
+
 
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
             }else{

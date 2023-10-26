@@ -458,11 +458,18 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/cart', 'index')->name('cart.index');
     Route::post('/cart/add/{course}', 'add')->name('cart.add');
     Route::post('/cart/remove/{id}', 'remove')->name('cart.remove');
-
-    // This code is nedded for any time
-    Route::post('/cart/item/remove/{id}', 'removeItemFromCart')->name('cart.item-remove');
-
 });
+
+
+
+Route::prefix('students')->controller(CartController::class)->group(function () {
+    Route::post('/cart/added/{course}', 'addToCartSkippLogin')->name('cart.added');
+});
+
+Route::prefix('students')->controller(CartController::class)->group(function () {
+    Route::post('/cart/bundle/{bundlecourse}', 'addToCartBundlekippLogin')->name('cart.added.bundle');
+});
+
 
 /* ======================================================== */
 /* ===================== Admin Routes ===================== */

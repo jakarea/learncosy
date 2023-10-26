@@ -24,12 +24,14 @@
 
 
 @php
+$instructorID = null;
 $subTotalPrice = 0;
 $totalPrice = 0;
 @endphp
 @foreach ($cart as $item)
 @php
-$subTotalPrice += $item->courses->price;
+$instructorID = $item->instructor->id;
+$subTotalPrice += $item->courses->price ?? "";
 $totalPrice += $item->courses->offer_price;
 @endphp
 @endforeach
@@ -81,7 +83,7 @@ $totalPrice += $item->courses->offer_price;
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
-å                                            <label for="email">Email</label>
+                                        <label for="email">Email</label>
                                         </div>
                                     </div>
                                     <h2 class="mt-3">Payment Method</h2>
@@ -165,6 +167,7 @@ $totalPrice += $item->courses->offer_price;
                     <div class="col-lg-5">
                         <div class="cart-right-wrap">
                             @foreach ($cart as $item)
+
                             @php
                             $review_sum = 0;
                             $review_avg = 0;
@@ -178,7 +181,7 @@ $totalPrice += $item->courses->offer_price;
                             @endphp
 
                             {{-- cart item start here --}}
-                            <div class="cart-items-wrap">
+                            <div class="cart-items-wrap" data-item="{{ $item->id}}">
                                 <div class="d-flex">
                                     <div class="media">
                                         <img src="{{asset($item->courses->thumbnail)}}" alt="Course Thumbnail"
@@ -210,32 +213,34 @@ $totalPrice += $item->courses->offer_price;
                             </div>
                             {{-- cart item end here --}}
                             @endforeach
-                            <div class="subtotal-wrap">
-                                <table>
-                                    <tr>
-                                        <td>Subtotal :</td>
-                                        <td>€{{ $subTotalPrice }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Discount :</td>
-                                        <td>€{{ $subTotalPrice - $totalPrice }}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="subtotal-wrap subtotal-wrap-2">
-                                <table>
-                                    <tr>
-                                        <td>Total :</td>
-                                        <td>€{{ $totalPrice }}</td>
-                                    </tr>
-                                </table>
-                            </div>
+                            <div id="subtotal-wrap-parent">
+                                <div class="subtotal-wrap">
+                                    <table>
+                                        <tr>
+                                            <td>Subtotal :</td>
+                                            <td>€{{ $subTotalPrice }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Discount :</td>
+                                            <td>€{{ $subTotalPrice - $totalPrice }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="subtotal-wrap subtotal-wrap-2">
+                                    <table>
+                                        <tr>
+                                            <td>Total :</td>
+                                            <td>€{{ $totalPrice }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
 
-                            <div class="cart-checkout-bttn-wrap">
-                                <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
-                                    <span class="stripe-bg">
-                                        <i class="fa-brands fa-stripe"></i>
-                                    </span></button>
+                                <div class="cart-checkout-bttn-wrap">
+                                    <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
+                                        <span class="stripe-bg">
+                                            <i class="fa-brands fa-stripe"></i>
+                                        </span></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -259,6 +264,8 @@ $totalPrice += $item->courses->offer_price;
 {{-- page content @E --}}
 
 @section('script')
+
+
 <script>
     let methods = document.querySelectorAll('.payment-method-wrapper a');
 
@@ -336,13 +343,12 @@ $totalPrice += $item->courses->offer_price;
                     // Use Stripe.js to create a token
                     Stripe.createToken(cardData, function(status, response) {
                         if (response.error) {
+
                             console.log( response.error)
+
                             if (response.error.param === "number") {
                                 displayErrorMessage('card_number_error', response.error.message);
                             } else if (response.error.param === "cvc") {
-                                displayErrorMessage('card_cvv_error', response.error.message);
-                            } else if(response.error.param === "number" || response.error.param === "cvc"){
-                                displayErrorMessage('card_number_error', response.error.message);
                                 displayErrorMessage('card_cvv_error', response.error.message);
                             }else if ( response.error.param === "exp_month"){
                                 displayErrorMessage('cexpiry_month_error', response.error.message);
@@ -363,7 +369,7 @@ $totalPrice += $item->courses->offer_price;
                             $form.append("<input type='hidden' name='email' value='" + email + "'/>");
                             $form.append("<input type='hidden' name='phone' value='" + phone + "'/>");
                             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                            $form.append('<input type="hidden" name="instructorId" value="{{ $cart[0]->id ?? "" }}"/>');
+                            $form.append('<input type="hidden" name="instructorId" value="{{ $instructorID ?? "" }}"/>');
                             $form.get(0).submit(); // Submit the form with the token
                         }
                     });
@@ -392,16 +398,19 @@ $totalPrice += $item->courses->offer_price;
         $(document).ready(function () {
             $(".remove-item").click(function (e) {
                 e.preventDefault();
-                var itemId = $(this).data("item-id");
+
+                var itemId = $(this).closest(".cart-items-wrap").data("item");
+                var itemToRemove = $(`.cart-items-wrap[data-item="${itemId}"]`);
 
                 $.ajax({
-                    type: "post",
-                    url: "/cart/item/remove/" + itemId,
+                    type: "POST",
+                    url: "/students/cart/remove/" + itemId,
                     data: {
                         _token: "{{ csrf_token() }}"
                     },
                     success: function (data) {
-                        $(this).closest("a").remove();
+                        itemToRemove.remove();
+                        $("#subtotal-wrap-parent").load(location.href + " #subtotal-wrap-parent>*", "");
                     },
                     error: function () {
                         alert("Error removing the item from the cart.");
