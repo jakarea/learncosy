@@ -407,7 +407,8 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
-    Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
+    Route::get('/certificate-download/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
+    Route::get('/certificate-view/{slug}', 'certificateView')->name('students.view.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');

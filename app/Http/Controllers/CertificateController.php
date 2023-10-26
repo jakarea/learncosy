@@ -156,7 +156,7 @@ class CertificateController extends Controller
                 $logoPath = $image_path;
 
            }else{
-                $logoPath = 'latest/assets/images/certificate/logo.png';
+                $logoPath = 'latest/assets/images/certificate/one/logo.png';
             } 
 
             // signature
@@ -176,7 +176,7 @@ class CertificateController extends Controller
                    $signaturePath = $image_path2;
 
                } else{
-                $signaturePath = 'latest/assets/images/certificate/signature.png';
+                $signaturePath = 'latest/assets/images/certificate/one/signature.png';
             } 
 
             // completion date
