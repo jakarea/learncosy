@@ -355,6 +355,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // latest certificate route for instructor -> 3rd feedback
         Route::prefix('profile')->controller(CertificateController::class)->group(function () {
             Route::post('/certificate-settings', 'certificateUpdate')->name('certificate.update');
+            Route::post('/certificate-generate', 'customCertificate')->name('certificate.generate');
             Route::post('/certificate-delete/{id}', 'certificateDelete')->name('certificate.delete');
         });
 

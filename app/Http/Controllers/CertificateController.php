@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Certificate;
+use App\Models\Course;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Barryvdh\DomPDF\Facade\Pdf;
+use File;
 use App\Models\User;
 use Auth;
 
@@ -109,10 +112,109 @@ class CertificateController extends Controller
     }
 
     // custom certificate generate
-
     public function customCertificate(Request $request)
     {
-        return $request->all();
+        $courseId = $request->input('c_course_id');
+
+        if (!$courseId) {
+            return redirect()->back()->with('error','There is no course found for this Certificate');
+        }else{
+            $course = Course::where('id', $courseId)->first();
+        }    
+
+        if ($request->input('c_certificate_style')) {
+
+            // style
+            $certStyle =  $request->input('c_certificate_style');
+
+            if ($certStyle == 3) {
+                $certificate_path = 'certificates/generate/certificate1'; 
+            }elseif ($certStyle == 2) {
+                $certificate_path = 'certificates/generate/certificate2';
+
+            }elseif ($certStyle == 1) {
+                $certificate_path = 'certificates/generate/certificate3';
+            }else{
+                return redirect()->back()->with('error','There is no Style found for this Certificate');
+            } 
+
+            // logo
+            $logoPath = '';
+            if ($request->hasFile('c_logo')) {
+
+                $oldFile = public_path('uploads/certificate/temp/temp-logo.png');
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+
+                $file = $request->file('c_logo');
+                $image = Image::make($file);
+                $uniqueFileName = 'temp-logo.png';
+                $image->save(public_path('uploads/certificate/temp/') . $uniqueFileName);
+                $image_path = 'uploads/certificate/temp/' . $uniqueFileName;
+
+                $logoPath = $image_path;
+
+           }else{
+                $logoPath = 'latest/assets/images/certificate/logo.png';
+            } 
+
+            // signature
+            $signaturePath = '';
+            if ($request->hasFile('c_signature')) { 
+
+                    $oldFile = public_path('uploads/certificate/temp/temp-signature.png');
+                    if (file_exists($oldFile)) {
+                        unlink($oldFile);
+                    }
+
+                    $file2 = $request->file('c_signature');
+                    $image2 = Image::make($file2);
+                    $uniqueFileName2 = 'temp-signature.png';
+                    $image2->save(public_path('uploads/certificate/temp/') . $uniqueFileName2);
+                    $image_path2 = 'uploads/certificate/temp/' . $uniqueFileName2;
+                   $signaturePath = $image_path2;
+
+               } else{
+                $signaturePath = 'latest/assets/images/certificate/signature.png';
+            } 
+
+            // completion date
+            $courseCompletionDate = ''; 
+            if ($request->input('c_completion_date')) {
+                $courseCompletionDate = $request->input('c_completion_date');
+            }
+
+            // issue date
+            $courseIssueDate = '';
+            if ($request->input('c_issue_date')) {
+                $courseIssueDate = $request->input('c_issue_date');
+            }
+
+            // name 
+            $fullName = $request->input('c_first_name') .' '. $request->input('c_last_name');
+
+            // certificate color
+            $certColor =  '';
+            if ($request->input('c_certificate_clr')) {
+                $certColor = $request->input('c_certificate_clr');
+            }
+
+            // accent color
+            $accentColor =  '';
+            if ($request->input('c_accent_clr')) {
+                $accentColor = $request->input('c_accent_clr');
+            }
+
+            $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseCompletionDate' => $courseCompletionDate,'courseIssueDate' => $courseIssueDate, 'signature' => $signaturePath, 'logo' => $logoPath, 'fullName' => $fullName, 'certColor' => $certColor, 'accentColor' => $accentColor]);
+        
+            return $pdf->download('custom-certificate.pdf');
+
+            return redirect()->back()->with('success','Certificate Generated Succesfully');
+
+        }else{
+            return redirect()->back()->with('error','There is no certificate found for this Course');
+        }
     }
 
     // delete certficate 

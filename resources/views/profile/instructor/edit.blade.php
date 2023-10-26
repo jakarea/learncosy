@@ -6,6 +6,7 @@
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <style>
+    .select-style-div-2,
     .select-style-div{
         cursor: pointer;
     }
@@ -371,11 +372,7 @@
                                                                                         <option value="{{ $course->id }}">{{ $course->title }}</option>
                                                                                     @endforeach  
                                                                                 </select>
-                                                                            </div>
-
-                                                                            {{-- <input type="text"
-                                                                                placeholder="Professional UI/UX Design Course"
-                                                                                class="form-control"> --}}
+                                                                            </div> 
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color.svg')}}"
                                                                                     alt="Color" class="img-fluid">
@@ -601,7 +598,6 @@
                                                                 </div>
                                                             </div>  
                                                             @endforeach
-
                                                             @else 
                                                             @include('partials/no-data')
                                                             @endif
@@ -614,52 +610,81 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form create-certificate-form-2">
-                                                            <form action="">
+                                                            <form action="{{ route('certificate.generate') }}" method="POST" enctype="multipart/form-data">
+                                                                @csrf 
                                                                 <div class="row" >
                                                                     <div class="col-lg-6">
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>Student Name </h6>
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control">
+                                                                            <div class="form-group form-error">
+                                                                                <input type="text" name="c_first_name"
+                                                                                        class="form-control @error('c_first_name') is-invalid @enderror">
                                                                                 <label for="">First Name</label>
-                                                                            </div>
+
+                                                                                <span class="invalid-feedback">@error('c_first_name'){{ $message }}
+                                                                                    @enderror</span>
+                                                                            </div> 
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>&nbsp;</h6>
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control">
-                                                                                <label for="">Last Name</label>
+                                                                            <div class="form-group form-error">
+                                                                                <input type="text" name="c_last_name"
+                                                                                        class="form-control @error('c_last_name') is-invalid @enderror">
+                                                                                    <label for="">Last Name</label>
+
+                                                                                <span class="invalid-feedback">@error('c_last_name'){{ $message }}
+                                                                                    @enderror</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-12 my-3">
                                                                         <div class="certificate-name border-0 pe-0">
-                                                                            <h6>Certificate/ Course Name</h6>
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control">
-                                                                                <label for="">Professional UI/UX Design
-                                                                                    Course</label>
+                                                                            <h6>Certificate/ Course Name</h6> 
+
+                                                                            <div class="form-group form-error">
+                                                                                <select name="c_course_id" class="form-control">
+                                                                                    @foreach ($courses as $course)
+                                                                                        <option value="{{ $course->id }}">{{ $course->title }}</option>
+                                                                                    @endforeach  
+                                                                                    <label for="">Professional UI/UX Design
+                                                                                        Course</label>
+                                                                                </select>
+
+                                                                                <span class="invalid-feedback">@error('c_course_id'){{ $message }}
+                                                                                    @enderror</span>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>Course Complete Date </h6>
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control">
-                                                                                <label for="">01/08/2023</label>
-                                                                            </div>
+
+                                                                            <div class="form-group form-error">
+                                                                                <input type="date" name="c_completion_date"
+                                                                                        class="form-control @error('c_completion_date') is-invalid @enderror">
+                                                                                    <label for="">Date</label>
+
+                                                                                <span class="invalid-feedback">@error('c_completion_date'){{ $message }}
+                                                                                    @enderror</span>
+                                                                            </div> 
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6">
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>Certificate Issue Date *</h6>
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control">
-                                                                                <label for="">01/08/2023</label>
-                                                                            </div>
+                                                                            <div class="form-group form-error">
+                                                                                <input type="date" name="c_issue_date"
+                                                                                        class="form-control @error('c_issue_date') is-invalid @enderror">
+                                                                                    <label for="">Date</label>
+
+                                                                                <span class="invalid-feedback">@error('c_issue_date'){{ $message }}
+                                                                                    @enderror</span>
+                                                                            </div> 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-9 mt-3">
@@ -673,10 +698,16 @@
                                                                                         bar. Your logo should look good
                                                                                         on this.</p>
                                                                                 </div>
-                                                                                <a href="#"><img
-                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid"></a>
+                                                                                <div class="color-position">
+                                                                                    <input type="color" class="form-control p-0"
+                                                                                        name="c_certificate_clr" id="c_certificate_clr"
+                                                                                        value="#ffffff">
+            
+                                                                                    <label for="c_certificate_clr">
+                                                                                        <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                    </label>
+                                                                                </div>
                                                                             </div>
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -686,15 +717,20 @@
                                                                                     <p>The accent color is used to
                                                                                         accentuate visual elements.</p>
                                                                                 </div>
-                                                                                <a href="#"><img
-                                                                                        src="{{asset('latest/assets/images/icons/pen-3.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid"></a>
+                                                                                <div class="color-position">
+                                                                                    <input type="color" class="form-control p-0"
+                                                                                        name="c_accent_clr" id="c_accent_clr"
+                                                                                        value="#ffffff">
+            
+                                                                                    <label for="c_accent_clr">
+                                                                                        <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                    </label>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="certificate-style-box">
-                                                                            <h6>Select Certificate Style</h6>
-
+                                                                            <h6>Select Certificate Style</h6>  
 
                                                                             <div class="media" id="certificate-1">
                                                                                 {{-- full page preview --}}
@@ -711,9 +747,9 @@
                                                                                 <img src="{{asset('latest/assets/images/certificate-01.png')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </a>
-                                                                                <div class="media-body clickable-div" data-value="1">
+                                                                                <div class="media-body select-style-div-2 active" data-value="1">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 1 ---</h6>
+                                                                                        <h6>Certificate Style 1 </h6>
                                                                                         <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
@@ -738,9 +774,10 @@
                                                                                 <img src="{{asset('latest/assets/images/certificate-02.png')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </a>
-                                                                                <div class="media-body clickable-div" data-value="2">
+                                                                                <div class="media-body select-style-div-2" data-value="2">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 2</h6>
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -764,9 +801,10 @@
                                                                                 <img src="{{asset('latest/assets/images/certificate-03.png')}}"
                                                                                     alt="Cert" class="img-fluid">
                                                                             </a>
-                                                                                <div class="media-body clickable-div" data-value="3">
+                                                                                <div class="media-body select-style-div-2" data-value="3">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 3</h6>
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -776,46 +814,57 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" name="certificate_value" id="certificate-value" value="">
+                                                                            <input type="hidden" name="c_certificate_style" id="cCertificateStyle" value="">
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-3 mt-3">
+
                                                                         <div class="certificate-asset-upload">
-                                                                            <h5>Logo</h5>
-                                                                            <input type="file" class="d-none" id="logo">
-                                                                            <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                            <h5>Logo </h5>
+                                                                                <input type="file" name="c_logo" id="logoInput2" accept="image/*"
+                                                                                    onchange="previewLogo2()"
+                                                                                    class="form-control d-none @error('c_logo') is-invalid @enderror">
+
+                                                                                <label for="logoInput2"
+                                                                                    class="upload-media-box"
+                                                                                    id="file-upload-area11"> 
+                                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                                     alt="Color"
-                                                                                    class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
-                                                                                    alt="Color"
-                                                                                    class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and
-                                                                                drop SVG, PNG or JPG (max. 300x300px)
-                                                                            </label>
+                                                                                    class="img-fluid light-ele" id="logoPreview2">
+                                                                               
+                                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                        alt="Color"
+                                                                                        class="img-fluid dark-ele" id="logoPreview2">
+                                                                                    <span>Click to upload</span> or drag and
+                                                                                    drop SVG, PNG or JPG (max. 300x300px)
+                                                                                </label>
                                                                         </div>
+
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
-                                                                            <input type="file" class="d-none" id="logo">
-                                                                            <label for="logo" class="upload-media-box">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}"
-                                                                                    alt="Color"
-                                                                                    class="img-fluid light-ele">
-                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
-                                                                                    alt="Color"
-                                                                                    class="img-fluid dark-ele">
-                                                                                <span>Click to upload</span> or drag and
-                                                                                drop SVG, PNG or JPG (max. 300x300px)
+                                                                            <input type="file" name="c_signature" id="signatureInput2" accept="image/*"
+                                                                                onchange="previewSignature2()"
+                                                                                class="form-control d-none @error('c_signature') is-invalid @enderror">
+
+                                                                            <label for="signatureInput2" class="upload-media-box" id="signature-upload-area2">
+                                                                                 
+                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview2">
+                                                                                 
+                                                                                <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="Color" class="img-fluid dark-ele" id="signaturePreview2">
+                                                                                <span>Click to upload Instructor Signature</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
+
                                                                         </div>
+
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
-                                                                            <a href="#" class="common-bttn"><img
-                                                                                    src="{{asset('latest/assets/images/icons/download4.svg')}}"
-                                                                                    alt="Color" class="img-fluid me-2">
-                                                                                Download</a>
+
+                                                                            <button class="btn common-bttn border-0"><img
+                                                                                src="{{asset('latest/assets/images/icons/download4.svg')}}"
+                                                                                alt="Color" class="img-fluid me-2">
+                                                                            Download</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1056,6 +1105,7 @@
 
 </script>
 
+{{-- logo certificate preview --}}
 <script>
     function previewLogo() {
         var logoPreview = document.getElementById('logoPreview');
@@ -1093,6 +1143,46 @@
         }
     }
 </script>
+
+<script>
+    function previewLogo2() {
+        var logoPreview = document.getElementById('logoPreview2');
+        var logoInput = document.getElementById('logoInput2');
+        var file = logoInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                logoPreview.src = e.target.result;
+                logoPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            logoPreview.style.display = 'none';
+        }
+    }
+</script>
+
+<script>
+    function previewSignature2() {
+        var signaturePreview = document.getElementById('signaturePreview2');
+        var signatureInput = document.getElementById('signatureInput2');
+        var file = signatureInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                signaturePreview.src = e.target.result;
+                signaturePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            signaturePreview.style.display = 'none';
+        }
+    }
+</script>
+
+{{-- certificate logo preview end --}}
 
 {{-- experience form --}}
 <script>
@@ -1153,6 +1243,23 @@
             certificateStyle.value = div.getAttribute('data-value');
 
             clickDivs.forEach(c => c.classList.remove("active"));
+            this.classList.add("active")
+
+        });
+    });
+     
+</script>
+
+<script>
+    const clickDivs2 = document.querySelectorAll(".select-style-div-2");
+    const cCertificateStyle = document.querySelector("#cCertificateStyle");
+
+    clickDivs2.forEach(function(div2) {
+        div2.addEventListener("click", function(e) {
+            e.preventDefault();
+            cCertificateStyle.value = div2.getAttribute('data-value');
+
+            clickDivs2.forEach(c => c.classList.remove("active"));
             this.classList.add("active")
 
         });
