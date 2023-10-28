@@ -97,8 +97,6 @@ class HomepageController extends Controller
                 $query->orWhere('user_identifier', $userIdentifier);
             })->get();
 
-
-
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
             }else{
              return redirect('//app.'.$domain.'/login');

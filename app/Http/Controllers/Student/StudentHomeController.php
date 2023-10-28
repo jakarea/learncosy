@@ -40,12 +40,15 @@ class StudentHomeController extends Controller
         $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
 
         $timeSpentData = CourseActivity::select(
+            'user_id',
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),
             DB::raw('SUM(duration) as time_spent')
         )
-        ->groupBy('month')
+        ->groupBy('user_id', 'month')
+        ->orderBy('user_id', 'asc')
         ->orderBy('created_at', 'asc')
         ->get();
+
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
