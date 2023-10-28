@@ -390,111 +390,6 @@ class StudentHomeController extends Controller
 
     public function certificateDownload($slug)
     {
-        $course = Course::where('slug', $slug)->with('certificate')->first();
-        $user = auth()->user();
-        $studentName = $user->name;
-        $courseName = $course->title;
-
-        $style=null;
-
-        if (!empty($course->certificate)) {
-            $style = $course->certificate->style;
-        }else{
-            return redirect()->back()->with('error',"No Certifcate Found for this course");
-        }
-
-        $certificateTemplate = Image::make(public_path("uploads/certificates/{$style}.png"));
-        $templateWidth = $certificateTemplate->width();
-        $templateHeight = $certificateTemplate->height();
-
-        // $studentNameX = $templateWidth / 2;
-        // $studentNameY = $templateHeight / 2;
-
-        if ($style == 1) {
-            $studentNameX = $templateWidth / 2;
-            $studentNameY = $templateHeight / 2;
-
-            $courseX = $studentNameX;
-            $courseY = $studentNameY + 40;
-
-            $imageX =  50;
-            $imageY = $studentNameY + 150;
-
-            $datetimeX = 580;
-            $datetimeY = $datetimeX - 80;
-        } elseif ($style == 2) {
-            $studentNameX = $templateWidth / 2;
-            $studentNameY = $templateHeight / 2;
-
-            $courseX = $studentNameX;
-            $courseY = $studentNameY + 40;
-
-            $imageX =  50;
-            $imageY = $studentNameY + 150;
-
-            $datetimeX = 580;
-            $datetimeY = $datetimeX - 80;
-        } elseif ($style == 3) {
-            $studentNameX = $templateWidth / 2;
-            $studentNameY = $templateHeight / 2;
-
-            $courseX = $studentNameX;
-            $courseY = $studentNameY + 40;
-
-            $imageX =  50;
-            $imageY = $studentNameY + 150;
-
-            $datetimeX = 580;
-            $datetimeY = $datetimeX - 80;
-        }
-
-        // $courseX = $studentNameX;
-        // $courseY = $studentNameY + 40;
-
-        $certificateTemplate->text($studentName, $studentNameX, $studentNameY, function ($font) {
-            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
-            $font->size(20);
-            $font->color('#000000');
-            $font->align('center');
-            $font->valign('middle');
-        });
-
-        $certificateTemplate->text($courseName, $courseX, $courseY, function ($font) {
-            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
-            $font->size(15);
-            $font->color('#000000');
-            $font->align('center');
-            $font->valign('middle');
-        });
-
-        $customImage = Image::make(public_path('uploads/instructor_signature/65304b5d8b3f9.jpg'));
-        // $imageX =  50;
-        // $imageY = $studentNameY + 150;
-
-        $certificateTemplate->insert($customImage, 'top-left' , $imageX, $imageY);
-
-
-        $certificateTemplate->text(Carbon::now()->format('Y-m-d'), $datetimeX, $datetimeY, function ($font) {
-            $font->file(public_path('latest/assets/fonts/Aaargh.ttf'));
-            $font->size(20);
-            $font->color('#000000');
-            $font->align('center');
-            $font->valign('middle');
-        });
-
-        $certificatePath = storage_path('app/public/certificates/' . $user->id . '_certificate.png');
-        $certificateTemplate->save($certificatePath);
-
-        $pdf = PDF::loadView('pdf.certificate', [
-            'certificateImage' => $certificatePath,
-        ]);
-        // $pdf->setPaper([0, 0, 750, 550], 'landscape');
-
-        return $pdf->download('certificate.pdf');
-    }
-
-    public function certificateDownload2($slug)
-    {
             $course = Course::where('slug', $slug)
             ->with('certificate')
             ->first();
@@ -511,8 +406,10 @@ class StudentHomeController extends Controller
             if (!$courseDate) {
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
+             
+           $certStyle = Certificate::where('instructor_id',$course->user_id)->where('course_id',$course->id)->first();
 
-            $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
+
 
             if ($certStyle) {
                 if ($certStyle->style == 3) {
@@ -527,15 +424,11 @@ class StudentHomeController extends Controller
                     return redirect()->back()->with('error','There is no Style found for this Course');
                 }
 
-                $signature = '';
+                $signature = $certStyle->signature; 
+                $logo = $certStyle->logo;
 
-                if (!empty($certStyle->signature)) {
-                   $signature = $certStyle->signature;
-                }else{
-                    $signature = 'latest/assets/images/certificate/signature.png';
-                }
-
-                $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
+                $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature, 'logo' => $logo]);
+            
 
                 return $pdf->download('certificate.pdf');
             }else{

@@ -23,7 +23,8 @@
         </div>
         @if (count($certificateCourses) > 0 ) 
         <div class="row">
-            <div class="col-12">
+            <div class="col-12"> 
+
                 <div class="subscription-table-wrap activity-table">
                     <table>
                         <tr>
@@ -116,25 +117,27 @@
                                 </div>
                             </td>
                             <td>
-                                @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
+                                {{-- @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101) --}}
                                 <a href="{{url('students/certificate-download/'.$certificateCourse->slug)}}">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 <a href="{{url('students/certificate-view/'.$certificateCourse->slug)}}" target="_blank">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                                @else
+                                {{-- @else --}}
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 <a href="#">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                                @endif 
+                                {{-- @endif  --}}
                                
                             </td>
                         </tr>
                         @endforeach
+
+                        
                     </table>
                 </div>
             </div>

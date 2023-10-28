@@ -988,7 +988,7 @@
 }
 .certificate-header-tab .nav {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 48.5% 48.5%;
   align-items: center;
 }
 .certificate-header-tab .nav .nav-item .nav-link {
@@ -1696,6 +1696,16 @@
 .social-extra-field div a i {
   font-size: 0.875rem;
   color: #667085;
+}
+
+.select-style-div-2 span,
+.select-style-div span {
+  display: none !important;
+}
+
+.select-style-div-2.active span,
+.select-style-div.active span {
+  display: block !important;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

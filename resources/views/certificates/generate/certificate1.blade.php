@@ -4,7 +4,6 @@
 <head>
     <title>Certificate of Completion</title>
 
-
     <style>
         @font-face {
             font-family: Poppins;
@@ -66,12 +65,12 @@
         }
 
         .certficate-content h2 {
-            color: #047580;
             font-size: 2.75rem;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.1375rem;
+            color: {{ $certColor ? $certColor : '#047580' }}
         }
 
         .certficate-content h5.badge {
@@ -98,8 +97,7 @@
             margin-top: 1rem;
         }
 
-        .name-box h1 {
-            color: #047580;
+        .name-box h1 { 
             font-size: 2rem;
             font-style: normal;
             font-weight: 400;
@@ -110,6 +108,7 @@
             position: relative;
             border-bottom: 1px solid #878787; 
             padding-bottom: 0.25rem;
+            color: {{ $certColor ? $certColor : '#047580' }}
         }
 
         .name-box h1:before {
@@ -267,34 +266,27 @@
             </div>
             <div class="certficate-content">
                 <h2>CERTIFICATE</h2>
-
                 <h5 class="badge">OF ACHIEVEMENT</h5>
-
                 <h6>This is certify that</h6> 
-
                 <div class="name-box">
-                    <h1>{{ Auth::user()->name }}</h1>
+                    <h1>{{ $fullName }}</h1>
                 </div>
-
                 <div class="details">
-                    <p>has successfully completed the {{$course->title}} Course on {{ date('d M Y', strtotime($courseDate)) }} through
+                    <p>has successfully completed the {{$course->title}}  Course on {{ date('d M Y', strtotime($courseCompletionDate)) }} through
                         Learncosy.</p>
                 </div>
-
                 <div class="bottom-area">
-
                     <div class="signature">
                         @if (!empty($signature))
                         <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
                         @else 
                             <img src="{{ public_path('latest/assets/images/certificate/one/signature.png') }}" alt="Logo" class="img-fluid">
                         @endif
-
                         <p>INSTRUCTOR SIGNATURE</p>
                     </div>
 
                     <div class="course-date">
-                        <h5>{{ date('d M Y') }}</h5>
+                        <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
                         <p>DATE</p>
                     </div>
                     <div class="clr"></div>

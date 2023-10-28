@@ -1138,7 +1138,8 @@
 
     .nav {
         display: grid;
-        grid-template-columns: 50% 50%;
+        // grid-template-columns: 50% 50%;
+        grid-template-columns: 48.5% 48.5%;
         align-items: center;
 
         .nav-item {
@@ -1991,7 +1992,19 @@
 }
 
 
+.select-style-div-2,
+.select-style-div{
+    span{
+        display: none!important;
+    }
+}
 
+.select-style-div-2.active,
+.select-style-div.active{
+    span{
+        display: block!important;
+    }
+}
 
 
 

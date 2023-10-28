@@ -6,6 +6,7 @@ use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
@@ -346,12 +347,20 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
-            Route::get('/account-settings', 'edit')->name('account.settings');
-            Route::post('/certificate-settings', 'certificateUpdate')->name('certificate.update');
+            Route::get('/account-settings', 'edit')->name('account.settings'); 
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
         });
+
+        // latest certificate route for instructor -> 3rd feedback
+        Route::prefix('profile')->controller(CertificateController::class)->group(function () {
+            Route::post('/certificate-settings', 'certificateUpdate')->name('certificate.update');
+            Route::post('/certificate-generate', 'customCertificate')->name('certificate.generate');
+            Route::post('/certificate-delete/{id}', 'certificateDelete')->name('certificate.delete');
+        });
+
+        // experience route
         Route::prefix('profile')->controller(ExperienceController::class)->group(function () {
             Route::post('/experience', 'store')->name('instructor.profile.experience');
         });
@@ -404,17 +413,14 @@ Route::middleware('auth')->prefix('review')->controller(ReviewController::class)
 /* ========================================================== */
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
-    // Student routes
-    Route::get('/dashboard1', function () {
-        return 'Student dashboard from auth!';
-    });
     Route::get('/dashboard', 'dashboard')->name('students.dashboard');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home', 'catalog')->name('students.catalog.courses');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
-    Route::get('/course-certificate/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
+    Route::get('/certificate-download/{slug}', 'certificateDownload')->name('students.download.courses-certificate');
+    Route::get('/certificate-view/{slug}', 'certificateView')->name('students.view.courses-certificate');
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
@@ -423,7 +429,6 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::post('/courses/{slug}', 'review')->name('students.review.courses');
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
-
     Route::post('/course-like/{course_id}/{ins_id}', 'courseLike')->name('students.course.like');
     Route::post('/course-unlike/{course_id}/{ins_id}', 'courseUnLike')->name('students.course.unlike');
 
