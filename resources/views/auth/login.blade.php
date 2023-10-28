@@ -4,7 +4,8 @@ Login Page
 @endsection
 
 @section('content')
-<!-- ====== login page content start ====== --> 
+<!-- ====== login page content start ====== -->
+
 <section class="auth-part-sec">
     <div class="container-fluid">
         <div class="row">
@@ -55,7 +56,7 @@ Login Page
                         <div class="d-flex">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{
-                                    old('remember') ? 'checked' : '' }}> 
+                                    old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
                                     Remember for 30 days
                                 </label>
@@ -65,7 +66,7 @@ Login Page
                                     <a href="{{ route('password.request') }}">
                                         {{ __('Forgot Password?') }}
                                     </a>
-                                    @endif 
+                                    @endif
                             </div>
                         </div>
                         <div class="form-submit">

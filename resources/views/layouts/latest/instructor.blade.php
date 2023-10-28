@@ -31,7 +31,7 @@
     <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 
     @yield('style')
-    <link href="{{ asset('latest/assets/admin-css/ins-responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" /> --}}
     <!-- all css end -->
 
     @yield('seo')

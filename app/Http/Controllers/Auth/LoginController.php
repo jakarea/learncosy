@@ -49,7 +49,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        $userIdentifier = isset( $_COOKIE['userIdentifier']) ?? NULL;
 
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
