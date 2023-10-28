@@ -36,24 +36,24 @@ class HomeController extends Controller
 
     public function studentsPayment()
     {
-         
+
         $students = [];
         $todaysStudents = [];
 
-        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
-        
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
         $enrolments = Checkout::with('course','user')->where('instructor_id',Auth::user()->id);
 
         if ($status) {
             if ($status == 'asc') {
                 $enrolments->orderBy('id', 'asc');
             }
-            
+
             if ($status == 'desc') {
                 $enrolments->orderBy('id', 'desc');
             }
         }else{
-            $enrolments->orderBy('id', 'desc'); 
+            $enrolments->orderBy('id', 'desc');
         }
 
         $enrolments = $enrolments->paginate(10);
@@ -72,7 +72,7 @@ class HomeController extends Controller
         foreach ($todaysEnrolments as $enrolment) {
             $todaysStudents[$enrolment->user_id] = $enrolment->created_at;
         }
-        
+
         $totalEnrollment =  count($students);
         $todaysEnrollment =  count($todaysStudents);
 
@@ -81,10 +81,10 @@ class HomeController extends Controller
 
         $totalEnrollToday = $this->getEnrollmentDataToday();
         $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
-        // return $enrolments; 
+        // return $enrolments;
         return view('payments/instructor/students-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
 
-    
+
         // return view('payments/instructor/students-payment', compact('payments','todaysEarnings','todaysEnrolment','totalEarnings','totalEnrolment'));
     }
 
@@ -104,7 +104,7 @@ class HomeController extends Controller
     public function adminPaymentData( Request $request )
     {
         $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', auth()->user()->id)->get();
-       
+
         return datatables()->of($payments)
             ->addColumn('action', function ($payment) {
                 $action = '<a href="' . route('admin.subscription.edit', $payment->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
@@ -267,7 +267,7 @@ class HomeController extends Controller
         if($previousMonthTotalSell){
             $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
         }
-            
+
         return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
     }
 
@@ -283,7 +283,7 @@ class HomeController extends Controller
         if($previousDayTotalSell){
             $percentageChange = (($currentDayTotalSell - $previousDayTotalSell) / abs($previousDayTotalSell)) * 100;
         }
-        
+
         return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
     }
 }

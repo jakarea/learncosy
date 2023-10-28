@@ -1,5 +1,6 @@
-@extends('layouts.latest.students')
+@extends('layouts.latest.instructor')
 @section('title') Cart Page @endsection
+
 
 {{-- page style @S --}}
 @section('style')
@@ -23,33 +24,20 @@
 {{-- ==== course activity list page @S ==== --}}
 
 
-@php
-$instructorID = null;
-$subTotalPrice = 0;
-$totalPrice = 0;
-@endphp
-@foreach ($cart as $item)
-@php
-$instructorID = $item->instructor->id;
-$subTotalPrice += $item->courses->price ?? "";
-$totalPrice += $item->courses->offer_price;
-@endphp
-@endforeach
-
 <main class="course-activity-list-page">
     <div class="container-fluid">
         <form
             role="form"
-            action="{{ route('process-payment') }}"
+            action="{{ route('instructor.subscription.payment') }}"
             method="post"
             class="require-validation needs-validation"
             data-cc-on-file="false"
-            data-stripe-publishable-key="{{ $cart[0]->stripe_public_key ?? "" }}"
+            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
             id="payment-form">
             @csrf
             <div class="row">
 
-                @if(count($cart))
+                @if($package)
 
                     <div class="col-lg-7">
                         <div class="add-experience-form cart-info-from">
@@ -166,38 +154,26 @@ $totalPrice += $item->courses->offer_price;
                     </div>
                     <div class="col-lg-5">
                         <div class="cart-right-wrap">
-                            @foreach ($cart as $item)
 
-                            @php
-                            $review_sum = 0;
-                            $review_avg = 0;
-                            $total = 0;
-                            foreach($item->courses->reviews as $review){
-                            $total++;
-                            $review_sum += $review->star;
-                            }
-                            if($total)
-                            $review_avg = $review_sum / $total;
-                            @endphp
 
                             {{-- cart item start here --}}
-                            <div class="cart-items-wrap" data-item="{{ $item->id}}">
+                            <div class="cart-items-wrap" data-item="{{ $package->id}}">
                                 <div class="d-flex">
                                     <div class="media">
-                                        <img src="{{asset($item->courses->thumbnail)}}" alt="Course Thumbnail"
-                                            class="img-fluid">
+                                        {{-- <img src="{{asset($package->courses->thumbnail)}}" alt="Course Thumbnail"
+                                            class="img-fluid"> --}}
                                         <div class="media-body">
-                                            <h6>{{ Str::limit($item->courses->title, $limit = 30, $end = '...') }}</h6>
-                                            <p>{{ $item->name }}</p>
+                                            <h6>{{ Str::limit($package->title, $limit = 30, $end = '...') }}</h6>
+                                            <p>{{ $package->name }}</p>
 
-                                            <ul>
+                                            {{-- <ul>
                                                 <li><span>{{ $review_avg }}</span></li>
                                                 @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
                                                     @endfor
                                                     <li><span>({{ $total }})</span></li>
-                                            </ul>
+                                            </ul> --}}
 
-                                            <h5>€{{ $item->courses->offer_price }} <s>€{{ $item->courses->price }}</s></h5>
+                                            <h5>€{{ number_format( $package->sales_price, 2) }} <s>€{{ number_format( $package->regular_price, 2 ) }}</s></h5>
                                         </div>
                                     </div>
                                     <div class="cart-close">
@@ -206,23 +182,25 @@ $totalPrice += $item->courses->offer_price;
                                             <button type="submit" class="btn"><i class="fas fa-close"></i></button>
                                         </form> --}}
 
-                                        <a href="javascript:;" class="btn remove-item" data-item-id="{{ $item->id }}"><i class="fas fa-close"></i></a>
+                                        {{-- <a href="javascript:;" class="btn remove-item" data-item-id="{{ $package->id }}"><i class="fas fa-close"></i></a> --}}
 
                                     </div>
                                 </div>
                             </div>
                             {{-- cart item end here --}}
-                            @endforeach
+
                             <div id="subtotal-wrap-parent">
                                 <div class="subtotal-wrap">
                                     <table>
                                         <tr>
                                             <td>Subtotal :</td>
-                                            <td>€{{ $subTotalPrice }}</td>
+                                            <td>
+                                                €{{ number_format($package->regular_price, 2) }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Discount :</td>
-                                            <td>€{{ $subTotalPrice - $totalPrice }}</td>
+                                            <td>€{{ $discountAmount = number_format(($package->regular_price - $package->sales_price), 2) }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -230,13 +208,15 @@ $totalPrice += $item->courses->offer_price;
                                     <table>
                                         <tr>
                                             <td>Total :</td>
-                                            <td>€{{ $totalPrice }}</td>
+                                            <td>
+                                                €{{ $total = number_format (( $package->regular_price - $discountAmount ), 2) }}
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
 
                                 <div class="cart-checkout-bttn-wrap">
-                                    <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
+                                    <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ number_format($total, 2) }} with
                                         <span class="stripe-bg">
                                             <i class="fa-brands fa-stripe"></i>
                                         </span></button>
@@ -363,13 +343,13 @@ $totalPrice += $item->courses->offer_price;
                             clearErrorMessage('cexpiry_year_error');
 
                             var token = response.id;
-                            $form.find('input[type=text]').val(''); // Clear sensitive data
+                            // $form.find('input[type=text]').val(''); // Clear sensitive data
                             $form.append("<input type='hidden' name='first_name' value='" + first_name + "'/>");
                             $form.append("<input type='hidden' name='last_name' value='" + last_name + "'/>");
                             $form.append("<input type='hidden' name='email' value='" + email + "'/>");
                             $form.append("<input type='hidden' name='phone' value='" + phone + "'/>");
                             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                            $form.append('<input type="hidden" name="instructorId" value="{{ $instructorID ?? "" }}"/>');
+                            $form.append('<input type="hidden" name="packageId" value="{{ $package->id ?? "" }}"/>');
                             $form.get(0).submit(); // Submit the form with the token
                         }
                     });

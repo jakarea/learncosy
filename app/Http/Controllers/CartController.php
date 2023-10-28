@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\BundleCourse;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Course;
@@ -8,28 +9,49 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
-
+use Cookie;
 class CartController extends Controller
 {
     public function index()
     {
         //$courseIds = Cart::where('user_id', auth()->id())->pluck('course_id')->toArray();
         //return $courses = Course::whereIn('id', $courseIds)->get();
-        $cart = Cart::where('user_id', auth()->id())
-        ->join('users', 'carts.instructor_id', '=', 'users.id')
-        ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key', 'users.id']);
+
+        // $cart = Cart::where('user_id', auth()->id())
+        // ->join('users', 'carts.instructor_id', '=', 'users.id')
+        // ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key']);
+
+
+        // $identifier = session()->getId();
+
+        // return $cart = Cart::where('user_identifier', $identifier)
+        // ->join('users', 'carts.instructor_id', '=', 'users.id')
+        // ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key']);
+
+        $userId = auth()->id();
+        $userIdentifier = $_COOKIE['userIdentifier'];
+
+        $cart = Cart::where(function ($query) use ($userId, $userIdentifier) {
+            $query->where('user_id', $userId);
+            $query->orWhere('user_identifier', $userIdentifier);
+        })
+        ->leftJoin('users', 'carts.user_id', '=', 'users.id')
+        ->select('carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key')
+        ->get();
 
 
         return view('e-learning/course/students/cart',compact('cart'));
     }
     public function add(Course $course)
     {
+
+        $userIdentifier = $_COOKIE['userIdentifier'];
         $instructor_id = $course->user_id;
         $instructor = User::where('id', $instructor_id)->firstOrFail();
 
         $user = auth()->user();
         $cart = Cart::firstOrNew([
-            'user_id' => $user->id,
+            'user_id' => $user ? $user->id : NULL,
             'course_id' => $course->id,
         ]);
 
@@ -40,28 +62,75 @@ class CartController extends Controller
         $cart->price = $course->price;
         $cart->quantity = 1;
         $cart->instructor_id = $instructor->id;
+        $cart->user_identifier = $userIdentifier;
         $cart->save();
         return redirect()->route('students.catalog.courses')->with('success', 'Course added to cart.');
     }
 
+
+
+    public function addToCartSkippLogin(Course $course)
+    {
+        $userIdentifier = $_COOKIE['userIdentifier'];
+        $instructor_id = $course->user_id;
+        $instructor = User::where('id', $instructor_id)->firstOrFail();
+
+        $user = auth()->user();
+
+        $cart = Cart::firstOrNew([
+            'user_id' => $user ? $user->id : NULL,
+            'course_id' => $course->id,
+        ]);
+
+        if ($cart->exists) {
+            return back()->with('error', 'Course already added to the cart');
+        }
+
+        $cart->price = $course->price;
+        $cart->quantity = 1;
+        $cart->instructor_id = $instructor->id;
+        $cart->user_identifier = $userIdentifier;
+        $cart->save();
+        return back()->with('success', 'Course added to cart.');
+    }
+
+    public function addToCartBundlekippLogin(BundleCourse $bundlecourse)
+    {
+
+        $userIdentifier = $_COOKIE['userIdentifier'];
+
+        $instructor_id = $bundlecourse->instructor_id;
+        $instructor = User::where('id', $instructor_id)->firstOrFail();
+
+        $user = auth()->user();
+
+        $cart = Cart::firstOrNew([
+            'user_id' => $user ? $user->id : NULL,
+            'bundle_course_id' => $bundlecourse->id,
+        ]);
+
+        if ($cart->exists) {
+            return back()->with('error', 'Course already added to the cart');
+        }
+
+        $cart->bundleprice = $bundlecourse->regular_price;
+        $cart->quantity = 1;
+        $cart->instructor_id = $instructor->id;
+        $cart->user_identifier = $userIdentifier;
+        $cart->save();
+        return back()->with('success', 'Course added to cart.');
+    }
+
+
+
+
+
     public function remove($id){
-
         $cart = Cart::where('id', $id)->first();
-
         $cart->delete();
-
-        return redirect()->back()->with('success', 'Course Removed from cart Successfully.');
+        return response()->json(['message' => 'Course Removed from cart Successfully.']);
     }
 
-
-    public function removeItemFromCart(Request $request){
-
-        $cart = Cart::where('id', $request->id)->first();
-
-        $cart->delete();
-
-        return redirect()->back()->with('success', 'Course Removed from cart Successfully.');
-    }
 }
 
 

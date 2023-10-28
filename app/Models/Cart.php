@@ -13,7 +13,9 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id',
+        'user_identifier',
         'course_id',
+        'bundle_course_id',
         'quantity',
         'price'
     ];

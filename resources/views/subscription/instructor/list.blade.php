@@ -91,8 +91,11 @@
                                 <a href="{{ route('instructor.subscription.status', $package->id) }}"
                                     class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                 @else
-                                <a href="{{ route('instructor.subscription.create', $package->id) }}"
-                                    class="will-subscribe">Get started</a>
+                                {{-- <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                    class="will-subscribe">Get started</a> --}}
+
+                                    <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
+                                        class="will-subscribe">Get started</a>
                                 @endif
                             </div>
                         </div>
@@ -154,8 +157,14 @@
                                 <a href="{{ route('instructor.subscription.status', $package->id) }}"
                                     class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                 @else
-                                <a href="{{ route('instructor.subscription.create', $package->id) }}"
-                                    class="will-subscribe">Get started</a>
+                                {{-- <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                    class="will-subscribe">Get started</a> --}}
+
+                                    <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
+                                        class="will-subscribe">Get started</a>
+
+
+
                                 @endif
                             </div>
                         </div>

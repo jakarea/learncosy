@@ -171,6 +171,8 @@ Route::get('/home', function (Request $request) {
 // auth route
 Auth::routes(['verify' => true]);
 
+
+
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('message');
@@ -387,26 +389,33 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 // SubscriptionPaymentController
 
 
-Route::prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
+    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
+    Route::post('/payment', 'payment')->name('instructor.subscription.payment');
     Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
 });
 
 
 
-
 // SubscriptionController
-Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
-    Route::get('/', 'index')->name('instructor.subscription');
-    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
-    Route::get('success', 'success')->name('instructor.subscription.success');
-    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
-    Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
-});
+
+// Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
+    Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
+        Route::get('/', 'index')->name('instructor.subscription');
+        // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+        Route::get('success', 'success')->name('instructor.subscription.success');
+        Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
+        Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
+    });
+// });
+
+
+
 
 // review page routes
-Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
-    Route::get('/', 'index');
-});
+// Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
+//     Route::get('/', 'index');
+// });
 
 /* ========================================================== */
 /* ===================== Student Routes ===================== */
@@ -463,11 +472,18 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/cart', 'index')->name('cart.index');
     Route::post('/cart/add/{course}', 'add')->name('cart.add');
     Route::post('/cart/remove/{id}', 'remove')->name('cart.remove');
-
-    // This code is nedded for any time
-    Route::post('/cart/item/remove/{id}', 'removeItemFromCart')->name('cart.item-remove');
-
 });
+
+
+
+Route::prefix('students')->controller(CartController::class)->group(function () {
+    Route::post('/cart/added/{course}', 'addToCartSkippLogin')->name('cart.added');
+});
+
+Route::prefix('students')->controller(CartController::class)->group(function () {
+    Route::post('/cart/bundle/{bundlecourse}', 'addToCartBundlekippLogin')->name('cart.added.bundle');
+});
+
 
 /* ======================================================== */
 /* ===================== Admin Routes ===================== */

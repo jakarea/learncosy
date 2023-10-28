@@ -202,17 +202,17 @@
                                             <div class="bttns">
                                                 <a href="{{ url($instructors->subdomain . '/courses/' . $course->slug) }}">More
                                                     Details</a>
-                                                {{-- <a href="{{ url('/students/dashboard/enrolled') }}"
+
+                                                    {{-- <a href="{{ url('/students/dashboard/enrolled') }}"
                                                     style="background: {{ modulesetting('secondary_color') }}">Enroll
                                                     Now!</a> --}}
-
-                                                    <form action="{{ route('cart.add', $course) }}" method="POST">
+                                                    <form action="{{ route('cart.added', $course) }}" method="POST">
                                                         @csrf
                                                         @if ($cartCourses->pluck('course_id')->contains($course->id))
                                                             <button type="button" class="btn add-to-cart-button bg-secondary"
                                                                 disabled>Already Added to Cart</button>
                                                         @else
-                                                            <button type="submit" class="btn add-to-cart-button">Add to Cart</button>
+                                                            <button style="background: {{ modulesetting('secondary_color') }}" type="submit" class="btn add-to-cart-button">Add to Cart</button>
                                                         @endif
                                                     </form>
                                             </div>
@@ -304,6 +304,16 @@
                             <div class="bttns">
                                 <h6>€ {{ $bundle_course->price }}/ <span>included {{ count($bundle_course->courses) }}
                                         courses</span></h6>
+
+                                        {{-- <form action="{{ route('cart.added.bundle', $bundle_course) }}" method="POST">
+                                            @csrf --}}
+                                            {{-- @if ($cartCourses->pluck('course_id')->contains($course->id)) --}}
+                                                {{-- <button type="button" class="btn add-to-cart-button bg-secondary"
+                                                    disabled>Already Added to Cart</button> --}}
+                                            {{-- @else --}}
+                                                {{-- <button style="background: {{ modulesetting('secondary_color') }}" type="submit" class="btn add-to-cart-button">Buy now</button> --}}
+                                            {{-- @endif --}}
+                                        {{-- </form> --}}
                                 @if (Auth::check())
                                     @can('student')
                                         <a href="{{ route('students.dashboard') }}"
@@ -381,5 +391,6 @@
 
 {{-- page script @S --}}
 @section('script')
+
 @endsection
 {{-- page script @E --}}
