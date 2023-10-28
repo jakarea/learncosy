@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 class PaymentController extends Controller
 {
     public function processPayment(Request $request) {
+
         $courseIds = Cart::where('user_id', auth()->id())->pluck('course_id')->toArray();
         $courses = Course::whereIn('id', $courseIds)->get();
         $course_price = 0;
@@ -61,7 +62,7 @@ class PaymentController extends Controller
                     'course_id' => $course->id,
                     'instructor_id' => $course->user_id,
                     'payment_method' => $charge->payment_method,
-                    'payment_status' => $charge->paid? 'Paid' : '',
+                    'payment_status' => $charge->paid? 'completed' : '',
                     'payment_id' => $charge->id,
                     'status' => $charge->status,
                     'amount' => $charge->amount_captured,

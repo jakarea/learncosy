@@ -37,7 +37,7 @@ class StudentHomeController extends Controller
         $totalTimeSpend = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->sum('duration');
 
         $totalHours = floor($totalTimeSpend / 3600);
-        $totalMinutes = floor(($totalTimeSpend % 3600) / 60); 
+        $totalMinutes = floor(($totalTimeSpend % 3600) / 60);
 
         $timeSpentData = CourseActivity::select(
             DB::raw('DATE_FORMAT(created_at, "%b") as month'),
@@ -45,7 +45,7 @@ class StudentHomeController extends Controller
         )
         ->groupBy('month')
         ->orderBy('created_at', 'asc')
-        ->get(); 
+        ->get();
 
 
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
@@ -410,13 +410,14 @@ class StudentHomeController extends Controller
            $certStyle = Certificate::where('instructor_id',$course->user_id)->where('course_id',$course->id)->first();
 
 
+
             if ($certStyle) {
                 if ($certStyle->style == 3) {
                     $certificate_path = 'certificates/download/certificate1';
-                     
+
                 }elseif ($certStyle->style == 2) {
                     $certificate_path = 'certificates/download/certificate2';
-    
+
                 }elseif ($certStyle->style == 1) {
                     $certificate_path = 'certificates/download/certificate3';
                 }else{
@@ -428,11 +429,12 @@ class StudentHomeController extends Controller
 
                 $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature, 'logo' => $logo]);
             
+
                 return $pdf->download('certificate.pdf');
             }else{
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
-            
+
     }
 
     public function certificateView($slug)
@@ -453,16 +455,16 @@ class StudentHomeController extends Controller
             if (!$courseDate) {
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
-            
+
             $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
 
             if ($certStyle) {
                 if ($certStyle->style == 3) {
                     $certificate_show_path = 'certificates/show/certificate1';
-                     
+
                 }elseif ($certStyle->style == 2) {
                     $certificate_show_path = 'certificates/show/certificate2';
-    
+
                 }elseif ($certStyle->style == 1) {
                     $certificate_show_path = 'certificates/show/certificate3';
                 }else{
@@ -478,11 +480,11 @@ class StudentHomeController extends Controller
                 }
 
                 return view($certificate_show_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
- 
+
             }else{
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
-            
+
     }
 
     // course overview
@@ -523,9 +525,9 @@ class StudentHomeController extends Controller
                 }
                 $related_course = $query->take(4)->get();
             }
- 
-             
-             
+
+
+
             return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
@@ -599,7 +601,7 @@ class StudentHomeController extends Controller
      */
     public function storeActivities()
     {
- 
+
         // // Update or insert to course activities
         // $courseId = (int)$request->input('courseId');
         // $lessonId = (int)$request->input('lessonId');
@@ -616,7 +618,7 @@ class StudentHomeController extends Controller
         //         'is_completed' => true
         //     ]
         // );
- 
+
         $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
 
         $courseActivities = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);

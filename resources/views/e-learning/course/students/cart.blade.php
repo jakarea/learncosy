@@ -8,8 +8,11 @@
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 
 <style>
-    .hide {
-        display: none;
+    .require-validation .error-input {
+        border: 1px solid red;
+    }
+    .require-validation .error-message{
+        color: red;
     }
 </style>
 @endsection
@@ -39,7 +42,7 @@ $totalPrice += $item->courses->offer_price;
             method="post"
             class="require-validation needs-validation"
             data-cc-on-file="false"
-            data-stripe-publishable-key="{{ $cart[0]->stripe_public_key }}"
+            data-stripe-publishable-key="{{ $cart[0]->stripe_public_key ?? "" }}"
             id="payment-form">
             @csrf
             <div class="row">
@@ -56,37 +59,29 @@ $totalPrice += $item->courses->offer_price;
                                             <input type="text" class="form-control" id="first_name" name="first_name"
                                                 placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[0] : '' }}">
                                             <label for="first_name">First Name</label>
-                                            {{-- <span class="invalid-feedback">@error('first_name'){{
-                                                $message }}
-                                                @enderror</span> --}}
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+
                                             <input type="text" class="form-control" id="last_name" name="last_name"
-                                                placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[1] : '' }}">
+                                                placeholder="" value="{{ Auth::check() ? (isset(explode(' ', Auth::user()->name)[1]) ? explode(' ', Auth::user()->name)[1] : '') : '' }}">
                                             <label for="last_name">Last Name</label>
-                                            {{-- <span class="invalid-feedback">@error('last_name'){{
-                                                $message }}
-                                                @enderror</span> --}}
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="{{ Auth::check() ? Auth::user()->phone : '' }}">
-                                            <label for="phone">+880 Phone</label>
-                                            {{-- <span class="invalid-feedback">@error('phone'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <label for="phone">+31 Phone</label>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
-                                            <label for="email">Email</label>
-                                            {{-- <span class="invalid-feedback">@error('email'){{
-                                                $message }}
-                                                @enderror</span> --}}
+å                                            <label for="email">Email</label>
                                         </div>
                                     </div>
                                     <h2 class="mt-3">Payment Method</h2>
@@ -104,37 +99,31 @@ $totalPrice += $item->courses->offer_price;
                                         </a>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="form-group required">
-                                            <input type="text" class="form-control" id="card_name" name="card_name"
+                                        <div class="form-group">
+                                            <input type="text" class="form-control card-name" id="card_name" name="card_name"
                                                 placeholder="">
                                             <label for="card_name">Name On Card </label>
-                                            {{-- <span class="invalid-feedback">@error('card_name'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <span class="error-message" id="card_name_error"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <input type="text" class="form-control card-number" id="card_number" name="card_number"
                                                 placeholder="" maxlength="16">
                                             <label for="card_number">Card Number </label>
-                                            {{-- <span class="invalid-feedback">@error('card_number'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <span class="error-message" id="card_number_error"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <input type="text" class="form-control card-cvc" id="card_cvv" name="card_cvv"
                                                 placeholder="" maxlength="3">
                                             <label for="card_cvv">CVV </label>
-                                            {{-- <span class="invalid-feedback">@error('card_cvv'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <span class="error-message" id="card_cvv_error"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                             <select name="card_month" id="card_month" class="form-control card-expiry-month">
                                                 <option value="">Month</option>
                                                 <option value="01">January</option>
@@ -150,13 +139,11 @@ $totalPrice += $item->courses->offer_price;
                                                 <option value="11">November</option>
                                                 <option selected value="12">December</option>
                                             </select>
-                                            {{-- <span class="invalid-feedback">@error('card_month'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                            <span class="error-message" id="cexpiry_month_error"></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group required">
+                                        <div class="form-group">
                                         <select name="card_year" id="card_year" class="form-control card-expiry-year">
                                             @php
                                             $currentYear = date("Y");
@@ -166,17 +153,9 @@ $totalPrice += $item->courses->offer_price;
                                             }
                                            @endphp
                                         </select>
-
-                                            {{-- <span class="invalid-feedback">@error('card_year'){{
-                                                $message }}
-                                                @enderror</span> --}}
+                                        <span class="error-message" id="cexpiry_year_error"></span>
                                         </div>
                                     </div>
-                                    {{-- <div class='col-lg-12'>
-                                        <div class="form-group">
-                                            <button id="stripe-pay-now" class="btn btn-primary btn-lg btn-block" type="submit">Pay Now</button>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
 
@@ -219,10 +198,13 @@ $totalPrice += $item->courses->offer_price;
                                         </div>
                                     </div>
                                     <div class="cart-close">
-                                        <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                        {{-- <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><i class="fas fa-close"></i></button>
-                                        </form>
+                                        </form> --}}
+
+                                        <a href="javascript:;" class="btn remove-item" data-item-id="{{ $item->id }}"><i class="fas fa-close"></i></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +231,7 @@ $totalPrice += $item->courses->offer_price;
                                 </table>
                             </div>
 
-                            <div class="cart-checkout-bttn-wrap"> 
+                            <div class="cart-checkout-bttn-wrap">
                                 <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ $totalPrice }} with
                                     <span class="stripe-bg">
                                         <i class="fa-brands fa-stripe"></i>
@@ -264,6 +246,10 @@ $totalPrice += $item->courses->offer_price;
                 @endif
             </div>
         </form>
+
+         {{-- <form id="cartItemRemove" action="{{ route('cart.remove', $item->id) }}" method="POST">
+            @csrf
+        </form> --}}
     </div>
 </main>
 
@@ -283,15 +269,15 @@ $totalPrice += $item->courses->offer_price;
         });
     });
 </script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://js.stripe.com/v2/"></script>
-
     <script>
         $(document).ready(function() {
-            var $form = $(".require-validation");
 
+            var $form = $(".require-validation");
+            var $submitButton = $("#stripe-pay-now");
+
+            document.getElementById("stripe-pay-now").display;
             $("#stripe-pay-now").on('click', function(e) {
                 e.preventDefault();
                 $form.submit();
@@ -300,34 +286,42 @@ $totalPrice += $item->courses->offer_price;
             $form.on('submit', function(e) {
                 e.preventDefault();
 
-                //document.getElementById('stripe-pay-now').disabled = true;
+                function validateField(field, errorField) {
+                    // console.log(field, errorField)
+                    var fieldValue = $(field).val();
+                    var label = $(field).data('label');
 
-                var first_name = $('#first_name').val();
-                var last_name = $('#last_name').val();
-                var email = $('#email').val();
-                var phone = $('#phone').val();
 
-                var inputSelector = 'input[type=email], input[type=password], input[type=text], input[type=file], textarea,select',
-                    $inputs = $form.find('.required').find(inputSelector),
-
-                    $errorMessage = $form.find('div.error');
-
-                $errorMessage.addClass('hide');
-
-                $errorMessage.removeClass('hide');
-
-                $('.invalid-feedback').removeClass('invalid-feedback');
-
-                $inputs.each(function(i, el) {
-                    var $input = $(el);
-                    if ($input.val() === '') {
-                        $input.closest('.required').addClass('invalid-feedback');
-
+                    var fieldValue = $(field).val();
+                    if (!fieldValue) {
+                        errorField.text('This field is required');
+                        errorField.show();
+                        $(field).addClass('error-input');
+                        return false;
+                    } else {
+                        errorField.text('');
+                        errorField.hide();
+                        $(field).removeClass('error-input');
+                        return true;
                     }
-                });
+                }
+
+                var cardNameError = $("#card_name_error");
+                var cardNumberError = $("#card_number_error");
+                var cardCvvError = $("#card_cvv_error");
+
+                var isCardNameValid = validateField("#card_name", cardNameError);
+                var isCardNumberValid = validateField("#card_number", cardNumberError);
+                var isCardCvvValid = validateField("#card_cvv", cardCvvError);
 
 
-                if (!$form.data('cc-on-file')) {
+                // if (!$form.data('cc-on-file')) {
+                if (isCardNameValid && isCardNumberValid && isCardCvvValid && !$form.data('cc-on-file')) {
+                    var first_name = $('#first_name').val();
+                    var last_name = $('#last_name').val();
+                    var email = $('#email').val();
+                    var phone = $('#phone').val();
+
                     Stripe.setPublishableKey($form.data('stripe-publishable-key'));
 
                     // Prepare card data
@@ -338,13 +332,30 @@ $totalPrice += $item->courses->offer_price;
                         exp_year: $('.card-expiry-year').val()
                     };
 
+
                     // Use Stripe.js to create a token
                     Stripe.createToken(cardData, function(status, response) {
                         if (response.error) {
-                            $errorMessage.removeClass('hide');
-                            $errorMessage.find('.alert').text(response.error.message);
-                            //document.getElementById('stripe-pay-now').disabled = true;
+                            console.log( response.error)
+                            if (response.error.param === "number") {
+                                displayErrorMessage('card_number_error', response.error.message);
+                            } else if (response.error.param === "cvc") {
+                                displayErrorMessage('card_cvv_error', response.error.message);
+                            } else if(response.error.param === "number" || response.error.param === "cvc"){
+                                displayErrorMessage('card_number_error', response.error.message);
+                                displayErrorMessage('card_cvv_error', response.error.message);
+                            }else if ( response.error.param === "exp_month"){
+                                displayErrorMessage('cexpiry_month_error', response.error.message);
+                            }
+                            else if ( response.error.param === "exp_year"){
+                                displayErrorMessage('cexpiry_year_error', response.error.message);
+                            }
                         } else {
+                            clearErrorMessage('card_number_error');
+                            clearErrorMessage('card_cvv_error');
+                            clearErrorMessage('cexpiry_month_error');
+                            clearErrorMessage('cexpiry_year_error');
+
                             var token = response.id;
                             $form.find('input[type=text]').val(''); // Clear sensitive data
                             $form.append("<input type='hidden' name='first_name' value='" + first_name + "'/>");
@@ -352,15 +363,54 @@ $totalPrice += $item->courses->offer_price;
                             $form.append("<input type='hidden' name='email' value='" + email + "'/>");
                             $form.append("<input type='hidden' name='phone' value='" + phone + "'/>");
                             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                            $form.append('<input type="hidden" name="amount" value="{{ $totalPrice }}"/>');
-                            $form.append('<input type="hidden" name="instructorId" value="{{ $cart[0]->id }}"/>');
+                            $form.append('<input type="hidden" name="instructorId" value="{{ $cart[0]->id ?? "" }}"/>');
                             $form.get(0).submit(); // Submit the form with the token
                         }
                     });
                 }
             });
+
+
+            // Dispaly error message
+            function displayErrorMessage(fieldId, message) {
+                var errorMessageElement = document.getElementById(fieldId);
+                errorMessageElement.textContent = message;
+                errorMessageElement.style.display = 'block';
+            }
+
+            // Clear message
+            function clearErrorMessage(fieldId) {
+                var errorMessageElement = document.getElementById(fieldId);
+                errorMessageElement.textContent = '';
+                errorMessageElement.style.display = 'none';
+            }
         });
     </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $(".remove-item").click(function (e) {
+                e.preventDefault();
+                var itemId = $(this).data("item-id");
+
+                $.ajax({
+                    type: "post",
+                    url: "/cart/item/remove/" + itemId,
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        $(this).closest("a").remove();
+                    },
+                    error: function () {
+                        alert("Error removing the item from the cart.");
+                    }
+                });
+            });
+        });
+    </script>
+
 
 @endsection
 

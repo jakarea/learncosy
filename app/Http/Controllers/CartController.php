@@ -52,6 +52,16 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Course Removed from cart Successfully.');
     }
+
+
+    public function removeItemFromCart(Request $request){
+
+        $cart = Cart::where('id', $request->id)->first();
+
+        $cart->delete();
+
+        return redirect()->back()->with('success', 'Course Removed from cart Successfully.');
+    }
 }
 
 
