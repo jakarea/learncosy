@@ -72,7 +72,8 @@ class CertificateController extends Controller
 
             $certificate->save();
 
-            return redirect()->back()->with('success', 'Your certificate has been Updated successfully!');
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Your certificate has been Updated successfully');
+ 
 
         } else {
 
@@ -83,6 +84,7 @@ class CertificateController extends Controller
             $newCertificate->course_id = $request->input('course_id');
             $newCertificate->certificate_clr = $request->input('certificate_clr');
             $newCertificate->accent_clr = $request->input('accent_clr');
+
             $newCertificate->style = $request->input('certificate_style');
 
             if ($request->hasFile('logo')) { 
@@ -105,19 +107,18 @@ class CertificateController extends Controller
             
             $newCertificate->save();
 
-            return redirect()->back()->with('success', 'Your certificate has been SET successfully!');
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Your certificate has been SET successfully!'); 
         }
-
         
     }
 
     // custom certificate generate
     public function customCertificate(Request $request)
     {
-        $courseId = $request->input('c_course_id');
+       $courseId = $request->input('c_course_id');
 
-        if (!$courseId) {
-            return redirect()->back()->with('error','There is no course found for this Certificate');
+        if (!$courseId) { 
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate');
         }else{
             $course = Course::where('id', $courseId)->first();
         }    
@@ -134,8 +135,8 @@ class CertificateController extends Controller
 
             }elseif ($certStyle == 1) {
                 $certificate_path = 'certificates/generate/certificate3';
-            }else{
-                return redirect()->back()->with('error','There is no Style found for this Certificate');
+            }else{ 
+                return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate');
             } 
 
             // logo
@@ -208,12 +209,12 @@ class CertificateController extends Controller
 
             $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseCompletionDate' => $courseCompletionDate,'courseIssueDate' => $courseIssueDate, 'signature' => $signaturePath, 'logo' => $logoPath, 'fullName' => $fullName, 'certColor' => $certColor, 'accentColor' => $accentColor]);
         
-            return $pdf->download('custom-certificate.pdf');
+            return $pdf->download('Learncosy-custom-certificate.pdf');
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Certificate Generated Succesfully'); 
+            
 
-            return redirect()->back()->with('success','Certificate Generated Succesfully');
-
-        }else{
-            return redirect()->back()->with('error','There is no certificate found for this Course');
+        }else{  
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate'); 
         }
     }
 
