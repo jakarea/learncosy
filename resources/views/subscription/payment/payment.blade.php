@@ -54,7 +54,6 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-
                                             <input type="text" class="form-control" id="last_name" name="last_name"
                                                 placeholder="" value="{{ Auth::check() ? (isset(explode(' ', Auth::user()->name)[1]) ? explode(' ', Auth::user()->name)[1] : '') : '' }}">
                                             <label for="last_name">Last Name</label>
@@ -278,7 +277,6 @@
                     var fieldValue = $(field).val();
                     var label = $(field).data('label');
 
-
                     var fieldValue = $(field).val();
                     if (!fieldValue) {
                         errorField.text('This field is required');
@@ -318,7 +316,6 @@
                         exp_month: $('.card-expiry-month').val(),
                         exp_year: $('.card-expiry-year').val()
                     };
-
 
                     // Use Stripe.js to create a token
                     Stripe.createToken(cardData, function(status, response) {
