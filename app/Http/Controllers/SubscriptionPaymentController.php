@@ -23,17 +23,25 @@ class SubscriptionPaymentController extends Controller
 
         $package = SubscriptionPackage::findorfail($request->packageId);
 
+        if( $package->sales_price ){
+            $discountAmount = $package->regular_price - $package->sales_price;
+            $total = $package->regular_price - $discountAmount;
+        }else{
+            $total = $package->regular_price;
+        }
+
         Stripe::setApiKey(config('services.stripe.secret'));
         try {
+
             $charge = Charge::create([
-                'amount'      => $package->sales_price ? $package->sales_price * 100 : $package->regular_price  * 100, // Amount in cents
+                'amount'      => $total * 100, // Amount in cents
                 'currency' => 'eur',
                 'source'      => $request->stripeToken,
-                'description' => $package->name,
+                'description' => "Package Name: ".$package->name,
             ]);
 
             if( $charge->status == "succeeded"){
-                $this->create($package->id);
+                $this->create($package->id, $charge);
                 return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
             }
 
@@ -42,7 +50,7 @@ class SubscriptionPaymentController extends Controller
         }
     }
 
-    public function create($id){
+    public function create($id, $charge){
 
         $package = SubscriptionPackage::findorfail($id);
 
@@ -54,23 +62,19 @@ class SubscriptionPaymentController extends Controller
             $ends_at = date('Y-m-d H:i:s', strtotime('+365 days'));
         }
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $paymentIntent = PaymentIntent::create([
-            'amount' => $package->sales_price ? $package->sales_price * 100 : $package->regular_price  * 100,
-            'currency' => 'eur',
-            'description' => 'Payment for XYZ service',
-            'confirmation_method' => 'automatic',
-            'payment_method_types' => ['card'],
-            'capture_method' => 'automatic',
-        ]);
+        if( $package->sales_price ){
+            $discountAmount = $package->regular_price - $package->sales_price;
+            $total = $package->regular_price - $discountAmount;
+        }else{
+            $total = $package->regular_price;
+        }
 
         $subscription = Subscription::create([
             'subscription_packages_id' => $id,
             'instructor_id' => auth()->user()->id,
             'name' => $package->name,
-            'amount' => $package->sales_price ? $package->sales_price : $package->regular_price,
-            'stripe_plan' => $paymentIntent->id,
+            'amount' => $total,
+            'stripe_plan' => $charge->id,
             'quantity' => 1,
             'start_at' => date('Y-m-d H:i:s'),
             'end_at' => $ends_at,
