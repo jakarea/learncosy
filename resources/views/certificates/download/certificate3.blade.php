@@ -95,25 +95,19 @@
             font-style: normal;
             line-height: 100%;
             font-weight: 400;
-        }
-
-        .bottom-area { 
-            margin-top: 1.25rem;
-            position: absolute;
-            left: 6rem;
-            bottom: 10.5rem;
-            width: 80%; 
-        }
+        } 
         .course-date{ 
-            text-align: center;
-            float: right;
-            width: 30%; 
-            margin-top: 2rem;
-            margin-right: 1rem;
+            position: absolute;
+            right: 4rem;
+            bottom: 11rem; 
+            text-align: center; 
+            width: 30%;
         } 
         .signature {
-            text-align: center;
-            float: left;
+            position: absolute;
+            left: 4rem;
+            bottom: 11rem; 
+            text-align: center; 
             width: 30%; 
         }
         .course-date p{
@@ -178,11 +172,7 @@
             right: 2rem;
             top: 6rem;
             z-index: 999;
-        }
-
-        .clr{
-            clear: both;
-        }
+        } 
        
         @page { size: 980px 650px }
 
@@ -218,25 +208,22 @@
                     <p>has successfully completed the {{$course->title}} Course on {{ date('d M Y', strtotime($courseDate)) }} through
                         Learncosy.</p>
                 </div>
+ 
+                <div class="signature">
+                    @if (!empty($signature))
+                    <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
+                    @else 
+                        <img src="{{ public_path('latest/assets/images/certificate/three/signature.png') }}" alt="Logo" class="img-fluid">
+                    @endif
 
-                <div class="bottom-area">
-
-                    <div class="signature">
-                        @if (!empty($signature))
-                        <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
-                        @else 
-                            <img src="{{ public_path('latest/assets/images/certificate/three/signature.png') }}" alt="Logo" class="img-fluid">
-                        @endif
-
-                        <p>INSTRUCTOR SIGNATURE</p>
-                    </div>
-
-                    <div class="course-date">
-                        <h5>{{ date('d M Y') }}</h5>
-                        <p>DATE</p>
-                    </div>
-                    <div class="clr"></div>
+                    <p>INSTRUCTOR SIGNATURE</p>
                 </div>
+
+                <div class="course-date">
+                    <h5>{{ date('d M Y') }}</h5>
+                    <p>DATE</p>
+                </div>
+
             </div>
 
         </div>

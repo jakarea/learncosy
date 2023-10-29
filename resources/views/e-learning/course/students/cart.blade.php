@@ -139,7 +139,7 @@ $totalPrice += $item->courses->offer_price;
                                                 <option value="09">September</option>
                                                 <option value="10">October</option>
                                                 <option value="11">November</option>
-                                                <option selected value="12">December</option>
+                                                <option value="12">December</option>
                                             </select>
                                             <span class="error-message" id="cexpiry_month_error"></span>
                                         </div>

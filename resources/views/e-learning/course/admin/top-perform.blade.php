@@ -101,7 +101,7 @@ Top Perform Courses
                     <div class="course-txt-box d-flex justify-content-between align-items-center">
                         <div>
                             @if ($course->offer_price)
-                            <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                            <h5>€{{ $course->offer_price }} <span>€{{ $course->price }}</span></h5>
                             @else
                             <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
                             @endif
@@ -115,7 +115,7 @@ Top Perform Courses
                                 @else
                                     Sold {{ $course->sale_count }} times
                                 @endif
-                            </span>                            
+                            </span>
                         </div>
                     </div>
                 </div>

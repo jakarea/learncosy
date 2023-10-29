@@ -479,7 +479,7 @@ class StudentHomeController extends Controller
                 if (!empty($certStyle->signature)) {
                    $signature = $certStyle->signature;
                 }else{
-                    $signature = 'latest/assets/images/certificate/signature.png';
+                    $signature = 'latest/assets/images/certificate/one/signature.png';
                 }
 
                 return view($certificate_show_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);

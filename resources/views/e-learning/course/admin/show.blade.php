@@ -56,7 +56,7 @@ $i = 0;
                     </div>
                     @if(!empty($group_files))
                     <div class="download-files-box">
-                        <h4>Download Files </h4> 
+                        <h4>Download Files </h4>
                         <div class="files">
                             @foreach($group_files as $fileExtension)
                                 <a href="{{ route('admin.file.download', [$course->id,$fileExtension]) }}">
@@ -179,7 +179,7 @@ $i = 0;
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
                                     @if ($relatedCourse->offer_price)
-                                    <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
+                                    <h5>€{{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
                                     <h5>Free</h5>
                                     @else

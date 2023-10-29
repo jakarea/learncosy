@@ -158,7 +158,7 @@
                                                             Add</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-12"> 
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror"
@@ -366,12 +366,15 @@
                                                                         <div class="certificate-name">
                                                                             <h6>Course/ Certificate Name </h6>
 
-                                                                            <div class="form-group">
-                                                                                <select name="course_id" class="form-control">
+                                                                            <div class="form-group form-error">
+                                                                                <select name="course_id" class="form-control  @error('course_id') is-invalid @enderror">
+                                                                                    <option value="">Select Below</option>
                                                                                     @foreach ($courses as $course)
                                                                                         <option value="{{ $course->id }}">{{ $course->title }}</option>
                                                                                     @endforeach  
                                                                                 </select>
+                                                                                <span class="invalid-feedback">@error('course_id'){{ $message }}
+                                                                                    @enderror</span>
                                                                             </div> 
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color.svg')}}"

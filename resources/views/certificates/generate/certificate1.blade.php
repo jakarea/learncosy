@@ -156,24 +156,21 @@
             font-weight: 400;
         }
 
-        .bottom-area { 
-            margin-top: 1.25rem;
-            position: absolute;
-            left: 5rem;
-            bottom: 7.8rem;
-            width: 70%;
-        }
         .course-date{ 
-            text-align: center;
-            float: right;
-            width: 30%; 
-            margin-top: 2rem;
+            position: absolute;
+            right: 11rem;
+            bottom: 7.5rem; 
+            text-align: center; 
+            width: 30%;
         } 
         .signature {
-            text-align: center;
-            float: left;
+            position: absolute;
+            left: 3rem;
+            bottom: 7.5rem; 
+            text-align: center; 
             width: 30%; 
         }
+
         .course-date p{
             color: var(--neutral-color-neutral-70, #2F3A4C);
             font-size: 14px;
@@ -280,24 +277,21 @@
                         Learncosy.</p>
                 </div>
 
-                <div class="bottom-area">
+                <div class="signature">
+                    @if (!empty($signature))
+                    <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
+                    @else 
+                        <img src="{{ public_path('latest/assets/images/certificate/one/signature.png') }}" alt="Logo" class="img-fluid">
+                    @endif 
 
-                    <div class="signature">
-                        @if (!empty($signature))
-                        <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
-                        @else 
-                            <img src="{{ public_path('latest/assets/images/certificate/one/signature.png') }}" alt="Logo" class="img-fluid">
-                        @endif 
-
-                        <p>INSTRUCTOR SIGNATURE</p>
-                    </div>
-
-                    <div class="course-date">
-                        <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
-                        <p>DATE</p>
-                    </div>
-                    <div class="clr"></div>
+                    <p>INSTRUCTOR SIGNATURE</p>
                 </div>
+
+                <div class="course-date">
+                    <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
+                    <p>DATE</p>
+                </div>
+                
             </div>
 
         </div>
