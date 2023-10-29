@@ -35,7 +35,7 @@ class CheckSubscription
                 return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
             }elseif (!$subscription) {
                 // Subscription not found, show alert or redirect
-                return redirect('instructor/subscription')->with('error', 'You are not subscribed user. Please subscribe to access this feature.');
+                return redirect('instructor/profile/step-2/complete')->with('success', 'Verification Successfully Done.'); 
             }elseif (!$user->subdomain) {
                 return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your subdomain to access this feature.');
             }elseif (!$user->vimeo_data && !$user->stripe_secret_key && !$user->stripe_public_key) {
