@@ -23,8 +23,12 @@
 @php
 $module_settings = App\Models\InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
 if ($module_settings) {
-$module_settings->value = json_decode($module_settings->value);
+    $module_settings->value = json_decode($module_settings->value);
+}else{
+    $module_settings = new App\Models\InstructorModuleSetting;
+    $module_settings->value = json_decode('{"primary_color":"#f4f8fc","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}');
 }
+
 @endphp
 @endif
 <!-- pricing plan page start -->

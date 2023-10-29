@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/instructor/dashboard') }}">
             @if (modulesetting('logo'))
-                <img src="{{ asset(modulesetting('logo')) }}" alt="Logo 2" class="img-fluid">
+                <img src="{{ asset(modulesetting('logo')) }}" alt="Logo 23" class="img-fluid">
             @else
                 <img src="{{ asset('latest/assets/images/black-logo.svg') }}" alt="Logo" class="img-fluid light-ele">
                 <img src="{{ asset('latest/assets/images/dark-logo.svg') }}" alt="Logo" class="img-fluid dark-ele">

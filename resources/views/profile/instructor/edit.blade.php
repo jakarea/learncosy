@@ -158,7 +158,7 @@
                                                             Add</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-12"> 
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror"
