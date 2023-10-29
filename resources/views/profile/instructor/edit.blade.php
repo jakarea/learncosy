@@ -499,7 +499,7 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
-                                                                            <input type="hidden" name="certificate_style" id="certificateStyle" value="">
+                                                                            <input type="hidden" name="certificate_style" id="certificateStyle" value="1">
 
                                                                         </div>
                                                                     </div>
@@ -814,7 +814,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" name="c_certificate_style" id="cCertificateStyle" value="">
+                                                                            <input type="hidden" name="c_certificate_style" id="cCertificateStyle" value="1">
 
                                                                         </div>
                                                                     </div>

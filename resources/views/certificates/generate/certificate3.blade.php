@@ -4,7 +4,6 @@
 <head>
     <title>Certificate of Completion</title>
 
-
     <style>
         @font-face {
             font-family: Poppins;
@@ -30,7 +29,7 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif; 
+            font-family: Arial, Helvetica, sans-serif;
             font-family: Rakkas;
         }
 
@@ -40,142 +39,205 @@
         }
 
         .container {
-            max-width: 832px;
-            height: 6in;
+            width: 845px;
+            height: 590px;
             margin: 0 auto;
+            position: relative; 
+        } 
+
+        .main-bg{
+            width: 845px;
+            height: 590px;
+            position: absolute; 
         }
 
-        .certificate-box {
-            width: 832px;
-            height: 6in;
-            position: relative;
-        }
-
-        .certificate-box img.main-certificate {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .name-box {
+        .certficate-content {
+            width: 845px; 
             position: absolute;
-            left: 0%;
-            top: 43%;
+            left: 0;
+            top: 24%;
             z-index: 9999;
-            width: 100%;
+            padding: 2.5rem;
             text-align: center;
+            padding-top: 6rem; 
+        } 
+
+        .certficate-content h6 {
+            color: var(--neutral-color-neutral-70, #2F3A4C);
+            font-size: 1.125rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-top: 1rem;
         }
 
         .name-box h1 {
             color: #4F8AC0;
-            text-align: center;
             font-size: 2rem;
             font-style: normal;
+            font-weight: 400;
             line-height: normal; 
-            font-weight: 400;
-            text-transform: uppercase;
-            font-family: Rakkas;
+            text-transform: uppercase;  
+        } 
+
+        .details {
+            width: 70%;
+            margin: 0 auto;
+            text-align: center; 
+            margin-top: 16px;
+            min-height: 6rem
         }
 
-        .course-name {
-            position: absolute;
-            left: 54%;
-            top: 54%;
-            z-index: 9999; 
-        }
-
-        .course-name h4 {
+        .details p {
             color: var(--neutral-color-neutral-70, #2F3A4C);
-            font-size: 1rem;
+            font-size: 1.125rem;
             font-style: normal;
-            line-height: 110%; 
-            font-family: Rakkas;
+            line-height: 100%;
             font-weight: 400;
-            text-align: left;
         }
 
-        .course-date {
+        .bottom-area { 
+            margin-top: 1.25rem;
             position: absolute;
-            left: 38.5%;
-            top: 58%;
-            z-index: 9999; 
+            left: 6rem;
+            bottom: 10.5rem;
+            width: 80%; 
         }
-
-        .course-date h4 {
-            color: var(--neutral-color-neutral-70, #2F3A4C);
-            font-size: 1rem;
-            font-style: normal;
-            line-height: 120%; 
-            font-weight: 400;
-            font-family: Rakkas;
-        }
-
-        .signature {
-            position: absolute;
-            left: 17%;
-            bottom: 22%;
-            z-index: 9999;
-        }
-
-        .signature img {
-            max-width: 6.375rem;
-            mix-blend-mode: darken;
-        }
-
-        .date-bottom {
-            position: absolute;
-            right: 18%;
-            bottom: 22%;
-            z-index: 9999;
-        }
-
-        .date-bottom h6 {
-            color: var(--neutral-color-neutral-70, #2F3A4C);
+        .course-date{ 
             text-align: center;
+            float: right;
+            width: 30%; 
+            margin-top: 2rem;
+            margin-right: 1rem;
+        } 
+        .signature {
+            text-align: center;
+            float: left;
+            width: 30%; 
+        }
+        .course-date p{
+            color: var(--neutral-color-neutral-70, #2F3A4C);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%;
             font-family: Poppins;
+            display: inline-block;
+            border-top: 1px solid #314E85; 
+            padding-left: 1rem;
+            padding-right: 1rem;
+            min-width: 10rem;
+        }
+        .signature p {
+            color: var(--neutral-color-neutral-70, #2F3A4C);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%;
+            font-family: Poppins;
+            display: inline-block;
+            border-top: 1px solid #314E85; 
+            padding-left: 1rem;
+            padding-right: 1rem;
+            min-width: 12.25rem;
+        }
+
+        .course-date h5{
+            color: var(--neutral-color-neutral-70, #2F3A4C);
             font-size: 1rem;
             font-style: normal;
             font-weight: 500;
-            line-height: normal;
-            letter-spacing: 0.02rem;
+            line-height: 150%;
+            font-family: Poppins;
+            padding-bottom: 0.5rem;
         }
 
-        @page {
-            size: 8.7in 6in;
+        .signature img {
+            mix-blend-mode: darken;
+            max-width: 6.375rem;
+            max-height: 4.875rem;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
         }
+
+        .logo-area{
+            position: absolute;
+            left: 6rem;
+            top: 6rem;
+            z-index: 999;
+        }
+        .logo-area img{
+            max-width: 9rem;
+            max-height: 2.6875rem; 
+            object-fit: contain;
+        }
+        .asset-area{
+            position: absolute;
+            right: 2rem;
+            top: 6rem;
+            z-index: 999;
+        }
+
+        .clr{
+            clear: both;
+        }
+       
+        @page { size: 980px 650px }
+
     </style>
 </head>
-
-<body>
-
-    <!-- main are -->
+<body> 
 
     <div class="main-wrapper">
         <div class="container">
-            <div class="certificate-box">
-                <img src="{{ public_path('latest/assets/images/certificate/three.png') }}" alt="Certificate-bg"
+            <div class="main-bg">
+                <img src="{{ public_path('latest/assets/images/certificate/three/three.png') }}" alt="Certificate-bg"
                     class="img-fluid main-certificate">
+            </div>
+            <div class="logo-area">
+                @if (!empty($logo))
+                    <img src="{{ public_path($logo) }}" alt="Logo" class="img-fluid">   
+                @else 
+                    <img src="{{ public_path('latest/assets/images/certificate/three/logo.png') }}" alt="Logo" class="img-fluid">
+                @endif 
+            </div>
+            <div class="asset-area">
+                <img src="{{ public_path('latest/assets/images/certificate/three/checkmark.png') }}" alt="CHK" class="img-fluid">
+            </div>
+            <div class="certficate-content">
+                
+                <h6>This is certify that</h6> 
 
                 <div class="name-box">
                     <h1>{{ $fullName }}</h1>
                 </div>
-                <div class="course-name">
-                    <h4>{{$course->title}} </h4>
-                </div>
-                <div class="course-date">
-                    <h4>{{ date('d M Y', strtotime($courseCompletionDate)) }}
-                    </h4>
+
+                <div class="details">
+                    <p>has successfully completed the {{$course->title}} Course on {{ date('d M Y', strtotime($courseCompletionDate)) }} through
+                        Learncosy.</p>
                 </div>
 
-                <div class="signature">
-                    <img src="{{ public_path($signature) }}" alt="Signature"
-                        class="img-fluid">
-                </div>
+                <div class="bottom-area">
 
-                <div class="date-bottom">
-                    <h6>{{ date('d M Y', strtotime($courseIssueDate)) }}</h6>
+                    <div class="signature">
+                        @if (!empty($signature))
+                        <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
+                        @else 
+                            <img src="{{ public_path('latest/assets/images/certificate/three/signature.png') }}" alt="Logo" class="img-fluid">
+                        @endif
+
+                        <p>INSTRUCTOR SIGNATURE</p>
+                    </div>
+
+                    <div class="course-date">
+                        <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
+                        <p>DATE</p>
+                    </div>
+                    <div class="clr"></div>
                 </div>
             </div>
+
         </div>
     </div>
 
