@@ -2,35 +2,55 @@
 
 namespace App\Http\Controllers\Student;
 use Auth;
+use File;
+use ZipArchive;
+use Carbon\Carbon;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\course_like;
 use App\Models\Module;
 use App\Models\Checkout;
-use Carbon\Carbon;
-use App\Models\Cart;
-use App\Models\Certificate;
 use App\Models\CourseLog;
+use Carbon\CarbonInterval;
+use App\Models\Certificate;
+use App\Models\course_like;
 use App\Models\BundleCourse;
 use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
-use Carbon\CarbonInterval;
+use RecursiveIteratorIterator;
+// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use RecursiveDirectoryIterator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
-// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
-use File;
-use ZipArchive;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
+
 class StudentHomeController extends Controller
 {
     // dashboard
     public function dashboard(){
+
+        $userIdentifier = Cookie::get('userIdentifier');
+
+        // dd( $userIdentifier );
+
+        Cart::where('user_identifier', $userIdentifier)
+        ->update(['user_id' => Auth::id()]);
+
+
+        // foreach ($carts as $cart) {
+        //     $cart->user_id = Auth::id();
+        //     $cart->save();
+        // }
+
+
+
+
+
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
         $cartCount = Cart::where('user_id', auth()->id())->count();
         $likeCourses = course_like::where('user_id', Auth::user()->id)->with('course')->get();
@@ -409,7 +429,7 @@ class StudentHomeController extends Controller
             if (!$courseDate) {
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
-             
+
            $certStyle = Certificate::where('instructor_id',$course->user_id)->where('course_id',$course->id)->first();
 
 
@@ -427,11 +447,11 @@ class StudentHomeController extends Controller
                     return redirect()->back()->with('error','There is no Style found for this Course');
                 }
 
-                $signature = $certStyle->signature; 
+                $signature = $certStyle->signature;
                 $logo = $certStyle->logo;
 
                 $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature, 'logo' => $logo]);
-            
+
 
                 return $pdf->download('certificate.pdf');
             }else{
