@@ -53,7 +53,7 @@
         }
 
         .certficate-content {
-            width: 845px;
+            width: 65%;
             height: 590px;
             position: absolute;
             left: 0;
@@ -61,8 +61,8 @@
             z-index: 9999;
             padding: 2.5rem;
             text-align: center;
-            padding-top: 3rem;
-            margin-left: -2rem;
+            padding-top: 3rem; 
+            text-align: right;
         }
 
         .certficate-content h2 {
@@ -75,18 +75,13 @@
         }
 
         .certficate-content h5.badge {
-            color: #FFF;
-            font-size: 1rem;
+            color: #1E7878;
+            font-size: 1.5rem;
             font-style: normal;
             font-weight: 500;
             line-height: normal;
             letter-spacing: 0.05rem;
-            font-family: Poppins; 
-            background-repeat: no-repeat; 
-            background-position: center center;
-            padding: 0px 3px;
-            padding-bottom: 6px;
-            background-image: url({{ public_path('latest/assets/images/certificate/one/curved-bg.png') }});
+            font-family: Poppins;  
         }
 
         .certficate-content h6 {
@@ -95,7 +90,7 @@
             font-style: normal;
             font-weight: 400;
             line-height: normal;
-            margin-top: 1rem;
+            margin-top: 2rem;
         }
 
         .name-box h1 {
@@ -105,48 +100,15 @@
             font-weight: 400;
             line-height: normal;
             letter-spacing: 0.29rem;
-            text-transform: uppercase; 
-            display: inline-block;
-            position: relative;
-            border-bottom: 1px solid #878787; 
-            padding-bottom: 0.25rem;
-        }
+            text-transform: uppercase;   
+        } 
 
-        .name-box h1:before {
-            position: absolute;
-            content: '';
-            left: -2rem;
-            top: 2rem;
-            width: 1rem;
-            height: 1rem;
-            z-index: 999;
-            background-repeat: no-repeat;
-            background-position: center left;
-            background-size: contain; 
-            background-image: url({{ public_path('latest/assets/images/certificate/one/left-arrow.png') }});  
-        }
-
-        .name-box h1:after {
-            position: absolute;
-            content: '';
-            right: -2rem;
-            top: 2rem;
-            width: 1rem;
-            height: 1rem;
-            z-index: 999;
-            background-repeat: no-repeat;
-            background-position: center right;
-            background-size: contain; 
-            background-image: url({{ public_path('latest/assets/images/certificate/one/right-arrow.png') }}); 
-            
-        }
-
-        .details {
-            width: 70%;
-            margin: 0 auto;
-            text-align: center; 
+        .details { 
+            text-align: right; 
             margin-top: 16px;
-            min-height: 6rem
+            min-height: 6rem;
+            width: 90%;
+            margin-left: auto;
         }
 
         .details p {
@@ -161,8 +123,8 @@
             margin-top: 1.25rem;
             position: absolute;
             left: 5rem;
-            bottom: 7.8rem;
-            width: 70%;
+            bottom: 9rem;
+            width: 100%; 
         }
         .course-date{ 
             text-align: center;
