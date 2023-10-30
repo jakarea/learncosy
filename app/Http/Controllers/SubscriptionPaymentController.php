@@ -54,7 +54,7 @@ class SubscriptionPaymentController extends Controller
                     'instructor_id' => auth()->user()->id,
                     'name' => $package->name,
                     'amount' => $total,
-                    'stripe_plan' => 5465454,
+                    'stripe_plan' => $charge->id,
                     'quantity' => 1,
                     'start_at' => date('Y-m-d H:i:s'),
                     'end_at' => $ends_at,
