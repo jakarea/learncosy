@@ -27,7 +27,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true" data-param="">My Profile</button>
+                                    aria-selected="true" data-param="profile">My Profile</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-experience-tab" data-bs-toggle="pill"
@@ -1288,10 +1288,16 @@
         const tabToOpen = urlParams.get('tab');
         const tabPanes = document.querySelectorAll('.tab-con');
         const tabLinks = document.querySelectorAll('.tab-link');
+
+        const homesTabLink = document.getElementById('pills-home-tab');
+        const homesTabContent = document.getElementById('pills-home');
+
         const experienceTabLink = document.getElementById('pills-experience-tab');
         const experienceTabContent = document.getElementById('pills-experience');
+
         const certificateTabLink = document.getElementById('pills-certificate-tab');
         const certificateTabContent = document.getElementById('pills-certificate');
+
         const passwordTabLink = document.getElementById('pills-password-tab');
         const passwordTabContent = document.getElementById('pills-password');
 
@@ -1329,6 +1335,13 @@
             tabLinks.forEach(tab => tab.classList.remove('active'));
             passwordTabLink.classList.add('active');
             passwordTabContent.classList.add('show', 'active');
+        }
+        else if (tabToOpen == 'profile') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            
+            homesTabLink.classList.add('active');
+            homesTabContent.classList.add('show', 'active');
         }
  
     });
