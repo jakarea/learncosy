@@ -85,6 +85,10 @@ class RegisterController extends Controller
         if ($data['user_role'] == 'student') {
             $email_verified_at = now()->format('Y-m-d H:i:s');
         }
+
+        if( $data['user_role'] == 'instructor'){
+            $subdomain = null;
+        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -92,7 +96,7 @@ class RegisterController extends Controller
             'company_name' => isset( $data['company_name']) ? $data['company_name'] : "",
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
-            'subdomain' => $subdomain
+            'subdomain' =>  $subdomain
         ]);
         return $user;
     }

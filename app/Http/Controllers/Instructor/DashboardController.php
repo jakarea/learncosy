@@ -18,6 +18,12 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::user()->id;
+
+        $user = User::where('id', $userId)->first();
+        $user->session_id = null;
+        $user->save();
+
+
         $messages = Message::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
         $analytics_title = 'Yearly Analytics';
         $compear = '1 year';
@@ -62,7 +68,7 @@ class DashboardController extends Controller
                                 ->whereBetween('created_at', [$firstDayOfPreviousMonth, $lastDayOfCurrentMonth])
                                 ->orderBy('id', 'desc')->get();
                 } elseif ($duration === 'one_year') {
-                   
+
                     $firstDayOfCurrentMonth =  Carbon::now()->startOfYear()->format('Y-m-d H:i:s');
                     $lastDayOfCurrentMonth =  Carbon::now()->endOfYear()->format('Y-m-d H:i:s');
                     $firstDayOfPreviousMonth = Carbon::now()->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -106,7 +112,7 @@ class DashboardController extends Controller
                     ->whereBetween('created_at', [$previousMonthsAgoStartDate, $threeMonthsAgoStartDate])
                     ->get();
             } elseif ($duration === 'one_year') {
-                
+
                 $firstdayOfCurrentYear = $currentDate->startOfYear()->format('Y-m-d H:i:s');
                 $lastDayOfCurrentYear = $currentDate->endOfYear()->format('Y-m-d H:i:s');
                 $firstDayOfPreviousYear = $currentDate->subYear()->startOfYear()->format('Y-m-d H:i:s');
@@ -288,7 +294,7 @@ class DashboardController extends Controller
                 }
             }
         }
- 
+
 
         return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear'));
 

@@ -87,6 +87,8 @@ Route::get('/auth-login', function () {
 
         if( $user){
             Auth::login( $user);
+            $user->session_id = null;
+            $user->save();
             return redirect()->intended($user->user_role.'/dashboard');
         }
 

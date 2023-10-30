@@ -41,7 +41,7 @@ class SubscriptionPaymentController extends Controller
             ]);
 
             if( $charge->status == "succeeded"){
-                $this->create($package->id, $charge);
+                $this->create($package->id);
                 return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
             }
 
@@ -50,7 +50,7 @@ class SubscriptionPaymentController extends Controller
         }
     }
 
-    public function create($id, $charge){
+    public function create($id){
 
         $package = SubscriptionPackage::findorfail($id);
 

@@ -32,6 +32,13 @@ class AdminHomeController extends Controller
     // dashboard
     public function dashboard(Request $request)
     {
+        $userId = Auth::user()->id;
+
+        $user = User::where('id', $userId)->first();
+        $user->session_id = null;
+        $user->save();
+
+
         $categories = [];
         $students = [];
         $users = 0;
@@ -282,8 +289,8 @@ class AdminHomeController extends Controller
                 $courses->where('courses.created_at', '>=', $today->subYear(1));
             }
         }
-        
-        $courses = $courses->get();    
+
+        $courses = $courses->get();
 
         return view(
             'e-learning/course/admin/dashboard',
@@ -356,9 +363,9 @@ class AdminHomeController extends Controller
         $monthlySums = array_fill(0, $curentMonthNumber, 0);
 
         // Iterate through the data array
-        foreach ($data as $item) { 
+        foreach ($data as $item) {
             $createdAt = Carbon::parse($item['created_at']);
-            $month = intval($createdAt->format('m')); 
+            $month = intval($createdAt->format('m'));
             $monthlySums[$month - 1] += $item['amount'];
         }
 
