@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
-use Cookie;
+
+use Illuminate\Support\Facades\Cookie;
+
 class CartController extends Controller
 {
     public function index()
@@ -29,7 +31,8 @@ class CartController extends Controller
         // ->get(['carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key']);
 
         $userId = auth()->id();
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        $userIdentifier = Cookie::get('userIdentifier');
+
 
         $cart = Cart::where(function ($query) use ($userId, $userIdentifier) {
             $query->where('user_id', $userId);
@@ -45,7 +48,8 @@ class CartController extends Controller
     public function add(Course $course)
     {
 
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        $userIdentifier = session()->getId();
+        $userIdentifierData = Cookie::make('userIdentifier', $userIdentifier, 60 * 24 * 30); // Cookie expires in 30 days
         $instructor_id = $course->user_id;
         $instructor = User::where('id', $instructor_id)->firstOrFail();
 
@@ -62,7 +66,7 @@ class CartController extends Controller
         $cart->price = $course->price;
         $cart->quantity = 1;
         $cart->instructor_id = $instructor->id;
-        $cart->user_identifier = $userIdentifier;
+        $cart->user_identifier = $userIdentifierData;
         $cart->save();
         return redirect()->route('students.catalog.courses')->with('success', 'Course added to cart.');
     }
@@ -71,7 +75,9 @@ class CartController extends Controller
 
     public function addToCartSkippLogin(Course $course)
     {
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        $userIdentifier = session()->getId();
+        $userIdentifierData = Cookie::make('userIdentifier', $userIdentifier, 60 * 24 * 30); // Cookie expires in 30 days
+
         $instructor_id = $course->user_id;
         $instructor = User::where('id', $instructor_id)->firstOrFail();
 
@@ -89,7 +95,7 @@ class CartController extends Controller
         $cart->price = $course->price;
         $cart->quantity = 1;
         $cart->instructor_id = $instructor->id;
-        $cart->user_identifier = $userIdentifier;
+        $cart->user_identifier = $userIdentifierData;
         $cart->save();
         return back()->with('success', 'Course added to cart.');
     }
@@ -97,7 +103,8 @@ class CartController extends Controller
     public function addToCartBundlekippLogin(BundleCourse $bundlecourse)
     {
 
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        $userIdentifier = session()->getId();
+        $userIdentifierData = Cookie::make('userIdentifier', $userIdentifier, 60 * 24 * 30); // Cookie expires in 30 days
 
         $instructor_id = $bundlecourse->instructor_id;
         $instructor = User::where('id', $instructor_id)->firstOrFail();
@@ -116,7 +123,7 @@ class CartController extends Controller
         $cart->bundleprice = $bundlecourse->regular_price;
         $cart->quantity = 1;
         $cart->instructor_id = $instructor->id;
-        $cart->user_identifier = $userIdentifier;
+        $cart->user_identifier = $userIdentifierData;
         $cart->save();
         return back()->with('success', 'Course added to cart.');
     }

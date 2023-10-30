@@ -41,7 +41,7 @@
     <div class="main-page-wrapper">
 
         {{-- header start --}}
-        @if (auth::user()->user_role == 'instructor')
+        @if (Auth::user()->user_role == 'instructor')
             @include('partials/latest/instructor/header')
         @else
             @include('partials/latest/students/header')

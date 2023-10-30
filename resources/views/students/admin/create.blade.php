@@ -69,6 +69,24 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
+                                <div class="form-group form-error">
+                                    <label for="email">Instructor <sup class="text-danger">*</sup>
+                                    </label>
+
+                                    <select class="form-control" name="instructor" id="">
+                                        <option value="">Select Instructor</option>
+                                        @if ( count( $instructors) > 0)
+                                            @foreach ( $instructors as $instructor)
+                                                <option {{ $instructor->subdomain == old( 'instructor') ? 'selected' : '' }} value="{{ $instructor->subdomain }}"> {{ $instructor->name }} </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+
+                                    <span class="invalid-feedback">@error('instructor'){{ $message }}
+                                        @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
                                 <div class="custom-hr">
                                     <hr>
                                     <h5>Other Information </h5>
@@ -216,16 +234,16 @@
 <script>
     // JavaScript
     const urlBttn = document.querySelector('#url_increment');
-    let extraFields = document.querySelector('.url-extra-field'); 
+    let extraFields = document.querySelector('.url-extra-field');
 
-    const createField = () => { 
+    const createField = () => {
     let div = document.createElement("div");
-    let node = document.createElement("input"); 
+    let node = document.createElement("input");
     node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-    node.setAttribute("multiple", ""); 
-    node.setAttribute("type", "url"); 
-    node.setAttribute("placeholder", "Enter Social Link"); 
-    node.setAttribute("name", "social_links[]");    
+    node.setAttribute("multiple", "");
+    node.setAttribute("type", "url");
+    node.setAttribute("placeholder", "Enter Social Link");
+    node.setAttribute("name", "social_links[]");
     let link = document.createElement("a");
     link.innerHTML = "<i class='fas fa-minus'></i>";
     link.addEventListener("click", () => removeField(div));
