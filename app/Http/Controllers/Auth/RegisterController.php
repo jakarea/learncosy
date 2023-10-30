@@ -72,18 +72,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        $serverName = $_SERVER['SERVER_NAME'];
+        $subdomain = explode('.', $serverName);
+
+        if (count($subdomain) > 1) {
+            $subdomain = $subdomain[0];
+        }
+
         // return $data;
         $email_verified_at = null;
         if ($data['user_role'] == 'student') {
             $email_verified_at = now()->format('Y-m-d H:i:s');
         }
+
+        if( $data['user_role'] == 'instructor'){
+            $subdomain = null;
+        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'email_verified_at' => $email_verified_at,
-            'company_name' => $data['company_name'],
+            'company_name' => isset( $data['company_name']) ? $data['company_name'] : "",
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
+            'subdomain' =>  $subdomain
         ]);
         return $user;
     }

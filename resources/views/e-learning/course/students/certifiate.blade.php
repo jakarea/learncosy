@@ -23,6 +23,13 @@
         </div>
         @if (count($certificateCourses) > 0 )  
         <div class="row">
+            <div class="col-12">
+                <a href="{{url('students/certificate-download/laboriosam-quisquam-libero-nam-odio')}}" class="btn btn-primary">
+                    Download
+                </a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12"> 
                 <div class="subscription-table-wrap activity-table">
                     <table>

@@ -11,6 +11,7 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Cookie;
 
 class HomepageController extends Controller
 {
@@ -91,10 +92,16 @@ class HomepageController extends Controller
 
              // return $courses_review;
 
-            $userIdentifier = $_COOKIE['userIdentifier'];
+
+            $userIdentifier = isset( $_COOKIE['userIdentifier']) ? $_COOKIE['userIdentifier'] : null;
+
             $cartCourses = Cart::where(function ($query) use ($userIdentifier) {
-                $query->where('user_id', auth()->id());
-                $query->orWhere('user_identifier', $userIdentifier);
+                if( auth()->id() ){
+                    $query->where('user_id', auth()->id());
+                }else{
+                    $query->Where('user_identifier', $userIdentifier);
+                }
+
             })->get();
 
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
@@ -212,5 +219,7 @@ class HomepageController extends Controller
 
         return redirect('/login')->with('error', 'Failed to Login as Instructor');
     }
+
+
 
 }

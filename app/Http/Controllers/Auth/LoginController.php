@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -49,17 +50,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $userIdentifier = isset( $_COOKIE['userIdentifier']) ?? NULL;
 
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
         $user = User::where('email', $request->email)->first();
 
-        $carts = Cart::where('user_identifier', $userIdentifier)->get();
-
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
+                $user->session_id = null;
+                $user->save();
                 // Auth::login($user);
                 // check if already logged in then logout
                 Auth::login($user);
@@ -68,18 +68,21 @@ class LoginController extends Controller
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
                     if ($user->subdomain && !$request->is('//app.',$domain)) {
-                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/instructor/dashboard');
+                        // insert session key in users table
+                        $sessionId = session()->getId();
+                        $user->session_id = $sessionId;
+                        $user->save();
+                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/auth-login?singnature='. $sessionId );
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');
                     }
                 } elseif ($user->user_role == 'student') {
-                    $carts = Cart::where('user_identifier', $userIdentifier)->get();
-                    foreach ($carts as $cart) {
-                        $cart->user_id = Auth::id();
-                        $cart->save();
-                    }
-                    return redirect('/students/dashboard');
+                    $sessionId = session()->getId();
+                    $user->session_id = $sessionId;
+                    $user->save();
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/auth-login?singnature='. $sessionId );
+                    // return redirect('/students/dashboard');
                 }
             } else {
                 return redirect()->back()->with('error', 'Invalid Credentials');

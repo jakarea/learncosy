@@ -290,6 +290,7 @@
                 <div class="course-date">
                     <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
                     <p>DATE</p>
+
                 </div>
                 
             </div>

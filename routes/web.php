@@ -1,12 +1,12 @@
 <?php
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
@@ -14,6 +14,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseBundleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SubscriptionController;
@@ -78,8 +79,24 @@ Route::get('/auth-login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
-    $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
+    $instrcutor = User::where('subdomain', request()->id)->firstOrFail();
+
+
+    if(isset( request()->singnature )){
+        $user = User::where('session_id', request()->singnature)->first();
+
+        if( $user){
+            Auth::login( $user);
+            $user->session_id = null;
+            $user->save();
+            return redirect()->intended($user->user_role.'/dashboard');
+        }
+
+    }
+
+
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
+
 
     if ($instrcutorModuleSettings) {
         $loginPageStyle = json_decode($instrcutorModuleSettings->value);
@@ -353,7 +370,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
-            Route::get('/account-settings', 'edit')->name('account.settings'); 
+            Route::get('/account-settings', 'edit')->name('account.settings');
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
@@ -396,7 +413,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
     Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
-    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
 });
 
 // SubscriptionController

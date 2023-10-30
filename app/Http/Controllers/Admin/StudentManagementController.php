@@ -10,14 +10,14 @@ use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 class StudentManagementController extends Controller
 {
-    // list page 
+    // list page
     public function index()
-    {   
+    {
         $user_role = "student";
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
@@ -30,29 +30,31 @@ class StudentManagementController extends Controller
             $users->where('status', '=', $status);
         }
         $users = $users->paginate(12);
-        
-        return view('students/admin/grid',compact('users'));  
-    } 
 
-     // create page 
-    public function create()
-    {  
-        return view('students/admin/create'); 
+        return view('students/admin/grid',compact('users'));
     }
 
-    // store page 
+     // create page
+    public function create()
+    {
+        $data['instructors'] = User::select(['subdomain','name'])->where('user_role', 'instructor')->get();
+        return view('students/admin/create', $data);
+    }
+
+    // store page
     public function store(Request $request)
-     {  
+     {
         // return $request->all();
 
         $request->validate([
-            'name' => 'required|string', 
+            'name' => 'required|string',
             'short_bio' => 'string',
             'phone' => 'string',
-            'email' => 'required|email|unique:users,email', 
+            'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'instructor' => 'required'
         ],
-        [ 
+        [
             'avatar' => 'Max file size is 5 MB!'
         ]);
 
@@ -62,7 +64,7 @@ class StudentManagementController extends Controller
         $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
         // add student
         $student = new User([
-            'name' => $request->name, 
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'short_bio' => $request->website,
@@ -71,7 +73,8 @@ class StudentManagementController extends Controller
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
             'password' => Hash::make($initialPass),
-        ]);  
+            'subdomain' => $request->instructor
+        ]);
 
         $stuSlug = Str::slug($request->name);
 
@@ -89,46 +92,49 @@ class StudentManagementController extends Controller
 
      }
 
-     // show page 
+     // show page
     public function show($id)
-    {  
+    {
        $student = User::where('id', $id)->first();
        $checkout = Checkout::where('user_id', $id)->with('course')->get();
-       return view('students/admin/show',compact('student', 'checkout')); 
+       return view('students/admin/show',compact('student', 'checkout'));
     }
 
-    // edit page 
+    // edit page
     public function edit($id)
-     {  
+     {
+
         $student = User::where('id', $id)->first();
-      
-        return view('students/admin/edit',compact('student'));
+        $instructors = User::select(['subdomain','name'])->where('user_role', 'instructor')->get();
+
+        return view('students/admin/edit',compact('student','instructors'));
      }
 
      public function update(Request $request,$id)
      {
         //  return $request->all();
- 
-         $userId = $id;  
- 
+
+         $userId = $id;
+
          $this->validate($request, [
-             'name' => 'required|string', 
+             'name' => 'required|string',
              'short_bio' => 'string',
-             'phone' => 'required|string', 
+             'phone' => 'required|string',
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+             'subdomain' => $request->instructor
          ],
-         [ 
+         [
              'avatar' => 'Max file size is 5 MB!'
          ]);
- 
-        
-         $user = User::where('id', $userId)->first(); 
+
+
+         $user = User::where('id', $userId)->first();
          $user->name = $request->name;
          if ($request->subdomain) {
             $user->subdomain =  Str::slug($request->subdomain);
          }else{
             $user->subdomain = $user->subdomain;
-        } 
+        }
 
          $user->short_bio = $request->website;
          $user->company_name = $request->company_name;
@@ -136,16 +142,16 @@ class StudentManagementController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $user->email; 
+         $user->email = $user->email;
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{
              $user->password = $user->password;
-         } 
- 
+         }
+
          $slugg = Str::slug($request->name);
 
-         if ($request->hasFile('avatar')) { 
+         if ($request->hasFile('avatar')) {
              if ($user->avatar) {
                 $oldFile = public_path($user->avatar);
                 if (file_exists($oldFile)) {
@@ -159,19 +165,20 @@ class StudentManagementController extends Controller
              $image_path = 'uploads/users/' . $uniqueFileName;
             $user->avatar = $image_path;
         }
- 
+        $user->subdomain = $request->instructor;
+
          $user->save();
          return redirect()->route('admin.allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }
 
      public function destroy($id){
-         
+
         $student = User::where('id', $id)->first();
          //delete student avatar
          $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
-         } 
+         }
         $student->delete();
 
         return redirect('admin/students')->with('success', 'Student Successfully deleted!');
