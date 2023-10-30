@@ -110,6 +110,7 @@
             text-align: center; 
             width: 30%; 
         }
+
         .course-date p{
             color: var(--neutral-color-neutral-70, #2F3A4C);
             font-size: 14px;
@@ -222,13 +223,11 @@
                 <div class="course-date">
                     <h5>{{ date('d M Y') }}</h5>
                     <p>DATE</p>
+
                 </div>
-
             </div>
-
         </div>
     </div>
-
 </body>
 
 </html>

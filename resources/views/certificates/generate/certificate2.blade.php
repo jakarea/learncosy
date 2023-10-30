@@ -196,7 +196,6 @@
             top: 0rem;
             z-index: 999;
         }
-
         .clr{
             clear: both;
         }
@@ -233,7 +232,6 @@
                     <p>has successfully completed the {{$course->title}} Course on {{ date('d M Y', strtotime($courseCompletionDate)) }} through
                         Learncosy.</p>
                 </div>
-
                 <div class="signature">
                     @if (!empty($signature))
                     <img src="{{ public_path($signature) }}" alt="Logo" class="img-fluid">   
@@ -247,9 +245,11 @@
                 <div class="course-date">
                     <h5>{{ date('d M Y', strtotime($courseIssueDate)) }}</h5>
                     <p>DATE</p>
+
                 </div>
                 
             </div>
+
         </div>
     </div>
 

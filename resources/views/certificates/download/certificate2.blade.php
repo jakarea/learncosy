@@ -118,7 +118,6 @@
             line-height: 100%;
             font-weight: 400;
         }
-
         .course-date{ 
             position: absolute;
             right: -8rem;
