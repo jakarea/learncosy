@@ -31,21 +31,21 @@ Account Management
                 {{-- session message @E --}}
                 <div class="own-profile-box account-settings-box">
                     <div class="header">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills main-navigator" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                <button class="nav-link active tab-link" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">Theme Setting</button>
+                                    aria-selected="true" data-param="home">Theme Setting</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link" id="pills-experience-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-experience" type="button" role="tab"
-                                    aria-controls="pills-experience" aria-selected="false">DNS</button>
+                                    aria-controls="pills-experience" aria-selected="false" data-param="dns">DNS</button>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane active-bg fade show active" id="pills-home" role="tabpanel"
+                        <div class="tab-pane active-bg fade show active tab-con" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10 col-xl-9">
@@ -452,7 +452,7 @@ Account Management
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-experience" role="tabpanel"
+                        <div class="tab-pane fade tab-con" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="dns-settings-box-wrapper">
                                 <div class="dns-left-sidebar">
@@ -951,25 +951,51 @@ Account Management
     document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const tabToOpen = urlParams.get('tab');
-            const homeTabLink = document.getElementById('pills-home-tab');
-            const profileTabLink = document.getElementById('pills-experience-tab');
-            const homeTabContent = document.getElementById('pills-home');
-            const profileTabContent = document.getElementById('pills-experience');
+            const tabPanes = document.querySelectorAll('.tab-con');
+            const tabLinks = document.querySelectorAll('.tab-link');
 
-            // Open the tab if the 'tab' parameter is specified
-            if (tabToOpen) {
+            const homeTabLink = document.getElementById('pills-home-tab');
+            const homeTabContent = document.getElementById('pills-home');
+
+            const profileTabLink = document.getElementById('pills-experience-tab'); 
+            const profileTabContent = document.getElementById('pills-experience');
+ 
+            if (tabToOpen == 'dns') {
+                tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+
                 profileTabLink.classList.add('active');
-                homeTabLink.classList.remove('active');
                 profileTabContent.classList.add('show', 'active');
-                homeTabContent.classList.remove('show', 'active');
-            } else {
-                profileTabLink.classList.remove('active');
+
+            } else if(tabToOpen == 'home') {
+               tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+
                 homeTabLink.classList.add('active');
-                profileTabContent.classList.remove('show', 'active');
                 homeTabContent.classList.add('show', 'active');
             }
         });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
+          var currentParam = '';  
+        
+          tabLinks.forEach(function(tabLink) {
+            tabLink.addEventListener('click', function(event) {
+              event.preventDefault(); 
+              var param = tabLink.getAttribute('data-param'); 
+              if (param !== currentParam) { 
+                var currentURL = window.location.href;
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
+                window.history.pushState(null, '', newURL); 
+                currentParam = param; 
+              }
+            });
+          });
+        });
+</script>
+
 @endsection
 
 {{-- page script @E --}}
