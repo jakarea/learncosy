@@ -61,8 +61,6 @@ class StudentHomeController extends Controller
         ->orderBy('created_at', 'asc')
         ->get();
 
-
-
         $currentMonthData = CourseActivity::selectRaw('SUM(duration) as total_duration')
         ->whereMonth('created_at', now()->month)
         ->first();

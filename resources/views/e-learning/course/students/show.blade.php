@@ -87,7 +87,7 @@ $i = 0;
                 @if(!empty($group_files))
                 <div class="download-files-box">
                     <h4>Download Files </h4>
-                    <div id="dataTextContainer"> 
+                    <div id="dataTextContainer" class="mb-3"> 
                     </div>
                     
                     <div class="files">
