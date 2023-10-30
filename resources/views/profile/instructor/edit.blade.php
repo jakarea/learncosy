@@ -170,7 +170,7 @@
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror"
-                                                            required>{!! $user->description !!}</textarea>
+                                                            >{!! $user->description !!}</textarea>
 
                                                         <label for="description">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message

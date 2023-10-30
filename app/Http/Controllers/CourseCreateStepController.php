@@ -294,7 +294,7 @@ class CourseCreateStepController extends Controller
             $audio = $request->file('audio');
             $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
-            $lesson->audio = $audioName;
+            $lesson->audio = 'uploads/audio/'.$audioName;
         }
         
         $uploadedFilenames = [];

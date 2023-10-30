@@ -2505,6 +2505,21 @@ span.stripe-bg i {
   opacity: 1;
 }
 
+.audio-iframe-box {
+  position: relative;
+}
+.audio-iframe-box .big-thumb {
+  display: block;
+  width: 100%;
+}
+.audio-iframe-box .player-bottom {
+  position: absolute;
+  left: 0%;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;
