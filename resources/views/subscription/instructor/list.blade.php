@@ -108,7 +108,7 @@
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"
                 tabindex="0">
                 <div class="row justify-content-center">
-                    @foreach (getSubscriptionPackage() as $package)
+                    @foreach ($packages as $package)
                     @php
                     $package_featurelist = explode(',', $package->features);
                     @endphp

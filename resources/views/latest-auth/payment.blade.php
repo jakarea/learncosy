@@ -1,12 +1,15 @@
-@extends('layouts.latest.instructor')
-@section('title') Cart Page @endsection
+@extends('layouts.latest.auth')
 
-{{-- page style @S --}}
+@section('title')
+    Subscribe Package
+@endsection
+
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-
+<link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ asset('latest/assets/auth-css/pricing.css') }}">
 <style>
     .require-validation .error-input {
         border: 1px solid red;
@@ -16,19 +19,17 @@
     }
 </style>
 @endsection
-{{-- page style @S --}}
 
-{{-- page content @S --}}
 @section('content')
 {{-- ==== course activity list page @S ==== --}}
 
 <main class="course-activity-list-page">
-    <div class="container-fluid">
+    <div class="container">
         <form
             role="form"
             action="{{ route('instructor.subscription.payment') }}"
             method="post"
-            class="require-validation needs-validation"
+            class="require-validation needs-validation mt-5"
             data-cc-on-file="false"
             data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
             id="payment-form">
@@ -152,9 +153,15 @@
                     <div class="col-lg-5">
                         <div class="cart-right-wrap">
 
+                           <div class="text-end">
 
+                            <a href="{{ url('instructor/profile/step-2/complete') }}" class="btn btn-primary">
+                                <i class="fas fa-angle-left"></i> Back
+                            </a>
+
+                           </div>
                             {{-- cart item start here --}}
-                            <div class="cart-items-wrap" data-item="{{ $package->id}}">
+                            <div class="cart-items-wrap mt-3" data-item="{{ $package->id}}">
                                 <div class="d-flex">
                                     <div class="media">
                                         {{-- <img src="{{asset($package->courses->thumbnail)}}" alt="Course Thumbnail"
@@ -213,8 +220,8 @@
                                 </div>
 
                                 <div class="cart-checkout-bttn-wrap">
-                                    <button class="common-bttn d-flex w-100 text-center" type="submit" id="stripe-pay-now">Pay €{{ number_format($total, 2) }} with
-                                        <span class="stripe-bg">
+                                    <button class="common-bttn d-flex w-100 text-center justify-content-center" type="submit" id="stripe-pay-now">Pay €{{ number_format($total, 2) }} with
+                                        <span class="stripe-bg pe-3">
                                             <i class="fa-brands fa-stripe"></i>
                                         </span></button>
                                 </div>

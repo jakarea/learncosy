@@ -17,22 +17,22 @@
             <div class="col-12">
                 <div class="own-profile-box">
                     <div class="header">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills main-navigator" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                <button class="nav-link active tab-link" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">My Profile</button>
+                                    aria-selected="true" data-param="home">My Profile</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link" id="pills-profile-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-profile" type="button" role="tab"
-                                    aria-controls="pills-profile" aria-selected="false">Password</button>
+                                    aria-controls="pills-profile" aria-selected="false" data-param="profile">Password</button>
                             </li>
                         </ul>
                     </div>
 
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                        <div class="tab-pane fade show active tab-link" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             {{-- profile edit form start --}}
                             <form action="{{ route('students.profile.update',$user->id) }}" method="POST" enctype="multipart/form-data">
@@ -156,7 +156,7 @@
                                 {{-- profile edit form end --}}
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                        <div class="tab-pane fade tab-link" id="pills-profile" role="tabpanel"
                             aria-labelledby="pills-profile-tab" tabindex="0">
                             {{-- password tab start --}}
                             <div class="row  user-add-form-wrap user-add-form-wrap-2">
@@ -323,6 +323,59 @@
     });
 });
 </script>
+
+
+{{-- tab open js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabToOpen = urlParams.get('tab');
+            const tabPanes = document.querySelectorAll('.tab-con');
+            const tabLinks = document.querySelectorAll('.tab-link');
+
+            const homeTabLink = document.getElementById('pills-home-tab');
+            const homeTabContent = document.getElementById('pills-home');
+
+            const profileTabLink = document.getElementById('pills-profile-tab'); 
+            const profileTabContent = document.getElementById('pills-profile');
+ 
+            if (tabToOpen == 'profile') {
+                tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+
+                profileTabLink.classList.add('active');
+                profileTabContent.classList.add('show', 'active');
+
+            } else if(tabToOpen == 'home') {
+               tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+
+                homeTabLink.classList.add('active');
+                homeTabContent.classList.add('show', 'active');
+            }
+        });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
+          var currentParam = '';  
+        
+          tabLinks.forEach(function(tabLink) {
+            tabLink.addEventListener('click', function(event) {
+              event.preventDefault(); 
+              var param = tabLink.getAttribute('data-param'); 
+              if (param !== currentParam) { 
+                var currentURL = window.location.href;
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
+                window.history.pushState(null, '', newURL); 
+                currentParam = param; 
+              }
+            });
+          });
+        });
+</script>
+
+
 @endsection
 
 {{-- page script @E --}}
