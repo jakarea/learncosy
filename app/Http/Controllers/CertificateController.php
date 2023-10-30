@@ -19,6 +19,18 @@ class CertificateController extends Controller
     public function certificateUpdate(Request $request)
     {
 
+        $this->validate($request, [
+            'course_id' => 'required|string', 
+            'certificate_style' => 'required', 
+            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'signature' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [
+            'course_id' => 'Select a course to set certificate',
+            'logo' => 'Max file size is 5 MB!',
+            'signature' => 'Max file size is 5 MB!'
+        ]);
+
         $userId = Auth::user()->id;
         $courseId = $request->course_id;
 
@@ -122,6 +134,25 @@ class CertificateController extends Controller
         }else{
             $course = Course::where('id', $courseId)->first();
         }    
+
+        $this->validate($request, [
+            'c_first_name' => 'required|string',
+            'c_last_name' => 'required|string',
+            'c_course_id' => 'required',
+            'c_completion_date' => 'required',
+            'c_issue_date' => 'required',
+            'c_logo' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'c_signature' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [
+            'c_first_name' => 'First Name is required',
+            'c_last_name' => 'Last Name is required',
+            'c_course_id' => 'Select a course to set certificate',
+            'c_completion_date' => 'Completion date is required',
+            'c_issue_date' => 'Issue date is required',
+            'c_logo' => 'Max file size is 5 MB!',
+            'c_signature' => 'Max file size is 5 MB!'
+        ]);
 
         if ($request->input('c_certificate_style')) {
 
