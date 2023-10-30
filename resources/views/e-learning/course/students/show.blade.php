@@ -476,6 +476,8 @@ $i = 0;
                         moduleId: moduleId,
                         duration: duration
                     };
+                    // console.log(data);
+
                     var $element = $(this); // Store reference to $(this) in a variable
 
                     $.ajax({
@@ -506,6 +508,7 @@ $i = 0;
         });
 </script>
 
+{{-- linke bttn --}}
 <script>
     let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');

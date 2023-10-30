@@ -456,6 +456,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
+    Route::get('/courses-activies/list', 'activitiesList')->name('students.activity.lesson');
     Route::get('/courses-activies', 'storeActivities')->name('students.complete.lesson');
     Route::get('/courses-certificate', 'certificate')->name('students.certificate.course');
     Route::post('/courses/{slug}', 'review')->name('students.review.courses');
