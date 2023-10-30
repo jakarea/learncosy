@@ -171,7 +171,7 @@
                                         </div>
                                         @if (!isSubscribed($package->id))
                                             <div class="bttn">
-                                                <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                                <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
                                                     class="will-subscribe">Subscribe Now</a>
                                             </div>
                                         @else
