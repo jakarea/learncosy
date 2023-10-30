@@ -7,7 +7,7 @@
 <link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
 <style>
     .select-style-div-2,
-    .select-style-div{
+    .select-style-div {
         cursor: pointer;
     }
 </style>
@@ -23,26 +23,29 @@
             <div class="col-12">
                 <div class="own-profile-box account-settings-box">
                     <div class="header">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills main-navigator" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link active" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                                    aria-selected="true">My Profile</button>
+                                    aria-selected="true" data-param="">My Profile</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-experience-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-experience" type="button" role="tab"
-                                    aria-controls="pills-experience" aria-selected="false">Experience</button>
+                                    aria-controls="pills-experience" aria-selected="false"
+                                    data-param="experience">Experience</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-certificate-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-certificate" type="button" role="tab"
-                                    aria-controls="pills-certificate" aria-selected="false">Certificate</button>
+                                    aria-controls="pills-certificate" aria-selected="false"
+                                    data-param="certificate">Certificate</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-password-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-password" type="button" role="tab"
-                                    aria-controls="pills-password" aria-selected="false">Password</button>
+                                    aria-controls="pills-password" aria-selected="false"
+                                    data-param="password">Password</button>
                             </li>
                         </ul>
                     </div>
@@ -67,9 +70,8 @@
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="preview"
-                                                        src="{{asset($user->avatar)}}"
-                                                        alt="Avatar" class="img-fluid static-image">
+                                                    <img id="preview" src="{{asset($user->avatar)}}" alt="Avatar"
+                                                        class="img-fluid static-image">
                                                     @else
                                                     <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
@@ -123,9 +125,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" id="company_name"
-                                                            name="company_name" value="{{ $user->company_name }}" required>
+                                                            name="company_name" value="{{ $user->company_name }}"
+                                                            required>
                                                         <label for="company_name">Company Name</label>
-                                                        <span class="invalid-feedback">@error('company_name'){{ $message }}
+                                                        <span class="invalid-feedback">@error('company_name'){{ $message
+                                                            }}
                                                             @enderror</span>
                                                     </div>
                                                 </div>
@@ -139,33 +143,38 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    @php  $socialLinks = explode(',',$user->social_links) @endphp
-                                                   <div class="form-group">
-                                                    <label for="social_links" style="top: -6px; background: #fff!important; z-index: 999">Social Media</label>
-                                                   </div>
+                                                    @php $socialLinks = explode(',',$user->social_links) @endphp
+                                                    <div class="form-group">
+                                                        <label for="social_links"
+                                                            style="top: -6px; background: #fff!important; z-index: 999">Social
+                                                            Media</label>
+                                                    </div>
                                                     @foreach ($socialLinks as $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
                                                             <input type="url" class="form-control" id="social_links"
-                                                                name="social_links[]" value="{{ $socialLink }}" >
+                                                                name="social_links[]" value="{{ $socialLink }}">
 
-                                                            <span class="invalid-feedback">@error('social_links'){{ $message }}  @enderror</span>
+                                                            <span class="invalid-feedback">@error('social_links'){{
+                                                                $message }} @enderror</span>
                                                         </div>
                                                     </div>
                                                     @endforeach
                                                     <div class="text-end mt-3">
-                                                        <a href="javascript:void(0)" id="social_increment"><i class="fas fa-plus"></i>
+                                                        <a href="javascript:void(0)" id="social_increment"><i
+                                                                class="fas fa-plus"></i>
                                                             Add</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12"> 
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror"
                                                             required>{!! $user->description !!}</textarea>
 
                                                         <label for="description">About</label>
-                                                        <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
+                                                        <span class="invalid-feedback">@error('description'){{ $message
+                                                            }} @enderror</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,24 +339,24 @@
                             </div>
                         </div>
                         {{-- experience tab end --}}
-                        {{-- certificate tab start --}} 
+                        {{-- certificate tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
                                     <div class="certificate-header-tab">
-                                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                        <ul class="nav nav-pills inner-tab" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="pills-add_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
-                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true"><i
+                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true" data-params="add_cert"><i
                                                         class="fas fa-plus"></i> Add Certificate</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="pills-custom_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-custom_cert"
                                                     type="button" role="tab" aria-controls="pills-custom_cert"
-                                                    aria-selected="false"><i class="fas fa-plus"></i> Custom
+                                                    aria-selected="false" data-params="custom_cert"><i class="fas fa-plus"></i> Custom
                                                     Certificate</button>
                                             </li>
                                         </ul>
@@ -359,7 +368,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form">
-                                                            <form action="{{ route('certificate.update') }}" method="POST" enctype="multipart/form-data">
+                                                            <form action="{{ route('certificate.update') }}"
+                                                                method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
                                                                     <div class="col-lg-9">
@@ -367,15 +377,20 @@
                                                                             <h6>Course/ Certificate Name </h6>
 
                                                                             <div class="form-group form-error">
-                                                                                <select name="course_id" class="form-control  @error('course_id') is-invalid @enderror">
-                                                                                    <option value="">Select Below</option>
+                                                                                <select name="course_id"
+                                                                                    class="form-control  @error('course_id') is-invalid @enderror">
+                                                                                    <option value="">Select Below
+                                                                                    </option>
                                                                                     @foreach ($courses as $course)
-                                                                                        <option value="{{ $course->id }}">{{ $course->title }}</option>
-                                                                                    @endforeach  
+                                                                                    <option value="{{ $course->id }}">{{
+                                                                                        $course->title }}</option>
+                                                                                    @endforeach
                                                                                 </select>
-                                                                                <span class="invalid-feedback">@error('course_id'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('course_id'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
-                                                                            </div> 
+                                                                            </div>
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color.svg')}}"
                                                                                     alt="Color" class="img-fluid">
@@ -386,15 +401,18 @@
                                                                                         on this.</p>
                                                                                 </div>
                                                                                 <div class="color-position">
-                                                                                    <input type="color" class="form-control p-0"
-                                                                                        name="certificate_clr" id="certificate_clr"
+                                                                                    <input type="color"
+                                                                                        class="form-control p-0"
+                                                                                        name="certificate_clr"
+                                                                                        id="certificate_clr"
                                                                                         value="#ffffff">
-            
+
                                                                                     <label for="certificate_clr">
                                                                                         <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
-                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                            alt="Color"
+                                                                                            class="img-fluid me-0">
                                                                                     </label>
-                                                                                </div> 
+                                                                                </div>
                                                                             </div>
                                                                             <div class="media">
                                                                                 <img src="{{asset('latest/assets/images/icons/color-2.svg')}}"
@@ -405,15 +423,17 @@
                                                                                         accentuate visual elements.</p>
                                                                                 </div>
                                                                                 <div class="color-position">
-                                                                                    <input type="color" class="form-control p-0"
-                                                                                        name="accent_clr" id="accent_clr"
-                                                                                        value="#ffffff">
-            
+                                                                                    <input type="color"
+                                                                                        class="form-control p-0"
+                                                                                        name="accent_clr"
+                                                                                        id="accent_clr" value="#ffffff">
+
                                                                                     <label for="accent_clr">
                                                                                         <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
-                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                            alt="Color"
+                                                                                            class="img-fluid me-0">
                                                                                     </label>
-                                                                                </div> 
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="certificate-style-box">
@@ -434,10 +454,12 @@
                                                                                     <img src="{{asset('latest/assets/images/certificate-01.png')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </a>
-                                                                                <div class="media-body select-style-div active" data-value="1">
+                                                                                <div class="media-body select-style-div active"
+                                                                                    data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -447,25 +469,27 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="media">
-                                                                               {{-- full page preview --}}
-                                                                               <div class="full-page-preview">
-                                                                                <a href="#" class="close-bttn">
-                                                                                    <i class="fas fa-close"></i>
+                                                                                {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
+
+
+                                                                                <a href="#" class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
                                                                                 </a>
-                                                                                <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </div>
-                                                                            {{-- full page preview --}}
-
-
-                                                                            <a href="#" class="cert-bttn">
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </a>
-                                                                                <div class="media-body select-style-div" data-value="2">
+                                                                                <div class="media-body select-style-div"
+                                                                                    data-value="2">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 2</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -490,10 +514,12 @@
                                                                                     <img src="{{asset('latest/assets/images/certificate-03.png')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </a>
-                                                                                <div class="media-body select-style-div" data-value="3">
+                                                                                <div class="media-body select-style-div"
+                                                                                    data-value="3">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 3</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -502,51 +528,68 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
-                                                                            <input type="hidden" name="certificate_style" id="certificateStyle" value="1">
+                                                                            <input type="hidden"
+                                                                                name="certificate_style"
+                                                                                id="certificateStyle" value="1">
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-3">
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                                <input type="file" name="logo" id="logoInput" accept="image/*"
-                                                                                    onchange="previewLogo()"
-                                                                                    class="form-control d-none @error('logo') is-invalid @enderror">
+                                                                            <input type="file" name="logo"
+                                                                                id="logoInput" accept="image/*"
+                                                                                onchange="previewLogo()"
+                                                                                class="form-control d-none @error('logo') is-invalid @enderror">
 
-                                                                                <label for="logoInput"
-                                                                                    class="upload-media-box"
-                                                                                    id="file-upload-area1"> 
-                                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                            <label for="logoInput"
+                                                                                class="upload-media-box"
+                                                                                id="file-upload-area1">
+                                                                                <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                                     alt="Color"
-                                                                                    class="img-fluid light-ele" id="logoPreview">
-                                                                               
-                                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid dark-ele" id="logoPreview">
-                                                                                    <span>Click to upload</span> or drag and
-                                                                                    drop SVG, PNG or JPG (max. 300x300px)
-                                                                                </label>
+                                                                                    class="img-fluid light-ele"
+                                                                                    id="logoPreview">
+
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele"
+                                                                                    id="logoPreview">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
+                                                                            </label>
                                                                         </div>
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
-                                                                            <input type="file" name="signature" id="signatureInput" accept="image/*"
+                                                                            <input type="file" name="signature"
+                                                                                id="signatureInput" accept="image/*"
                                                                                 onchange="previewSignature()"
                                                                                 class="form-control d-none @error('signature') is-invalid @enderror">
 
-                                                                            <label for="signatureInput" class="upload-media-box" id="signature-upload-area">
-                                                                                 
-                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview">
-                                                                                 
-                                                                                <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="Color" class="img-fluid dark-ele" id="signaturePreview">
-                                                                                <span>Click to upload Instructor Signature</span>
-                                                                                <span>or drag and drop SVG, PNG or JPG (max. 300x300px)</span>
+                                                                            <label for="signatureInput"
+                                                                                class="upload-media-box"
+                                                                                id="signature-upload-area">
+
+                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele"
+                                                                                    id="signaturePreview">
+
+                                                                                <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele"
+                                                                                    id="signaturePreview">
+                                                                                <span>Click to upload Instructor
+                                                                                    Signature</span>
+                                                                                <span>or drag and drop SVG, PNG or JPG
+                                                                                    (max. 300x300px)</span>
                                                                             </label>
 
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
-                                                                            <button type="submit" class="common-bttn border-0">Save</button>
+                                                                            <button type="submit"
+                                                                                class="common-bttn border-0">Save</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -555,78 +598,88 @@
                                                         <div class="user-expperience-box user-expperience-box-2">
                                                             <div class="title">
                                                                 <h4>All Certificates</h4>
-                                                            </div>  
-                                                            @if (count($certificates) > 0) 
-                                                            @foreach ($certificates as $certificate)  
+                                                            </div>
+                                                            @if (count($certificates) > 0)
+                                                            @foreach ($certificates as $certificate)
                                                             <div class="media brdr-bttm">
-                                                                @if ($certificate->style == 1) 
+                                                                @if ($certificate->style == 1)
                                                                 <img src="{{ asset('latest/assets/images/certificate-01.png') }}"
-                                                                alt="experience-img" class="img-fluid rounded"> 
+                                                                    alt="experience-img" class="img-fluid rounded">
                                                                 @elseif($certificate->style == 2)
                                                                 <img src="{{ asset('latest/assets/images/certificate-02.png') }}"
-                                                                alt="experience-img" class="img-fluid rounded">
+                                                                    alt="experience-img" class="img-fluid rounded">
                                                                 @elseif($certificate->style == 3)
                                                                 <img src="{{ asset('latest/assets/images/certificate-03.png') }}"
-                                                                alt="experience-img" class="img-fluid rounded">
-                                                                @endif 
+                                                                    alt="experience-img" class="img-fluid rounded">
+                                                                @endif
                                                                 <div class="media-body">
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
                                                                         <h5>{{ $certificate->course->title }}</h5>
-                                                                        <div>  
+                                                                        <div>
                                                                             <a href="#"><img
                                                                                     src="{{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                                     alt="img" class="img-fluid"></a>
 
-                                                                            <form class="d-inline" action="{{route('certificate.delete',$certificate->id)}}" method="post">
-                                                                                @csrf 
+                                                                            <form class="d-inline"
+                                                                                action="{{route('certificate.delete',$certificate->id)}}"
+                                                                                method="post">
+                                                                                @csrf
 
-                                                                                <button type="submit" class="btn p-0"><img src="{{ asset('latest/assets/images/icons/minus.svg') }}"
-                                                                                    alt="img" class="img-fluid"></button> 
-                                                                            </form> 
+                                                                                <button type="submit"
+                                                                                    class="btn p-0"><img
+                                                                                        src="{{ asset('latest/assets/images/icons/minus.svg') }}"
+                                                                                        alt="img"
+                                                                                        class="img-fluid"></button>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
 
                                                                     <h6>
                                                                         @if ($certificate->style == 1)
-                                                                            Certificate Style 1
+                                                                        Certificate Style 1
                                                                         @elseif($certificate->style == 2)
-                                                                            Certificate Style 2
+                                                                        Certificate Style 2
                                                                         @elseif($certificate->style == 3)
-                                                                            Certificate Style 3
+                                                                        Certificate Style 3
                                                                         @endif
-                                                                        
-                                                                        <i class="fas fa-circle"></i> {{ $certificate->updated_at->format('d F Y') }}</h6>
+
+                                                                        <i class="fas fa-circle"></i> {{
+                                                                        $certificate->updated_at->format('d F Y') }}
+                                                                    </h6>
                                                                     <p>{{$certificate->course->short_description}}</p>
                                                                 </div>
-                                                            </div>  
+                                                            </div>
                                                             @endforeach
-                                                            @else 
+                                                            @else
                                                             @include('partials/no-data')
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="pills-custom_cert" role="tabpanel"
+                                            <div class="tab-pane fade " id="pills-custom_cert" role="tabpanel"
                                                 aria-labelledby="pills-custom_cert-tab" tabindex="0">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form create-certificate-form-2">
-                                                            <form action="{{ route('certificate.generate') }}" method="POST" enctype="multipart/form-data">
-                                                                @csrf 
-                                                                <div class="row" >
+                                                            <form action="{{ route('certificate.generate') }}"
+                                                                method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="row">
                                                                     <div class="col-lg-6">
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>Student Name </h6>
                                                                             <div class="form-group form-error">
                                                                                 <input type="text" name="c_first_name"
-                                                                                        class="form-control @error('c_first_name') is-invalid @enderror">
+                                                                                    class="form-control @error('c_first_name') is-invalid @enderror">
                                                                                 <label for="">First Name</label>
 
-                                                                                <span class="invalid-feedback">@error('c_first_name'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('c_first_name'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
-                                                                            </div> 
+                                                                            </div>
 
                                                                         </div>
                                                                     </div>
@@ -635,28 +688,35 @@
                                                                             <h6>&nbsp;</h6>
                                                                             <div class="form-group form-error">
                                                                                 <input type="text" name="c_last_name"
-                                                                                        class="form-control @error('c_last_name') is-invalid @enderror">
-                                                                                    <label for="">Last Name</label>
+                                                                                    class="form-control @error('c_last_name') is-invalid @enderror">
+                                                                                <label for="">Last Name</label>
 
-                                                                                <span class="invalid-feedback">@error('c_last_name'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('c_last_name'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-12 my-3">
                                                                         <div class="certificate-name border-0 pe-0">
-                                                                            <h6>Certificate/ Course Name</h6> 
+                                                                            <h6>Certificate/ Course Name</h6>
 
                                                                             <div class="form-group form-error">
-                                                                                <select name="c_course_id" class="form-control">
+                                                                                <select name="c_course_id"
+                                                                                    class="form-control">
                                                                                     @foreach ($courses as $course)
-                                                                                        <option value="{{ $course->id }}">{{ $course->title }}</option>
-                                                                                    @endforeach  
-                                                                                    <label for="">Professional UI/UX Design
+                                                                                    <option value="{{ $course->id }}">{{
+                                                                                        $course->title }}</option>
+                                                                                    @endforeach
+                                                                                    <label for="">Professional UI/UX
+                                                                                        Design
                                                                                         Course</label>
                                                                                 </select>
 
-                                                                                <span class="invalid-feedback">@error('c_course_id'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('c_course_id'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
                                                                             </div>
 
@@ -667,13 +727,16 @@
                                                                             <h6>Course Complete Date </h6>
 
                                                                             <div class="form-group form-error">
-                                                                                <input type="date" name="c_completion_date"
-                                                                                        class="form-control @error('c_completion_date') is-invalid @enderror">
-                                                                                    <label for="">Date</label>
+                                                                                <input type="date"
+                                                                                    name="c_completion_date"
+                                                                                    class="form-control @error('c_completion_date') is-invalid @enderror">
+                                                                                <label for="">Date</label>
 
-                                                                                <span class="invalid-feedback">@error('c_completion_date'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('c_completion_date'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
-                                                                            </div> 
+                                                                            </div>
 
                                                                         </div>
                                                                     </div>
@@ -682,12 +745,14 @@
                                                                             <h6>Certificate Issue Date *</h6>
                                                                             <div class="form-group form-error">
                                                                                 <input type="date" name="c_issue_date"
-                                                                                        class="form-control @error('c_issue_date') is-invalid @enderror">
-                                                                                    <label for="">Date</label>
+                                                                                    class="form-control @error('c_issue_date') is-invalid @enderror">
+                                                                                <label for="">Date</label>
 
-                                                                                <span class="invalid-feedback">@error('c_issue_date'){{ $message }}
+                                                                                <span
+                                                                                    class="invalid-feedback">@error('c_issue_date'){{
+                                                                                    $message }}
                                                                                     @enderror</span>
-                                                                            </div> 
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-9 mt-3">
@@ -702,13 +767,16 @@
                                                                                         on this.</p>
                                                                                 </div>
                                                                                 <div class="color-position">
-                                                                                    <input type="color" class="form-control p-0"
-                                                                                        name="c_certificate_clr" id="c_certificate_clr"
+                                                                                    <input type="color"
+                                                                                        class="form-control p-0"
+                                                                                        name="c_certificate_clr"
+                                                                                        id="c_certificate_clr"
                                                                                         value="#ffffff">
-            
+
                                                                                     <label for="c_certificate_clr">
                                                                                         <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
-                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                            alt="Color"
+                                                                                            class="img-fluid me-0">
                                                                                     </label>
                                                                                 </div>
                                                                             </div>
@@ -721,39 +789,44 @@
                                                                                         accentuate visual elements.</p>
                                                                                 </div>
                                                                                 <div class="color-position">
-                                                                                    <input type="color" class="form-control p-0"
-                                                                                        name="c_accent_clr" id="c_accent_clr"
+                                                                                    <input type="color"
+                                                                                        class="form-control p-0"
+                                                                                        name="c_accent_clr"
+                                                                                        id="c_accent_clr"
                                                                                         value="#ffffff">
-            
+
                                                                                     <label for="c_accent_clr">
                                                                                         <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
-                                                                                            alt="Color" class="img-fluid me-0">
+                                                                                            alt="Color"
+                                                                                            class="img-fluid me-0">
                                                                                     </label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="certificate-style-box">
-                                                                            <h6>Select Certificate Style</h6>  
+                                                                            <h6>Select Certificate Style</h6>
 
                                                                             <div class="media" id="certificate-1">
                                                                                 {{-- full page preview --}}
-                                                                               <div class="full-page-preview">
-                                                                                <a href="#" class="close-bttn">
-                                                                                    <i class="fas fa-close"></i>
-                                                                                </a>
-                                                                                <img src="{{asset('latest/assets/images/big-c-01.svg')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </div>
-                                                                            {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/big-c-01.svg')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
 
-                                                                            <a class="cert-bttn" >
-                                                                                <img src="{{asset('latest/assets/images/certificate-01.png')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </a>
-                                                                                <div class="media-body select-style-div-2 active" data-value="1">
+                                                                                <a class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-01.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </a>
+                                                                                <div class="media-body select-style-div-2 active"
+                                                                                    data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 1 </h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -762,25 +835,27 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="media" >
+                                                                            <div class="media">
                                                                                 {{-- full page preview --}}
-                                                                               <div class="full-page-preview">
-                                                                                <a href="#" class="close-bttn">
-                                                                                    <i class="fas fa-close"></i>
-                                                                                </a>
-                                                                                <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </div>
-                                                                            {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/big-c-02.svg')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
 
-                                                                            <a class="cert-bttn" >
-                                                                                <img src="{{asset('latest/assets/images/certificate-02.png')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </a>
-                                                                                <div class="media-body select-style-div-2" data-value="2">
+                                                                                <a class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-02.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </a>
+                                                                                <div class="media-body select-style-div-2"
+                                                                                    data-value="2">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 2</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -791,23 +866,25 @@
                                                                             </div>
                                                                             <div class="media" id="certificate-3">
                                                                                 {{-- full page preview --}}
-                                                                               <div class="full-page-preview">
-                                                                                <a href="#" class="close-bttn">
-                                                                                    <i class="fas fa-close"></i>
-                                                                                </a>
-                                                                                <img src="{{asset('latest/assets/images/big-c-03.svg')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </div>
-                                                                            {{-- full page preview --}}
+                                                                                <div class="full-page-preview">
+                                                                                    <a href="#" class="close-bttn">
+                                                                                        <i class="fas fa-close"></i>
+                                                                                    </a>
+                                                                                    <img src="{{asset('latest/assets/images/big-c-03.svg')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </div>
+                                                                                {{-- full page preview --}}
 
-                                                                            <a  class="cert-bttn" >
-                                                                                <img src="{{asset('latest/assets/images/certificate-03.png')}}"
-                                                                                    alt="Cert" class="img-fluid">
-                                                                            </a>
-                                                                                <div class="media-body select-style-div-2" data-value="3">
+                                                                                <a class="cert-bttn">
+                                                                                    <img src="{{asset('latest/assets/images/certificate-03.png')}}"
+                                                                                        alt="Cert" class="img-fluid">
+                                                                                </a>
+                                                                                <div class="media-body select-style-div-2"
+                                                                                    data-value="3">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style 3</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -817,7 +894,9 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" name="c_certificate_style" id="cCertificateStyle" value="1">
+                                                                            <input type="hidden"
+                                                                                name="c_certificate_style"
+                                                                                id="cCertificateStyle" value="1">
 
                                                                         </div>
                                                                     </div>
@@ -825,37 +904,51 @@
 
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Logo </h5>
-                                                                                <input type="file" name="c_logo" id="logoInput2" accept="image/*"
-                                                                                    onchange="previewLogo2()"
-                                                                                    class="form-control d-none @error('c_logo') is-invalid @enderror">
+                                                                            <input type="file" name="c_logo"
+                                                                                id="logoInput2" accept="image/*"
+                                                                                onchange="previewLogo2()"
+                                                                                class="form-control d-none @error('c_logo') is-invalid @enderror">
 
-                                                                                <label for="logoInput2"
-                                                                                    class="upload-media-box"
-                                                                                    id="file-upload-area11"> 
-                                                                                    <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
+                                                                            <label for="logoInput2"
+                                                                                class="upload-media-box"
+                                                                                id="file-upload-area11">
+                                                                                <img src="{{ asset('latest/assets/images/icons/upload-icon.svg')}}"
                                                                                     alt="Color"
-                                                                                    class="img-fluid light-ele" id="logoPreview2">
-                                                                               
-                                                                                    <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
-                                                                                        alt="Color"
-                                                                                        class="img-fluid dark-ele" id="logoPreview2">
-                                                                                    <span>Click to upload</span> or drag and
-                                                                                    drop SVG, PNG or JPG (max. 300x300px)
-                                                                                </label>
+                                                                                    class="img-fluid light-ele"
+                                                                                    id="logoPreview2">
+
+                                                                                <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele"
+                                                                                    id="logoPreview2">
+                                                                                <span>Click to upload</span> or drag and
+                                                                                drop SVG, PNG or JPG (max. 300x300px)
+                                                                            </label>
                                                                         </div>
 
                                                                         <div class="certificate-asset-upload">
                                                                             <h5>Instructor Signature </h5>
-                                                                            <input type="file" name="c_signature" id="signatureInput2" accept="image/*"
+                                                                            <input type="file" name="c_signature"
+                                                                                id="signatureInput2" accept="image/*"
                                                                                 onchange="previewSignature2()"
                                                                                 class="form-control d-none @error('c_signature') is-invalid @enderror">
 
-                                                                            <label for="signatureInput2" class="upload-media-box" id="signature-upload-area2">
-                                                                                 
-                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}" alt="Color" class="img-fluid light-ele" id="signaturePreview2">
-                                                                                 
-                                                                                <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="Color" class="img-fluid dark-ele" id="signaturePreview2">
-                                                                                <span>Click to upload Instructor Signature</span> or drag and drop SVG, PNG or JPG (max. 300x300px)
+                                                                            <label for="signatureInput2"
+                                                                                class="upload-media-box"
+                                                                                id="signature-upload-area2">
+
+                                                                                <img src="{{  asset('latest/assets/images/icons/upload-icon.svg') }}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid light-ele"
+                                                                                    id="signaturePreview2">
+
+                                                                                <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}"
+                                                                                    alt="Color"
+                                                                                    class="img-fluid dark-ele"
+                                                                                    id="signaturePreview2">
+                                                                                <span>Click to upload Instructor
+                                                                                    Signature</span> or drag and drop
+                                                                                SVG, PNG or JPG (max. 300x300px)
                                                                             </label>
 
                                                                         </div>
@@ -864,15 +957,16 @@
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
 
-                                                                            <button class="btn common-bttn border-0"><img
-                                                                                src="{{asset('latest/assets/images/icons/download4.svg')}}"
-                                                                                alt="Color" class="img-fluid me-2">
-                                                                            Download</button>
+                                                                            <button
+                                                                                class="btn common-bttn border-0"><img
+                                                                                    src="{{asset('latest/assets/images/icons/download4.svg')}}"
+                                                                                    alt="Color" class="img-fluid me-2">
+                                                                                Download</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </form>
-                                                        </div> 
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -952,7 +1046,8 @@
 {{-- page script @S --}}
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
+</script>
 <script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
 
 {{-- add extra filed js --}}
@@ -1003,7 +1098,7 @@
     }
 </script>
 
-{{-- upload image preview  --}}
+{{-- upload image preview --}}
 <script>
     function previewImage() {
         var preview = document.getElementById('preview');
@@ -1150,7 +1245,7 @@
     });
 
 });
-</script>   
+</script>
 
 <script>
     const clickDivs = document.querySelectorAll(".select-style-div");
@@ -1197,6 +1292,8 @@
         const experienceTabContent = document.getElementById('pills-experience');
         const certificateTabLink = document.getElementById('pills-certificate-tab');
         const certificateTabContent = document.getElementById('pills-certificate');
+        const passwordTabLink = document.getElementById('pills-password-tab');
+        const passwordTabContent = document.getElementById('pills-password');
 
         // Open the tab if the 'tab' parameter is specified
         if (tabToOpen == 'experience') {
@@ -1205,13 +1302,76 @@
             experienceTabLink.classList.add('active');
             experienceTabContent.classList.add('show', 'active');
         }
-        else if (tabToOpen == 'certificate') {
+        else if (tabToOpen == 'certificate' || tabToOpen == 'add_cert' || tabToOpen == 'custom_cert') {
             tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
             tabLinks.forEach(tab => tab.classList.remove('active'));
             certificateTabLink.classList.add('active');
             certificateTabContent.classList.add('show', 'active');
+
+            if (tabToOpen == 'add_cert') {
+                document.getElementById('pills-add_cert-tab').classList.add('active');
+                document.getElementById('pills-add_cert').classList.add('show', 'active');
+
+                document.getElementById('pills-custom_cert-tab').classList.remove('active');
+                document.getElementById('pills-custom_cert').classList.remove('show', 'active');
+
+            }else if(tabToOpen == 'custom_cert'){
+                document.getElementById('pills-add_cert-tab').classList.remove('active');
+                document.getElementById('pills-add_cert').classList.remove('show', 'active');
+
+                document.getElementById('pills-custom_cert-tab').classList.add('active');
+                document.getElementById('pills-custom_cert').classList.add('show', 'active');
+            }
+
         }
+        else if (tabToOpen == 'password') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            passwordTabLink.classList.add('active');
+            passwordTabContent.classList.add('show', 'active');
+        }
+ 
     });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
+          var currentParam = '';  
+        
+          tabLinks.forEach(function(tabLink) {
+            tabLink.addEventListener('click', function(event) {
+              event.preventDefault(); 
+              var param = tabLink.getAttribute('data-param'); 
+              if (param !== currentParam) { 
+                var currentURL = window.location.href;
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
+                window.history.pushState(null, '', newURL); 
+                currentParam = param; 
+              }
+            });
+          });
+        });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          var tabLinks = document.querySelectorAll('.inner-tab .nav-link');
+          var currentParam = '';  
+        
+          tabLinks.forEach(function(tabLink) {
+            tabLink.addEventListener('click', function(event) {
+              event.preventDefault(); 
+              var param = tabLink.getAttribute('data-params'); 
+              if (param !== currentParam) { 
+                var currentURL = window.location.href;
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
+                window.history.pushState(null, '', newURL); 
+                currentParam = param; 
+              }
+            });
+          });
+        });
 </script>
 
 @endsection
