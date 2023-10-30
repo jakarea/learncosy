@@ -300,8 +300,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-4">
                                 <div class="col-12">
+                                    @if (count($experiences) > 0) 
                                     <div class="user-expperience-box user-expperience-box-2">
                                         @foreach ($experiences as $experience)
                                         <div class="media brdr-bttm">
@@ -329,13 +330,16 @@
                                         </div>
                                         @endforeach
                                     </div>
+                                    @else 
+                                    @include('partials/no-data')
+                                    @endif
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="form-submit-bttns my-4 mx-3">
                                         <button type="reset" class="btn btn-cancel">Cancel</button>
                                         <button type="submit" class="btn btn-submit">Save Changes</button>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         {{-- experience tab end --}}

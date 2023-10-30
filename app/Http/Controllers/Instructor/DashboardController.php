@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Models\ManagePage;
 use App\Models\Checkout;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -416,13 +417,13 @@ class DashboardController extends Controller
     public function checkSubdomain($user_id, Request $request)
     {
         $request->validate([
-            // 'username' => 'required|string|max:32|unique:users,username,' . $user_id . '|regex:/^[a-zA-Z0-9]+$/u',
             'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
+            // 'subdomain' => 'required|string|max:32,'.$user_id, 
         ]);
 
         $proposedUsername = $request->subdomain;
 
-        $existingUser = User::where('subdomain', $proposedUsername)->first();
+        $existingUser = User::where('subdomain', $proposedUsername)->where('id','!=',$user_id)->first();
 
         if ($existingUser) {
             $suggestedUsernames = [];

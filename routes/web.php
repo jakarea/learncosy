@@ -186,6 +186,7 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 /* ============================================================= */
 /* ===================== Instructor Routes ===================== */
 /* ============================================================= */
+
 Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')->group(function () {
     Route::get('/profile/step-1/complete', function () {
         if (Auth::user()->email_verified_at == null) {
@@ -197,9 +198,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/complete', function () {
         return view('latest-auth.price');
     });
+    Route::get('/profile/step-2/payment/{id}', function ($id) {
+        $package = App\Models\SubscriptionPackage::findorfail($id);
+        return view('latest-auth.payment',compact('package'));
+    });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
-
 
     Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');
@@ -390,12 +394,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
 
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
-    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
+    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
     Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
 });
-
-
 
 // SubscriptionController
 
