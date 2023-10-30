@@ -614,26 +614,31 @@ class StudentHomeController extends Controller
     /**
      * Student activties lesson complete
      */
-    public function storeActivities()
+    public function storeActivities(Request $request)
     {
 
         // // Update or insert to course activities
-        // $courseId = (int)$request->input('courseId');
-        // $lessonId = (int)$request->input('lessonId');
-        // $moduleId = (int)$request->input('moduleId');
-        // $userId = Auth()->user()->id;
+        $courseId = (int)$request->input('courseId');
+        $lessonId = (int)$request->input('lessonId');
+        $moduleId = (int)$request->input('moduleId');
+        $userId = Auth()->user()->id;
 
-        // $courseActivities = CourseActivity::updateOrCreate(
-        //     ['lesson_id' => $lessonId, 'module_id' => $moduleId],
-        //     [
-        //         'course_id' => $courseId,
-        //         'module_id' => $moduleId,
-        //         'lesson_id' => $lessonId,
-        //         'user_id'   => $userId,
-        //         'is_completed' => true
-        //     ]
-        // );
+        $courseActivities = CourseActivity::updateOrCreate(
+            ['lesson_id' => $lessonId, 'module_id' => $moduleId],
+            [
+                'course_id' => $courseId,
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId,
+                'is_completed' => true
+            ]
+        ); 
 
+        return response()->json($courseActivities);
+    }
+
+    public function activitiesList()
+    {
         $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
 
         $courseActivities = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);

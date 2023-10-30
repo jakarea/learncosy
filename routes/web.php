@@ -189,6 +189,12 @@ Route::get('/home', function (Request $request) {
 Auth::routes(['verify' => true]);
 
 
+Route::get('students/lessons/{id}', function ($id) {
+ 
+    $lesson = App\Models\Lesson::findorfail($id);
+    return response()->json($lesson);
+});
+
 
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
@@ -218,7 +224,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/payment/{id}', function ($id) {
         $package = App\Models\SubscriptionPackage::findorfail($id);
         return view('latest-auth.payment',compact('package'));
-    });
+    }); 
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
 
@@ -330,9 +336,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
         // lesson page routes
         Route::prefix('lessons')->controller(LessonController::class)->group(function () {
-            Route::get('/', 'index');
-            // data table route
-            Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table');
+            Route::get('/', 'index'); 
             Route::get('/create', 'create');
 
             Route::get('/create/video-upload', 'videoUpload')->name('lesson.upload.video');
@@ -452,6 +456,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
+    Route::get('/courses-activies/list', 'activitiesList')->name('students.activity.lesson');
     Route::get('/courses-activies', 'storeActivities')->name('students.complete.lesson');
     Route::get('/courses-certificate', 'certificate')->name('students.certificate.course');
     Route::post('/courses/{slug}', 'review')->name('students.review.courses');
