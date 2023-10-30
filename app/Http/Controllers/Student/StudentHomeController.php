@@ -34,22 +34,14 @@ class StudentHomeController extends Controller
     // dashboard
     public function dashboard(){
 
-        $userIdentifier = Cookie::get('userIdentifier');
+        $user = User::where('id', Auth::id())->first();
+        $user->session_id = null;
+        $user->save();
 
-        // dd( $userIdentifier );
+        $userIdentifier = $_COOKIE['userIdentifier'];
 
         Cart::where('user_identifier', $userIdentifier)
         ->update(['user_id' => Auth::id()]);
-
-
-        // foreach ($carts as $cart) {
-        //     $cart->user_id = Auth::id();
-        //     $cart->save();
-        // }
-
-
-
-
 
         $enrolments = Checkout::with('course')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(12);
         $cartCount = Cart::where('user_id', auth()->id())->count();

@@ -82,11 +82,5 @@
 
     @yield('script')
 
-    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
-    <script>
-        var userIdentifier = uuidv4();
-        document.cookie = "userIdentifier=" + userIdentifier + "; path=/;
-    </script>
-
 </body>
 </html>

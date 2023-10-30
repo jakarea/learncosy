@@ -87,6 +87,8 @@ Route::get('/auth-login', function () {
 
         if( $user){
             Auth::login( $user);
+            $user->session_id = null;
+            $user->save();
             return redirect()->intended($user->user_role.'/dashboard');
         }
 
@@ -407,7 +409,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
     Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
-    Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
 });
 
 
