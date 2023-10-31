@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use Mail;
 use Stripe\Stripe;
 use App\Models\Course;
+use App\Models\Notification;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Stripe\Checkout\Session;
@@ -34,7 +35,7 @@ class CheckoutController extends Controller
         $course = Course::where('slug', $slug)->first();
 
         // configure stripe key
-        Stripe::setApiKey( $course->user->stripe_secret_key);
+        Stripe::setApiKey($course->user->stripe_secret_key);
 
         // check if stripe key is not null
         if($course->user->stripe_secret_key == null){
@@ -75,9 +76,6 @@ class CheckoutController extends Controller
 
         return redirect($checkout_session->url);
     }
-
-
-
 
     public function indexOfCart()
     {
@@ -215,8 +213,19 @@ class CheckoutController extends Controller
         foreach ($cartItems as $cartItem) {
             $cartItem->delete();
         }
-        return redirect()->route('students.catalog.courses')->with('success', 'You have successfully enrolled in this course');
+ 
+        // set notification for instructor
+        $notify = new Notification([
+            'user_id'   => Auth::user()->id,
+            'instructor_id' => $course->user_id,
+            'course_id' => $course->id,
+            'type'      => 'instructor',
+            'message'   => "enrolled",
+            'status'   => 'unseen',
+        ]);
+        $notify->save();
 
+        return redirect()->route('students.catalog.courses')->with('success', 'You have successfully enrolled in this course');
 
     }
 

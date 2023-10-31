@@ -6,6 +6,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Notification;
 use App\Models\Message;
 use App\Models\ManagePage;
 use App\Models\Checkout;
@@ -312,10 +313,20 @@ class DashboardController extends Controller
 
     public function analytics(){
 
+      $recentUpdates = Notification::where('instructor_id',Auth::user()->id)->where('type','instructor')->orderBy('id','desc')->get();
+
         $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->paginate(12);
 
         $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
-        return view('dashboard/instructor/dashboard',compact('courses','payments'));
+        return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
+    }
+
+    // instructor notification delete
+    public function notifyDestroy($id)
+    {
+        $notify = Notification::find($id);
+        $notify->delete();
+        return redirect()->back()->with('success','Notification deleted successfully');
     }
 
     private function getActiveInActiveStudents($data)
