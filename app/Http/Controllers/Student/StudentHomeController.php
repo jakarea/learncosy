@@ -20,6 +20,7 @@ use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use RecursiveIteratorIterator;
+use App\Models\Notification;
 // use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Barryvdh\DomPDF\Facade\Pdf;
 use RecursiveDirectoryIterator;
@@ -661,6 +662,17 @@ class StudentHomeController extends Controller
                 'comment'   => $request->comment,
             ]);
             $review->save();
+
+            // set notification for instructor
+                $notify = new Notification([
+                    'user_id'   => Auth::user()->id,
+                    'instructor_id' => $course->user_id,
+                    'course_id' => $course->id,
+                    'type'      => 'instructor',
+                    'message'   => "review",
+                    'status'   => 'unseen',
+                ]);
+                $notify->save();
         }
 
         return redirect()->route('students.show.courses',$slug)->with('message', 'comment submitted successfully!');

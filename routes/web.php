@@ -227,6 +227,9 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     }); 
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+    
+    // destroy instructor notification
+    Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
     Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');

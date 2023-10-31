@@ -21,14 +21,7 @@ $layoutName = "layouts.latest.admin";
 
 @section('content')
 <main class="courses-lists-pages">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="user-title-box">
