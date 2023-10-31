@@ -1420,6 +1420,12 @@
 .dark-mode .header-area .d-flex a.bttn.active {
   background-color: #7289FF !important;
 }
+.dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a img {
+  filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%) !important;
+}
+.dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a i {
+  color: #7289FF !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

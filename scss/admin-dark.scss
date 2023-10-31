@@ -1843,6 +1843,12 @@
     .header-area .d-flex a.bttn.active{
         background-color: #7289FF!important;
     }
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a img{
+        filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%)!important;
+    }
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a i{
+        color: #7289FF!important;
+    }
 }
 
 
