@@ -84,11 +84,13 @@ $i = 0;
                         {!! $course->description !!}
                     </div>
                 </div>
-                @if(!empty($group_files))
+               
                 <div class="download-files-box">
                     <h4>Download Files </h4>
                     <div id="dataTextContainer" class="mb-3"> 
                     </div>
+                    @if(!empty($group_files))
+                   
                     
                     <div class="files">
                         @foreach($group_files as $fileExtension)
@@ -108,8 +110,9 @@ $i = 0;
                                 title="120MB" class="img-fluid"></a>
                         @endif
                     </div>
+                    @endif
                 </div>
-                @endif
+                
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -519,7 +522,7 @@ $i = 0;
 
 {{-- linke bttn --}}
 <script>
-    let currentURL = window.location.href;
+        let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const likeBttn = document.getElementById('likeBttn');
 
