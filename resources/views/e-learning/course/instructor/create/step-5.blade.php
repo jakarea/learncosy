@@ -110,7 +110,6 @@ Course Create - Video Upload Step
                         </div>
                         @endforeach
                         @endif 
-                        
                         {{-- course page file box end --}}
 
                     </div>

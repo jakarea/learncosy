@@ -2852,10 +2852,70 @@ span.stripe-bg {
         position: absolute;
         left: 0%;
         bottom: 0;
-        width: 100%;  
+        width: 100%;
         text-align: center;
     }
+}
 
+.course-modules-lessons-redesign {
+
+    .accordion-item {
+        border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
+
+        &:last-child {
+            border-bottom: 0!important;
+        }
+    }
+
+    .lesson-wrap{
+        margin-left: 1.4rem!important;
+        li{
+            border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
+            margin-bottom: 0.3rem!important;
+
+            &:last-child {
+                border-bottom: 0!important;
+            }
+        }
+    }
+
+    .video_list_play{
+        .actv-show{
+            display: none!important;
+        }
+    
+        .actv-hide{
+            display: inline-block!important;
+        }
+    }
+    
+
+    .video_list_play.active{
+        .actv-show{
+            display: inline-block!important;
+        }
+    
+        .actv-hide{
+            display: none!important;
+        }
+    }
+
+    
+
+    p.module-title {
+        overflow: hidden;
+        color: var(--neutral-color-neutral-70, #2F3A4C);
+        text-overflow: ellipsis; 
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 155%;
+    }
+
+    .fa-check-circle {
+        color: #A6B1C4;
+        font-size: 1.2rem;
+    }
 }
 
 

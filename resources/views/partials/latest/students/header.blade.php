@@ -2,9 +2,10 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url('students/dashboard')}}">
             @if ( modulesetting('logo') )
-                    <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
+                <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
-                    <img src="{{asset('latest/assets/images/logo-d.svg')}}" alt="Logo" class="img-fluid">
+                <img src="{{asset('latest/assets/images/logo-d.svg')}}" alt="Logo" class="img-fluid light-ele ">
+                <img src="{{asset('latest/assets/images/logo-w.svg')}}" alt="Logo" class="img-fluid dark-ele">
             @endif
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

@@ -2520,6 +2520,48 @@ span.stripe-bg i {
   text-align: center;
 }
 
+.course-modules-lessons-redesign .accordion-item {
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
+}
+.course-modules-lessons-redesign .accordion-item:last-child {
+  border-bottom: 0 !important;
+}
+.course-modules-lessons-redesign .lesson-wrap {
+  margin-left: 1.4rem !important;
+}
+.course-modules-lessons-redesign .lesson-wrap li {
+  border-bottom: 1px solid var(--neutral-color-neutral-30, #E5ECF6) !important;
+  margin-bottom: 0.3rem !important;
+}
+.course-modules-lessons-redesign .lesson-wrap li:last-child {
+  border-bottom: 0 !important;
+}
+.course-modules-lessons-redesign .video_list_play .actv-show {
+  display: none !important;
+}
+.course-modules-lessons-redesign .video_list_play .actv-hide {
+  display: inline-block !important;
+}
+.course-modules-lessons-redesign .video_list_play.active .actv-show {
+  display: inline-block !important;
+}
+.course-modules-lessons-redesign .video_list_play.active .actv-hide {
+  display: none !important;
+}
+.course-modules-lessons-redesign p.module-title {
+  overflow: hidden;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  text-overflow: ellipsis;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%;
+}
+.course-modules-lessons-redesign .fa-check-circle {
+  color: #A6B1C4;
+  font-size: 1.2rem;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

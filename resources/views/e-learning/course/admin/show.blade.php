@@ -18,13 +18,16 @@ $i = 0;
         <div class="row">
             <div class="col-xl-9 col-lg-8 col-md-12 col-12">
                 <div class="course-left">
-                    {{-- video player --}}
+                    {{-- video player --}} 
                     <div class="video-iframe-vox">
                         @if (getFirstLesson($course->id))
                         <div class="video-iframe-vox">
-                            <div class="vimeo-player w-100"
-                                data-vimeo-url="{{ getFirstLesson($course->id)->video_url }}" data-vimeo-width="1000"
-                                data-vimeo-height="360"></div>
+                            <div class="vimeo-player w-100" id="firstLesson"
+                                data-vimeo-url="{{ getFirstLesson($course->id)->video_link }}"
+                                data-first-lesson-id="{{ getFirstLesson($course->id)->id }}"
+                                data-first-course-id="{{ getFirstLesson($course->id)->course_id }}"
+                                data-first-modules-id="{{ getFirstLesson($course->id)->module_id }}"
+                                data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
                         @else
                         <div class="video-iframe-vox">
@@ -34,6 +37,21 @@ $i = 0;
                         @endif
                     </div>
                     {{-- video player --}}
+
+                    {{-- audio player --}}
+                    <div class="audio-iframe-box d-none">
+                        <a href="#">
+                            <img src="{{ asset('latest/assets/images/audio.png') }}" alt="Audio"
+                                class="img-fluid big-thumb">
+                        </a>
+                        <div class="player-bottom">
+                            <audio id="audioPlayer" controls>
+                                <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                    {{-- audio player --}} 
 
                     {{-- course title --}}
                     <div class="media course-title">
@@ -54,9 +72,13 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
-                    @if(!empty($group_files))
+                    
+                    
                     <div class="download-files-box">
                         <h4>Download Files </h4>
+                        <div id="dataTextContainer" class="mb-3"> 
+                        </div>
+                        @if(!empty($group_files))
                         <div class="files">
                             @foreach($group_files as $fileExtension)
                                 <a href="{{ route('admin.file.download', [$course->id,$fileExtension]) }}">
@@ -64,8 +86,9 @@ $i = 0;
                                 </a>
                             @endforeach
                         </div>
+                        @endif
                     </div>
-                    @endif
+                   
                     {{-- course review --}}
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -101,7 +124,7 @@ $i = 0;
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
-                <div class="course-outline-wrap">
+                <div class="course-outline-wrap  course-modules-lessons-redesign">
                     <div class="header">
                         <h3>Modules</h3>
                         <h6>{{ $totalModules }} Modules . {{ $totalLessons }} Lessons</h6>
@@ -114,7 +137,7 @@ $i = 0;
                                     data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
+                                        <p class="module-title"><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
                                     </div>
                                 </button>
                             </div>
@@ -124,12 +147,36 @@ $i = 0;
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
                                         <li>
-                                            <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
-                                                data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}">
-                                                <i class="fas fa-check-circle"></i> <i class="fas fa-play"></i>
-                                                {{ $lesson->title }}
-                                            </a>
+                                            <div class="d-flex align-items-center">
+                                                @can('instructor')
+                                                    <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
+                                                        <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
+                                                    </a> 
+                                                    @endcan
+
+                                                <a href="{{ $lesson->video_link }}"
+                                                    class="video_list_play d-inline-block"
+                                                    data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
+                                                    data-course-id="{{ $course->id }}"
+                                                    data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
+                                                    data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important"> 
+
+                                                    @if ($lesson->type == 'text')
+                                                    <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @elseif($lesson->type == 'audio')
+                                                    <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @elseif($lesson->type == 'video')
+                                                    <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @endif 
+                                                    
+                                                    {{ $lesson->title }}
+                                                </a>
+                                                
+                                            </div>
+
                                         </li>
                                         @endforeach
                                     </ul>
@@ -210,31 +257,66 @@ $i = 0;
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
     $(document).ready(function() {
+        let currentURL = window.location.href;
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
             var options = {
-                id: '{{ 305108069 }}',
-                // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
+                id: '{{ 305108069 }}', 
                 autoplay: true,
                 loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
-            // play video on load
             player.on('ended', function() {
-                player.setCurrentTime(0); // Set current time to 0 seconds
+                player.setCurrentTime(0); 
                 player.play();
             });
 
 
             $('a.video_list_play').click(function(e) {
-                e.preventDefault();
-                var videoId = $(this).data('video-id');
-                var videoUrl = $(this).attr('href');
-                videoUrl = videoUrl.replace('/videos/', '');
-                player.loadVideo(videoUrl);
-                // add bold class to current lesson
+                e.preventDefault(); 
+
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
+
+                let type = this.getAttribute('data-lesson-type');
+
+                if(type == 'video'){
+
+                    document.querySelector('.video-iframe-vox').classList.remove('d-none');
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
+                    audioPlayer.pause();
+
+                    var videoId = $(this).data('video-id');
+                    var videoUrl = $(this).attr('href');
+                    videoUrl = videoUrl.replace('/videos/', '');
+                    player.loadVideo(videoUrl); 
+
+                }else if(type == 'audio'){
+                    player.pause();
+                    document.querySelector('.audio-iframe-box').classList.remove('d-none');
+                    document.querySelector('.video-iframe-vox').classList.add('d-none');
+                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');  
+                    let audioPlayer = document.getElementById('audioPlayer');
+                    let audioSource = audioPlayer.querySelector('source');
+                    audioSource.src = laravelURL; 
+                    audioPlayer.load(); 
+                    audioPlayer.play(); 
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
+
+                }else if(type == 'text'){
+                    player.pause(); 
+                    audioPlayer.pause();
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+                    document.querySelector('.video-iframe-vox').classList.add('d-none');
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
+
+
+                } 
+                
             });
 
         });
