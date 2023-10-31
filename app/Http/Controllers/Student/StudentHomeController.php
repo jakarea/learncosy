@@ -39,7 +39,12 @@ class StudentHomeController extends Controller
         $user->session_id = null;
         $user->save();
 
-        $userIdentifier = $_COOKIE['userIdentifier'];
+        if (isset($_COOKIE['userIdentifier'])) {
+            $userIdentifier = $_COOKIE['userIdentifier'];
+        } else {
+            $userIdentifier = '';
+        }
+        
 
         Cart::where('user_identifier', $userIdentifier)
         ->update(['user_id' => Auth::id()]);

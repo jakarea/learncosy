@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 9
+Course Create - Certificate 
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -106,7 +106,7 @@ Course Create - Step 9
                         <hr>
                         <div class="form-group">
                             <h6>Select Certificate</h6>
-                            <select class="form-control" name="hascertificate">
+                            <select class="form-control" name="hascertificate"> 
                                 <option value="no" {{ $course->hascertificate == 'no' ? 'selected' : ''}}>No</option>
                                 <option value="yes" {{ $course->hascertificate == 'yes' ? 'selected' : ''}}>Yes</option>
                             </select>

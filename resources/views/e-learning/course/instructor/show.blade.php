@@ -145,16 +145,16 @@ $i = 0;
                                         </li>
                                         @endforeach
                                     </ul>
-                                    <div class="text-center add-lesson-bttn">
+                                    {{-- <div class="text-center add-lesson-bttn">
                                         <a href="{{ url('instructor/lessons/create') }}"
                                             class="add_lesson_bttn">Add Lesson</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                         @endforeach
                         <div class="text-center add-lesson-bttn mt-2">
-                            <a href="{{ url('instructor/modules/create') }}" class="add_lesson_bttn">Add Module</a>
+                            <a href="{{ url('instructor/modules/create') }}" class="add_lesson_bttn">Add More</a>
                         </div>
                     </div>
                 </div>

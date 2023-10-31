@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Course;
 use App\Models\Notification;
+use App\Models\Certificate;
 use App\Models\Checkout;
 use App\Models\Module;
 use App\Models\Lesson;
@@ -567,7 +568,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
 
         return view('e-learning/course/instructor/create/step-9',compact('course'));
     }

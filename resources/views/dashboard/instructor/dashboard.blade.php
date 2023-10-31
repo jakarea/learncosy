@@ -120,6 +120,7 @@
                 <div class="col-lg-6 mt-15">
                     <div class="my-courses-box recent-update-box">
                         <h3>Recent Updates</h3>
+                        @if (count($recentUpdates) > 0) 
                         @foreach ($recentUpdates->slice(0,5) as $recentUpdate)
                         @php
                             $course = App\Models\Course::find($recentUpdate->course_id);
@@ -152,6 +153,9 @@
 
                         </div> 
                         @endforeach
+                        @else 
+                        @include('partials/no-data')
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">
