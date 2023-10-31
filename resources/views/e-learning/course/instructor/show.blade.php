@@ -133,7 +133,11 @@ $i = 0;
                                                     data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                     data-course-id="{{ $course->id }}"
                                                     data-modules-id="{{ $module->id }}">
-                                                    <i class="fas fa-play text-primary me-2"></i>
+
+                                                    @if ($lesson->type == 'video')
+                                                        <i class="fas fa-play text-primary me-2"></i>
+                                                    @endif
+                                                    
                                                     {{ $lesson->title }}
                                                 </a>
                                                 @can('instructor')

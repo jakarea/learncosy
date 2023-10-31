@@ -187,7 +187,7 @@ $i = 0;
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
-                <div class="course-outline-wrap">
+                <div class="course-outline-wrap course-modules-lessons-redesign">
                     <div class="header">
                         <h3>Modules</h3>
                         <h6>
@@ -204,7 +204,7 @@ $i = 0;
                                     <div class="media align-items-center">
                                         <i class="fas fa-check-circle me-2"></i>
                                         <div class="media-body">
-                                            <p>{{ $module->title }}</p>
+                                            <p class="module-title">{{ $module->title }}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -228,25 +228,30 @@ $i = 0;
                                                 data-audio-url="{{ $lesson->audio }}"
                                                 data-lesson-type="{{ $lesson->type }}">
 
-                                                @if ($lesson->type == 'text')
-                                                <i class="fa-regular fa-file-lines"></i>
-                                                @elseif($lesson->type == 'audio')
-                                                <i class="fa-solid fa-headphones"></i>
-                                                @elseif($lesson->type == 'video')
-                                                <i class="fa-solid fa-video"></i>
-                                                @endif
-                                                {{ $lesson->title }}
-                                                <span class="mt-2 ml-1" style="cursor:pointer;">
+                                                <span class="mt-2 ms-1" style="cursor:pointer;">
                                                     @if (isLessonCompleted($lesson->id))
-                                                    <i class="fa-regular fa-circle-play text-success"></i>
+                                                    <i class="fas fa-check-circle text-primary"></i>
                                                     @else
-                                                    <i class="fa-regular fa-circle-play is_complete_lesson"
+                                                    <i class="fas fa-check-circle is_complete_lesson"
                                                         data-course="{{ $course->id }}" data-module="{{ $module->id }}"
                                                         data-lesson="{{ $lesson->id }}"
                                                         data-duration="{{ $lesson->duration }}"
                                                         data-user="{{ Auth::user()->id }}"></i>
                                                     @endif
                                                 </span>
+
+                                                @if ($lesson->type == 'text')
+                                                <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @elseif($lesson->type == 'audio')
+                                                <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @elseif($lesson->type == 'video')
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @endif  
+
+                                                {{ $lesson->title }} 
                                             </a>
                                             @endif
                                         </li>
@@ -379,12 +384,17 @@ $i = 0;
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault();
+ 
+                $('a.video_list_play').removeClass('active');
+                $(this).addClass('active');
+
                 let type = this.getAttribute('data-lesson-type');
                
                 if(type == 'video'){
                     document.querySelector('.video-iframe-vox').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
                     audioPlayer.pause();
 
                     @if (isEnrolled($course->id))
@@ -397,9 +407,7 @@ $i = 0;
                         // console.log({videoUrl})
                         videoUrl = videoUrl.replace('/videos/', '');
                         player.loadVideo(videoUrl);
-                        // add bold class to current lesson
-                        $('a.video_list_play').removeClass('active');
-                        $(this).addClass('active');
+                        
                     @else
                         alert('Please enroll the course');
                     @endif
@@ -415,6 +423,7 @@ $i = 0;
                     audioPlayer.load(); 
                     audioPlayer.play(); 
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
 
                 }else if(type == 'text'){
                     player.pause(); 
@@ -486,14 +495,14 @@ $i = 0;
                         data: data,
                         beforeSend: function() {
                             // Change class to spinner
-                            $element.removeClass('fa-solid fa-circle-play').addClass(
+                            $element.removeClass('fas fa-check-circle').addClass(
                                 'spinner-border spinner-border-sm');
                         },
                         success: function(response) {
                             // console.log('response', response);
                             // Change icon to success checkmark
                             $element.removeClass('spinner-border spinner-border-sm').addClass(
-                                'fa-solid fa-circle-play text-success');
+                                'fas fa-check-circle text-primary');
                         },
                         error: function(xhr, status, error) {
                             // Handle errors, if any
