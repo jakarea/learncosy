@@ -177,20 +177,30 @@
                                             @else
                                             €
                                                 {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
-                                            @endif
-    
-                                            <span>/{{ $package->type[0] }}</span>
-                                        </h3>
-                                        <h6>Billed {{ $package->type }}</h6>
-                                        <ul>
-                                            @foreach ($package_featurelist as $feature)
-                                            <li>
-                                                <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
-                                                <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
-                                                <span>{{ $feature }}</span>
-                                            </li>
-                                            @endforeach
-                                        </ul>
+                                                @endif
+                                                /{{ $package->type[0] }}</span>
+                                            </h3>
+                                            <h6>Billed {{ $package->type }}</h6>
+
+                                            <ul>
+                                                @foreach ($package_featurelist as $feature)
+                                                    <li><img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}"
+                                                            alt="Prici" class="img-fluid">
+                                                        <span>{{ $feature }}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @if (!isSubscribed($package->id))
+                                            <div class="bttn">
+                                                <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
+                                                    class="will-subscribe">Subscribe Now</a>
+                                            </div>
+                                        @else
+                                            <div class="bttn">
+                                                <a href="#" class="will-subscribe bg-secondary">Subscribed</a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="bttn">
