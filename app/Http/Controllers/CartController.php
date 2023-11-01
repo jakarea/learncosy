@@ -21,10 +21,9 @@ class CartController extends Controller
         $cart = Cart::where(function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })
-        ->leftJoin('users', 'carts.user_id', '=', 'users.id')
-        ->select('carts.*', 'users.name', 'users.stripe_secret_key', 'users.stripe_public_key')
+        ->leftJoin('users', 'carts.instructor_id', '=', 'users.id') // Join with 'instructor_id'
+        ->select('carts.*', 'users.name', 'users.stripe_public_key') // Include 'stripe_public_key'
         ->get();
-
 
         return view('e-learning/course/students/cart',compact('cart'));
     }
