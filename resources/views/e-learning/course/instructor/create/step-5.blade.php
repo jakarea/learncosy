@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Video Upload Step
+Course Create - Video Upload
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -116,7 +116,7 @@ Course Create - Video Upload Step
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         <a href="{{ url('instructor/courses/create/'.$lesson->course_id) }}">Back</a>
-                        <button class="btn btn-primary" type="submit">Next</button>
+                        <button class="btn btn-primary btn-submit" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
                 </form>
@@ -225,6 +225,7 @@ Course Create - Video Upload Step
 </script>
 
 <script>
+    
     var baseUrl = "{{ url('') }}";
         var currentURL = window.location.href
         var urlObject = new URL(currentURL);
@@ -284,25 +285,13 @@ Course Create - Video Upload Step
                     dataType: 'json',
                     cache: false,
                     contentType: false,
-                    processData: false,
-                    // xhr: function() {
-                    //     var xhr = new window.XMLHttpRequest();
-                    //     // Upload progress
-                    //     xhr.upload.addEventListener('progress', function(evt) {
-                    //         if (evt.lengthComputable) {
-                    //             var percentComplete = (evt.loaded / evt.total) * 100;
-                    //             $('.progress-bar').css('width', percentComplete + '%');
-                    //             $('.upload-progress h3').text(percentComplete + '%');
-                    //         }
-                    //     }, false);
-                    //     return xhr;
-                    // },
+                    processData: false, 
                     beforeSend: function() {
-
-                        // set button state to loading and disable with spinner
+ 
                         $('.btn-submit').attr('disabled', true).html(
                             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
                         );
+ 
                         // check if file is not empty
 
                         var fileInput = document.getElementById('uploadFile');
@@ -385,6 +374,9 @@ Course Create - Video Upload Step
                     const durationInSeconds = Math.floor(video.duration);
                     durationInput.value = durationInSeconds;
                 });
+ 
+                // show video name frontend
+                $('.highlighted-area-upload p').text(file.name);
             }
         });
 </script>
