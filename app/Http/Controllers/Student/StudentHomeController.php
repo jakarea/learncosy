@@ -44,7 +44,7 @@ class StudentHomeController extends Controller
         } else {
             $userIdentifier = '';
         }
-        
+
 
         Cart::where('user_identifier', $userIdentifier)
         ->update(['user_id' => Auth::id()]);
@@ -112,6 +112,8 @@ class StudentHomeController extends Controller
         $sum_of_duration = CourseActivity::selectRaw('SUM(duration) as total_duration')
                                             ->where('user_id', auth()->user()->id)
                                             ->first();
+
+                                            // dd( $sum_of_duration );
         $total_hr = 0;
         $total_min = 0;
         $total_hr = floor($sum_of_duration->total_duration / 3600);
@@ -621,6 +623,8 @@ class StudentHomeController extends Controller
     public function storeActivities(Request $request)
     {
 
+        // dd( $request->storeCourseLog);
+
         // // Update or insert to course activities
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
@@ -636,7 +640,7 @@ class StudentHomeController extends Controller
                 'user_id'   => $userId,
                 'is_completed' => true
             ]
-        ); 
+        );
 
         return response()->json($courseActivities);
     }
