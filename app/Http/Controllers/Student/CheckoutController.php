@@ -225,6 +225,17 @@ class CheckoutController extends Controller
         ]);
         $notify->save();
 
+        $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
+        $pdfContent = $pdf->output();
+
+        // Send the email with the PDF attachment
+        $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+            $message->to(auth()->user()->email)
+                    ->subject('Invoice')
+                    ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+        });
+
+
         return redirect()->route('students.catalog.courses')->with('success', 'You have successfully enrolled in this course');
 
     }

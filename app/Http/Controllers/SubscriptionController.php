@@ -130,16 +130,20 @@ class SubscriptionController extends Controller
             'end_at' => $ends_at,
         ]);
 
+        // return redirect()->route('instructor.dashboard.index')->with('success', 'Stop Here'); 
+
         // Generate and save the PDF file
         $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
         $pdfContent = $pdf->output();
 
         // Send the email with the PDF attachment
-        Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+        $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
             $message->to(auth()->user()->email)
                     ->subject('Invoice')
                     ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
         });
+
+        // dd($mailInfo);
 
         // return back with success message
         return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');

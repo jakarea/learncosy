@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+// use PDF;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
-use App\Models\SubscriptionPackage;
+use App\Models\SubscriptionPackage; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Charge;
+use Stripe\Charge; 
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SubscriptionPaymentController extends Controller
 {
@@ -60,7 +61,22 @@ class SubscriptionPaymentController extends Controller
                     'end_at' => $ends_at,
                 ]);
 
-                return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
+                $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
+                $pdfContent = $pdf->output();
+        
+                // Send the email with the PDF attachment
+                $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+                    $message->to(auth()->user()->email)
+                            ->subject('Invoice')
+                            ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+                });
+
+                if (Auth::user()->subdomain) {
+                    return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
+                }else{
+                    return redirect('instructor/profile/step-3/complete')->with('success', 'Subscribed Successfully');
+                }
+                
             }
 
         } catch (\Exception $e) {
