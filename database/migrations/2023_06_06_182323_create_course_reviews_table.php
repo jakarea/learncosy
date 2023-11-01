@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('instructor_id');
             $table->unsignedBigInteger('user_id');
-            $table->longText('comment');
+            $table->longText('comment')->nullable();
             $table->integer('star');
             $table->timestamps();
         });
