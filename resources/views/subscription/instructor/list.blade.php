@@ -177,4 +177,5 @@
     </div>
 </section>
 <!-- pricing plan page end -->
+
 @endsection

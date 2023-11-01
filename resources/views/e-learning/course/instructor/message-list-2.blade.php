@@ -25,49 +25,102 @@
                                 <input type="text" placeholder="Search" class="form-control">
                             </div>
 
-                            <div class="person-tab-body">
-                                @if (count($highLightMessages) > 0)
-                                    @foreach ($highLightMessages as $message)
-                                        <a href="{{ route('message') }}?sender={{ $message[0]->user->id }}">
-                                            <div class="media">
-                                                <div class="avatar">
-                                                    <img src="{{ asset( $message[0]->user->avatar) }}"
-                                                        alt="Avatar" class="img-fluid">
-                                                    <i class="fas fa-circle"></i>
-                                                </div>
-
-                                                <div class="media-body">
-                                                    <div class="name">
-                                                        <h5>{{ $message[count($message) - 1]->user->name }}</h5>
-                                                        <span>{{ $message[count($message) - 1]->created_at->diffForHumans() }}</span>
-                                                    </div>
-                                                    <p>{{ $message[count($message) - 1]->message }}.</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                @else
-                                    <div>
-                                        @include('partials/no-data')
-                                    </div>
-                                @endif
-                            </div>
-                        </div> 
-                            <div class="chat-main-body-box">
-                                @if (count($messages) > 0)
-                                    <div class="chat-room-head"> 
+                            <div class="person-tab-body"> 
+                                    <a href="#">
                                         <div class="media">
-                                            @if ($senderInfo)
-                                                <img src="{{ asset($senderInfo->avatar) }}"
+                                            <div class="avatar">
+                                                <img src="{{ asset('latest/assets/images/update-5.png') }}"
                                                     alt="Avatar" class="img-fluid">
-                                            @else
-                                                <img src="{{ asset('dashboard-assets/images/avatar.png') }}" alt="Avatar"
-                                                    class="img-fluid">
-                                            @endif
+                                                <i class="fas fa-circle"></i>
+                                            </div>
 
                                             <div class="media-body">
-                                                <h5>{{ $senderInfo ? $senderInfo->name : '' }}</h5>
-                                                <p>@ {{ $senderInfo ? $senderInfo->subdomain : '' }}</p>
+                                                <div class="name">
+                                                    <h5>Katherine Moss</h5>
+                                                    <span>12m</span>
+                                                </div>
+                                                <p>You: Sure thing, I’ll have a look today.</p>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                    <a href="#">
+                                        <div class="media">
+                                            <div class="avatar">
+                                                <img src="{{ asset('latest/assets/images/update-2.png') }}"
+                                                    alt="Avatar" class="img-fluid">
+                                                <i class="fas fa-circle"></i>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="name">
+                                                    <h5>Katherine Moss</h5>
+                                                    <span>12m</span>
+                                                </div>
+                                                <p>You: Sure thing, I’ll have a look today.</p>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                    <a href="#">
+                                        <div class="media">
+                                            <div class="avatar">
+                                                <img src="{{ asset('latest/assets/images/update-3.png') }}"
+                                                    alt="Avatar" class="img-fluid">
+                                                <i class="fas fa-circle"></i>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="name">
+                                                    <h5>Katherine Moss</h5>
+                                                    <span>12m</span>
+                                                </div>
+                                                <p>You: Sure thing, I’ll have a look today.</p>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                    <a href="#">
+                                        <div class="media">
+                                            <div class="avatar">
+                                                <img src="{{ asset('latest/assets/images/update-4.png') }}"
+                                                    alt="Avatar" class="img-fluid">
+                                                <i class="fas fa-circle"></i>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="name">
+                                                    <h5>Katherine Moss</h5>
+                                                    <span>12m</span>
+                                                </div>
+                                                <p>You: Sure thing, I’ll have a look today.</p>
+                                            </div>
+                                        </div>
+                                    </a> 
+                                    <a href="#">
+                                        <div class="media">
+                                            <div class="avatar">
+                                                <img src="{{ asset('latest/assets/images/update-5.png') }}"
+                                                    alt="Avatar" class="img-fluid">
+                                                <i class="fas fa-circle"></i>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="name">
+                                                    <h5>Katherine Moss</h5>
+                                                    <span>12m</span>
+                                                </div>
+                                                <p>You: Sure thing, I’ll have a look today.</p>
+                                            </div>
+                                        </div>
+                                    </a> 
+                            </div>
+                        </div> 
+                            <div class="chat-main-body-box"> 
+                                    <div class="chat-room-head"> 
+                                        <div class="media">
+                                            <img src="{{ asset('latest/assets/images/avatar.png') }}" alt="Avatar" class="img-fluid">
+
+                                            <div class="media-body">
+                                                <h5>Katherine Moss</h5>
+                                                <p>@kathy</p>
                                             </div>
                                             <a href="#" class="common-bttn">View Profile</a>
                                         </div> 
@@ -75,20 +128,33 @@
 
                                     <div class="main-chat-room">
                                         <div class="chat-messages-box">
-                                            @foreach ($messages as $message)
-                                                <div
-                                                    class="{{ $message->user_id == Auth::user()->id ? 'sender' : 'reciver' }} message-item">
-                                                    <p>{{ $message->message }}</p>
-                                                    <span>{{ $message->created_at->diffForHumans() }}</span>
-                                                </div>
-                                                <br>
-                                            @endforeach
+
+                                            <div class="reciver message-item">
+                                                    <p>Thanks Olivia! Almost there. I’ll work on making those changes you suggested and will shoot it over.</p>
+                                                    <span>Thursday 10:16am</span>
+                                            </div>
+                                            <br>
+                                            <div class="sender message-item bg-primary">
+                                                    <p class="text-white">Hey Olivia, I’ve finished with the requirements doc! I made some notes in the gdoc as well for Phoenix to look over.</p>
+                                                    <span class="text-white">Thursday 10:16am</span>
+                                            </div>
+                                            <br>
+                                            <div class="reciver message-item">
+                                                    <p>Thanks Olivia! Almost there. I’ll work on making those changes you suggested and will shoot it over.</p>
+                                                    <span>Thursday 10:16am</span>
+                                            </div>
+                                            <br>
+                                            <div class="sender message-item bg-primary">
+                                                    <p class="text-white">Hey Olivia, I’ve finished with the requirements doc! I made some notes in the gdoc as well for Phoenix to look over.</p>
+                                                    <span class="text-white">Thursday 10:16am</span>
+                                            </div>
+                                            <br>
+
                                         </div>
                                     </div>
 
                                     <form id="send" method="POST"
-                                        action="{{ route('message-send', ['sender' => isset($senderInfo) ? $senderInfo->id : '']) }}">
-                                        @csrf
+                                        action=""> 
 
                                         <div class="message-send-box">
                                             <div class="form-group">
@@ -102,12 +168,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
-                                @else
-                                    <div>
-                                        @include('partials/no-data')
-                                    </div>
-                                @endif
+                                    </form> 
                             </div>
                         </div>
                     </div>

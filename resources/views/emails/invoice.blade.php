@@ -5,7 +5,9 @@
     <thead>
       <tr>
         <th style="text-align: left;">
-          <img style="max-width: 150px;" src="https://www.bachanatours.in/book/img/logo.png">
+          <a href="https://app.learncosy.com"> 
+            <img src="{{ asset('latest/assets/images/black-logo.png') }}" alt="Learncosy" class="img-fluid" width="140px">
+        </a>
         </th>
         <th style="text-align: right; font-weight: 400;">{{ date('d M Y') }}</th>
       </tr>
@@ -24,7 +26,7 @@
             <span style="font-weight: bold; display: inline-block; min-width: 146px;">Transaction ID</span> {{ $subscription->stripe_plan }}
           </p>
           <p style="font-size: 14px; margin: 0 0 0 0;">
-            <span style="font-weight: bold; display: inline-block; min-width: 146px;">Order amount</span> € {{ $data->amount }}
+            <span style="font-weight: bold; display: inline-block; min-width: 146px;">Order amount</span> € {{ $subscription->amount }}
           </p>
         </td>
       </tr>
@@ -41,10 +43,7 @@
           </p>
           <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
             <span style="display: block; font-weight: bold; font-size: 13px;">Phone</span> {{ auth()->user()->phone }}
-          </p>
-          <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">ID No.</span>  {{ auth()->user()->id }}
-          </p>
+          </p> 
         </td>
         <td style="width: 50%; padding: 20px; vertical-align: top;">
           <!-- <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
@@ -55,7 +54,7 @@
             <span style="display: block; font-weight: bold; font-size: 13px;">Package Name</span> {{ $data->name }}
           </p>
           <p style="margin: 0 0 10px 0; padding: 0; font-size: 14px;">
-            <span style="display: block; font-weight: bold; font-size: 13px;">Duration of your vacation</span>
+            <span style="display: block; font-weight: bold; font-size: 13px;">Start &amp; End Date</span>
             Start at {{ $subscription->start_at }} and end at {{ $subscription->end_at }}
           </p>
         </td>
