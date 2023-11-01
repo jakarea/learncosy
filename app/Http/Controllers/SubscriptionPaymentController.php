@@ -15,6 +15,24 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class SubscriptionPaymentController extends Controller
 {
+
+    public function index()
+    {
+
+        // dd( Auth::id());
+
+        $packages = SubscriptionPackage::where('status','active')->get();
+        $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
+
+        if ($insPackage && $insPackage->status == 'cancel') {
+            $activePackageId = null;
+        }else{
+            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
+        }
+
+        return view('subscription/instructor/list',compact('packages','activePackageId'));
+    }
+    
     public function createPayment($id){
         $package = SubscriptionPackage::findorfail($id);
         return view('subscription/payment/payment',compact('package'));
@@ -61,7 +79,7 @@ class SubscriptionPaymentController extends Controller
                     'end_at' => $ends_at,
                 ]);
 
-                $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
+                $pdf = PDF::loadView('emails.package.subscribe', ['data' => $package, 'subscription' => $subscription]);
                 $pdfContent = $pdf->output();
         
                 // Send the email with the PDF attachment
@@ -83,6 +101,31 @@ class SubscriptionPaymentController extends Controller
             return redirect()->route('instructor.dashboard.index')->with('error', $e->getMessage());
         }
 
+    }
+
+    public function cancel()
+    {
+        //
+        return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
+    }
+    public function status($id)
+    {
+        //
+        $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();
+        $subscription->status = 'cancel';
+        $subscription->save();
+
+        $pdf = PDF::loadView('emails.package.cancle', ['subscription' => $subscription]);
+        $pdfContent = $pdf->output();
+
+        // Send the email with the PDF attachment
+        $mailInfo = Mail::send('emails.package.cancle', ['subscription' => $subscription], function($message) use ($pdfContent, $subscription) {
+            $message->to(auth()->user()->email)
+                    ->subject('Invoice')
+                    ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+        });
+
+        return redirect()->back()->with('error', 'Subscription Cancelled');
     }
 
 }

@@ -109,7 +109,7 @@
                                                     $completedLessons += $module->lessons->where('completed', 1)->count();
                                                 @endphp
                                             @endforeach
-                                            <div class="number" style="left: 30%">
+                                            <div class="number" style="left: 34%">
                                                 <h6>{{ $totalPorgressPercent }}<b style="font-size: 14px">%</b></h6>
                                             </div>
                                         </div>

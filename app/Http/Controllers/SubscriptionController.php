@@ -11,7 +11,7 @@ use App\Mail\PackageSubscribeCancle;
 use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\SubscriptionPackage;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 class SubscriptionController extends Controller
 {
     /**
@@ -27,22 +27,7 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
-        // dd( Auth::id());
-
-        $packages = SubscriptionPackage::where('status','active')->get();
-        $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
-
-        if ($insPackage && $insPackage->status == 'cancel') {
-            $activePackageId = null;
-        }else{
-            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
-        }
-
-        return view('subscription/instructor/list',compact('packages','activePackageId'));
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -133,11 +118,11 @@ class SubscriptionController extends Controller
         // return redirect()->route('instructor.dashboard.index')->with('success', 'Stop Here'); 
 
         // Generate and save the PDF file
-        $pdf = PDF::loadView('emails.invoice', ['data' => $package, 'subscription' => $subscription]);
+        $pdf = PDF::loadView('emails.invoice', ['subscription' => $subscription]);
         $pdfContent = $pdf->output();
 
         // Send the email with the PDF attachment
-        $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+        $mailInfo = Mail::send('emails.invoice', ['subscription' => $subscription], function($message) use ($pdfContent, $subscription) {
             $message->to(auth()->user()->email)
                     ->subject('Invoice')
                     ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
@@ -157,20 +142,7 @@ class SubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cancel()
-    {
-        //
-        return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
-    }
-    public function status($id)
-    {
-        //
-        $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();
-        $subscription->status = 'cancel';
-        $subscription->save();
-
-        return redirect()->back()->with('error', 'Subscription Cancelled');
-    }
+    
 
     /**
      * Update the specified resource in storage.

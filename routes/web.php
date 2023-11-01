@@ -419,25 +419,21 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
 
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
+    Route::get('/', 'index')->name('instructor.subscription'); 
     Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
-    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
+    Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
 });
 
 // SubscriptionController
 
 // Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
-        Route::get('/', 'index')->name('instructor.subscription');
         // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
         Route::get('success', 'success')->name('instructor.subscription.success');
-        Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
-        Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
     });
 // });
-
-
-
 
 // review page routes
 // Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
