@@ -59,19 +59,15 @@
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
                                         <div class="profile-picture-box">
-
-                                            <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                                onchange="previewImage()"
-                                                class="form-control d-none  @error('avatar') is-invalid @enderror">
-
-                                            <label for="imageInput" class="img-upload">
+                                            <input type="file" id="avatar" class="d-none" name="avatar">
+                                            <label for="avatar" class="img-upload">
                                                 <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
                                                     alt="a" class="img-fluid">
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="preview" src="{{asset($user->avatar)}}" alt="Avatar"
-                                                        class="img-fluid static-image">
+                                                    <img id="avatar-preview" src="{{asset($user->avatar)}}"
+                                                        alt="Avatar" class="img-fluid static-image">
                                                     @else
                                                     <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
@@ -82,13 +78,11 @@
                                                 Max size of 3.1 MB</h6>
 
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="recivingMessage">Receiving
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
                                                     Messages</label>
 
-                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
-                                                    value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ?
-                                                'checked' : '' }}>
-
+                                                    <input class="form-check-input" type="checkbox" name="recivingMessage" value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ? 'checked' : '' }}>
+ 
                                             </div>
                                         </div>
                                     </div>
@@ -124,10 +118,10 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="company_name"
+                                                        <input type="text" class="form-control" id="company_name2"
                                                             name="company_name" value="{{ $user->company_name }}"
                                                             required>
-                                                        <label for="company_name">Company Name</label>
+                                                        <label for="company_name2">Company Name</label>
                                                         <span class="invalid-feedback">@error('company_name'){{ $message
                                                             }}
                                                             @enderror</span>
@@ -149,10 +143,10 @@
                                                             style="top: -6px; background: #fff!important; z-index: 999">Social
                                                             Media</label>
                                                     </div>
-                                                    @foreach ($socialLinks as $socialLink)
+                                                    @foreach ($socialLinks as $key => $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
-                                                            <input type="url" class="form-control" id="social_links"
+                                                            <input type="url" class="form-control" id="social_links_{{ $key }}"
                                                                 name="social_links[]" value="{{ $socialLink }}">
 
                                                             <span class="invalid-feedback">@error('social_links'){{
@@ -1054,6 +1048,27 @@
 </script>
 <script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
 
+<script>
+      document.addEventListener("DOMContentLoaded", function() {
+    const avatarInput = document.getElementById("avatar");
+    const avatarPreview = document.getElementById("avatar-preview");
+
+    avatarInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                avatarPreview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
+
 {{-- add extra filed js --}}
 <script>
     const urlBttn = document.querySelector('#social_increment');
@@ -1390,6 +1405,8 @@
           });
         });
 </script>
+ 
+
 
 @endsection
 
