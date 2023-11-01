@@ -478,8 +478,10 @@ class DashboardController extends Controller
        if ($managePage) {
             $permission = json_decode($managePage->pagePermissions);
        }else{
-            $permission = '{"dashboard":0,"homePage":0,"messagePage":0,"certificatePage":0}';
+            $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
        }
+
+    //    return $permission;
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }

@@ -30,7 +30,7 @@
                             <div class="action">
                                 <h6>Access Permission</h6>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="dashboard" id="dashboardPage" {{ ($permission->dashboard ?? 0) == 1 ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="checkbox" role="switch" name="dashboard" id="dashboardPage" {{ $permission->dashboard == 1 ? 'checked' : ''}}>
                                     @error('dashboard')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -52,7 +52,7 @@
                             <div class="action">
                                 <h6>Access Permission</h6>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="homePage" id="homePage" {{ ($permission->homePage ?? 0) == 1 ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="checkbox" role="switch" name="homePage" id="homePage" {{ $permission->homePage == 1 ? 'checked' : ''}}>
                                     @error('homePage')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -72,12 +72,11 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <h6>Access Permission</h6>
-  
-
+                                <h6>Access Permission</h6> 
+                                
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" name="messagePage" id="messagePage"
-                                    {{ ($permission->messagePage ?? 0) == 1 ? 'checked' : '' }}>
+                                    {{ $permission->messagePage == 1 ? 'checked' : ''}}>
                                     @error('messagePage')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -100,7 +99,7 @@
                                 <h6>Access Permission</h6>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" name="certificatePage" id="certificatePage"
-                                    {{ ($permission->certificatePage ?? 0) == 1 ? 'checked' : '' }}>
+                                    {{ $permission->certificatePage == 1 ? 'checked' : ''}}>
                                     @error('certificatePage')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

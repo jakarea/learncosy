@@ -58,6 +58,50 @@ class MessageController extends Controller
         return view('e-learning/course/instructor/message-list',compact('highLightMessages','messages','userId','senderInfo','cartCount'));
      }
 
+
+    public function index2(Request $request)
+    {
+        $cartCount = Cart::where('user_id', auth()->id())->count();
+        $course_id = $request->query('course');
+        $senderId = $request->query('sender');
+        $userId = Auth::user()->id;
+
+        $highLightMessages = Message::with(['course'])->where('receiver_id',$userId)->orWhere('sender_id',$userId)->get()->groupBy(function($data) use ($userId){
+            if( $data->receiver_id == $userId){
+                return $data->sender_id;
+            }
+            if( $data->sender_id == $userId){
+                return $data->receiver_id;
+            }
+        });
+
+
+        foreach ($highLightMessages as $messages) {
+            foreach( $messages as $message){
+                if($message->receiver_id == $userId ){
+                    $message['user'] = User::find($message->sender_id );
+                }else{
+                    $message['user'] = User::find($message->receiver_id );
+                }
+            }
+        }
+
+        if($senderId){
+            $senderInfo =  User::find($senderId);
+            $messages = Message::where(function ($query) use ($senderId, $userId){
+                $query->where('receiver_id', $senderId)->where('sender_id', $userId);
+            })
+            ->orwhere(function ($query) use ($senderId, $userId){
+                $query->where('receiver_id', $userId)->where('sender_id', $senderId);
+            })->get();
+        }else{
+            $messages = $highLightMessages->first() ? $highLightMessages->first() : [];
+            $senderInfo =  User::find($highLightMessages->keys()->first());
+        } 
+
+        return view('e-learning/course/instructor/message-list-2',compact('highLightMessages','messages','userId','senderInfo','cartCount'));
+     }
+
      // instructor message list
      public function send($courseId)
      { 

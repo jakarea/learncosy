@@ -43,14 +43,19 @@
                                             <input type="file" id="avatar" class="d-none" name="avatar">
                                             <label for="avatar" class="img-upload">
                                                 <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
-                                                    alt="a" class="img-fluid">
+                                                    alt="a" class="img-fluid"> 
+                                                    
+                                                @if (!$user->avatar)
+                                                    <img src=""
+                                                    alt="" class="img-fluid static-image avatar-preview" style="border-radius: 50%">
+                                                @endif     
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="avatar-preview" src="{{asset($user->avatar)}}"
-                                                        alt="Avatar" class="img-fluid static-image">
+                                                    <img src="{{asset($user->avatar)}}"
+                                                        alt="Avatar" class="img-fluid static-image avatar-preview">
                                                     @else
-                                                    <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
+                                                    <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
                                                 </div>
                                             </label>
@@ -306,7 +311,7 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     const avatarInput = document.getElementById("avatar");
-    const avatarPreview = document.getElementById("avatar-preview");
+    const avatarPreview = document.querySelector(".avatar-preview");
 
     avatarInput.addEventListener("change", function(event) {
         const file = event.target.files[0];
