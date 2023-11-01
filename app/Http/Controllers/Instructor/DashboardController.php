@@ -19,7 +19,36 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+
         $userId = Auth::user()->id;
+
+        $checkout = Checkout::where('instructor_id', $userId);
+
+        if ($request->duration == "one_month") {
+            $startDate = now()->startOfMonth();
+            $endDate = now()->endOfMonth();
+        } elseif ($request->three_month) {
+            $startDate = now()->subMonths(3);
+            $endDate = now();
+        } elseif ($request->duration == "six_month") {
+            $startDate = now()->subMonths(6);
+            $endDate = now();
+        } elseif ($request->duration == "one_year") {
+            $startDate = now()->subYear();
+            $endDate = now();
+        } else {
+            $startDate = null;
+            $endDate = null;
+        }
+
+        if ($startDate && $endDate) {
+            $totalAmounts = $checkout->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
+        } else {
+            $totalAmounts = 0;
+        }
+
+        $totalAmounts = $checkout->sum('amount');
+
 
         $user = User::where('id', $userId)->first();
         $user->session_id = null;
@@ -298,7 +327,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear','totalAmounts'));
 
     }
 
@@ -435,7 +464,7 @@ class DashboardController extends Controller
     {
         $request->validate([
             'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
-            // 'subdomain' => 'required|string|max:32,'.$user_id, 
+            // 'subdomain' => 'required|string|max:32,'.$user_id,
         ]);
 
         $proposedUsername = $request->subdomain;

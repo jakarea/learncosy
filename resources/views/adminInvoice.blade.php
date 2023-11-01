@@ -65,7 +65,7 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif; 
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         table tr th {
@@ -83,7 +83,7 @@
             font-size: .875rem;
             color: #535b61;
         }
- 
+
 
         .border-0 {
             border: 0 !important;
@@ -152,8 +152,8 @@
                     Name: {{ $payment->user->name}} <br />
                     Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
                     Payment Date : {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
-                    Payment type : {{ $payment->payment_method }} <br>
-                    Status type : {{ $payment->status }}
+                    Payment Type : {{ $payment->payment_method }} <br>
+                    Payment Status : {{ ucfirst( $payment->payment_status) }}
 
                 </address>
             </td>
@@ -164,7 +164,7 @@
                     @if ($payment->instructor->company_name)
                     Company Name: {{ $payment->instructor->company_name }} <br />
                     @endif
-                   
+
                     Email: {{ $payment->instructor->email }}
                 </address>
             </td>
@@ -174,8 +174,8 @@
                 <table border="0" cellspacing="0" cellpadding="0" class="billed-table">
                     <thead class="card-header">
                         <tr>
-                            <td class="br-0" width="50%"><strong>Details</strong></td>
-                            <td class="bl-0 br-0" width="15%"><strong>Course Type</strong></td>
+                            <td class="br-0" width="50%"><strong>Course Name</strong></td>
+                            <td class="bl-0 br-0" width="15%"><strong>Category</strong></td>
                             <td class="bl-0 " width="15%" style="text-align: right;"><strong>Amount</strong></td>
                         </tr>
                     </thead>

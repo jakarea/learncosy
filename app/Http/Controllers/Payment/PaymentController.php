@@ -44,6 +44,7 @@ class PaymentController extends Controller
                 'source'      => $request->stripeToken,
                 'description' => $courseNames,
             ]);
+
             $this->success($charge);
             return redirect(route('students.catalog.courses'))->with('success', 'You have successfully enrolled in this course');;
         } catch (\Exception $e) {
@@ -61,7 +62,7 @@ class PaymentController extends Controller
                 $checkout = $course->checkouts()->create([
                     'course_id' => $course->id,
                     'instructor_id' => $course->user_id,
-                    'payment_method' => $charge->payment_method,
+                    'payment_method' => "Stripe",
                     'payment_status' => $charge->paid? 'completed' : '',
                     'payment_id' => $charge->id,
                     'status' => $charge->status,
