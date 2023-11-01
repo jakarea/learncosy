@@ -29,7 +29,7 @@
                     <a class="{{ Request::is('students/courses-certificate*')  ? ' active' : '' }} nav-link" href="{{ url('students/courses-certificate') }}">Certificate</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ Request::is('course/messages*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages') }}">Message</a>
+                    <a class="{{ Request::is('course/messages/students*')  ? ' active' : '' }} nav-link" href="{{ url('course/messages/students') }}">Message</a>
                 </li>
             </ul>
             @endcan

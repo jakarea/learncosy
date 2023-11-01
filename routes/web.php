@@ -199,6 +199,7 @@ Route::get('students/lessons/{id}', function ($id) {
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('message');
+    Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
     Route::post('/', 'sendMessage')->name('message-send');
     Route::get('/send/{id}', 'send')->name('get.message');
     Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
@@ -448,9 +449,9 @@ Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->cont
 /* ========================================================== */
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
-    Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/dashboard', 'dashboard')->name('students.dashboard')->middleware('page.access');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
-    Route::get('/home', 'catalog')->name('students.catalog.courses');
+    Route::get('/home', 'catalog')->name('students.catalog.courses')->middleware('page.access');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
@@ -461,7 +462,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
     Route::get('/courses-activies/list', 'activitiesList')->name('students.activity.lesson');
     Route::get('/courses-activies', 'storeActivities')->name('students.complete.lesson');
-    Route::get('/courses-certificate', 'certificate')->name('students.certificate.course');
+    Route::get('/courses-certificate', 'certificate')->name('students.certificate.course')->middleware('page.access');
     Route::post('/courses/{slug}', 'review')->name('students.review.courses');
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
