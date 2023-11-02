@@ -30,19 +30,7 @@ Course Create - Video Upload
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <!-- <div class="row">
-                    {{-- main video upload area start --}}
-                    <div class="col-lg-12">
-                        <div class="highlighted-area-upload text-center dragBox">
-                            <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
-
-                            <p style="font-size: 1rem"><label for="uploadFile">Click here</label> to upload full course
-                                video</p>
-                        </div>
-                    </div>
-                    {{-- main video upload area end --}} 
-                </div> -->
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7"> 
                 <form id="uploadForm" action="" method="POST" class="create-form-box custom-select"
                     enctype="multipart/form-data">
                     @csrf
@@ -50,11 +38,11 @@ Course Create - Video Upload
                             <div class="highlighted-area-upload dragBox">
                                 <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
                                 <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
-                                <p class="file-name"><label for="uploadFile">Click here</label> to set the highlighted video</p>
+                                <p class="file-name"><label for="uploadFile">Click here</label> to set the Lesson video</p>
                             </div>
                             <input type="hidden" name="duration" id="duration" />
                             <div id="preview" class="mt-2"></div>
-                            <div class="upload-progress">
+                            <div class="upload-progress mt-4">
                                 <div class="progress d-none">
                                 <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" 
                                     aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
@@ -68,52 +56,28 @@ Course Create - Video Upload
                                 @enderror
                             </span>
                         </div>
-                        
-                        <h4>A Short description for this video</h4>
-                        <div class="form-group">
-                            <textarea class="form-control" id="description" name="description"></textarea>
+                        <div class="form-group mt-4">
+                            <label for="file-input" class="txt mb-2" style="font-weight: 600">A Short description for this video</label> 
+                            <textarea class="form-control" id="description" name="description" placeholder="Type here" col></textarea> 
                         </div>
-
-                        <div class="form-group form-upload">
-                            <label for="file-input" class="txt">Upload Files</label>
-                            <input type="file" id="file-input" class="opacity-0" name="lesson_file">
-                            <label for="file-input" id="upload-box">
-                                <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar"
-                                    class="img-fluid"> Upload
-                            </label>
-                            <span>*.doc, *.pdf, *.xls file (max 25 mb)</span>
-                            <span class="invalid-feedback text-danger" id="fileErrorMessage"></span>
-                        </div>
-
-                        {{-- course page file box start --}}
-                        <div id="file-list">
-                            <!-- Uploaded files will be displayed here -->
-                        </div>
-
-                        @php
-                        $lessonFileString = $lesson->lesson_file;
-                        $uploadedFilenames = explode(',', $lessonFileString);
-                        @endphp
-                        @if ($lesson->lesson_file)
-                        <div class="form-group form-upload">
-                            <label for="file-input" class="txt">Uploaded Files</label>
-                        </div>
-                        @foreach ($uploadedFilenames as $filename)
+ 
+                        @if ($lesson->video_link)
+                        <div class="form-group form-upload mb-0">
+                            <label for="file-input" class="txt mb-0">Current Video</label> 
+                        </div> 
                         <div class="course-content-box course-page-edit-box">
                             <div class="title">
                                 <div class="media">
-                                    <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File"
+                                    <img src="{{ asset('latest/assets/images/icons/video.svg') }}" alt="File"
                                         class="img-fluid">
                                     <div class="media-body">
-                                        <h5>{{ $filename }} </h5>
-                                        <p>{{ $lesson->created_at }}</p>
+                                        <h5>{{ $lesson->slug .'.mp4' }} </h5>
+                                        <p>Uploaded at: {{ $lesson->created_at }}</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @endforeach
-                        @endif 
-                        {{-- course page file box end --}}
+                        </div> 
+                        @endif
 
                     </div>
                     {{-- step next bttns --}}
@@ -130,10 +94,7 @@ Course Create - Video Upload
 {{-- page content @E --}}
 
 @section('script')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="//cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-    type="text/javascript"></script>
-<script src="{{ asset('latest/assets/js/tinymce.js') }}" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 
 {{-- file upload preview --}}
 <script>
@@ -189,8 +150,8 @@ $(document).ready(function() {
         var formData = new FormData(this);
         var urlParams = new URLSearchParams(window.location.search);
         var url = window.location.href;
-        document.querySelector('#fileErrorMessage').innerHTML = '';
-        document.querySelector('#fileErrorMessage').innerHTML = '';
+        // document.querySelector('#fileErrorMessage').innerHTML = '';
+        // document.querySelector('#fileErrorMessage').innerHTML = '';
         $.ajax({
             url: url,
             type: 'POST',
@@ -217,7 +178,6 @@ $(document).ready(function() {
                 $('.btn-submit').attr('disabled', true).html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
                 );
-                // check if file is not empty
 
                 var fileInput = document.getElementById('uploadFile');
                 const selectedFile = fileInput.files[0];
@@ -273,10 +233,8 @@ $(document).ready(function() {
                 uploadProgress.classList.add('d-none');
                 warnm.classList.add('d-none');
                 var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
-                console.log(errors.lesson_file, errors.video_link)
-                if(errors.lesson_file){
-                    document.querySelector('#fileErrorMessage').innerHTML = errors.lesson_file[0];
-                }
+                console.log(errors.video_link)
+                 
                 if(errors.video_link){
                     document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];
                 }
