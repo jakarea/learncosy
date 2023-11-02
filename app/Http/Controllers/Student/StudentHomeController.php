@@ -109,15 +109,17 @@ class StudentHomeController extends Controller
         }
 
         // Avr hr
-        $sum_of_duration = CourseActivity::selectRaw('SUM(duration) as total_duration')
-                                            ->where('user_id', auth()->user()->id)
-                                            ->first();
+        // $sum_of_duration = CourseActivity::selectRaw('SUM(duration) as total_duration')
+        //                                     ->where(['user_id' => auth()->user()->id, 'is_completed' => 1])
+        //                                     ->get();
 
-                                            // dd( $sum_of_duration );
+
+        $sum_of_duration = CourseActivity::where('user_id', Auth::user()->id)->where('is_completed',1)->avg('duration');
+
         $total_hr = 0;
         $total_min = 0;
-        $total_hr = floor($sum_of_duration->total_duration / 3600);
-        $total_min = floor(($sum_of_duration->total_duration % 3600) / 60);
+        $total_hr = floor($sum_of_duration / 3600);
+        $total_min = floor(($sum_of_duration % 3600) / 60);
         // Enrolled
         $total_enrolled = DB::table('course_user')
                     ->where('user_id', auth()->user()->id)
@@ -629,6 +631,8 @@ class StudentHomeController extends Controller
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
+        $duration = (int)$request->input('duration');
+
         $userId = Auth()->user()->id;
 
         $courseActivities = CourseActivity::updateOrCreate(
@@ -638,7 +642,8 @@ class StudentHomeController extends Controller
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
-                'is_completed' => true
+                'is_completed' => true,
+                'duration' => $duration
             ]
         );
 

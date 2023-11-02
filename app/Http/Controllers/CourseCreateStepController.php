@@ -335,13 +335,13 @@ class CourseCreateStepController extends Controller
     {
 
         $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
             'description' => 'string', 
-            'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
+            'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
-            'video_link' => 'Max file size is 1 GB!',
+            'video_link.max' => 'Max file size is 1 GB!',
         ]);
         
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
@@ -382,6 +382,7 @@ class CourseCreateStepController extends Controller
                 $lesson->duration = $request->duration;
                 $lesson->short_description = $request->description;
                 $lesson->save();
+                flash()->addSuccess('Video upload success!');
             }
             $course = Course::find($id);
             $price = $course->price ?? 0;
