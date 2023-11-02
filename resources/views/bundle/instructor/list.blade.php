@@ -117,7 +117,7 @@
                                     @endphp
                                 
                                     <ul>
-                                        <li><span>{{ $review_avg }}</span></li>
+                                        <li><span>{{ number_format($review_avg, 2) }}</span></li>
                                         @for ($i = 0; $i < $review_avg; $i++)
                                             <li><i class="fas fa-star"></i></li>
                                         @endfor

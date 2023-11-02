@@ -430,9 +430,11 @@ class StudentHomeController extends Controller
                 return redirect()->back()->with('error','There is no certificate found for this Course');
             }
 
-           $certStyle = Certificate::where('instructor_id',$course->user_id)->where('course_id',$course->id)->first();
+            $certStyle = Certificate::where('instructor_id',$course->user_id)->where('course_id',$course->id)->first();
 
-
+            if (!$certStyle) {
+                $certificate_path = 'certificates/download/certificate1';
+            }
 
             if ($certStyle) {
                 if ($certStyle->style == 3) {
@@ -444,19 +446,16 @@ class StudentHomeController extends Controller
                 }elseif ($certStyle->style == 1) {
                     $certificate_path = 'certificates/download/certificate3';
                 }else{
-                    return redirect()->back()->with('error','There is no Style found for this Course');
+                    $certificate_path = 'certificates/download/certificate1';
                 }
-
-                $signature = $certStyle->signature;
-                $logo = $certStyle->logo;
-
-                $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature, 'logo' => $logo]);
-
-
-                return $pdf->download('certificate.pdf');
-            }else{
-                return redirect()->back()->with('error','There is no certificate found for this Course');
             }
+
+            $signature = $certStyle ? $certStyle->signature : '';
+            $logo = $certStyle ? $certStyle->logo : '';
+
+            $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature, 'logo' => $logo]);
+
+            return $pdf->download($course->title.'-certificate.pdf');
 
     }
 
@@ -481,6 +480,10 @@ class StudentHomeController extends Controller
 
             $certStyle = Certificate::where('instructor_id',$course->user_id)->first();
 
+            if (!$certStyle) {
+                $certificate_show_path = 'certificates/show/certificate1';
+            }
+
             if ($certStyle) {
                 if ($certStyle->style == 3) {
                     $certificate_show_path = 'certificates/show/certificate1';
@@ -491,22 +494,18 @@ class StudentHomeController extends Controller
                 }elseif ($certStyle->style == 1) {
                     $certificate_show_path = 'certificates/show/certificate3';
                 }else{
-                    return redirect()->back()->with('error','There is no Style found for this Course');
+                    $certificate_show_path = 'certificates/show/certificate1';
                 }
-
-                $signature = '';
-
-                if (!empty($certStyle->signature)) {
-                   $signature = $certStyle->signature;
-                }else{
-                    $signature = 'latest/assets/images/certificate/one/signature.png';
-                }
-
-                return view($certificate_show_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
-
-            }else{
-                return redirect()->back()->with('error','There is no certificate found for this Course');
             }
+
+            $signature = '';
+
+            if (!empty($certStyle->signature)) {
+                $signature = $certStyle->signature;
+            }else{
+                $signature = 'latest/assets/images/certificate/one/signature.png';
+            }
+            return view($certificate_show_path, ['course' => $course, 'courseDate' => $courseDate->updated_at , 'signature' => $signature]);
 
     }
 
@@ -695,9 +694,7 @@ class StudentHomeController extends Controller
     public function certificate()
     {
         $myCoursesList = Checkout::where('user_id', Auth()->id())->get();
-
         $certificateCourses = Course::whereIn('id',$myCoursesList->pluck('course_id'))->orderby('id', 'desc')->paginate(12);
-
         return view('e-learning/course/students/certifiate',compact('certificateCourses'));
     }
 
