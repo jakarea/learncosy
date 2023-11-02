@@ -72,7 +72,7 @@ class LoginController extends Controller
                         $sessionId = session()->getId();
                         $user->session_id = $sessionId;
                         $user->save();
-                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/auth-login?singnature='. $sessionId );
+                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature='. $sessionId );
                     } else {
                         // return redirect('/instructor/dashboard');
                         return redirect()->intended('/instructor/dashboard');
@@ -81,7 +81,7 @@ class LoginController extends Controller
                     $sessionId = session()->getId();
                     $user->session_id = $sessionId;
                     $user->save();
-                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/auth-login?singnature='. $sessionId );
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature='. $sessionId );
                     // return redirect('/students/dashboard');
                 }
             } else {

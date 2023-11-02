@@ -40,9 +40,9 @@
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo"
                         class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
-                    @endif 
+                    @endif
                 </a>
-                <a href="{{ url('/auth-login') }}" class="signup-bttn">
+                <a href="{{ url('/login') }}" class="signup-bttn">
                     SIGN IN
                 </a>
             </div>
@@ -51,10 +51,10 @@
 
     <section class="login-page-wrapper login-four-page-wrap">
         <div class="bg-olg">
-            @if (modulesetting('lp_bg_image')) 
+            @if (modulesetting('lp_bg_image'))
                 <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
             title="Login BG" class="" style="max-height: 150vh; object-fit:cover">
-            @else 
+            @else
             <img src="{{ asset('latest/assets/images/learncosy-bg.svg') }}" alt="" class="img-fluid light-ele">
             <img src="{{ asset('latest/assets/images/learncosy-bg-2.svg') }}" alt="" class="img-fluid dark-ele">
             @endif

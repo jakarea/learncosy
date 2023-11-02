@@ -13,7 +13,7 @@ Verify Email
                 <!-- login form start -->
                 <div class="auth-form-wrap justify-content-start">
                     <div class="back-bttn">
-                        <a href="{{url('/login') }}">
+                        <a href="{{url('/admin/login') }}">
                             Back
                         </a>
                     </div>

@@ -9,34 +9,34 @@ use App\Models\Lesson;
 use App\Models\Checkout;
 use App\Models\CourseReview;
 use App\Models\Module;
-use Illuminate\Support\Str;  
+use Illuminate\Support\Str;
 use App\Mail\CourseUpdated;
 use Illuminate\Support\Facades\Mail;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF; 
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use File;
 use ZipArchive;
-use Auth; 
+use Auth;
 
 class CourseManagementController extends Controller
 {
     // course list
-    public function index(){  
+    public function index(){
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
         $courses = Course::with('user','reviews')->where('status','published');
 
         if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
-        } 
+        }
 
         if ($status) {
             if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
             }
 
-            if ($status == 'best_rated') { 
+            if ($status == 'best_rated') {
                 $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
                 ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
                 ->groupBy('courses.id')
@@ -50,40 +50,40 @@ class CourseManagementController extends Controller
                 ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
 
             }
-            
+
             if ($status == 'newest') {
                 $courses->orderBy('id', 'desc');
             }
         }else{
-            $courses->orderBy('id', 'desc'); 
+            $courses->orderBy('id', 'desc');
         }
 
         $courses = $courses->paginate(16);
- 
-        return view('e-learning/course/admin/list',compact('courses'));  
+
+        return view('e-learning/course/admin/list',compact('courses'));
     }
 
     // course show
     public function show($slug)
-    {    
-       
+    {
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
 
         //start group file
         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
         $group_files = [];
-       
+
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
-                $file_arr = explode('.', $lesson_file->file);  
+                $file_arr = explode('.', $lesson_file->file);
                 $extention = $file_arr[1];
                 if (!in_array($extention, $group_files)) {
                     $group_files[] = $extention;
                 }
             }
         }
-        
+
         //end group file
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
@@ -112,7 +112,7 @@ class CourseManagementController extends Controller
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
-                $file_arr = explode('.', $file_name); 
+                $file_arr = explode('.', $file_name);
                 $extension = $file_arr['1'];
                 if($file_extension == $extension){
                     $files[] = public_path('uploads/lessons/'.$file_name);
@@ -132,7 +132,7 @@ class CourseManagementController extends Controller
                    break;
                 }
             }
-            if(!empty($is_have_file)){ 
+            if(!empty($is_have_file)){
               return redirect('admin/courses')->with('error', $is_have_file);
             }
             $zip->close();
@@ -152,13 +152,13 @@ class CourseManagementController extends Controller
             // Handle the case when the zip file could not be created
             echo 'Failed to create the zip file.';
         }
-    } 
+    }
 
     public function cousreDownloadPDF($course_id){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             $file_name = $lesson_file->file;
-            $file_arr = explode('.', $lesson_file->file);  
+            $file_arr = explode('.', $lesson_file->file);
             $extention = $file_arr[1];
             if($extention == 'pdf'){
                 $pdfFiles[] = $file_name;
@@ -181,8 +181,8 @@ class CourseManagementController extends Controller
         }
     }
 
-    
- 
+
+
 
     public function destroy($slug)
     {
@@ -219,7 +219,7 @@ class CourseManagementController extends Controller
                     if (file_exists($lessonOldFile)) {
                         @unlink($lessonOldFile);
                     }
-                    
+
                     $lesson->delete();
                 }
                 $module->delete();

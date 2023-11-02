@@ -75,7 +75,7 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 // custom auth screen route
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
 
-Route::get('/auth-login', function () {
+Route::get('/admin/login', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
 
@@ -190,7 +190,7 @@ Auth::routes(['verify' => true]);
 
 
 Route::get('students/lessons/{id}', function ($id) {
- 
+
     $lesson = App\Models\Lesson::findorfail($id);
     return response()->json($lesson);
 });
@@ -225,10 +225,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/payment/{id}', function ($id) {
         $package = App\Models\SubscriptionPackage::findorfail($id);
         return view('latest-auth.payment',compact('package'));
-    }); 
+    });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
-    
+
     // destroy instructor notification
     Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
@@ -340,7 +340,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
         // lesson page routes
         Route::prefix('lessons')->controller(LessonController::class)->group(function () {
-            Route::get('/', 'index'); 
+            Route::get('/', 'index');
             Route::get('/create', 'create');
 
             Route::get('/create/video-upload', 'videoUpload')->name('lesson.upload.video');
@@ -419,8 +419,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
 
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
-    Route::get('/', 'index')->name('instructor.subscription'); 
-    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
+    Route::get('/', 'index')->name('instructor.subscription');
+    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
     Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
     Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
@@ -619,7 +619,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 Route::get('/logout', function () {
     Auth::logout();
     session()->flush();
-    return redirect('/login');
+    return redirect('/admin/login');
 });
 
 /**
