@@ -335,7 +335,7 @@ class CourseCreateStepController extends Controller
     {
 
         $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000',
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
             'description' => 'string', 
             'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
