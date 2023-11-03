@@ -42,6 +42,11 @@
                                     data-param="certificate">Certificate</button>
                             </li>
                             <li class="nav-item" role="presentation">
+                                <button class="nav-link tab-link" id="pills-app-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-app" type="button" role="tab" aria-controls="pills-app"
+                                    aria-selected="false" data-param="app">Connect account</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-password-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-password" type="button" role="tab"
                                     aria-controls="pills-password" aria-selected="false"
@@ -62,19 +67,20 @@
                                             <input type="file" id="avatar" class="d-none" name="avatar">
                                             <label for="avatar" class="img-upload">
                                                 <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
-                                                    alt="a" class="img-fluid"> 
-                                                    
+                                                    alt="a" class="img-fluid">
+
                                                 @if (!$user->avatar)
-                                                    <img src=""
-                                                    alt="" class="img-fluid static-image avatar-preview" style="border-radius: 50%">
-                                                @endif     
+                                                <img src="" alt="" class="img-fluid static-image avatar-preview"
+                                                    style="border-radius: 50%">
+                                                @endif
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img src="{{asset($user->avatar)}}"
-                                                        alt="Avatar" class="img-fluid static-image avatar-preview">
+                                                    <img src="{{asset($user->avatar)}}" alt="Avatar"
+                                                        class="img-fluid static-image avatar-preview">
                                                     @else
-                                                    <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
+                                                    <span class="avatar-box" style="color: #3D5CFF">{!!
+                                                        strtoupper($user->name[0]) !!}</span>
                                                     @endif
                                                 </div>
                                             </label>
@@ -86,8 +92,10 @@
                                                 <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
                                                     Messages</label>
 
-                                                    <input class="form-check-input" type="checkbox" name="recivingMessage" value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ? 'checked' : '' }}>
- 
+                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
+                                                    value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ?
+                                                'checked' : '' }}>
+
                                             </div>
                                         </div>
                                     </div>
@@ -151,8 +159,9 @@
                                                     @foreach ($socialLinks as $key => $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
-                                                            <input type="url" class="form-control" id="social_links_{{ $key }}"
-                                                                name="social_links[]" value="{{ $socialLink }}">
+                                                            <input type="url" class="form-control"
+                                                                id="social_links_{{ $key }}" name="social_links[]"
+                                                                value="{{ $socialLink }}">
 
                                                             <span class="invalid-feedback">@error('social_links'){{
                                                                 $message }} @enderror</span>
@@ -168,8 +177,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
-                                                            class="form-control @error('description') is-invalid @enderror"
-                                                            >{!! $user->description !!}</textarea>
+                                                            class="form-control @error('description') is-invalid @enderror">{!! $user->description !!}</textarea>
 
                                                         <label for="description">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message
@@ -188,6 +196,7 @@
                             </form>
                         </div>
                         {{-- profile tab end --}}
+
                         {{-- experience tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
@@ -301,7 +310,7 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-12">
-                                    @if (count($experiences) > 0) 
+                                    @if (count($experiences) > 0)
                                     <div class="user-expperience-box user-expperience-box-2">
                                         @foreach ($experiences as $experience)
                                         <div class="media brdr-bttm">
@@ -329,7 +338,7 @@
                                         </div>
                                         @endforeach
                                     </div>
-                                    @else 
+                                    @else
                                     @include('partials/no-data')
                                     @endif
                                 </div>
@@ -342,6 +351,7 @@
                             </div>
                         </div>
                         {{-- experience tab end --}}
+
                         {{-- certificate tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
@@ -352,14 +362,16 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="pills-add_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
-                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true" data-params="add_cert"><i
-                                                        class="fas fa-plus"></i> Add Certificate</button>
+                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true"
+                                                    data-params="add_cert"><i class="fas fa-plus"></i> Add
+                                                    Certificate</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="pills-custom_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-custom_cert"
                                                     type="button" role="tab" aria-controls="pills-custom_cert"
-                                                    aria-selected="false" data-params="custom_cert"><i class="fas fa-plus"></i> Custom
+                                                    aria-selected="false" data-params="custom_cert"><i
+                                                        class="fas fa-plus"></i> Custom
                                                     Certificate</button>
                                             </li>
                                         </ul>
@@ -980,6 +992,70 @@
                             </div>
                         </div>
                         {{-- certificate tab end --}}
+
+                        {{-- connect app tab start --}}
+                        <div class="tab-pane tab-con fade active-bg" id="pills-app" role="tabpanel"
+                            aria-labelledby="pills-app-tab" tabindex="0">
+                            {{-- app tab start --}}
+                            <div class="row connect-app-box mt-4">
+                                <div class="col-lg-6">
+                                    <div class="app-title">
+                                        <h3>Connects to your account</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="app-bttn">
+                                        <a href="#"><img src="{{ asset('latest/assets/images/icons/pluss.svg') }}"
+                                                alt="a" class="img-fluid"> Add new account</a>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="app-box">
+                                        {{-- app box --}}
+                                        <div class="media">
+                                            <img src="{{ asset('latest/assets/images/vimeo.svg') }}" alt="a"
+                                                class="img-fluid">
+                                            <div class="media-body">
+                                                <h5>Vimeo</h5>
+                                                <p>Join the web's most supportive community of creators and get
+                                                    high-quality tools for hosting, sharing, and streaming videos in
+                                                    gorgeous HD with no ads.</p>
+                                            </div>
+                                            <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : '' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
+                                                @if (isVimeoConnected()[1] == 'Connected')
+                                                    Disconnect
+                                                @else 
+                                                    Connect
+                                                @endif
+                                            </a>
+                                        </div>
+                                        {{-- app box --}}
+                                        {{-- app box --}}
+                                        <div class="media">
+                                            <img src="{{ asset('latest/assets/images/stripe.svg') }}" alt="a"
+                                                class="img-fluid">
+                                            <div class="media-body">
+                                                <h5>Stripe</h5>
+                                                <p>Stripe is a suite of APIs powering online payment processing and
+                                                    commerce solutions for internet businesses of all sizes. Accept
+                                                    payments and scale faster.</p>
+                                            </div>
+                                            <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : '' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
+                                                @if (isConnectedWithStripe()[1] == 'Connected')
+                                                    Disconnect
+                                                @else 
+                                                    Connect
+                                                @endif
+                                            </a>
+                                        </div>
+                                        {{-- app box --}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- password tab end --}}
+                        </div>
+                        {{-- connect app tab start --}}
+
                         {{-- password tab start --}}
                         <div class="tab-pane tab-con fade active-bg" id="pills-password" role="tabpanel"
                             aria-labelledby="pills-password-tab" tabindex="0">
@@ -1043,6 +1119,104 @@
     </div>
 </main>
 {{-- student update page @e --}}
+
+{{-- stripe viemo app modal --}}
+<div class="app-modals">
+    <div class="connect-modal-box">
+        <div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header">
+                        <h5 id="connectModalLabel">Connect Vimeo</h5>
+                        <button class="btn" type="button" data-bs-dismiss="modal"><i class="fas fa-close"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="connect-modal-wrap">
+                            <form action="{{ route('instructor.vimeo.update') }}" method="POST">
+                                @csrf
+                                <div class="stripe-settings-form-wrap">
+                                    <div class="form-group">
+                                        <label for="client_id">CLIENT ID 
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter Client ID"
+                                            name="client_id" value="{{ isVimeoConnected()[0]->client_id ?? '' }}">
+                                        <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="client_secret">CLIENT SECRET</label>
+                                        <input type="text" class="form-control" placeholder="Enter Client Secret"
+                                            name="client_secret"
+                                            value="{{ isVimeoConnected()[0]->client_secret ?? '' }}">
+                                        <span class="text-danger">@error('client_secret') {{ $message }}
+                                            @enderror</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="access_key">CLIENT ACCESS KEY</label>
+                                        <input type="text" class="form-control" placeholder="Enter Access Key"
+                                            name="access_key" value="{{ isVimeoConnected()[0]->access_key ?? '' }}">
+                                        <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
+                                    </div>
+                                    <div class="form-submit  mt-3">
+                                        <button class="btn btn-submit" type="submit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="connect-modal-box">
+        <div class="modal fade" id="StripeconnectModal" tabindex="-1" role="dialog" aria-labelledby="StripeconnectModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="connectModalLabel">Connect Stripe</h5>
+                        <button class="btn" type="button" data-bs-dismiss="modal"><i class="fas fa-close"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="connect-modal-wrap">
+                            <form action="{{ route('instructor.stripe.update') }}" method="post">
+                                @csrf
+                                <div class="stripe-settings-form-wrap">
+                                    <div class="form-group mb-3">
+                                        <label for="stripe_public_key">STRIPE KEY
+                                             
+                                        </label>
+                                        <input type="text" class="form-control" name="stripe_public_key"
+                                            placeholder="Enter Secret Key"
+                                            value="{{ Auth::user()->stripe_public_key }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="stripe_secret_key">STRIPE SECRET KEY</label>
+                                        <input type="text" class="form-control" name="stripe_secret_key"
+                                            placeholder="Enter Secret Key"
+                                            value="{{ Auth::user()->stripe_secret_key }}">
+                                    </div>
+                                    <div class="form-submit">
+                                        <div class="go-to-stripe">
+                                            <a href="https://stripe.com" target="_blank"><i
+                                                    class="fa-brands fa-cc-stripe me-2"></i>Go to stripe account <i
+                                                    class="fas fa-arrow-right"></i></a>
+                                        </div>
+                                        <div class="submit-form mt-3">
+                                            <button class="btn btn-submit" type="submit">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- stripe viemo app modal --}}
 @endsection
 {{-- page content @E --}}
 
@@ -1054,7 +1228,7 @@
 <script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
 
 <script>
-      document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
     const avatarInput = document.getElementById("avatar");
     const avatarPreview = document.querySelector(".avatar-preview");
 
@@ -1322,6 +1496,9 @@
         const certificateTabLink = document.getElementById('pills-certificate-tab');
         const certificateTabContent = document.getElementById('pills-certificate');
 
+        const appTabLink = document.getElementById('pills-app-tab');
+        const appTabContent = document.getElementById('pills-app');
+
         const passwordTabLink = document.getElementById('pills-password-tab');
         const passwordTabContent = document.getElementById('pills-password');
 
@@ -1353,6 +1530,12 @@
                 document.getElementById('pills-custom_cert').classList.add('show', 'active');
             }
 
+        }
+        else if (tabToOpen == 'app') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            appTabLink.classList.add('active');
+            appTabContent.classList.add('show', 'active');
         }
         else if (tabToOpen == 'password') {
             tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
@@ -1410,9 +1593,6 @@
           });
         });
 </script>
- 
-
-
 @endsection
 
 {{-- page script @E --}}
