@@ -262,6 +262,7 @@
                             </div>
                             @endif
                         </form>
+                        {{-- <button type="button" class="btn enrol-bttn btn-share" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{{ asset('latest/assets/images/icons/share.svg') }}" alt="a" class="img-fluid me-2" style="width: 1.5rem"> Share this course</button> --}}
                         @endif
                     </div>
                     <div class="course-desc-txt">
@@ -360,6 +361,73 @@
 </div>
 {{-- overview tab modal end --}}
 
+{{-- share course modal --}}
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="share-on-social-wrap mt-0">
+            <h4>Share</h4>
+            <h6>As a post</h6>
+
+            <div class="d-flex">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('students/courses/overview',$course->slug)}}"
+                    target="_blank">
+                    <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
+                    <span>Facebook</span>
+                </a>
+                <a href="#">
+                    <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
+                    <span>Telegram</span>
+                </a>
+                <a href="https://www.linkedin.com/shareArticle?url={{ url('students/courses/overview',$course->slug)}}" target="_blank">
+                    <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
+                        class="img-fluid">
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://twitter.com/intent/tweet?url={{ url('students/courses/overview',$course->slug)}}&text={{ $course->title }}"
+                    target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB"
+                        class="img-fluid">
+                    <span>Twitter</span>
+                </a>
+            </div>
+
+            <h6>As a message</h6>
+
+            <div class="d-flex">
+
+                <a href="https://www.messenger.com/share.php?text={{ url('students/courses/overview',$course->slug) }}">
+                    <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
+                    <span>Messenger</span>
+                </a>
+                <a href="https://api.whatsapp.com/send?text={{ url('students/courses/overview',$course->slug) }}">
+                    <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
+                    <span>Whatsapp</span>
+                </a>
+                <a href="https://telegram.me/share/url?url={{ url('students/courses/overview',$course->slug) }}">
+                    <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
+                    <span>Telegram</span>
+                </a>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between mb-0">
+                <h6>Or copy link</h6>
+                <span id="notify" style="color: green; font-size: 14px;"></span>
+            </div>
+            
+
+            <div class="copy-link">
+                <input type="text" placeholder="Link" value="{{ url('students/courses/overview', $course->slug)}}"
+                    class="form-control" id="linkToCopy">
+                <a href="#" id="copyButton" class="ms-1">Copy</a>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+{{-- share course modal --}}
+
 @endsection
 
 {{-- js --}}
@@ -396,5 +464,25 @@
 
         });
 </script>
+
+<script>
+    const copyButton = document.getElementById("copyButton");
+    const linkToCopy = document.getElementById("linkToCopy");
+    const notify = document.getElementById("notify");
+
+    copyButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        linkToCopy.select();
+        document.execCommand("copy"); 
+        notify.innerText = 'Copied!';
+
+        setTimeout(() => {
+            notify.innerText = '';
+        }, 1000);
+
+    });
+
+</script>
+
 @endsection
 {{-- js --}}

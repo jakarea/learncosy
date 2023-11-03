@@ -1426,6 +1426,17 @@
 .dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a i {
   color: #7289FF !important;
 }
+.dark-mode .app-modals .custom-modal-content {
+  border: 1px solid #1E222A;
+  background: #0D0D0D;
+}
+.dark-mode .app-modals .custom-modal-content .form-group .form-control {
+  color: #fff;
+  border-color: #101C2D;
+}
+.dark-mode .app-modals .custom-modal-content .btn-submit {
+  background-color: #7289FF;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

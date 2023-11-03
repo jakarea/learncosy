@@ -2104,6 +2104,16 @@
         }
 
         a.connected {
+            border-color: #00AB55;
+            color: #00AB55;
+
+            &:hover {
+                background-color: #00AB55;
+                color: #fff;
+            }
+        }
+
+        a.disconnected {
             border-color: #F04574;
             color: #F04574;
 
@@ -2198,6 +2208,44 @@
 
 // small phone device
 @include q.responsive(phone) {
+    .connect-app-box{
+        padding: 1rem;
+        .app-title h3{
+            font-size: 1.2rem;
+        }
+        .app-bttn{
+            text-align: center!important;
+            margin-top: 1rem;
+            a{
+                font-size: 0.875rem;
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        .app-box .media{
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 2rem;
+            img{
+                margin-right: 0;
+            }
+            h5{
+                margin-top: 1rem;
+            }
+            p{
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            a{
+                display: block;
+                text-align: center;
+                width: 100%; 
+            }
+        }
+    }
+
     .user-profile-picture .media {
         padding: 1rem;
         flex-direction: column;
@@ -2439,6 +2487,47 @@
 
 // landscape phone device 
 @include q.responsive(landphone) {
+
+    .connect-app-box{
+        padding: 1rem;
+        .app-title h3{
+            font-size: 1.2rem;
+        }
+        .app-bttn{
+            text-align: center!important;
+            margin-top: 1rem;
+            a{
+                font-size: 0.875rem;
+                display: block;
+                text-align: center;
+                width: 70%; 
+                margin: 0 auto;
+            }
+        }
+
+        .app-box .media{
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 2rem;
+            img{
+                margin-right: 0;
+            }
+            h5{
+                margin-top: 1rem;
+            }
+            p{
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            a{
+                display: block;
+                text-align: center;
+                width: 70%; 
+                margin: 0 auto;
+            }
+        }
+    }
+
     .contact-info-box {
         margin-top: 2rem;
     }
@@ -2537,7 +2626,12 @@
     .contact-info-box {
         margin-top: 2rem;
     }
-
+    .app-box .media{
+    
+        p{
+            width: 90%; 
+        } 
+    }
     .user-search-box-wrap {
         grid-template-columns: 50% 25% 25%;
     }

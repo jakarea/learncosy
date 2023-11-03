@@ -1791,10 +1791,18 @@
   color: #fff;
 }
 .app-box .media a.connected {
+  border-color: #00AB55;
+  color: #00AB55;
+}
+.app-box .media a.connected:hover {
+  background-color: #00AB55;
+  color: #fff;
+}
+.app-box .media a.disconnected {
   border-color: #F04574;
   color: #F04574;
 }
-.app-box .media a.connected:hover {
+.app-box .media a.disconnected:hover {
   background-color: #F04574;
   color: #fff;
 }
@@ -1850,6 +1858,42 @@
 }
 
 @media (min-width: 320px) and (max-width: 574px) {
+  .connect-app-box {
+    padding: 1rem;
+  }
+  .connect-app-box .app-title h3 {
+    font-size: 1.2rem;
+  }
+  .connect-app-box .app-bttn {
+    text-align: center !important;
+    margin-top: 1rem;
+  }
+  .connect-app-box .app-bttn a {
+    font-size: 0.875rem;
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+  .connect-app-box .app-box .media {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .connect-app-box .app-box .media img {
+    margin-right: 0;
+  }
+  .connect-app-box .app-box .media h5 {
+    margin-top: 1rem;
+  }
+  .connect-app-box .app-box .media p {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .connect-app-box .app-box .media a {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
   .user-profile-picture .media {
     padding: 1rem;
     flex-direction: column;
@@ -2035,6 +2079,44 @@
   }
 }
 @media (min-width: 574px) and (max-width: 767px) {
+  .connect-app-box {
+    padding: 1rem;
+  }
+  .connect-app-box .app-title h3 {
+    font-size: 1.2rem;
+  }
+  .connect-app-box .app-bttn {
+    text-align: center !important;
+    margin-top: 1rem;
+  }
+  .connect-app-box .app-bttn a {
+    font-size: 0.875rem;
+    display: block;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+  }
+  .connect-app-box .app-box .media {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .connect-app-box .app-box .media img {
+    margin-right: 0;
+  }
+  .connect-app-box .app-box .media h5 {
+    margin-top: 1rem;
+  }
+  .connect-app-box .app-box .media p {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .connect-app-box .app-box .media a {
+    display: block;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+  }
   .contact-info-box {
     margin-top: 2rem;
   }
@@ -2109,6 +2191,9 @@
 @media (min-width: 767px) and (max-width: 992px) {
   .contact-info-box {
     margin-top: 2rem;
+  }
+  .app-box .media p {
+    width: 90%;
   }
   .user-search-box-wrap {
     grid-template-columns: 50% 25% 25%;

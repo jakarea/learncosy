@@ -1262,6 +1262,13 @@
   line-height: 155%;
 }
 
+.btn-share img {
+  transition: ease-in-out 0.3s;
+}
+.btn-share:hover img {
+  filter: invert(22%) sepia(81%) saturate(2630%) hue-rotate(227deg) brightness(102%) contrast(112%);
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .student-courses-lists-pages .course-ol-box {
     left: 0%;

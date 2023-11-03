@@ -998,12 +998,12 @@
                             aria-labelledby="pills-app-tab" tabindex="0">
                             {{-- app tab start --}}
                             <div class="row connect-app-box mt-4">
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <div class="app-title">
                                         <h3>Connects to your account</h3>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
                                     <div class="app-bttn">
                                         <a href="#"><img src="{{ asset('latest/assets/images/icons/pluss.svg') }}"
                                                 alt="a" class="img-fluid"> Add new account</a>
@@ -1021,15 +1021,16 @@
                                                     high-quality tools for hosting, sharing, and streaming videos in
                                                     gorgeous HD with no ads.</p>
                                             </div>
-                                            <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : '' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
+                                            <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
                                                 @if (isVimeoConnected()[1] == 'Connected')
-                                                    Disconnect
+                                                    Connected
                                                 @else 
                                                     Connect
                                                 @endif
                                             </a>
                                         </div>
                                         {{-- app box --}}
+
                                         {{-- app box --}}
                                         <div class="media">
                                             <img src="{{ asset('latest/assets/images/stripe.svg') }}" alt="a"
@@ -1040,9 +1041,9 @@
                                                     commerce solutions for internet businesses of all sizes. Accept
                                                     payments and scale faster.</p>
                                             </div>
-                                            <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : '' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
+                                            <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
                                                 @if (isConnectedWithStripe()[1] == 'Connected')
-                                                    Disconnect
+                                                    Connected
                                                 @else 
                                                     Connect
                                                 @endif

@@ -1445,7 +1445,16 @@
     font-weight: 400;
     line-height: 155%; 
 }
-
+.btn-share{
+    img{
+        transition: ease-in-out .3s;
+    }
+    &:hover{
+        img{
+            filter: invert(22%) sepia(81%) saturate(2630%) hue-rotate(227deg) brightness(102%) contrast(112%);
+        }
+    }
+}
 
 
 
