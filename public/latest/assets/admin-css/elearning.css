@@ -2562,6 +2562,15 @@ span.stripe-bg i {
   font-size: 1.2rem;
 }
 
+.view-as-bttn {
+  display: inline-block !important;
+  color: #1334d8 !important;
+  font-size: 0.675rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.375rem !important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .course-title {
     padding: 1rem 0;

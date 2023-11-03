@@ -132,15 +132,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="course-txt-box">
+                                <div class="course-txt-box d-flex justify-content-between align-items-center">
                                     @if ($course->offer_price)
                                         <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                                      @elseif(!$course->offer_price && !$course->price)
-                                     <h5>Free</h5>
-                                        
+                                     <h5>Free</h5> 
                                         @else 
                                         <h5>€ {{ $course->price }}</h5>
-                                    @endif
+                                    @endif 
+                                    <a href="{{ url('instructor/courses/overview/' . $course->slug) }}" class="view-as-bttn">view as student</a>
                                 </div>
                             </div>
                         </div>
