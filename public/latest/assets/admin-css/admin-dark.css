@@ -1437,6 +1437,152 @@
 .dark-mode .app-modals .custom-modal-content .btn-submit {
   background-color: #7289FF;
 }
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .title a {
+  border: 1px solid var(--others-dark-mode-btn, #7289FF);
+  background: #0D0D0D;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  color: #7289FF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .title a:hover {
+  background-color: #5672FF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .btn {
+  border: 1px solid var(--others-dark-stroke, #1A1A1A);
+  background: #0D0D0D;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  color: #66768E;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show {
+  border: 1px solid #1E222A;
+  background: #1E1E1E;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2);
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show .dropdown-item {
+  color: #D2DEEF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show .dropdown-item:hover {
+  background-color: #111 !important;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show .dropdown-item.active {
+  background-color: #111 !important;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-person-list-box .header-filter,
+.dark-mode .person-suggest-box-list .single-person,
+.dark-mode .person-tab-body .single-person {
+  border-color: #171717;
+}
+.dark-mode .person-suggest-box-list .media a.name,
+.dark-mode .person-tab-body .media a.name {
+  color: #D0D5DD;
+}
+.dark-mode .person-suggest-box-list .media .avatar i,
+.dark-mode .person-tab-body .media .avatar i {
+  border-color: #000A39;
+}
+.dark-mode .person-suggest-box-list .media .dropdown .btn,
+.dark-mode .person-tab-body .media .dropdown .btn {
+  background: #121212;
+}
+.dark-mode .person-suggest-box-list .media .dropdown .btn i,
+.dark-mode .person-tab-body .media .dropdown .btn i {
+  color: #475467;
+}
+.dark-mode .person-suggest-box-list .media .dropdown .dropdown-menu.show,
+.dark-mode .person-tab-body .media .dropdown .dropdown-menu.show {
+  background: #1E1E1E;
+  box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2);
+}
+.dark-mode .person-suggest-box-list .media .dropdown .dropdown-menu.show .dropdown-item,
+.dark-mode .person-tab-body .media .dropdown .dropdown-menu.show .dropdown-item {
+  background: #1E1E1E;
+  color: #D2DEEF;
+}
+.dark-mode .person-suggest-box-list .media .dropdown .dropdown-menu.show .dropdown-item:hover,
+.dark-mode .person-tab-body .media .dropdown .dropdown-menu.show .dropdown-item:hover {
+  background-color: #111;
+}
+.dark-mode .person-suggest-box-list .media .dropdown .dropdown-menu.show .dropdown-item.active,
+.dark-mode .person-tab-body .media .dropdown .dropdown-menu.show .dropdown-item.active {
+  background-color: #111;
+}
+.dark-mode .chat-room-head {
+  background: #0d0d0d;
+  border-bottom: 1px solid #1A1A1A !important;
+}
+.dark-mode .chat-room-head .media .view-bttn {
+  background: #5672FF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file a {
+  color: #D2DEEF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file span {
+  color: #D2DEEF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file,
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .text {
+  background: #121212;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file p,
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .text p {
+  color: #D2DEEF;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .sender-item .media.main-media .text {
+  background: #5672FF;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .sender-item .media.main-media .text p {
+  color: #0D0D0D;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status hr {
+  background-color: #171717;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status span {
+  background-color: transparent;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .typing {
+  background: #121212;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .typing i {
+  color: #fff;
+}
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns .btn-submit {
+  background-color: #5672FF;
+}
+.dark-mode .create-group-form .form-group .form-control {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #101C2D;
+}
+.dark-mode .create-group-form .form-group label {
+  color: #D2DEEF;
+}
+.dark-mode .create-group-form .suggested-name-box div {
+  border-radius: 0.25rem;
+  background: #191919;
+}
+.dark-mode .create-group-form .suggested-name-box div span {
+  color: #D2DEEF;
+}
+.dark-mode .create-group-form .form-submit .btn-cancel {
+  border: 1px solid #2D343E;
+  background: #0D0D0D;
+}
+.dark-mode .create-group-form .form-submit .btn-cancel:hover {
+  background-color: #5672FF;
+}
+.dark-mode .create-group-form .form-submit .btn-create {
+  background-color: #5672FF;
+}
+.dark-mode .create-group-form .form-submit .btn-create:hover {
+  background-color: transparent;
+  color: #5672FF;
+  border-color: #5672FF;
+}
+.dark-mode .create-group-form h4 {
+  border-color: #1E222A;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

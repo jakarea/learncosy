@@ -1740,7 +1740,7 @@
         color: #C5CCD8 !important;
     }
 
-    .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active p, 
+    .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active p,
     .dns-page-wrapper .dns-main-body .finish-txt a,
     .dns-page-wrapper .file-upload-area p span,
     .pricing-box .txt h5,
@@ -1760,7 +1760,7 @@
         border-color: #7289FF !important;
     }
 
-    .logo-upload-box{
+    .logo-upload-box {
         border-color: #7289FF !important;
     }
 
@@ -1779,88 +1779,276 @@
 
     .pricing-box {
         border: 1px solid #1E222A;
-        background: #0D0D0D; 
+        background: #0D0D0D;
         box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.05), 0px 12px 16px -4px rgba(16, 24, 40, 0.10);
     }
 
-    .current-plan{
+    .current-plan {
         background-color: #7289FF;
         color: #0D0D0D;
     }
 
-    .pricing-box .bttn{
+    .pricing-box .bttn {
         background: #121212;
     }
 
-    .pricing-box .bttn a{
+    .pricing-box .bttn a {
         background-color: #7289FF;
         color: #0D0D0D;
     }
 
-    .pricing-box .bttn a.active{
-        background-color: #7289FF!important;
+    .pricing-box .bttn a.active {
+        background-color: #7289FF !important;
         color: #0D0D0D;
     }
-    .dns-page-wrapper .dns-main-body .add-domain-box .form-control{
+
+    .dns-page-wrapper .dns-main-body .add-domain-box .form-control {
         border-color: #7289FF;
     }
 
-    .access-page-box{
+    .access-page-box {
         .form-switch .form-check-input {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")!important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
         }
-        .form-switch .form-check-input:checked { 
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")!important;
+
+        .form-switch .form-check-input:checked {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
         }
     }
 
-    .no-data-found i{
-        color: #7289FF!important;
-    }
-    .course-create-step-page-wrap .course-create-step-wrap .step-box.current p{
-        color: #7289FF!important;
+    .no-data-found i {
+        color: #7289FF !important;
     }
 
-    .reset-modal .modal-content{
-        border: 1px solid #1E222A!important;
-        background: #0D0D0D!important; 
+    .course-create-step-page-wrap .course-create-step-wrap .step-box.current p {
+        color: #7289FF !important;
     }
 
-    .modal-bttnss .btn-yes{
-        background-color:  #7289FF!important;
-        color: #000A39!important;
+    .reset-modal .modal-content {
+        border: 1px solid #1E222A !important;
+        background: #0D0D0D !important;
     }
 
-    .modal-bttnss .btn-no{
-        background: #191919!important;
-        color: #fff!important;
+    .modal-bttnss .btn-yes {
+        background-color: #7289FF !important;
+        color: #000A39 !important;
     }
 
-    .reset-modal .modal-content .btn i{
-        color: #fff!important;
+    .modal-bttnss .btn-no {
+        background: #191919 !important;
+        color: #fff !important;
     }
 
-    .header-area .d-flex a.bttn.active{
-        background-color: #7289FF!important;
+    .reset-modal .modal-content .btn i {
+        color: #fff !important;
     }
-    .course-outline-wrap .accordion .accordion-item .lesson-wrap a img{
-        filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%)!important;
+
+    .header-area .d-flex a.bttn.active {
+        background-color: #7289FF !important;
     }
-    .course-outline-wrap .accordion .accordion-item .lesson-wrap a i{
-        color: #7289FF!important;
+
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a img {
+        filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%) !important;
     }
-    .app-modals .custom-modal-content{
+
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a i {
+        color: #7289FF !important;
+    }
+
+    .app-modals .custom-modal-content {
         border: 1px solid #1E222A;
-        background: #0D0D0D; 
+        background: #0D0D0D;
     }
 
-    .app-modals .custom-modal-content .form-group .form-control{
+    .app-modals .custom-modal-content .form-group .form-control {
         color: #fff;
         border-color: #101C2D;
     }
 
-    .app-modals .custom-modal-content .btn-submit{
+    .app-modals .custom-modal-content .btn-submit {
         background-color: #7289FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .title a {
+        border: 1px solid var(--others-dark-mode-btn, #7289FF);
+        background: #0D0D0D;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: #7289FF;
+
+        &:hover {
+            background-color: #5672FF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .btn {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: #66768E;
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show {
+        border: 1px solid #1E222A;
+        background: #1E1E1E;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+
+        .dropdown-item {
+            color: #D2DEEF;
+
+            &:hover {
+                background-color: #111 !important;
+            }
+        }
+
+        .dropdown-item.active {
+            background-color: #111 !important;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter,
+    .person-suggest-box-list .single-person,
+    .person-tab-body .single-person {
+        border-color: #171717;
+    }
+
+    .person-suggest-box-list .media a.name,
+    .person-tab-body .media a.name {
+        color: #D0D5DD;
+    }
+
+    .person-suggest-box-list .media .avatar i,
+    .person-tab-body .media .avatar i {
+        border-color: #000A39;
+    }
+
+    .person-suggest-box-list .media .dropdown .btn,
+    .person-tab-body .media .dropdown .btn {
+        background: #121212;
+
+        i {
+            color: #475467;
+        }
+    }
+
+    .person-suggest-box-list .media .dropdown .dropdown-menu.show,
+    .person-tab-body .media .dropdown .dropdown-menu.show {
+        background: #1E1E1E;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+
+        .dropdown-item {
+            background: #1E1E1E;
+            color: #D2DEEF;
+
+            &:hover {
+                background-color: #111;
+            }
+        }
+
+        .dropdown-item.active {
+            background-color: #111;
+        }
+    }
+
+    .chat-room-head {
+        background: #0d0d0d;
+        border-bottom: 1px solid #1A1A1A !important;
+    }
+
+    .chat-room-head .media .view-bttn {
+        background: #5672FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file {
+        a {
+            color: #D2DEEF;
+        }
+
+        span {
+            color: #D2DEEF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file,
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .text {
+        background: #121212;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        p {
+            color: #D2DEEF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .sender-item .media.main-media .text {
+
+        background: #5672FF;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        p {
+            color: #0D0D0D;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status hr {
+        background-color: #171717;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status span {
+        background-color: transparent;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .typing {
+        background: #121212;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        i {
+            color: #fff;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns .btn-submit {
+        background-color: #5672FF;
+    }
+
+    .create-group-form .form-group .form-control {
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #101C2D;
+    }
+
+    .create-group-form .form-group label {
+        color: #D2DEEF;
+    }
+
+    .create-group-form .suggested-name-box div {
+        border-radius: 0.25rem;
+        background: #191919;
+
+        span {
+            color: #D2DEEF;
+        }
+    }
+
+    .create-group-form .form-submit .btn-cancel { 
+        border: 1px solid #2D343E;
+        background: #0D0D0D;
+
+        &:hover{
+            background-color: #5672FF;
+        }
+    }
+
+    .create-group-form .form-submit .btn-create{
+        background-color: #5672FF;
+
+        &:hover{
+            background-color: transparent;
+            color: #5672FF;
+            border-color: #5672FF;
+        }
+    }
+
+    .create-group-form h4{
+        border-color: #1E222A;
     }
 }
 
