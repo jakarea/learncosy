@@ -10,6 +10,8 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Checkout;
 use App\Models\CourseReview;
+use App\Models\Cart;
+use App\Models\course_like;
 use App\Models\Module;
 use Illuminate\Support\Str; 
 use Illuminate\Http\Request;
@@ -102,6 +104,44 @@ class CourseController extends Controller
             return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
+        }
+    }
+
+    
+    // course overview
+    public function overview($slug)
+    {
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+ 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+        $related_course = [];
+        if ($course) {
+            if($course->categories){
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query();  
+
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+                $related_course = $query->take(4)->get();
+            }
+
+
+            return view('e-learning/course/instructor/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+        } else {
+            return redirect('instructor/dashboard')->with('error', 'Course not found!');
         }
     }
 
