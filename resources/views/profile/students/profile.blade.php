@@ -118,6 +118,7 @@
                                 </tr>
                                 {{-- item @S --}}
                                 @foreach ($checkout as $key => $value)
+                                @if ($value->course) 
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $value->payment_id }}</td>
@@ -136,6 +137,7 @@
                                             <a href="{{ route('students.show.courses', $value->course->slug) }}">View Course</a>
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                                 {{-- item @E --}}
                             </table>

@@ -255,6 +255,7 @@ Student Dashboard
                             <th class="text-end">Action</th>
                         </tr>
                         @foreach ($enrolments->slice(0, 4) as $enrolment)
+                        @if ($enrolment->course)
                         <tr>
                             <td>
                                 <div class="media">
@@ -288,7 +289,8 @@ Student Dashboard
                             <td class="text-end">
                                 <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
                             </td>
-                        </tr>
+                        </tr>                            
+                        @endif
                         @endforeach
                     </table>
                     @else
