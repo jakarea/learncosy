@@ -305,7 +305,6 @@
                         {{-- free sample video --}}
                         <div class="free-sample-video-list">
                             <h5 class="mb-4">Course Videos:</h5>
-
                             @foreach ($course->modules as $module)
                                 @foreach ($module->lessons as $lesson)  
                                     @if ($lesson->type == 'video') 
@@ -313,7 +312,6 @@
                                         <div class="media d-flex py-2">
                                             <img src="{{ asset('latest/assets/images/icons/icon-play.svg') }}" alt="video-thumb" class="img-fluid icon">
                                             <div class="media-body">
-                                                
                                                 <h4 class="mt-0">{{$lesson->title}}</h4>
                                             </div>
                                             <img src="{{ asset('latest/assets/images/icons/lok.svg') }}" alt="video-thumb" class="img-fluid icon">
@@ -322,10 +320,8 @@
                                     @endif
                                 @endforeach
                             @endforeach
-
                         </div>
                         {{-- free sample video --}}
-
                     </div>
                 </div>
             </div>
@@ -341,7 +337,6 @@
         <div class="share-on-social-wrap mt-0">
             <h4>Share</h4>
             <h6>As a post</h6>
-
             <div class="d-flex">
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}"
                     target="_blank">
@@ -363,11 +358,8 @@
                     <span>Twitter</span>
                 </a>
             </div>
-
             <h6>As a message</h6>
-
             <div class="d-flex">
-
                 <a href="https://www.messenger.com/share.php?text={{ url('courses',$course->slug) }}">
                     <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                     <span>Messenger</span>
@@ -381,21 +373,16 @@
                     <span>Telegram</span>
                 </a>
             </div>
-
             <div class="d-flex align-items-center justify-content-between mb-0">
                 <h6>Or copy link</h6>
                 <span id="notify" style="color: green; font-size: 14px;"></span>
             </div>
-            
-
             <div class="copy-link">
                 <input type="text" placeholder="Link" value="{{ url('courses', $course->slug)}}"
                     class="form-control" id="linkToCopy">
-                <a href="#" id="copyButton" class="ms-1">Copy</a>
+                <a href="#" id="copyButton" class="ms-1 px-0">Copy</a>
             </div>
-
         </div>
-
       </div>
     </div>
   </div>

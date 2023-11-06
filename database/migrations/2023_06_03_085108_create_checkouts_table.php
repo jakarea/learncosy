@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('payment_id')->nullable();
-            $table->enum('status', ['pending', 'processing', 'completed', 'decline', 'canceled', 'refunded', 'failed'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'completed', 'decline', 'canceled', 'refunded', 'failed', 'deleted'])->default('pending');
             $table->integer('amount')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();

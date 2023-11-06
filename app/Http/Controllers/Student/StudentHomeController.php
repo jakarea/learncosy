@@ -95,14 +95,16 @@ class StudentHomeController extends Controller
 
         if ($enrolments) {
             foreach ($enrolments as $enrolment) {
-                $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
+                if ($enrolment->course) { 
+                    $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
 
-                if ($allCourses == 0) {
-                    $notStartedCount++;
-                } elseif ($allCourses > 0 && $allCourses < 99) {
-                    $inProgressCount++;
-                } elseif ($allCourses == 100) {
-                    $completedCount++;
+                    if ($allCourses == 0) {
+                        $notStartedCount++;
+                    } elseif ($allCourses > 0 && $allCourses < 99) {
+                        $inProgressCount++;
+                    } elseif ($allCourses == 100) {
+                        $completedCount++;
+                    }
                 }
             }
 
@@ -632,12 +634,15 @@ class StudentHomeController extends Controller
         $moduleId = (int)$request->input('moduleId');
         $duration = (int)$request->input('duration');
 
+        $course = Course::find($courseId);
+
         $userId = Auth()->user()->id;
 
         $courseActivities = CourseActivity::updateOrCreate(
             ['lesson_id' => $lessonId, 'module_id' => $moduleId],
             [
                 'course_id' => $courseId,
+                'instructor_id' => $course->instructor_id,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
@@ -671,6 +676,7 @@ class StudentHomeController extends Controller
             $review = new CourseReview([
                 'user_id'   => $userId,
                 'course_id' => $course->id,
+                'instructor_id' => $course->instructor_id,
                 'star'      => $request->star,
                 'comment'   => $request->comment,
             ]);
@@ -679,7 +685,7 @@ class StudentHomeController extends Controller
             // set notification for instructor
                 $notify = new Notification([
                     'user_id'   => Auth::user()->id,
-                    'instructor_id' => $course->user_id,
+                    'instructor_id' => $course->instructor_id,
                     'course_id' => $course->id,
                     'type'      => 'instructor',
                     'message'   => "review",

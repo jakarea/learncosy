@@ -186,6 +186,7 @@ class CourseManagementController extends Controller
 
     public function destroy($slug)
     {
+
         $course = Course::where('slug', $slug)->first();
         if ($course) {
             //delete thumbnail
@@ -229,5 +230,6 @@ class CourseManagementController extends Controller
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
+        
     }
 }

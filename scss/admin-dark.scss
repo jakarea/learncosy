@@ -1979,12 +1979,11 @@
     }
 
     .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .sender-item .media.main-media .text {
-
         background: #5672FF;
         box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
 
         p {
-            color: #0D0D0D;
+            color: #0D0D0D!important;
         }
     }
 
@@ -2028,27 +2027,59 @@
         }
     }
 
-    .create-group-form .form-submit .btn-cancel { 
+    .create-group-form .form-submit .btn-cancel {
         border: 1px solid #2D343E;
         background: #0D0D0D;
 
-        &:hover{
+        &:hover {
             background-color: #5672FF;
         }
     }
 
-    .create-group-form .form-submit .btn-create{
+    .create-group-form .form-submit .btn-create {
         background-color: #5672FF;
 
-        &:hover{
+        &:hover {
             background-color: transparent;
             color: #5672FF;
             border-color: #5672FF;
         }
     }
 
-    .create-group-form h4{
+    .create-group-form h4 {
         border-color: #1E222A;
+    }
+
+    .view-profile-box {
+        border-left: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D;
+        box-shadow: -4px 4px 25px 0px rgba(142, 152, 163, 0.10);
+    }
+
+    .view-profile-box .profile-box .btn-remove{
+        background-color: transparent;
+        border-color: #EF6E79;
+        color: #EF6E79;
+
+        &:hover{
+            background-color: #EF6E79;
+        }
+    }
+
+    .view-profile-box .media i{
+        color: #344054;
+    }
+
+    .view-profile-box .media a{
+        color: #5672FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .react-box ul li span{
+        background-color: #121212!important;
+    }
+
+    .group-room-header .dropdown .btn{
+        background-color: #171717;
     }
 }
 

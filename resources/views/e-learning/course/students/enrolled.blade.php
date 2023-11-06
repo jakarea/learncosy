@@ -65,6 +65,7 @@
                 @if (count($enrolments) > 0)
                     @foreach ($enrolments as $enrolment)
                         {{-- course single box start --}}
+                        @if ($enrolment->course) 
                         @php
                             $review_sum = 0;
                             $review_avg = 0;
@@ -131,6 +132,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         {{-- course single box end --}}
                     @endforeach
                 @else

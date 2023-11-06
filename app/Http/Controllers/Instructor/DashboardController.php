@@ -19,7 +19,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-
+        // return 123;
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);
@@ -182,6 +182,7 @@ class DashboardController extends Controller
           $earningByMonth = $this->getEarningByMonth($enrolments);
           $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
+
         //$courses = Course::where('user_id', Auth::user()->id)->get();
         foreach ($enrolments as $enrolment) {
                 $students[$enrolment->user_id] = $enrolment->created_at;
@@ -340,13 +341,13 @@ class DashboardController extends Controller
             ->get();
     }
 
-    public function analytics(){
+    public function analytics()
+    {
 
-      $recentUpdates = Notification::where('instructor_id',Auth::user()->id)->where('type','instructor')->orderBy('id','desc')->get();
-
+        $recentUpdates = Notification::where('instructor_id',Auth::user()->id)->where('type','instructor')->orderBy('id','desc')->get();
         $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->paginate(12);
-
         $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
+
         return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
     }
 
@@ -442,14 +443,17 @@ class DashboardController extends Controller
         $course_wise_payments = [];
         foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->user;
-            $title = substr($enrolment->course->title, 0, 20);
-            if (strlen($enrolment->course->title) > 20) {
-                $title .= "...";
-            }
-            if (isset($course_wise_payments[$title])) {
-                $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
-            } else {
-                $course_wise_payments[$title] = $enrolment->amount;
+            if ($enrolment->course) {
+                 
+                $title = substr($enrolment->course->title, 0, 20);
+                if (strlen($enrolment->course->title) > 20) {
+                    $title .= "...";
+                }
+                if (isset($course_wise_payments[$title])) {
+                    $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
+                } else {
+                    $course_wise_payments[$title] = $enrolment->amount;
+                }
             }
         }
         return $course_wise_payments;
