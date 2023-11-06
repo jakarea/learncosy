@@ -217,8 +217,10 @@ class CourseManagementController extends Controller
 
         // update cart 
         $cartSelect = Cart::where(['course_id'=> $selectedCourseValue])->first();
-        if ($cartSelect) {
-            $cartSelect->delete();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
         }
 
         // certificate delete
