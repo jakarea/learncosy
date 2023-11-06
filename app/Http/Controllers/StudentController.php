@@ -260,7 +260,7 @@ class StudentController extends Controller
         } 
 
         $student = User::find($userId); 
-
+        
          $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);

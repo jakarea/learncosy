@@ -154,7 +154,7 @@ class AdminManagementController extends Controller
 
         $admin = User::where('id', $id)->first();
          //delete admin avatar
-         $adminOldThumbnail = public_path('uploads/users/'.$admin->avatar);
+         $adminOldThumbnail = public_path($admin->avatar);
          if (file_exists($adminOldThumbnail)) {
              @unlink($adminOldThumbnail);
          }
