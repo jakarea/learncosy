@@ -147,6 +147,8 @@
                             <td>
                                 @if ($payment->course)
                                     <h5>{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
+                                @else 
+                                <h5 class="mishty-clr">Course has been removed</h5>
                                 @endif
                             </td>
                             <td>

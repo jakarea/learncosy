@@ -122,21 +122,23 @@
                         <h3>Recent Updates</h3>
                         @if (count($recentUpdates) > 0) 
                         @foreach ($recentUpdates->slice(0,5) as $recentUpdate)
+                        
                         @php
                             $course = App\Models\Course::find($recentUpdate->course_id);
                             $user = App\Models\User::find($recentUpdate->user_id);
                         @endphp
-
+                        @if ($course && $user) 
                         <div class="media">
                             <img src="{{ asset($user->avatar) }}" alt="icon"
                                 class="img-fluid me-3 user">
                             <div class="media-body">   
-
+ 
                                 @if ($recentUpdate->message == 'enrolled')
                                     <h5>{{ $user->name }} - Enrolled to {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>   
                                 @elseif($recentUpdate->message == 'review')
                                     <h5>{{ $user->name }} - Post a review to  {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>
                                 @endif 
+                                
                                 
                                 <p>{{ Auth::user()->name }}</p>
 
@@ -151,7 +153,9 @@
                                 <button type="submit" class="btn"><i class="fa-solid fa-trash-can" style="color: #ED5763"></i></button>
                             </form> 
 
-                        </div> 
+                        </div>  
+                        @endif
+
                         @endforeach
                         @else 
                         @include('partials/no-data')

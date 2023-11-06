@@ -153,12 +153,7 @@ class CourseController extends Controller
             $oldThumbnail = public_path($course->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            }
-            //delete banner
-            $oldBanner = public_path($course->banner);
-            if (file_exists($oldBanner)) {
-                @unlink($oldBanner);
-            }
+            } 
             //delete certficate
             $oldCertificate = public_path($course->sample_certificates);
             if (file_exists($oldCertificate)) {
