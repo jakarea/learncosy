@@ -153,9 +153,7 @@ Route::get('/auth-register', function () {
 
 // password reset
 Route::get('/auth/password/reset', function () {
-
     return view('custom-auth/passwords/email');
-
 })->name('auth.password.request')->middleware('guest');
 
 Route::get('/home', function (Request $request) {
