@@ -243,7 +243,9 @@ class CourseController extends Controller
         $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
         if ($course_useres) {
             foreach ($course_useres as $course_usere) { 
-                $course_usere->delete();
+                DB::table('course_user')
+                ->where('id', $course_usere->id)
+                ->delete();
             }
         }
 
