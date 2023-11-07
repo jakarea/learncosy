@@ -59,12 +59,13 @@ class LoginController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $user->session_id = null;
-                $user->save();
-                // Auth::login($user);
-                // check if already logged in then logout
+                $user->save(); 
+
                 Auth::login($user);
+
                 if ($user->user_role == 'admin') {
                     return redirect()->route('admin.dashboard');
+                    
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
                     if ($user->subdomain && !$request->is('//app.',$domain)) {

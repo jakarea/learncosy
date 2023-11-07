@@ -107,11 +107,11 @@ class RegisterController extends Controller
         Mail::to($user)->send(new UserCreated($user));
 
         // Show the success message
-        session()->flash('success', 'Your account has been created. Please login to continue!');
+        // session()->flash('success', 'Your account has been created. Please login to continue!');
 
-        auth()->logout();
+        // auth()->logout();
 
-        return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
+        // return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
     }
 
 }

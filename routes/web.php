@@ -51,17 +51,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 |
  */
 
-// Route::get('/')->middleware('auth');
-
-
-
-
 Route::post('/students/stripe-process-payment', [PaymentController::class, 'processPayment'])->name('process-payment');
-
-
-
-
-
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
@@ -74,29 +64,21 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 
 // custom auth screen route
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
-
 Route::get('/auth-login', function () {
-
     $subdomain = explode('.', request()->getHost())[0];
-
     $instrcutor = User::where('subdomain', request()->id)->firstOrFail();
-
-
-    if(isset( request()->singnature )){
+    if(isset(request()->singnature )){
         $user = User::where('session_id', request()->singnature)->first();
 
         if( $user){
-            Auth::login( $user);
+            Auth::login($user);
             $user->session_id = null;
             $user->save();
             return redirect()->intended($user->user_role.'/dashboard');
         }
-
     }
 
-
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
-
 
     if ($instrcutorModuleSettings) {
         $loginPageStyle = json_decode($instrcutorModuleSettings->value);
@@ -125,9 +107,7 @@ Route::get('/auth-login', function () {
 
 // theme settings register page
 Route::get('/auth-register', function () {
-
     $subdomain = explode('.', request()->getHost())[0];
-
     $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
@@ -158,20 +138,36 @@ Route::get('/auth/password/reset', function () {
 
 Route::get('/home', function (Request $request) {
     $role = Auth::user()->user_role;
-    // $subdomain = Auth::user()->subdomain;
-    $subdomain = explode('.', request()->getHost())[0];
-    if ($subdomain == 'app' && $role == 'admin') {
+
+    if (Auth::user()->user_role == 'instructor' && Auth::user()->email_verified_at == null) {
+        return view('auth.verify');
+    }
+
+    if (Auth::user()->user_role == 'admin') {
         return redirect('/admin/dashboard');
     }
 
-    if ($subdomain != 'app' && $role == 'student') {
-        return redirect('/students/dashboard');
+    // $subdomain = Auth::user()->subdomain;
+    // $subdomain = explode('.', request()->getHost())[0];
+    
+    // if ($subdomain == 'app' && $role == 'admin') {
+    //     return redirect('/admin/dashboard');
+    // }
 
-    }
+    // if ($role == 'instructor') {
+    //     return redirect('/admin/dashboard');
+    // }
 
-    if ($subdomain != 'app' && $role == 'instructor') {
-        return redirect('/instructor/dashboard');
-    }
+    return "Stop here for debug";
+
+    // if ($subdomain != 'app' && $role == 'student') {
+    //     return redirect('/students/dashboard');
+
+    // }
+
+    // if ($subdomain != 'app' && $role == 'instructor') {
+    //     return redirect('/instructor/dashboard');
+    // }
 
     Auth::logout();
 
@@ -185,10 +181,7 @@ Route::get('/home', function (Request $request) {
 
 // auth route
 Auth::routes(['verify' => true]);
-
-
 Route::get('students/lessons/{id}', function ($id) {
- 
     $lesson = App\Models\Lesson::findorfail($id);
     return response()->json($lesson);
 });
