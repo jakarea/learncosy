@@ -3,7 +3,7 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
