@@ -81,8 +81,8 @@
                         </div>
                     </div>
                     <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
-                            $percentageChangeOfCourse >= 0 ? '+' . $percentageChangeOfCourse :
-                            $percentageChangeOfCourse }}%</b> VS last {{$compear}}</p>
+                            $percentageChangeOfCourse >= 0 ? '+' . number_format($percentageChangeOfCourse,0) :
+                            number_format($percentageChangeOfCourse,0) }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">

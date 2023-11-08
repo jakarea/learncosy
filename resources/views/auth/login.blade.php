@@ -24,7 +24,7 @@ Login Page
                     @endif
                     <a href="#">
                         <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
-                    </a>
+                    </a>  
                     <h1>Welcome back</h1>
                     <p>Welcome back! Please enter your details.</p>
                     <form method="POST" action="{{ route('login') }}">

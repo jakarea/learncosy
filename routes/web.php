@@ -68,7 +68,7 @@ Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageCont
 // custom login for student and instructor
 Route::get('/auth-login', function () {
 
-    // match user sessionId
+    // match user sessionId 
     if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();
         if($user){
@@ -77,7 +77,7 @@ Route::get('/auth-login', function () {
             $user->save(); 
             return redirect()->intended($user->user_role.'/dashboard');
         }
-    }
+    } 
 
     $subdomain = explode('.', request()->getHost())[0];
     $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
@@ -466,6 +466,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     });
 
     // student own profile management page routes
+    
     Route::prefix('profile')->controller(StudentProfileController::class)->group(function () {
         Route::get('/myprofile', 'show')->name('students.profile');
         Route::get('/edit', 'edit');
@@ -602,7 +603,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 Route::get('/logout', function () {
     Auth::logout();
     session()->flush();
-    return redirect('/login');
+    return redirect('/');
 });
 
 /**
