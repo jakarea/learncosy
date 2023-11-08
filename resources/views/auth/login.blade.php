@@ -3,8 +3,7 @@
 Login Page
 @endsection
 
-@section('content')
-<!-- ====== login page content start ====== -->
+@section('content') 
 
 <section class="auth-part-sec">
     <div class="container-fluid">
@@ -76,8 +75,7 @@ Login Page
                             <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
                         </div>
                     </form>
-                </div>
-                <!-- login form end -->
+                </div> 
             </div>
             <div class="col-lg-6 px-0">
                 <div class="auth-side-img d-none d-lg-block">
@@ -86,8 +84,7 @@ Login Page
             </div>
         </div>
     </div>
-</section>
-<!-- ====== login page content end ====== -->
+</section> 
 
 @endsection
 

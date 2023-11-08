@@ -56,7 +56,7 @@
                     <form class="ms-0" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <div class="form-submit only-submit">
-                            <button class="btn btn-submit mx-auto" type="submit">Verify</button>
+                            <button class="btn btn-submit mx-auto" type="submit">Resend Verification Link!</button>
                         </div>
                     </form>
 
