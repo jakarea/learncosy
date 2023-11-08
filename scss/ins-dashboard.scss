@@ -620,6 +620,17 @@
     }
 }
 
+.recent-payment-grid-view{
+    .payment-box{
+        display: grid!important;
+        grid-template-columns: 45% 20% 25% 10%!important; 
+
+        .payment-box h5{
+            display: flex;
+        }
+    }
+     
+}
 
 
 
@@ -634,6 +645,16 @@
 
 // small phone device
 @include q.responsive(phone) {
+
+    .recent-payment-grid-view{
+        .payment-box{ 
+            grid-template-columns: 100%!important; 
+            p{
+                margin: .2rem 0;
+            }
+        }
+         
+    }
 
     .yearly-analitics{
         flex-direction: column;
@@ -748,6 +769,16 @@
 @include q.responsive(landphone) {
     .chart-box-wrap #course_earning {
         position: inherit;
+    }
+
+    .recent-payment-grid-view{
+        .payment-box{ 
+            grid-template-columns: 100%!important; 
+            p{
+                margin: .2rem 0;
+            }
+        }
+         
     }
 
     .recent-payment-box .text-center {

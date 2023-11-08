@@ -202,6 +202,10 @@ body {
   display: block !important;
 }
 
+.mce-notification-inner {
+  display: none !important;
+}
+
 .filter-dropdown-box {
   position: relative;
 }

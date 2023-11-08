@@ -82,6 +82,7 @@ class RegisterController extends Controller
 
         // return $data;
         $email_verified_at = null;
+        
         if ($data['user_role'] == 'student') {
             $email_verified_at = now()->format('Y-m-d H:i:s');
         }
@@ -107,11 +108,11 @@ class RegisterController extends Controller
         Mail::to($user)->send(new UserCreated($user));
 
         // Show the success message
-        session()->flash('success', 'Your account has been created. Please login to continue!');
+        // session()->flash('success', 'Your account has been created. Please login to continue!');
 
-        auth()->logout();
+        // auth()->logout();
 
-        return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
+        // return redirect()->route('login')->with('success', 'Your account has been created. Please login to continue!');
     }
 
 }

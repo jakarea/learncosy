@@ -7,7 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Checkout;
-use App\Models\CourseReview;
+use App\Models\CourseReview;  
+use App\Models\BundleSelect;
+use App\Models\CourseActivity;
+use App\Models\Notification;
+use App\Models\Cart;
+use App\Models\Certificate;
+use App\Models\course_like;
+use App\Models\CourseLog;
+use App\Models\BundleCourse;
 use App\Models\Module;
 use Illuminate\Support\Str;  
 use App\Mail\CourseUpdated;
@@ -16,6 +24,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use File;
 use ZipArchive;
 use Auth; 
+use DB;
 
 class CourseManagementController extends Controller
 {
@@ -181,26 +190,125 @@ class CourseManagementController extends Controller
         }
     }
 
-    
- 
-
-    public function destroy($slug)
+    public function destroy($id)
     {
+         // update bundle course for this course
+         $selectedCourseValue = intval($id); 
 
-        $course = Course::where('slug', $slug)->first();
+        $bundleSelected = BundleCourse::where(function ($query) use ($selectedCourseValue) {
+                $query->where('selected_course', 'LIKE', $selectedCourseValue . ',%')
+                    ->orWhere('selected_course', 'LIKE', '%,' . $selectedCourseValue . ',%')
+                    ->orWhere('selected_course', 'LIKE', '%,' . $selectedCourseValue);
+        })->get();
+
+        foreach ($bundleSelected as $record) {
+            $updatedSelectedCourse = str_replace($selectedCourseValue . ',', '', $record->selected_course);
+            $updatedSelectedCourse = str_replace(',' . $selectedCourseValue, '', $updatedSelectedCourse);
+            $updatedSelectedCourse = str_replace($selectedCourseValue, '', $updatedSelectedCourse);
+            $record->selected_course = $updatedSelectedCourse;
+            $record->save();
+        } 
+
+        // delete bundleselected for this course
+        $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue])->first();
+        if ($bundleSelection) {
+            $bundleSelection->delete();
+        }
+
+        // update cart 
+        $cartSelect = Cart::where(['course_id'=> $selectedCourseValue])->first();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
+        }
+
+        // certificate delete
+        $certificate = Certificate::where(['course_id'=> $selectedCourseValue])->first();
+        if ($certificate) {
+            $certificateOldLogo = public_path($certificate->logo);
+            if (file_exists($certificateOldLogo)) {
+                @unlink($certificateOldLogo);
+            }
+
+            $certificateOldSignature = public_path($certificate->signature);
+            if (file_exists($certificateOldSignature)) {
+                @unlink($certificateOldSignature);
+            }
+            $certificate->delete();
+        }
+        
+        // checkout controller update
+        $totalCheckout = Checkout::where(['course_id'=> $selectedCourseValue])->get();
+        if ($totalCheckout) {
+            foreach ($totalCheckout as $checkout) {
+                $checkout->status = 'deleted';
+                $checkout->save();
+            }
+        }
+
+        // course activities
+        $totalActivity = CourseActivity::where(['course_id'=> $selectedCourseValue])->get();
+        if ($totalActivity) {
+            foreach ($totalActivity as $activity) { 
+                $activity->delete();
+            }
+        }
+
+        // course likes
+        $course_likes = course_like::where(['course_id'=> $selectedCourseValue])->get();
+        if ($course_likes) {
+            foreach ($course_likes as $course_liked) { 
+                $course_liked->delete();
+            }
+        }
+
+        // course Log
+        $course_logs = CourseLog::where(['course_id'=> $selectedCourseValue])->get();
+        if ($course_logs) {
+            foreach ($course_logs as $course_log) { 
+                $course_log->delete();
+            }
+        }
+
+        // course review
+        $course_reviews = CourseReview::where(['course_id'=> $selectedCourseValue])->get();
+        if ($course_reviews) {
+            foreach ($course_reviews as $course_review) { 
+                $course_review->delete();
+            }
+        }
+
+        // course users
+        $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue])->get();
+        if ($course_useres) {
+            foreach ($course_useres as $course_usere) { 
+                DB::table('course_user')
+                ->where('id', $course_usere->id)
+                ->delete();
+            }
+        }
+
+
+        // delete notification for this course
+        $course_notifications = Notification::where(['course_id'=> $selectedCourseValue])->get();
+        if ($course_notifications) {
+            foreach ($course_notifications as $course_notification) { 
+                $course_notification->delete();
+            }
+        }
+
+        // delete main course 
+        $course = Course::where(['id'=> $selectedCourseValue])->first();
+
         if ($course) {
             //delete thumbnail
-            $oldThumbnail = public_path('/assets/images/courses/'.$course->thumbnail);
+            $oldThumbnail = public_path($course->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            }
-            //delete banner
-            $oldBanner = public_path('/assets/images/courses/'.$course->banner);
-            if (file_exists($oldBanner)) {
-                @unlink($oldBanner);
-            }
+            } 
             //delete certficate
-            $oldCertificate = public_path('/assets/images/courses/'.$course->sample_certificates);
+            $oldCertificate = public_path($course->sample_certificates);
             if (file_exists($oldCertificate)) {
                 @unlink($oldCertificate);
             }
@@ -211,12 +319,12 @@ class CourseManagementController extends Controller
                 $lessons = Lesson::where('module_id', $module->id)->get();
                 foreach ($lessons as $lesson) {
                     //delete lesson thumbnail
-                    $lessonOldThumbnail = public_path('/assets/images/lessons/'.$lesson->thumbnail);
+                    $lessonOldThumbnail = public_path($lesson->thumbnail);
                     if (file_exists($lessonOldThumbnail)) {
                         @unlink($lessonOldThumbnail);
                     }
                     //delete lesson file
-                    $lessonOldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
+                    $lessonOldFile = public_path($lesson->lesson_file);
                     if (file_exists($lessonOldFile)) {
                         @unlink($lessonOldFile);
                     }
@@ -226,10 +334,10 @@ class CourseManagementController extends Controller
                 $module->delete();
             }
             $course->delete();
-            return redirect('admin/courses')->with('success', 'Course deleted!');
+            return redirect('admin/courses')->with('success', 'Course deleted Successfully!');
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
-        
+
     }
 }

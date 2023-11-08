@@ -9,6 +9,21 @@ use App\Models\Course;
 use App\Models\Experience;
 use App\Models\Lesson;
 use Illuminate\Support\Str;
+use DB;  
+use App\Models\Checkout;
+use App\Models\ManagePage;
+use App\Models\VimeoData;
+use App\Models\Module;
+use App\Models\InstructorModuleSetting;
+use App\Models\BundleSelect;
+use App\Models\CourseActivity;
+use App\Models\Notification;
+use App\Models\CourseLog;
+use App\Models\BundleCourse;
+use App\Models\Certificate;
+use App\Models\CourseReview;
+use App\Models\Cart;
+use App\Models\course_like;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -189,23 +204,140 @@ class InstructorController extends Controller
             return redirect('admin/instructor')->with('error', 'Failed to delete this Instructor!');
         }
 
-        $instructor = User::where('id', $id)->first();
-         //delete instructor avatar
-         $instructorOldAvatar = public_path($instructor->avatar);
-         if (file_exists($instructorOldAvatar)) {
-             @unlink($instructorOldAvatar);
+        $instructorId = intval($id);
+
+        /// bundle course delete
+        $bundleCourses = BundleCourse::where(['instructor_id' => $instructorId])->get();
+        if ($bundleCourses) {
+            foreach ($bundleCourses as $bundleCourse) { 
+                $bundleThumbnail = public_path($bundleCourse->thumbnail);
+                if (file_exists($bundleThumbnail)) {
+                    @unlink($bundleThumbnail);
+                } 
+                $bundleCourse->delete();
+            }
+        }
+
+         // delete bundleselected for this user
+         $bundleSelection = BundleSelect::where(['instructor_id' => $instructorId])->get();
+         if ($bundleSelection) {
+             foreach ($bundleSelection as $bundleSelected) { 
+                 $bundleSelected->delete();
+             }
          }
 
-         \App\Models\BundleCourse::where('instructor_id', $id)->delete();
-         \App\Models\Checkout::where('instructor_id', $id)->delete();
-         \App\Models\Course::where('user_id', $id)->delete();
-         \App\Models\CourseActivity::where('user_id', $id)->delete();
-         \App\Models\InstructorModuleSetting::where('instructor_id', $id)->delete();
-         \App\Models\Message::where('sender_id', $id)->orWhere('receiver_id', $id)->delete();
-         \App\Models\Module::where('instructor_id', $id)->delete();
-         \App\Models\Lesson::where('instructor_id', $id)->delete();
-         \App\Models\Subscription::where('instructor_id', $id)->delete();
-         \App\Models\VimeoData::where('user_id', $id)->delete();
+         // certificate delete
+        $allCertificates = Certificate::where(['instructor_id' => $instructorId])->get();
+        if ($allCertificates) {
+            foreach ($allCertificates as $certificate) { 
+                $certificateOldLogo = public_path($certificate->logo);
+                if (file_exists($certificateOldLogo)) {
+                    @unlink($certificateOldLogo);
+                }
+                $certificateOldSignature = public_path($certificate->signature);
+                if (file_exists($certificateOldSignature)) {
+                    @unlink($certificateOldSignature);
+                }
+                $certificate->delete();
+            }           
+        }
+
+        // checkout controller update
+        $totalCheckout = Checkout::where(['instructor_id' => $instructorId])->get();
+        if ($totalCheckout) {
+            foreach ($totalCheckout as $checkout) {
+                $checkout->status = 'deleted';
+                $checkout->save();
+            }
+        }
+
+        // delete course for this instructor
+        $courses = Course::where(['instructor_id' => $instructorId])->get();
+        if ($courses) {
+             foreach ($courses as $course) {
+                //delete thumbnail
+                $oldThumbnail = public_path($course->thumbnail);
+                if (file_exists($oldThumbnail)) {
+                    @unlink($oldThumbnail);
+                } 
+                //delete certficate
+                $oldCertificate = public_path($course->sample_certificates);
+                if (file_exists($oldCertificate)) {
+                    @unlink($oldCertificate);
+                }
+                //delete modules
+                $modules = Module::where('course_id', $course->id)->get();
+                foreach ($modules as $module) {
+                    //delete lessons
+                    $lessons = Lesson::where('module_id', $module->id)->get();
+                    foreach ($lessons as $lesson) {
+                        //delete lesson thumbnail
+                        $lessonOldThumbnail = public_path($lesson->thumbnail);
+                        if (file_exists($lessonOldThumbnail)) {
+                            @unlink($lessonOldThumbnail);
+                        }
+                        //delete lesson file
+                        $lessonOldFile = public_path($lesson->lesson_file);
+                        if (file_exists($lessonOldFile)) {
+                            @unlink($lessonOldFile);
+                        }
+                        
+                        $lesson->delete();
+                    }
+                    $module->delete();
+                }
+                $course->delete();
+             }
+        }
+
+        // experience table delete
+        $totalExperiences = Experience::where(['user_id' => $instructorId])->get();
+        if ($totalExperiences) {
+            foreach ($totalExperiences as $totalExperience) { 
+                $totalExperience->delete();
+            }
+        }
+
+        // module settings delete
+        $insModule = InstructorModuleSetting::where(['instructor_id' => $instructorId])->first();
+        if ($insModule) {
+            $insModule->delete();
+        }
+
+        // manage pages settings delete
+        $managePage = ManagePage::where(['instructor_id' => $instructorId])->first();
+        if ($managePage) {
+            $managePage->delete();
+        }
+
+        // delete notification for this course
+        $course_notifications = Notification::where(['instructor_id' => $instructorId])->get();
+        if ($course_notifications) {
+            foreach ($course_notifications as $course_notification) { 
+                $course_notification->delete();
+            }
+        }
+
+         // subscription update
+         $totalSubscriptions = Subscription::where(['instructor_id' => $instructorId])->get();
+         if ($totalSubscriptions) {
+             foreach ($totalSubscriptions as $totalSubscription) {
+                 $totalSubscription->status = 'deleted';
+                 $totalSubscription->save();
+             }
+         }
+
+        //  vimeo data
+        $vimeoData = VimeoData::where(['user_id' => $instructorId])->first();
+        if ($vimeoData) {
+            $vimeoData->delete();
+        }
+         //  delete instructor avatar 
+        $instructor = User::where('id', $id)->first();
+        $instructorOldAvatar = public_path($instructor->avatar);
+        if (file_exists($instructorOldAvatar)) {
+            @unlink($instructorOldAvatar);
+        }
 
         $instructor->delete();
 

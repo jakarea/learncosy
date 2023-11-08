@@ -555,7 +555,21 @@
   color: #1C2636;
 }
 
+.recent-payment-grid-view .payment-box {
+  display: grid !important;
+  grid-template-columns: 45% 20% 25% 10% !important;
+}
+.recent-payment-grid-view .payment-box .payment-box h5 {
+  display: flex;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
+  .recent-payment-grid-view .payment-box {
+    grid-template-columns: 100% !important;
+  }
+  .recent-payment-grid-view .payment-box p {
+    margin: 0.2rem 0;
+  }
   .yearly-analitics {
     flex-direction: column;
     align-items: flex-start;
@@ -647,6 +661,12 @@
 @media (min-width: 574px) and (max-width: 767px) {
   .chart-box-wrap #course_earning {
     position: inherit;
+  }
+  .recent-payment-grid-view .payment-box {
+    grid-template-columns: 100% !important;
+  }
+  .recent-payment-grid-view .payment-box p {
+    margin: 0.2rem 0;
   }
   .recent-payment-box .text-center {
     position: inherit;

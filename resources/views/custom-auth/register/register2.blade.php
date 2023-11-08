@@ -85,7 +85,7 @@
                                     class="img-fluid"></a>
                         </div>
 
-                        <form method="POST" action="{{ route('login') }}" class="login-from">
+                        <form method="POST" action="{{ route('register') }}" class="login-from">
                             @csrf
  
                             <div class="form-group mt-3">

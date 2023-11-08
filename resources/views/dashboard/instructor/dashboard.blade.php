@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">
-                    <div class="recent-payment-box">
+                    <div class="recent-payment-box recent-payment-grid-view">
                         <h3>Recent Payment</h3>
                         @if (count($payments) > 0) 
                         @foreach ($payments->slice(0, 5) as $payment)

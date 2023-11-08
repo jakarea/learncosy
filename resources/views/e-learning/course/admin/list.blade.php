@@ -86,7 +86,7 @@
                                                     </li>
                                                     <li>
                                                         <form method="post" class="d-inline"
-                                                            action="{{ url('admin/courses/' . $course->slug . '/destroy') }}">
+                                                            action="{{ url('admin/courses/' . $course->id . '/destroy') }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"

@@ -172,15 +172,19 @@ class CourseController extends Controller
         } 
 
         // delete bundleselected for this course
-        $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->first();
+        $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
         if ($bundleSelection) {
-            $bundleSelection->delete();
+            foreach ($bundleSelection as $bundleSelected) { 
+                $bundleSelected->delete();
+            }
         }
 
         // update cart 
-        $cartSelect = Cart::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->first();
-        if ($cartSelect) {
-            $cartSelect->delete();
+        $cartSelects = Cart::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
         }
 
         // certificate delete
@@ -243,7 +247,9 @@ class CourseController extends Controller
         $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
         if ($course_useres) {
             foreach ($course_useres as $course_usere) { 
-                $course_usere->delete();
+                DB::table('course_user')
+                ->where('id', $course_usere->id)
+                ->delete();
             }
         }
 

@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use DataTables;
+use DB;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Checkout;
+use App\Models\BundleSelect;
+use App\Models\CourseActivity;
+use App\Models\Notification;
+use App\Models\CourseLog;
+use App\Models\BundleCourse;
+use App\Models\Certificate;
+use App\Models\CourseReview;
+use App\Models\Cart;
+use App\Models\course_like; 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -179,16 +188,85 @@ class StudentController extends Controller
          return redirect()->route('allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }
 
-     public function destroy($id){
+     public function destroy($id)
+     {
+        $userId = intval($id);
 
-        $student = User::where('id', $id)->first();
-         //delete student avatar
-         $studentOldThumbnail = public_path('uploads/users/'.$student->avatar);
+        // delete cart 
+        $cartSelects = Cart::where(['user_id' => $userId])->get();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
+        }
+
+        // checkout table
+        $totalCheckout = Checkout::where(['user_id' => $userId])->get();
+        if ($totalCheckout) {
+            foreach ($totalCheckout as $checkout) {
+                $checkout->status = 'deleted';
+                $checkout->save();
+            }
+        }
+
+        // course activities
+        $totalActivity = CourseActivity::where(['user_id' => $userId])->get();
+        if ($totalActivity) {
+            foreach ($totalActivity as $activity) { 
+                $activity->delete();
+            }
+        }
+
+         // course likes
+         $course_likes = course_like::where(['user_id' => $userId])->get();
+         if ($course_likes) {
+             foreach ($course_likes as $course_liked) { 
+                 $course_liked->delete();
+             }
+         }
+
+         // course Log
+        $course_logs = CourseLog::where(['user_id' => $userId])->get();
+        if ($course_logs) {
+            foreach ($course_logs as $course_log) { 
+                $course_log->delete();
+            }
+        }
+
+        // course review
+        $course_reviews = CourseReview::where(['user_id' => $userId])->get();
+        if ($course_reviews) {
+            foreach ($course_reviews as $course_review) { 
+                $course_review->delete();
+            }
+        }
+
+         // course users
+        $course_useres = DB::table('course_user')->where(['user_id' => $userId])->get();
+        if ($course_useres) {
+            foreach ($course_useres as $course_usere) { 
+                DB::table('course_user')
+                ->where('user_id', $userId)
+                ->delete();
+            }
+        }
+
+        // delete notification for this user
+        $user_notifications = Notification::where(['user_id' => $userId])->get();
+        if ($user_notifications) {
+            foreach ($user_notifications as $user_notification) { 
+                $user_notification->delete();
+            }
+        } 
+
+        $student = User::find($userId); 
+        
+         $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
          }
         $student->delete();
 
-        return redirect('instructor/students')->with('success', 'Student Successfully deleted!');
+        return redirect('instructor/students')->with('success', 'Student Successfully Deleted!');
     }
 }
