@@ -317,10 +317,8 @@ class CourseCreateStepController extends Controller
         
     }
 
-    public function stepLessonVideo($id,$module_id,$lesson_id){
-
-        // return 2345;
-
+    public function stepLessonVideo($id,$module_id,$lesson_id)
+    {
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -336,7 +334,7 @@ class CourseCreateStepController extends Controller
 
         $request->validate([
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
-            'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
+            // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',

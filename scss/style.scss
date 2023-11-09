@@ -127,6 +127,10 @@
     display: none!important;
 }
 
+.mce-widget.mce-notification.mce-notification-warning.mce-has-close.mce-in{
+    z-index: -9999!important;
+    display: none!important;
+}
 .filter-dropdown-box {
     position: relative;
 

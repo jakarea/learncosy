@@ -44,7 +44,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4>Experiences</h4>
                             <div>
-                                <a href="{{ url('instructor/profile/edit') }}"><img
+                                <a href="{{ route('account.settings', ['tab' => 'experience']) }}"><img
                                         src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img"
                                         class="img-fluid"></a>
                             </div>

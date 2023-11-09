@@ -233,7 +233,7 @@ $(document).ready(function() {
                 uploadProgress.classList.add('d-none');
                 warnm.classList.add('d-none');
                 var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
-                console.log(errors.video_link)
+                // console.log(errors.video_link)
                  
                 if(errors.video_link){
                     document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];
