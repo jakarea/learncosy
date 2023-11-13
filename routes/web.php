@@ -499,6 +499,7 @@ Route::prefix('students')->controller(CartController::class)->group(function () 
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
+        Route::get('/notifications', 'notification')->name('admin.notification');
         Route::get('/top-perform/courses', 'perform');
 
         // all admin profile manage routes for admin

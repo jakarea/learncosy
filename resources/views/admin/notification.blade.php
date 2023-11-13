@@ -1,15 +1,5 @@
-@php
-if ( Auth::user()->user_role == 'instructor') {
-$layoutName = "layouts.latest.instructor";
-}elseif(Auth::user()->user_role == 'student'){
-$layoutName = "layouts.latest.students";
-}else{
-$layoutName = "layouts.latest.admin";
-}
-@endphp
-
-@extends($layoutName)
-@section('title') Instructor Notifications @endsection
+@extends("layouts.latest.admin")
+@section('title') Notifications || Page @endsection
 
 {{-- style section @S --}}
 @section('style')
@@ -79,14 +69,7 @@ $layoutName = "layouts.latest.admin";
                                         <p>{{$today['message']}}</p>
                                     </div>
                                 </div>
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$today['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                
                             </div>
                             @endforeach
                             {{-- notify item end --}}
@@ -117,15 +100,7 @@ $layoutName = "layouts.latest.admin";
                                         <p>{{$yestarday['message']}}</p>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$yestarday['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+ 
                             </div>
                             @endforeach
                             {{-- notify item end --}}
@@ -155,15 +130,7 @@ $layoutName = "layouts.latest.admin";
                                         <p>{{$sevenDay['message']}}</p>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$sevenDay['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+ 
                             </div>
                             @endforeach
                             {{-- notify item end --}}
@@ -192,15 +159,7 @@ $layoutName = "layouts.latest.admin";
                                         <p>{{$thirtyDay['message']}}</p>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$thirtyDay['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+ 
                             </div>
                             @endforeach
                             {{-- notify item end --}}
@@ -232,14 +191,7 @@ $layoutName = "layouts.latest.admin";
                                     </div>
                                 </div>
 
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$lastOneYear['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                
                             </div>
                             @endforeach
                             {{-- notify item end --}}
@@ -320,7 +272,6 @@ $layoutName = "layouts.latest.admin";
                     document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'block';
                 }
- 
 
             });
         });

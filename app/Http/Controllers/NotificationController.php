@@ -62,14 +62,7 @@ class NotificationController extends Controller
                 $lastOneYears[] = $item;
             }
         } 
-                                        
-                        //  return [$todays,
-                        //  $yestardays,
-                        //  $sevenDays,
-                        //  $thirtyDays,
-                        //  $lastOneYears];    
                         
-        // return $todays;
         return view('instructor.notification.system',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
     }
 
