@@ -14,6 +14,8 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
+    <meta name="csrf-token" content=" {{ csrf_token() }} ">
+
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
@@ -29,6 +31,12 @@
     <link href="{{ asset('latest/assets/admin-css/dashboard.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/admin-dark.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     @yield('style')
     {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css" /> --}}

@@ -68,16 +68,16 @@ Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageCont
 // custom login for student and instructor
 Route::get('/auth-login', function () {
 
-    // match user sessionId 
+    // match user sessionId
     if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();
         if($user){
             Auth::login($user);
             $user->session_id = null;
-            $user->save(); 
+            $user->save();
             return redirect()->intended($user->user_role.'/dashboard');
         }
-    } 
+    }
 
     $subdomain = explode('.', request()->getHost())[0];
     $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
@@ -124,7 +124,7 @@ Route::get('/auth-register', function () {
         } elseif ($registerPageStyle->lp_layout == 'default') {
             return view('custom-auth/register/register');
         } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
-            return view('custom-auth/register/register3'); 
+            return view('custom-auth/register/register3');
         } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
             return view('custom-auth/register/register4');
         } else {
@@ -140,8 +140,8 @@ Route::get('/auth-register', function () {
 Route::get('/auth/password/reset', function () {
     return view('custom-auth/passwords/email');
 })->name('auth.password.request')->middleware('guest');
- 
-// after registration redirect user 
+
+// after registration redirect user
 Route::get('/home', function (Request $request) {
     // user role
     $role = Auth::user()->user_role;
@@ -150,18 +150,18 @@ Route::get('/home', function (Request $request) {
     if ($role == 'instructor' && isset(Auth::user()->email_verified_at)) {
         return redirect('instructor/dashboard');
 
-    }elseif($role == 'instructor' && !isset(Auth::user()->email_verified_at)){ 
+    }elseif($role == 'instructor' && !isset(Auth::user()->email_verified_at)){
          return redirect('instructor/profile/step-1/complete');
     }
 
     // admin rediretion
     if ($role == 'admin') {
-        return redirect('/admin/dashboard'); 
+        return redirect('/admin/dashboard');
     }
 
     // students rediretion
     if ($role == 'student') {
-        return redirect('/students/dashboard'); 
+        return redirect('/students/dashboard');
     }
 
     Auth::logout();
@@ -181,12 +181,15 @@ Route::get('students/lessons/{id}', function ($id) {
 // message pages routes
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('message');
-    Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
-    Route::post('/', 'sendMessage')->name('message-send');
-    Route::get('/send/{id}', 'send')->name('get.message');
-    Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+    Route::get('/chat/{id}', 'getChatMessage')->name('chat');
+    Route::post('/chat', 'sendChatMessage');
+
+    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
+    // Route::post('/', 'sendMessage')->name('message-send');
+    // Route::get('/send/{id}', 'send')->name('get.message');
+    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
+    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
+    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
 });
 
 /* ============================================================= */
@@ -207,10 +210,10 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     Route::get('/profile/step-2/payment/{id}', function ($id) {
         $package = App\Models\SubscriptionPackage::findorfail($id);
         return view('latest-auth.payment',compact('package'));
-    }); 
+    });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
-    
+
     // destroy instructor notification
     Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
@@ -323,7 +326,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
         // lesson page routes
         Route::prefix('lessons')->controller(LessonController::class)->group(function () {
-            Route::get('/', 'index'); 
+            Route::get('/', 'index');
             Route::get('/create', 'create');
 
             Route::get('/create/video-upload', 'videoUpload')->name('lesson.upload.video');
@@ -402,8 +405,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
 
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
-    Route::get('/', 'index')->name('instructor.subscription'); 
-    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
+    Route::get('/', 'index')->name('instructor.subscription');
+    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
     Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
     Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
@@ -466,7 +469,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     });
 
     // student own profile management page routes
-    
+
     Route::prefix('profile')->controller(StudentProfileController::class)->group(function () {
         Route::get('/myprofile', 'show')->name('students.profile');
         Route::get('/edit', 'edit');
