@@ -281,7 +281,7 @@ class AdminHomeController extends Controller
             $today = now();
             if ($status == 'one') {
                 $courses->whereYear('courses.created_at', '=', $today->year)
-                    ->whereMonth('courses.created_at', '=', $today->month);
+                    ->whereMonth('courses.created_at', '=', $today->month); 
             } elseif ($status == 'three') {
                 $courses->where('courses.created_at', '>=', $today->subMonths(3));
             } elseif ($status == 'six') {
@@ -290,6 +290,8 @@ class AdminHomeController extends Controller
                 $courses->where('courses.created_at', '>=', $today->subYear(1));
             }
         }
+
+        // return $earningByMonth;
 
         $courses = $courses->get();
 

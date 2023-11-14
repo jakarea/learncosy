@@ -1,4 +1,4 @@
-@extends('layouts/latest/instructor')
+@extends('layouts/latest/admin')
 @section('title','Course Overview') 
 
 

@@ -112,12 +112,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="course-txt-box">
+                                <div class="course-txt-box d-flex justify-content-between align-items-center">
                                     @if ($course->offer_price)
-                                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                    @elseif(!$course->offer_price && !$course->price)
+                                    <h5>Free</h5>
                                     @else
-                                        <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
+                                    <h5>€ {{ $course->price }}</h5>
                                     @endif
+                                    <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
                                 </div>
                             </div>
                         </div>

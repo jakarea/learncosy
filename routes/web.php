@@ -541,6 +541,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.course.store');
             Route::get('/{slug}', 'show')->name('admin.course.show');
+            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
             Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
             Route::post('/{slug}/edit', 'update')->name('admin.course.update');
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
@@ -573,9 +574,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // lesson page routes for admin
         Route::prefix('lessons')->controller(LessonManagementController::class)->group(function () {
-            Route::get('/', 'index');
-            // data table route
-            Route::get('/datatable', 'lessonsDataTable')->name('admin.lessons.data.table');
+            Route::get('/', 'index'); 
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.lesson.store');
             Route::get('/{slug}/edit', 'edit')->name('admin.lesson.edit');
