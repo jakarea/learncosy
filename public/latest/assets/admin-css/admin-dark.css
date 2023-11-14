@@ -587,7 +587,6 @@
 .dark-mode .recent-update-box .media {
   border-color: #262626 !important;
 }
-.dark-mode .user-add-form-wrap form .form-group label,
 .dark-mode .chart-box-wrap {
   border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
   background: #0D0D0D !important;
@@ -1607,6 +1606,9 @@
 }
 .dark-mode .group-room-header .dropdown .btn {
   background-color: #171717;
+}
+.dark-mode .tox.tox-tinymce {
+  background-color: #161f29 !important;
 }
 
 .dark-mode-bttn {

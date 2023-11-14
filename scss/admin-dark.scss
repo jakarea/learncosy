@@ -765,7 +765,7 @@
         border-color: #262626 !important;
     }
 
-    .user-add-form-wrap form .form-group label,
+    // .user-add-form-wrap form .form-group label,
     .chart-box-wrap {
         border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
         background: #0D0D0D !important;
@@ -2081,6 +2081,10 @@
     .group-room-header .dropdown .btn{
         background-color: #171717;
     }
+    .tox.tox-tinymce{
+        background-color: #161f29!important;
+    }
+    
 }
 
 
