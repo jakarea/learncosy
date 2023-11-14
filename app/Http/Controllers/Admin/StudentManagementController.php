@@ -48,19 +48,16 @@ class StudentManagementController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'short_bio' => 'string',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
             'instructor' => 'required'
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
         ]);
-
-        // initial password for student if instructor create profile
-        $initialPass = 1234567890;
-
+ 
         $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
         // add student
         $student = new User([
@@ -72,7 +69,7 @@ class StudentManagementController extends Controller
             'social_links' => trim($social_links,','),
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => Hash::make($initialPass),
+            'password' => Hash::make($request->password),
             'subdomain' => $request->instructor
         ]);
 
@@ -117,14 +114,14 @@ class StudentManagementController extends Controller
          $userId = $id;
 
          $this->validate($request, [
-             'name' => 'required|string',
-             'short_bio' => 'string',
+             'name' => 'required|string', 
              'phone' => 'required|string',
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
              'subdomain' => $request->instructor
          ],
          [
-             'avatar' => 'Max file size is 5 MB!'
+             'avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone number is required'
          ]);
 
 

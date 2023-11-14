@@ -2084,6 +2084,68 @@
     .tox.tox-tinymce{
         background-color: #161f29!important;
     }
+
+    .user-add-box a,
+    .user-header-bttn a{
+        color: #0D0D0D;
+        img{
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(248deg) brightness(107%) contrast(107%);
+        }
+    }
+    .package-list-header{
+        .common-bttn{
+            color: #0D0D0D!important;
+        }
+    } 
+
+    .add-lesson-bttn a{
+        color: #0D0D0D!important;
+    }
+    .course-modules-lessons-redesign p.module-title{
+        color: #C5CCD8!important;
+    }
+
+    // scrolbar 
+    .course-outline-wrap::-webkit-scrollbar-track {
+        background: #1A1A1A; 
+    } 
+    .course-outline-wrap::-webkit-scrollbar-thumb {
+        background: #2F3A4C; 
+    } 
+    .course-outline-wrap::-webkit-scrollbar-thumb:hover {
+        background: #2F3A4C;
+    }
+
+    .user-details-box{
+        h1,h2,h3,h4,h5,h6,p,a,span,input,td,button{
+            color: #F4EBFF!important;
+        }
+    }
+
+    .header-area .dropdown-menu .dropdown-item.active{
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+    .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-cancel:hover,
+   .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-submit{
+        color: #0D0D0D!important;
+    }
+
+    textarea.form-control{
+        background-color: transparent;
+        color: #fff!important;
+    }
+
+    .lesson-edit-form-wrap label{
+        color: #fff!important;
+    }
+
+    .top-image-upload-box{
+        .form-control{
+            background-color: transparent!important;
+            color: #fff!important;
+            border-color: #313A49 !important;
+        }
+    }
     
 }
 

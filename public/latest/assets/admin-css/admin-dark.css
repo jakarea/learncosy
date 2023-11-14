@@ -1610,6 +1610,54 @@
 .dark-mode .tox.tox-tinymce {
   background-color: #161f29 !important;
 }
+.dark-mode .user-add-box a,
+.dark-mode .user-header-bttn a {
+  color: #0D0D0D;
+}
+.dark-mode .user-add-box a img,
+.dark-mode .user-header-bttn a img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(248deg) brightness(107%) contrast(107%);
+}
+.dark-mode .package-list-header .common-bttn {
+  color: #0D0D0D !important;
+}
+.dark-mode .add-lesson-bttn a {
+  color: #0D0D0D !important;
+}
+.dark-mode .course-modules-lessons-redesign p.module-title {
+  color: #C5CCD8 !important;
+}
+.dark-mode .course-outline-wrap::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+.dark-mode .course-outline-wrap::-webkit-scrollbar-thumb {
+  background: #2F3A4C;
+}
+.dark-mode .course-outline-wrap::-webkit-scrollbar-thumb:hover {
+  background: #2F3A4C;
+}
+.dark-mode .user-details-box h1, .dark-mode .user-details-box h2, .dark-mode .user-details-box h3, .dark-mode .user-details-box h4, .dark-mode .user-details-box h5, .dark-mode .user-details-box h6, .dark-mode .user-details-box p, .dark-mode .user-details-box a, .dark-mode .user-details-box span, .dark-mode .user-details-box input, .dark-mode .user-details-box td, .dark-mode .user-details-box button {
+  color: #F4EBFF !important;
+}
+.dark-mode .header-area .dropdown-menu .dropdown-item.active {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+.dark-mode .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-cancel:hover,
+.dark-mode .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-submit {
+  color: #0D0D0D !important;
+}
+.dark-mode textarea.form-control {
+  background-color: transparent;
+  color: #fff !important;
+}
+.dark-mode .lesson-edit-form-wrap label {
+  color: #fff !important;
+}
+.dark-mode .top-image-upload-box .form-control {
+  background-color: transparent !important;
+  color: #fff !important;
+  border-color: #313A49 !important;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

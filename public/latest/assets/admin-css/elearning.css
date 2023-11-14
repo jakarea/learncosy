@@ -313,6 +313,24 @@ span.finsihLesson {
   margin-right: 0.3rem;
 }
 
+.course-outline-wrap::-webkit-scrollbar {
+  width: 0.375rem;
+}
+
+.course-outline-wrap::-webkit-scrollbar-track {
+  background: #E5ECF6;
+  border-radius: 0 0.625rem 0.625rem 0;
+}
+
+.course-outline-wrap::-webkit-scrollbar-thumb {
+  background: #A6B1C4;
+  border-radius: 0.625rem;
+}
+
+.course-outline-wrap::-webkit-scrollbar-thumb:hover {
+  background: #A6B1C4;
+}
+
 .course-outline-wrap {
   border-radius: 0.75rem;
   border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);

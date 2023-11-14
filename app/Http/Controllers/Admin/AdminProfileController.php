@@ -51,14 +51,14 @@ class AdminProfileController extends Controller
     }
 
     public function update(Request $request)
-    {
-        // return $request->all();
+    { 
 
-        $userId = Auth()->user()->id;
+        $userId = Auth::user()->id;
 
         $this->validate($request, [
             'name' => 'required|string', 
             'phone' => 'required|string',
+            'email' => 'required',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [ 
@@ -75,7 +75,8 @@ class AdminProfileController extends Controller
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
-        $user->email = $user->email;
+        $user->email = $request->email;
+
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }else{
@@ -103,7 +104,7 @@ class AdminProfileController extends Controller
         $user->save();
 
         // Send email
-        Mail::to($user->email)->send(new ProfileUpdated($user));
+        // Mail::to($user->email)->send(new ProfileUpdated($user));
         return redirect()->route('admin.profile')->with('success', 'Your Profile has been Updated successfully!');
     }
 

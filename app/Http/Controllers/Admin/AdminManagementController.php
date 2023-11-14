@@ -45,9 +45,6 @@ class AdminManagementController extends Controller
            'avatar' => 'Max file size is 5 MB!'
        ]);
 
-       // initial password for admin if admin create profile
-       $initialPass = 1234567890;
-
        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
        // add admin
        $admin = new User([
@@ -59,8 +56,8 @@ class AdminManagementController extends Controller
            'company_name' => $request->company_name,
            'social_links' => trim($social_links,','),
            'description' => $request->description,
-           'recivingMessage' => $request->recivingMessage,
-           'password' => Hash::make($initialPass),
+           'recivingMessage' => $request->recivingMessage, 
+           'password' => Hash::make($request->password),
        ]);
  
         $adminslug = Str::slug($request->name);

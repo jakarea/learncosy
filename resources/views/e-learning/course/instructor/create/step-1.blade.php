@@ -129,11 +129,7 @@
         titleInput.addEventListener('keyup', function() {
             const titleValue = titleInput.value;
             const slugValue = slugify(titleValue);
-            slugInput.value = slugValue; // Set the slug value
-
-            // If you want to append the slug value to the original slug input
-            // uncomment the following line
-            // slugInput.value += slugValue;
+            slugInput.value = slugValue; // Set the slug value 
         });
 
         function slugify(text) {
@@ -146,7 +142,19 @@
         }
     </script>
 
-    <script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"
-        type="text/javascript"></script>
-    <script src="{{ asset('latest/assets/js/tinymce.js') }}" type="text/javascript"></script>
+<script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>;
+<script>
+    var isDarkMode = document.body.classList.contains('dark-mode');
+
+// Initialize TinyMCE with the correct mode
+tinymce.init({
+    selector: '#description',
+    plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+    toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
+    height: '300px',
+    skin: isDarkMode ? "oxide-dark" : "oxide",
+    content_css: isDarkMode ? "dark" : "default",
+
+});
+</script>
 @endsection

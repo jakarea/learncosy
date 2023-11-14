@@ -91,7 +91,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="url" name="website" id="website" value="{{ old('website') }}"
+                                    <input type="text" name="website" id="website" value="{{ old('website') }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Website">
 
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="url" placeholder="Enter Social Link" name="social_links[]"
+                                    <input type="url" placeholder="e.g. https://www.sociallink.com" name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">
 
@@ -117,11 +117,11 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="description" class="mb-2">Description </label>
+                                    <label for="description" class="mb-2">About </label>
 
                                     <textarea name="description" id="description"
                                         class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Enter Full Description">{{ old('description') }}</textarea>
+                                        placeholder="Type here..">{{ old('description') }}</textarea>
 
                                     <span class="invalid-feedback">@error('description'){{ $message }}
                                         @enderror</span>
@@ -129,30 +129,27 @@
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="imageInput">Avatar</label>
+                                    <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container">
-                                    <label for="imageInput" class="upload-box">
+                                <div id="image-container" class="drop-container">
+                                    <label for="avatar" class="upload-box">
                                         <span>
                                             <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
                                                 alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
-
-                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
-                                            @enderror</span>
+                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
-                                    <label for="">Uploaded Image</label>
+                                    <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
-                                    <img id="uploadedImage" src="" alt="">
+                                <div id="imageContainer" class="drop-container">
+                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
+                                    <img src="" alt="" class="img-fluid d-block" id="uploadedImage"> 
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -184,9 +181,8 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group mt-3">
-                                    <label for="">Initial Password for this Admin </label>
-                                    <input type="text" class="form-control " value="1234567890" disabled> 
-                                    <span class="can-change">*Can be Change it Later</span>
+                                    <label for="">Password </label>
+                                    <input type="password" class="form-control" name="password" placeholder="********">  
                                 </div>
                             </div> 
                         </div>
@@ -212,9 +208,87 @@
 {{-- script @S --}}
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"></script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
+<script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>;
+<script>
+    var isDarkMode = document.body.classList.contains('dark-mode');
+
+    // Initialize TinyMCE with the correct mode
+    tinymce.init({
+        selector: '#description',
+        plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+        toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
+        height: '300px',
+        skin: isDarkMode ? "oxide-dark" : "oxide",
+        content_css: isDarkMode ? "dark" : "default",
+
+    });
+</script>
+
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+        const file = files[0];
+
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-fluid', 'd-block');
+            img.id = 'uploadedImage';
+
+            imageContainer.appendChild(img);
+
+            const closeIcon = document.createElement('span');
+            closeIcon.innerHTML = '&#10006;';
+            closeIcon.id = 'closeIcon';
+            closeIcon.onclick = removeImage;
+
+            imageContainer.appendChild(closeIcon);
+
+            // Show the close icon
+            closeIcon.style.display = 'inline';
+        };
+
+        reader.readAsDataURL(file);
+        }
+        }
+
+        document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+        function removeImage() {
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none'; // Hide the close icon
+        }
+
+        const dropContainers = document.querySelectorAll('.drop-container');
+        dropContainers.forEach(function (dropContainer) {
+        dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        });
+
+        dropContainer.addEventListener('drop', handleFileSelect);
+        });
+
+</script>
+
 <script>
     // JavaScript
     const urlBttn = document.querySelector('#url_increment');

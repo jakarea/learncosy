@@ -28,6 +28,8 @@
                             <h3>{{$user->name}}</h3>
                             <p class="text-capitalize">{{$user->user_role}}</p>
                         </div> 
+                        <a href="{{ url('/admin/profile/edit') }}" class="edit-profile">Edit
+                            Profile</a>
                     </div>
                 </div>
                 <div class="user-details-box">

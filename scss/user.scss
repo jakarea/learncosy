@@ -665,6 +665,12 @@
         }
     }
 
+    a.btn-cancel{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .btn-submit {
         border-radius: 0.5rem;
         border-radius: 0.5rem;
@@ -1377,8 +1383,6 @@
             transition: all .15s ease-in-out;
             background-color: #fff;
         }
-
-
 
         .form-control:hover,
         .form-control:focus {

@@ -49,7 +49,7 @@
                                     <div class="form-group form-error">
                                         <label for="regular_price">Regular Price 
                                         </label>
-                                        <input type="number" placeholder="€ Enter Amount" name="regular_price"
+                                        <input type="text" placeholder="€ Enter Amount" name="regular_price"
                                             class="form-control @error('regular_price') is-invalid @enderror"
                                             value="{{ old('regular_price', $package->regular_price) }}" id="regular_price">
                                         <span class="invalid-feedback">
@@ -63,7 +63,7 @@
                                     <div class="form-group form-error">
                                         <label for="regular_price">Sales Price 
                                         </label>
-                                        <input type="number" placeholder="€ Enter Amount" name="sales_price"
+                                        <input type="text" placeholder="€ Enter Amount" name="sales_price"
                                             class="form-control @error('sales_price') is-invalid @enderror"
                                             value="{{ old('sales_price', $package->sales_price) }}" id="sales_price">
                                         <span class="invalid-feedback">
@@ -133,7 +133,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-submit-bttns">
-                                        <button type="reset" class="btn btn-cancel">Cancel</button>
+                                        <button type="reset" class="btn btn-cancel">
+                                            <a href="{{url('admin/manage/subscriptionpackage')}}">Cancel</a>
+                                        </button>
                                         <button type="submit" class="btn btn-submit">Save Changes</button>
                                     </div>
                                 </div>

@@ -65,16 +65,14 @@ class InstructorController extends Controller
 
        $request->validate([
            'name' => 'required|string',
-           'phone' => 'string',
+           'phone' => 'required|string',
            'email' => 'required|email|unique:users,email',
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
        [
-           'avatar' => 'Max file size is 5 MB!'
+           'avatar' => 'Max file size is 5 MB!',
+           'phone' => 'Phone number is required.',
        ]);
-
-       // initial password for instructor if admin create profile
-       $initialPass = 1234567890;
 
        // add instructor
        $instructor = new User([
@@ -88,7 +86,7 @@ class InstructorController extends Controller
            'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
-           'password' => Hash::make($initialPass),
+           'password' => Hash::make($request->password),
        ]);
 
        $insSlugs = Str::slug($request->name);

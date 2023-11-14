@@ -319,12 +319,13 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideo($id,$module_id,$lesson_id)
     {
+        // return 2345;
         if(!$id){
             return redirect('instructor/courses');
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }

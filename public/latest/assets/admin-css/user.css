@@ -583,6 +583,11 @@
 .form-submit-bttns .btn-cancel:hover {
   background-color: #C5CCD8;
 }
+.form-submit-bttns a.btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 .form-submit-bttns .btn-submit {
   border-radius: 0.5rem;
   border-radius: 0.5rem;

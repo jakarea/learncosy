@@ -63,7 +63,7 @@
                                     </label>
                                     <input type="email" placeholder="Enter email" name="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ $user->email }}" id="email" disabled>
+                                        value="{{ $user->email }}" id="email">
 
                                     <span class="invalid-feedback">@error('email'){{ $message }}
                                         @enderror</span>
@@ -92,7 +92,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="url" name="website" id="website" value="{{  $user->short_bio }}"
+                                    <input type="text" name="website" id="website" value="{{  $user->short_bio }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Website">
 
@@ -130,7 +130,7 @@
                                     <span class="invalid-feedback">@error('description'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
@@ -195,8 +195,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                <div class="form-submit-bttns"> 
+                                        <a href="{{ url('admin/profile/myprofile') }}" class="btn btn-cancel">Cancel</a>
+                                     
                                     <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
@@ -219,19 +220,17 @@
 <script>
     var isDarkMode = document.body.classList.contains('dark-mode');
 
-    // Initialize TinyMCE with the correct mode
-    tinymce.init({
-        selector: '#description',
-        plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
-        toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
-        height: '300px',
-        skin: isDarkMode ? "oxide-dark" : "oxide",
-        content_css: isDarkMode ? "dark" : "default",
+// Initialize TinyMCE with the correct mode
+tinymce.init({
+    selector: '#description',
+    plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+    toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
+    height: '300px',
+    skin: isDarkMode ? "oxide-dark" : "oxide",
+    content_css: isDarkMode ? "dark" : "default",
 
-    });
+});
 </script>
-
-
 
 {{-- drag & drop image upload js --}}
 <script>
