@@ -625,7 +625,7 @@ class AdminHomeController extends Controller
       
        ->where('notifications.created_at', '>', $currentYear)
        ->join('courses', 'notifications.course_id', '=', 'courses.id')
-       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.message', 'users.avatar', 'notifications.created_at')
+       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.course_id', 'notifications.message', 'users.avatar', 'notifications.created_at')
        ->orderBy('notifications.created_at', 'DESC')
        ->get();
 
@@ -664,6 +664,8 @@ class AdminHomeController extends Controller
                 $lastOneYears[] = $item;
             }
         } 
+
+        // return $todays;
                         
         return view('admin.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
 

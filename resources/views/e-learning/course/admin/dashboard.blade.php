@@ -203,7 +203,7 @@
                                         <img src="{{ asset($course->thumbnail) }}" alt="c-status" class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5>{{ substr($course->title, 0, 35) }}</h5>
+                                        <h5><a href="{{ url('admin/courses/overview/'.$course->slug) }}" class="p-0 bg-transparent">{{ substr($course->title, 0, 35) }}</a></h5>
                                         <p> {{ $course->categories }}</p>
                                     </div>
                                 </div>

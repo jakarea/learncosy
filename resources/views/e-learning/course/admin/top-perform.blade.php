@@ -87,7 +87,7 @@ Top Perform Courses
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
-                            <a href="{{ url('admin/courses/' . $course->slug) }}">{{ substr($course->title, 0, 27)
+                            <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{ substr($course->title, 0, 27)
                                 }}</a>
                             <p>{{ $course->user->subdomain }}</p>
                             <ul>

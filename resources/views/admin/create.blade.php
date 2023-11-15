@@ -207,22 +207,6 @@
 
 {{-- script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>;
-<script>
-    var isDarkMode = document.body.classList.contains('dark-mode');
-
-    // Initialize TinyMCE with the correct mode
-    tinymce.init({
-        selector: '#description',
-        plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
-        toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
-        height: '300px',
-        skin: isDarkMode ? "oxide-dark" : "oxide",
-        content_css: isDarkMode ? "dark" : "default",
-
-    });
-</script>
 
 {{-- drag & drop image upload js --}}
 <script>

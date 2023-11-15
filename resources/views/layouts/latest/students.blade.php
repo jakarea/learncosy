@@ -67,33 +67,54 @@
     {{-- dark mode button end --}}
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 
     {{-- dark mode js --}}
     <script>
+        const htmlBody = document.querySelector("body"); 
         const modeBttn = document.getElementById("darkModeBttn");
-        const htmlBody = document.querySelector("body");
+       
         function toggleMode() {
-            htmlBody.classList.toggle('dark-mode');
-            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
+            htmlBody.classList.toggle('dark-mode'); 
+            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : ''; 
             localStorage.setItem('dark-mode', mode);
-        }
+
+            if (htmlBody.classList.contains('dark-mode')) {
+                tinymce.remove('#description');
+                darkFunction();
+            }else{
+                tinymce.remove('#description');
+                lightFunction();
+            }
+        } 
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
             htmlBody.classList.add('dark-mode');
-        }
+        } 
         modeBttn.addEventListener('change', toggleMode);
     </script>
 
-    @yield('script')
+    <script> 
+        if (document.querySelector("body").classList.contains('dark-mode')) {
+            tinymce.remove('#description');
+            darkFunction();
+        } else {
+            tinymce.remove('#description');
+            lightFunction();
+        }
+    </script>
 
+        <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
+        <script>
+            var userIdentifier = uuidv4();
+            var domainParts = window.location.hostname.split('.');
+            var topLevelDomain = domainParts.slice(-2).join('.');
+            var cookieDomain = '.' + topLevelDomain;
+            document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + cookieDomain + "; secure; samesite=Strict";
+        </script>
 
-<script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
-<script>
-    var userIdentifier = uuidv4();
-    var domainParts = window.location.hostname.split('.');
-    var topLevelDomain = domainParts.slice(-2).join('.');
-    var cookieDomain = '.' + topLevelDomain;
-    document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + cookieDomain + "; secure; samesite=Strict";
-</script>
+    @yield('script') 
 </body>
 </html>

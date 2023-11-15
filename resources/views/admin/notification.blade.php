@@ -65,8 +65,18 @@
                                         <i class="fas fa-heart"></i>
                                     </div> 
                                     <div class="media-body">
-                                        <h5>{{$today['type']}} </h5>
-                                        <p>{{$today['message']}}</p>
+                                        @php
+                                        $course = App\Models\Course::find($today->course_id);
+                                        @endphp
+                                        <h5>
+                                            @if ($course)
+                                            <a
+                                                href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$today['title']}}</a>
+                                            @else
+                                            {{$today['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$today['type']}}</p>
                                     </div>
                                 </div>
                                 
