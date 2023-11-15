@@ -163,8 +163,7 @@
                                                     @endforeach
                                                     <div class="text-end mt-3">
                                                         <a href="javascript:void(0)" id="social_increment"><i
-                                                                class="fas fa-plus"></i>
-                                                            Add</a>
+                                                                class="fas fa-plus"></i> Add</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
@@ -996,12 +995,12 @@
                                         <h3>Connects to your account</h3>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="app-bttn">
                                         <a href="#"><img src="{{ asset('latest/assets/images/icons/pluss.svg') }}"
                                                 alt="a" class="img-fluid"> Add new account</a>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="app-box">
                                         {{-- app box --}}

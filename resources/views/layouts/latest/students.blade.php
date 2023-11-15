@@ -38,7 +38,7 @@
 
 <body>
     {{-- Main Root Wrapper @S --}}
-    <div class="main-page-wrapper">
+    <div class="main-page-wrapper">  
 
         {{-- header start --}}
         @if (Auth::user()->user_role == 'instructor')

@@ -1,6 +1,6 @@
 @extends('layouts.latest.students')
 @section('title')
-    Student Profile Details Page
+    My Profile Details
 @endsection
 
 {{-- page style @S --}}
@@ -16,6 +16,7 @@
             {{-- profile information @S --}}
             <div class="row">
                 <div class="col-lg-8">
+ 
                     <div class="user-profile-picture">
                         <div class="cover-img">
                             <img src="{{ asset('latest/assets/images/cover.png') }}" alt="Cover" class="img-fluid">
@@ -30,6 +31,7 @@
                                 <h3>{{ $user->name }}</h3>
                                 <p class="text-capitalize">{{ $user->user_role }}</p>
                             </div>
+                            <a href="{{url('students/profile/edit')}}" class="edit-profile">Edit Profile</a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +136,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('students.show.courses', $value->course->slug) }}">View Course</a>
+                                            <a href="{{ url('students/courses/my-courses/details/'.$value->course->slug) }}">View Course</a>
                                         </td>
                                     </tr>
                                     @endif

@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\ManagePage;
 use Illuminate\Http\Request;
 
+use Session;
+
 class ManagePageAccess
 {
     /**
@@ -27,7 +29,7 @@ class ManagePageAccess
         $pageAccess = ManagePage::where('instructor_id',$instructor->id)->first();
 
         if ($pageAccess) {
-
+ 
             $permission = json_decode($pageAccess->pagePermissions);
             $path = $request->path(); 
 

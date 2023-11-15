@@ -39,26 +39,21 @@
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box">
+                                        <div class="profile-picture-box position-relative">
                                             <input type="file" id="avatar" class="d-none" name="avatar">
                                             <label for="avatar" class="img-upload">
-                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
-                                                    alt="a" class="img-fluid"> 
-                                                    
-                                                @if (!$user->avatar)
-                                                    <img src=""
-                                                    alt="" class="img-fluid static-image avatar-preview" style="border-radius: 50%">
-                                                @endif     
+                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img src="{{asset($user->avatar)}}"
-                                                        alt="Avatar" class="img-fluid static-image avatar-preview">
+                                                        <img src="{{asset($user->avatar)}}" alt="Avatar" class="img-fluid static-image avatar-preview">
                                                     @else
-                                                    <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
+                                                        <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
                                                 </div>
                                             </label>
+
+                                             <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
 
                                             <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
                                                 Max size of 3.1 MB</h6>
@@ -113,7 +108,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="url" class="form-control" id="website"
+                                                        <input type="text" class="form-control" id="website"
                                                             name="website" value="{{ $user->short_bio }}" required>
                                                         <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('website'){{ $message }}
@@ -123,7 +118,7 @@
                                                 <div class="col-lg-12">
                                                     @php  $socialLinks = explode(',',$user->social_links) @endphp
                                                    <div class="form-group">
-                                                    <label for="social_links" style="top: -6px; background: #fff!important; z-index: 999">Social Media</label>
+                                                    <label for="social_links" class="social-label">Social Media</label>
                                                    </div>
                                                     @foreach ($socialLinks as $socialLink) 
                                                     <div class="social-extra-field">
@@ -146,7 +141,7 @@
                                                             class="form-control @error('description') is-invalid @enderror"
                                                             required>{!! $user->description !!}</textarea>
 
-                                                        <label for="description">About</label>
+                                                        <label for="description" style="top: -1rem!important;">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                                                     </div>
                                                 </div>
@@ -223,8 +218,83 @@
 {{-- page script @S --}}
 @section('script') 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"></script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
+<script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>;
+<script>
+    var isDarkMode = document.body.classList.contains('dark-mode');
+
+    // Initialize TinyMCE with the correct mode
+    tinymce.init({
+        selector: '#description',
+        plugins: 'powerpaste casechange searchreplace autolink directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave',
+        toolbar: 'undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify lineheight | checklist bullist numlist indent outdent | removeformat',
+        height: '300px',
+        skin: isDarkMode ? "oxide-dark" : "oxide",
+        content_css: isDarkMode ? "dark" : "default",
+
+    });
+</script>
+
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+            const file = files[0];
+
+            if (!file.type.match('image.*')) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageContainer = document.querySelector('.img-upload .ol');
+                imageContainer.innerHTML = '';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-fluid', 'd-block', 'avatar-preview'); 
+                
+                
+                imageContainer.appendChild(img);
+
+                const closeIcon = document.createElement('a');
+                closeIcon.innerHTML = '&#10006;';
+                closeIcon.id = 'closeIcon';
+                closeIcon
+                closeIcon.onclick = removeImage;
+                closeIcon.classList.add('cus-postion')
+                imageContainer.parentNode.parentNode.appendChild(closeIcon);
+
+                closeIcon.style.display = 'inline';
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+    function removeImage() {
+        const imageContainer = document.querySelector('.img-upload .ol');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none';
+    }
+
+    const dropContainer = document.querySelector('.img-upload');
+    dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    dropContainer.addEventListener('drop', handleFileSelect);
+</script>
 
 {{-- add extra filed js --}}
 <script>
@@ -329,7 +399,6 @@
 });
 </script>
 
-
 {{-- tab open js --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -379,8 +448,6 @@
           });
         });
 </script>
-
-
 @endsection
 
 {{-- page script @E --}}

@@ -20,7 +20,7 @@ $layoutName = "layouts.latest.admin";
 
 @section('content')
 <main class="courses-lists-pages">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="user-title-box">
@@ -50,15 +50,16 @@ $layoutName = "layouts.latest.admin";
             <div class="col-lg-12">
                 <hr class="line">
                 <div class="notification-box-wrapper">
-                    @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 ) 
+                    @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays)
+                    == 0 && count($lastOneYears) == 0 )
                     @include('partials/no-data')
-                    @else 
+                    @else
                     <div class="show-notification-item">
-                        
+
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
-                            
+
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -68,15 +69,25 @@ $layoutName = "layouts.latest.admin";
                                     <div class="icon">
                                         @if ($today['thumbnail'])
                                         <img src="{{asset($today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
+                                        @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
-                                    </div> 
+                                    </div>
                                     <div class="media-body">
-                                        <h5>{{$today['type']}} </h5>
-                                        <p>{{$today['message']}}</p>
+                                        @php
+                                        $course = App\Models\Course::find($today->course_id);
+                                        @endphp
+                                        <h5>
+                                            @if ($course)
+                                            <a
+                                                href="{{ url('students/courses/overview/'.$course->slug) }}">{{$today['title']}}</a>
+                                            @else
+                                            {{$today['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$today['type']}}</p>
                                     </div>
                                 </div>
                                 <div class="delete-item">
@@ -93,7 +104,7 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="2">
-                            {{-- day --}}  
+                            {{-- day --}}
                             <h5 class="mt-5">Yesterday</h5>
 
                             {{-- day --}}
@@ -104,17 +115,25 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($yestarday['thumbnail'])
-                                        <img src="{{asset($yestarday['thumbnail'])}}"
-                                            alt="Thumbnail" class="img-fluid">
+                                        <img src="{{asset($yestarday['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">
-                                        <h5>{{$yestarday['type']}}</h5>
-                                        <p>{{$yestarday['message']}}</p>
+                                    <div class="media-body"> 
+                                        @php 
+                                            $course = App\Models\Course::find($yestarday->course_id);
+                                        @endphp 
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$yestarday['title']}}</a>
+                                            @else 
+                                                {{$yestarday['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$yestarday['type']}}</p>
                                     </div>
                                 </div>
 
@@ -132,7 +151,7 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="7">
-                            {{-- day --}}  
+                            {{-- day --}}
                             <h5 class="mt-5">Last 7 Days</h5>
                             {{-- day --}}
 
@@ -142,17 +161,25 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($sevenDay['thumbnail'])
-                                        <img src="{{asset($sevenDay['thumbnail'])}}"
-                                            alt="Thumbnail" class="img-fluid">
+                                        <img src="{{asset($sevenDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">
-                                        <h5>{{$sevenDay['type']}}</h5>
-                                        <p>{{$sevenDay['message']}}</p>
+                                    <div class="media-body"> 
+                                        @php 
+                                            $course = App\Models\Course::find($sevenDay->course_id);
+                                        @endphp 
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$sevenDay['title']}}</a>
+                                            @else 
+                                                {{$sevenDay['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$sevenDay['type']}}</p>
                                     </div>
                                 </div>
 
@@ -170,8 +197,8 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="30">
-                            {{-- day --}} 
-                            <h5 class="mt-5">Last 30 Days</h5> 
+                            {{-- day --}}
+                            <h5 class="mt-5">Last 30 Days</h5>
 
                             {{-- notify item start --}}
                             @foreach($thirtyDays as $thirtyDay)
@@ -179,17 +206,25 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($thirtyDay['thumbnail'])
-                                        <img src="{{asset($thirtyDay['thumbnail'])}}"
-                                            alt="Thumbnail" class="img-fluid">
+                                        <img src="{{asset($thirtyDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">
-                                        <h5>{{$thirtyDay['type']}}</h5>
-                                        <p>{{$thirtyDay['message']}}</p>
+                                    <div class="media-body"> 
+                                        @php 
+                                            $course = App\Models\Course::find($thirtyDay->course_id);
+                                        @endphp 
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$thirtyDay['title']}}</a>
+                                            @else 
+                                                {{$thirtyDay['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$thirtyDay['type']}}</p>
                                     </div>
                                 </div>
 
@@ -208,7 +243,6 @@ $layoutName = "layouts.latest.admin";
 
                         <div class="single" data-value="365">
                             {{-- day --}} 
-
                             <h5 class="mt-5">Last 1 year</h5>
                             {{-- day --}}
 
@@ -218,17 +252,26 @@ $layoutName = "layouts.latest.admin";
                                 <div class="media">
                                     <div class="icon">
                                         @if ($lastOneYear['thumbnail'])
-                                        <img src="{{asset($lastOneYear['thumbnail'])}}"
-                                            alt="Thumbnail" class="img-fluid">
+                                        <img src="{{asset($lastOneYear['thumbnail'])}}" alt="Thumbnail"
+                                            class="img-fluid">
                                         @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">
-                                        <h5>{{$lastOneYear['type']}}</h5>
-                                        <p>{{$lastOneYear['message']}}</p>
+                                    <div class="media-body"> 
+                                        @php 
+                                            $course = App\Models\Course::find($lastOneYear->course_id);
+                                        @endphp 
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$lastOneYear['title']}}</a>
+                                            @else 
+                                                {{$lastOneYear['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$lastOneYear['type']}}</p>
                                     </div>
                                 </div>
 
