@@ -178,11 +178,13 @@ Route::get('students/lessons/{id}', function ($id) {
     return response()->json($lesson);
 });
 
-// message pages routes
+// One to one chat system
 Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('message');
     Route::get('/chat/{id}', 'getChatMessage')->name('chat');
     Route::post('/chat', 'sendChatMessage');
+    Route::get('/search-user', 'searchChatUser')->name('course.messages.search');
+    Route::get('/chat/download/{filename}', 'downloadChatFile')->name('course.messages.file.download');
 
     // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
     // Route::post('/', 'sendMessage')->name('message-send');

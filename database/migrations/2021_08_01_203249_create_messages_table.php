@@ -20,7 +20,9 @@ class CreateMessagesTable extends Migration
             $table->string('from');
             $table->string('name');
             $table->string('is_read');
-            $table->longText('message');
+            $table->longText('message')->nullable();
+            $table->string('file')->nullable();
+            $table->string('file_extension', 50)->nullable();
             $table->timestamps();
         });
     }

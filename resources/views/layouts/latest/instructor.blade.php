@@ -90,5 +90,10 @@
 
     @yield('script')
 
+
+
+
+
+
 </body>
 </html>

@@ -33,8 +33,41 @@
                     <span> {{ $message->created_at->format('F j, Y') }}
                     </span>
                 </div>
+
                 <div class="text">
-                    <p>{{ $message->message }}</p>
+                    @if ($message->file)
+                        @php
+                            $allowedImageExtensions = ['jpg', 'png', 'jpeg', 'gif'];
+                            $allowedDocumentExtensions = ['pdf', 'zip', 'doc','docx'];
+                            $extension = pathinfo($message->file, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (in_array(strtolower($extension), $allowedImageExtensions))
+                            <img width="75" src="{{ asset('storage/chat/'.$message->file) }}" alt="Image"/>
+                        @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
+                            @if (strtolower($extension) === 'zip')
+                                <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/zip.png') }}" alt="Avatar" class="img-fluid">
+                                </a>
+                            @elseif (strtolower($extension) === 'pdf')
+                                <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/pdf.svg') }}" alt="Avatar" class="img-fluid">
+                                </a>
+                            @elseif (strtolower($extension) === 'docx')
+                                <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/docx.png') }}" alt="Avatar" class="img-fluid">
+                                </a>
+                            @else
+                            @endif
+                        @endif
+                    @endif
+
+                    @if ($message->message)
+                        <p>{{ $message->message }}</p>
+                    @endif
+
+
+
                 </div>
             </div>
         </div>
@@ -57,6 +90,7 @@
             {{-- <button type="button" class="btn btn-emoji">
                 <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}" alt="Avatar" class="img-fluid">
             </button> --}}
+            <input type="file" name="file">
             <button class="btn btn-submit" type="submit">
                 Send
             </button>

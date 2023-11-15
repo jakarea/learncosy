@@ -172,7 +172,7 @@
                                 <div class="search">
                                     <img src="{{ asset('latest/assets/images/icons/search-m.svg') }}" alt="ic"
                                         class="img-fluid">
-                                    <input type="text" placeholder="Search" class="form-control">
+                                    <input type="text" placeholder="Search" class="form-control search-chat-user">
                                 </div>
                                 <div class="chat-filter">
                                     <div class="dropdown">
@@ -191,67 +191,9 @@
                             {{-- chat filter --}}
 
                             {{-- leftbar person list start --}}
-                            <div class="person-tab-body">
+                            <div class="person-tab-body chat-user-load">
                                 {{-- single person start --}}
-                                @forelse ($users as $user)
-                                    <div class="single-person user" id="{{ $user->id }}">
-                                        <div class="media">
-                                            @isset($user)
-                                                <div class="avatar">
-                                                    <img src="{{ asset($user->avatar) }}" alt="Avatar" class="img-fluid">
-                                                    <i class="fas fa-circle"></i>
-                                                </div>
-                                            @else
-                                                <div class="avatar">
-                                                    <img src="{{ asset('latest/assets/images/update-5.png') }}"
-                                                        alt="Avatar" class="img-fluid">
-                                                    <i class="fas fa-circle"></i>
-                                                </div>
-                                            @endisset
-
-                                            <div class="media-body">
-                                                <div class="name">
-                                                    <a href="javascript:;" class="name">{{ $user->name }}</a>
-                                                </div>
-                                                <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                            </div>
-                                            {{-- action --}}
-                                            <div class="dropdown">
-                                                <a class="btn" href="#" role="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa-solid fa-ellipsis"></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
-                                                                alt="ic" class="img-fluid"> Delete chat
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal4">
-                                                            <img src="{{ asset('latest/assets/images/icons/messages/users.svg') }}"
-                                                                alt="ic" class="img-fluid"> Create group with
-                                                            Katherine
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            <img src="{{ asset('latest/assets/images/icons/messages/mail-open.svg') }}"
-                                                                alt="ic" class="img-fluid"> Mark as unread
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            {{-- action --}}
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="single-persion">
-                                        <h5>User not found</h5>
-                                    </div>
-                                @endforelse
+                                @include('e-learning.course.instructor.chat-user.users')
                                 {{-- single person end --}}
 
                             </div>
@@ -827,6 +769,25 @@
 
 @section('script')
     <script>
+        $(document).ready(function () {
+            $(".search-chat-user").on("keyup click paste", function (e) {
+                e.preventDefault();
+                let searchTerm = $(this).val().trim();
+                if (searchTerm !== "") {
+                    $.ajax({
+                        url: "{{ route('course.messages.search') }}",
+                        type: 'GET',
+                        data: { term: searchTerm },
+                        success: function (data) {
+                            $(".chat-user-load").html(data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
         var receiver_id = '';
         var my_id = "{{ Auth::id() }}";
         $(document).ready(function() {
@@ -841,7 +802,7 @@
             Pusher.logToConsole = true;
 
             // Set pusher key
-            var pusher = new Pusher('97cea720a4df9e2471e5', {
+            var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
                 cluster: 'ap2',
                 forceTLS: true
             });
@@ -867,7 +828,7 @@
                 }
             });
 
-            $('.user').click(function() {
+            $(document).on('click', '.user', function() {
                 $('.user').removeClass('active');
                 $(this).addClass('active');
                 $(this).find('.pending').remove();
@@ -897,44 +858,35 @@
                 });
             });
 
-            // $(document).on('keyup', '.chat-message-input', function (e) {
             $(document).on('submit', '#chatMessage', function(e) {
                 e.preventDefault();
+                var formData = new FormData($(this)[0]);
+                formData.append("receiver_id", receiver_id);
 
-                var message = $('.chat-message-input').val();
-
-                // if (message == '' && receiver_id = '') {
-                //     var confirmation = confirm('Message cannot be empty! Do you want to continue?');
-
-                //     if (!confirmation) {
-                //         return false;
-                //     }
-                // }
-
-                // check if enter key is pressed and message is not null also receiver is selected
-                // if (e.keyCode == 13 && message != '' && receiver_id != '') {
-                // if (textMessage.trim() !== '' && receiver_id !== '') {
-
-
-
-                if (message.trim() !== '' && receiver_id !== '') {
-                    var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+                if (receiver_id !== '') {
                     $.ajax({
                         type: "post",
-                        url: "messages/chat", // need to create this post route
-                        data: datastr,
+                        url: "messages/chat",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
                         cache: false,
                         success: function(data) {
                             $('.chat-message-input').val('');
                             $('.chat-message-input').emojioneArea().val('');
                         },
-                        error: function(jqXHR, status, err) {},
+                        error: function(jqXHR, status, err) {
+                            // Handle error if needed
+                        },
                         complete: function() {
                             scrollToBottomFunc();
                         }
-                    })
+                    });
                 }
             });
+
+
+
         });
 
         // make a function to scroll down auto
@@ -957,21 +909,21 @@
 
     {{-- close profile box --}}
     <script>
-        const openPorifles = document.querySelectorAll('.open-profile');
-        const closeIcon = document.getElementById('closeProfile');
-        const profileBox = document.getElementById('profileBox');
+        // const openPorifles = document.querySelectorAll('.open-profile');
+        // const closeIcon = document.getElementById('closeProfile');
+        // const profileBox = document.getElementById('profileBox');
 
-        openPorifles.forEach(openPorifle => {
-            openPorifle.addEventListener('click', function() {
-                profileBox.classList.add('active');
-            });
-        });
+        // openPorifles.forEach(openPorifle => {
+        //     openPorifle.addEventListener('click', function() {
+        //         profileBox.classList.add('active');
+        //     });
+        // });
 
-        function closeProfileBox(e) {
-            e.preventDefault();
-            this.parentNode.parentNode.classList.remove('active');
-        }
-        closeIcon.addEventListener('click', closeProfileBox);
+        // function closeProfileBox(e) {
+        //     e.preventDefault();
+        //     this.parentNode.parentNode.classList.remove('active');
+        // }
+        // closeIcon.addEventListener('click', closeProfileBox);
     </script>
 
     <script>

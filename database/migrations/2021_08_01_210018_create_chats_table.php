@@ -17,7 +17,9 @@ class CreateChatsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('from');
             $table->bigInteger('to');
-            $table->text('message');
+            $table->longText('message')->nullable();
+            $table->string('file')->nullable();
+            $table->string('file_extension', 50)->nullable();
             $table->tinyInteger('is_read');
             $table->timestamps();
         });
