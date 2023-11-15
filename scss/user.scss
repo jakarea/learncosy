@@ -665,7 +665,7 @@
         }
     }
 
-    a.btn-cancel{
+    a.btn-cancel {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -2168,8 +2168,9 @@
                 font-weight: 400;
                 line-height: normal;
                 height: 3rem;
-            } 
+            }
         }
+
         .btn-submit {
             border-radius: 0.375rem;
             background: var(--primary-color-blue, #294CFF);
@@ -2177,7 +2178,7 @@
             font-size: 0.875rem;
             font-style: normal;
             font-weight: 500;
-            line-height: 1.25rem; 
+            line-height: 1.25rem;
             box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
             display: block;
             width: 100%;
@@ -2187,7 +2188,15 @@
     }
 }
 
-
+.social-label {
+    top: -6px !important;
+    background: #fff !important;
+    z-index: 999 !important;
+}
+.cus-postion{
+    left: 20%!important;
+    top: 21%!important;
+}
 
 
 
@@ -2212,15 +2221,18 @@
 
 // small phone device
 @include q.responsive(phone) {
-    .connect-app-box{
+    .connect-app-box {
         padding: 1rem;
-        .app-title h3{
+
+        .app-title h3 {
             font-size: 1.2rem;
         }
-        .app-bttn{
-            text-align: center!important;
+
+        .app-bttn {
+            text-align: center !important;
             margin-top: 1rem;
-            a{
+
+            a {
                 font-size: 0.875rem;
                 display: block;
                 text-align: center;
@@ -2228,24 +2240,28 @@
             }
         }
 
-        .app-box .media{
+        .app-box .media {
             flex-direction: column;
             text-align: center;
             margin-bottom: 2rem;
-            img{
+
+            img {
                 margin-right: 0;
             }
-            h5{
+
+            h5 {
                 margin-top: 1rem;
             }
-            p{
+
+            p {
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            a{
+
+            a {
                 display: block;
                 text-align: center;
-                width: 100%; 
+                width: 100%;
             }
         }
     }
@@ -2492,41 +2508,48 @@
 // landscape phone device 
 @include q.responsive(landphone) {
 
-    .connect-app-box{
+    .connect-app-box {
         padding: 1rem;
-        .app-title h3{
+
+        .app-title h3 {
             font-size: 1.2rem;
         }
-        .app-bttn{
-            text-align: center!important;
+
+        .app-bttn {
+            text-align: center !important;
             margin-top: 1rem;
-            a{
+
+            a {
                 font-size: 0.875rem;
                 display: block;
                 text-align: center;
-                width: 70%; 
+                width: 70%;
                 margin: 0 auto;
             }
         }
 
-        .app-box .media{
+        .app-box .media {
             flex-direction: column;
             text-align: center;
             margin-bottom: 2rem;
-            img{
+
+            img {
                 margin-right: 0;
             }
-            h5{
+
+            h5 {
                 margin-top: 1rem;
             }
-            p{
+
+            p {
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            a{
+
+            a {
                 display: block;
                 text-align: center;
-                width: 70%; 
+                width: 70%;
                 margin: 0 auto;
             }
         }
@@ -2630,12 +2653,14 @@
     .contact-info-box {
         margin-top: 2rem;
     }
-    .app-box .media{
-    
-        p{
-            width: 90%; 
-        } 
+
+    .app-box .media {
+
+        p {
+            width: 90%;
+        }
     }
+
     .user-search-box-wrap {
         grid-template-columns: 50% 25% 25%;
     }

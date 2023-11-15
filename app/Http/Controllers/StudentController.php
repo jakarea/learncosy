@@ -64,16 +64,14 @@ class StudentController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
-        ]);
-
-        // initial password for student if instructor create profile
-        $initialPass = 1234567890;
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
+        ]); 
 
         // add student
         $student = new User([
@@ -86,7 +84,7 @@ class StudentController extends Controller
             'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => Hash::make($initialPass),
+            'password' => Hash::make($request->password),
             'subdomain' => $subdomain
         ]);
 
@@ -122,13 +120,11 @@ class StudentController extends Controller
     public function edit($id)
      {
         $student = User::where('id', $id)->first();
-
         return view('students/instructor/edit',compact('student'));
      }
 
      public function update(Request $request,$id)
-     {
-        //  return $request->all();
+     { 
 
          $userId = $id;
 
@@ -138,7 +134,8 @@ class StudentController extends Controller
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
          [
-             'avatar' => 'Max file size is 5 MB!'
+             'avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone number is required'
          ]);
 
 
@@ -159,7 +156,7 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $user->email;
+         $user->email = $request->email;
 
          if ($request->password) {
              $user->password = Hash::make($request->password);

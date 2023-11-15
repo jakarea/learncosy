@@ -153,7 +153,7 @@
                                             </div>
                                         </div>
                                         <div class="form-submit-bttns mt-5">
-                                            <button type="reset" class="btn btn-cancel">Cancel</button>
+                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                             <button type="submit" class="btn btn-submit">Save Changes</button>
                                         </div>
                                     </div>
@@ -201,7 +201,7 @@
                                             <div class="col-12">
                                                 <div class="form-submit-bttns text-start">
                                                     <button type="submit" class="btn btn-submit me-3 ms-0">Save Changes</button>
-                                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                 </div>
                                             </div>
                                         </div> 

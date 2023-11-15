@@ -18,8 +18,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
-        // return 123;
+    { 
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);
@@ -349,6 +348,62 @@ class DashboardController extends Controller
         $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
 
         return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
+    }
+
+    // instructor notification 
+    public function notifications()
+    { 
+
+        $currentYear = Carbon::now()->subDays(365);
+        $today = Carbon::now();
+
+        $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
+            ->where('notifications.instructor_id', Auth::user()->id)  // Specify the table for instructor_id
+            ->where('notifications.type', 'instructor')
+            ->where('notifications.created_at', '>', $currentYear)
+            ->join('courses', 'notifications.course_id', '=', 'courses.id')
+            ->select('notifications.id', 'courses.thumbnail AS thumbnail', 'courses.title AS title', 'notifications.type','notifications.user_id','notifications.course_id',  'notifications.message', 'users.avatar', 'notifications.created_at')
+            ->orderBy('notifications.created_at', 'DESC')
+            ->get();
+
+                                              
+        // Get today's date
+        $today = now();
+        
+        // Initialize arrays for each category
+        $todays = [];
+        $yestardays = [];
+        $sevenDays = [];
+        $thirtyDays = [];
+        $lastOneYears = [];
+        
+        foreach ($data as $item) {
+            $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
+        
+            // Calculate the interval in days
+            $interval = $today->diffInDays($createdAt);
+        
+            if ($interval == 0) {
+                // Today
+                $todays[] = $item;
+            } elseif ($interval == 1) {
+                // Yesterday
+                $yestardays[] = $item;
+            } elseif ($interval > 2 && $interval <= 7) {
+                // Last 7 days
+                $sevenDays[] = $item;
+            } elseif ($interval >= 8 && $interval <= 30) {
+                    
+                $thirtyDays[] = $item;
+            } elseif ($interval >= 31 && $interval <= 365) {
+                    
+                $lastOneYears[] = $item;
+            }
+        } 
+ 
+                        
+        return view('instructor.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
+        
     }
 
     // instructor notification delete

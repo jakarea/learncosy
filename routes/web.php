@@ -211,7 +211,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
     
-    // destroy instructor notification
+    // Instructor Notification 
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
     Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
     Route::get('/profile/step-4/complete', function () {
@@ -338,16 +339,27 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/{slug}/edit', 'update')->name('lesson.update');
             Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
         });
-
+ 
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view');
+
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
+
             Route::get('/create', 'step2');
             Route::post('/create', 'createBundle')->name('create.bundle.course');
+
+            Route::get('{slug}/edit', 'edit1')->name('select.again.bundle.course');
+            Route::post('{id}/select-update', 'update1');
+
+            Route::get('{slug}/edit-final', 'edit2');
+            Route::post('{slug}/edit-final', 'update2')->name('create.update.bundle.course');
+
+            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('reove.select.bundle.course');
             Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
+
             Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
         });
         // theme settings page routes

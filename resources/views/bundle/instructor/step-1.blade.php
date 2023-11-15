@@ -12,7 +12,7 @@ Bundle Course Select
 
 @section('content')
 <main class="courses-lists-pages">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <form action="" method="GET" id="myForm">
@@ -54,12 +54,13 @@ Bundle Course Select
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="select-bundle-title mb-2 text-end"> 
-                        <a href="{{ url('instructor/bundle/courses/create') }}" class="btn d-inline">
-                            <span class="counter">{{ count($bundleSelected) }}</span>
-                            <img src="{{ asset('latest/assets/images/icons/cart.svg') }}" alt="Course Thumbanil"
-                                class="img-fluid"> <b class="counter2" style="font-weight: 400">{{ count($bundleSelected) }} </b> Courses Selected
-                        </a> 
+                <div class="select-bundle-title mb-2 text-end">
+                    <a href="{{ url('instructor/bundle/courses/create') }}" class="btn d-inline">
+                        <span class="counter">{{ count($bundleSelected) }}</span>
+                        <img src="{{ asset('latest/assets/images/icons/cart.svg') }}" alt="Course Thumbanil"
+                            class="img-fluid"> <b class="counter2" style="font-weight: 400">{{ count($bundleSelected) }}
+                        </b> Courses Selected
+                    </a>
                 </div>
             </div>
         </div>
@@ -105,13 +106,14 @@ Bundle Course Select
                         @else
                         <h5>€ {{ $course->price }}</h5>
                         @endif
-
                         <div class="bundle-create-bttn">
                             @if ($bundleSelected->pluck('course_id')->contains($course->id))
-                            <button type="button" class="btn border-0" disabled style="background: #ccc!important; color: #101010"><i class="fas fa-check"></i> Added</button>
-                            @else 
-                            <button type="button" class="btn select-bundle" data-course-id="{{ $course->id }}" ><i
-                                class="fas fa-plus"></i> Add to bundle</button>
+                            <button type="button" class="btn border-0" disabled
+                                style="background: #ccc!important; color: #101010"><i class="fas fa-check"></i>
+                                Added</button>
+                            @else
+                            <button type="button" class="btn select-bundle" data-course-id="{{ $course->id }}">
+                                <i class="fas fa-plus"></i>Add to bundle</button>
                             @endif
                         </div>
                     </div>
@@ -119,6 +121,13 @@ Bundle Course Select
             </div>
             {{-- course single box end --}}
             @endforeach
+
+            <div class="form-submit-bttns"> 
+                <a href="{{ url('instructor/bundle/courses/create') }}" class="btn btn-primary px-4 py-2">
+                    Next
+                </a> 
+            </div>
+
             @else
             <div class="col-12">
                 @include('partials/no-data')

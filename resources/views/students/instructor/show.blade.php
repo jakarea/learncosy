@@ -41,6 +41,7 @@
                             <h3>{{$student->name}}</h3>
                             <p>{{$student->user_role}}</p>
                         </div>
+                        <a href="#" class="edit-profile">Loin as {{ $student->name }}</a>
                     </div>
                 </div> 
             </div>

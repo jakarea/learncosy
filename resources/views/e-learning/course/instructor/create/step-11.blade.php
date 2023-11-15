@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 11
+Course Create - Final Step
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -133,6 +133,13 @@ Course Create - Step 11
                     </div>
 
                 </div>
+
+                {{-- step next bttns --}}
+                <div class="back-next-bttns">
+                    <a href="{{ url('instructor/courses/create/'.$course->id.'/visibility')}}">Back</a>
+                    <a href="{{ url('instructor/courses')}}">Finish</a> 
+                </div>
+                {{-- step next bttns --}}
             </div>
         </div>
 </main>
