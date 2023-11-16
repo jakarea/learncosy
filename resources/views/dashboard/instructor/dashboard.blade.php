@@ -137,9 +137,7 @@
                                     <h5>{{ $user->name }} - Enrolled to {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>   
                                 @elseif($recentUpdate->message == 'review')
                                     <h5>{{ $user->name }} - Post a review to  {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>
-                                @endif 
-                                
-                                
+                                @endif  
                                 <p>{{ Auth::user()->name }}</p>
 
                                 <ul>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('short_bio')->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('cover_photo')->nullable();
             $table->string('social_links')->nullable();
             $table->longText('description')->nullable();
             $table->string('recivingMessage')->default('0');

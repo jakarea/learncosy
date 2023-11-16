@@ -903,7 +903,7 @@ Account Management
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-    let currentURL = window.location.href;
+        let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const resetBttn = document.getElementById('resetBttn');
 

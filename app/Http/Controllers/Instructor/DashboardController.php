@@ -13,13 +13,13 @@ use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
-        // return 123;
+    { 
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);
@@ -351,6 +351,62 @@ class DashboardController extends Controller
         return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
     }
 
+    // instructor notification 
+    public function notifications()
+    { 
+
+        $currentYear = Carbon::now()->subDays(365);
+        $today = Carbon::now();
+
+        $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
+            ->where('notifications.instructor_id', Auth::user()->id)  // Specify the table for instructor_id
+            ->where('notifications.type', 'instructor')
+            ->where('notifications.created_at', '>', $currentYear)
+            ->join('courses', 'notifications.course_id', '=', 'courses.id')
+            ->select('notifications.id', 'courses.thumbnail AS thumbnail', 'courses.title AS title', 'notifications.type','notifications.user_id','notifications.course_id',  'notifications.message', 'users.avatar', 'notifications.created_at')
+            ->orderBy('notifications.created_at', 'DESC')
+            ->get();
+
+                                              
+        // Get today's date
+        $today = now();
+        
+        // Initialize arrays for each category
+        $todays = [];
+        $yestardays = [];
+        $sevenDays = [];
+        $thirtyDays = [];
+        $lastOneYears = [];
+        
+        foreach ($data as $item) {
+            $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
+        
+            // Calculate the interval in days
+            $interval = $today->diffInDays($createdAt);
+        
+            if ($interval == 0) {
+                // Today
+                $todays[] = $item;
+            } elseif ($interval == 1) {
+                // Yesterday
+                $yestardays[] = $item;
+            } elseif ($interval > 2 && $interval <= 7) {
+                // Last 7 days
+                $sevenDays[] = $item;
+            } elseif ($interval >= 8 && $interval <= 30) {
+                    
+                $thirtyDays[] = $item;
+            } elseif ($interval >= 31 && $interval <= 365) {
+                    
+                $lastOneYears[] = $item;
+            }
+        } 
+ 
+                        
+        return view('instructor.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
+        
+    }
+
     // instructor notification delete
     public function notifyDestroy($id)
     {
@@ -514,7 +570,7 @@ class DashboardController extends Controller
             $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
        }
 
-    //    return $permission;
+        //    return $permission;
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }
@@ -543,5 +599,36 @@ class DashboardController extends Controller
         );
 
         return redirect()->back()->with('success', 'Access permissions updated successfully');
+    }
+
+    // login as student
+    public function loginAsStudent($userSessionId, $userId, $stuId)
+    {
+        if (!$userId || !$userSessionId) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $instructorUserId = Crypt::decrypt($userId);
+        $instructorUser = User::find($instructorUserId);
+
+        if (!$instructorUser) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $reqSessionId = Crypt::decrypt($userSessionId);
+        $dbSessionId = Crypt::decrypt($instructorUser->session_id);
+
+        if ($reqSessionId === $dbSessionId && $stuId) {
+            $studentUserId = Crypt::decrypt($stuId);
+            $studentUser = User::find($studentUserId);
+
+            if ($studentUser) {
+                Auth::login($studentUser);
+
+                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
+            }
+        }
+
+        return redirect('/login')->with('error', 'Failed to Login as Student');
     }
 }

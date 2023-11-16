@@ -74,10 +74,7 @@ Course Create - Step 10
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <form action="" method="POST" > 
                     @csrf
-                    <div class="content-settings-form-wrap visibility-form-wrap">
-                        {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
+                    <div class="content-settings-form-wrap visibility-form-wrap"> 
                         <h4>Visibility</h4>
                         <hr>
                         <div class="form-group">

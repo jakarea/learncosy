@@ -35,7 +35,7 @@
             <div class="logo">
                 <a href="{{url('/')}}">
                     @if (modulesetting('logo'))
-                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
+                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem; max-height: 5rem;">
                     @else
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">

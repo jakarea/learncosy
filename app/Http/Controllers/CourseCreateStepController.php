@@ -317,16 +317,15 @@ class CourseCreateStepController extends Controller
         
     }
 
-    public function stepLessonVideo($id,$module_id,$lesson_id){
-
+    public function stepLessonVideo($id,$module_id,$lesson_id)
+    {
         // return 2345;
-
         if(!$id){
             return redirect('instructor/courses');
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
@@ -336,7 +335,7 @@ class CourseCreateStepController extends Controller
 
         $request->validate([
             'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
-            'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
+            // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
@@ -568,8 +567,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
-
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-9',compact('course'));
     }
 

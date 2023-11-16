@@ -1,5 +1,5 @@
 @extends('layouts/latest/instructor')
-@section('title','Course Overview as Student') 
+@section('title','Course Overview') 
 
 
 {{-- style section @S --}}

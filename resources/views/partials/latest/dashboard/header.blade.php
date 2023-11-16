@@ -49,7 +49,7 @@
                     <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="Search icon"
                         class="img-fluid">
                 </a>
-                <a href="#" class="bttn">
+                <a href="{{url('admin/notifications')}}" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/notification.svg') }}" alt="Notification icon"
                         class="img-fluid">
                     {{-- <span>0</span> --}}
