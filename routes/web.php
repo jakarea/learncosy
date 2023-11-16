@@ -519,6 +519,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index')->name('allAdmin');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('allAdmin.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('allAdmin.profile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateAllAdminProfile');
@@ -529,6 +530,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('instructor.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('instructorProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateInstructorProfile');
@@ -536,11 +538,10 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // all students manage routes for admin
         Route::prefix('students')->controller(StudentManagementController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.allStudents');
-            // data table route
-            Route::get('/datatable', 'studentsDataTable')->name('admin.students.data.table');
+            Route::get('/', 'index')->name('admin.allStudents'); 
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.student.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('admin.studentProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('admin.updateStudentProfile');
