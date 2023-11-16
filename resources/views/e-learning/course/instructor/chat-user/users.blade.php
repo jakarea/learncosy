@@ -18,7 +18,17 @@
                 <div class="name">
                     <a href="javascript:;" class="name">{{ $user->name }}</a>
                 </div>
-                <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
+                @if (!empty($user->last_message))
+                    {{-- <p>{{ Str::limit($user->last_message, 20, '...') }} <span>{{ $user->last_message_timestamp->diffForHumans() }}</span></p> --}}
+                    <p>{{ Str::limit($user->last_message, 20, '...') }} </p>
+                @else
+                    @if ($user->last_message_sender === 'self')
+                        <p>You have sent a file</p>
+                    @elseif ($user->last_message_sender === 'other')
+                        <p>You received a file</p>
+                    @else
+                    @endif
+                @endif
             </div>
             {{-- action --}}
             <div class="dropdown">
@@ -28,7 +38,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a data-chat-user-id="{{ $user->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
                             <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
                                 alt="ic" class="img-fluid"> Delete chat
                         </a>

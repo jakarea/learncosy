@@ -76,4 +76,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(VimeoData::class, 'user_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

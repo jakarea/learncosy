@@ -10,20 +10,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class MessageController extends Controller
 {
     // message
     public function index(Request $request)
     {
-        $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread
-        from users LEFT  JOIN  chats ON users.id = chats.from and is_read = 0 and chats.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . "
-        group by users.id, users.name, users.avatar, users.email");
+        $data['users'] = DB::table('users')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+                DB::raw('COUNT(chats.is_read) as unread'),
+                DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
+                DB::raw('(CASE WHEN (SELECT chats.from FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) = users.id THEN "self" ELSE "other" END) AS last_message_sender')
+
+            )
+            ->selectRaw('COUNT(chats.is_read) as unread')
+            ->leftJoin('chats', function ($join) {
+                $join->on('users.id', '=', 'chats.from')
+                    ->where([
+                        ['chats.is_read', 0],
+                        ['chats.to', Auth::id()],
+                    ]);
+            })
+            ->where('users.id', '!=', Auth::id())
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
 
         // return view('e-learning/course/instructor/message-list-backup', compact('users'));
 
-        return view('e-learning/course/instructor/message-list', compact('users'));
+        return view('e-learning/course/instructor/message-list', $data);
     }
 
     public function getChatMessage($user_id)
@@ -69,8 +88,8 @@ class MessageController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $image = substr(md5( time()), 0, 10).'.'.$file->getClientOriginalExtension();
-            $fileName = $file->storeAs('chat', $image ,'public');
+            $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+            $fileName = $file->storeAs('chat', $image, 'public');
             $data->update([
                 'file' => $image,
                 'file_extension' => $file->getClientOriginalExtension(),
@@ -95,39 +114,50 @@ class MessageController extends Controller
     }
 
 
-    public function searchChatUser( Request $request){
-
+    public function searchChatUser(Request $request)
+    {
         $searchTerm = $request->input('term');
-
         $data['users'] = DB::table('users')
-        ->select('users.id', 'users.name', 'users.avatar', 'users.email')
-        ->selectRaw('COUNT(chats.is_read) as unread')
-        ->leftJoin('chats', function ($join) {
-            $join->on('users.id', '=', 'chats.from')
-                ->where([
-                    ['chats.is_read', 0],
-                    ['chats.to', Auth::id()],
-                ]);
-        })
-        ->where('users.id', '!=', Auth::id())
-        ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
-        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-        ->get();
+            ->select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+                DB::raw('COUNT(chats.is_read) as unread'),
+                DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
+                DB::raw('(CASE WHEN (SELECT chats.from FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) = users.id THEN "self" ELSE "other" END) AS last_message_sender')
+            )
+            ->selectRaw('COUNT(chats.is_read) as unread')
+            ->leftJoin('chats', function ($join) {
+                $join->on('users.id', '=', 'chats.from')
+                    ->where([
+                        ['chats.is_read', 0],
+                        ['chats.to', Auth::id()],
+                    ]);
+            })
+            ->where('users.id', '!=', Auth::id())
+            ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
 
         return view('e-learning.course.instructor.chat-user.users', $data);
     }
 
-    public function downloadChatFile( $filename ){
+    public function deleteSingleChatHistory( Request $request ){
+        $userId = $request->userId;
+        dd( $userId);
+        Chat::where('from', $userId)->orWhere('to', $userId)->delete();
+        return response()->json(['message' => 'Chat messages deleted successfully']);
+    }
+
+    public function downloadChatFile($filename)
+    {
 
         $path = storage_path('app/public/chat/' . $filename);
 
-        //dd( $path );
-        // $dd = public_path($filename );
-
-        // dd( $dd );
-        // if (!Storage::exists($path)) {
-        //     abort(404);
-        // }
+        if (!File::exists($path)) {
+            abort(404);
+        }
         return response()->download($path, $filename);
     }
 }

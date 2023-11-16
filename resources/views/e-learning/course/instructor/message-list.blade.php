@@ -769,6 +769,8 @@
 
 @section('script')
     <script>
+
+        document.querySelector('.single-person .dropdown .btn');
         $(document).ready(function () {
             $(".search-chat-user").on("keyup click paste", function (e) {
                 e.preventDefault();
@@ -785,6 +787,32 @@
                 }
             });
         });
+
+
+        $(document).on('click','.deleteChatMsg', function() {
+            // var userId = $(this).data('chat-user-id');
+            event.stopPropagation();
+
+            var parentId = $(this).closest('.single-person').attr('id');
+
+            alert("hi")
+
+            console.log( userId);
+
+            $.ajax({
+                type: 'post',
+                url: "{{ route('course.messages.delete.singlechat') }}",
+                data : {userId : userId}
+                success: function(response) {
+                    console.log(response.message);
+                    $('#ingle-chat-message-wrap').empty();
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+
     </script>
 
     <script>
