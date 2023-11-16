@@ -107,7 +107,7 @@
                         @elseif ($domain == 'instagram')
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
-                        <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/icons/x.svg') }}" alt="twitter" class="img-fluid" style="width: 1.1rem;">
                         @elseif ($domain == 'facebook')
                         <i class="fa-brands fa-facebook-square" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
                         height: 24px;

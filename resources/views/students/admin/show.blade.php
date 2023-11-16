@@ -54,6 +54,12 @@
                             <h3>{{$student->name}}</h3>
                             <p class="text-capitalize">{{$student->user_role}}</p>
                         </div>
+                        {{-- @php 
+                            $domain = env('APP_DOMAIN', 'learncosy.com');
+                            $url = '//'.$student->subdomain.'.'.$domain.'/login-as-instructor/'.$userSessionId.'/'.$userId.'/'.$insId;
+                        @endphp   --}}
+                        <a href="#" class="edit-profile">Login as {{ $student->name }}</a>
+
                     </div>
                 </div> 
             </div>

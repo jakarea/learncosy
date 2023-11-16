@@ -344,6 +344,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 135%;
+  text-transform: capitalize;
 }
 .contact-info-box .media .media-body a {
   color: var(--primary-color-blue-dark, #0824B4);

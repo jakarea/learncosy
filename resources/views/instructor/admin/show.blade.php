@@ -52,7 +52,6 @@
                         @php 
                             $domain = env('APP_DOMAIN', 'learncosy.com');
                             $url = '//'.$instructor->subdomain.'.'.$domain.'/login-as-instructor/'.$userSessionId.'/'.$userId.'/'.$insId;
- 
                         @endphp  
                         <a href="{{$url}}" class="edit-profile">Login as {{ $instructor->name }}</a>
                     </div>
@@ -183,7 +182,7 @@
                         @elseif ($domain == 'instagram')
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
-                        <img src="{{ asset('latest/assets/images/icons/twitter.svg') }}" alt="twitter" class="img-fluid">
+                        <img src="{{ asset('latest/assets/images/icons/x.svg') }}" alt="twitter" class="img-fluid" style="width: 1.1rem;">
                         @else
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         @endif

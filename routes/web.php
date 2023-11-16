@@ -373,6 +373,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/account-settings', 'edit')->name('account.settings'); 
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
@@ -401,6 +402,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'index')->name('allStudents');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('student.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('studentProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
@@ -482,6 +484,7 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::prefix('profile')->controller(StudentProfileController::class)->group(function () {
         Route::get('/myprofile', 'show')->name('students.profile');
         Route::get('/edit', 'edit');
+        Route::post('/cover/upload', 'coverUpload');
         Route::post('/edit', 'update')->name('students.profile.update');
         Route::get('/change-password', 'passwordUpdate');
         Route::post('/change-password', 'postChangePassword')->name('students.password.update');
