@@ -35,7 +35,7 @@
             <div class="logo">
                 <a href="{{url('/')}}">
                     @if (modulesetting('logo'))
-                        <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
+                        <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem; max-height: 5rem;">
                     @else
                     <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
                     @endif 
@@ -44,7 +44,7 @@
         </div>
     </header>
 
-    <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{ asset(modulesetting('lp_bg_image') ? modulesetting('lp_bg_image') : 'latest/assets/images/login-left.svg') }});">
+    <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{ asset(modulesetting('lp_bg_image') ? modulesetting('lp_bg_image') : 'latest/assets/images/login-left.svg') }}); background-size: contain;">
         <div class="container">
             <div class="row justify-content-end"> 
                 <div class="col-lg-6 col-md-8">

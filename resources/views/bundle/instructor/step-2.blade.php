@@ -181,7 +181,7 @@ Bundle Course create
                                             aria-describedby="sales_price">
                                     </div>
                                     <div class="form-submit-bttns">
-                                        <button type="reset" class="btn btn-cancel">Cancel</button>
+                                        <button type="button" class="btn btn-cancel" onclick="history.go(-1);">Cancel</button>
                                         <button type="submit" class="btn btn-submit">Submit</button>
                                     </div>
                                 </div>

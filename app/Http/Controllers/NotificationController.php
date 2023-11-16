@@ -24,7 +24,7 @@ class NotificationController extends Controller
        ->where('message','message')
        ->whereYear('notifications.created_at', '>', $currentYear)
        ->join('courses', 'notifications.course_id', '=', 'courses.id')
-       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.message', 'users.avatar', 'notifications.created_at')
+       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type','notifications.course_id', 'notifications.message', 'users.avatar', 'notifications.created_at')
        ->orderBy('notifications.created_at', 'DESC')
        ->get();
     
@@ -62,14 +62,7 @@ class NotificationController extends Controller
                 $lastOneYears[] = $item;
             }
         } 
-                                        
-                        //  return [$todays,
-                        //  $yestardays,
-                        //  $sevenDays,
-                        //  $thirtyDays,
-                        //  $lastOneYears];    
                         
-        // return $todays;
         return view('instructor.notification.system',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
     }
 

@@ -96,9 +96,9 @@ Course Create - Certificate
                         <span class="invalid-feedback">@error('sample_certificates'){{ $message }} @enderror</span>
                     </div>
                     <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="" class="img-fluid">
+                        <img id="previewImage" src="" alt="" class="img-fluid rounded d-block w-100">
                         @if ($course->sample_certificates)
-                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded">
+                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded d-block w-100">
                         @endif
                     </div>
                     <div class="content-settings-form-wrap mt-0">

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentManagementController extends Controller
 {
@@ -48,19 +49,16 @@ class StudentManagementController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'short_bio' => 'string',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
             'instructor' => 'required'
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
         ]);
-
-        // initial password for student if instructor create profile
-        $initialPass = 1234567890;
-
+ 
         $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
         // add student
         $student = new User([
@@ -72,7 +70,7 @@ class StudentManagementController extends Controller
             'social_links' => trim($social_links,','),
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => Hash::make($initialPass),
+            'password' => Hash::make($request->password),
             'subdomain' => $request->instructor
         ]);
 
@@ -97,7 +95,21 @@ class StudentManagementController extends Controller
     {
        $student = User::where('id', $id)->first();
        $checkout = Checkout::where('user_id', $id)->with('course')->get();
-       return view('students/admin/show',compact('student', 'checkout'));
+
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand());
+
+        $adminUser = User::where('id',Auth::user()->id)->first();
+        $adminUser->session_id = $value;
+        $adminUser->save();
+
+       $userId = Crypt::encrypt($adminUser->id);
+       $stuId = Crypt::encrypt($id);
+
+       return view('students/admin/show',compact('student', 'checkout','userSessionId','userId','stuId'));
     }
 
     // edit page
@@ -117,14 +129,14 @@ class StudentManagementController extends Controller
          $userId = $id;
 
          $this->validate($request, [
-             'name' => 'required|string',
-             'short_bio' => 'string',
+             'name' => 'required|string', 
              'phone' => 'required|string',
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
              'subdomain' => $request->instructor
          ],
          [
-             'avatar' => 'Max file size is 5 MB!'
+             'avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone number is required'
          ]);
 
 
@@ -170,6 +182,38 @@ class StudentManagementController extends Controller
          $user->save();
          return redirect()->route('admin.allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }
+
+     //  upload cover photo for all students
+    public function coverUpload(Request $request)
+    { 
+        
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
+
+            $userId = $request->userId;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    }
 
      public function destroy($id){
 

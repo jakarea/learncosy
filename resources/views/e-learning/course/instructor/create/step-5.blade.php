@@ -37,7 +37,7 @@ Course Create - Video Upload
                         <div class="lesson-edit-form-wrap mt-4">
                             <div class="highlighted-area-upload dragBox">
                                 <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
-                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
+                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" required />
                                 <p class="file-name"><label for="uploadFile">Click here</label> to set the Lesson video</p>
                             </div>
                             <input type="hidden" name="duration" id="duration" />
@@ -103,9 +103,10 @@ Course Create - Video Upload
     var currentURL = window.location.href
     var urlObject = new URL(currentURL);
     var pathname = urlObject.pathname;
-    var pathnameParts = pathname.split('/');
+    var pathnameParts = pathname.split('/'); 
     var course_id = pathnameParts[4];
     var module_id = pathnameParts[6];
+    var lesson_id = pathnameParts[8];
     const uploadProgress = document.querySelector('.progress');
     const warnm = document.querySelector('.warnm');
     const h33 = document.querySelector('.h33');
@@ -225,7 +226,8 @@ $(document).ready(function() {
                 progressBAR.classList.remove('bg-warning');
                 progressBAR.classList.add('bg-success');
                 $('.upload-progress p').css('display', 'none');
-                window.location.href = baseUrl + '/instructor/courses/create/' + course_id + '?tab=' + module_id;
+                window.location.href = baseUrl + '/instructor/courses/create/' + course_id + '/lesson/' + module_id + '/institute/' + lesson_id;
+                
             },
             // handle all types of errors
             error: function(xhr) {
@@ -233,7 +235,7 @@ $(document).ready(function() {
                 uploadProgress.classList.add('d-none');
                 warnm.classList.add('d-none');
                 var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
-                console.log(errors.video_link)
+                // console.log(errors.video_link)
                  
                 if(errors.video_link){
                     document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];

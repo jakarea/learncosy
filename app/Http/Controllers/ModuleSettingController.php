@@ -158,7 +158,7 @@ class ModuleSettingController extends Controller
 
         $module_settings->save();
 
-        return redirect('/instructor/profile/step-6/complete')->with('success', 'Module settings updated successfully.');
+        return redirect()->back()->with('success', 'Module settings updated successfully.');
     }
 
     /**

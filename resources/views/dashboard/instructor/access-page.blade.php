@@ -109,7 +109,7 @@
                         {{-- Certificate page --}}
 
                         <div class="save-bttns">
-                            <button type="reset" class="btn btn-cancel">Cancel</button>
+                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                             <button type="submit" class="btn btn-submit">Save Changes</button>
                         </div>
                     </div>
