@@ -145,7 +145,6 @@ class MessageController extends Controller
 
     public function deleteSingleChatHistory( Request $request ){
         $userId = $request->userId;
-        dd( $userId);
         Chat::where('from', $userId)->orWhere('to', $userId)->delete();
         return response()->json(['message' => 'Chat messages deleted successfully']);
     }

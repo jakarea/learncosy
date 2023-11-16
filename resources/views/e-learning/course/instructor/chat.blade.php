@@ -43,7 +43,14 @@
                             @endphp
 
                             @if (in_array(strtolower($extension), $allowedImageExtensions))
-                                <img width="75" src="{{ asset('storage/chat/'.$message->file) }}" alt="Image"/>
+                                {{-- <div class="single-chat-image">
+                                    <a href="{{ asset('storage/chat/'.$message->file) }}" data-lightbox="image-1" data-title="My caption">
+                                        <img class="example-image" src="{{ asset('storage/chat/'.$message->file) }}" alt=""/>
+                                    </a>
+                                </div> --}}
+                                <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-1.jpg" data-lightbox="example-1"><img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-1.jpg" alt="image-1" /></a>
+      <a class="example-image-link" href="http://lokeshdhakar.com/projects/lightbox2/images/image-2.jpg" data-lightbox="example-2" data-title="Optional caption."><img class="example-image" src="http://lokeshdhakar.com/projects/lightbox2/images/thumb-2.jpg" alt="image-1"/></a>
+
                             @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                                 @if (strtolower($extension) === 'zip')
                                     <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
