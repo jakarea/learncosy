@@ -135,7 +135,7 @@ All Courses
                         @else
                         <h5>€ {{ $course->price }}</h5>
                         @endif
-                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}" class="view-as-bttn">View as student</a>
+                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
                     </div>
                 </div>
             </div>

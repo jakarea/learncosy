@@ -87,7 +87,7 @@ Student Profile Edit Page
                                     </label>
 
                                     <select class="form-control" name="instructor" id="">
-                                        <option value="">Select Instructor</option>
+                                        <option value="" disabled>Select Instructor</option>
                                         @if ( count( $instructors) > 0)
                                             @foreach ( $instructors as $instructor)
                                                 <option {{ $instructor->subdomain == $student->subdomain ? 'selected' : '' }} value="{{ $instructor->subdomain }}"> {{ $instructor->name }} </option>
@@ -122,7 +122,7 @@ Student Profile Edit Page
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="url" name="website" id="website" value="{{ $student->website }}"
+                                    <input type="text" name="website" id="website" value="{{ $student->website }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Website">
 
@@ -170,31 +170,31 @@ Student Profile Edit Page
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="">Avatar</label>
+                                    <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container">
-                                    <label for="imageInput" class="upload-box">
+                                <div id="image-container" class="drop-container">
+                                    <label for="avatar" class="upload-box">
                                         <span>
                                             <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
                                                 alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
-                                    <span class="invalid-feedback">@error('avatar'){{ $message }}
-                                        @enderror</span>
+                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
-                                    <label for="">Uploaded Image</label>
+                                    <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
+                                <div id="imageContainer" class="drop-container">
+                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
                                     @if ($student->avatar)
                                     <img src="{{asset($student->avatar)}}" alt="No Image" class="img-fluid d-block"
                                         id="uploadedImage">
+                                    @else
+                                    <img src="" alt="No Image" class="img-fluid d-block" id="uploadedImage">
                                     @endif
                                 </div>
                             </div>
@@ -230,18 +230,20 @@ Student Profile Edit Page
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="form-group mt-3">
                                     <label for="">Initial Password for this Student </label>
                                     <input type="text" class="form-control " value="1234567890" disabled>
                                     <span class="can-change">*Can be Change it Later</span>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                    <button type="reset" class="btn btn-cancel">
+                                        <a href="{{url('admin/students/profile/'.$student->id)}}">Cancel</a>
+                                    </button>
                                     <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
@@ -259,11 +261,72 @@ Student Profile Edit Page
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
+  
+
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+        const file = files[0];
+
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-fluid', 'd-block');
+            img.id = 'uploadedImage';
+
+            imageContainer.appendChild(img);
+
+            const closeIcon = document.createElement('span');
+            closeIcon.innerHTML = '&#10006;';
+            closeIcon.id = 'closeIcon';
+            closeIcon.onclick = removeImage;
+
+            imageContainer.appendChild(closeIcon);
+ 
+            closeIcon.style.display = 'inline';
+        };
+
+        reader.readAsDataURL(file);
+        }
+        }
+
+        document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+        function removeImage() {
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none';  
+        }
+
+        const dropContainers = document.querySelectorAll('.drop-container');
+        dropContainers.forEach(function (dropContainer) {
+        dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        });
+
+        dropContainer.addEventListener('drop', handleFileSelect);
+        });
+
 </script>
-<script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
+
 <script>
     const urlBttn = document.querySelector('#url_increment');
         let extraFileds = document.querySelector('.url-extra-field');

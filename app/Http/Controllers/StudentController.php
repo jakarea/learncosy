@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentController extends Controller
 {
@@ -64,16 +65,14 @@ class StudentController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
-        ]);
-
-        // initial password for student if instructor create profile
-        $initialPass = 1234567890;
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
+        ]); 
 
         // add student
         $student = new User([
@@ -86,7 +85,7 @@ class StudentController extends Controller
             'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => Hash::make($initialPass),
+            'password' => Hash::make($request->password),
             'subdomain' => $subdomain
         ]);
 
@@ -110,25 +109,34 @@ class StudentController extends Controller
     public function show($id)
      {
         $checkout = Checkout::where('user_id', $id)->get();
-
         $course = Course::whereIn('id', $checkout->pluck('course_id'))->where('user_id', auth()->user()->id)->get();
-
         $student = User::where('id', $id)->first();
 
-        return view('students/instructor/show',compact('checkout', 'student','course'));
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand());
+
+        $instructorUser = User::where('id',Auth::user()->id)->first();
+        $instructorUser->session_id = $value;
+        $instructorUser->save();
+
+        $userId = Crypt::encrypt($instructorUser->id);
+        $stuId = Crypt::encrypt($id);
+
+        return view('students/instructor/show',compact('checkout', 'student','course','userSessionId','userId','stuId'));
      }
 
     // show page
     public function edit($id)
      {
         $student = User::where('id', $id)->first();
-
         return view('students/instructor/edit',compact('student'));
      }
 
      public function update(Request $request,$id)
-     {
-        //  return $request->all();
+     { 
 
          $userId = $id;
 
@@ -138,7 +146,8 @@ class StudentController extends Controller
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
          [
-             'avatar' => 'Max file size is 5 MB!'
+             'avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone number is required'
          ]);
 
 
@@ -159,7 +168,7 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $user->email;
+         $user->email = $request->email;
 
          if ($request->password) {
              $user->password = Hash::make($request->password);
@@ -187,6 +196,38 @@ class StudentController extends Controller
          $user->save();
          return redirect()->route('allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }
+
+     //  upload cover photo for all instructor
+    public function coverUpload(Request $request)
+    { 
+        
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
+
+            $userId = $request->userId;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    } 
 
      public function destroy($id)
      {

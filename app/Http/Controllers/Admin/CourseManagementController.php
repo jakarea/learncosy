@@ -34,7 +34,7 @@ class CourseManagementController extends Controller
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : ''; 
 
-        $courses = Course::with('user','reviews')->where('status','published');
+        $courses = Course::with('user','reviews');
 
         if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
@@ -187,6 +187,43 @@ class CourseManagementController extends Controller
             return response()->download(public_path('uploads/lessons/'.$zipFileName))->deleteFileAfterSend(true);
         } else {
             // handle error here
+        }
+    }
+
+    // course overview
+    public function overview($slug)
+    {
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+ 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+        $related_course = [];
+        if ($course) {
+            if($course->categories){
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query();  
+
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+                $related_course = $query->take(4)->get();
+            }
+
+
+            return view('e-learning/course/admin/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+        } else {
+            return redirect('admin/dashboard')->with('error', 'Course not found!');
         }
     }
 

@@ -9,7 +9,6 @@
 
 {{-- page content @S --}}
 @section('content')
-<!-- === Instructor update page @S === -->
 <main class="profile-update-page">
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -20,10 +19,11 @@
             </div>
             <div class="col-12 col-sm-5 col-md-5">
                 <div class="user-header-bttn">
-                    <a href="{{url('admin/profile/change-password')}}"> <i class="fas fa-lock-open me-2"></i> Update Password </a>
+                    <a href="{{url('admin/profile/change-password')}}"> <i class="fas fa-lock-open me-2"></i> Update
+                        Password </a>
                 </div>
             </div>
-        </div> 
+        </div>
 
         <div class="row">
             <div class="col-12">
@@ -32,7 +32,6 @@
                     <form action="{{route('admin.profile.update',$user->id)}}" method="POST"
                         class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf
-
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
@@ -45,7 +44,7 @@
                                     <span class="invalid-feedback">@error('name'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="phone">Phone <sup class="text-danger">*</sup>
@@ -64,7 +63,7 @@
                                     </label>
                                     <input type="email" placeholder="Enter email" name="email"
                                         class="form-control @error('email') is-invalid @enderror"
-                                        value="{{ $user->email }}" id="email" disabled>
+                                        value="{{ $user->email }}" id="email">
 
                                     <span class="invalid-feedback">@error('email'){{ $message }}
                                         @enderror</span>
@@ -80,7 +79,8 @@
                                 <div class="form-group form-error">
                                     <label for="company_name">Company name </label>
 
-                                    <input type="text" name="company_name" id="company_name" value="{{  $user->company_name }}"
+                                    <input type="text" name="company_name" id="company_name"
+                                        value="{{  $user->company_name }}"
                                         class="form-control @error('company_name') is-invalid @enderror"
                                         placeholder="Company Name">
 
@@ -92,7 +92,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="url" name="website" id="website" value="{{  $user->short_bio }}"
+                                    <input type="text" name="website" id="website" value="{{  $user->short_bio }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Website">
 
@@ -104,7 +104,7 @@
                                 <div class="form-group">
                                     <label for="social_links" class="mb-1">Social Media </label>
                                     @php $socialLinks = explode(",",$user->social_links); @endphp
-                                    
+
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
@@ -116,7 +116,8 @@
                                     </div>
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i
+                                            class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -133,38 +134,35 @@
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="">Avatar</label>
+                                    <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container">
-                                    <label for="imageInput" class="upload-box">
+                                <div id="image-container" class="drop-container">
+                                    <label for="avatar" class="upload-box">
                                         <span>
                                             <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
                                                 alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
-
-                                        <span class="invalid-feedback">@error('avatar'){{ $message }}
-                                            @enderror</span>
+                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
-                                    <label for="">Uploaded Image</label>
+                                    <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
+                                <div id="imageContainer" class="drop-container">
+                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
                                     @if ($user->avatar)
-                                    <img src="{{asset($user->avatar)}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
+                                    <img src="{{asset($user->avatar)}}" alt="No Image" class="img-fluid d-block"
+                                        id="uploadedImage">
                                     @else
-                                    <img src="{{asset('latest/assets/images/avatar.png')}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
+                                    <img src="" alt="No Image" class="img-fluid d-block" id="uploadedImage">
                                     @endif
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
@@ -193,12 +191,13 @@
                                     <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                <div class="form-submit-bttns"> 
+                                        <a href="{{ url('admin/profile/myprofile') }}" class="btn btn-cancel">Cancel</a>
+                                     
                                     <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
@@ -211,64 +210,122 @@
     </div>
 </main>
 
-<!-- === Instructor update page @E === -->
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+        const file = files[0];
+
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-fluid', 'd-block');
+            img.id = 'uploadedImage';
+
+            imageContainer.appendChild(img);
+
+            const closeIcon = document.createElement('span');
+            closeIcon.innerHTML = '&#10006;';
+            closeIcon.id = 'closeIcon';
+            closeIcon.onclick = removeImage;
+
+            imageContainer.appendChild(closeIcon);
+
+            // Show the close icon
+            closeIcon.style.display = 'inline';
+        };
+
+        reader.readAsDataURL(file);
+        }
+        }
+
+        document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+        function removeImage() {
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none'; // Hide the close icon
+        }
+
+        const dropContainers = document.querySelectorAll('.drop-container');
+        dropContainers.forEach(function (dropContainer) {
+        dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        });
+
+        dropContainer.addEventListener('drop', handleFileSelect);
+        });
+
 </script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
+
 <script>
     const urlBttn = document.querySelector('#url_increment');
-let extraFields = document.querySelector('.url-extra-field');
+    let extraFields = document.querySelector('.url-extra-field');
 
-// A function to create a new input field
-const createField = () => {
-  let div = document.createElement("div");
-  let node = document.createElement("input");
-  node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-  node.setAttribute("multiple", "");
-  node.setAttribute("type", "url");
-  node.setAttribute("placeholder", "Enter Social Link");
-  node.setAttribute("name", "social_links[]");
+    // A function to create a new input field
+    const createField = () => {
+    let div = document.createElement("div");
+    let node = document.createElement("input");
+    node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
+    node.setAttribute("multiple", "");
+    node.setAttribute("type", "url");
+    node.setAttribute("placeholder", "Enter Social Link");
+    node.setAttribute("name", "social_links[]");
 
-  let link = document.createElement("a");
-  link.innerHTML = "<i class='fas fa-minus'></i>";
-  link.setAttribute("onclick", "removeField(this)");
-  div.appendChild(node);
-  div.appendChild(link);
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
+    div.appendChild(node);
+    div.appendChild(link);
 
-  extraFields.appendChild(div);
-}
+    extraFields.appendChild(div);
+    }
 
-// A function to remove a field
-const removeField = (element) => {
-  let fieldDiv = element.parentElement;
-  fieldDiv.remove();
-}
+    // A function to remove a field
+    const removeField = (element) => {
+    let fieldDiv = element.parentElement;
+    fieldDiv.remove();
+    }
 
-// Add an event listener to create a new field
-urlBttn.addEventListener('click', createField, true);
+    // Add an event listener to create a new field
+    urlBttn.addEventListener('click', createField, true);
 
-// Show the minus icon for the existing input fields in the loop
-const existingInputs = document.querySelectorAll('.url-extra-field input');
-for (const input of existingInputs) {
-  let link = document.createElement("a");
-  link.innerHTML = "<i class='fas fa-minus'></i>";
-  link.setAttribute("onclick", "removeField(this)");
+    // Show the minus icon for the existing input fields in the loop
+    const existingInputs = document.querySelectorAll('.url-extra-field input');
+    for (const input of existingInputs) {
+    let link = document.createElement("a");
+    link.innerHTML = "<i class='fas fa-minus'></i>";
+    link.setAttribute("onclick", "removeField(this)");
 
-  let div = document.createElement("div");
-  div.appendChild(input);
-  div.appendChild(link);
+    let div = document.createElement("div");
+    div.appendChild(input);
+    div.appendChild(link);
 
-  extraFields.appendChild(div);
-}
+    extraFields.appendChild(div);
+    }
 
 </script>
-
 @endsection
 {{-- page script @E --}}

@@ -65,16 +65,14 @@ class InstructorController extends Controller
 
        $request->validate([
            'name' => 'required|string',
-           'phone' => 'string',
+           'phone' => 'required|string',
            'email' => 'required|email|unique:users,email',
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
        [
-           'avatar' => 'Max file size is 5 MB!'
+           'avatar' => 'Max file size is 5 MB!',
+           'phone' => 'Phone number is required.',
        ]);
-
-       // initial password for instructor if admin create profile
-       $initialPass = 1234567890;
 
        // add instructor
        $instructor = new User([
@@ -88,7 +86,7 @@ class InstructorController extends Controller
            'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
            'description' => $request->description,
            'recivingMessage' => $request->recivingMessage,
-           'password' => Hash::make($initialPass),
+           'password' => Hash::make($request->password),
        ]);
 
        $insSlugs = Str::slug($request->name);
@@ -197,6 +195,38 @@ class InstructorController extends Controller
         $user->save();
         return redirect('admin/instructor')->with('success', 'Instructor Profile has been Updated successfully!');
     }
+
+    //  upload cover photo for all instructor
+    public function coverUpload(Request $request)
+    { 
+        
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
+
+            $userId = $request->userId;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    } 
 
     public function destroy($id){
 
