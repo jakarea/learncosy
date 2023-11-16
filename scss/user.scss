@@ -190,20 +190,92 @@
     background: var(--neutral-10, #FFF);
 
     .cover-img {
-        img {
+        position: relative;
+        transition: ease-in-out .3s;
+        height: 250px;
+
+        img.cover-img {
             display: block;
             width: 100%;
             border-radius: 10px 10px 0 0;
+            height: 100%;
+            object-fit: cover; 
+            transition: ease-in-out .3s;
+            position: absolute;
+            left: 0;
+            top: 0;
+            min-height: 250px;
+        } 
+
+        .ol-upload{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px 10px 0 0;
+            background-color: rgba(0, 0, 0, 0.587);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            display: none;
+            padding: 1.5rem;
+            transition: ease-in-out .3s;
+            flex-direction: column;
+
+            .icons{
+                width: 2rem;
+                height: 2rem;
+                border-radius: 6px;
+                background-color: #fff;
+                color: #0824B4;
+                font-size: 0.875rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: ease-in-out .3s;
+            }
+        } 
+
+        .upload-form{
+            position: absolute;
+            z-index: 999;
+            right: 1rem;
+            bottom: 1rem;
+        }
+
+        #cancelBtn{ 
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 0.875rem!important;
+            background-color: #fff;
+            color: #0824B4;
+            margin-right: 0.5rem;
+        }
+
+        #uploadBtn{ 
+            cursor: pointer;
+            padding: 5px 15px;
+            font-size: 0.875rem!important;
+        }
+    }
+
+    &:hover{
+        .ol-upload{
+            display: flex;
         }
     }
 
     .media {
-        background-color: #fff;
+        // background-color: #fff;
         padding: 1.5rem 2rem;
         padding-bottom: 3.5rem;
         align-items: flex-end;
         margin-top: -6rem;
         border-radius: 0 0 1rem 1rem;
+        position: relative;
+        z-index: 99;
 
         img {
             border-radius: 6.25rem;
@@ -2198,6 +2270,7 @@
     top: 21%!important;
 }
 
+ 
 
 
 

@@ -134,4 +134,6 @@ class ProfileManagementController extends Controller
 
         return redirect()->route('instructor.profile')->with('success', 'Your password has been changed successfully!');
     }
+
+   
 }

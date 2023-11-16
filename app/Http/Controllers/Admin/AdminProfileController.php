@@ -376,5 +376,34 @@ class AdminProfileController extends Controller
         return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
     }
 
+    public function coverUpload(Request $request)
+    {
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
+
+            $userId = Auth::user()->id;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    } 
 
 }

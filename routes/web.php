@@ -373,7 +373,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
-            Route::get('/account-settings', 'edit')->name('account.settings');
+            Route::get('/account-settings', 'edit')->name('account.settings'); 
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
@@ -597,6 +597,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('profile')->controller(AdminProfileController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('admin.profile');
             Route::get('/edit', 'edit');
+            Route::post('/cover/upload', 'coverUpload')->name('account.cover.upload');
             Route::post('/edit', 'update')->name('admin.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
