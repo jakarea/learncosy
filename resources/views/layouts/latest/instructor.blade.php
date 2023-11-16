@@ -82,7 +82,7 @@
     {{-- Light box image popup js --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <link href="{{ asset('magnify-popup/js/lightbox-plus-jquery.min.js') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
 
       {{-- dark mode js --}}
     <script>

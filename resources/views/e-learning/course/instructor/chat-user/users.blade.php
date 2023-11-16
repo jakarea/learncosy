@@ -22,13 +22,13 @@
                     {{-- <p>{{ Str::limit($user->last_message, 20, '...') }} <span>{{ $user->last_message_timestamp->diffForHumans() }}</span></p> --}}
                     <p>{{ Str::limit($user->last_message, 20, '...') }} </p>
                 @else
-                    @if ($user->last_message_sender === 'self')
-                        <p>You have sent a file</p>
-                    @elseif ($user->last_message_sender === 'other')
-                        <p>You received a file</p>
-                    @else
-                    @endif
+                    {{-- @if ($user->received_file)
+                        {{ __("You have received a file")}}
+                    @elseif($user->sent_file)
+                    {{ __("You have sent a file ") }}
+                    @endif --}}
                 @endif
+
             </div>
             {{-- action --}}
             <div class="dropdown">

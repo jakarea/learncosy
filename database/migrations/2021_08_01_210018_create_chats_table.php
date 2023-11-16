@@ -21,6 +21,7 @@ class CreateChatsTable extends Migration
             $table->string('file')->nullable();
             $table->string('file_extension', 50)->nullable();
             $table->tinyInteger('is_read');
+            // $table->boolean('send_receive_identifier')->default(false)->comment('0: sender, 1: receiver');
             $table->timestamps();
         });
     }

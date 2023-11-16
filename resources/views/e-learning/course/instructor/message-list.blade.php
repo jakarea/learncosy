@@ -191,7 +191,7 @@
                             {{-- chat filter --}}
 
                             {{-- leftbar person list start --}}
-                            <div class="person-tab-body chat-user-load">
+                            <div class="person-tab-body chat-user-load" id="chat-user-load">
                                 {{-- single person start --}}
                                 @include('e-learning.course.instructor.chat-user.users')
                                 {{-- single person end --}}
@@ -794,11 +794,12 @@
                 var userId = event.target.getAttribute('data-chat-user-id');
 
                 $.ajax({
-                    type: 'post',
+                    type: 'get',
                     url: "{{ route('course.messages.delete.singlechat') }}",
                     data: { userId: userId },
                     success: function(response) {
                         $('#single-chat-message-wrap').empty();
+                        $("#chat-user-load").load(location.href+" #chat-user-load>*","");
                     },
                     error: function(error) {
                         console.error(error);
@@ -897,11 +898,13 @@
                         success: function(data) {
                             $('.chat-message-input').val('');
                             $('.chat-message-input').emojioneArea().val('');
+
                         },
                         error: function(jqXHR, status, err) {
                             // Handle error if needed
                         },
                         complete: function() {
+                            $("#chat-user-load").load(location.href+" #chat-user-load>*","");
                             scrollToBottomFunc();
                         }
                     });

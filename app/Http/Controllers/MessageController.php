@@ -23,9 +23,7 @@ class MessageController extends Controller
                 'users.name',
                 'users.avatar',
                 'users.email',
-                DB::raw('COUNT(chats.is_read) as unread'),
                 DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(CASE WHEN (SELECT chats.from FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) = users.id THEN "self" ELSE "other" END) AS last_message_sender')
 
             )
             ->selectRaw('COUNT(chats.is_read) as unread')
@@ -40,6 +38,7 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
+            return $data;
         // return view('e-learning/course/instructor/message-list-backup', compact('users'));
 
         return view('e-learning/course/instructor/message-list', $data);
@@ -67,9 +66,6 @@ class MessageController extends Controller
 
     public function sendChatMessage(Request $request)
     {
-
-        // dd( $request->all() );
-
         $request->validate([
             'message' => 'required_without:file', // Message is required if file is not present
             'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
@@ -125,7 +121,8 @@ class MessageController extends Controller
                 'users.email',
                 DB::raw('COUNT(chats.is_read) as unread'),
                 DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(CASE WHEN (SELECT chats.from FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) = users.id THEN "self" ELSE "other" END) AS last_message_sender')
+                DB::raw('(SELECT file FROM chats WHERE (chats.from = users.id AND chats.to = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS received_file'),
+                DB::raw('(SELECT file FROM chats WHERE (chats.to = users.id AND chats.from = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS sent_file')
             )
             ->selectRaw('COUNT(chats.is_read) as unread')
             ->leftJoin('chats', function ($join) {
@@ -145,15 +142,24 @@ class MessageController extends Controller
 
     public function deleteSingleChatHistory( Request $request ){
         $userId = $request->userId;
+
+        $chats = Chat::where('from', $userId)->orWhere('to', $userId)->get();
+
+        $chats->each(function ($chat) {
+            $fileName = $chat->file_name;
+            $path = storage_path("app/public/chat/{$fileName}");
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        });
+
         Chat::where('from', $userId)->orWhere('to', $userId)->delete();
         return response()->json(['message' => 'Chat messages deleted successfully']);
     }
 
     public function downloadChatFile($filename)
     {
-
         $path = storage_path('app/public/chat/' . $filename);
-
         if (!File::exists($path)) {
             abort(404);
         }
