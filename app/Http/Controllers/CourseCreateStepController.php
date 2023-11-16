@@ -567,8 +567,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
-
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-9',compact('course'));
     }
 
