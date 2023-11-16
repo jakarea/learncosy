@@ -13,6 +13,7 @@ use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -569,7 +570,7 @@ class DashboardController extends Controller
             $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
        }
 
-    //    return $permission;
+        //    return $permission;
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }
@@ -598,5 +599,36 @@ class DashboardController extends Controller
         );
 
         return redirect()->back()->with('success', 'Access permissions updated successfully');
+    }
+
+    // login as student
+    public function loginAsStudent($userSessionId, $userId, $stuId)
+    {
+        if (!$userId || !$userSessionId) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $instructorUserId = Crypt::decrypt($userId);
+        $instructorUser = User::find($instructorUserId);
+
+        if (!$instructorUser) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $reqSessionId = Crypt::decrypt($userSessionId);
+        $dbSessionId = Crypt::decrypt($instructorUser->session_id);
+
+        if ($reqSessionId === $dbSessionId && $stuId) {
+            $studentUserId = Crypt::decrypt($stuId);
+            $studentUser = User::find($studentUserId);
+
+            if ($studentUser) {
+                Auth::login($studentUser);
+
+                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
+            }
+        }
+
+        return redirect('/login')->with('error', 'Failed to Login as Student');
     }
 }

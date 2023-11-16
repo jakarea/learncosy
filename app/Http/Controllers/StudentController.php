@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentController extends Controller
 {
@@ -108,12 +109,23 @@ class StudentController extends Controller
     public function show($id)
      {
         $checkout = Checkout::where('user_id', $id)->get();
-
         $course = Course::whereIn('id', $checkout->pluck('course_id'))->where('user_id', auth()->user()->id)->get();
-
         $student = User::where('id', $id)->first();
 
-        return view('students/instructor/show',compact('checkout', 'student','course'));
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand());
+
+        $instructorUser = User::where('id',Auth::user()->id)->first();
+        $instructorUser->session_id = $value;
+        $instructorUser->save();
+
+        $userId = Crypt::encrypt($instructorUser->id);
+        $stuId = Crypt::encrypt($id);
+
+        return view('students/instructor/show',compact('checkout', 'student','course','userSessionId','userId','stuId'));
      }
 
     // show page

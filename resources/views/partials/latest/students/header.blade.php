@@ -21,17 +21,20 @@
                     $subdomain = explode('.', $host)[0]; 
                     $instructor = \App\Models\User::where('subdomain', $subdomain)->first();
                     $pageAccess = \App\Models\ManagePage::where('instructor_id', $instructor->id)->first();
+                    $userPermissions = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
+
                     if ($pageAccess) {
-                        $userPermissions = json_decode($pageAccess->pagePermissions);
+                        $userPermissions = json_decode($pageAccess->pagePermissions); 
                     }
+
                 @endphp  
-                {{-- check permission --}} 
+                {{-- check permission --}}  
                 @if ($userPermissions->dashboard == 1) 
                     <li class="nav-item">
                         <a href="{{ url('students/dashboard') }}"
                             class="{{ Request::is('students/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
                     </li>  
-                @endif
+                @endif 
                 @if ($userPermissions->homePage == 1) 
                 <li class="nav-item">
                     <a class="{{ Request::is('students/home*') || Request::is('students/courses')  ? ' active' : '' }} nav-link"

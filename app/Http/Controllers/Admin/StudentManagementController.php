@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentManagementController extends Controller
 {
@@ -94,7 +95,21 @@ class StudentManagementController extends Controller
     {
        $student = User::where('id', $id)->first();
        $checkout = Checkout::where('user_id', $id)->with('course')->get();
-       return view('students/admin/show',compact('student', 'checkout'));
+
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand());
+
+        $adminUser = User::where('id',Auth::user()->id)->first();
+        $adminUser->session_id = $value;
+        $adminUser->save();
+
+       $userId = Crypt::encrypt($adminUser->id);
+       $stuId = Crypt::encrypt($id);
+
+       return view('students/admin/show',compact('student', 'checkout','userSessionId','userId','stuId'));
     }
 
     // edit page

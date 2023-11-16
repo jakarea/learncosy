@@ -64,6 +64,8 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 
 // custom auth screen route
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
+Route::get('login-as-student/{userSessionId}/{userId}/{stuId}', [HomepageController::class, 'loginAsStudent']);
+Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardController::class, 'loginAsStudent']);
 
 // custom login for student and instructor
 Route::get('/auth-login', function () {
