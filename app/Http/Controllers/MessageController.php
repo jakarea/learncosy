@@ -38,7 +38,7 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-            return $data;
+            // return $data;
         // return view('e-learning/course/instructor/message-list-backup', compact('users'));
 
         return view('e-learning/course/instructor/message-list', $data);
