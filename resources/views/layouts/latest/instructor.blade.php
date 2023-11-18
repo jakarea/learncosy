@@ -34,15 +34,16 @@
 
     {{-- Light box image popup --}}
     <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('emoji/emojionearea.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     @yield('style')
@@ -84,6 +85,10 @@
 
     {{-- Light box image popup js --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <script src="{{ asset('emoji/emojionearea.min.js') }}"></script>
+
 
     <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
 

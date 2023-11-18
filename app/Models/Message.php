@@ -8,31 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
-    protected $fillable = [
-        'receiver_id',
-        'course_id',
-        'sender_id',
-        'message',
-        'user_id',
-    ];
+    public function group()
+    {
+        return $this->belongsTo('App\Models\Group', 'group_id');
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    public function course()
+    public function getDateTimeAttribute()
     {
-        return $this->belongsTo(Course::class);
-    }
+        //we get the date and the time, this will return an array
+        $dateAndTime = explode(' ', $this->created_at);
 
-    public function scopeLastMessagePerUser($query)
-    {
-        return $query->whereIn('id', function ($subquery) {
-            $subquery->selectRaw('MAX(id)')
-                ->from('messages')
-                ->groupBy('sender_id','receiver_id');
-        });
+        $date = date('d-M-Y', strtotime($dateAndTime[0]));
+
+        $time = date('H:i', strtotime($dateAndTime[1]));
+
+        return "{$date} {$time}";
     }
 }

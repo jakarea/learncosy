@@ -17,6 +17,8 @@ class MessageController extends Controller
     // message
     public function index(Request $request)
     {
+
+
         $data['users'] = DB::table('users')
             ->select(
                 'users.id',
@@ -24,7 +26,8 @@ class MessageController extends Controller
                 'users.avatar',
                 'users.email',
                 DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-
+                DB::raw('(SELECT file FROM chats WHERE chats.to = ' . Auth::id() . ' AND chats.from = users.id ORDER BY created_at DESC LIMIT 1) AS received_file'),
+                DB::raw('(SELECT file FROM chats WHERE chats.from = ' . Auth::id() . ' AND chats.to = users.id ORDER BY created_at DESC LIMIT 1) AS sent_file'),
             )
             ->selectRaw('COUNT(chats.is_read) as unread')
             ->leftJoin('chats', function ($join) {
@@ -38,7 +41,29 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-            // return $data;
+        // $userId = Auth::id();
+        // return $data['users']=  Chat::join(DB::raw('(SELECT
+        // LEAST(sender_id, receiver_id) AS min_user_id,
+        // GREATEST(sender_id, receiver_id) AS max_user_id,
+        // MAX(created_at) AS last_message_time
+        // FROM chats
+        // WHERE sender_id = ? OR receiver_id = ?
+        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($join) {
+        //     $join->on(DB::raw('LEAST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.min_user_id')
+        //          ->on(DB::raw('GREATEST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.max_user_id')
+        //          ->on('chats.created_at', '=', 'subquery.last_message_time');
+        // })
+        // ->where(function ($query) use ($userId) {
+        //     $query->where('chats.sender_id', $userId)
+        //         ->orWhere('chats.receiver_id', $userId);
+        // })
+        // ->addBinding($userId, 'select')
+        // ->addBinding($userId, 'select')
+        // ->get();
+
+
+
+        // return $data;
         // return view('e-learning/course/instructor/message-list-backup', compact('users'));
 
         return view('e-learning/course/instructor/message-list', $data);
@@ -165,4 +190,7 @@ class MessageController extends Controller
         }
         return response()->download($path, $filename);
     }
+
+
+
 }

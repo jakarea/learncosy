@@ -4,7 +4,11 @@
             @isset($user)
                 <div class="avatar">
                     <img src="{{ asset($user->avatar) }}" alt="Avatar" class="img-fluid">
-                    <i class="fas fa-circle"></i>
+                    @if(Cache::has('user-is-online-' . $user->id))
+                        <i class="fas fa-circle"></i>
+                    @else
+                        <i class="fa-regular fa-circle"></i>
+                    @endif
                 </div>
             @else
                 <div class="avatar">

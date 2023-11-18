@@ -4,8 +4,18 @@
             <img src="{{ asset($friend->avatar) }}" alt="Avatar" class="img-fluid">
 
             <div class="media-body">
-                <h5 class="name">{{ $friend->name }} <span><i class="fas fa-circle"></i>
-                        Online</span>
+                <h5 class="name">{{ $friend->name }}
+                    @if(Cache::has('user-is-online-' . $friend->id))
+                        <span class="online">
+                            <i class="fas fa-circle"></i>
+                            Online
+                        </span>
+                    @else
+                        <span class="offline">
+                            <i class="fas fa-circle"></i>
+                            Offline
+                        </span>
+                    @endif
                 </h5>
                 @php
                     $emailParts = explode("@", $friend->email);
@@ -82,16 +92,16 @@
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
     <div class="message-send-box">
         <div class="form-group">
-            <input type="text" class="form-control chat-message-input" placeholder="Send a message" name="message">
+            <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message" name="message">
         </div>
         <div class="file-attach-bttns">
             {{-- <button type="button" class="btn btn-emoji">
                 <img src="{{ asset('latest/assets/images/icons/messages/wmoji.svg') }}" alt="Avatar"
                     class="img-fluid">
             </button> --}}
-            {{-- <button type="button" class="btn btn-emoji">
+            <button type="button" class="btn btn-emoji">
                 <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}" alt="Avatar" class="img-fluid">
-            </button> --}}
+            </button>
             <input type="file" name="file">
             <button class="btn btn-submit" type="submit">
                 Send
