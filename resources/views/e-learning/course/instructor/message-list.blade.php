@@ -40,18 +40,12 @@
                                 <div class="create-group-form">
                                     <h4>Create Group</h4>
 
-                                    <div class="media">
-                                        <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="a"
-                                            class="img-fluid">
-                                        <div class="media-body">
-                                            <h6>Phoenix Baker</h6>
-                                            <p>Admin</p>
-                                        </div>
-                                    </div>
-                                    <form action="">
+                                    @include('e-learning.course.instructor.group-admin.admin-info')
+                                    <form method="post" id="createGroup" action="{{ route('course.messages.group') }}">
                                         <div class="form-group">
                                             <label for="">Group Name</label>
-                                            <input type="text" placeholder="Group Name" class="form-control">
+                                            <input type="text" placeholder="Group Name" class="form-control"
+                                                name="name">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Add People</label>
@@ -158,7 +152,7 @@
                                         {{-- form submit --}}
                                         <div class="form-submit">
                                             <button class="btn btn-cancel">Cancel</button>
-                                            <button class="btn btn-create">Create</button>
+                                            <button type="submit" class="btn btn-create">Create</button>
                                         </div>
                                         {{-- form submit --}}
                                     </form>
@@ -769,6 +763,7 @@
 
 @section('script')
     <script>
+        // Search single chat user
         $(document).ready(function() {
             $(".search-chat-user").on("keyup click paste", function(e) {
                 e.preventDefault();
@@ -788,7 +783,7 @@
             });
         });
 
-
+        // Delete single chat history
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('deleteChatMsg')) {
                 event.stopPropagation();
@@ -800,7 +795,8 @@
                     data: {
                         userId: userId
                     },
-                    success: function(response) {
+                    success: function(data) {
+                        toastr.success(data.success, 'Success');
                         $('#single-chat-message-wrap').empty();
                         $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                     },
@@ -887,8 +883,6 @@
                     }
                 }
 
-
-
             });
 
             $(document).on('click', '.user', function() {
@@ -925,6 +919,12 @@
             // });
 
 
+            $(document).on('submit', '#createGroup', function(e) {
+                e.preventDefault();
+                createGroup();
+            });
+
+
 
         });
 
@@ -958,6 +958,32 @@
                 });
             }
         }
+
+        function createGroup() {
+            var formData = new FormData($('#createGroup')[0]);
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('course.messages.group') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    toastr.success(data.success, 'Success');
+                    $(".adminName").html(data.adminName)
+                    $("#createGroup").load(location.href + " #createGroup>*", "");
+                },
+                error: function(jqXHR, status, err) {
+                    toastr.error('Something went wrong!', 'Error');
+                },
+                complete: function() {
+                    scrollToBottomFunc();
+                }
+            });
+
+        }
+
         // make a function to scroll down auto
         function scrollToBottomFunc() {
             $('.main-chat-room').animate({

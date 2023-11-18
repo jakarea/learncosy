@@ -15,26 +15,27 @@ use File;
 class MessageController extends Controller
 {
     // message
+
+
     public function index(Request $request)
     {
-
-
+        $data['adminInfo'] = Auth::user();
         $data['users'] = DB::table('users')
             ->select(
                 'users.id',
                 'users.name',
                 'users.avatar',
                 'users.email',
-                DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE chats.to = ' . Auth::id() . ' AND chats.from = users.id ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE chats.from = ' . Auth::id() . ' AND chats.to = users.id ORDER BY created_at DESC LIMIT 1) AS sent_file'),
+                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
+                DB::raw('(SELECT file FROM chats WHERE chats.receiver_id = ' . Auth::id() . ' AND chats.sender_id = users.id ORDER BY created_at DESC LIMIT 1) AS received_file'),
+                DB::raw('(SELECT file FROM chats WHERE chats.sender_id = ' . Auth::id() . ' AND chats.receiver_id = users.id ORDER BY created_at DESC LIMIT 1) AS sent_file'),
             )
             ->selectRaw('COUNT(chats.is_read) as unread')
             ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.from')
+                $join->on('users.id', '=', 'chats.sender_id')
                     ->where([
                         ['chats.is_read', 0],
-                        ['chats.to', Auth::id()],
+                        ['chats.receiver_id', Auth::id()],
                     ]);
             })
             ->where('users.id', '!=', Auth::id())
@@ -76,14 +77,16 @@ class MessageController extends Controller
 
         $data['friend'] = User::findOrFail($user_id);
 
+
         // Make read all unread message
-        Chat::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
+        Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
+
 
         // Get all message from selected user
         $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $user_id)->where('to', $my_id);
+            $query->where('sender_id', $user_id)->where('receiver_id', $my_id);
         })->oRwhere(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $my_id)->where('to', $user_id);
+            $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
         })->get();
 
         return view('e-learning.course/instructor.chat', $data);
@@ -96,15 +99,15 @@ class MessageController extends Controller
             'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
         ]);
 
-        $from = Auth::id();
-        $to = $request->receiver_id;
+        $sender_Id = Auth::id();
+        $receiver_id = $request->receiver_id;
         $message = $request->message;
 
         $data = new Chat();
-        $data->from = $from;
-        $data->to = $to;
+        $data->sender_id = $sender_Id;
+        $data->receiver_id = $receiver_id;
         $data->message = $message;
-        $data->is_read = 0; // message will be unread when sending message
+        $data->is_read = false;
         $data->save();
 
         if ($request->hasFile('file')) {
@@ -130,7 +133,7 @@ class MessageController extends Controller
             $options
         );
 
-        $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
+        $data = ['from' => $sender_Id, 'to' => $receiver_id];
         $pusher->trigger('my-channel', 'my-event', $data);
     }
 
@@ -145,16 +148,16 @@ class MessageController extends Controller
                 'users.avatar',
                 'users.email',
                 DB::raw('COUNT(chats.is_read) as unread'),
-                DB::raw('(SELECT message FROM chats WHERE (chats.from = users.id OR chats.to = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.from = users.id AND chats.to = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.to = users.id AND chats.from = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS sent_file')
+                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
+                DB::raw('(SELECT file FROM chats WHERE (chats.sender_id = users.id AND chats.receiver_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS received_file'),
+                DB::raw('(SELECT file FROM chats WHERE (chats.receiver_id = users.id AND chats.sender_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS sent_file')
             )
             ->selectRaw('COUNT(chats.is_read) as unread')
             ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.from')
+                $join->on('users.id', '=', 'chats.sender_id')
                     ->where([
                         ['chats.is_read', 0],
-                        ['chats.to', Auth::id()],
+                        ['chats.receiver_id', Auth::id()],
                     ]);
             })
             ->where('users.id', '!=', Auth::id())
@@ -168,7 +171,7 @@ class MessageController extends Controller
     public function deleteSingleChatHistory( Request $request ){
         $userId = $request->userId;
 
-        $chats = Chat::where('from', $userId)->orWhere('to', $userId)->get();
+        $chats = Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId)->get();
 
         $chats->each(function ($chat) {
             $fileName = $chat->file_name;
@@ -178,8 +181,8 @@ class MessageController extends Controller
             }
         });
 
-        Chat::where('from', $userId)->orWhere('to', $userId)->delete();
-        return response()->json(['message' => 'Chat messages deleted successfully']);
+        Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId)->delete();
+        return response()->json(['success' => 'Chat messages deleted successfully!!']);
     }
 
     public function downloadChatFile($filename)

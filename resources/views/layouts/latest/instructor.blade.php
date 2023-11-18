@@ -36,8 +36,8 @@
     <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('emoji/emojionearea.min.css') }}" rel="stylesheet" type="text/css" />
 
-
-
+    {{-- Toaster notification css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 
@@ -85,6 +85,9 @@
 
     {{-- Light box image popup js --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    {{--  Toaster js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
     <script src="{{ asset('emoji/emojionearea.min.js') }}"></script>

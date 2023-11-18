@@ -30,7 +30,7 @@
 
 
     @forelse ($messages as $message)
-        <div class="message-item {{ $message->from == Auth::id() ? 'sender-item' : '' }}">
+        <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
             <div class="media main-media">
                 <div class="avatar">
                     <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}" alt="Avatar"
@@ -39,7 +39,7 @@
                 </div>
                 <div class="media-body">
                     <div class="d-flex">
-                        <h6 class="open-profile">{{ $message->user->name }} &nbsp; </h6>
+                        <h6 class="open-profile">{{ $message->user->name ?? "" }} &nbsp; </h6>
                         <span> {{ $message->created_at->format('F j, Y') }}
                         </span>
                     </div>

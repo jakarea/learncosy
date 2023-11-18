@@ -15,8 +15,8 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('from');
-            $table->bigInteger('to');
+            $table->bigInteger('sender_id');
+            $table->bigInteger('receiver_id');
             $table->longText('message')->nullable();
             $table->string('file')->nullable();
             $table->string('file_extension', 50)->nullable();
