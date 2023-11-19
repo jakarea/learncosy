@@ -194,6 +194,7 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 // Group message
 Route::middleware('auth')->prefix('course/messages')->controller(GroupController::class)->group(function () {
     Route::post('/create-group', 'createGroup')->name('course.messages.group');
+    Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('course.messages.suggested.people');
 });
 
 /* ============================================================= */

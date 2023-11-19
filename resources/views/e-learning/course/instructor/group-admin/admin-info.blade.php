@@ -1,5 +1,3 @@
-
-
 <div class="media">
     <img src="{{ asset($adminInfo->avatar) }}" alt="{{ $adminInfo->name }}" class="img-fluid">
     <div class="media-body">

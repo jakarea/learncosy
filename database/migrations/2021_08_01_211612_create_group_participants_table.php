@@ -17,6 +17,7 @@ class CreateGroupParticipantsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('group_id');
             $table->unsignedBiginteger('user_id');
+            $table->boolean('status')->default(false);
             $table->unique(['group_id', 'user_id']);
             $table->timestamps();
         });

@@ -65,7 +65,7 @@ class MessageController extends Controller
 
 
         // return $data;
-        // return view('e-learning/course/instructor/message-list-backup', compact('users'));
+        // return view('e-learning/course/instructor/message-list-backup', $data);
 
         return view('e-learning/course/instructor/message-list', $data);
     }
@@ -141,6 +141,8 @@ class MessageController extends Controller
     public function searchChatUser(Request $request)
     {
         $searchTerm = $request->input('term');
+        $layoutDesing = $request->input('layout');
+
         $data['users'] = DB::table('users')
             ->select(
                 'users.id',
@@ -165,7 +167,13 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-        return view('e-learning.course.instructor.chat-user.users', $data);
+            if( $layoutDesing == "layout1" ){
+                return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
+            }else{
+                return view('e-learning.course.instructor.chat-user.search-users', $data);
+            }
+
+
     }
 
     public function deleteSingleChatHistory( Request $request ){
