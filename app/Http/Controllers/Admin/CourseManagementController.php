@@ -53,10 +53,17 @@ class CourseManagementController extends Controller
             }
 
             if ($status == 'most_purchased') {
-                $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-                ->select('courses.*')
-                ->groupBy('courses.id')
-                ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+            //    $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+            //     ->select('courses.*')
+            //     ->groupBy('courses.id')
+            //     ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+
+                $courses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+                ->with('user')
+                ->with('reviews')
+                ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                ->groupBy('courses.id');
+
 
             }
             

@@ -326,7 +326,7 @@ class AdminHomeController extends Controller
     {
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
-        $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+       $TopPerformingCourses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
             ->with('user')
             ->with('reviews')
             ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
@@ -349,7 +349,7 @@ class AdminHomeController extends Controller
             $TopPerformingCourses->orderByDesc('sale_count');
         }
 
-        $TopPerformingCourses = $TopPerformingCourses->paginate(12);
+       $TopPerformingCourses = $TopPerformingCourses->paginate(12);
 
 
         return view('e-learning/course/admin/top-perform', compact('TopPerformingCourses'));

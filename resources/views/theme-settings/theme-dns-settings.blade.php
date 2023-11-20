@@ -762,7 +762,6 @@ Account Management
 
 {{-- page script @S --}}
 @section('script')
-
 {{-- logo image preview js --}}
 <script>
     const logoInput = document.getElementById('logo');
