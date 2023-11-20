@@ -134,9 +134,9 @@
                                         </span>
                                        
                                     </div>
-                                    @endif
-                                    {{-- <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a> --}}
-                                   
+                                    @else 
+                                     <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
+                                    @endif 
                                 </div>
                             </div>
                         </div>
