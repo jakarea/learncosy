@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 
+use File;
 use Pusher\Pusher;
 use App\Models\Chat;
 use App\Models\User;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use File;
 
 class MessageController extends Controller
 {
@@ -39,6 +40,9 @@ class MessageController extends Controller
             ->where('users.id', '!=', Auth::id())
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
+
+        // select channels that User Subscribe
+        $data['groups'] = Group::whereHas('participants')->get();
 
         // $userId = Auth::id();
         // return $data['users']=  Chat::join(DB::raw('(SELECT

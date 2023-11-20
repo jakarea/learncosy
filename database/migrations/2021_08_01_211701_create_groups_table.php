@@ -17,7 +17,7 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
-            $table->unsignedBigInteger('admin_id');
+            $table->unsignedBigInteger('admin_id')->comment('Creator of group');
 
             $table->foreign('admin_id')
                     ->references('id')
