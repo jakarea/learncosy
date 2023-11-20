@@ -138,12 +138,13 @@ class AdminProfileController extends Controller
 
     public function adminPayment()
     {
-        $students = [];
-        $todaysStudents = [];
+        // return 123456;
+
+        $instructors = []; 
 
         $status = isset($_GET['status']) ? $_GET['status'] : ''; 
         
-        $enrolments = Checkout::with('course','user');
+        $enrolments = Subscription::with('instructor');
 
         if ($status) {
             if ($status == 'asc') {
@@ -157,34 +158,13 @@ class AdminProfileController extends Controller
             $enrolments->orderBy('id', 'desc'); 
         }
 
-        $enrolments = $enrolments->paginate(6);
+        $enrolments = $enrolments->paginate(6); 
 
+        $todaysEnrolments = Subscription::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
 
-        $formatedPercentageChangeOfStudentEnrollByMonth = $this->getPercentageByMonthOfStudentEnrollment();
-        $formatedPercentageChangeOfStudentEnrollByDay = $this->getPercentageByDayOfStudentEnrollment();
-        $formattedPercentageChangeOfEarningByMonth = $this->getPercentageByMonthOfEarning();
-        $formattedPercentageChangeOfEarningByDay = $this->getPercentageByDayOfEarning();
-
-        $todaysEnrolments = Checkout::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
-
-        foreach ($enrolments as $enrolment) {
-            $students[$enrolment->user_id] = $enrolment->created_at;
-        }
-
-        foreach ($todaysEnrolments as $enrolment) {
-            $todaysStudents[$enrolment->user_id] = $enrolment->created_at;
-        }
-        
-        $totalEnrollment =  count($students);
-        $todaysEnrollment =  count($todaysStudents);
-
-        $totalEnroll = $this->getEnrollmentData();
-        $totalEnrollmentSell = $totalEnroll->sum('amount');
-
-        $totalEnrollToday = $this->getEnrollmentDataToday();
-        $todaysTotalEnrollmentSell = $totalEnrollToday->sum('amount');
-        // return $enrolments; 
-        return view('payments/admin/grid-admin-payment', compact('enrolments','totalEnrollment','todaysEnrollment','totalEnrollmentSell','todaysTotalEnrollmentSell','formatedPercentageChangeOfStudentEnrollByMonth','formatedPercentageChangeOfStudentEnrollByDay','formattedPercentageChangeOfEarningByMonth','formattedPercentageChangeOfEarningByDay'));
+        // return $enrolments;
+ 
+        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments'));
     }
 
     public function export($payment_id){
@@ -236,145 +216,8 @@ class AdminProfileController extends Controller
         {
             return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
         }
-    }
+    } 
 
-    private function getEnrollmentData()
-    {
-        return Checkout::orderBy('id', 'desc')->get();
-    }
-
-
-    private function getEnrollmentByDateRange($startDate, $endDate)
-    {
-        return Checkout::whereBetween('created_at', [$startDate, $endDate])
-                ->orderBy('id', 'desc')
-                ->get();
-    }
-
-    private function getEnrollmentByDate($date)
-    {
-        $carbonDate = Carbon::parse($date);
-        return Checkout::whereDate('created_at', $carbonDate->toDateString())
-            ->orderBy('id', 'desc')
-            ->get();
-    }
-
-
-    private function getEnrollmentDataToday()
-    {
-        return Checkout::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
-    }
-
-    public function adminPaymentData( Request $request )
-    {
-        $payments = Subscription::with(['subscriptionPakage'])->where('instructor_id', 1)->get();
-        // dd($payments);
-        return datatables()->of($payments)
-            // ->addColumn('action', function ($payment) {
-            //     $action = '<a href="' . route('admin.subscription.edit', $payment->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>';
-            //     $action .= '<a href="' . route('admin.subscription.destroy', $payment->id) . '" class="btn btn-sm btn-danger delete_data" data-id="'.$payment->id.'"><i class="fas fa-trash"></i></a>';
-            //     return $action;
-            // })
-            // instructor name from instructor_id
-            ->editColumn('instructor_id', function ($payment) {
-                return $payment->instructor->email;
-            })
-            ->editColumn('amount', function ($payment) {
-                return $payment->subscriptionPakage->amount;
-            })
-            ->rawColumns(['action', 'status', 'features'])
-            ->make(true);
-
-    }
-
-    public function getPercentageByMonthOfStudentEnrollment(){
-        $currentMonthEnrolledStudents = [];
-        $previousMonthEnrolledStudents = [];
-        $currentMonthEnrollments = Checkout::whereYear('created_at', '=', now()->year)
-                ->whereMonth('created_at', '=', now()->month)
-                ->get();
-        $previousMonthEnrollments = Checkout::whereYear('created_at', '=', date('Y', strtotime('-1 month')))
-            ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
-            ->get();
-        foreach ($currentMonthEnrollments as $enrolment) {
-            $currentMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
-        }
-
-        foreach ($previousMonthEnrollments as $enrolment) {
-            $previousMonthEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
-        }
-
-        $currentMonthEnrolledStudentsCount = count($currentMonthEnrolledStudents);
-        $previousMonthEnrolledStudentsCount = count($previousMonthEnrolledStudents);
-
-        if ($previousMonthEnrolledStudentsCount === 0) {
-            $percentageChangeOfStudentEnroll = ($currentMonthEnrolledStudentsCount > 0) ? 100 : 0;
-        } else {
-            $percentageChangeOfStudentEnroll = (($currentMonthEnrolledStudentsCount - $previousMonthEnrolledStudentsCount) / abs($previousMonthEnrolledStudentsCount)) * 100;
-        }
-        return  number_format($percentageChangeOfStudentEnroll, 2);
-    }
-
-    public function getPercentageByDayOfStudentEnrollment(){
-        $currentDayEnrolledStudents = [];
-        $previousDayEnrolledStudents = [];
-        $currentDate = Carbon::now();
-        $previousDate = Carbon::now()->subDay();
-        $currentDayEnrollments = Checkout::whereDate('created_at', $currentDate->toDateString())->get();
-        $previousDayEnrollments = Checkout::whereDate('created_at', $previousDate->toDateString())->get();
-
-        foreach ($currentDayEnrollments as $enrolment) {
-            $currentDayEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
-        }
-
-        foreach ($previousDayEnrollments as $enrolment) {
-            $previousDayEnrolledStudents[$enrolment->user_id] = $enrolment->created_at;
-        }
-
-        $currentDayEnrolledStudentsCount = count($currentDayEnrolledStudents);
-        $previousDayEnrolledStudentsCount = count($previousDayEnrolledStudents);
-
-        if ($previousDayEnrolledStudentsCount === 0) {
-            $percentageChangeOfStudentEnroll = ($currentDayEnrolledStudentsCount > 0) ? 100 : 0;
-        } else {
-            $percentageChangeOfStudentEnroll = (($currentDayEnrolledStudentsCount - $previousDayEnrolledStudentsCount) / abs($previousDayEnrolledStudentsCount)) * 100;
-        }
-        return  number_format($percentageChangeOfStudentEnroll, 2);
-    }
-
-
-    public function getPercentageByMonthOfEarning(){
-        $currentMonthStart = $this->currentMonthStart;
-        $currentMonthEnd = $this->currentMonthEnd;
-        $previousMonthStart = $this->previousMonthStart;
-        $previousMonthEnd = $this->previousMonthEnd;
-        $currentMonthEnrollment = $this->getEnrollmentByDateRange($currentMonthStart, $currentMonthEnd);
-        $previousMonthEnrollment = $this->getEnrollmentByDateRange($previousMonthStart, $previousMonthEnd);
-        $currentMonthTotalSell = $currentMonthEnrollment->sum('amount');
-        $previousMonthTotalSell = $previousMonthEnrollment->sum('amount');
-        $percentageChange = 0;
-        if($previousMonthTotalSell){
-            $percentageChange = (($currentMonthTotalSell - $previousMonthTotalSell) / abs($previousMonthTotalSell)) * 100;
-        }
-            
-        return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
-    }
-
-    public function getPercentageByDayOfEarning(){
-        $today = Carbon::today()->toDateString();
-        $previousDay = Carbon::yesterday()->toDateString();
-        $currentDayEnrollment = $this->getEnrollmentByDate($today);
-        $previousDayEnrollment = $this->getEnrollmentByDate($previousDay);
-        $currentDayTotalSell = $currentDayEnrollment->sum('amount');
-        $previousDayTotalSell = $previousDayEnrollment->sum('amount');
-        // dd( $previousMonthTotalSell);
-        $percentageChange = 0;
-        if($previousDayTotalSell){
-            $percentageChange = (($currentDayTotalSell - $previousDayTotalSell) / abs($previousDayTotalSell)) * 100;
-        }
-        
-        return $formattedPercentageChangeOfEarning = round($percentageChange, 2);
-    }
 
     public function coverUpload(Request $request)
     {
