@@ -1,3 +1,4 @@
+
 @forelse ($users as $user)
     <div class="single-person user" id="user_{{ $user->id }}">
         <div class="media">

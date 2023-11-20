@@ -16,6 +16,7 @@ class Group extends Model
         return $this->belongsTo(User::class, 'admin_id');
     }
 
+    // Old code
     // public function participants()
     // {
     //     return $this->belongsToMany(User::class, 'group_participants', 'group_id', 'user_id');
@@ -29,6 +30,12 @@ class Group extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    // New Code
+    public function participants()
+    {
+        return $this->hasMany(GroupParticipant::class, 'group_id');
     }
 
 }
