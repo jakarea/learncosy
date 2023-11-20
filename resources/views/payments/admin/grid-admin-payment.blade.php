@@ -1,5 +1,5 @@
 @extends('layouts.latest.admin')
-@section('title') Payment From Student @endsection
+@section('title') Payment From Instructor @endsection
 
 {{-- page style @S --}}
 @section('style')
@@ -22,16 +22,11 @@
                         class="img-fluid dark-ele">
                     <h5>Total Earnings</h5>
 
-                    <span class="{{ $formattedPercentageChangeOfEarningByMonth < 0 ? 'red' : '' }}">
-                        @if ($formattedPercentageChangeOfEarningByMonth < 0 ) <img
-                            src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
-                            @else
-                            <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
-                            @endif
-                            {{ number_format(floatval($formattedPercentageChangeOfEarningByMonth), 0, '.', '') }}%
+                    <span class="green">
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
                     </span>
 
-                    <h4>€{{$totalEnrollmentSell}}</h4>
+                    <h4>€ 24</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -43,16 +38,11 @@
                     <h5>Earnings Today</h5>
 
 
-                    <span class="{{ $formattedPercentageChangeOfEarningByDay < 0 ? 'red' : '' }}">
-                        @if ($formattedPercentageChangeOfEarningByDay < 0 ) <img
-                            src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
-                            @else
-                            <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
-                            @endif
-                            {{ number_format(floatval($formattedPercentageChangeOfEarningByDay), 0, '.', '') }}%
+                    <span class="green">
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
                     </span>
 
-                    <h4>€{{$todaysTotalEnrollmentSell}}</h4>
+                    <h4>€ 12</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -62,17 +52,12 @@
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01"
                         class="img-fluid dark-ele">
 
-                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByMonth < 0 ? 'red' : '' }}">
-                        @if ($formatedPercentageChangeOfStudentEnrollByMonth < 0 ) <img
-                            src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
-                            @else
-                            <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
-                            @endif
-                            {{ number_format(floatval($formatedPercentageChangeOfStudentEnrollByMonth), 0, '.', '') }}%
+                    <span class="green">
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
                     </span>
 
                     <h5>Total Enrollments</h5>
-                    <h4>{{$totalEnrollment}} Students</h4>
+                    <h4> 1234 Instructor</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -82,24 +67,19 @@
                     <img src="{{asset('latest/assets/images/icons/ear-03-d.svg')}}" alt="ear-01"
                         class="img-fluid dark-ele">
 
-                    <span class="{{ $formatedPercentageChangeOfStudentEnrollByDay < 0 ? 'red' : '' }}">
-                        @if ($formatedPercentageChangeOfStudentEnrollByDay < 0 ) <img
-                            src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
-                            @else
-                            <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
-                            @endif
-                            {{ number_format(floatval($formatedPercentageChangeOfStudentEnrollByDay), 0, '.', '') }}%
+                    <span class="green">
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
                     </span>
 
                     <h5>Enrolled Today</h5>
-                    <h4>{{$todaysEnrollment}} Students</h4>
+                    <h4>1234 Students</h4>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="pay-title">
-                    <h4>Payment from student</h4>
+                    <h4>Payment from Instructor</h4>
                 </div>
             </div>
         </div>
@@ -123,7 +103,7 @@
                         <tr>
                             <th width="3%">No</th>
                             <th class="d-flex justify-content-between">
-                                <span>Course Name</span>
+                                <span>Package Name</span>
                                 <div class="filter-sort-box">
                                     <div class="dropdown">
                                         <button class="btn p-0" type="button" data-bs-toggle="dropdown"
@@ -140,9 +120,9 @@
                                     </div>
                                 </div>
                             </th>
-                            <th width="12%">Student Name</th>
-                            <th width="12%">Payment Date</th>
-                            <th width="12%">Payment Type</th>
+                            <th width="12%">Instructor Name</th> 
+                            <th width="12%">Start at</th>
+                            <th width="12%">End at</th>
                             <th>Amount</th>
                             <th>Status</th>
                             <th width="15%">Action</th>
@@ -153,38 +133,40 @@
                                 {{ $key + 1 }}
                             </td>
                             <td>
-                                @if ($payment->course)
-                                <h5>{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47)
-                                    . "..." : $payment->course->title }}</h5>
-                                @endif
+                                <p>{{$payment->name}}</p>
                             </td>
                             <td>
-                                <p>{{$payment->user->name}}</p>
+                                
+                                <h5>
+                                    @if ($payment->instructor && $payment->instructor->name)
+                                        <a href="{{url('admin/instructor/profile/'.$payment->instructor->id)}}">
+                                            {{$payment->instructor->name}}
+                                        </a>
+                                    @else 
+                                        <u class="text-danger">user not found!</u>
+                                    @endif
+                                </h5>
+                            </td> 
+                            <td>
+                                <p>{{ $payment->start_at->format('d M Y') }}</p>
                             </td>
                             <td>
-                                <p>{{ $payment->created_at->format('d M Y') }}</p>
-                            </td>
-                            <td>
-                                <p>{{$payment->payment_method}}</p>
+                                <p>{{ $payment->end_at->format('d M Y') }}</p>
                             </td>
                             <td>
                                 <p>€{{$payment->amount}}</p>
-
                             </td>
                             <td>
-                                @if ($payment->status == 'completed')
-                                <p style="color: #2A920B;" class="text-capitalize">{{ $payment->status }}</p>
+                                @if ($payment->status == 'cancel')
+                                <p style="color: #ED5763;" class="text-capitalize">Cancled</p> 
                                 @else
-                                <p style="color: #ED5763;" class="text-capitalize">{{ $payment->status }}</p>
+                                 <p style="color: #2A920B;" class="text-capitalize">Active</p>
                                 @endif
                             </td>
-                            <td>
-
+                            <td> 
                                 <ul>
-                                    <a href="{{ route('export',encrypt($payment->payment_id)) }}"
-                                        class="btn-view btn-export">Export</a>
-                                    <a href="{{ route('view',encrypt($payment->payment_id)) }}"
-                                        class="btn-view">View</a>
+                                    <a href="#" class="btn-view btn-export">Export</a>
+                                    <a href="#" class="btn-view">View</a>
                                 </ul>
                             </td>
                         </tr>

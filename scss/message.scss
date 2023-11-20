@@ -14,7 +14,8 @@
             border-right: 1px solid var(--neutral-40, #C5CCD8);
             background: var(--white, #FFF);
             border-radius: 0.5rem 0 0 0.5rem;
-
+            max-height: 90vh;
+            overflow-y: hidden;
 
 
             .title {
@@ -188,20 +189,24 @@
             }
         }
 
+
+
         .chat-main-body-box {
-           
+
 
             .main-chat-room {
                 display: flex;
                 padding: 2.5rem 2rem 2rem 2rem;
                 flex-direction: column;
-                justify-content: flex-end;
-                align-items: flex-start;
+                // justify-content: flex-end;
+                // align-items: flex-start;
                 gap: 2rem;
                 flex: 1 0 0;
-                align-self: stretch;
-                min-height: 63rem;
-                padding-bottom: 0;
+                align-self: stretch; 
+                max-height: 40rem; 
+                overflow-y: scroll;
+                padding-top: 8rem;
+                padding-bottom: 4rem;
 
                 .message-item {
                     max-width: 90%;
@@ -412,9 +417,33 @@
 
             }
 
+            .main-chat-room::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            .main-chat-room::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+            
+            .main-chat-room::-webkit-scrollbar-thumb {
+                background: #888;
+            }
+            
+            .main-chat-room::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            .dock-bottom{
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                z-index: 999;
+                width: 100%;
+                background-color: #fff;
+            }
+
             .message-send-box {
-                padding: 1.5rem 2rem;
-                padding-top: 2rem;
+                padding: 1rem 2rem; 
                 position: relative;
 
                 input {
@@ -435,7 +464,7 @@
                 .file-attach-bttns {
                     position: absolute;
                     right: 45px;
-                    top: 40px;
+                    top: 24px;
                     z-index: 99;
                     display: inline-flex;
                     align-items: center;
@@ -477,6 +506,11 @@
     box-shadow: 0px 6px 34px 0px rgba(0, 0, 0, 0.08);
     padding: 1.25rem 1.5rem 1.1875rem 1.5rem;
     border-radius: 0 10px 0 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 
     .media {
         align-items: center;
@@ -547,6 +581,27 @@
             line-height: 1.25rem;
         }
     }
+}
+
+.person-tab-body {
+    max-height: 40rem;
+    overflow-y: scroll;
+}
+
+.person-tab-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.person-tab-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.person-tab-body::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.person-tab-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .person-suggest-box-list,
@@ -939,6 +994,8 @@
 
 .chat-main-body-box {
     position: relative;
+    max-height: 90vh;
+    overflow-y: hidden;
 }
 
 .view-profile-box {
@@ -1084,21 +1141,21 @@
 }
 
 .custom-modal-box {
-    .modal-content{
+    .modal-content {
         border-radius: 0.75rem;
-        background: var(--gray-white, #FFF); 
+        background: var(--gray-white, #FFF);
         box-shadow: -20px 20px 40px -4px rgba(0, 0, 0, 0.24), 0px 0px 2px 0px rgba(0, 0, 0, 0.24);
-    } 
+    }
 }
 
-.error-bttn{
-    .btn-create{
-        background-color: #E43242!important;
-        border-color: #E43242!important;
+.error-bttn {
+    .btn-create {
+        background-color: #E43242 !important;
+        border-color: #E43242 !important;
 
-        &:hover{
-            background-color: #fff!important;
-            color: #E43242!important;
+        &:hover {
+            background-color: #fff !important;
+            color: #E43242 !important;
         }
     }
 }

@@ -59,7 +59,7 @@
                         <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
-                                class="profile-form create-form-box" enctype="multipart/form-data">
+                                class="profile-form create-form-box profile-frm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
@@ -1216,7 +1216,32 @@
 
 {{-- page script @S --}}
 @section('script')
-  
+  {{-- form save js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var formChanged = false; 
+        function markFormChanged() {
+            formChanged = true;
+        }
+ 
+        var formElements = document.querySelectorAll('.profile-frm input, .profile-frm select, .profile-frm textarea');
+        formElements.forEach(function (element) {
+            element.addEventListener('change', markFormChanged);
+        });
+ 
+        window.addEventListener('beforeunload', function (e) {
+            if (formChanged) {
+                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
+                e.returnValue = confirmationMessage;  
+                return confirmationMessage;  
+            }
+        });
+ 
+        document.querySelector('form').addEventListener('submit', function () {
+            formChanged = false;
+        });
+    });
+</script>
 {{-- drag & drop image upload js --}}
 <script>
     function handleFileSelect(evt) {

@@ -40,12 +40,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-
-
-
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @yield('style')
     {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css" /> --}}
     <!-- all css end -->
@@ -82,24 +79,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
-
-    {{-- Light box image popup js --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    {{--  Toaster js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-
-    <script src="{{ asset('emoji/emojionearea.min.js') }}"></script>
-
-
-    <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
-
-      {{-- dark mode js --}}
+    {{-- dark mode js --}}
     <script>
         const htmlBody = document.querySelector("body");
         const modeBttn = document.getElementById("darkModeBttn");
-
         function toggleMode() {
             htmlBody.classList.toggle('dark-mode');
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';

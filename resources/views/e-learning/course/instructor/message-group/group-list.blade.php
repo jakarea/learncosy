@@ -1,35 +1,41 @@
 
-@if( count( $users ) > 0)
-    @foreach ($users as $user)
-        <div class="single-person user" id="user_{{ $user->id }}">
+@if( count( $groups ) > 0)
+    @foreach ($groups as $group)
+        <div class="single-person group" id="group_{{ $group->id }}">
             <div class="media">
-                @if($user)
+                @isset($group)
                     <div class="avatar">
-                        @isset( $user->avatar )
-                            <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
+                        @isset( $group->avatar )
+                            <img src="{{ asset($group->avatar) }}" alt="{{ $group->name }}" class="img-fluid">
                         @else
-                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $user->name }}" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $group->id }}" class="img-fluid">
                         @endisset
-                        @if(Cache::has('user-is-online-' . $user->id))
+
+                        @if(Cache::has('user-is-online-' . $group->id))
                             <i class="fas fa-circle"></i>
                         @else
                             <i class="fa-solid fa-circle" style="color: #a1a1a5;"></i>
                         @endif
                     </div>
-
-                @endif
+                @else
+                    <div class="avatar">
+                        <img src="{{ asset('/latest/assets/images/update-5.png') }}"
+                            alt="Avatar" class="img-fluid">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                @endisset
 
                 <div class="media-body">
                     <div class="name">
-                        <a href="javascript:;" class="name">{{ $user->name }}</a>
+                        <a href="javascript:;" class="name">{{ $group->name }}</a>
                     </div>
-                    @if (!empty($user->last_message))
-                        {{-- <p>{{ Str::limit($user->last_message, 20, '...') }} <span>{{ $user->last_message_timestamp->diffForHumans() }}</span></p> --}}
-                        <p>{{ Str::limit($user->last_message, 20, '...') }} </p>
+                    @if (!empty($group->last_message))
+                        {{-- <p>{{ Str::limit($group->last_message, 20, '...') }} <span>{{ $group->last_message_timestamp->diffForHumans() }}</span></p> --}}
+                        <p>{{ Str::limit($group->last_message, 20, '...') }} </p>
                     @else
-                        {{-- @if ($user->received_file)
+                        {{-- @if ($group->received_file)
                             {{ __("You have received a file")}}
-                        @elseif($user->sent_file)
+                        @elseif($group->sent_file)
                         {{ __("You have sent a file ") }}
                         @endif --}}
                     @endif
@@ -43,7 +49,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a data-chat-user-id="{{ $user->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
+                            <a data-chat-user-id="{{ $group->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
                                 <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
                                     alt="ic" class="img-fluid"> Delete chat
                             </a>

@@ -66,15 +66,11 @@ class MessageController extends Controller
 
     public function getChatMessage($user_id)
     {
-
         $my_id = Auth::id();
-
         $data['friend'] = User::findOrFail($user_id);
-
 
         // Make read all unread message
         Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
-
 
         // Get all message from selected user
         $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
@@ -131,9 +127,60 @@ class MessageController extends Controller
         $pusher->trigger('my-channel', 'my-event', $data);
     }
 
+    // public function sendGroupMessage(Request $request, $groupId)
+    // {
+
+    //     $request->validate([
+    //         'message' => 'required_without:file', // Message is required if file is not present
+    //         'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
+    //     ]);
+
+    //     $sender_Id = Auth::id();
+    //     $receiver_id = $request->receiver_id;
+    //     $message = $request->message;
+
+    //     $data = new Chat();
+    //     $data->sender_id = $sender_Id;
+    //     $data->receiver_id = $receiver_id;
+    //     $data->group_id = $groupId;
+    //     $data->message = $message;
+    //     $data->type = 2;
+    //     $data->is_read = false;
+    //     $data->save();
+
+    //     if ($request->hasFile('file')) {
+    //         $file = $request->file('file');
+    //         $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+    //         $fileName = $file->storeAs('chat', $image, 'public');
+    //         $data->update([
+    //             'file' => $image,
+    //             'file_extension' => $file->getClientOriginalExtension(),
+    //         ]);
+    //     }
+
+    //     // pusher
+    //     $options = array(
+    //         'cluster' => 'ap2',
+    //         'useTLS' => true
+    //     );
+
+    //     $pusher = new Pusher(
+    //         env('PUSHER_APP_KEY'),
+    //         env('PUSHER_APP_SECRET'),
+    //         env('PUSHER_APP_ID'),
+    //         $options
+    //     );
+
+    //     $data = ['from' => $sender_Id, 'to' => $receiver_id];
+    //     $pusher->trigger('my-channel', 'my-event', $data);
+
+
+    // }
+
 
     public function searchChatUser(Request $request)
     {
+        // dd( $request->all());
         $searchTerm = $request->input('term');
         $layoutDesing = $request->input('layout');
 
@@ -152,6 +199,8 @@ class MessageController extends Controller
         ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
         ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
         ->get();
+
+        // dd( $data['users']->toArray() );
 
         if( $layoutDesing == "layout1" ){
             return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);

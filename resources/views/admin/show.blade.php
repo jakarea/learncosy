@@ -82,7 +82,7 @@
                         <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                         <div class="media-body">
                             <h6>Website</h6>
-                            <a href="#">{{$user->short_bio ? $user->short_bio : '--'}}</a>
+                            <a href="{{$user->short_bio}}">{{$user->short_bio ? $user->short_bio : '--'}}</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,15 @@
                         @elseif ($domain == 'instagram')
                         <img src="{{ asset('latest/assets/images/icons/insta.svg') }}" alt="insta" class="img-fluid">
                         @elseif ($domain == 'twitter')
+<<<<<<< HEAD
+
                         <img src="{{ asset('latest/assets/images/icons/x.svg') }}" alt="twitter" class="img-fluid" style="width: 1.1rem;">
+
+=======
+                        <img src="{{ asset('latest/assets/images/icons/x.svg') }}" alt="x" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
+                        height: 24px;
+                        margin-top: 0.5rem;" class="img-fluid">
+>>>>>>> db3a49a (twitter icon changed)
                         @elseif ($domain == 'facebook')
                         <i class="fa-brands fa-facebook-square" style="color: rgba(28, 28, 28, 0.626); font-size: 1.3rem; margin-right: 1rem; width: 24px;
                         height: 24px;
