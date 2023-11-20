@@ -51,7 +51,7 @@ class MessageController extends Controller
         // MAX(created_at) AS last_message_time
         // FROM chats
         // WHERE sender_id = ? OR receiver_id = ?
-        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($join) {
+        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($jToin) {
         //     $join->on(DB::raw('LEAST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.min_user_id')
         //          ->on(DB::raw('GREATEST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.max_user_id')
         //          ->on('chats.created_at', '=', 'subquery.last_message_time');
