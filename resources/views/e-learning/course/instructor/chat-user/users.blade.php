@@ -4,7 +4,11 @@
             @isset($user)
                 <div class="avatar">
                     <img src="{{ asset($user->avatar) }}" alt="Avatar" class="img-fluid">
-                    <i class="fas fa-circle"></i>
+                    @if(Cache::has('user-is-online-' . $user->id))
+                        <i class="fas fa-circle"></i>
+                    @else
+                        <i class="fa-regular fa-circle"></i>
+                    @endif
                 </div>
             @else
                 <div class="avatar">
@@ -18,7 +22,17 @@
                 <div class="name">
                     <a href="javascript:;" class="name">{{ $user->name }}</a>
                 </div>
-                <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
+                @if (!empty($user->last_message))
+                    {{-- <p>{{ Str::limit($user->last_message, 20, '...') }} <span>{{ $user->last_message_timestamp->diffForHumans() }}</span></p> --}}
+                    <p>{{ Str::limit($user->last_message, 20, '...') }} </p>
+                @else
+                    {{-- @if ($user->received_file)
+                        {{ __("You have received a file")}}
+                    @elseif($user->sent_file)
+                    {{ __("You have sent a file ") }}
+                    @endif --}}
+                @endif
+
             </div>
             {{-- action --}}
             <div class="dropdown">
@@ -28,7 +42,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a data-chat-user-id="{{ $user->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
                             <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
                                 alt="ic" class="img-fluid"> Delete chat
                         </a>

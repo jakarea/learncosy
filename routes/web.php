@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
@@ -187,13 +188,12 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
     Route::post('/chat', 'sendChatMessage');
     Route::get('/search-user', 'searchChatUser')->name('course.messages.search');
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('course.messages.file.download');
+    Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('course.messages.delete.singlechat');
+});
 
-    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
-    // Route::post('/', 'sendMessage')->name('message-send');
-    // Route::get('/send/{id}', 'send')->name('get.message');
-    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+// Group message
+Route::middleware('auth')->prefix('course/messages')->controller(GroupController::class)->group(function () {
+    Route::post('/create-group', 'createGroup')->name('course.messages.group');
 });
 
 /* ============================================================= */
@@ -218,8 +218,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
 
-    
-    // Instructor Notification 
+
+    // Instructor Notification
     Route::get('/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
 
     Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
@@ -348,7 +348,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::post('/{slug}/edit', 'update')->name('lesson.update');
             Route::delete('/{slug}/destroy', 'destroy')->name('lesson.destroy');
         });
- 
+
         // course bundle page routes
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
@@ -383,7 +383,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
             Route::post('/cover/upload', 'coverUpload');
-            Route::get('/account-settings', 'edit')->name('account.settings'); 
+            Route::get('/account-settings', 'edit')->name('account.settings');
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('instructor.password.update');
@@ -550,7 +550,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // all students manage routes for admin
         Route::prefix('students')->controller(StudentManagementController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.allStudents'); 
+            Route::get('/', 'index')->name('admin.allStudents');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.student.add');
             Route::post('/cover/upload', 'coverUpload');
@@ -599,7 +599,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
         // lesson page routes for admin
         Route::prefix('lessons')->controller(LessonManagementController::class)->group(function () {
-            Route::get('/', 'index'); 
+            Route::get('/', 'index');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.lesson.store');
             Route::get('/{slug}/edit', 'edit')->name('admin.lesson.edit');

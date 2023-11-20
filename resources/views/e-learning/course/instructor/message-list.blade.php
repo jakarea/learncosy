@@ -40,18 +40,12 @@
                                 <div class="create-group-form">
                                     <h4>Create Group</h4>
 
-                                    <div class="media">
-                                        <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="a"
-                                            class="img-fluid">
-                                        <div class="media-body">
-                                            <h6>Phoenix Baker</h6>
-                                            <p>Admin</p>
-                                        </div>
-                                    </div>
-                                    <form action="">
+                                    @include('e-learning.course.instructor.group-admin.admin-info')
+                                    <form method="post" id="createGroup" action="{{ route('course.messages.group') }}">
                                         <div class="form-group">
                                             <label for="">Group Name</label>
-                                            <input type="text" placeholder="Group Name" class="form-control">
+                                            <input type="text" placeholder="Group Name" class="form-control"
+                                                name="name">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Add People</label>
@@ -158,7 +152,7 @@
                                         {{-- form submit --}}
                                         <div class="form-submit">
                                             <button class="btn btn-cancel">Cancel</button>
-                                            <button class="btn btn-create">Create</button>
+                                            <button type="submit" class="btn btn-create">Create</button>
                                         </div>
                                         {{-- form submit --}}
                                     </form>
@@ -191,7 +185,7 @@
                             {{-- chat filter --}}
 
                             {{-- leftbar person list start --}}
-                            <div class="person-tab-body chat-user-load">
+                            <div class="person-tab-body chat-user-load" id="chat-user-load">
                                 {{-- single person start --}}
                                 @include('e-learning.course.instructor.chat-user.users')
                                 {{-- single person end --}}
@@ -769,21 +763,48 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
-            $(".search-chat-user").on("keyup click paste", function (e) {
+        // Search single chat user
+        $(document).ready(function() {
+            $(".search-chat-user").on("keyup click paste", function(e) {
                 e.preventDefault();
                 let searchTerm = $(this).val().trim();
                 if (searchTerm !== "") {
                     $.ajax({
                         url: "{{ route('course.messages.search') }}",
                         type: 'GET',
-                        data: { term: searchTerm },
-                        success: function (data) {
+                        data: {
+                            term: searchTerm
+                        },
+                        success: function(data) {
                             $(".chat-user-load").html(data);
                         }
                     });
                 }
             });
+        });
+
+        // Delete single chat history
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('deleteChatMsg')) {
+                event.stopPropagation();
+                var userId = event.target.getAttribute('data-chat-user-id');
+
+                $.ajax({
+                    type: 'get',
+                    url: "{{ route('course.messages.delete.singlechat') }}",
+                    data: {
+                        userId: userId
+                    },
+                    success: function(data) {
+                        toastr.success(data.success, 'Success');
+                        $('#single-chat-message-wrap').empty();
+                        $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
         });
     </script>
 
@@ -802,12 +823,47 @@
             Pusher.logToConsole = true;
 
             // Set pusher key
-            var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
+            var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
                 cluster: 'ap2',
                 forceTLS: true
             });
 
+
+
+
+            // <<<<<========== User Online Activity ===============>>>>>
+
+            // var channel = pusher.subscribe('my-channel');
+
+            // // Presence channel events
+            // channel.bind('pusher:subscription_succeeded', function(members) {
+            //     members.each(function(member) {
+            //         console.log('User online:', member.id);
+            //         // Update your UI to show online users
+            //     });
+            // });
+
+            // channel.bind('pusher:member_added', function(member) {
+            //     console.log('User online:', member.id);
+            //     // Update your UI to show online users
+            // });
+
+            // channel.bind('pusher:member_removed', function(member) {
+            //     console.log('User offline:', member.id);
+            //     // Update your UI to show offline users
+            // });
+
+            // // Your existing code for handling other events
+            // channel.bind('my-event', function(data) {
+            //     // Handle your existing messaging events
+            // });
+
+
+            // <<<<<========== User Online Activity ===============>>>>>
+
+
             var channel = pusher.subscribe('my-channel');
+
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
                     $('#' + data.to).click();
@@ -826,6 +882,7 @@
                         }
                     }
                 }
+
             });
 
             $(document).on('click', '.user', function() {
@@ -841,53 +898,91 @@
                     cache: false,
                     success: function(data) {
                         $('#chat-message').html(data);
+                        // $('#chat-message-input').emojioneArea();
                         scrollToBottomFunc();
 
-                        $('.chat-message-input').emojioneArea({
-                            pickerPosition: "right",
-                            tonesStyle: "bullet",
-                            events: {
-                                keyup: function(editor, e) {
-                                    if (e.keyCode === 13 && !e.shiftKey) {
-                                        console.log($(this)[0].getText());
-                                    }
-                                }
-                            }
-                        });
                     }
                 });
             });
 
             $(document).on('submit', '#chatMessage', function(e) {
                 e.preventDefault();
-                var formData = new FormData($(this)[0]);
-                formData.append("receiver_id", receiver_id);
+                sendMessage();
+            });
 
-                if (receiver_id !== '') {
-                    $.ajax({
-                        type: "post",
-                        url: "messages/chat",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        success: function(data) {
-                            $('.chat-message-input').val('');
-                            $('.chat-message-input').emojioneArea().val('');
-                        },
-                        error: function(jqXHR, status, err) {
-                            // Handle error if needed
-                        },
-                        complete: function() {
-                            scrollToBottomFunc();
-                        }
-                    });
-                }
+            // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
+            //     alert("hi")
+            //     if (event.which === 13) {
+            //         event.preventDefault();
+            //         sendMessage();
+            //     }
+            // });
+
+
+            $(document).on('submit', '#createGroup', function(e) {
+                e.preventDefault();
+                createGroup();
             });
 
 
 
         });
+
+        function sendMessage() {
+            // var messageText = $('.chat-message-input').emojioneArea().getText();
+            var formData = new FormData($('#chatMessage')[0]);
+            formData.append("receiver_id", receiver_id);
+
+            var messageText = $('.chat-message-input').val();
+
+            if (receiver_id !== '') {
+                $.ajax({
+                    type: "post",
+                    url: "messages/chat",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(data) {
+                        $('.chat-message-input').val('');
+                        $('.chat-message-input').emojioneArea().val('');
+
+                    },
+                    error: function(jqXHR, status, err) {
+                        // Handle error if needed
+                    },
+                    complete: function() {
+                        $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                        scrollToBottomFunc();
+                    }
+                });
+            }
+        }
+
+        function createGroup() {
+            var formData = new FormData($('#createGroup')[0]);
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('course.messages.group') }}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    toastr.success(data.success, 'Success');
+                    $(".adminName").html(data.adminName)
+                    $("#createGroup").load(location.href + " #createGroup>*", "");
+                },
+                error: function(jqXHR, status, err) {
+                    toastr.error('Something went wrong!', 'Error');
+                },
+                complete: function() {
+                    scrollToBottomFunc();
+                }
+            });
+
+        }
 
         // make a function to scroll down auto
         function scrollToBottomFunc() {
@@ -926,17 +1021,5 @@
         // closeIcon.addEventListener('click', closeProfileBox);
     </script>
 
-    <script>
-        // $('.chat-message-input').emojioneArea({
-        //     pickerPosition: "right",
-        //     tonesStyle: "bullet",
-        //     events: {
-        //         keyup: function(editor, e) {
-        //             if (e.keyCode === 13 && !e.shiftKey) {
-        //                 console.log($(this)[0].getText());
-        //             }
-        //         }
-        //     }
-        // });
-    </script>
+    <script></script>
 @endsection

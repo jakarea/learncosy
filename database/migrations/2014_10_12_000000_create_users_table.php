@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('stripe_public_key')->nullable();
             $table->string('session_id')->nullable();
             $table->string('status')->default('active');
+            // $table->string('online')->default('online');
             $table->rememberToken();
             $table->timestamps();
         });

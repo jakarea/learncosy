@@ -46,10 +46,10 @@
                                         <p>Admin</p>
                                     </div>
                                 </div>
-                                <form action="">
+                                <form action="post" id="create_group">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
-                                        <input type="text" placeholder="Group Name" class="form-control">
+                                        <input type="text" name="name" placeholder="Group Name" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Add People</label>

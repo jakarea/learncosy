@@ -31,11 +31,19 @@
     <link href="{{ asset('latest/assets/admin-css/dashboard.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/admin-dark.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {{-- Light box image popup --}}
+    <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('emoji/emojionearea.min.css') }}" rel="stylesheet" type="text/css" />
+
+    {{-- Toaster notification css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
 
 
     @yield('style')
@@ -75,14 +83,26 @@
     <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 
-    {{-- dark mode js --}}
+    {{-- Light box image popup js --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    {{--  Toaster js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+    <script src="{{ asset('emoji/emojionearea.min.js') }}"></script>
+
+
+    <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
+
+      {{-- dark mode js --}}
     <script>
-        const htmlBody = document.querySelector("body"); 
+        const htmlBody = document.querySelector("body");
         const modeBttn = document.getElementById("darkModeBttn");
-       
+
         function toggleMode() {
-            htmlBody.classList.toggle('dark-mode'); 
-            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : ''; 
+            htmlBody.classList.toggle('dark-mode');
+            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
             localStorage.setItem('dark-mode', mode);
 
             if (htmlBody.classList.contains('dark-mode')) {
@@ -92,15 +112,15 @@
                 tinymce.remove('#description');
                 lightFunction();
             }
-        } 
+        }
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
             htmlBody.classList.add('dark-mode');
-        } 
+        }
         modeBttn.addEventListener('change', toggleMode);
     </script>
 
-    <script> 
+    <script>
         if (document.querySelector("body").classList.contains('dark-mode')) {
             tinymce.remove('#description');
             darkFunction();
@@ -111,10 +131,6 @@
     </script>
 
     @yield('script')
-
-
-
-
 
 
 </body>
