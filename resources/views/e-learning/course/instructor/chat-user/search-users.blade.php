@@ -1,5 +1,5 @@
 @forelse ($users as $user)
-    <div class="single-person user" id="{{ $user->id }}">
+    <div class="single-person user" id="user_{{ $user->id }}">
         <div class="media">
             @isset($user)
                 <div class="avatar">

@@ -733,23 +733,22 @@
 
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
-                    $('#' + data.to).click();
+                    $('#user_' + data.to).click();
                 } else if (my_id == data.to) {
                     if (receiver_id == data.from) {
-                        // if receiver is selected, reload the selected user ...
-                        $('#' + data.from).click();
+                        // If the receiver is selected, reload the selected user...
+                        $('#user_' + data.from).click();
                     } else {
-                        // if receiver is not seleted, add notification for that user
-                        var pending = parseInt($('#' + data.from).find('.pending').html());
+                        // If the receiver is not selected, add a notification for that user
+                        var pending = parseInt($('#user_' + data.from).find('.pending').html());
 
                         if (pending) {
-                            $('#' + data.from).find('.pending').html(pending + 1);
+                            $('#user_' + data.from).find('.pending').html(pending + 1);
                         } else {
-                            $('#' + data.from).append('<span class="pending">1</span>');
+                            $('#user_' + data.from).append('<span class="pending">1</span>');
                         }
                     }
                 }
-
             });
 
             $(document).on('click', '.user', function() {
@@ -757,7 +756,8 @@
                 $(this).addClass('active');
                 $(this).find('.pending').remove();
 
-                receiver_id = $(this).attr('id');
+                var user_receive_id = $(this).attr('id');
+                receiver_id =  user_receive_id.split('_')[1];
                 $.ajax({
                     type: "get",
                     url: '/course/messages/chat/' + receiver_id, // need to create this route
