@@ -19,30 +19,22 @@ class MessageController extends Controller
     public function index(Request $request)
     {
         $data['adminInfo'] = Auth::user();
-        $data['users'] = DB::table('users')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.avatar',
-                'users.email',
-                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE chats.receiver_id = ' . Auth::id() . ' AND chats.sender_id = users.id ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE chats.sender_id = ' . Auth::id() . ' AND chats.receiver_id = users.id ORDER BY created_at DESC LIMIT 1) AS sent_file'),
-            )
-            ->selectRaw('COUNT(chats.is_read) as unread')
-            ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.sender_id')
-                    ->where([
-                        ['chats.is_read', 0],
-                        ['chats.receiver_id', Auth::id()],
-                    ]);
-            })
-            ->where('users.id', '!=', Auth::id())
-            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-            ->get();
+        $data['users'] = User::select(
+            'users.id',
+            'users.name',
+            'users.avatar',
+            'users.email',
+        )
+        ->withCount([
+            'chats as unread' => function ($query) {
+                $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            },
+        ])
+        ->where('users.id', '!=', Auth::id())
+        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+        ->get();
 
-        // select channels that User Subscribe
-        $data['groups'] = Group::whereHas('participants')->get();
+        $data['groups'] = Group::whereHas('participants')->latest()->get();
 
         // $userId = Auth::id();
         // return $data['users']=  Chat::join(DB::raw('(SELECT
@@ -145,37 +137,27 @@ class MessageController extends Controller
         $searchTerm = $request->input('term');
         $layoutDesing = $request->input('layout');
 
+        $data['users'] = User::select(
+            'users.id',
+            'users.name',
+            'users.avatar',
+            'users.email',
+        )
+        ->withCount([
+            'chats as unread' => function ($query) {
+                $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            },
+        ])
+        ->where('users.id', '!=', Auth::id())
+        ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
+        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+        ->get();
 
-        $data['users'] = DB::table('users')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.avatar',
-                'users.email',
-                DB::raw('COUNT(chats.is_read) as unread'),
-                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.sender_id = users.id AND chats.receiver_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.receiver_id = users.id AND chats.sender_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS sent_file')
-            )
-            ->selectRaw('COUNT(chats.is_read) as unread')
-            ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.sender_id')
-                    ->where([
-                        ['chats.is_read', 0],
-                        ['chats.receiver_id', Auth::id()],
-                    ]);
-            })
-            ->where('users.id', '!=', Auth::id())
-            ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
-            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-            ->get();
-
-            if( $layoutDesing == "layout1" ){
-                return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
-            }else{
-                return view('e-learning.course.instructor.chat-user.search-users', $data);
-            }
-
+        if( $layoutDesing == "layout1" ){
+            return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
+        }else{
+            return view('e-learning.course.instructor.chat-user.search-users', $data);
+        }
 
     }
 
