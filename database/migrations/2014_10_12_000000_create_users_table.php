@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('short_bio')->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('cover_photo')->nullable();
             $table->string('social_links')->nullable();
             $table->longText('description')->nullable();
             $table->string('recivingMessage')->default('0');
@@ -33,6 +34,7 @@ return new class extends Migration
             $table->string('stripe_public_key')->nullable();
             $table->string('session_id')->nullable();
             $table->string('status')->default('active');
+            // $table->string('online')->default('online');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,10 +1,10 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 11
+Course Create - Final Step
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -81,7 +81,7 @@ Course Create - Step 11
                     <h6>As a post</h6>
 
                     <div class="d-flex">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses',$course->slug)}}"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('instructor/courses',$course->id)}}"
                             target="_blank">
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
@@ -90,12 +90,12 @@ Course Create - Step 11
                             <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
                             <span>Telegram</span>
                         </a>
-                        <a href="https://www.linkedin.com/shareArticle?url={{ url('courses',$course->slug)}}" target="_blank">
+                        <a href="https://www.linkedin.com/shareArticle?url={{ url('instructor/courses',$course->id)}}" target="_blank">
                             <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
                                 class="img-fluid">
                             <span>LinkedIn</span>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ url('courses',$course->slug)}}&text={{ $course->title }}"
+                        <a href="https://twitter.com/intent/tweet?url={{ url('instructor/courses',$course->id)}}&text={{ $course->title }}"
                             target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB"
                                 class="img-fluid">
                             <span>Twitter</span>
@@ -106,15 +106,15 @@ Course Create - Step 11
 
                     <div class="d-flex">
 
-                        <a href="https://www.messenger.com/share.php?text={{ url('courses',$course->slug) }}">
+                        <a href="https://www.messenger.com/share.php?text={{ url('instructor/courses',$course->id) }}">
                             <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                             <span>Messenger</span>
                         </a>
-                        <a href="https://api.whatsapp.com/send?text={{ url('courses',$course->slug) }}">
+                        <a href="https://api.whatsapp.com/send?text={{ url('instructor/courses',$course->id) }}">
                             <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                             <span>Whatsapp</span>
                         </a>
-                        <a href="https://telegram.me/share/url?url={{ url('courses',$course->slug) }}">
+                        <a href="https://telegram.me/share/url?url={{ url('instructor/courses',$course->id) }}">
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
@@ -127,12 +127,19 @@ Course Create - Step 11
                     
 
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="{{ url('courses', $course->slug)}}"
+                        <input type="text" placeholder="Link" value="{{ url('instructor/courses', $course->id)}}"
                             class="form-control" id="linkToCopy">
                         <a href="#" id="copyButton">Copy</a>
                     </div>
 
                 </div>
+
+                {{-- step next bttns --}}
+                <div class="back-next-bttns">
+                    <a href="{{ url('instructor/courses/create/'.$course->id.'/visibility')}}">Back</a>
+                    <a href="{{ url('instructor/courses')}}">Finish</a> 
+                </div>
+                {{-- step next bttns --}}
             </div>
         </div>
 </main>

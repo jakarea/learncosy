@@ -54,7 +54,7 @@ class ModuleSettingController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
@@ -69,7 +69,7 @@ class ModuleSettingController extends Controller
             $userNameSlug = Str::slug(Auth::user()->name);
 
             // main logo
-            if ($request->hasFile('logo')) { 
+            if ($request->hasFile('logo')) {
                 if ($module_settings->logo) {
                     $oldLogo = public_path($module_settings->logo);
                     if (file_exists($oldLogo)) {
@@ -85,7 +85,7 @@ class ModuleSettingController extends Controller
             }
 
             // app logo
-            if ($request->hasFile('app_logo')) { 
+            if ($request->hasFile('app_logo')) {
                 if ($module_settings->app_logo) {
                     $oldAppLogo = public_path($module_settings->app_logo);
                     if (file_exists($oldAppLogo)) {
@@ -101,7 +101,7 @@ class ModuleSettingController extends Controller
             }
 
             // favicon
-            if ($request->hasFile('favicon')) { 
+            if ($request->hasFile('favicon')) {
                 if ($module_settings->favicon) {
                     $oldFavicon = public_path($module_settings->favicon);
                     if (file_exists($oldFavicon)) {
@@ -118,7 +118,7 @@ class ModuleSettingController extends Controller
 
 
             // apple_icon
-            if ($request->hasFile('apple_icon')) { 
+            if ($request->hasFile('apple_icon')) {
                 if ($module_settings->apple_icon) {
                     $oldAppleIcon = public_path($module_settings->apple_icon);
                     if (file_exists($oldAppleIcon)) {
@@ -134,7 +134,7 @@ class ModuleSettingController extends Controller
             }
 
             // login bg image
-            if ($request->hasFile('lp_bg_image')) { 
+            if ($request->hasFile('lp_bg_image')) {
                     if ($module_settings->lp_bg_image) {
                     $oldLoginBg = public_path($module_settings->lp_bg_image);
                     if (file_exists($oldLoginBg)) {
@@ -158,7 +158,7 @@ class ModuleSettingController extends Controller
 
         $module_settings->save();
 
-        return back()->with('success', 'Module settings updated successfully.');
+        return redirect()->back()->with('success', 'Module settings updated successfully.');
     }
 
     /**
@@ -202,7 +202,7 @@ class ModuleSettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function reset($id)
-    { 
+    {
 
         $item = InstructorModuleSetting::findOrFail($id);
 
@@ -241,9 +241,9 @@ class ModuleSettingController extends Controller
         $item->apple_icon = null;
         $item->app_logo = null;
         $item->favicon = null;
- 
+
         $item->save();
-        
+
         return response()->json(['message' => 'Theme Reset']);
     }
 }

@@ -9,7 +9,15 @@ use DB;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Checkout;
+use App\Models\BundleSelect;
+use App\Models\CourseActivity;
+use App\Models\Notification;
+use App\Models\CourseLog;
+use App\Models\BundleCourse;
+use App\Models\Certificate;
 use App\Models\CourseReview;
+use App\Models\Cart;
+use App\Models\course_like;
 use App\Models\Module;
 use Illuminate\Support\Str; 
 use Illuminate\Http\Request;
@@ -42,11 +50,19 @@ class CourseController extends Controller
             }
 
             if ($status == 'most_purchased') {
-                $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-                ->select('courses.*')
-                ->groupBy('courses.id')
+                // $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                // ->select('courses.*')
+                // ->groupBy('courses.id')
+                // ->where('courses.user_id', Auth::user()->id)
+                // ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+
+                $courses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
+                ->with('user')
+                ->with('reviews')
                 ->where('courses.user_id', Auth::user()->id)
-                ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
+                ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
+                ->groupBy('courses.id');
+
 
             }
             
@@ -105,20 +121,163 @@ class CourseController extends Controller
         }
     }
 
+    
+    // course overview
+    public function overview($slug)
+    {
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+ 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+        $related_course = [];
+        if ($course) {
+            if($course->categories){
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query();  
+
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+                $related_course = $query->take(4)->get();
+            }
+
+
+            return view('e-learning/course/instructor/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+        } else {
+            return redirect('instructor/dashboard')->with('error', 'Course not found!');
+        }
+    }
+
     public function destroy($id)
     {
-        $course = Course::where(['id'=> $id,'user_id' => Auth::user()->id])->first();
+        // update bundle course for this course
+        $selectedCourseValue = intval($id);
+        $instructorId = Auth::user()->id; 
+        $bundleSelected = BundleCourse::where('instructor_id', $instructorId)
+            ->where(function ($query) use ($selectedCourseValue) {
+                $query->where('selected_course', 'LIKE', $selectedCourseValue . ',%')
+                    ->orWhere('selected_course', 'LIKE', '%,' . $selectedCourseValue . ',%')
+                    ->orWhere('selected_course', 'LIKE', '%,' . $selectedCourseValue);
+            })
+            ->get(); 
+        foreach ($bundleSelected as $record) {
+            $updatedSelectedCourse = str_replace($selectedCourseValue . ',', '', $record->selected_course);
+            $updatedSelectedCourse = str_replace(',' . $selectedCourseValue, '', $updatedSelectedCourse);
+            $updatedSelectedCourse = str_replace($selectedCourseValue, '', $updatedSelectedCourse);
+            $record->selected_course = $updatedSelectedCourse;
+            $record->save();
+        } 
+
+        // delete bundleselected for this course
+        $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($bundleSelection) {
+            foreach ($bundleSelection as $bundleSelected) { 
+                $bundleSelected->delete();
+            }
+        }
+
+        // update cart 
+        $cartSelects = Cart::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
+        }
+
+        // certificate delete
+        $certificate = Certificate::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->first();
+        if ($certificate) {
+            $certificateOldLogo = public_path($certificate->logo);
+            if (file_exists($certificateOldLogo)) {
+                @unlink($certificateOldLogo);
+            }
+
+            $certificateOldSignature = public_path($certificate->signature);
+            if (file_exists($certificateOldSignature)) {
+                @unlink($certificateOldSignature);
+            }
+            $certificate->delete();
+        }
+        
+        // checkout controller update
+        $totalCheckout = Checkout::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($totalCheckout) {
+            foreach ($totalCheckout as $checkout) {
+                $checkout->status = 'deleted';
+                $checkout->save();
+            }
+        }
+
+        // course activities
+        $totalActivity = CourseActivity::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($totalActivity) {
+            foreach ($totalActivity as $activity) { 
+                $activity->delete();
+            }
+        }
+
+        // course likes
+        $course_likes = course_like::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($course_likes) {
+            foreach ($course_likes as $course_liked) { 
+                $course_liked->delete();
+            }
+        }
+
+        // course Log
+        $course_logs = CourseLog::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($course_logs) {
+            foreach ($course_logs as $course_log) { 
+                $course_log->delete();
+            }
+        }
+
+        // course review
+        $course_reviews = CourseReview::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($course_reviews) {
+            foreach ($course_reviews as $course_review) { 
+                $course_review->delete();
+            }
+        }
+
+        // course users
+        $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($course_useres) {
+            foreach ($course_useres as $course_usere) { 
+                DB::table('course_user')
+                ->where('id', $course_usere->id)
+                ->delete();
+            }
+        }
+
+        // delete notification for this course
+        $course_notifications = Notification::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        if ($course_notifications) {
+            foreach ($course_notifications as $course_notification) { 
+                $course_notification->delete();
+            }
+        }
+
+        // delete main course 
+        $course = Course::where(['id'=> $selectedCourseValue,'user_id' => $instructorId])->first();
+
         if ($course) {
             //delete thumbnail
             $oldThumbnail = public_path($course->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            }
-            //delete banner
-            $oldBanner = public_path($course->banner);
-            if (file_exists($oldBanner)) {
-                @unlink($oldBanner);
-            }
+            } 
             //delete certficate
             $oldCertificate = public_path($course->sample_certificates);
             if (file_exists($oldCertificate)) {
@@ -146,7 +305,7 @@ class CourseController extends Controller
                 $module->delete();
             }
             $course->delete();
-            return redirect('instructor/courses')->with('success', 'Course deleted!');
+            return redirect('instructor/courses')->with('success', 'Course deleted Successfully!');
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }

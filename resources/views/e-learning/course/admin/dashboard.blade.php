@@ -81,8 +81,8 @@
                         </div>
                     </div>
                     <p><b style="color: {{ $percentageChangeOfCourse >= 0 ? 'green' : 'red' }}">{{
-                            $percentageChangeOfCourse >= 0 ? '+' . $percentageChangeOfCourse :
-                            $percentageChangeOfCourse }}%</b> VS last {{$compear}}</p>
+                            $percentageChangeOfCourse >= 0 ? '+' . number_format($percentageChangeOfCourse,0) :
+                            number_format($percentageChangeOfCourse,0) }}%</b> VS last {{$compear}}</p>
 
                     <img src="{{ asset('latest/assets/images/chart.svg') }}" alt="Chart" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/chart-d.svg') }}" alt="Chart" class="img-fluid dark-ele">
@@ -203,7 +203,7 @@
                                         <img src="{{ asset($course->thumbnail) }}" alt="c-status" class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5>{{ substr($course->title, 0, 35) }}</h5>
+                                        <h5><a href="{{ url('admin/courses/overview/'.$course->slug) }}" class="p-0 bg-transparent">{{ substr($course->title, 0, 35) }}</a></h5>
                                         <p> {{ $course->categories }}</p>
                                     </div>
                                 </div>

@@ -765,7 +765,7 @@
         border-color: #262626 !important;
     }
 
-    .user-add-form-wrap form .form-group label,
+    // .user-add-form-wrap form .form-group label,
     .chart-box-wrap {
         border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
         background: #0D0D0D !important;
@@ -1740,7 +1740,7 @@
         color: #C5CCD8 !important;
     }
 
-    .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active p, 
+    .dns-page-wrapper .dns-left-sidebar .setup-step .step-box.active p,
     .dns-page-wrapper .dns-main-body .finish-txt a,
     .dns-page-wrapper .file-upload-area p span,
     .pricing-box .txt h5,
@@ -1760,7 +1760,7 @@
         border-color: #7289FF !important;
     }
 
-    .logo-upload-box{
+    .logo-upload-box {
         border-color: #7289FF !important;
     }
 
@@ -1779,70 +1779,432 @@
 
     .pricing-box {
         border: 1px solid #1E222A;
-        background: #0D0D0D; 
+        background: #0D0D0D;
         box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.05), 0px 12px 16px -4px rgba(16, 24, 40, 0.10);
     }
 
-    .current-plan{
+    .current-plan {
         background-color: #7289FF;
         color: #0D0D0D;
     }
 
-    .pricing-box .bttn{
+    .pricing-box .bttn {
         background: #121212;
     }
 
-    .pricing-box .bttn a{
+    .pricing-box .bttn a {
         background-color: #7289FF;
         color: #0D0D0D;
     }
 
-    .pricing-box .bttn a.active{
-        background-color: #7289FF!important;
+    .pricing-box .bttn a.active {
+        background-color: #7289FF !important;
         color: #0D0D0D;
     }
-    .dns-page-wrapper .dns-main-body .add-domain-box .form-control{
+
+    .dns-page-wrapper .dns-main-body .add-domain-box .form-control {
         border-color: #7289FF;
     }
 
-    .access-page-box{
+    .access-page-box {
         .form-switch .form-check-input {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")!important;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
         }
-        .form-switch .form-check-input:checked { 
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")!important;
+
+        .form-switch .form-check-input:checked {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e") !important;
         }
     }
 
-    .no-data-found i{
-        color: #7289FF!important;
-    }
-    .course-create-step-page-wrap .course-create-step-wrap .step-box.current p{
-        color: #7289FF!important;
+    .no-data-found i {
+        color: #7289FF !important;
     }
 
-    .reset-modal .modal-content{
-        border: 1px solid #1E222A!important;
-        background: #0D0D0D!important; 
+    .course-create-step-page-wrap .course-create-step-wrap .step-box.current p {
+        color: #7289FF !important;
     }
 
-    .modal-bttnss .btn-yes{
-        background-color:  #7289FF!important;
-        color: #000A39!important;
+    .reset-modal .modal-content {
+        border: 1px solid #1E222A !important;
+        background: #0D0D0D !important;
     }
 
-    .modal-bttnss .btn-no{
-        background: #191919!important;
-        color: #fff!important;
+    .modal-bttnss .btn-yes {
+        background-color: #7289FF !important;
+        color: #000A39 !important;
     }
 
-    .reset-modal .modal-content .btn i{
-        color: #fff!important;
+    .modal-bttnss .btn-no {
+        background: #191919 !important;
+        color: #fff !important;
     }
 
-    .header-area .d-flex a.bttn.active{
-        background-color: #7289FF!important;
+    .reset-modal .modal-content .btn i {
+        color: #fff !important;
     }
+
+    .header-area .d-flex a.bttn.active {
+        background-color: #7289FF !important;
+    }
+
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a img {
+        filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%) !important;
+    }
+
+    .course-outline-wrap .accordion .accordion-item .lesson-wrap a i {
+        color: #7289FF !important;
+    }
+
+    .app-modals .custom-modal-content {
+        border: 1px solid #1E222A;
+        background: #0D0D0D;
+    }
+
+    .app-modals .custom-modal-content .form-group .form-control {
+        color: #fff;
+        border-color: #101C2D;
+    }
+
+    .app-modals .custom-modal-content .btn-submit {
+        background-color: #7289FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .title a {
+        border: 1px solid var(--others-dark-mode-btn, #7289FF);
+        background: #0D0D0D;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: #7289FF;
+
+        &:hover {
+            background-color: #5672FF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .btn {
+        border: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        color: #66768E;
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .dropdown-menu.show {
+        border: 1px solid #1E222A;
+        background: #1E1E1E;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+
+        .dropdown-item {
+            color: #D2DEEF;
+
+            &:hover {
+                background-color: #111 !important;
+            }
+        }
+
+        .dropdown-item.active {
+            background-color: #111 !important;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-person-list-box .header-filter,
+    .person-suggest-box-list .single-person,
+    .person-tab-body .single-person {
+        border-color: #171717;
+    }
+
+    .person-suggest-box-list .media a.name,
+    .person-tab-body .media a.name {
+        color: #D0D5DD;
+    }
+
+    .person-suggest-box-list .media .avatar i,
+    .person-tab-body .media .avatar i {
+        border-color: #000A39;
+    }
+
+    .person-suggest-box-list .media .dropdown .btn,
+    .person-tab-body .media .dropdown .btn {
+        background: #121212;
+
+        i {
+            color: #475467;
+        }
+    }
+
+    .person-suggest-box-list .media .dropdown .dropdown-menu.show,
+    .person-tab-body .media .dropdown .dropdown-menu.show {
+        background: #1E1E1E;
+        box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.10), 0px 0px 2px 0px rgba(37, 45, 52, 0.20);
+
+        .dropdown-item {
+            background: #1E1E1E;
+            color: #D2DEEF;
+
+            &:hover {
+                background-color: #111;
+            }
+        }
+
+        .dropdown-item.active {
+            background-color: #111;
+        }
+    }
+
+    .chat-room-head {
+        background: #0d0d0d;
+        border-bottom: 1px solid #1A1A1A !important;
+    }
+
+    .chat-room-head .media .view-bttn {
+        background: #5672FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file {
+        a {
+            color: #D2DEEF;
+        }
+
+        span {
+            color: #D2DEEF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .file,
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .text {
+        background: #121212;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        p {
+            color: #D2DEEF;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .sender-item .media.main-media .text {
+        background: #5672FF;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        p {
+            color: #0D0D0D !important;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status hr {
+        background-color: #171717;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .date-status span {
+        background-color: transparent;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .typing {
+        background: #121212;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+        i {
+            color: #fff;
+        }
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns .btn-submit {
+        background-color: #5672FF;
+    }
+
+    .create-group-form .form-group .form-control {
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #101C2D;
+    }
+
+    .create-group-form .form-group label {
+        color: #D2DEEF;
+    }
+
+    .create-group-form .suggested-name-box div {
+        border-radius: 0.25rem;
+        background: #191919;
+
+        span {
+            color: #D2DEEF;
+        }
+    }
+
+    .create-group-form .form-submit .btn-cancel {
+        border: 1px solid #2D343E;
+        background: #0D0D0D;
+
+        &:hover {
+            background-color: #5672FF;
+        }
+    }
+
+    .create-group-form .form-submit .btn-create {
+        background-color: #5672FF;
+
+        &:hover {
+            background-color: transparent;
+            color: #5672FF;
+            border-color: #5672FF;
+        }
+    }
+
+    .create-group-form h4 {
+        border-color: #1E222A;
+    }
+
+    .view-profile-box {
+        border-left: 1px solid var(--others-dark-stroke, #1A1A1A);
+        background: #0D0D0D;
+        box-shadow: -4px 4px 25px 0px rgba(142, 152, 163, 0.10);
+    }
+
+    .view-profile-box .profile-box .btn-remove {
+        background-color: transparent;
+        border-color: #EF6E79;
+        color: #EF6E79;
+
+        &:hover {
+            background-color: #EF6E79;
+        }
+    }
+
+    .view-profile-box .media i {
+        color: #344054;
+    }
+
+    .view-profile-box .media a {
+        color: #5672FF;
+    }
+
+    .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item .react-box ul li span {
+        background-color: #121212 !important;
+    }
+
+    .group-room-header .dropdown .btn {
+        background-color: #171717;
+    }
+
+    .tox.tox-tinymce {
+        background-color: #161f29 !important;
+    }
+
+    .user-add-box a,
+    .user-header-bttn a {
+        color: #0D0D0D;
+
+        img {
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(248deg) brightness(107%) contrast(107%);
+        }
+    }
+
+    .package-list-header {
+        .common-bttn {
+            color: #0D0D0D !important;
+        }
+    }
+
+    .add-lesson-bttn a {
+        color: #0D0D0D !important;
+    }
+
+    .course-modules-lessons-redesign p.module-title {
+        color: #C5CCD8 !important;
+    }
+
+    // scrolbar 
+    .course-outline-wrap::-webkit-scrollbar-track {
+        background: #1A1A1A;
+    }
+
+    .course-outline-wrap::-webkit-scrollbar-thumb {
+        background: #2F3A4C;
+    }
+
+    .course-outline-wrap::-webkit-scrollbar-thumb:hover {
+        background: #2F3A4C;
+    }
+
+    .user-details-box {
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        a,
+        span,
+        input,
+        td,
+        button {
+            color: #F4EBFF !important;
+        }
+    }
+
+    .header-area .dropdown-menu .dropdown-item.active {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-cancel:hover,
+    .course-name-modal .modal-content .modal-body .course-name-txt .form-submit .btn-submit {
+        color: #0D0D0D !important;
+    }
+
+    textarea.form-control {
+        background-color: transparent;
+        color: #fff !important;
+    }
+
+    .lesson-edit-form-wrap label {
+        color: #fff !important;
+    }
+
+    .top-image-upload-box {
+        .form-control {
+            background-color: transparent !important;
+            color: #fff !important;
+            border-color: #313A49 !important;
+        }
+    }
+
+    .common-bttn,
+    .share-on-social-wrap .copy-link a {
+        color: #0D0D0D;
+
+        img {
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(248deg) brightness(107%) contrast(107%);
+        }
+    }
+
+    .instructor-profile-update-page .create-certificate-form .certificate-name .form-control {
+        background-color: #1A1A1A !important;
+    }
+
+    .bundle-create-bttn .btn {
+        color: #0D0D0D;
+    }
+
+   
+    .subscription-table-wrap table tr td a.btn-view { 
+        background: rgba(105, 147, 255, 0.20)!important;
+        color: #7A8FFA!important;
+        border-radius: 0.375rem!important;
+    }
+
+    .subscription-table-wrap table tr td a.btn-export { 
+        background: rgba(0, 255, 208, 0.20)!important;
+        color: #0AC5A2!important;
+        border-radius: 0.375rem!important;
+    } 
+
+    .social-label { 
+        background: #1A1A1A !important; 
+    }
+
+    #social_increment{
+        background: #7289FF !important; 
+        color: #0D0D0D!important;
+    }
+
 }
 
 

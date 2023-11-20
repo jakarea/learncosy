@@ -62,6 +62,7 @@ View Bundle
                                             @endfor
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
+                                   <div class="d-flex align-items-center justify-content-between">
                                     @if ($course->offer_price)
                                     <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                                     @elseif(!$course->offer_price && !$course->price)
@@ -70,6 +71,8 @@ View Bundle
                                     @else
                                     <h5>€ {{ $course->price }}</h5>
                                     @endif
+                                    <a href="{{url('admin/courses/overview/'.$course->slug)}}" class="view-as-bttn">Overview</a>
+                                   </div>
                                 </div>
                             </div>
                         </div>
@@ -82,8 +85,10 @@ View Bundle
                         <div class="col-lg-4">
                             <div class="basic-info-txt">
                                 <h5>Bundle Course Information</h5>
-                                <p>Quickly introduce your course info to students by filling in course information.
-                                </p>
+                                @php 
+                                    $instructor = \App\Models\User::find($updatingCourse->instructor_id);
+                                @endphp 
+                                <p>Instructor: {{ $instructor->name }}</p>
                             </div>
                         </div>
                         <div class="col-lg-8">

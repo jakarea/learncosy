@@ -1,11 +1,11 @@
 @extends('layouts/latest/students')
-@section('title','Course Overview') 
+@section('title','Course Overview ') 
 
 
 {{-- style section @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/student-dash.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/student-dash.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- style section @E --}}
 
@@ -16,8 +16,7 @@
 
 @section('content')
 <main class="course-overview-page">
-    <div class="overview-banner-box"
-        style="background-image: url({{asset('assets/images/courseds/'.$course->banner)}});">
+    <div class="overview-banner-box">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-lg-8">
@@ -216,10 +215,10 @@
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb"> 
-                        @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                        @if ($course->thumbnail) 
+                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbnail" class="img-fluid">
                         @else 
-                        <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
                         @endif
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -261,7 +260,7 @@
                                 </button>
                             </div>
                             @endif
-                        </form>
+                        </form> 
                         @endif
                     </div>
                     <div class="course-desc-txt">
@@ -396,5 +395,25 @@
 
         });
 </script>
+
+<script>
+    const copyButton = document.getElementById("copyButton");
+    const linkToCopy = document.getElementById("linkToCopy");
+    const notify = document.getElementById("notify");
+
+    copyButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        linkToCopy.select();
+        document.execCommand("copy"); 
+        notify.innerText = 'Copied!';
+
+        setTimeout(() => {
+            notify.innerText = '';
+        }, 1000);
+
+    });
+
+</script>
+
 @endsection
 {{-- js --}}

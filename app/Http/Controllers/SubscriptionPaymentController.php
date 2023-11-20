@@ -2,18 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+// use PDF;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
-use App\Models\SubscriptionPackage;
+use App\Models\SubscriptionPackage; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Charge;
+use Stripe\Charge; 
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SubscriptionPaymentController extends Controller
 {
+
+    public function index()
+    {
+
+        // dd( Auth::id());
+
+        $packages = SubscriptionPackage::where('status','active')->get();
+        $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
+
+        if ($insPackage && $insPackage->status == 'cancel') {
+            $activePackageId = null;
+        }else{
+            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
+        }
+
+        return view('subscription/instructor/list',compact('packages','activePackageId'));
+    }
+    
     public function createPayment($id){
         $package = SubscriptionPackage::findorfail($id);
         return view('subscription/payment/payment',compact('package'));
@@ -54,19 +73,59 @@ class SubscriptionPaymentController extends Controller
                     'instructor_id' => auth()->user()->id,
                     'name' => $package->name,
                     'amount' => $total,
-                    'stripe_plan' => 5465454,
+                    'stripe_plan' => $charge->id,
                     'quantity' => 1,
                     'start_at' => date('Y-m-d H:i:s'),
                     'end_at' => $ends_at,
                 ]);
 
-                return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
+                $pdf = PDF::loadView('emails.package.subscribe', ['data' => $package, 'subscription' => $subscription]);
+                $pdfContent = $pdf->output();
+        
+                // Send the email with the PDF attachment
+                $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
+                    $message->to(auth()->user()->email)
+                            ->subject('Invoice')
+                            ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+                });
+
+                if (Auth::user()->subdomain) {
+                    return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
+                }else{
+                    return redirect('instructor/profile/step-3/complete')->with('success', 'Subscribed Successfully');
+                }
+                
             }
 
         } catch (\Exception $e) {
             return redirect()->route('instructor.dashboard.index')->with('error', $e->getMessage());
         }
 
+    }
+
+    public function cancel()
+    {
+        //
+        return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
+    }
+    public function status($id)
+    {
+        //
+        $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();
+        $subscription->status = 'cancel';
+        $subscription->save();
+
+        $pdf = PDF::loadView('emails.package.cancle', ['subscription' => $subscription]);
+        $pdfContent = $pdf->output();
+
+        // Send the email with the PDF attachment
+        $mailInfo = Mail::send('emails.package.cancle', ['subscription' => $subscription], function($message) use ($pdfContent, $subscription) {
+            $message->to(auth()->user()->email)
+                    ->subject('Invoice')
+                    ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
+        });
+
+        return redirect()->back()->with('error', 'Subscription Cancelled');
     }
 
 }

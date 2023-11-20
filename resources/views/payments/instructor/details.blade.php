@@ -3,8 +3,8 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -12,14 +12,7 @@
 @section('content')
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                {{-- session message @S --}}
-                @include('partials/session-message')
-                {{-- session message @E --}}
-            </div>
-        </div>
+    <div class="container-fluid"> 
         <div class="row">
             <div class="col-12">
                 <div class="payment-details-title">
@@ -88,7 +81,7 @@
                         <img src="{{asset($payment->user->avatar)}}" alt="a" class="img-fluid">
                     </div>
                     <div class="txt">
-                        <h5>{{ $payment->user->name}}</h5>
+                        <h5><a href="{{url('instructor/students/profile/'.$payment->user->id)}}">{{ $payment->user->name}}</a></h5>
                         <h6>{{ $payment->user->user_role}}</h6>
 
                         <hr>
@@ -117,7 +110,9 @@
                             </li>
                             @endforeach
                         </ul>
+                        <a href="{{url('instructor/students/profile/'.$payment->user->id)}}" class="common-bttn d-block w-100">View profile</a>
                     </div>
+                    
                 </div>
             </div>
          </div>

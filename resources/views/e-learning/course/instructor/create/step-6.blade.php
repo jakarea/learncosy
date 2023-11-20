@@ -1,10 +1,10 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 1
+Course Create - Initial Step
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -22,9 +22,7 @@ Course Create - Step 1
                         <p>Contents</p>
                     </div>
                     <div class="step-box">
-                        <span class="circle">
-                             
-                        </span>
+                        <span class="circle"></span>
                         <p>Facts</p>
                     </div>
                     <div class="step-box">
@@ -260,16 +258,14 @@ Course Create - Step 1
                                                                             class="{{ $lesson->type == 'video' ? 'active' : '' }}"><img
                                                                                 src="{{asset('latest/assets/images/icons/video.svg')}}"
                                                                                 alt="a" class="img-fluid"> Video</label>
-                                                                    </div>
-
+                                                                    </div> 
                                                                 </div>
 
                                                                 <p>Select the Lesson type.</p>
+
                                                                 <div class="form-submit">
-                                                                    <button type="button" class="btn btn-cancel"
-                                                                        data-bs-dismiss="modal">Cancel</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-submit">Update</button>
+                                                                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" class="btn btn-submit">Update</button> 
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -360,7 +356,12 @@ Course Create - Step 1
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         <a href="{{ url('instructor/courses/create/') }}">Back</a>
-                        <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Next</a>
+ 
+                        @if (count($modules) > 0)
+                            <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Next</a>
+                        @else 
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#moduleModal">Add Module</a>
+                        @endif
                     </div>
                     {{-- step next bttns --}}
                 </div>

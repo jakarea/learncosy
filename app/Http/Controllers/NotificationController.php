@@ -12,18 +12,19 @@ class NotificationController extends Controller
 {
     public function notificationDetails()
     {
-        $unseens = Notification::where('user_id',Auth::user()->id)->where('status','unseen')->select('id','user_id','status')->get();
+        $unseens = Notification::where('user_id',Auth::user()->id)->where('status','unseen')->where('message','message')->select('id','user_id','status')->get();
         foreach ($unseens as $key => $unseen) 
         {
-            Notification::where('user_id',Auth::user()->id)->where('status','unseen')->update(['status'=>'seen']);
+            Notification::where('user_id',Auth::user()->id)->where('message','message')->where('status','unseen')->update(['status'=>'seen']);
         }
         $currentYear = Carbon::now()->subDays(365); 
         $today = Carbon::now();
        $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
        ->where('notifications.user_id', Auth::user()->id)
+       ->where('message','message')
        ->whereYear('notifications.created_at', '>', $currentYear)
        ->join('courses', 'notifications.course_id', '=', 'courses.id')
-       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.message', 'users.avatar', 'notifications.created_at')
+       ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type','notifications.course_id', 'notifications.message', 'users.avatar', 'notifications.created_at')
        ->orderBy('notifications.created_at', 'DESC')
        ->get();
     
@@ -61,14 +62,7 @@ class NotificationController extends Controller
                 $lastOneYears[] = $item;
             }
         } 
-                                        
-                        //  return [$todays,
-                        //  $yestardays,
-                        //  $sevenDays,
-                        //  $thirtyDays,
-                        //  $lastOneYears];    
                         
-        // return $todays;
         return view('instructor.notification.system',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
     }
 

@@ -13,6 +13,7 @@
 <meta name="keywords" content="{{ $course->categories . ', ' . $course->meta_keyword }}" />
 <meta name="description" content="{{ $course->meta_description }}" itemprop="description">
 @endsection
+
 @section('content')
 @php
 $i = 0;
@@ -35,20 +36,28 @@ $i = 0;
                                 data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
                         @else
-
                         <div class="video-iframe-vox">
                             <div class="vimeo-player w-100" data-vimeo-url="https://vimeo.com/305108069"
                                 data-vimeo-width="1000" data-vimeo-height="360"></div>
                         </div>
-
                         @endif
                     </div>
-                    @else
-                    <a href="#">
-                        <img src="{{ asset('assets/images/courses/' . $course->thumbnail) }}" alt="Course"
-                            class="img-fluid">
-                    </a>
                     {{-- video player --}}
+
+                    {{-- audio player --}}
+                    <div class="audio-iframe-box d-none">
+                        <a href="#">
+                            <img src="{{ asset('latest/assets/images/audio.png') }}" alt="Audio"
+                                class="img-fluid big-thumb">
+                        </a>
+                        <div class="player-bottom">
+                            <audio id="audioPlayer" controls>
+                                <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                    {{-- audio player --}}
                     @endif
 
 
@@ -75,14 +84,21 @@ $i = 0;
                         {!! $course->description !!}
                     </div>
                 </div>
-                @if(!empty($group_files))
+               
                 <div class="download-files-box">
                     <h4>Download Files </h4>
+                    <div id="dataTextContainer" class="mb-3"> 
+                    </div>
+                    @if(!empty($group_files))
+                   
+                    
                     <div class="files">
                         @foreach($group_files as $fileExtension)
-                            <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
-                                {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
-                            </a>
+                        <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
+                            {{strtoupper($fileExtension)}}<img
+                                src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title=""
+                                class="img-fluid">
+                        </a>
                         @endforeach
                         @php
                         $progress = StudentActitviesProgress(auth()->user()->id, $course->id);
@@ -94,8 +110,9 @@ $i = 0;
                                 title="120MB" class="img-fluid"></a>
                         @endif
                     </div>
+                    @endif
                 </div>
-                @endif
+                
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -173,7 +190,7 @@ $i = 0;
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
-                <div class="course-outline-wrap">
+                <div class="course-outline-wrap course-modules-lessons-redesign">
                     <div class="header">
                         <h3>Modules</h3>
                         <h6>
@@ -190,7 +207,7 @@ $i = 0;
                                     <div class="media align-items-center">
                                         <i class="fas fa-check-circle me-2"></i>
                                         <div class="media-body">
-                                            <p>{{ $module->title }}</p>
+                                            <p class="module-title">{{ $module->title }}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -210,27 +227,34 @@ $i = 0;
                                             @else
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}">
+                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
+                                                data-audio-url="{{ $lesson->audio }}"
+                                                data-lesson-type="{{ $lesson->type }}">
 
-                                                @if ($lesson->type == 'text')
-                                                <i class="fa-regular fa-file-lines"></i>
-                                                @elseif($lesson->type == 'audio')
-                                                <i class="fa-solid fa-headphones"></i>
-                                                @elseif($lesson->type == 'video')
-                                                <i class="fa-solid fa-video"></i>
-                                                @endif
-                                                {{ $lesson->title }}
-                                                <span class="mt-2 ml-1" style="cursor:pointer;">
+                                                <span class="mt-2 ms-1" style="cursor:pointer;">
                                                     @if (isLessonCompleted($lesson->id))
-                                                    <i class="fa-regular fa-circle-play text-success"></i>
+                                                    <i class="fas fa-check-circle text-primary"></i>
                                                     @else
-                                                    <i class="fa-regular fa-circle-play is_complete_lesson"
+                                                    <i class="fas fa-check-circle is_complete_lesson"
                                                         data-course="{{ $course->id }}" data-module="{{ $module->id }}"
                                                         data-lesson="{{ $lesson->id }}"
                                                         data-duration="{{ $lesson->duration }}"
                                                         data-user="{{ Auth::user()->id }}"></i>
                                                     @endif
                                                 </span>
+
+                                                @if ($lesson->type == 'text')
+                                                <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @elseif($lesson->type == 'audio')
+                                                <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @elseif($lesson->type == 'video')
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                @endif  
+
+                                                {{ $lesson->title }} 
                                             </a>
                                             @endif
                                         </li>
@@ -295,11 +319,12 @@ $i = 0;
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
                                     @if ($relatedCourse->offer_price)
-                                        <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
-                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
-                                     <h5>Free</h5>
-                                        @else
-                                        <h5>€ {{ $relatedCourse->price }}</h5>
+                                    <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span>
+                                    </h5>
+                                    @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
+                                    <h5>Free</h5>
+                                    @else
+                                    <h5>€ {{ $relatedCourse->price }}</h5>
                                     @endif
                                 </div>
                             </div>
@@ -356,28 +381,81 @@ $i = 0;
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             // play video on load
             player.on('ended', function() {
-                player.setCurrentTime(0); // Set current time to 0 seconds
+                player.setCurrentTime(0);
                 player.play();
             });
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault();
-                @if (isEnrolled($course->id))
+ 
+                $('a.video_list_play').removeClass('active');
+                $(this).addClass('active');
+
+                let type = this.getAttribute('data-lesson-type');
+               
+                if(type == 'video'){
+                    document.querySelector('.video-iframe-vox').classList.remove('d-none');
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
+                    audioPlayer.pause();
+
+                    @if (isEnrolled($course->id))
                     var videoId = $(this).data('video-id');
                     var courseId = $(this).data('course-id');
                     var lessonId = $(this).data('lesson-id');
                     var moduleId = $(this).data('modules-id');
-                    var videoUrl = $(this).attr('href');
-                    // console.log({videoUrl})
-                    videoUrl = videoUrl.replace('/videos/', '');
-                    player.loadVideo(videoUrl);
-                    // add bold class to current lesson
-                    $('a.video_list_play').removeClass('active');
-                    $(this).addClass('active');
-                @else
-                    alert('Please enroll the course');
-                @endif
+                    var videoUrl = $(this).attr('href'); 
 
+                        // console.log({videoUrl})
+                        videoUrl = videoUrl.replace('/videos/', '');
+                        player.loadVideo(videoUrl);
+                        
+                    @else
+                        alert('Please enroll the course');
+                    @endif
+
+                }else if(type == 'audio'){
+                    player.pause();
+                    document.querySelector('.audio-iframe-box').classList.remove('d-none');
+                    document.querySelector('.video-iframe-vox').classList.add('d-none');
+                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');  
+                    let audioPlayer = document.getElementById('audioPlayer');
+                    let audioSource = audioPlayer.querySelector('source');
+                    audioSource.src = laravelURL; 
+                    audioPlayer.load(); 
+                    audioPlayer.play(); 
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    document.getElementById('dataTextContainer').innerHTML = '';
+
+                }else if(type == 'text'){
+                    player.pause(); 
+                    audioPlayer.pause();
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+                    document.querySelector('.video-iframe-vox').classList.add('d-none');
+                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
+
+                   let lessonId =  this.getAttribute('data-lesson-id') 
+
+                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {  
+                         document.getElementById('dataTextContainer').innerHTML = data.text;
+
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+
+
+                }
+ 
                 var data = {
                     courseId: courseId,
                     lessonId: lessonId,
@@ -410,6 +488,8 @@ $i = 0;
                         moduleId: moduleId,
                         duration: duration
                     };
+                    // console.log(data);
+
                     var $element = $(this); // Store reference to $(this) in a variable
 
                     $.ajax({
@@ -418,14 +498,14 @@ $i = 0;
                         data: data,
                         beforeSend: function() {
                             // Change class to spinner
-                            $element.removeClass('fa-solid fa-circle-play').addClass(
+                            $element.removeClass('fas fa-check-circle').addClass(
                                 'spinner-border spinner-border-sm');
                         },
                         success: function(response) {
                             // console.log('response', response);
                             // Change icon to success checkmark
                             $element.removeClass('spinner-border spinner-border-sm').addClass(
-                                'fa-solid fa-circle-play text-success');
+                                'fas fa-check-circle text-primary');
                         },
                         error: function(xhr, status, error) {
                             // Handle errors, if any
@@ -440,8 +520,9 @@ $i = 0;
         });
 </script>
 
+{{-- linke bttn --}}
 <script>
-    let currentURL = window.location.href;
+        let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const likeBttn = document.getElementById('likeBttn');
 

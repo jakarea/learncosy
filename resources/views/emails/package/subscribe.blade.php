@@ -1,148 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Subscription Success</title>
+    <link href="images/favicon.png" rel="icon" />
+    <title>Payment From Instructor - Learncosy</title>
+
     <style>
-        /* Reset styles */
-        body, body * {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        * {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            list-style-type: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        ol,
+        ul,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        a,
+        p,
+        i,
+        button,
+        strong,
+        u,
+        sub,
+        sup,
+        span,
+        textarea,
+        table tr td,
+        select,
+        input {
+            padding: 0;
+            margin: 0;
+        }
+
+        select:focus-within,
+        textarea:focus-within,
+        input:focus-within,
+        .form-control:focus-within,
+        button:focus-within {
+            box-shadow: none !important;
+        }
+
+        a,
+        a:hover {
+            color: #000;
+            text-decoration: none;
+        }
+
+        ol,
+        ul {
+            list-style-type: none;
             margin: 0;
             padding: 0;
         }
 
-        /* Container */
-        .main-table {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto; 
-            text-align: left;
-        } 
-          .main-table tr .header-table {
-            text-align: center;
-            padding: 1rem;
-            width: 100%;
-            background-color: #5a4b4b;
-          }
-          .main-table tr th h1{
-            font-size: 1.4rem;
-            font-weight: 700; 
-            padding-left: 1rem;
-            padding-right: 1rem;
-            color: #fff
-          }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-          .main-table tr th a{
-            display: block;
-            margin-top: .3rem;
-          }
-          .main-table tr th img{
-            width: 8rem; 
-            display: block;
-          }
-          .main-table tr th p{
-            font-size: 0.9rem;
+        table tr th {
+            padding: .8rem 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        table tr th h1 {
+            font-size: 1.875rem;
+            color: #0c2f54;
+        }
+
+        table tr th p {
+            font-size: .875rem;
+            color: #535b61;
+        }
+
+
+        .border-0 {
+            border: 0 !important;
+        }
+
+        address {
+            font-size: .875rem;
+            color: #535b61;
             font-weight: 400;
-            color: #fff;
-          }
-          .body-table{
-            width: 100%;
-            padding: 2rem;
-            background-color: #fff;
-          }
+            font-style: normal;
+            line-height: 24px;
+        }
 
-          .body-table h4{
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-          }
-          .body-table h5{
+        .billed-table {
+            width: 100%;
+            max-width: 632px;
             margin-top: 1rem;
-            font-size: .9rem;
-          }
+        }
 
-          .body-table h5 span{ 
-            font-weight: 500;
-            color: green;
-          }
+        .billed-table .card-header td {
+            font-size: .875rem;
+            font-weight: 600;
+            color: #000;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+        }
 
-          .body-table h4 span{
-            font-size: 1.1rem;
+        .billed-table tbody td {
+            font-size: .875rem;
             font-weight: 400;
-          }
-          .project-ftr{
-            background-color: #ddd;
-            padding: 1rem;
-            text-align: center;
-          }
-          .project-ftr p{
-            font-size: .9rem;
-          }
+            color: #000;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+        }
 
-          @media (min-width: 320px) and (max-width: 767px) {
-            .main-table tr th h1{
-                font-size: 1.2rem; 
-            }
-          }
+        .bl-0 {
+            border-left: 0 !important;
+        }
 
-          @media (min-width: 768px) and (max-width: 991px) {
-            .main-table tr th h1{
-                font-size: 1.8rem; 
-            }
-          }
+        .br-0 {
+            border-right: 0 !important;
+        }
     </style>
 </head>
-<body>
 
-    <table cellpadding="0" cellspacing="0" border="0" class="main-table">
+<body>
+    <table border="0" cellspacing="0" cellpadding="0" style="max-width: 832px; min-width: 632px; width: 90%; margin: 0 auto;">
         <tr>
-            <th>
-                <table cellpadding="0" cellspacing="0" border="0" class="header-table">
-                    <tr>
-                        <th>
-                            <a href="https://app.learncosy.com">
-                                <img src="https://app.learncosy.com/assets/images/learncosy-logo.png" alt="learncosy"> 
-                            </a>
-                        </th>
-                        <th>
-                            <h1>Subscribed Successfuly!</h1>
-                        </th> 
-                    </tr>
-                </table>
+            <th class="border-0" style="text-align: left;">
+                <a href="https://app.learncosy.com"> 
+                    <img src="{{public_path('latest/assets/images/black-logo.png')}}" alt="Learncosy" class="img-fluid" width="140px">
+                </a>
+            </th>
+            <th class=" border-0" style="text-align: right;">
+                <h1>Invoice</h1>
             </th>
         </tr>
         <tr>
-            <td>
-                <table cellpadding="0" cellspacing="0" border="0" class="body-table">
-                    <tr>
-                        <td>
-                            <h4><span>You have successfully buy this package!</span></h4>
-                        </td>
-                    </tr> 
-                    <tr>
-                        <td>
-                            <h3>Package Information:</h3> 
-                            <ul>
-                                <li><strong>Name:</strong> {{ $package->name }}</li>  
-                                <li><strong>Start date:</strong> {{ $package->start_at }}</li>  
-                                <li><strong>End date:</strong> {{ $package->end_at }}</li>  
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p style="margin-top: 1rem">Thank you again for staying Learncosy. We hope you are having a great experience!</p>
-                        </td>
-                    </tr> 
+            <th colspan="2" class="" style="text-align: right;">
+                <p>Date: {{ now()->format('d-M-Y') }}</p>
+            </th>
+        </tr>
+        <tr>
+            <td style="padding-top: 1rem;">
+                <address>
+                    <strong>Payment By: </strong> <br>
+                    Name: {{ Auth::user()->name }} <br /> 
+                    Payment Date : {{ date(' d M, Y',strtotime($subscription->created_at)) }} <br> 
+                    Subscription Start : {{ date(' d M, Y',strtotime($subscription->start_at)) }} <br> 
+                    Subscription End : {{ date(' d M, Y',strtotime($subscription->end_at)) }} <br> 
+                   
+
+                </address>
+            </td>
+            <td style="padding-top: 1rem; text-align: right;" class="" valign="top">
+                <address>
+                    <strong>Billed To: </strong> <br>
+                      Leancosy <br />  
+                    Payment Status : {{ $subscription->status}}
+                </address>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table border="0" cellspacing="0" cellpadding="0" class="billed-table">
+                    <thead class="card-header">
+                        <tr>
+                            <td class="br-0" width="50%"><strong>Package Name</strong></td>
+                            <td class="bl-0 br-0" width="15%"><strong>Type</strong></td>
+                            <td class="bl-0 " width="15%" style="text-align: right;"><strong>Amount</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="br-0">{{ $subscription->name }}</td>
+                            <td class="bl-0 br-0">{{ $subscription->status}}</td>
+                            <td class="bl-0 " style="text-align: right;">€ {{ $subscription->amount }}</td>
+                        </tr> 
+                        <tr class="" style="text-align: right;">
+                            <td colspan="2" class="br-0">
+                                <strong>Tax:</strong>
+                            </td>
+                            <td class="bl-0">
+                                € 0
+                            </td>
+                        </tr>
+                        <tr class="" style="text-align: right;">
+                            <td colspan="2" class="br-0">
+                                <strong>Grand Total:</strong>
+                            </td>
+                            <td class="bl-0">
+                                € {{ $subscription->amount }}
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </td>
         </tr>
         <tr>
-            <td class="project-ftr">
-                <p>This is an automated email, please do not reply.</p>
+            <td colspan="2" style="text-align: center; padding-top: 2rem;">
+                <p style="font-size: 12px; color: #535b61;">This invoice is computer generated, Powred by Learcosy</p>
             </td>
         </tr>
-    </table> 
+    </table>
 </body>
+
 </html>

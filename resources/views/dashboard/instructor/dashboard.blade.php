@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">
-                    <div class="recent-payment-box">
+                    <div class="recent-payment-box recent-payment-grid-view">
                         <h3>Recent Payment</h3>
                         @if (count($payments) > 0) 
                         @foreach ($payments->slice(0, 5) as $payment)
@@ -120,78 +120,44 @@
                 <div class="col-lg-6 mt-15">
                     <div class="my-courses-box recent-update-box">
                         <h3>Recent Updates</h3>
-
+                        @if (count($recentUpdates) > 0) 
+                        @foreach ($recentUpdates->slice(0,5) as $recentUpdate)
+                        
+                        @php
+                            $course = App\Models\Course::find($recentUpdate->course_id);
+                            $user = App\Models\User::find($recentUpdate->user_id);
+                        @endphp
+                        @if ($course && $user) 
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/susmita-bahar.png') }}" alt="icon"
+                            <img src="{{ asset($user->avatar) }}" alt="icon"
                                 class="img-fluid me-3 user">
-                            <div class="media-body">
-                                <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
-                                <p>Evelyn Gaylord</p>
+                            <div class="media-body">   
+ 
+                                @if ($recentUpdate->message == 'enrolled')
+                                    <h5>{{ $user->name }} - Enrolled to {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>   
+                                @elseif($recentUpdate->message == 'review')
+                                    <h5>{{ $user->name }} - Post a review to  {{ Str::limit($course->title, $limit = 60, $end = '...') }}</h5>
+                                @endif  
+                                <p>{{ Auth::user()->name }}</p>
 
                                 <ul>
                                     <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon"
-                                            class="img-fluid"> 1 min ago</li>
+                                            class="img-fluid"> {{$recentUpdate->created_at->diffForHumans()}} </li>
                                 </ul>
                             </div>
-                            <a href="#"><i class="fa-solid fa-trash-can"></i></a>
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/update-2.png') }}" alt="icon"
-                                class="img-fluid me-3 user">
-                            <div class="media-body">
-                                <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
-                                <p>Evelyn Gaylord</p>
 
-                                <ul>
-                                    <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon"
-                                            class="img-fluid"> 1 min ago</li>
-                                </ul>
-                            </div>
-                            <a href="#"><i class="fa-solid fa-trash-can"></i></a>
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="icon"
-                                class="img-fluid me-3 user">
-                            <div class="media-body">
-                                <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
-                                <p>Evelyn Gaylord</p>
+                            <form action="{{ route('instructor.notify.destroy',$recentUpdate->id) }}" class="d-inline" method="POST">
+                                @csrf
+                                <button type="submit" class="btn"><i class="fa-solid fa-trash-can" style="color: #ED5763"></i></button>
+                            </form> 
 
-                                <ul>
-                                    <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon"
-                                            class="img-fluid"> 1 min ago</li>
-                                </ul>
-                            </div>
-                            <a href="#"><i class="fa-solid fa-trash-can"></i></a>
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="icon"
-                                class="img-fluid me-3 user">
-                            <div class="media-body">
-                                <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
-                                <p>Evelyn Gaylord</p>
+                        </div>  
+                        @endif
 
-                                <ul>
-                                    <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon"
-                                            class="img-fluid"> 1 min ago</li>
-                                </ul>
-                            </div>
-                            <a href="#"><i class="fa-solid fa-trash-can"></i></a>
-                        </div>
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="icon"
-                                class="img-fluid me-3 user">
-                            <div class="media-body">
-                                <h5>Susmita Bahar- Enrolled to UX Foundation Course</h5>
-                                <p>Evelyn Gaylord</p>
-
-                                <ul>
-                                    <li><img src="{{ asset('latest/assets/images/clock.svg') }}" alt="icon"
-                                            class="img-fluid"> 1 min ago</li>
-                                </ul>
-                            </div>
-                            <a href="#"><i class="fa-solid fa-trash-can"></i></a>
-                        </div>
-
+                        @endforeach
+                        @else 
+                        @include('partials/no-data')
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 mt-15">

@@ -3,14 +3,24 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use DataTables;
+use DB;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Checkout;
+use App\Models\BundleSelect;
+use App\Models\CourseActivity;
+use App\Models\Notification;
+use App\Models\CourseLog;
+use App\Models\BundleCourse;
+use App\Models\Certificate;
+use App\Models\CourseReview;
+use App\Models\Cart;
+use App\Models\course_like; 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentController extends Controller
 {
@@ -55,16 +65,14 @@ class StudentController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
-        ]);
-
-        // initial password for student if instructor create profile
-        $initialPass = 1234567890;
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
+        ]); 
 
         // add student
         $student = new User([
@@ -77,7 +85,7 @@ class StudentController extends Controller
             'social_links' => is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links,
             'description' => $request->description,
             'recivingMessage' => $request->recivingMessage,
-            'password' => Hash::make($initialPass),
+            'password' => Hash::make($request->password),
             'subdomain' => $subdomain
         ]);
 
@@ -101,25 +109,34 @@ class StudentController extends Controller
     public function show($id)
      {
         $checkout = Checkout::where('user_id', $id)->get();
-
         $course = Course::whereIn('id', $checkout->pluck('course_id'))->where('user_id', auth()->user()->id)->get();
-
         $student = User::where('id', $id)->first();
 
-        return view('students/instructor/show',compact('checkout', 'student','course'));
+        // set unique id for user
+        $uniqueId = Str::uuid()->toString();
+        session(['unique_id' => $uniqueId]);
+
+        $userSessionId = $value = Crypt::encrypt(session('unique_id').mt_rand());
+
+        $instructorUser = User::where('id',Auth::user()->id)->first();
+        $instructorUser->session_id = $value;
+        $instructorUser->save();
+
+        $userId = Crypt::encrypt($instructorUser->id);
+        $stuId = Crypt::encrypt($id);
+
+        return view('students/instructor/show',compact('checkout', 'student','course','userSessionId','userId','stuId'));
      }
 
     // show page
     public function edit($id)
      {
         $student = User::where('id', $id)->first();
-
         return view('students/instructor/edit',compact('student'));
      }
 
      public function update(Request $request,$id)
-     {
-        //  return $request->all();
+     { 
 
          $userId = $id;
 
@@ -129,7 +146,8 @@ class StudentController extends Controller
              'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
          ],
          [
-             'avatar' => 'Max file size is 5 MB!'
+             'avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone number is required'
          ]);
 
 
@@ -150,7 +168,7 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $user->email;
+         $user->email = $request->email;
 
          if ($request->password) {
              $user->password = Hash::make($request->password);
@@ -179,16 +197,117 @@ class StudentController extends Controller
          return redirect()->route('allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }
 
-     public function destroy($id){
+     //  upload cover photo for all instructor
+    public function coverUpload(Request $request)
+    { 
+        
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
 
-        $student = User::where('id', $id)->first();
-         //delete student avatar
-         $studentOldThumbnail = public_path('uploads/users/'.$student->avatar);
+            $userId = $request->userId;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    } 
+
+     public function destroy($id)
+     {
+        $userId = intval($id);
+
+        // delete cart 
+        $cartSelects = Cart::where(['user_id' => $userId])->get();
+        if ($cartSelects) {
+            foreach ($cartSelects as $cartSelect) { 
+                $cartSelect->delete();
+            }
+        }
+
+        // checkout table
+        $totalCheckout = Checkout::where(['user_id' => $userId])->get();
+        if ($totalCheckout) {
+            foreach ($totalCheckout as $checkout) {
+                $checkout->status = 'deleted';
+                $checkout->save();
+            }
+        }
+
+        // course activities
+        $totalActivity = CourseActivity::where(['user_id' => $userId])->get();
+        if ($totalActivity) {
+            foreach ($totalActivity as $activity) { 
+                $activity->delete();
+            }
+        }
+
+         // course likes
+         $course_likes = course_like::where(['user_id' => $userId])->get();
+         if ($course_likes) {
+             foreach ($course_likes as $course_liked) { 
+                 $course_liked->delete();
+             }
+         }
+
+         // course Log
+        $course_logs = CourseLog::where(['user_id' => $userId])->get();
+        if ($course_logs) {
+            foreach ($course_logs as $course_log) { 
+                $course_log->delete();
+            }
+        }
+
+        // course review
+        $course_reviews = CourseReview::where(['user_id' => $userId])->get();
+        if ($course_reviews) {
+            foreach ($course_reviews as $course_review) { 
+                $course_review->delete();
+            }
+        }
+
+         // course users
+        $course_useres = DB::table('course_user')->where(['user_id' => $userId])->get();
+        if ($course_useres) {
+            foreach ($course_useres as $course_usere) { 
+                DB::table('course_user')
+                ->where('user_id', $userId)
+                ->delete();
+            }
+        }
+
+        // delete notification for this user
+        $user_notifications = Notification::where(['user_id' => $userId])->get();
+        if ($user_notifications) {
+            foreach ($user_notifications as $user_notification) { 
+                $user_notification->delete();
+            }
+        } 
+
+        $student = User::find($userId); 
+        
+         $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);
          }
         $student->delete();
 
-        return redirect('instructor/students')->with('success', 'Student Successfully deleted!');
+        return redirect('instructor/students')->with('success', 'Student Successfully Deleted!');
     }
 }

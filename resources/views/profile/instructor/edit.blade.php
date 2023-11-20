@@ -3,8 +3,8 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .select-style-div-2,
     .select-style-div {
@@ -42,6 +42,11 @@
                                     data-param="certificate">Certificate</button>
                             </li>
                             <li class="nav-item" role="presentation">
+                                <button class="nav-link tab-link" id="pills-app-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-app" type="button" role="tab" aria-controls="pills-app"
+                                    aria-selected="false" data-param="app">Connect account</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link tab-link" id="pills-password-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-password" type="button" role="tab"
                                     aria-controls="pills-password" aria-selected="false"
@@ -54,35 +59,31 @@
                         <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
-                                class="profile-form create-form-box" enctype="multipart/form-data">
+                                class="profile-form create-form-box profile-frm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box">
-
-                                            <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                                onchange="previewImage()"
-                                                class="form-control d-none  @error('avatar') is-invalid @enderror">
-
-                                            <label for="imageInput" class="img-upload">
-                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
-                                                    alt="a" class="img-fluid">
+                                        <div class="profile-picture-box position-relative">
+                                            <input type="file" id="avatar" class="d-none" name="avatar">
+                                            <label for="avatar" class="img-upload">
+                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="preview" src="{{asset($user->avatar)}}" alt="Avatar"
-                                                        class="img-fluid static-image">
+                                                        <img src="{{asset($user->avatar)}}" alt="Avatar" class="img-fluid static-image avatar-preview">
                                                     @else
-                                                    <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
+                                                        <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
                                                 </div>
                                             </label>
+
+                                             <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
 
                                             <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
                                                 Max size of 3.1 MB</h6>
 
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="recivingMessage">Receiving
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
                                                     Messages</label>
 
                                                 <input class="form-check-input" type="checkbox" name="recivingMessage"
@@ -124,10 +125,10 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="company_name"
+                                                        <input type="text" class="form-control" id="company_name2"
                                                             name="company_name" value="{{ $user->company_name }}"
                                                             required>
-                                                        <label for="company_name">Company Name</label>
+                                                        <label for="company_name2">Company Name</label>
                                                         <span class="invalid-feedback">@error('company_name'){{ $message
                                                             }}
                                                             @enderror</span>
@@ -135,7 +136,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="url" class="form-control" id="website"
+                                                        <input type="text" class="form-control" id="website"
                                                             name="website" value="{{ $user->short_bio }}" required>
                                                         <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('website'){{ $message }}
@@ -145,15 +146,15 @@
                                                 <div class="col-lg-12">
                                                     @php $socialLinks = explode(',',$user->social_links) @endphp
                                                     <div class="form-group">
-                                                        <label for="social_links"
-                                                            style="top: -6px; background: #fff!important; z-index: 999">Social
+                                                        <label for="social_links" class="social-label">Social
                                                             Media</label>
                                                     </div>
-                                                    @foreach ($socialLinks as $socialLink)
+                                                    @foreach ($socialLinks as $key => $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
-                                                            <input type="url" class="form-control" id="social_links"
-                                                                name="social_links[]" value="{{ $socialLink }}">
+                                                            <input type="url" class="form-control"
+                                                                id="social_links_{{ $key }}" name="social_links[]"
+                                                                value="{{ $socialLink }}">
 
                                                             <span class="invalid-feedback">@error('social_links'){{
                                                                 $message }} @enderror</span>
@@ -162,17 +163,15 @@
                                                     @endforeach
                                                     <div class="text-end mt-3">
                                                         <a href="javascript:void(0)" id="social_increment"><i
-                                                                class="fas fa-plus"></i>
-                                                            Add</a>
+                                                                class="fas fa-plus"></i> Add</a>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
-                                                            class="form-control @error('description') is-invalid @enderror"
-                                                            required>{!! $user->description !!}</textarea>
+                                                            class="form-control @error('description') is-invalid @enderror">{!! $user->description !!}</textarea>
 
-                                                        <label for="description">About</label>
+                                                        <label for="description" style="top: -1rem!important;">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message
                                                             }} @enderror</span>
                                                     </div>
@@ -180,7 +179,7 @@
                                             </div>
                                         </div>
                                         <div class="form-submit-bttns mt-5">
-                                            <button type="reset" class="btn btn-cancel">Cancel</button>
+                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                             <button type="submit" class="btn btn-submit">Save Changes</button>
                                         </div>
                                     </div>
@@ -189,6 +188,7 @@
                             </form>
                         </div>
                         {{-- profile tab end --}}
+
                         {{-- experience tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
@@ -289,7 +289,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-submit-bttns mt-5">
-                                                            <button type="reset" class="btn btn-cancel">Cancel</button>
+                                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                             <button type="submit" class="btn btn-submit">Add</button>
                                                         </div>
                                                     </div>
@@ -302,7 +302,7 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-12">
-                                    @if (count($experiences) > 0) 
+                                    @if (count($experiences) > 0)
                                     <div class="user-expperience-box user-expperience-box-2">
                                         @foreach ($experiences as $experience)
                                         <div class="media brdr-bttm">
@@ -330,19 +330,20 @@
                                         </div>
                                         @endforeach
                                     </div>
-                                    @else 
+                                    @else
                                     @include('partials/no-data')
                                     @endif
                                 </div>
                                 {{-- <div class="col-12">
                                     <div class="form-submit-bttns my-4 mx-3">
-                                        <button type="reset" class="btn btn-cancel">Cancel</button>
+                                        <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                         <button type="submit" class="btn btn-submit">Save Changes</button>
                                     </div>
                                 </div> --}}
                             </div>
                         </div>
                         {{-- experience tab end --}}
+
                         {{-- certificate tab start --}}
                         <div class="tab-pane tab-con fade" id="pills-certificate" role="tabpanel"
                             aria-labelledby="pills-certificate-tab" tabindex="0">
@@ -353,14 +354,16 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="pills-add_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-add_cert" type="button"
-                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true" data-params="add_cert"><i
-                                                        class="fas fa-plus"></i> Add Certificate</button>
+                                                    role="tab" aria-controls="pills-add_cert" aria-selected="true"
+                                                    data-params="add_cert"><i class="fas fa-plus"></i> Add
+                                                    Certificate</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="pills-custom_cert-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-custom_cert"
                                                     type="button" role="tab" aria-controls="pills-custom_cert"
-                                                    aria-selected="false" data-params="custom_cert"><i class="fas fa-plus"></i> Custom
+                                                    aria-selected="false" data-params="custom_cert"><i
+                                                        class="fas fa-plus"></i> Custom
                                                     Certificate</button>
                                             </li>
                                         </ul>
@@ -461,7 +464,7 @@
                                                                                 <div class="media-body select-style-div active"
                                                                                     data-value="1">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 1</h6>
+                                                                                        <h6>Certificate Style One</h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -491,7 +494,7 @@
                                                                                 <div class="media-body select-style-div"
                                                                                     data-value="2">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 2</h6>
+                                                                                        <h6>Certificate Style Two</h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -521,7 +524,7 @@
                                                                                 <div class="media-body select-style-div"
                                                                                     data-value="3">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 3</h6>
+                                                                                        <h6>Certificate Style Three</h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -641,11 +644,11 @@
 
                                                                     <h6>
                                                                         @if ($certificate->style == 1)
-                                                                        Certificate Style 1
+                                                                        Certificate Style One
                                                                         @elseif($certificate->style == 2)
-                                                                        Certificate Style 2
+                                                                        Certificate Style Two
                                                                         @elseif($certificate->style == 3)
-                                                                        Certificate Style 3
+                                                                        Certificate Style Three
                                                                         @endif
 
                                                                         <i class="fas fa-circle"></i> {{
@@ -828,7 +831,7 @@
                                                                                 <div class="media-body select-style-div-2 active"
                                                                                     data-value="1">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 1 </h6>
+                                                                                        <h6>Certificate Style One </h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -857,7 +860,7 @@
                                                                                 <div class="media-body select-style-div-2"
                                                                                     data-value="2">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 2</h6>
+                                                                                        <h6>Certificate Style Two</h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -886,7 +889,7 @@
                                                                                 <div class="media-body select-style-div-2"
                                                                                     data-value="3">
                                                                                     <div class="d-flex">
-                                                                                        <h6>Certificate Style 3</h6>
+                                                                                        <h6>Certificate Style Three</h6>
                                                                                         <span>Selected
                                                                                             Certificate</span>
                                                                                     </div>
@@ -981,6 +984,71 @@
                             </div>
                         </div>
                         {{-- certificate tab end --}}
+
+                        {{-- connect app tab start --}}
+                        <div class="tab-pane tab-con fade active-bg" id="pills-app" role="tabpanel"
+                            aria-labelledby="pills-app-tab" tabindex="0">
+                            {{-- app tab start --}}
+                            <div class="row connect-app-box mt-4">
+                                <div class="col-md-6">
+                                    <div class="app-title">
+                                        <h3>Connects to your account</h3>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-6">
+                                    <div class="app-bttn">
+                                        <a href="#"><img src="{{ asset('latest/assets/images/icons/pluss.svg') }}"
+                                                alt="a" class="img-fluid"> Add new account</a>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="app-box">
+                                        {{-- app box --}}
+                                        <div class="media">
+                                            <img src="{{ asset('latest/assets/images/vimeo.svg') }}" alt="a"
+                                                class="img-fluid">
+                                            <div class="media-body">
+                                                <h5>Vimeo</h5>
+                                                <p>Join the web's most supportive community of creators and get
+                                                    high-quality tools for hosting, sharing, and streaming videos in
+                                                    gorgeous HD with no ads.</p>
+                                            </div>
+                                            <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
+                                                @if (isVimeoConnected()[1] == 'Connected')
+                                                    Connected
+                                                @else 
+                                                    Connect
+                                                @endif
+                                            </a>
+                                        </div>
+                                        {{-- app box --}}
+
+                                        {{-- app box --}}
+                                        <div class="media">
+                                            <img src="{{ asset('latest/assets/images/stripe.svg') }}" alt="a"
+                                                class="img-fluid">
+                                            <div class="media-body">
+                                                <h5>Stripe</h5>
+                                                <p>Stripe is a suite of APIs powering online payment processing and
+                                                    commerce solutions for internet businesses of all sizes. Accept
+                                                    payments and scale faster.</p>
+                                            </div>
+                                            <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
+                                                @if (isConnectedWithStripe()[1] == 'Connected')
+                                                    Connected
+                                                @else 
+                                                    Connect
+                                                @endif
+                                            </a>
+                                        </div>
+                                        {{-- app box --}}
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- password tab end --}}
+                        </div>
+                        {{-- connect app tab start --}}
+
                         {{-- password tab start --}}
                         <div class="tab-pane tab-con fade active-bg" id="pills-password" role="tabpanel"
                             aria-labelledby="pills-password-tab" tabindex="0">
@@ -1026,8 +1094,9 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-submit-bttns">
+                                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                     <button type="submit" class="btn btn-submit">Save Changes</button>
-                                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -1044,16 +1113,196 @@
     </div>
 </main>
 {{-- student update page @e --}}
+
+{{-- stripe viemo app modal --}}
+<div class="app-modals">
+    <div class="connect-modal-box">
+        <div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header">
+                        <h5 id="connectModalLabel">Connect Vimeo</h5>
+                        <button class="btn" type="button" data-bs-dismiss="modal"><i class="fas fa-close"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="connect-modal-wrap">
+                            <form action="{{ route('instructor.vimeo.update') }}" method="POST">
+                                @csrf
+                                <div class="stripe-settings-form-wrap">
+                                    <div class="form-group">
+                                        <label for="client_id">CLIENT ID 
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter Client ID"
+                                            name="client_id" value="{{ isVimeoConnected()[0]->client_id ?? '' }}">
+                                        <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="client_secret">CLIENT SECRET</label>
+                                        <input type="text" class="form-control" placeholder="Enter Client Secret"
+                                            name="client_secret"
+                                            value="{{ isVimeoConnected()[0]->client_secret ?? '' }}">
+                                        <span class="text-danger">@error('client_secret') {{ $message }}
+                                            @enderror</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="access_key">CLIENT ACCESS KEY</label>
+                                        <input type="text" class="form-control" placeholder="Enter Access Key"
+                                            name="access_key" value="{{ isVimeoConnected()[0]->access_key ?? '' }}">
+                                        <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
+                                    </div>
+                                    <div class="form-submit  mt-3">
+                                        <button class="btn btn-submit" type="submit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="connect-modal-box">
+        <div class="modal fade" id="StripeconnectModal" tabindex="-1" role="dialog" aria-labelledby="StripeconnectModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="connectModalLabel">Connect Stripe</h5>
+                        <button class="btn" type="button" data-bs-dismiss="modal"><i class="fas fa-close"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="connect-modal-wrap">
+                            <form action="{{ route('instructor.stripe.update') }}" method="post">
+                                @csrf
+                                <div class="stripe-settings-form-wrap">
+                                    <div class="form-group mb-3">
+                                        <label for="stripe_public_key">STRIPE KEY
+                                             
+                                        </label>
+                                        <input type="text" class="form-control" name="stripe_public_key"
+                                            placeholder="Enter Secret Key"
+                                            value="{{ Auth::user()->stripe_public_key }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="stripe_secret_key">STRIPE SECRET KEY</label>
+                                        <input type="text" class="form-control" name="stripe_secret_key"
+                                            placeholder="Enter Secret Key"
+                                            value="{{ Auth::user()->stripe_secret_key }}">
+                                    </div>
+                                    <div class="form-submit">
+                                        <div class="go-to-stripe">
+                                            <a href="https://stripe.com" target="_blank"><i
+                                                    class="fa-brands fa-cc-stripe me-2"></i>Go to stripe account <i
+                                                    class="fas fa-arrow-right"></i></a>
+                                        </div>
+                                        <div class="submit-form mt-3">
+                                            <button class="btn btn-submit" type="submit">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- stripe viemo app modal --}}
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
+  {{-- form save js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var formChanged = false; 
+        function markFormChanged() {
+            formChanged = true;
+        }
+ 
+        var formElements = document.querySelectorAll('.profile-frm input, .profile-frm select, .profile-frm textarea');
+        formElements.forEach(function (element) {
+            element.addEventListener('change', markFormChanged);
+        });
+ 
+        window.addEventListener('beforeunload', function (e) {
+            if (formChanged) {
+                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
+                e.returnValue = confirmationMessage;  
+                return confirmationMessage;  
+            }
+        });
+ 
+        document.querySelector('form').addEventListener('submit', function () {
+            formChanged = false;
+        });
+    });
 </script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
 
+        if (files.length > 0) {
+            const file = files[0];
+
+            if (!file.type.match('image.*')) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageContainer = document.querySelector('.img-upload .ol');
+                imageContainer.innerHTML = '';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-fluid', 'd-block', 'avatar-preview'); 
+                
+                
+                imageContainer.appendChild(img);
+
+                const closeIcon = document.createElement('a');
+                closeIcon.innerHTML = '&#10006;';
+                closeIcon.id = 'closeIcon';
+                closeIcon
+                closeIcon.onclick = removeImage;
+                closeIcon.classList.add('cus-postion')
+                imageContainer.parentNode.parentNode.appendChild(closeIcon);
+
+                closeIcon.style.display = 'inline';
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+    function removeImage() {
+        const imageContainer = document.querySelector('.img-upload .ol');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none';
+    }
+
+    const dropContainer = document.querySelector('.img-upload');
+    dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    dropContainer.addEventListener('drop', handleFileSelect);
+</script>
 {{-- add extra filed js --}}
 <script>
     const urlBttn = document.querySelector('#social_increment');
@@ -1302,6 +1551,9 @@
         const certificateTabLink = document.getElementById('pills-certificate-tab');
         const certificateTabContent = document.getElementById('pills-certificate');
 
+        const appTabLink = document.getElementById('pills-app-tab');
+        const appTabContent = document.getElementById('pills-app');
+
         const passwordTabLink = document.getElementById('pills-password-tab');
         const passwordTabContent = document.getElementById('pills-password');
 
@@ -1333,6 +1585,12 @@
                 document.getElementById('pills-custom_cert').classList.add('show', 'active');
             }
 
+        }
+        else if (tabToOpen == 'app') {
+            tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
+            tabLinks.forEach(tab => tab.classList.remove('active'));
+            appTabLink.classList.add('active');
+            appTabContent.classList.add('show', 'active');
         }
         else if (tabToOpen == 'password') {
             tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
@@ -1390,7 +1648,6 @@
           });
         });
 </script>
-
 @endsection
 
 {{-- page script @E --}}

@@ -73,7 +73,8 @@
                     <div class="media">
                         <div class="media-body">
                             <h5>Earnings</h5>
-                            <h4>€{{ count($earningByDates) }}</h4>
+                            {{-- <h4>€{{ count($earningByDates) }}</h4> --}}
+                            <h4>€{{ $totalAmounts }}</h4>
                         </div>
                     </div>
                     <p> <b style="color: {{ $formattedPercentageChangeOfEarning >= 0 ? 'green' : 'red' }}">{{
@@ -86,7 +87,7 @@
             </div>
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                 <div class="total-client-box">
-                    @php 
+                    @php
                     $totalCombinedCourses = $activeCourses + $draftCourses;
 
                     if ($totalCombinedCourses > 0) {
@@ -94,12 +95,12 @@
                     } else {
                         $percentageActiveCourses = 0;
                     }
-                    @endphp 
+                    @endphp
 
                     <div class="media">
                         <div class="media-body">
                             <h5>Sell Rating</h5>
-                            <h4>{{ $percentageActiveCourses }}%</h4>
+                            <h4>{{ number_format($percentageActiveCourses,0) }}%</h4>
                         </div>
                     </div>
                     <p>All time stats</p>

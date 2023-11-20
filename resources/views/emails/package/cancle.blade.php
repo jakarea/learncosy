@@ -102,7 +102,7 @@
                     <tr>
                         <th>
                             <a href="https://app.learncosy.com">
-                                <img src="https://app.learncosy.com/assets/images/learncosy-logo.png" alt="learncosy"> 
+                              <img src="{{ public_path('latest/assets/images/black-logo.png') }}" alt="learncosy"> 
                             </a>
                         </th>
                         <th>
@@ -115,6 +115,15 @@
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" border="0" class="body-table">
+                  <tr>
+                    <td>
+                        <h3>Package Information:</h3> 
+                        <ul>
+                            <li><strong>Name:</strong> {{ $subscription->name }}</li>   
+                            <li><strong>Cancle Date:</strong> {{ now() }}</li>  
+                        </ul>
+                    </td>
+                </tr>
                     <tr>
                         <td>
                             <h4><span>You have Cancled the subscription package!</span></h4>

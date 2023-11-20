@@ -45,9 +45,6 @@ class AdminManagementController extends Controller
            'avatar' => 'Max file size is 5 MB!'
        ]);
 
-       // initial password for admin if admin create profile
-       $initialPass = 1234567890;
-
        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
        // add admin
        $admin = new User([
@@ -59,8 +56,8 @@ class AdminManagementController extends Controller
            'company_name' => $request->company_name,
            'social_links' => trim($social_links,','),
            'description' => $request->description,
-           'recivingMessage' => $request->recivingMessage,
-           'password' => Hash::make($initialPass),
+           'recivingMessage' => $request->recivingMessage, 
+           'password' => Hash::make($request->password),
        ]);
  
         $adminslug = Str::slug($request->name);
@@ -150,11 +147,43 @@ class AdminManagementController extends Controller
          return redirect('admin/alladmin')->with('success', 'Admin Profile has been Updated successfully!');
      }
 
+    //  upload cover photo for all admin
+     public function coverUpload(Request $request)
+    { 
+        
+        if ($request->hasFile('cover_photo')) {
+            $coverPhoto = $request->file('cover_photo');
+
+            $userId = $request->userId;
+            $user = User::where('id', $userId)->first();
+            $adSlugg = Str::slug($user->name);
+
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+            $file = $request->file('cover_photo');
+            $image = Image::make($file);
+            $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
+            $image->save(public_path('uploads/users/') . $uniqueFileName);
+            $image_path = 'uploads/users/' . $uniqueFileName;
+
+            $user->cover_photo = $image_path; 
+            $user->save();
+    
+            return response()->json(['message' => "UPLOADED"]);
+        }
+    
+        return response()->json(['error' => 'No image uploaded'], 400);
+    } 
+
      public function destroy($id){
 
         $admin = User::where('id', $id)->first();
          //delete admin avatar
-         $adminOldThumbnail = public_path('uploads/users/'.$admin->avatar);
+         $adminOldThumbnail = public_path($admin->avatar);
          if (file_exists($adminOldThumbnail)) {
              @unlink($adminOldThumbnail);
          }

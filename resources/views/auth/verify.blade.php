@@ -1,21 +1,17 @@
 @extends('layouts.latest.auth')
+@section('title','Verify Email')
 
-@section('title')
-Verify Email
-@endsection
-
-@section('content')
-<!-- ====== verify page content start ====== -->
+@section('content') 
 <section class="auth-part-sec">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12 px-md-0">
-                <!-- login form start -->
+            <div class="col-lg-12 px-md-0"> 
                 <div class="auth-form-wrap justify-content-start">
-                    <div class="back-bttn">
-                        <a href="{{url('/login') }}">
-                            Back
-                        </a>
+                    <div class="back-bttn  justify-content-end">
+                        {{-- <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                            Do it Later
+                        </a> --}}
                     </div>
                     {{-- verify step start --}}
                     <div class="verify-step-wrap">
@@ -45,7 +41,7 @@ Verify Email
                         </div>
                     </div>
                     {{-- verify step end --}}
-                    <a href="#" class="mt-4">
+                    <a href="{{url('/')}}" class="mt-4">
                         <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
                     </a>
                     <h1>Verify your mail address</h1>
@@ -60,25 +56,23 @@ Verify Email
                     <form class="ms-0" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <div class="form-submit only-submit">
-                            <button class="btn btn-submit mx-auto" type="submit">Verify</button>
-                        </div>
-                        <div class="optional-txt">
-                            <p>Wanna verifed later ? <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">Logout Now</a></p>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+                            <button class="btn btn-submit mx-auto" type="submit">Resend Verification Link!</button>
                         </div>
                     </form>
-                </div>
-                <!-- login form end -->
+
+                    <div class="optional-txt">
+                        <p>Prefer to verify later? 
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Logout Now</a>
+                        </p>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+
+                </div> 
             </div>
         </div>
     </div>
-</section>
-<!-- ====== verify page content end ====== -->
-@endsection
-
-@section('script')
-
+</section> 
 @endsection

@@ -3,8 +3,8 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                     <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>

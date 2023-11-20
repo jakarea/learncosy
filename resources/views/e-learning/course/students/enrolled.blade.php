@@ -15,14 +15,7 @@
 @section('content')
 
     <main class="student-courses-lists-pages">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-                </div>
-            </div>
+        <div class="container-fluid"> 
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
@@ -61,7 +54,7 @@
                             </div>
                             <div class="col-xl-2 col-md-5">
                                 <div class="user-add-box text-end text-xl-end mb-lg-3 mb-xl-0">
-                                    <a href="{{ url('students/courses-activies') }}">Course Activity</a>
+                                    <a href="{{ url('students/courses-activies/list') }}">Course Activity</a>
                                 </div>
                             </div>
                         </div>
@@ -72,6 +65,7 @@
                 @if (count($enrolments) > 0)
                     @foreach ($enrolments as $enrolment)
                         {{-- course single box start --}}
+                        @if ($enrolment->course) 
                         @php
                             $review_sum = 0;
                             $review_avg = 0;
@@ -138,6 +132,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         {{-- course single box end --}}
                     @endforeach
                 @else

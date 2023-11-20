@@ -3,7 +3,7 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -63,7 +63,7 @@
                                     </label> 
                                         <input type="email" placeholder="Enter email" name="email"
                                             class="form-control @error('email') is-invalid @enderror"
-                                            value="{{ $student->email }}" id="email" disabled>
+                                            value="{{ $student->email }}" id="email">
                                     
                                     <span class="invalid-feedback">@error('email'){{ $message }}
                                         @enderror</span>
@@ -121,7 +121,7 @@
                                     <label for="description" class="mb-2">About </label> 
                                         <textarea name="description" id="description"
                                             class="form-control @error('description') is-invalid @enderror"
-                                            placeholder="Enter Full Description">{{ $student->description }}</textarea>
+                                            placeholder="Type here..">{{ $student->description }}</textarea>
                                     
                                     <span class="invalid-feedback">@error('description'){{ $message }}
                                         @enderror</span>
@@ -130,35 +130,35 @@
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
-                                    <label for="">Avatar</label>
+                                    <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container">
-                                    <label for="imageInput" class="upload-box">
+                                <div id="image-container" class="drop-container">
+                                    <label for="avatar" class="upload-box">
                                         <span>
                                             <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
                                                 alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" id="imageInput" accept="image/*"
-                                        onchange="displayImage(event)" class="d-none">
+                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none">
+                                    <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
-                                    <label for="">Uploaded Image</label>
+                                    <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer">
-                                    <span id="closeIcon" onclick="removeImage()">&#10006;</span>
+                                <div id="imageContainer" class="drop-container">
+                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
                                     @if ($student->avatar)
-                                    <img src="{{asset($student->avatar)}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
+                                    <img src="{{asset($student->avatar)}}" alt="No Image" class="img-fluid d-block"
+                                        id="uploadedImage">
                                     @else
-                                    <img src="{{asset('latest/assets/images/avatar.png')}}" alt="No Image"
-                                        class="img-fluid d-block" id="uploadedImage">
-                                    @endif 
+                                    <img src="" alt="No Image" class="img-fluid d-block" id="uploadedImage">
+                                    @endif
                                 </div>
-                            </div> 
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group"> 
                                     <label for="recivingMessage">Receiving Messages: </label>
@@ -190,16 +190,15 @@
                             </div> 
                             <div class="col-lg-12">
                                 <div class="form-group mt-3">
-                                    <label for="">Initial Password for this Student </label>
-                                    <input type="text" class="form-control " value="1234567890" disabled> 
-                                    <span class="can-change">*Can be Change it Later</span>
+                                    <label for="password">Password </label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="********">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                     <button type="submit" class="btn btn-submit">Update</button>
                                 </div>
                             </div>
@@ -218,11 +217,97 @@
 
 {{-- page script @S --}}
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js">
+
+{{-- form save js --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var formChanged = false; 
+        function markFormChanged() {
+            formChanged = true;
+        }
+ 
+        var formElements = document.querySelectorAll('form input, form select, form textarea');
+        formElements.forEach(function (element) {
+            element.addEventListener('change', markFormChanged);
+        });
+ 
+        window.addEventListener('beforeunload', function (e) {
+            if (formChanged) {
+                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
+                e.returnValue = confirmationMessage;  
+                return confirmationMessage;  
+            }
+        });
+ 
+        document.querySelector('form').addEventListener('submit', function () {
+            formChanged = false;
+        });
+    });
 </script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
-<script src="{{asset('latest/assets/js/user-image-upload.js')}}"></script>
+
+ {{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+        const file = files[0];
+
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('img-fluid', 'd-block');
+            img.id = 'uploadedImage';
+
+            imageContainer.appendChild(img);
+
+            const closeIcon = document.createElement('span');
+            closeIcon.innerHTML = '&#10006;';
+            closeIcon.id = 'closeIcon';
+            closeIcon.onclick = removeImage;
+
+            imageContainer.appendChild(closeIcon);
+ 
+            closeIcon.style.display = 'inline';
+        };
+
+        reader.readAsDataURL(file);
+        }
+        }
+
+        document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+        function removeImage() {
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none';  
+        }
+
+        const dropContainers = document.querySelectorAll('.drop-container');
+        dropContainers.forEach(function (dropContainer) {
+        dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        });
+
+        dropContainer.addEventListener('drop', handleFileSelect);
+        });
+
+</script>
 <script>
     const urlBttn = document.querySelector('#url_increment');
     let extraFields = document.querySelector('.url-extra-field');

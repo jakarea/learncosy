@@ -4,7 +4,7 @@ Course Create - Step 4
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -73,7 +73,7 @@ Course Create - Step 4
                 @endif 
 
                 <div class="lesson-edit-form-wrap mt-4">
-                    <h4>Selecting Suitable Plants for Page 2</h4>
+                    <h4>{{$lesson->title}}</h4>
 
                     <form
                         action="{{ route('course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id]) }}"

@@ -14,6 +14,8 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
+    <meta name="csrf-token" content=" {{ csrf_token() }} ">
+
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
@@ -24,14 +26,25 @@
     <!-- all css start -->
     <!-- App css -->
     <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/style.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/header.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/header.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/dashboard.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/admin-dark.css') }}" rel="stylesheet" type="text/css" />
 
+    {{-- Light box image popup --}}
+    <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('emoji/emojionearea.min.css') }}" rel="stylesheet" type="text/css" />
+
+    {{-- Toaster notification css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @yield('style')
-    {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css?v='.time() ) }}" rel="stylesheet" type="text/css" /> --}}
+    {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css" /> --}}
     <!-- all css end -->
 
     @yield('seo')
@@ -63,15 +76,26 @@
 
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
-
-      {{-- dark mode js --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    {{-- dark mode js --}}
     <script>
-        const modeBttn = document.getElementById("darkModeBttn");
         const htmlBody = document.querySelector("body");
+        const modeBttn = document.getElementById("darkModeBttn");
         function toggleMode() {
             htmlBody.classList.toggle('dark-mode');
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
             localStorage.setItem('dark-mode', mode);
+
+            if (htmlBody.classList.contains('dark-mode')) {
+                tinymce.remove('#description');
+                darkFunction();
+            }else{
+                tinymce.remove('#description');
+                lightFunction();
+            }
         }
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
@@ -80,7 +104,18 @@
         modeBttn.addEventListener('change', toggleMode);
     </script>
 
+    <script>
+        if (document.querySelector("body").classList.contains('dark-mode')) {
+            tinymce.remove('#description');
+            darkFunction();
+        } else {
+            tinymce.remove('#description');
+            lightFunction();
+        }
+    </script>
+
     @yield('script')
+
 
 </body>
 </html>

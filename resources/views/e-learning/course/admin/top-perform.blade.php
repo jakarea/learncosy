@@ -87,7 +87,7 @@ Top Perform Courses
                                 class="img-fluid">
                         </div>
                         <div class="course-txt-box">
-                            <a href="{{ url('admin/courses/' . $course->slug) }}">{{ substr($course->title, 0, 27)
+                            <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{ substr($course->title, 0, 27)
                                 }}</a>
                             <p>{{ $course->user->subdomain }}</p>
                             <ul>
@@ -109,11 +109,11 @@ Top Perform Courses
                         <div>
                             <span class="sold-item">
                                 @if($course->sale_count == 0)
-                                    No sales yet
+                                    No Sold Yet
                                 @elseif($course->sale_count == 1)
-                                    Sold 1 Item
+                                    Sold 1 Time
                                 @else
-                                    Sold {{ $course->sale_count }} times
+                                    Sold {{ $course->sale_count }} Times
                                 @endif
                             </span>
                         </div>

@@ -6,26 +6,56 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Message;
+use App\Models\Notification;
+use App\Models\Chat;
 use App\Models\ManagePage;
 use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
+    { 
         $userId = Auth::user()->id;
+
+        $checkout = Checkout::where('instructor_id', $userId);
+
+        if ($request->duration == "one_month") {
+            $startDate = now()->startOfMonth();
+            $endDate = now()->endOfMonth();
+        } elseif ($request->three_month) {
+            $startDate = now()->subMonths(3);
+            $endDate = now();
+        } elseif ($request->duration == "six_month") {
+            $startDate = now()->subMonths(6);
+            $endDate = now();
+        } elseif ($request->duration == "one_year") {
+            $startDate = now()->subYear();
+            $endDate = now();
+        } else {
+            $startDate = null;
+            $endDate = null;
+        }
+
+        if ($startDate && $endDate) {
+            $totalAmounts = $checkout->whereBetween('created_at', [$startDate, $endDate])->sum('amount');
+        } else {
+            $totalAmounts = 0;
+        }
+
+        $totalAmounts = $checkout->sum('amount');
+
 
         $user = User::where('id', $userId)->first();
         $user->session_id = null;
         $user->save();
 
 
-        $messages = Message::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
+        $messages = Chat::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
         $analytics_title = 'Yearly Analytics';
         $compear = '1 year';
           $categories = [];
@@ -151,6 +181,7 @@ class DashboardController extends Controller
           $earningByDates = $this->getEarningByDates($enrolments);
           $earningByMonth = $this->getEarningByMonth($enrolments);
           $course_wise_payments = $this->getCourseWisePayments($enrolments);
+
 
         //$courses = Course::where('user_id', Auth::user()->id)->get();
         foreach ($enrolments as $enrolment) {
@@ -297,7 +328,7 @@ class DashboardController extends Controller
         }
 
 
-        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear'));
+        return view('dashboard/instructor/analytics', compact('categories', 'courses', 'students', 'enrolments', 'course_wise_payments', 'activeInActiveStudents', 'earningByDates','earningByMonth','messages','formatedPercentageChangeOfStudentEnroll','formatedPercentageOfCourse','formattedPercentageChangeOfEarning','activeCourses','draftCourses','currentMonthEnrolledStudentsCount','analytics_title','compear','totalAmounts'));
 
     }
 
@@ -310,12 +341,78 @@ class DashboardController extends Controller
             ->get();
     }
 
-    public function analytics(){
+    public function analytics()
+    {
 
+        $recentUpdates = Notification::where('instructor_id',Auth::user()->id)->where('type','instructor')->orderBy('id','desc')->get();
         $payments = Checkout::courseEnrolledByInstructor()->where('instructor_id',Auth::user()->id)->paginate(12);
-
         $courses = Course::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
-        return view('dashboard/instructor/dashboard',compact('courses','payments'));
+
+        return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
+    }
+
+    // instructor notification 
+    public function notifications()
+    { 
+
+        $currentYear = Carbon::now()->subDays(365);
+        $today = Carbon::now();
+
+        $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
+            ->where('notifications.instructor_id', Auth::user()->id)  // Specify the table for instructor_id
+            ->where('notifications.type', 'instructor')
+            ->where('notifications.created_at', '>', $currentYear)
+            ->join('courses', 'notifications.course_id', '=', 'courses.id')
+            ->select('notifications.id', 'courses.thumbnail AS thumbnail', 'courses.title AS title', 'notifications.type','notifications.user_id','notifications.course_id',  'notifications.message', 'users.avatar', 'notifications.created_at')
+            ->orderBy('notifications.created_at', 'DESC')
+            ->get();
+
+                                              
+        // Get today's date
+        $today = now();
+        
+        // Initialize arrays for each category
+        $todays = [];
+        $yestardays = [];
+        $sevenDays = [];
+        $thirtyDays = [];
+        $lastOneYears = [];
+        
+        foreach ($data as $item) {
+            $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
+        
+            // Calculate the interval in days
+            $interval = $today->diffInDays($createdAt);
+        
+            if ($interval == 0) {
+                // Today
+                $todays[] = $item;
+            } elseif ($interval == 1) {
+                // Yesterday
+                $yestardays[] = $item;
+            } elseif ($interval > 2 && $interval <= 7) {
+                // Last 7 days
+                $sevenDays[] = $item;
+            } elseif ($interval >= 8 && $interval <= 30) {
+                    
+                $thirtyDays[] = $item;
+            } elseif ($interval >= 31 && $interval <= 365) {
+                    
+                $lastOneYears[] = $item;
+            }
+        } 
+ 
+                        
+        return view('instructor.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
+        
+    }
+
+    // instructor notification delete
+    public function notifyDestroy($id)
+    {
+        $notify = Notification::find($id);
+        $notify->delete();
+        return redirect()->back()->with('success','Notification deleted successfully');
     }
 
     private function getActiveInActiveStudents($data)
@@ -402,14 +499,17 @@ class DashboardController extends Controller
         $course_wise_payments = [];
         foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->user;
-            $title = substr($enrolment->course->title, 0, 20);
-            if (strlen($enrolment->course->title) > 20) {
-                $title .= "...";
-            }
-            if (isset($course_wise_payments[$title])) {
-                $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
-            } else {
-                $course_wise_payments[$title] = $enrolment->amount;
+            if ($enrolment->course) {
+                 
+                $title = substr($enrolment->course->title, 0, 20);
+                if (strlen($enrolment->course->title) > 20) {
+                    $title .= "...";
+                }
+                if (isset($course_wise_payments[$title])) {
+                    $course_wise_payments[$title] = $course_wise_payments[$title] + $enrolment->amount;
+                } else {
+                    $course_wise_payments[$title] = $enrolment->amount;
+                }
             }
         }
         return $course_wise_payments;
@@ -424,7 +524,7 @@ class DashboardController extends Controller
     {
         $request->validate([
             'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
-            // 'subdomain' => 'required|string|max:32,'.$user_id, 
+            // 'subdomain' => 'required|string|max:32,'.$user_id,
         ]);
 
         $proposedUsername = $request->subdomain;
@@ -467,8 +567,10 @@ class DashboardController extends Controller
        if ($managePage) {
             $permission = json_decode($managePage->pagePermissions);
        }else{
-            $permission = '{"dashboard":0,"homePage":0,"messagePage":0,"certificatePage":0}';
+            $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
        }
+
+        //    return $permission;
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }
@@ -497,5 +599,36 @@ class DashboardController extends Controller
         );
 
         return redirect()->back()->with('success', 'Access permissions updated successfully');
+    }
+
+    // login as student
+    public function loginAsStudent($userSessionId, $userId, $stuId)
+    {
+        if (!$userId || !$userSessionId) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $instructorUserId = Crypt::decrypt($userId);
+        $instructorUser = User::find($instructorUserId);
+
+        if (!$instructorUser) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $reqSessionId = Crypt::decrypt($userSessionId);
+        $dbSessionId = Crypt::decrypt($instructorUser->session_id);
+
+        if ($reqSessionId === $dbSessionId && $stuId) {
+            $studentUserId = Crypt::decrypt($stuId);
+            $studentUser = User::find($studentUserId);
+
+            if ($studentUser) {
+                Auth::login($studentUser);
+
+                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
+            }
+        }
+
+        return redirect('/login')->with('error', 'Failed to Login as Student');
     }
 }

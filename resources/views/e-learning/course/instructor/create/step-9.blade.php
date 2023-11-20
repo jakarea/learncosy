@@ -1,10 +1,10 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Step 9
+Course Create - Certificate 
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -96,9 +96,9 @@ Course Create - Step 9
                         <span class="invalid-feedback">@error('sample_certificates'){{ $message }} @enderror</span>
                     </div>
                     <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="" class="img-fluid">
+                        <img id="previewImage" src="" alt="" class="img-fluid rounded d-block w-100">
                         @if ($course->sample_certificates)
-                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded">
+                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded d-block w-100">
                         @endif
                     </div>
                     <div class="content-settings-form-wrap mt-0">
@@ -106,7 +106,7 @@ Course Create - Step 9
                         <hr>
                         <div class="form-group">
                             <h6>Select Certificate</h6>
-                            <select class="form-control" name="hascertificate">
+                            <select class="form-control" name="hascertificate"> 
                                 <option value="no" {{ $course->hascertificate == 'no' ? 'selected' : ''}}>No</option>
                                 <option value="yes" {{ $course->hascertificate == 'yes' ? 'selected' : ''}}>Yes</option>
                             </select>

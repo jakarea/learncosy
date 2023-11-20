@@ -4,7 +4,7 @@ Course Create - Design Step
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -69,13 +69,13 @@ Course Create - Design Step
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="top-image-upload-box">
-                        <h4>Promo Video URL <sup>(youtube)</sup> </h4>
-                        <input type="url" class="mt-2 form-control" name="promo_video" placeholder="Video URL" value="{{ $course->promo_video ? $course->promo_video : old('promo_video')  }}">
+                        <h4>Promo Video URL <sup class="text-danger" style="font-size: 0.8rem">(youtube)</sup> </h4>
+                        <input type="url" class="mt-2 form-control" name="promo_video" placeholder="Only youtube video" value="{{ $course->promo_video ? $course->promo_video : old('promo_video')  }}">
                         <span class="invalid-feedback d-block">@error('promo_video'){{ $message }}
                             @enderror</span>
                     </div>
                     <div class="top-image-upload-box mt-2">
-                        <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Image</h4>
+                        <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon" class="img-fluid"> Thumbnail</h4>
                         <input type="file" class="d-none" id="thumbnail" name="thumbnail">
                         <label for="thumbnail" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon" class="img-fluid light-ele">

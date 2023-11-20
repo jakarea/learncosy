@@ -4,7 +4,7 @@ Course Create - Lesson Text Content Add
 @endsection
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -14,11 +14,11 @@ Course Create - Lesson Text Content Add
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-4 col-xl-3">
-                {{-- course step --}}  
+                {{-- course step --}}
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle">
-                             
+
                         </span>
                         <p>Content</p>
                     </div>
@@ -56,9 +56,7 @@ Course Create - Lesson Text Content Add
                         </div>
 
                         {{-- course page file box start --}}
-                        <div id="file-list">
-                            <!-- Uploaded files will be displayed here -->
-                        </div>
+                        <div id="file-list"></div>
 
                         @php
                         $lessonFileString = $lesson->lesson_file;
@@ -66,7 +64,7 @@ Course Create - Lesson Text Content Add
                         @endphp
                         @if ($lesson->lesson_file)
                         <div class="form-group form-upload">
-                            <label for="file-input" class="txt">Uploaded Files</label> 
+                            <label for="file-input" class="txt">Uploaded Files</label>
                         </div>
                         @foreach ($uploadedFilenames as $filename)
                         <div class="course-content-box course-page-edit-box">
@@ -83,9 +81,7 @@ Course Create - Lesson Text Content Add
                         </div>
                         @endforeach
                         @endif
-
-                        
-                        {{-- course page file box end --}}
+                    {{-- course page file box end --}}
                 </div>
 
                 {{-- step next bttns --}}

@@ -68,7 +68,7 @@ Student Dashboard
                         @endphp
                         <span>
                             <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
-                            {{$cmpltPercentage}}%
+                            {{ number_format(abs($cmpltPercentage), 2) }}%
                         </span>
                     </div>
                 </div>
@@ -95,9 +95,17 @@ Student Dashboard
                 <div class="status-card-box">
                     <p>Certificate Achievement</p>
                     <div class="d-flex">
-                        <h5>0</h5>
-                        <span><img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test"
-                                class="img-fluid"> 100%</span>
+                        <h5>{{ $completedCount}}</h5>
+                        @php
+                            $cmpltPercentage = 0;
+                            $totalCoureses = count($enrolments);
+                            if($totalCoureses> 0 && $completedCount > 0)
+                            $cmpltPercentage = ($completedCount / $totalCoureses) * 100;
+                        @endphp
+                        <span>
+                            <img src="{{ asset('latest/assets/images/icons/arrow-up.svg') }}" alt="Test" class="img-fluid">
+                            {{ number_format(abs($cmpltPercentage), 2) }}%
+                        </span>
                     </div>
                 </div>
             </div>
@@ -247,6 +255,7 @@ Student Dashboard
                             <th class="text-end">Action</th>
                         </tr>
                         @foreach ($enrolments->slice(0, 4) as $enrolment)
+                        @if ($enrolment->course)
                         <tr>
                             <td>
                                 <div class="media">
@@ -280,7 +289,8 @@ Student Dashboard
                             <td class="text-end">
                                 <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
                             </td>
-                        </tr>
+                        </tr>                            
+                        @endif
                         @endforeach
                     </table>
                     @else

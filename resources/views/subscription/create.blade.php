@@ -3,7 +3,7 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/subscription.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/subscription.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -30,8 +30,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group form-error">
-                                    <label for="name">Name 
-                                    </label>
+                                    <label for="name">Name </label>
                                     <input type="text" placeholder="Enter name" name="name"
                                         class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name') }}" id="name">
@@ -43,7 +42,7 @@
                                 <div class="form-group form-error">
                                     <label for="regular_price">Regular Price 
                                     </label>
-                                    <input type="number" placeholder="€ Enter Amount" name="regular_price"
+                                    <input type="text" placeholder="€ Enter Amount" name="regular_price"
                                         class="form-control @error('regular_price') is-invalid @enderror"
                                         value="{{ old('regular_price') }}" id="regular_price">
                                     <span class="invalid-feedback">@error('regular_price'){{ $message }}
@@ -53,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-error">
                                     <label for="sales_price">Sales Price </label>
-                                    <input type="number" placeholder="€ Enter Amount" name="sales_price"
+                                    <input type="text" placeholder="€ Enter Amount" name="sales_price"
                                         class="form-control @error('sales_price') is-invalid @enderror"
                                         value="{{ old('sales_price') }}" id="sales_price">
                                     <span class="invalid-feedback">@error('sales_price'){{ $message }}
@@ -112,7 +111,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-submit-bttns">
-                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                     <button type="submit" class="btn btn-submit">Submit</button>
                                 </div>
                             </div>

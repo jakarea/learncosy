@@ -190,6 +190,8 @@ class HomepageController extends Controller
     {
         //
     }
+
+    // login as instructor
     public function loginAsInstructor($userSessionId, $userId, $insId)
     {
         if (!$userId || !$userSessionId) {
@@ -218,6 +220,37 @@ class HomepageController extends Controller
         }
 
         return redirect('/login')->with('error', 'Failed to Login as Instructor');
+    }
+
+    // login as student
+    public function loginAsStudent($userSessionId, $userId, $stuId)
+    {
+        if (!$userId || !$userSessionId) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $adminUserId = Crypt::decrypt($userId);
+        $adminUser = User::find($adminUserId);
+
+        if (!$adminUser) {
+            return redirect('/login')->with('error', 'Failed to Login as Student');
+        }
+
+        $reqSessionId = Crypt::decrypt($userSessionId);
+        $dbSessionId = Crypt::decrypt($adminUser->session_id);
+
+        if ($reqSessionId === $dbSessionId && $stuId) {
+            $studentUserId = Crypt::decrypt($stuId);
+            $studentUser = User::find($studentUserId);
+
+            if ($studentUser) {
+                Auth::login($studentUser);
+
+                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
+            }
+        }
+
+        return redirect('/login')->with('error', 'Failed to Login as Student');
     }
 
 

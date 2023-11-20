@@ -762,7 +762,6 @@ Account Management
 
 {{-- page script @S --}}
 @section('script')
-
 {{-- logo image preview js --}}
 <script>
     const logoInput = document.getElementById('logo');
@@ -903,7 +902,7 @@ Account Management
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-    let currentURL = window.location.href;
+        let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const resetBttn = document.getElementById('resetBttn');
 

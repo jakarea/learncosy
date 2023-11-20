@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
@@ -40,6 +41,7 @@ use App\Http\Controllers\Admin\StudentManagementController;
 use App\Http\Controllers\Admin\BundleCourseManagementController;
 use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,17 +53,7 @@ use App\Http\Controllers\Admin\AdminSubscriptionPackageController;
 |
  */
 
-// Route::get('/')->middleware('auth');
-
-
-
-
 Route::post('/students/stripe-process-payment', [PaymentController::class, 'processPayment'])->name('process-payment');
-
-
-
-
-
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
@@ -74,29 +66,28 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 
 // custom auth screen route
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
+Route::get('login-as-student/{userSessionId}/{userId}/{stuId}', [HomepageController::class, 'loginAsStudent']);
+Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardController::class, 'loginAsStudent']);
 
+// custom login for student and instructor
 Route::get('/auth-login', function () {
 
-    $subdomain = explode('.', request()->getHost())[0];
-
-    $instrcutor = User::where('subdomain', request()->id)->firstOrFail();
-
-
-    if(isset( request()->singnature )){
+    // match user sessionId
+    if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();
-
-        if( $user){
-            Auth::login( $user);
+        if($user){
+            Auth::login($user);
             $user->session_id = null;
             $user->save();
             return redirect()->intended($user->user_role.'/dashboard');
         }
-
     }
 
+    $subdomain = explode('.', request()->getHost())[0];
+    $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
 
+    // module settings
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
-
 
     if ($instrcutorModuleSettings) {
         $loginPageStyle = json_decode($instrcutorModuleSettings->value);
@@ -122,12 +113,10 @@ Route::get('/auth-login', function () {
 
 })->name('tlogin')->middleware('guest');
 
-
 // theme settings register page
 Route::get('/auth-register', function () {
 
     $subdomain = explode('.', request()->getHost())[0];
-
     $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
     $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
@@ -137,7 +126,7 @@ Route::get('/auth-register', function () {
         if ($registerPageStyle->lp_layout == 'fullwidth') {
             return view('custom-auth/register/register2');
         } elseif ($registerPageStyle->lp_layout == 'default') {
-            return view('custom-auth/register/register1');
+            return view('custom-auth/register/register');
         } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
             return view('custom-auth/register/register3');
         } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
@@ -146,60 +135,76 @@ Route::get('/auth-register', function () {
             return view('custom-auth/register/register');
         }
     } else {
-        return view('auth/register');
+        return view('custom-auth/register/register');
     }
 
 })->name('tregister')->middleware('guest');
 
 // password reset
 Route::get('/auth/password/reset', function () {
-
     return view('custom-auth/passwords/email');
-
 })->name('auth.password.request')->middleware('guest');
 
+// after registration redirect user
 Route::get('/home', function (Request $request) {
+    // user role
     $role = Auth::user()->user_role;
-    // $subdomain = Auth::user()->subdomain;
-    $subdomain = explode('.', request()->getHost())[0];
-    if ($subdomain == 'app' && $role == 'admin') {
+
+    // instructor rediretion
+    if ($role == 'instructor' && isset(Auth::user()->email_verified_at)) {
+        return redirect('instructor/dashboard');
+
+    }elseif($role == 'instructor' && !isset(Auth::user()->email_verified_at)){
+         return redirect('instructor/profile/step-1/complete');
+    }
+
+    // admin rediretion
+    if ($role == 'admin') {
         return redirect('/admin/dashboard');
     }
 
-    if ($subdomain != 'app' && $role == 'student') {
+    // students rediretion
+    if ($role == 'student') {
         return redirect('/students/dashboard');
-
-    }
-
-    if ($subdomain != 'app' && $role == 'instructor') {
-        return redirect('/instructor/dashboard');
     }
 
     Auth::logout();
-
     $request->session()->invalidate();
-
     $request->session()->regenerateToken();
-
     return redirect('/');
 
 })->name('home')->middleware('auth');
 
 // auth route
 Auth::routes(['verify' => true]);
+Route::get('students/lessons/{id}', function ($id) {
 
-
-
-// message pages routes
-Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
-    Route::get('/', 'index')->name('message');
-    Route::post('/', 'sendMessage')->name('message-send');
-    Route::get('/send/{id}', 'send')->name('get.message');
-    Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+    $lesson = App\Models\Lesson::findorfail($id);
+    return response()->json($lesson);
 });
 
+// One to one chat system
+Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
+    Route::get('/', 'index')->name('message');
+    Route::get('/chat/{id}', 'getChatMessage')->name('chat');
+    Route::post('/chat', 'sendChatMessage');
+    Route::get('/search-user', 'searchChatUser')->name('course.messages.search');
+    Route::get('/chat/download/{filename}', 'downloadChatFile')->name('course.messages.file.download');
+    Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('course.messages.delete.singlechat');
+    // // Route::get('/', 'index')->name('message');
+    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
+    // Route::post('/', 'sendMessage')->name('message-send');
+    // Route::get('/send/{id}', 'send')->name('get.message');
+    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
+    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
+    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+});
+
+// Group message
+Route::middleware('auth')->prefix('course/messages')->controller(GroupController::class)->group(function () {
+    Route::post('/create-group', 'createGroup')->name('course.messages.group');
+    Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('course.messages.suggested.people');
+});
 /* ============================================================= */
 /* ===================== Instructor Routes ===================== */
 /* ============================================================= */
@@ -221,6 +226,12 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
     });
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+
+
+    // Instructor Notification
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
+
+    Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
     Route::get('/profile/step-4/complete', function () {
         return view('latest-auth.connect');
@@ -263,6 +274,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // course page routes
         Route::prefix('courses')->controller(CourseController::class)->group(function () {
             Route::get('/', 'index')->name('instructor.courses');
+            Route::get('/overview/{slug}', 'overview')->name('instructor.course.overview');
             Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('instructor.file.download');
             Route::get('/{id}', 'show')->name('course.show')->where('id', '[0-9]+');
             Route::delete('/{id}/destroy', 'destroy')->name('course.destroy');
@@ -331,8 +343,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // lesson page routes
         Route::prefix('lessons')->controller(LessonController::class)->group(function () {
             Route::get('/', 'index');
-            // data table route
-            Route::get('/datatable', 'lessonsDataTable')->name('lessons.data.table');
             Route::get('/create', 'create');
 
             Route::get('/create/video-upload', 'videoUpload')->name('lesson.upload.video');
@@ -352,11 +362,22 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         Route::prefix('bundle/courses')->controller(CourseBundleController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view');
+
             Route::get('/select', 'step1');
             Route::post('/select/{course_id}', 'selectBundle')->name('select.bundle.course');
+
             Route::get('/create', 'step2');
             Route::post('/create', 'createBundle')->name('create.bundle.course');
+
+            Route::get('{slug}/edit', 'edit1')->name('select.again.bundle.course');
+            Route::post('{id}/select-update', 'update1');
+
+            Route::get('{slug}/edit-final', 'edit2');
+            Route::post('{slug}/edit-final', 'update2')->name('create.update.bundle.course');
+
+            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('reove.select.bundle.course');
             Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
+
             Route::post('/delete/{bundle_id}', 'delete')->name('delete.bundle.course');
         });
         // theme settings page routes
@@ -370,6 +391,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // profile management page routes
         Route::prefix('profile')->controller(ProfileManagementController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('instructor.profile');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/account-settings', 'edit')->name('account.settings');
             Route::post('/edit', 'update')->name('instructor.profile.update');
             Route::get('/change-password', 'passwordUpdate');
@@ -398,6 +420,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/', 'index')->name('allStudents');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('student.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('studentProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateStudentProfile');
@@ -411,25 +434,21 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
 
 Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionPaymentController::class)->group(function () {
-    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');  
+    Route::get('/', 'index')->name('instructor.subscription');
+    Route::get('/create-payment/{id}', 'createPayment')->name('instructor.subscription.create.payment');
     Route::post('/payment', 'payment')->name('instructor.subscription.payment');
-    // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
+    Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
+    Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
 });
 
 // SubscriptionController
 
 // Route::prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
     Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->controller(SubscriptionController::class)->group(function () {
-        Route::get('/', 'index')->name('instructor.subscription');
         // Route::get('/create/{id}', 'create')->name('instructor.subscription.create');
         Route::get('success', 'success')->name('instructor.subscription.success');
-        Route::get('/cancel', 'cancel')->name('instructor.subscription.cancel');
-        Route::get('/status/{id}', 'status')->name('instructor.subscription.status');
     });
 // });
-
-
-
 
 // review page routes
 // Route::middleware('auth')->prefix('review')->controller(ReviewController::class)->group(function () {
@@ -441,9 +460,9 @@ Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->cont
 /* ========================================================== */
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
-    Route::get('/dashboard', 'dashboard')->name('students.dashboard');
+    Route::get('/dashboard', 'dashboard')->name('students.dashboard')->middleware('page.access');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
-    Route::get('/home', 'catalog')->name('students.catalog.courses');
+    Route::get('/home', 'catalog')->name('students.catalog.courses')->middleware('page.access');
     Route::get('/catalog/courses', 'catalog')->name('students.catalog.courses');
     Route::get('/courses/{slug}', 'show')->name('students.show.courses');
     Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('file.download');
@@ -452,8 +471,9 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     Route::get('/courses/overview/{slug}', 'overview')->name('students.overview.courses');
     Route::get('/courses/my-courses/details/{slug}', 'courseDetails')->name('students.overview.myCourses');
     Route::get('/courses-log', 'storeCourseLog')->name('students.log.courses');
+    Route::get('/courses-activies/list', 'activitiesList')->name('students.activity.lesson');
     Route::get('/courses-activies', 'storeActivities')->name('students.complete.lesson');
-    Route::get('/courses-certificate', 'certificate')->name('students.certificate.course');
+    Route::get('/courses-certificate', 'certificate')->name('students.certificate.course')->middleware('page.access');
     Route::post('/courses/{slug}', 'review')->name('students.review.courses');
     Route::get('/courses/{slug}/message', 'message')->name('students.courses.message');
     Route::get('/account-management', 'accountManagement')->name('students.account.management');
@@ -478,9 +498,11 @@ Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->con
     });
 
     // student own profile management page routes
+
     Route::prefix('profile')->controller(StudentProfileController::class)->group(function () {
         Route::get('/myprofile', 'show')->name('students.profile');
         Route::get('/edit', 'edit');
+        Route::post('/cover/upload', 'coverUpload');
         Route::post('/edit', 'update')->name('students.profile.update');
         Route::get('/change-password', 'passwordUpdate');
         Route::post('/change-password', 'postChangePassword')->name('students.password.update');
@@ -510,6 +532,7 @@ Route::prefix('students')->controller(CartController::class)->group(function () 
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
+        Route::get('/notifications', 'notification')->name('admin.notification');
         Route::get('/top-perform/courses', 'perform');
 
         // all admin profile manage routes for admin
@@ -517,6 +540,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index')->name('allAdmin');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('allAdmin.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('allAdmin.profile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateAllAdminProfile');
@@ -527,6 +551,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('instructor.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('instructorProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('updateInstructorProfile');
@@ -535,10 +560,9 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // all students manage routes for admin
         Route::prefix('students')->controller(StudentManagementController::class)->group(function () {
             Route::get('/', 'index')->name('admin.allStudents');
-            // data table route
-            Route::get('/datatable', 'studentsDataTable')->name('admin.students.data.table');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.student.add');
+            Route::post('/cover/upload', 'coverUpload');
             Route::get('/profile/{id}', 'show')->name('admin.studentProfile');
             Route::get('/{id}/edit', 'edit');
             Route::post('/{id}/edit', 'update')->name('admin.updateStudentProfile');
@@ -551,6 +575,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.course.store');
             Route::get('/{slug}', 'show')->name('admin.course.show');
+            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
             Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
             Route::post('/{slug}/edit', 'update')->name('admin.course.update');
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
@@ -584,8 +609,6 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // lesson page routes for admin
         Route::prefix('lessons')->controller(LessonManagementController::class)->group(function () {
             Route::get('/', 'index');
-            // data table route
-            Route::get('/datatable', 'lessonsDataTable')->name('admin.lessons.data.table');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.lesson.store');
             Route::get('/{slug}/edit', 'edit')->name('admin.lesson.edit');
@@ -596,6 +619,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('profile')->controller(AdminProfileController::class)->group(function () {
             Route::get('/myprofile', 'show')->name('admin.profile');
             Route::get('/edit', 'edit');
+            Route::post('/cover/upload', 'coverUpload')->name('account.cover.upload');
             Route::post('/edit', 'update')->name('admin.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
@@ -614,7 +638,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 Route::get('/logout', function () {
     Auth::logout();
     session()->flush();
-    return redirect('/login');
+    return redirect('/');
 });
 
 /**

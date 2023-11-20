@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Course;
 use App\Models\Notification;
+use App\Models\Certificate;
 use App\Models\Checkout;
 use App\Models\Module;
 use App\Models\Lesson;
@@ -294,7 +295,7 @@ class CourseCreateStepController extends Controller
             $audio = $request->file('audio');
             $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
-            $lesson->audio = $audioName;
+            $lesson->audio = 'uploads/audio/'.$audioName;
         }
         
         $uploadedFilenames = [];
@@ -316,16 +317,15 @@ class CourseCreateStepController extends Controller
         
     }
 
-    public function stepLessonVideo($id,$module_id,$lesson_id){
-
+    public function stepLessonVideo($id,$module_id,$lesson_id)
+    {
         // return 2345;
-
         if(!$id){
             return redirect('instructor/courses');
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
@@ -334,13 +334,12 @@ class CourseCreateStepController extends Controller
     {
 
         $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:100000',
-            'description' => 'string', 
-            'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
+            // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
-            'video_link' => 'Max file size is 1 GB!',
+            'video_link.max' => 'Max file size is 1 GB!',
         ]);
         
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
@@ -381,6 +380,7 @@ class CourseCreateStepController extends Controller
                 $lesson->duration = $request->duration;
                 $lesson->short_description = $request->description;
                 $lesson->save();
+                flash()->addSuccess('Video upload success!');
             }
             $course = Course::find($id);
             $price = $course->price ?? 0;
@@ -568,7 +568,6 @@ class CourseCreateStepController extends Controller
         }
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-
         return view('e-learning/course/instructor/create/step-9',compact('course'));
     }
 

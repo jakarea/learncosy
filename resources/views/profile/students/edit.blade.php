@@ -3,8 +3,8 @@
 
 {{-- page style @S --}}
 @section('style')
-<link href="{{ asset('latest/assets/admin-css/user.css?v='.time() ) }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css?v='.time() ) }}" rel="stylesheet" type="text/css" /> 
+<link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 {{-- page style @S --}}
 
@@ -39,21 +39,21 @@
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box">
+                                        <div class="profile-picture-box position-relative">
                                             <input type="file" id="avatar" class="d-none" name="avatar">
                                             <label for="avatar" class="img-upload">
-                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
-                                                    alt="a" class="img-fluid">
+                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
                                                 <p>Update photo</p>
                                                 <div class="ol">
                                                     @if ($user->avatar)
-                                                    <img id="avatar-preview" src="{{asset($user->avatar)}}"
-                                                        alt="Avatar" class="img-fluid static-image">
+                                                        <img src="{{asset($user->avatar)}}" alt="Avatar" class="img-fluid static-image avatar-preview">
                                                     @else
-                                                    <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
+                                                        <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
                                                     @endif
                                                 </div>
                                             </label>
+
+                                             <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
 
                                             <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
                                                 Max size of 3.1 MB</h6>
@@ -108,7 +108,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="url" class="form-control" id="website"
+                                                        <input type="text" class="form-control" id="website"
                                                             name="website" value="{{ $user->short_bio }}" required>
                                                         <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('website'){{ $message }}
@@ -118,7 +118,7 @@
                                                 <div class="col-lg-12">
                                                     @php  $socialLinks = explode(',',$user->social_links) @endphp
                                                    <div class="form-group">
-                                                    <label for="social_links" style="top: -6px; background: #fff!important; z-index: 999">Social Media</label>
+                                                    <label for="social_links" class="social-label">Social Media</label>
                                                    </div>
                                                     @foreach ($socialLinks as $socialLink) 
                                                     <div class="social-extra-field">
@@ -141,14 +141,14 @@
                                                             class="form-control @error('description') is-invalid @enderror"
                                                             required>{!! $user->description !!}</textarea>
 
-                                                        <label for="description">About</label>
+                                                        <label for="description" style="top: -1rem!important;">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message }} @enderror</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-submit-bttns mt-5">
-                                            <button type="reset" class="btn btn-cancel">Cancel</button>
+                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                             <button type="submit" class="btn btn-submit">Save Changes</button>
                                         </div>
                                     </div>
@@ -196,7 +196,7 @@
                                             <div class="col-12">
                                                 <div class="form-submit-bttns text-start">
                                                     <button type="submit" class="btn btn-submit me-3 ms-0">Save Changes</button>
-                                                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                 </div>
                                             </div>
                                         </div> 
@@ -217,9 +217,67 @@
 
 {{-- page script @S --}}
 @section('script') 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js"></script>
-<script src="{{asset('latest/assets/js/tinymce.js')}}"></script>
+{{-- drag & drop image upload js --}}
+<script>
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+
+        if (files.length > 0) {
+            const file = files[0];
+
+            if (!file.type.match('image.*')) {
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageContainer = document.querySelector('.img-upload .ol');
+                imageContainer.innerHTML = '';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-fluid', 'd-block', 'avatar-preview'); 
+                
+                
+                imageContainer.appendChild(img);
+
+                const closeIcon = document.createElement('a');
+                closeIcon.innerHTML = '&#10006;';
+                closeIcon.id = 'closeIcon';
+                closeIcon
+                closeIcon.onclick = removeImage;
+                closeIcon.classList.add('cus-postion')
+                imageContainer.parentNode.parentNode.appendChild(closeIcon);
+
+                closeIcon.style.display = 'inline';
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('avatar').addEventListener('change', handleFileSelect);
+
+    function removeImage() {
+        const imageContainer = document.querySelector('.img-upload .ol');
+        imageContainer.innerHTML = '';
+        document.getElementById('avatar').value = '';
+
+        const closeIcon = document.getElementById('closeIcon');
+        closeIcon.style.display = 'none';
+    }
+
+    const dropContainer = document.querySelector('.img-upload');
+    dropContainer.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    dropContainer.addEventListener('drop', handleFileSelect);
+</script>
 
 {{-- add extra filed js --}}
 <script>
@@ -306,7 +364,7 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     const avatarInput = document.getElementById("avatar");
-    const avatarPreview = document.getElementById("avatar-preview");
+    const avatarPreview = document.querySelector(".avatar-preview");
 
     avatarInput.addEventListener("change", function(event) {
         const file = event.target.files[0];
@@ -323,7 +381,6 @@
     });
 });
 </script>
-
 
 {{-- tab open js --}}
 <script>
@@ -374,8 +431,6 @@
           });
         });
 </script>
-
-
 @endsection
 
 {{-- page script @E --}}

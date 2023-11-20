@@ -6,9 +6,11 @@ use Stripe\Charge;
 use Stripe\Stripe;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Notification;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class PaymentController extends Controller
 {
@@ -44,7 +46,9 @@ class PaymentController extends Controller
                 'source'      => $request->stripeToken,
                 'description' => $courseNames,
             ]);
-            $this->success($charge);
+
+            $this->success($charge);     
+
             return redirect(route('students.catalog.courses'))->with('success', 'You have successfully enrolled in this course');;
         } catch (\Exception $e) {
             return redirect()->route('students.catalog.courses')->with('error', $e->getMessage());
@@ -61,14 +65,36 @@ class PaymentController extends Controller
                 $checkout = $course->checkouts()->create([
                     'course_id' => $course->id,
                     'instructor_id' => $course->user_id,
-                    'payment_method' => $charge->payment_method,
+                    'payment_method' => "Stripe",
                     'payment_status' => $charge->paid? 'completed' : '',
                     'payment_id' => $charge->id,
                     'status' => $charge->status,
                     'amount' => $charge->amount_captured,
                     'start_date' =>  $start_date = now()->toDateTimeString()
                 ]);
+
+                $notify = new Notification([
+                    'user_id'   => Auth::user()->id,
+                    'instructor_id' => $course->user_id,
+                    'course_id' => $course->id,
+                    'type'      => 'instructor',
+                    'message'   => "enrolled",
+                    'status'   => 'unseen',
+                ]);
+                $notify->save();
+        
+                // $pdf = PDF::loadView('emails.invoice', ['data' => $checkout]);
+                // $pdfContent = $pdf->output();
+        
+                // // Send the email with the PDF attachment
+                // $mailInfo = Mail::send('emails.invoice', ['data' => $checkout], function($message) use ($checkout, $pdfContent) {
+                //     $message->to(auth()->user()->email)
+                //             ->subject('Invoice')
+                //             ->attachData($pdfContent,  $checkout->payment_method.'.pdf', ['mime' => 'application/pdf']);
+                // });
+
             }
             $cartItems = Cart::where('user_id', auth()->id())->delete();
+
     }
 }

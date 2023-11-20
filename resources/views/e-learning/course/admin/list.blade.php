@@ -86,7 +86,7 @@
                                                     </li>
                                                     <li>
                                                         <form method="post" class="d-inline"
-                                                            action="{{ url('admin/courses/' . $course->slug . '/destroy') }}">
+                                                            action="{{ url('admin/courses/' . $course->id . '/destroy') }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
@@ -112,12 +112,31 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="course-txt-box">
+                                <div class="course-txt-box d-flex justify-content-between align-items-center">
                                     @if ($course->offer_price)
-                                        <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                    <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                    @elseif(!$course->offer_price && !$course->price)
+                                    <h5>Free</h5>
                                     @else
-                                        <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
+                                    <h5>€ {{ $course->price }}</h5>
                                     @endif
+
+                                    @if ($course->sale_count) 
+                                    <div>
+                                        <span class="sold-item">
+                                            @if($course->sale_count == 0)
+                                                No Sold Yet
+                                            @elseif($course->sale_count == 1)
+                                                Sold 1 Time
+                                            @else
+                                                Sold {{ $course->sale_count }} Times
+                                            @endif
+                                        </span>
+                                       
+                                    </div>
+                                    @else 
+                                     <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
+                                    @endif 
                                 </div>
                             </div>
                         </div>
