@@ -2197,6 +2197,7 @@
         },
         {
             "name": "league/flysystem",
+<<<<<<< HEAD
             "version": "3.21.0",
             "source": {
                 "type": "git",
@@ -2207,6 +2208,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a326d8a2d007e4ca327a57470846e34363789258",
                 "reference": "a326d8a2d007e4ca327a57470846e34363789258",
+=======
+            "version": "3.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "1b2aa10f2326e0351399b8ce68e287d8e9209a83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1b2aa10f2326e0351399b8ce68e287d8e9209a83",
+                "reference": "1b2aa10f2326e0351399b8ce68e287d8e9209a83",
+>>>>>>> 28601c3 (compser.loc changed)
                 "shasum": ""
             },
             "require": {
@@ -2271,7 +2284,11 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/thephpleague/flysystem/tree/3.21.0"
+=======
+                "source": "https://github.com/thephpleague/flysystem/tree/3.19.0"
+>>>>>>> 28601c3 (compser.loc changed)
             },
             "funding": [
                 {
@@ -2283,6 +2300,7 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-11-18T13:59:15+00:00"
         },
         {
@@ -2297,6 +2315,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/470eb1c09eaabd49ebd908ae06f23983ba3ecfe7",
                 "reference": "470eb1c09eaabd49ebd908ae06f23983ba3ecfe7",
+=======
+            "time": "2023-11-07T09:04:28+00:00"
+        },
+        {
+            "name": "league/flysystem-local",
+            "version": "3.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-local.git",
+                "reference": "8d868217f9eeb4e9a7320db5ccad825e9a7a4076"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/8d868217f9eeb4e9a7320db5ccad825e9a7a4076",
+                "reference": "8d868217f9eeb4e9a7320db5ccad825e9a7a4076",
+>>>>>>> 28601c3 (compser.loc changed)
                 "shasum": ""
             },
             "require": {
@@ -2331,7 +2365,11 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-local/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/thephpleague/flysystem-local/tree/3.21.0"
+=======
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.19.0"
+>>>>>>> 28601c3 (compser.loc changed)
             },
             "funding": [
                 {
@@ -2343,7 +2381,11 @@
                     "type": "github"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-11-18T13:41:42+00:00"
+=======
+            "time": "2023-11-06T20:35:28+00:00"
+>>>>>>> 28601c3 (compser.loc changed)
         },
         {
             "name": "league/mime-type-detection",

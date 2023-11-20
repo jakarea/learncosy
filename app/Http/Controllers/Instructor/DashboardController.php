@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Notification;
-use App\Models\Message;
+use App\Models\Chat;
 use App\Models\ManagePage;
 use App\Models\Checkout;
 use Illuminate\Support\Str;
@@ -55,7 +55,7 @@ class DashboardController extends Controller
         $user->save();
 
 
-        $messages = Message::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
+        $messages = Chat::where('receiver_id',$userId)->orWhere('sender_id',$userId)->groupBy('receiver_id','sender_id')->take(3)->get();
         $analytics_title = 'Yearly Analytics';
         $compear = '1 year';
           $categories = [];
