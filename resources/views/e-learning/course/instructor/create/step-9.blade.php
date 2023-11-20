@@ -106,9 +106,12 @@ Course Create - Certificate
                         <hr>
                         <div class="form-group">
                             <h6>Select Certificate</h6>
-                            <select class="form-control" name="hascertificate"> 
-                                <option value="no" {{ $course->hascertificate == 'no' ? 'selected' : ''}}>No</option>
-                                <option value="yes" {{ $course->hascertificate == 'yes' ? 'selected' : ''}}>Yes</option>
+                            <select class="form-control" name="certificateStyle"> 
+                                <option value="">Select Below</option>
+                                @foreach ($certificates as $certificate) 
+                                    <option value="{{ $certificate->id }}" {{ $certificate->course_id ==  $course->id ? 'selected' : ''}}>{{ $certificate->course->title }}</option>
+                                @endforeach
+                                
                             </select>
                             <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down"
                                 class="img-fluid euro" style="top: 3rem">
