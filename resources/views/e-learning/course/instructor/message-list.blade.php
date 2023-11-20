@@ -896,4 +896,17 @@
     </script>
 
     <script></script>
+
+    <script>
+        function displayFileName() { 
+            var input = document.getElementById('attached');
+     
+            var fileName = input.files[0].name;
+    
+            // Display the file name in a paragraph element
+            var fileNameElement = document.getElementById('chat-message-input');
+            fileNameElement.placeholder = fileName;
+        }
+    </script>
+
 @endsection

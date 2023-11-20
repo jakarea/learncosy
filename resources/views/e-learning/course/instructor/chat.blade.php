@@ -56,7 +56,7 @@
                             @if (in_array(strtolower($extension), $allowedImageExtensions))
                                 <div class="single-chat-image">
                                     <a href="{{ asset('storage/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
-                                        <img src="{{ asset('storage/chat/'.$message->file) }}" alt=""/>
+                                        <img src="{{ asset('storage/chat/'.$message->file) }}" alt="Image" class="img-fluid">
                                     </a>
                                 </div>
                             @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
@@ -92,22 +92,30 @@
 
 
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-    <div class="message-send-box">
-        <div class="form-group">
-            <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message" name="message">
+    <div class="dock-bottom">
+        <div class="message-send-box">
+            <div class="form-group">
+                <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message" name="message">
+            </div>
+            <div class="file-attach-bttns">
+                {{-- <button type="button" class="btn btn-emoji">
+                    <img src="{{ asset('latest/assets/images/icons/messages/wmoji.svg') }}" alt="Avatar"
+                        class="img-fluid">
+                </button> --}}
+                {{-- <button type="button" class="btn btn-emoji">
+                   
+                </button> --}}
+               
+                <label for="attached">
+                    <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}" alt="Avatar" class="img-fluid">
+                </label>
+                <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
+                <button class="btn btn-submit" type="submit">
+                    Send
+                </button>
+            </div>
         </div>
-        <div class="file-attach-bttns">
-            {{-- <button type="button" class="btn btn-emoji">
-                <img src="{{ asset('latest/assets/images/icons/messages/wmoji.svg') }}" alt="Avatar"
-                    class="img-fluid">
-            </button> --}}
-            <button type="button" class="btn btn-emoji">
-                <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}" alt="Avatar" class="img-fluid">
-            </button>
-            <input type="file" name="file">
-            <button class="btn btn-submit" type="submit">
-                Send
-            </button>
-        </div>
-    </div>
+    </div> 
 </form>
+
+
