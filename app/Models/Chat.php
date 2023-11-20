@@ -13,6 +13,15 @@ class Chat extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'from', 'id');
+        return $this->belongsTo(User::class, 'receiver_id', 'id');
+    }
+
+    public function scopeLastMessagePerUser($query)
+    {
+        return $query->whereIn('id', function ($subquery) {
+            $subquery->selectRaw('MAX(id)')
+                ->from('chats')
+                ->groupBy('sender_id','receiver_id');
+        });
     }
 }
