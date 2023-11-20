@@ -41,11 +41,10 @@
                                     <h4>Create Group</h4>
 
                                     @include('e-learning.course.instructor.group-admin.admin-info')
-                                    <form method="post" id="createGroup" action="{{ route('course.messages.group') }}">
+                                    <form method="post" class="createGroup" action="{{ route('course.messages.group') }}">
                                         <div class="form-group">
                                             <label for="">Group Name</label>
-                                            <input type="text" placeholder="Group Name" class="form-control"
-                                                name="name">
+                                            <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Add People</label>
@@ -455,17 +454,16 @@
                     <div class="create-group-form">
                         <h4>Create Group</h4>
                         @include('e-learning.course.instructor.group-admin.admin-info')
-                        <form method="post" id="createGroup" action="{{ route('course.messages.group') }}">
+                        <form method="post" class="createGroupModal" action="{{ route('course.messages.group') }}">
                             <div class="form-group">
                                 <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control" name="name">
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Add People</label>
                                 <input type="text" placeholder="Name" class="form-control search-group-chat-user">
                                 <input class="addUserId" type="hidden" name="user_id">
-                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
-                                    class="img-fluid">
+                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
                             </div>
                             {{-- suggested name box --}}
                             <div class="suggested-name-box load-suggested-people"></div>
@@ -582,21 +580,22 @@
         $(document).ready(function() {
             $(".search-group-chat-user").on("keyup click paste", function(e) {
                 e.preventDefault();
-                searchUser(this.value, ".load-chat-user-for-group", "layout1");
+                searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
             });
         });
-
 
         // Search group chat user
         $(document).ready(function() {
             $(".search-chat-user").on("keyup click paste", function(e) {
                 e.preventDefault();
-                searchUser(this.value, ".chat-user-load", "layout2");
+                searchUser($.trim(this.value), ".chat-user-load", "layout2");
             });
         });
 
         // Search User
         function searchUser(searchTerm, resultContainer, layout) {
+            searchTerm = $.trim(searchTerm);
+            console.log(searchTerm);
             if (searchTerm !== "") {
                 $.ajax({
                     url: "{{ route('course.messages.search') }}",
@@ -609,6 +608,8 @@
                         $(resultContainer).html(data);
                     }
                 });
+            }else{
+                $(".load-chat-user-for-group").empty();
             }
         }
 
@@ -650,44 +651,6 @@
             }
             $('#' + userId).remove();
         });
-
-        // $(document).on("click", ".districtData", function() {
-        //     $(".search-preferred-district").toggle();
-        //     $("#searchDivision").val("");
-        //     var districtName = $(this).data("distict-name");
-        //     var districtId = $(this).data("distict-id");
-        //     var divisionId = $(this).data("division-id");
-
-        //     console.log(districtId);
-
-        //     if ($(".appendDistrict span[distId=" + districtId + "]").length == 0) {
-        //         $(".existsDist").empty();
-
-        //         $(".appendDistrict").append(
-        //             '<span class="remove_value_check1 district" distId="' +
-        //             districtId +
-        //             '">' +
-        //             districtName +
-        //             '<span class="remove_chck1 removeDistrict">X</span></span><input type="hidden" name="district_id[]" value="' +
-        //             districtId +
-        //             '"><input type="hidden" name="division_id[]" value="' +
-        //             divisionId +
-        //             '">'
-        //         );
-        //     } else {
-        //         $(".division-exists").html(districtName + " already exists!");
-        //     }
-        // });
-
-        // $(document).on("click", ".appendDistrict .removeDistrict", function() {
-        //     $(this).closest(".district").remove();
-        // });
-
-
-
-
-
-
 
         // Delete single chat history
         document.addEventListener('click', function(event) {
@@ -733,8 +696,6 @@
                 cluster: 'ap2',
                 forceTLS: true
             });
-
-
 
 
             // <<<<<========== User Online Activity ===============>>>>>
@@ -811,25 +772,31 @@
                 });
             });
 
-            $(document).on('submit', '#chatMessage', function(e) {
-                e.preventDefault();
-                sendMessage();
-            });
-
-            // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
-            //     alert("hi")
-            //     if (event.which === 13) {
-            //         event.preventDefault();
-            //         sendMessage();
-            //     }
-            // });
+        });
 
 
-            $(document).on('submit', '#createGroup', function(e) {
-                e.preventDefault();
-                createGroup();
-            });
+        $(document).on('submit', '#chatMessage', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
 
+        // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
+        //     alert("hi")
+        //     if (event.which === 13) {
+        //         event.preventDefault();
+        //         sendMessage();
+        //     }
+        // });
+
+
+        $(document).on('submit', '.createGroup', function(e) {
+            e.preventDefault();
+            createGroup(".createGroup");
+        });
+
+        $(document).on('submit', '.createGroupModal', function(e) {
+            e.preventDefault();
+            createGroup(".createGroupModal");
         });
 
         // Send one to on chat message
@@ -866,8 +833,8 @@
         }
 
         // Create Group
-        function createGroup() {
-            var formData = new FormData($('#createGroup')[0]);
+        function createGroup(formSelector) {
+            var formData = new FormData($(formSelector)[0]);
 
             $.ajax({
                 type: "post",
@@ -878,10 +845,8 @@
                 cache: false,
                 success: function(data) {
                     toastr.success(data.success, 'Success');
-                    $(".adminName").html(data.adminName)
-                    $("#createGroup").load(location.href + " #createGroup>*", "");
                     if (data.success) {
-                        $('#createGroup')[0].reset();
+                        $(formSelector)[0].reset();
                     }
                 },
                 error: function(jqXHR, status, err) {
@@ -891,7 +856,6 @@
                     scrollToBottomFunc();
                 }
             });
-
         }
 
         // make a function to scroll down auto

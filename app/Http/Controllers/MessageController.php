@@ -14,8 +14,6 @@ use File;
 
 class MessageController extends Controller
 {
-    // message
-
 
     public function index(Request $request)
     {
@@ -142,6 +140,7 @@ class MessageController extends Controller
     {
         $searchTerm = $request->input('term');
         $layoutDesing = $request->input('layout');
+
 
         $data['users'] = DB::table('users')
             ->select(
