@@ -95,7 +95,7 @@ class MessageController extends Controller
     }
 
     public function sendChatMessage(Request $request)
-    {
+    { 
         $request->validate([
             'message' => 'required_without:file', // Message is required if file is not present
             'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
