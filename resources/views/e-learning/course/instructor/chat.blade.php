@@ -48,6 +48,7 @@
                         @if ($message->file)
                             @php
                                 $allowedImageExtensions = ['jpg', 'png', 'jpeg', 'gif'];
+                                $allowedVideoExtensions = ['webm','mkv','avi','wmv','amv','mp4','mpg','mpeg','m4v','3gp','flv'];
                                 $allowedDocumentExtensions = ['pdf', 'zip', 'doc','docx'];
                                 $extension = pathinfo($message->file, PATHINFO_EXTENSION);
                             @endphp
@@ -58,7 +59,8 @@
                                         <img src="{{ asset('storage/chat/'.$message->file) }}" alt=""/>
                                     </a>
                                 </div>
-
+                            @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
+                                <video src="{{ asset('storage/chat/'.$message->file) }}"></video>
                             @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                                 @if (strtolower($extension) === 'zip')
                                     <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">

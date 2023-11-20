@@ -41,117 +41,31 @@
                                     <h4>Create Group</h4>
 
                                     @include('e-learning.course.instructor.group-admin.admin-info')
-                                    <form method="post" id="createGroup" action="{{ route('course.messages.group') }}">
+                                    <form method="post" class="createGroup" action="{{ route('course.messages.group') }}">
                                         <div class="form-group">
                                             <label for="">Group Name</label>
-                                            <input type="text" placeholder="Group Name" class="form-control"
-                                                name="name">
+                                            <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Add People</label>
-                                            <input type="text" placeholder="Name" class="form-control">
+                                            <input type="text" placeholder="Name"
+                                                class="form-control search-group-chat-user">
+                                            <input class="addUserId" type="hidden" name="user_id">
                                             <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
                                                 class="img-fluid">
                                         </div>
                                         {{-- suggested name box --}}
-                                        <div class="suggested-name-box">
-                                            {{-- suggested person --}}
-                                            <div>
-                                                <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt=""
-                                                    class="img-fluid">
-                                                <span>Mollie Hall</span>
-                                                <a href="#">
-                                                    <i class="fas fa-close"></i>
-                                                </a>
-                                            </div>
-                                            {{-- suggested person --}}
-                                            {{-- suggested person --}}
-                                            <div>
-                                                <img src="{{ asset('latest/assets/images/avatar.png') }}" alt=""
-                                                    class="img-fluid">
-                                                <span>Mollie Hall</span>
-                                                <a href="#">
-                                                    <i class="fas fa-close"></i>
-                                                </a>
-                                            </div>
-                                            {{-- suggested person --}}
-                                            {{-- suggested person --}}
-                                            <div>
-                                                <img src="{{ asset('latest/assets/images/update-5.png') }}" alt=""
-                                                    class="img-fluid">
-                                                <span>Mollie Hall</span>
-                                                <a href="#">
-                                                    <i class="fas fa-close"></i>
-                                                </a>
-                                            </div>
-                                            {{-- suggested person --}}
-                                        </div>
+                                        <div class="suggested-name-box load-suggested-people"></div>
                                         {{-- suggested name box --}}
 
                                         {{-- person list box start --}}
-                                        <div class="person-box-list person-tab-body">
-
-                                            {{-- person --}}
-                                            <div class="single-person border-0">
-                                                <div class="media p-0 border-0">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('latest/assets/images/update-5.png') }}"
-                                                            alt="Avatar" class="img-fluid me-0">
-                                                        <i class="fas fa-circle"></i>
-                                                    </div>
-
-                                                    <div class="media-body">
-                                                        <div class="name">
-                                                            <a href="#" class="name">Katherine Moss</a>
-                                                        </div>
-                                                        <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{-- person --}}
-                                            {{-- person --}}
-                                            <div class="single-person border-0">
-                                                <div class="media p-0 border-0">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('latest/assets/images/update-4.png') }}"
-                                                            alt="Avatar" class="img-fluid me-0">
-                                                        <i class="fas fa-circle"></i>
-                                                    </div>
-
-                                                    <div class="media-body">
-                                                        <div class="name">
-                                                            <a href="#" class="name">Katherine Moss</a>
-                                                        </div>
-                                                        <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{-- person --}}
-                                            {{-- person --}}
-                                            <div class="single-person border-0">
-                                                <div class="media p-0 border-0">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('latest/assets/images/update-3.png') }}"
-                                                            alt="Avatar" class="img-fluid me-0">
-                                                        <i class="fas fa-circle"></i>
-                                                    </div>
-
-                                                    <div class="media-body">
-                                                        <div class="name">
-                                                            <a href="#" class="name">Katherine Moss</a>
-                                                        </div>
-                                                        <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{-- person --}}
-
-                                        </div>
+                                        <div class="person-box-list person-tab-body load-chat-user-for-group"
+                                            id="load-chat-user-for-group"></div>
                                         {{-- person list box end --}}
 
                                         {{-- form submit --}}
                                         <div class="form-submit">
-                                            <button class="btn btn-cancel">Cancel</button>
+                                            <button type="reset" class="btn btn-cancel">Cancel</button>
                                             <button type="submit" class="btn btn-create">Create</button>
                                         </div>
                                         {{-- form submit --}}
@@ -172,8 +86,8 @@
                                     <div class="dropdown">
                                         <button class="btn" type="button" data-bs-toggle="dropdown"
                                             aria-expanded="false">
-                                            <img src="{{ asset('latest/assets/images/icons/filter-2.svg') }}"
-                                                alt="ic" class="img-fluid"> All Chat
+                                            <img src="{{ asset('latest/assets/images/icons/filter-2.svg') }}" alt="ic"
+                                                class="img-fluid"> All Chat
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item active" href="#">All Chat</a></li>
@@ -187,7 +101,7 @@
                             {{-- leftbar person list start --}}
                             <div class="person-tab-body chat-user-load" id="chat-user-load">
                                 {{-- single person start --}}
-                                @include('e-learning.course.instructor.chat-user.users')
+                                @include('e-learning.course.instructor.chat-user.search-users')
                                 {{-- single person end --}}
 
                             </div>
@@ -377,8 +291,7 @@
 
     {{-- add people to group modal start --}}
     <div class="custom-modal-box">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="create-group-form">
@@ -445,8 +358,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- person --}}
-                                {{-- person --}}
+
                                 <div class="single-person border-0">
                                     <div class="media p-0 border-0">
                                         <div class="avatar">
@@ -463,8 +375,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- person --}}
-                                {{-- person --}}
+
                                 <div class="single-person border-0">
                                     <div class="media p-0 border-0">
                                         <div class="avatar">
@@ -481,8 +392,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- person --}}
-                                {{-- person --}}
+
                                 <div class="single-person border-0">
                                     <div class="media p-0 border-0">
                                         <div class="avatar">
@@ -499,8 +409,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- person --}}
-                                {{-- person --}}
+
                                 <div class="single-person border-0">
                                     <div class="media p-0 border-0">
                                         <div class="avatar">
@@ -544,126 +453,30 @@
                 <div class="modal-content">
                     <div class="create-group-form">
                         <h4>Create Group</h4>
-
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="a"
-                                class="img-fluid">
-                            <div class="media-body">
-                                <h6>Phoenix Baker</h6>
-                                <p>Admin</p>
-                            </div>
-                        </div>
-                        <form action="">
+                        @include('e-learning.course.instructor.group-admin.admin-info')
+                        <form method="post" class="createGroupModal" action="{{ route('course.messages.group') }}">
                             <div class="form-group">
                                 <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control">
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Add People</label>
-                                <input type="text" placeholder="Name" class="form-control">
-                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
-                                    class="img-fluid">
+                                <input type="text" placeholder="Name" class="form-control search-group-chat-user">
+                                <input class="addUserId" type="hidden" name="user_id">
+                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
                             </div>
                             {{-- suggested name box --}}
-                            <div class="suggested-name-box">
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/avatar.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/update-5.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                            </div>
+                            <div class="suggested-name-box load-suggested-people"></div>
                             {{-- suggested name box --}}
 
                             {{-- person list box start --}}
-                            <div class="person-box-list person-tab-body">
-
-                                {{-- person --}}
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- person --}}
-                                {{-- person --}}
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- person --}}
-                                {{-- person --}}
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>You: Sure thing, I’ll have a l.. <span>12m</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- person --}}
-
-                            </div>
+                            <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
                             {{-- person list box end --}}
 
                             {{-- form submit --}}
                             <div class="form-submit">
-                                <button class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                                <button class="btn btn-create">Create</button>
+                                <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-create">Create</button>
                             </div>
                             {{-- form submit --}}
                         </form>
@@ -765,22 +578,78 @@
     <script>
         // Search single chat user
         $(document).ready(function() {
+            $(".search-group-chat-user").on("keyup click paste", function(e) {
+                e.preventDefault();
+                searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
+            });
+        });
+
+        // Search group chat user
+        $(document).ready(function() {
             $(".search-chat-user").on("keyup click paste", function(e) {
                 e.preventDefault();
-                let searchTerm = $(this).val().trim();
-                if (searchTerm !== "") {
-                    $.ajax({
-                        url: "{{ route('course.messages.search') }}",
-                        type: 'GET',
-                        data: {
-                            term: searchTerm
-                        },
-                        success: function(data) {
-                            $(".chat-user-load").html(data);
-                        }
-                    });
+                searchUser($.trim(this.value), ".chat-user-load", "layout2");
+            });
+        });
+
+        // Search User
+        function searchUser(searchTerm, resultContainer, layout) {
+            searchTerm = $.trim(searchTerm);
+            console.log(searchTerm);
+            if (searchTerm !== "") {
+                $.ajax({
+                    url: "{{ route('course.messages.search') }}",
+                    type: 'GET',
+                    data: {
+                        term: searchTerm,
+                        layout: layout
+                    },
+                    success: function(data) {
+                        $(resultContainer).html(data);
+                    }
+                });
+            }else{
+                $(".load-chat-user-for-group").empty();
+            }
+        }
+
+
+        // Load suggested user
+        var existsUsers = [];
+        $(document).on('click', '.suggest-people', function() {
+            var userId = $(this).attr('id');
+            $.ajax({
+                type: "get",
+                url: "{{ route('course.messages.suggested.people') }}",
+                data: {
+                    userId: userId
+                },
+                success: function(data) {
+                    if ($.inArray(userId, existsUsers) === -1) {
+                        existsUsers.push(userId);
+                        $('.load-suggested-people').append(data);
+                        $(".addUserId").val(function(_, currentValues) {
+                            return currentValues ? currentValues + ',' + userId : userId;
+                        });
+                    } else {
+                        toastr.error('User already exits!!', 'Error');
+                    }
                 }
             });
+        });
+
+        // Remove suggested people
+        $(document).on('click', '.remove-suggested-people', function() {
+            var userId = $(this).closest(".suggest-user").attr('id');
+
+            userId = parseInt(userId, 10);
+            var indexToRemove = existsUsers.indexOf(userId.toString());
+            if (indexToRemove !== -1) {
+                existsUsers.splice(indexToRemove, 1);
+
+                $(".addUserId").val(existsUsers.join(','));
+            }
+            $('#' + userId).remove();
         });
 
         // Delete single chat history
@@ -829,8 +698,6 @@
             });
 
 
-
-
             // <<<<<========== User Online Activity ===============>>>>>
 
             // var channel = pusher.subscribe('my-channel');
@@ -866,23 +733,22 @@
 
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
-                    $('#' + data.to).click();
+                    $('#user_' + data.to).click();
                 } else if (my_id == data.to) {
                     if (receiver_id == data.from) {
-                        // if receiver is selected, reload the selected user ...
-                        $('#' + data.from).click();
+                        // If the receiver is selected, reload the selected user...
+                        $('#user_' + data.from).click();
                     } else {
-                        // if receiver is not seleted, add notification for that user
-                        var pending = parseInt($('#' + data.from).find('.pending').html());
+                        // If the receiver is not selected, add a notification for that user
+                        var pending = parseInt($('#user_' + data.from).find('.pending').html());
 
                         if (pending) {
-                            $('#' + data.from).find('.pending').html(pending + 1);
+                            $('#user_' + data.from).find('.pending').html(pending + 1);
                         } else {
-                            $('#' + data.from).append('<span class="pending">1</span>');
+                            $('#user_' + data.from).append('<span class="pending">1</span>');
                         }
                     }
                 }
-
             });
 
             $(document).on('click', '.user', function() {
@@ -890,7 +756,8 @@
                 $(this).addClass('active');
                 $(this).find('.pending').remove();
 
-                receiver_id = $(this).attr('id');
+                var user_receive_id = $(this).attr('id');
+                receiver_id =  user_receive_id.split('_')[1];
                 $.ajax({
                     type: "get",
                     url: '/course/messages/chat/' + receiver_id, // need to create this route
@@ -905,29 +772,34 @@
                 });
             });
 
-            $(document).on('submit', '#chatMessage', function(e) {
-                e.preventDefault();
-                sendMessage();
-            });
-
-            // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
-            //     alert("hi")
-            //     if (event.which === 13) {
-            //         event.preventDefault();
-            //         sendMessage();
-            //     }
-            // });
-
-
-            $(document).on('submit', '#createGroup', function(e) {
-                e.preventDefault();
-                createGroup();
-            });
-
-
-
         });
 
+
+        $(document).on('submit', '#chatMessage', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+
+        // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
+        //     alert("hi")
+        //     if (event.which === 13) {
+        //         event.preventDefault();
+        //         sendMessage();
+        //     }
+        // });
+
+
+        $(document).on('submit', '.createGroup', function(e) {
+            e.preventDefault();
+            createGroup(".createGroup");
+        });
+
+        $(document).on('submit', '.createGroupModal', function(e) {
+            e.preventDefault();
+            createGroup(".createGroupModal");
+        });
+
+        // Send one to on chat message
         function sendMessage() {
             // var messageText = $('.chat-message-input').emojioneArea().getText();
             var formData = new FormData($('#chatMessage')[0]);
@@ -946,6 +818,7 @@
                     success: function(data) {
                         $('.chat-message-input').val('');
                         $('.chat-message-input').emojioneArea().val('');
+                        $('#chatMessage')[0].reset();
 
                     },
                     error: function(jqXHR, status, err) {
@@ -959,8 +832,9 @@
             }
         }
 
-        function createGroup() {
-            var formData = new FormData($('#createGroup')[0]);
+        // Create Group
+        function createGroup(formSelector) {
+            var formData = new FormData($(formSelector)[0]);
 
             $.ajax({
                 type: "post",
@@ -971,8 +845,9 @@
                 cache: false,
                 success: function(data) {
                     toastr.success(data.success, 'Success');
-                    $(".adminName").html(data.adminName)
-                    $("#createGroup").load(location.href + " #createGroup>*", "");
+                    if (data.success) {
+                        $(formSelector)[0].reset();
+                    }
                 },
                 error: function(jqXHR, status, err) {
                     toastr.error('Something went wrong!', 'Error');
@@ -981,7 +856,6 @@
                     scrollToBottomFunc();
                 }
             });
-
         }
 
         // make a function to scroll down auto
