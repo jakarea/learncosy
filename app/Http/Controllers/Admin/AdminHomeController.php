@@ -6,7 +6,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
-use App\Models\Message;
+use App\Models\Chat;
 use App\Models\Notification;
 use App\Models\Checkout;
 use App\Models\Subscription;
@@ -68,7 +68,7 @@ class AdminHomeController extends Controller
             ->get();
 
 
-        $lastMessages = Message::lastMessagePerUser()->with('user')->take(10)->get();
+        $lastMessages = Chat::lastMessagePerUser()->with('user')->take(10)->get();
 
          //9
         $currentMonthStart = $this->currentMonthStart;
