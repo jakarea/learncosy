@@ -19,30 +19,22 @@ class MessageController extends Controller
     public function index(Request $request)
     {
         $data['adminInfo'] = Auth::user();
-        $data['users'] = DB::table('users')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.avatar',
-                'users.email',
-                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE chats.receiver_id = ' . Auth::id() . ' AND chats.sender_id = users.id ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE chats.sender_id = ' . Auth::id() . ' AND chats.receiver_id = users.id ORDER BY created_at DESC LIMIT 1) AS sent_file'),
-            )
-            ->selectRaw('COUNT(chats.is_read) as unread')
-            ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.sender_id')
-                    ->where([
-                        ['chats.is_read', 0],
-                        ['chats.receiver_id', Auth::id()],
-                    ]);
-            })
-            ->where('users.id', '!=', Auth::id())
-            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-            ->get();
+        $data['users'] = User::select(
+            'users.id',
+            'users.name',
+            'users.avatar',
+            'users.email',
+        )
+        ->withCount([
+            'chats as unread' => function ($query) {
+                $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            },
+        ])
+        ->where('users.id', '!=', Auth::id())
+        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+        ->get();
 
-        // select channels that User Subscribe
-        $data['groups'] = Group::whereHas('participants')->get();
+        $data['groups'] = Group::whereHas('participants')->latest()->get();
 
         // $userId = Auth::id();
         // return $data['users']=  Chat::join(DB::raw('(SELECT
@@ -51,7 +43,7 @@ class MessageController extends Controller
         // MAX(created_at) AS last_message_time
         // FROM chats
         // WHERE sender_id = ? OR receiver_id = ?
-        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($join) {
+        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($jToin) {
         //     $join->on(DB::raw('LEAST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.min_user_id')
         //          ->on(DB::raw('GREATEST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.max_user_id')
         //          ->on('chats.created_at', '=', 'subquery.last_message_time');
@@ -74,15 +66,11 @@ class MessageController extends Controller
 
     public function getChatMessage($user_id)
     {
-
         $my_id = Auth::id();
-
         $data['friend'] = User::findOrFail($user_id);
-
 
         // Make read all unread message
         Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
-
 
         // Get all message from selected user
         $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
@@ -95,7 +83,7 @@ class MessageController extends Controller
     }
 
     public function sendChatMessage(Request $request)
-    { 
+    {
         $request->validate([
             'message' => 'required_without:file', // Message is required if file is not present
             'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
@@ -139,43 +127,86 @@ class MessageController extends Controller
         $pusher->trigger('my-channel', 'my-event', $data);
     }
 
+    // public function sendGroupMessage(Request $request, $groupId)
+    // {
+
+    //     $request->validate([
+    //         'message' => 'required_without:file', // Message is required if file is not present
+    //         'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
+    //     ]);
+
+    //     $sender_Id = Auth::id();
+    //     $receiver_id = $request->receiver_id;
+    //     $message = $request->message;
+
+    //     $data = new Chat();
+    //     $data->sender_id = $sender_Id;
+    //     $data->receiver_id = $receiver_id;
+    //     $data->group_id = $groupId;
+    //     $data->message = $message;
+    //     $data->type = 2;
+    //     $data->is_read = false;
+    //     $data->save();
+
+    //     if ($request->hasFile('file')) {
+    //         $file = $request->file('file');
+    //         $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+    //         $fileName = $file->storeAs('chat', $image, 'public');
+    //         $data->update([
+    //             'file' => $image,
+    //             'file_extension' => $file->getClientOriginalExtension(),
+    //         ]);
+    //     }
+
+    //     // pusher
+    //     $options = array(
+    //         'cluster' => 'ap2',
+    //         'useTLS' => true
+    //     );
+
+    //     $pusher = new Pusher(
+    //         env('PUSHER_APP_KEY'),
+    //         env('PUSHER_APP_SECRET'),
+    //         env('PUSHER_APP_ID'),
+    //         $options
+    //     );
+
+    //     $data = ['from' => $sender_Id, 'to' => $receiver_id];
+    //     $pusher->trigger('my-channel', 'my-event', $data);
+
+
+    // }
+
 
     public function searchChatUser(Request $request)
     {
+        // dd( $request->all());
         $searchTerm = $request->input('term');
         $layoutDesing = $request->input('layout');
 
+        $data['users'] = User::select(
+            'users.id',
+            'users.name',
+            'users.avatar',
+            'users.email',
+        )
+        ->withCount([
+            'chats as unread' => function ($query) {
+                $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            },
+        ])
+        ->where('users.id', '!=', Auth::id())
+        ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
+        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+        ->get();
 
-        $data['users'] = DB::table('users')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.avatar',
-                'users.email',
-                DB::raw('COUNT(chats.is_read) as unread'),
-                DB::raw('(SELECT message FROM chats WHERE (chats.sender_id = users.id OR chats.receiver_id = users.id) ORDER BY created_at DESC LIMIT 1) AS last_message'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.sender_id = users.id AND chats.receiver_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS received_file'),
-                DB::raw('(SELECT file FROM chats WHERE (chats.receiver_id = users.id AND chats.sender_id = ' . Auth::id() . ' AND file IS NOT NULL) ORDER BY created_at DESC LIMIT 1) AS sent_file')
-            )
-            ->selectRaw('COUNT(chats.is_read) as unread')
-            ->leftJoin('chats', function ($join) {
-                $join->on('users.id', '=', 'chats.sender_id')
-                    ->where([
-                        ['chats.is_read', 0],
-                        ['chats.receiver_id', Auth::id()],
-                    ]);
-            })
-            ->where('users.id', '!=', Auth::id())
-            ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
-            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-            ->get();
+        // dd( $data['users']->toArray() );
 
-            if( $layoutDesing == "layout1" ){
-                return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
-            }else{
-                return view('e-learning.course.instructor.chat-user.search-users', $data);
-            }
-
+        if( $layoutDesing == "layout1" ){
+            return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
+        }else{
+            return view('e-learning.course.instructor.chat-user.search-users', $data);
+        }
 
     }
 
