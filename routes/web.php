@@ -189,13 +189,13 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
     Route::post('/chat', 'sendChatMessage');
     Route::get('/search-user', 'searchChatUser')->name('course.messages.search');
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('course.messages.file.download');
+    Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('course.messages.delete.singlechat');
+});
 
-    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
-    // Route::post('/', 'sendMessage')->name('message-send');
-    // Route::get('/send/{id}', 'send')->name('get.message');
-    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+// Group message
+Route::middleware('auth')->prefix('course/messages')->controller(GroupController::class)->group(function () {
+    Route::post('/create-group', 'createGroup')->name('course.messages.group');
+    Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('course.messages.suggested.people');
 });
 /* ============================================================= */
 /* ===================== Instructor Routes ===================== */
