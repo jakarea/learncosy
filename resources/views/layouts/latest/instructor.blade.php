@@ -34,6 +34,7 @@
 
     {{-- Light box image popup --}}
     <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- Emoji --}}
     <link href="{{ asset('emoji/emojionearea.min.css') }}" rel="stylesheet" type="text/css" />
 
     {{-- Toaster notification css --}}
@@ -79,7 +80,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('emoji/emojionearea.min.js') }}"></script>
+    <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
     {{-- dark mode js --}}
     <script>
         const htmlBody = document.querySelector("body");

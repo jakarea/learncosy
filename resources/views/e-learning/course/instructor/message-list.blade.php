@@ -101,6 +101,7 @@
                             {{-- leftbar person list start --}}
                             <div class="person-tab-body chat-user-load" id="chat-user-load">
                                 {{-- single person start --}}
+                                {{-- @include('e-learning.course.instructor.message-group.group-list') --}}
                                 @include('e-learning.course.instructor.chat-user.search-users')
                                 {{-- single person end --}}
 
