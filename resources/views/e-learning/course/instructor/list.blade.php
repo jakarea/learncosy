@@ -135,7 +135,24 @@ All Courses
                         @else
                         <h5>€ {{ $course->price }}</h5>
                         @endif
-                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
+
+                        @if ($course->sale_count)
+                        <div>
+                            <span class="sold-item">
+                                @if($course->sale_count == 0)
+                                No Sold Yet
+                                @elseif($course->sale_count == 1)
+                                Sold 1 Time
+                                @else
+                                Sold {{ $course->sale_count }} Times
+                                @endif
+                            </span>
+
+                        </div>
+                        @else
+                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}"
+                            class="view-as-bttn">Overview</a>
+                        @endif 
                     </div>
                 </div>
             </div>

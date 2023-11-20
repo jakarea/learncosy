@@ -139,7 +139,9 @@
                                 
                                 <h5>
                                     @if ($payment->instructor && $payment->instructor->name)
-                                        {{$payment->instructor->name}}
+                                        <a href="{{url('admin/instructor/profile/'.$payment->instructor->id)}}">
+                                            {{$payment->instructor->name}}
+                                        </a>
                                     @else 
                                         <u class="text-danger">user not found!</u>
                                     @endif
