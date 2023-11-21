@@ -112,7 +112,7 @@
 
                         {{-- chat body right side start --}}
                         <div class="chat-main-body-box">
-
+                            
                             {{-- view profile box start --}}
                             {{-- <div class="view-profile-box" id="profileBox">
                                 <div class="profile-box">
