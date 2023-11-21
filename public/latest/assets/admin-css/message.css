@@ -614,8 +614,26 @@
   background: #F1F4F9;
 }
 
+.create-group-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.create-group-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.create-group-form::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.create-group-form::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .create-group-form {
   padding: 1.5em;
+  max-height: 20rem;
+  overflow-y: scroll;
 }
 .create-group-form h4 {
   color: var(--neutral-90, #101C2D);
