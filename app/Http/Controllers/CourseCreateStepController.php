@@ -567,8 +567,10 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+       $certificates = Certificate::where('instructor_id', Auth::user()->id)->with('course')->get();
+
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        return view('e-learning/course/instructor/create/step-9',compact('course'));
+        return view('e-learning/course/instructor/create/step-9',compact('course','certificates'));
     }
 
     public function courseCertificateSet(Request $request, $id){
@@ -576,13 +578,19 @@ class CourseCreateStepController extends Controller
         if(!$id){
             return redirect('instructor/courses');
         }
-
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
             'sample_certificates' => 'nullable|file|mimes:jpg,png,pdf,svg|max:5121',
-            'hascertificate' => 'required',
         ]);
+
+        $certificateStyle = Certificate::find($request->certificateStyle);
+
+        if ($certificateStyle) {
+            $newCertificateStyle = $certificateStyle->replicate(); 
+            $newCertificateStyle->course_id = $id; 
+            $newCertificateStyle->save();
+        }
 
         $image_path = 'uploads/courses/sample_certificates.jpg';
 
@@ -594,12 +602,11 @@ class CourseCreateStepController extends Controller
             $image->save(public_path('uploads/courses/sample_certificates_') . $course->slug . '.jpg');
         }
 
-        // Store other form data
-        $course->hascertificate = $request->input('hascertificate');
+        // Store other form data 
         $course->sample_certificates = $image_path;
         $course->save();
 
-        return redirect('instructor/courses/create/'.$course->id.'/visibility')->with('success', 'Course Sample Certificate Set successfully');
+        return redirect('instructor/courses/create/'.$course->id.'/visibility')->with('success', 'Course Certificate Set successfully');
     }
 
     public function visibility($id){
