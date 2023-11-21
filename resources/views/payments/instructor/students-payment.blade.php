@@ -107,10 +107,10 @@
                 <div class="subscription-table-wrap payment-table-admin">
                     @if (count($enrolments) > 0) 
                     {{-- filter form --}}
-            <form action="" method="GET" id="myForm">
-                <input type="hidden" name="status" id="inputField">
-            </form>
-            {{-- filter form --}}
+                    <form action="" method="GET" id="myForm">
+                        <input type="hidden" name="status" id="inputField">
+                    </form>
+                    {{-- filter form --}}
                     <table>
                         <tr>
                             <th width="3%">No</th>

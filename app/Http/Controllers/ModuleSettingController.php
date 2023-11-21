@@ -22,16 +22,16 @@ class ModuleSettingController extends Controller
         //
         $module_settings = InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
         if ( $module_settings ) {
-        $module_settings->value = json_decode($module_settings->value);
-        }
+         $module_settings->value = json_decode($module_settings->value);
+        } 
+
         return view('theme-settings/settings', compact('module_settings'));
     }
     public function dnsTheme()
     {
-        //
         $module_settings = InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
-        if ( $module_settings ) {
-        $module_settings->value = json_decode($module_settings->value);
+        if ($module_settings) {
+            $module_settings->value = json_decode($module_settings->value);
         }
         return view('theme-settings/theme-dns-settings', compact('module_settings'));
     }
@@ -234,7 +234,7 @@ class ModuleSettingController extends Controller
             }
         }
 
-        $value = ["primary_color" => "#f4f8fc","secondary_color"=>"#294cff","lp_layout"=>"","meta_title"=>"","meta_desc"=>""];
+        $value = ["primary_color" => "#f4f8fc","menu_color" => "#000000","secondary_color"=>"#294cff","lp_layout"=>"","meta_title"=>"","meta_desc"=>""];
         $item->value = json_encode($value);
         $item->logo = null;
         $item->lp_bg_image = null;

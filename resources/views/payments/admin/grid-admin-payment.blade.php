@@ -22,11 +22,27 @@
                         class="img-fluid dark-ele">
                     <h5>Total Earnings</h5>
 
-                    <span class="green">
-                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
+                    @php 
+                        $percenTageAlltimeEarnings = 0; 
+
+                        $earningsLastTwoYears = ($earningsLastTwoYears == 0) ? 1 : $earningsLastTwoYears; 
+                        $lastOneyear = ($lastOneyear == 0) ? 1 : $lastOneyear; 
+                        
+                        if ($earningsLastTwoYears != 0 && $lastOneyear != 0) {
+                            $percenTageAlltimeEarnings = (($lastOneyear - $earningsLastTwoYears) / $earningsLastTwoYears) * 100;
+                        }
+                    @endphp
+
+                    <span class="{{ $percenTageAlltimeEarnings < 0 ? 'red' : '' }}">
+                        @if ($percenTageAlltimeEarnings < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ number_format($percenTageAlltimeEarnings,0) }}%
                     </span>
 
-                    <h4>€ 24</h4>
+                    <h4>€ {{ $lastOneyear }}</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -35,14 +51,25 @@
                         class="img-fluid light-ele">
                     <img src="{{asset('latest/assets/images/icons/ear-02-d.svg')}}" alt="ear-01"
                         class="img-fluid dark-ele">
-                    <h5>Earnings Today</h5>
+                    <h5>Earnings Today</h5> 
 
+                    @php 
+                        $percentageChangeTodayEarnongs = 0; 
+                        if ($earningsYesterday !=0 ) {
+                            $percentageChangeTodayEarnongs = (($earningsToday - $earningsYesterday) / $earningsYesterday) * 100;
+                        }
+                    @endphp
 
-                    <span class="green">
-                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid"> 10%
+                    <span class="{{ $percentageChangeTodayEarnongs < 0 ? 'red' : '' }}">
+                        @if ($percentageChangeTodayEarnongs < 0 )
+                        <img src="{{asset('latest/assets/images/icons/down-red.svg')}}" alt="icon" class="img-fluid">
+                        @else 
+                        <img src="{{asset('latest/assets/images/icons/upgrade.svg')}}" alt="icon" class="img-fluid">
+                        @endif
+                        {{ $percentageChangeTodayEarnongs }}%
                     </span>
-
-                    <h4>€ 12</h4>
+                    
+                    <h4>€ {{ $earningsToday }}</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -57,7 +84,7 @@
                     </span>
 
                     <h5>Total Enrollments</h5>
-                    <h4> 1234 Instructor</h4>
+                    <h4> {{ $totalEnrollments }}</h4>
                 </div>
             </div>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
@@ -72,7 +99,7 @@
                     </span>
 
                     <h5>Enrolled Today</h5>
-                    <h4>1234 Students</h4>
+                    <h4>{{$enrollesToday}}</h4>
                 </div>
             </div>
         </div>
@@ -120,7 +147,7 @@
                                     </div>
                                 </div>
                             </th>
-                            <th width="12%">Instructor Name</th> 
+                            <th width="16%">Instructor Name</th> 
                             <th width="12%">Start at</th>
                             <th width="12%">End at</th>
                             <th>Amount</th>
@@ -143,7 +170,7 @@
                                             {{$payment->instructor->name}}
                                         </a>
                                     @else 
-                                        <u class="text-danger">user not found!</u>
+                                        <u class="text-danger">This user has been removed.</u>
                                     @endif
                                 </h5>
                             </td> 
@@ -166,7 +193,7 @@
                             <td> 
                                 <ul>
                                     <a href="#" class="btn-view btn-export">Export</a>
-                                    <a href="#" class="btn-view">View</a>
+                                    <a href="{{ url('admin/profile/platform-fee', encrypt($payment->stripe_plan)) }}" class="btn-view">View</a>
                                 </ul>
                             </td>
                         </tr>

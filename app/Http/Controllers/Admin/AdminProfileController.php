@@ -137,13 +137,9 @@ class AdminProfileController extends Controller
     }
 
     public function adminPayment()
-    {
-        // return 123456;
-
-        $instructors = []; 
+    { 
 
         $status = isset($_GET['status']) ? $_GET['status'] : ''; 
-        
         $enrolments = Subscription::with('instructor');
 
         if ($status) {
@@ -159,12 +155,56 @@ class AdminProfileController extends Controller
         }
 
         $enrolments = $enrolments->paginate(6); 
+ 
 
+        $today = Carbon::today();
+
+        // last one year
+        $oneYearAgo = Carbon::parse($today)->subYear();
+        $lastOneyear = $enrolments
+            ->where('start_at', '>=', $oneYearAgo)
+            ->where('start_at', '<', $today)
+            ->sum('amount'); 
+
+        // last 2 years
+        $oneTwoYearAgo = Carbon::parse($today)->subYears(2);
+        $earningsLastTwoYears = $enrolments
+            ->where('start_at', '>=', $oneTwoYearAgo)
+            ->where('start_at', '<', Carbon::parse($today)->subYears(1))
+            ->sum('amount');
+       
+        // todays earning
+        $earningsToday = $enrolments
+            ->where('start_at', '>=', $today)
+            ->where('start_at', '<', $today->copy()->addDay())
+            ->sum('amount'); 
+
+        // yesterday earnings
+        $yesterday = Carbon::parse($today)->subDay();
+        $earningsYesterday = $enrolments
+        ->where('start_at', '>=', $yesterday)
+        ->where('start_at', '<', $today)
+        ->sum('amount');
+
+        // total enrollments
+        $totalEnrollments = Checkout::count();
+        $enrollesToday = Checkout::
+            where('start_date', '>=', $today)
+            ->where('start_date', '<', $today->copy()->addDay())
+            ->count(); 
+
+        // today enrollments
         $todaysEnrolments = Subscription::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
 
-        // return $enrolments;
- 
-        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments'));
+        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments','earningsYesterday','lastOneyear','earningsLastTwoYears','earningsToday','totalEnrollments','enrollesToday'));
+    }
+
+    public function details($stripe_plan)
+    {
+        $stripe_plan = Crypt::decrypt($stripe_plan);
+
+        $payment = Subscription::where('stripe_plan',$stripe_plan)->with('instructor','subscriptionPakage')->first();
+        return view('payments/admin/details', compact('payment'));
     }
 
     public function export($payment_id){

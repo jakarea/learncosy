@@ -265,7 +265,6 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         // instructor payment history pages
         Route::prefix('payments')->controller(HomeController::class)->group(function () {
             Route::get('/', 'studentsPayment');
-
             Route::get('/{payment_id}', 'details');
             Route::get('/generate-pdf/{id}', 'generatePdf')->name('generate-pdf');
             Route::get('/invoice-mail/{id}', 'invoiceMail')->name('invoice-mail');
@@ -626,7 +625,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
             Route::get('/platform-fee', 'adminPayment');
-            Route::get('/platform-fee/data', 'adminPaymentData')->name('admin.admin-payment');
+            Route::get('/platform-fee/{stripe_plan}', 'details')->name('admin.payment.details');
             Route::get('/export/{id}', 'export')->name('export');
             Route::get('/view/{id}', 'view')->name('view');
             Route::get('/pdf-generate/{id}', 'generatePdf')->name('pdf-generate');
@@ -634,7 +633,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
     });
 });
-
+ 
 // Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {

@@ -10,8 +10,7 @@
 {{-- page style @S --}}
 
 {{-- page content @S --}}
-@section('content')
-    <!-- === package edit page @S === -->
+@section('content') 
     <main class="subscription-edit-page">
         <div class="container-fluid"> 
             <div class="row">
@@ -145,14 +144,15 @@
                 </div>
             </div>
         </div>
-    </main>
-    <!-- === package edit page @E === -->
+    </main> 
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    {{-- form save js --}}
+    <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+    
     <script>
         const urlBttn = document.querySelector('#feature_increment');
         let extraFields = document.querySelector('.feature-extra-field');
