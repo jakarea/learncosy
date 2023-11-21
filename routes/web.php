@@ -184,15 +184,15 @@ Route::get('students/lessons/{id}', function ($id) {
 });
 
 // One to one chat system
-Route::middleware('auth')->prefix('course/messages')->controller(MessageController::class)->group(function () {
+Route::middleware('auth')->prefix('messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('message');
-    Route::get('/chat/{id}', 'getChatMessage')->name('chat');
-    Route::get('/group/chat', 'getGroupChatMessage')->name('chat');
-    Route::post('/chat', 'sendChatMessage')->name('chat');
-    Route::post('/group/chat', 'sendGroupMessage')->name('course.messages.group.chat');
-    Route::get('/search-user', 'searchChatUser')->name('course.messages.search');
-    Route::get('/chat/download/{filename}', 'downloadChatFile')->name('course.messages.file.download');
-    Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('course.messages.delete.singlechat');
+    Route::get('/chat', 'getChatMessage')->name('messages.chat');
+    Route::post('/chat', 'sendChatMessage')->name('messages.chat');
+    Route::get('/group/chat', 'getGroupChatMessage')->name('messages.group.chat');
+    Route::post('/group/chat', 'sendGroupMessage')->name('messages.group.chat');
+    Route::get('/search-user', 'searchChatUser')->name('messages.search');
+    Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
+    Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
     // // Route::get('/', 'index')->name('message');
     // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
     // Route::post('/', 'sendMessage')->name('message-send');
@@ -203,9 +203,9 @@ Route::middleware('auth')->prefix('course/messages')->controller(MessageControll
 });
 
 // Group message
-Route::middleware('auth')->prefix('course/messages')->controller(GroupController::class)->group(function () {
-    Route::post('/create-group', 'createGroup')->name('course.messages.group');
-    Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('course.messages.suggested.people');
+Route::middleware('auth')->prefix('messages')->controller(GroupController::class)->group(function () {
+    Route::post('/create-group', 'createGroup')->name('messages.group');
+    Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');
 });
 /* ============================================================= */
 /* ===================== Instructor Routes ===================== */

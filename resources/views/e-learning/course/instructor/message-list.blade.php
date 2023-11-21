@@ -41,7 +41,7 @@
                                     <h4>Create Group</h4>
 
                                     @include('e-learning.course.instructor.group-admin.admin-info')
-                                    <form method="post" class="createGroup" action="{{ route('course.messages.group') }}">
+                                    <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                         <div class="form-group">
                                             <label for="">Group Name</label>
                                             <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
@@ -287,7 +287,7 @@
                     <div class="create-group-form">
                         <h4>Create Group</h4>
                         @include('e-learning.course.instructor.group-admin.admin-info')
-                        <form method="post" class="createGroupModal" action="{{ route('course.messages.group') }}">
+                        <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
                             <div class="form-group">
                                 <label for="">Group Name</label>
                                 <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
@@ -431,7 +431,7 @@
             console.log(searchTerm);
             if (searchTerm !== "") {
                 $.ajax({
-                    url: "{{ route('course.messages.search') }}",
+                    url: "{{ route('messages.search') }}",
                     type: 'GET',
                     data: {
                         term: searchTerm,
@@ -454,7 +454,7 @@
             var userId = $(this).attr('id');
             $.ajax({
                 type: "get",
-                url: "{{ route('course.messages.suggested.people') }}",
+                url: "{{ route('messages.suggested.people') }}",
                 data: {
                     userId: userId
                 },
@@ -494,7 +494,7 @@
 
                 $.ajax({
                     type: 'get',
-                    url: "{{ route('course.messages.delete.singlechat') }}",
+                    url: "{{ route('messages.delete.singlechat') }}",
                     data: {
                         userId: userId
                     },
@@ -596,8 +596,8 @@
             receiver_id =  user_receive_id.split('_')[1];
             $.ajax({
                 type: "get",
-                url: '/course/messages/chat/' + receiver_id, // need to create this route
-                data: "",
+                url: "{{ route('messages.chat') }}",
+                data: {receiver_id: receiver_id},
                 cache: false,
                 success: function(data) {
                     $('#chat-message').html(data);
@@ -619,7 +619,7 @@
 
             $.ajax({
                 type: "get",
-                url: "{{ route('course.messages.group.chat') }}",
+                url: "{{ route('messages.group.chat') }}",
                 data: { receiver_id : receiver_id },
                 cache: false,
                 success: function(data) {
@@ -723,7 +723,7 @@
             var formData = new FormData($(formSelector)[0]);
             $.ajax({
                 type: "post",
-                url: "{{ route('course.messages.group') }}",
+                url: "{{ route('messages.group') }}",
                 data: formData,
                 processData: false,
                 contentType: false,
