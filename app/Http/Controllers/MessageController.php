@@ -135,12 +135,12 @@ class MessageController extends Controller
     public function getGroupChatMessage( Request $request )
     {
 
-        dd( $request->all() );
+        // dd( $request->all() );
 
-        $messages = Chat::where(['group_id' => $request->receiver_id ])->where(['user_id' => $my_id])->get();
-        foreach($messages as $value) {
-            Chat::where(['user_id' => $my_id])->update(['is_read' => 1]); // if User start to see messages is_read in Table update to 0
-        }
+        $messages = Chat::where(['group_id' => $request->receiver_id ])->get();
+        // foreach($messages as $value) {
+        //     Chat::where(['user_id' => $my_id])->update(['is_read' => 1]); // if User start to see messages is_read in Table update to 0
+        // }
         // $my_id = Auth::id();
         // $data['friend'] = User::findOrFail($user_id);
 
