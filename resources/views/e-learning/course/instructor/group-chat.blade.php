@@ -1,14 +1,15 @@
-@isset($friend)
+{{-- @isset($friend)
     <div class="chat-room-head w-100">
         <div class="media">
-            @isset( $friend->avatar )
-                <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
+
+            @isset( $currentGroup->avatar )
+                <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
             @else
-                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $friend->name }}" class="img-fluid">
+                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
             @endisset
 
             <div class="media-body">
-                <h5 class="name">{{ $friend->name }}
+                <h5 class="name">{{ $currentGroup->name }}
                     @if(Cache::has('user-is-online-' . $friend->id))
                         <span class="online">
                             <i class="fas fa-circle"></i>
@@ -30,20 +31,69 @@
             <a href="javascript:;" class="view-bttn open-profile">View Profile</a>
         </div>
     </div>
-@endisset
+@endisset --}}
 
+@isset($currentGroup)
+    <div class="chat-room-head group-room-header">
+        <div class="media">
+            @isset( $currentGroup->avatar )
+                <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+            @else
+                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+            @endisset
+
+            <div class="media-body">
+                <h5 class="name">{{ $currentGroup->name }}</h5>
+
+                <ul class="peoples">
+                    @if( $currentGroup->participants )
+                        @foreach ($currentGroup->participants as $participant)
+                            <li>
+                                <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+
+            </div>
+            {{-- action --}}
+            <div class="dropdown">
+                <a class="btn" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item active" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <img src="{{ asset('latest/assets/images/icons/messages/add.svg') }}"
+                                alt="ic" class="img-fluid"> Add People
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                            <img src="{{ asset('latest/assets/images/icons/messages/pencil.svg') }}"
+                                alt="ic" class="img-fluid"> Rename Group
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                            <img src="{{ asset('latest/assets/images/icons/messages/delete.svg') }}"
+                                alt="ic" class="img-fluid"> Delete Group
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            {{-- action --}}
+        </div>
+    </div>
+@endisset
 
 @forelse ($messages as $message)
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
-
-                @isset( $message->user->avatar )
-                    <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
-                @else
-                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $message->user->name }}" class="img-fluid">
-                @endisset
-
+                <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}" alt="Avatar"
+                    class="img-fluid">
                 <i class="fas fa-circle"></i>
             </div>
             <div class="media-body">
@@ -100,7 +150,7 @@
 @endforelse
 
 
-<form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
+<form method="POST" class="send-actions w-100" id="groupChatMessage" autocomplete="off">
     <div class="dock-bottom">
         <div class="message-send-box">
             <div class="form-group">

@@ -25,14 +25,14 @@ class MessageController extends Controller
             'users.avatar',
             'users.email',
         )
-        ->withCount([
-            'chats as unread' => function ($query) {
-                $query->where('is_read', 0)->where('receiver_id', Auth::id());
-            },
-        ])
-        ->where('users.id', '!=', Auth::id())
-        ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-        ->get();
+            ->withCount([
+                'chats as unread' => function ($query) {
+                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                },
+            ])
+            ->where('users.id', '!=', Auth::id())
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
 
         $data['groups'] = Group::whereHas('participants')->latest()->get();
 
@@ -66,9 +66,9 @@ class MessageController extends Controller
 
 
     // One to one get chat message
-    public function getChatMessage( Request $request )
+    public function getChatMessage(Request $request)
     {
-        if( $request->ajax() ){
+        if ($request->ajax()) {
             $user_id = $request->receiver_id;
             $my_id = Auth::id();
             $data['friend'] = User::findOrFail($user_id);
@@ -78,9 +78,9 @@ class MessageController extends Controller
 
             // Get all message from selected user
             $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-                $query->where('sender_id', $user_id)->where('receiver_id', $my_id);
+                $query->where(["sender_id" => $user_id, "receiver_id" => $my_id, "message_type" => 1]);
             })->orWhere(function ($query) use ($user_id, $my_id) {
-                $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
+                $query->where(["sender_id" => $my_id, "receiver_id" => $user_id, "message_type" => 1]);
             })->get();
 
             return view('e-learning.course/instructor.chat', $data);
@@ -90,7 +90,7 @@ class MessageController extends Controller
     // One to one send chat message
     public function sendChatMessage(Request $request)
     {
-        if( $request->ajax() ){
+        if ($request->ajax()) {
             $request->validate([
                 'message' => 'required_without:file', // Message is required if file is not present
                 'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
@@ -104,6 +104,7 @@ class MessageController extends Controller
             $data->sender_id = $sender_Id;
             $data->receiver_id = $receiver_id;
             $data->message = $message;
+            $data->message_type = 1;
             $data->is_read = false;
             $data->save();
 
@@ -114,6 +115,7 @@ class MessageController extends Controller
                 $data->update([
                     'file' => $image,
                     'file_extension' => $file->getClientOriginalExtension(),
+                    'file_type' => 2
                 ]);
             }
 
@@ -137,108 +139,91 @@ class MessageController extends Controller
 
 
     // One to many  get chat message
-    public function getGroupChatMessage( Request $request )
+    public function getGroupChatMessage(Request $request)
     {
-
-        if( $request->ajax() ){
-
+        if ($request->ajax()) {
 
             // dd( $request->all() );
 
-
-
-            // $data['users'] = User::where('id', '!=', Auth::id())->get();
             $data['myInfo'] = User::find(Auth::id());
-            $data['groups'] = Group::get();
-            $data['currentGroup'] = Group::where('id', $request->receiver_id)
-                ->with('participants')
-                ->first();
+            $data['currentGroup'] = Group::where('id', $request->receiver_id)->with('participants')->firstOrFail();
 
+            Chat::where(['sender_id' => Auth::id(), 'receiver_id' => $request->receiver_id])->update(['is_read' => 1]);
 
+            $data['messages'] = Chat::where(['sender_id' => Auth::id(), 'group_id' => $request->receiver_id])
+                ->orWhere(["receiver_id" => Auth::id(), "group_id" => $request->receiver_id])
+                ->get();
 
+            $maxUpdatedAt = $data['messages']->max('updated_at');
 
+            $data['currentGroup']->update(['updated_at' => $maxUpdatedAt]);
 
-            $data['messages'] = Chat::where(['group_id' => $request->receiver_id ])->get();
-
-            return $data;
-            // foreach($messages as $value) {
-            //     Chat::where(['user_id' => $my_id])->update(['is_read' => 1]); // if User start to see messages is_read in Table update to 0
-            // }
-            // $my_id = Auth::id();
-            // $data['friend'] = User::findOrFail($user_id);
-
-            // // Make read all unread message
-            // Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
-
-            // // Get all message from selected user
-            // $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-            //     $query->where('sender_id', $user_id)->where('receiver_id', $my_id);
-            // })->oRwhere(function ($query) use ($user_id, $my_id) {
-            //     $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
-            // })->get();
-
-            $data = [];
-
-            return view('e-learning.course/instructor.chat', $data);
+            return view('e-learning.course/instructor.group-chat', $data);
         }
     }
 
     // Send group message
     public function sendGroupMessage(Request $request)
     {
-        if( $request->ajax() ){
-            dd( $request->all() );
+        if ($request->ajax()) {
+
             $request->validate([
-                'message' => 'required_without:file', // Message is required if file is not present
+                'message' => 'required_without:file',
                 'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',
             ]);
 
             $sender_Id = Auth::id();
-            $receiver_id = $request->receiver_id;
-            $message = $request->message;
+            $group = Group::with('participants')->findOrFail($request->receiver_id);
 
-            $data = new Chat();
-            $data->sender_id = $sender_Id;
-            $data->receiver_id = $receiver_id;
-            $data->group_id = 2;
-            $data->message = $message;
-            $data->type = 2;
-            $data->is_read = false;
-            $data->save();
+            foreach ($group->participants as $member) {
+                Chat::create(
+                    $data = array(
+                        'sender_id' => $sender_Id,
+                        'group_id' => $request->receiver_id,
+                        'message' => $request->message,
+                        'message_type' => 2,
+                        'is_read' => false
+                    )
+                );
+                // if ($request->hasFile('file')) {
+                //     $file = $request->file('file');
+                //     $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+                //     $fileName = $file->storeAs('chat', $image, 'public');
+                //     $data->update([
+                //         'file' => $image,
+                //         'file_extension' => $file->getClientOriginalExtension(),
+                //         'file_type' => 2
+                //     ]);
+                // }
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
-                $fileName = $file->storeAs('chat', $image, 'public');
-                $data->update([
-                    'file' => $image,
-                    'file_extension' => $file->getClientOriginalExtension(),
-                ]);
+                // pusher
+                $options = array(
+                    'cluster' => 'ap2',
+                    'useTLS' => true
+                );
+
+                $pusher = new Pusher(
+                    env('PUSHER_APP_KEY'),
+                    env('PUSHER_APP_SECRET'),
+                    env('PUSHER_APP_ID'),
+                    $options
+                );
+
+                $data = ['from' => $sender_Id, 'to' => $member->group_id];
+
+
+                // $pusher->trigger('my-channel', 'my-event', $data);
+                $notify = '' . $member->id . '';
+                $pusher->trigger($notify, 'App\\Events\\Notify', $data);
+
             }
-
-            // pusher
-            $options = array(
-                'cluster' => 'ap2',
-                'useTLS' => true
-            );
-
-            $pusher = new Pusher(
-                env('PUSHER_APP_KEY'),
-                env('PUSHER_APP_SECRET'),
-                env('PUSHER_APP_ID'),
-                $options
-            );
-
-            $data = ['from' => $sender_Id, 'to' => $receiver_id];
-            $pusher->trigger('my-channel', 'my-event', $data);
         }
-
     }
 
 
     public function searchChatUser(Request $request)
     {
-        if( $request->ajax() ){
+        if ($request->ajax()) {
             // dd( $request->all());
             $searchTerm = $request->input('term');
             $layoutDesing = $request->input('layout');
@@ -249,27 +234,28 @@ class MessageController extends Controller
                 'users.avatar',
                 'users.email',
             )
-            ->withCount([
-                'chats as unread' => function ($query) {
-                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
-                },
-            ])
-            ->where('users.id', '!=', Auth::id())
-            ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
-            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-            ->get();
+                ->withCount([
+                    'chats as unread' => function ($query) {
+                        $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                    },
+                ])
+                ->where('users.id', '!=', Auth::id())
+                ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
+                ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+                ->get();
 
             // dd( $data['users']->toArray() );
 
-            if( $layoutDesing == "layout1" ){
+            if ($layoutDesing == "layout1") {
                 return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
-            }else{
+            } else {
                 return view('e-learning.course.instructor.chat-user.search-users', $data);
             }
         }
     }
 
-    public function deleteSingleChatHistory( Request $request ){
+    public function deleteSingleChatHistory(Request $request)
+    {
         $userId = $request->userId;
 
         $chats = Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId)->get();
@@ -294,7 +280,4 @@ class MessageController extends Controller
         }
         return response()->download($path, $filename);
     }
-
-
-
 }

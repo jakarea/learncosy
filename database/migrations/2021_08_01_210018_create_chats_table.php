@@ -15,13 +15,14 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('sender_id')->nullable();
-            $table->bigInteger('receiver_id');
+            $table->bigInteger('sender_id');
+            $table->bigInteger('receiver_id')->nullable();
             $table->unsignedInteger('group_id')->nullable();
             $table->longText('message')->nullable();
             $table->string('file')->nullable();
             $table->string('file_extension', 50)->nullable();
-            $table->tinyInteger('type')->default(1)->comment('1:message, 2:file');
+            $table->tinyInteger('file_type')->default(1)->comment('1:Message, 2:File');
+            $table->tinyInteger('message_type')->default(1)->comment('1:Personal message, 2:Group message');
             $table->tinyInteger('is_read');
             // $table->boolean('send_receive_identifier')->default(false)->comment('0: sender, 1: receiver');
             $table->timestamps();

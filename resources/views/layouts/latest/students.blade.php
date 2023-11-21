@@ -36,6 +36,8 @@
 
     {{-- Toaster notification css --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
 
     @yield('style')
     <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
@@ -75,7 +77,7 @@
     {{-- dark mode button end --}}
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
     <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 

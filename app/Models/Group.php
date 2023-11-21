@@ -10,6 +10,7 @@ class Group extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $fillable = ['updated_at'];
 
     public function user()
     {
@@ -22,10 +23,6 @@ class Group extends Model
     //     return $this->belongsToMany(User::class, 'group_participants', 'group_id', 'user_id');
     // }
 
-    public function messages()
-    {
-        return $this->hasMany(Message::class, 'group_id');
-    }
 
     public function users()
     {

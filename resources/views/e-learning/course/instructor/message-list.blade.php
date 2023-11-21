@@ -514,6 +514,7 @@
     <script>
         var receiver_id = '';
         var my_id = "{{ Auth::id() }}";
+
         $(document).ready(function() {
             // ajax setup form csrf token
             $.ajaxSetup({
@@ -564,7 +565,6 @@
 
 
             var channel = pusher.subscribe('my-channel');
-
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
                     $('#user_' + data.to).click();
@@ -580,6 +580,30 @@
                             $('#user_' + data.from).find('.pending').html(pending + 1);
                         } else {
                             $('#user_' + data.from).append('<span class="pending">1</span>');
+                        }
+                    }
+                }
+            });
+
+
+            var channelGroup = pusher.subscribe(my_id);
+
+            channelGroup.bind('App\\Events\\Notify', function(data) {
+                console(JSON.stringify(data));
+                if (my_id == data.from) {
+                    $('#group_' + data.to).click();
+                } else if (my_id == data.to) {
+                    if (receiver_id == data.from) {
+                        // if receiver is selected, reload the selected user ...
+                        $('#group_' + data.from).click();
+                    } else {
+                        // if receiver is not seleted, add notification for that user
+                        var pending = parseInt($('#group_' + data.from).find('.pending').html());
+
+                        if (pending) {
+                            $('#group_' + data.from).find('.pending').html(pending + 1);
+                        } else {
+                            $('#group_' + data.from).append('<span class="pending">1</span>');
                         }
                     }
                 }
@@ -623,20 +647,28 @@
                 data: { receiver_id : receiver_id },
                 cache: false,
                 success: function(data) {
-                    console.log( data)
-                    // $('#chat-message').html(data);
+                    $('#chat-message').html(data);
                     // $('#chat-message-input').emojioneArea();
-                    // scrollToBottomFunc();
-
+                    scrollToBottomFunc();
                 }
             });
         });
 
 
+        // Send one to one chate
         $(document).on('submit', '#chatMessage', function(e) {
             e.preventDefault();
             sendMessage();
         });
+
+        // Send group message
+        $(document).on('submit', '#groupChatMessage', function(e) {
+            e.preventDefault();
+            sendGroupMessage();
+        });
+
+
+
 
         // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
         //     alert("hi")
@@ -666,7 +698,7 @@
             if (receiver_id !== '') {
                 $.ajax({
                     type: "post",
-                    url: "messages/chat",
+                    url: "{{ route('messages.chat') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -690,13 +722,13 @@
 
         function sendGroupMessage() {
             // var messageText = $('.chat-message-input').emojioneArea().getText();
-            var formData = new FormData($('#chatMessage')[0]);
+            var formData = new FormData($('#groupChatMessage')[0]);
             formData.append("receiver_id", receiver_id);
             var messageText = $('.chat-message-input').val();
             if (receiver_id !== '') {
                 $.ajax({
                     type: "post",
-                    url: "messages/chat",
+                    url: "{{ route('messages.group.chat') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -704,8 +736,7 @@
                     success: function(data) {
                         $('.chat-message-input').val('');
                         $('.chat-message-input').emojioneArea().val('');
-                        $('#chatMessage')[0].reset();
-
+                        $('#groupChatMessage')[0].reset();
                     },
                     error: function(jqXHR, status, err) {
                         // Handle error if needed
