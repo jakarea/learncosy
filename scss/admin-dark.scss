@@ -2209,6 +2209,32 @@
         background-color: #0D0D0D;
     }
 
+    .main-chat-room::-webkit-scrollbar-track,
+    .create-group-form::-webkit-scrollbar-track,
+    .person-tab-body::-webkit-scrollbar-track {
+        background: #000!important; 
+    }
+    
+    .main-chat-room::-webkit-scrollbar-thumb,
+    .create-group-form::-webkit-scrollbar-thumb,
+    .person-tab-body::-webkit-scrollbar-thumb {
+        background: #7289FF!important; 
+    }
+    
+    .main-chat-room::-webkit-scrollbar-thumb:hover,
+    .create-group-form::-webkit-scrollbar-thumb:hover,
+    .person-tab-body::-webkit-scrollbar-thumb:hover {
+        background: #7289FF!important;
+    }
+
+    .form-group-submit{
+        background-color: transparent!important;
+    }
+
+    .blank-chat-page i{
+        color: #7289FF;
+    }
+
 }
 
 
