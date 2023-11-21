@@ -101,10 +101,9 @@
                             {{-- leftbar person list start --}}
                             <div class="person-tab-body chat-user-load" id="chat-user-load">
                                 {{-- single person start --}}
-                                {{-- @include('e-learning.course.instructor.message-group.group-list') --}}
+                                @include('e-learning.course.instructor.message-group.group-list')
                                 @include('e-learning.course.instructor.chat-user.search-users')
                                 {{-- single person end --}}
-
                             </div>
                             {{-- leftbar person list end --}}
                         </div>
@@ -112,175 +111,8 @@
 
                         {{-- chat body right side start --}}
                         <div class="chat-main-body-box">
-                            
-                            {{-- view profile box start --}}
-                            {{-- <div class="view-profile-box" id="profileBox">
-                                <div class="profile-box">
-                                    <a href="#" id="closeProfile">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/icons/messages/big-avatar.png') }}"
-                                            alt="a" class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <h5>sajib</h5>
-                                    <p>Student</p>
-
-                                    <button type="button" class="btn btn-remove">Remove from group</button>
-                                </div>
-
-                                <hr>
-
-                                <h5>Contact</h5>
-
-                                <div class="media">
-                                    <i class="fa-regular fa-envelope"></i>
-                                    <div class="media-body">
-                                        <h6>Email</h6>
-                                        <a href="#">kellyleannon@gemail.com</a>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <i class="fa-solid fa-mobile-screen"></i>
-                                    <div class="media-body">
-                                        <h6>Phone</h6>
-                                        <a href="#">+11 1234 567 890</a>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <i class="fa-brands fa-instagram"></i>
-                                    <div class="media-body">
-                                        <h6>Instagram</h6>
-                                        <a href="#">instagram.com/kellyleannon</a>
-                                    </div>
-                                </div>
-                                <hr class="my-3">
-
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h6>Date of birth</h6>
-                                        <a href="#">21 Jan, 2002</a>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h6>Gender</h6>
-                                        <a href="#">Female</a>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h6>Country</h6>
-                                        <a href="#">United State</a>
-                                    </div>
-                                </div>
-
-                            </div> --}}
-                            {{-- view profile box end --}}
-
                             {{-- chat body list start --}}
-                            <div class="main-chat-room" style="min-height: auto" id=chat-message>
-                                {{-- message item start --}}
-                                {{-- <div class="message-item sender-item">
-                                <div class="media main-media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}"
-                                            alt="Avatar" class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex">
-                                            <h6 class="open-profile">Katherine Moss</h6>
-                                            <span>Thursday 10:16am</span>
-                                        </div>
-                                        <div class="text">
-                                            <p>Thanks Olivia! Almost there. I’ll work on making those changes
-                                                you suggested and will shoot it over.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                                {{-- message item end --}}
-                                {{-- message item start --}}
-
-                                {{-- message item start --}}
-                                {{-- <div class="message-item sender-item">
-                                <div class="media main-media">
-                                    <div class="media-body">
-                                        <div class="d-flex">
-                                            <h6>You</h6>
-                                            <span>Thursday 10:16am</span>
-                                        </div>
-                                        <div class="file">
-                                            <div class="media">
-                                                <img src="{{ asset('latest/assets/images/icons/messages/pdf.svg') }}"
-                                                    alt="Avatar" class="img-fluid">
-                                                <div class="media-body">
-                                                    <h5><a href="#">Tech requirements.pdf</a></h5>
-                                                    <span>1.2 MB</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                                {{-- message item end --}}
-
-                                {{-- time block --}}
-                                {{-- <div class="date-status">
-                                <hr>
-                                <span>Today</span>
-                            </div> --}}
-                                {{-- time block --}}
-
-                                {{-- message item start --}}
-                                {{-- <div class="message-item">
-                                <div class="media main-media">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}"
-                                            alt="Avatar" class="img-fluid">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex">
-                                            <h6>Katherine Moss</h6>
-                                        </div>
-                                        <div class="typing">
-                                            <i class="fa-solid fa-ellipsis fa-fade"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                                {{-- message item end --}}
-
-                            </div>
-                            {{-- chat body list end --}}
-
-                            {{-- message send actions start --}}
-                            {{-- <form method="POST" class="send-actions" id="chatMessage" autocomplete="off">
-                                <div class="message-send-box">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control chat-message-input"
-                                            placeholder="Send a message" name="message">
-                                    </div>
-                                    <div class="file-attach-bttns">
-                                        <button type="button" class="btn btn-emoji">
-                                        <img src="{{ asset('latest/assets/images/icons/messages/wmoji.svg') }}"
-                                            alt="Avatar" class="img-fluid">
-                                    </button>
-                                        <button type="button" class="btn btn-emoji">
-                                            <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}"
-                                                alt="Avatar" class="img-fluid">
-                                        </button>
-                                        <button class="btn btn-submit" type="submit">
-                                            Send
-                                        </button>
-                                    </div>
-                                </div>
-                            </form> --}}
-                            {{-- message send actions end --}}
-
+                            <div class="main-chat-room" style="min-height: auto" id=chat-message></div>
                         </div>
                         {{-- chat body right side end --}}
                     </div>
@@ -777,27 +609,28 @@
         });
 
 
-        // $(document).on('click', '.group', function() {
-        //     $('.user').removeClass('active');
-        //     $(this).addClass('active');
-        //     $(this).find('.pending').remove();
+        $(document).on('click', '.group', function() {
+            $('.group').removeClass('active');
+            $(this).addClass('active');
+            $(this).find('.pending').remove();
 
-        //     var group_id = $(this).attr('id');
-        //     receiver_id =  group_id.split('_')[1];
+            var group_id = $(this).attr('id');
+            receiver_id =  group_id.split('_')[1];
 
-        //     $.ajax({
-        //         type: "get",
-        //         url: '/course/messages/chat/' + receiver_id, // need to create this route
-        //         data: "",
-        //         cache: false,
-        //         success: function(data) {
-        //             $('#chat-message').html(data);
-        //             // $('#chat-message-input').emojioneArea();
-        //             scrollToBottomFunc();
+            $.ajax({
+                type: "get",
+                url: "{{ route('course.messages.group.chat') }}",
+                data: { receiver_id : receiver_id },
+                cache: false,
+                success: function(data) {
+                    console.log( data)
+                    // $('#chat-message').html(data);
+                    // $('#chat-message-input').emojioneArea();
+                    // scrollToBottomFunc();
 
-        //         }
-        //     });
-        // });
+                }
+            });
+        });
 
 
         $(document).on('submit', '#chatMessage', function(e) {
@@ -829,9 +662,37 @@
             // var messageText = $('.chat-message-input').emojioneArea().getText();
             var formData = new FormData($('#chatMessage')[0]);
             formData.append("receiver_id", receiver_id);
-
             var messageText = $('.chat-message-input').val();
+            if (receiver_id !== '') {
+                $.ajax({
+                    type: "post",
+                    url: "messages/chat",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(data) {
+                        $('.chat-message-input').val('');
+                        $('.chat-message-input').emojioneArea().val('');
+                        $('#chatMessage')[0].reset();
 
+                    },
+                    error: function(jqXHR, status, err) {
+                        // Handle error if needed
+                    },
+                    complete: function() {
+                        $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                        scrollToBottomFunc();
+                    }
+                });
+            }
+        }
+
+        function sendGroupMessage() {
+            // var messageText = $('.chat-message-input').emojioneArea().getText();
+            var formData = new FormData($('#chatMessage')[0]);
+            formData.append("receiver_id", receiver_id);
+            var messageText = $('.chat-message-input').val();
             if (receiver_id !== '') {
                 $.ajax({
                     type: "post",
