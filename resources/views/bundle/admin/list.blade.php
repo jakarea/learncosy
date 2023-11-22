@@ -64,73 +64,91 @@
                     @foreach ($bundleCourses as $course)
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                             <div class="course-single-item">
-                                <div class="course-thumb-box"> 
-                                    <div class="header-action">
-                                        <div class="dropdown">
-                                            <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">View</a>
-                                                </li> 
-                                                <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <form method="POST" class="d-inline" action="{{ route('admin.course.bundle.destroy', $course->id) }}">
-                                                        @csrf 
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item btn text-danger">Delete
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            </ul>
+                                <div>
+                                    <div class="course-thumb-box"> 
+                                        <div class="header-action">
+                                            <div class="dropdown">
+                                                <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">View</a>
+                                                    </li> 
+                                                    <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
+                                                    </li>
+                                                    <li>
+                                                        <form method="POST" class="d-inline" action="{{ route('admin.course.bundle.destroy', $course->id) }}">
+                                                            @csrf 
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item btn text-danger">Delete
+                                                            </button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                     </div>
-                                    <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
-                                </div>
-                                <div class="course-txt-box">
-                                    <a href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
-                                    <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
-                                
-                                    @php
-                                    $courseIds = explode(',', $course->selected_course); 
-                                    $bundleSelected = App\Models\Course::whereIn('id', $courseIds)
-                                        ->with('reviews')
-                                        ->get();
-                                
-                                    $review_sum = 0;
-                                    $total = 0;
-                                    @endphp
-                                
-                                    @foreach ($bundleSelected as $selectedCourse)
-                                        @foreach ($selectedCourse->reviews as $review)
-                                            @php
-                                            $total++;
-                                            $review_sum += $review->star;
-                                            @endphp
+                                    <div class="course-txt-box">
+                                        <a href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
+                                        <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
+                                    
+                                        @php
+                                        $courseIds = explode(',', $course->selected_course); 
+                                        $bundleSelected = App\Models\Course::whereIn('id', $courseIds)
+                                            ->with('reviews')
+                                            ->get();
+                                    
+                                        $review_sum = 0;
+                                        $total = 0;
+                                        @endphp
+                                    
+                                        @foreach ($bundleSelected as $selectedCourse)
+                                            @foreach ($selectedCourse->reviews as $review)
+                                                @php
+                                                $total++;
+                                                $review_sum += $review->star;
+                                                @endphp
+                                            @endforeach
                                         @endforeach
-                                    @endforeach
-                                
-                                    @php
-                                    $review_avg = ($total > 0) ? $review_sum / $total : 0;
-                                    @endphp
-                                
-                                    <ul>
-                                        <li><span>{{ $review_avg }}</span></li>
-                                        @for ($i = 0; $i < $review_avg; $i++)
-                                            <li><i class="fas fa-star"></i></li>
-                                        @endfor
-                                        <li><span>({{ $total }})</span></li>
-                                    </ul>
-                                
-                                    @if ($course->sales_price)
-                                        <h5>€ {{ $course->sales_price }} <span>€ {{ $course->regular_price }}</span></h5>
-                                    @else
-                                        <h5>{{ $course->regular_price > 0 ? '€ ' . $course->regular_price : 'Free' }}</h5>
-                                    @endif
+                                    
+                                        @php
+                                        $review_avg = ($total > 0) ? $review_sum / $total : 0;
+                                        @endphp
+                                    
+                                        <ul>
+                                            <li><span>{{ $review_avg }}</span></li>
+                                            @for ($i = 0; $i < $review_avg; $i++)
+                                                <li><i class="fas fa-star"></i></li>
+                                            @endfor
+                                            <li><span>({{ $total }})</span></li>
+                                        </ul> 
+                                    </div>
+                                    <div class="course-txt-box d-flex justify-content-between align-items-center">
+                                        @if ($course->sales_price)
+                                            <h5>€ {{ $course->sales_price }} <span>€ {{ $course->regular_price }}</span></h5>
+                                        @else
+                                            <h5>{{ $course->regular_price > 0 ? '€ ' . $course->regular_price : 'Free' }}</h5>
+                                        @endif
+    
+                                        @if ($course->total_sale_count) 
+                                        <div>
+                                            <span class="sold-item">
+                                                @if($course->total_sale_count == 0 || $course->total_sale_count == NULL)
+                                                    No Sold Yet
+                                                @elseif($course->total_sale_count == 1)
+                                                    Sold 1 Time
+                                                @else
+                                                    Sold {{ $course->total_sale_count }} Times
+                                                @endif
+                                            </span>
+                                           
+                                        </div>
+                                        @endif 
+    
+                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
                         {{-- course single box end --}}
