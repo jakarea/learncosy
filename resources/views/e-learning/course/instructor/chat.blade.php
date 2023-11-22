@@ -1,12 +1,26 @@
 @isset($friend)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
     <div class="chat-room-head w-100">
         <div class="media">
             @isset( $friend->avatar )
                 <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
             @else
                 <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $friend->name }}" class="img-fluid">
+<<<<<<< HEAD
+            @endisset
+=======
+<div class="chat-room-head w-100">
+    <div class="media">
+        <img src="{{ asset($friend->avatar) }}" alt="Avatar" class="img-fluid">
+>>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
+
+=======
             @endisset 
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
         <div class="media-body">
             <h5 class="name">{{ $friend->name }}
                 @if(Cache::has('user-is-online-' . $friend->id))
@@ -34,21 +48,46 @@
 
 
 @forelse ($messages as $message)
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
+        <div class="media main-media">
+            <div class="avatar">
+
+                @isset( $message->user->avatar )
+=======
  
 <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
     <div class="media main-media">
         <div class="avatar">
             @isset( $message->user->avatar )
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                     <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
                 @else
                     <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $message->user->name }}" class="img-fluid">
                 @endisset
+<<<<<<< HEAD
+
+                <i class="fas fa-circle"></i>
+=======
+<div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
+    <div class="media main-media">
+        <div class="avatar">
+            <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}" alt="Avatar" class="img-fluid">
+=======
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
             <i class="fas fa-circle"></i>
         </div>
         <div class="media-body">
             <div class="d-flex">
                 <h6 class="open-profile">{{ $message->user->name ?? "" }} &nbsp; </h6>
+<<<<<<< HEAD
+                <span> {{ $message->created_at->format('F j, Y') }}
+                </span>
+>>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
+=======
                 <span> {{ $message->created_at->format('F j, Y') }}  </span> 
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
             </div>
 
             <div class="text">
@@ -125,8 +164,8 @@
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
                     Send
-                </button> 
+                </button>
             </div>
         </div>
-    </div> 
+    </div>
 </form>
