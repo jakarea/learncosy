@@ -157,7 +157,7 @@ class MessageController extends Controller
             })
             ->get();
 
-            dd( $data['messages']->toArray() );
+            // dd( $data['messages']->toArray() );
 
             $maxUpdatedAt = $data['messages']->max('updated_at');
 
