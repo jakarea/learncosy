@@ -60,7 +60,6 @@ class CourseManagementController extends Controller
                 ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
                 ->groupBy('courses.id');
 
-
             }
             
             if ($status == 'newest') {

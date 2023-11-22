@@ -40,13 +40,27 @@ class BundleCourseManagementController extends Controller
                     ->orderBy('total_star', 'desc');
             } elseif ($status == 'most_purchased') {
 
+                // $bundleCourses->select('bundle_courses.*')
+                // ->selectRaw('COUNT(checkouts.course_id) as course_count')
+                // ->leftJoin('checkouts', function ($join) {
+                //     $join->on('checkouts.course_id', '=', DB::raw("FIND_IN_SET(checkouts.course_id, bundle_courses.selected_course)"));
+                // })
+                // ->groupBy('bundle_courses.id')
+                // ->orderBy('course_count', 'desc');
+
                 $bundleCourses->select('bundle_courses.*')
-                ->selectRaw('COUNT(checkouts.course_id) as course_count')
-                ->leftJoin('checkouts', function ($join) {
-                    $join->on('checkouts.course_id', '=', DB::raw("FIND_IN_SET(checkouts.course_id, bundle_courses.selected_course)"));
+                ->selectRaw('SUM(course_sales.course_count) as total_sale_count')
+                ->leftJoin(DB::raw('(
+                    SELECT checkouts.course_id, COUNT(checkouts.course_id) as course_count
+                    FROM checkouts
+                    GROUP BY checkouts.course_id
+                ) as course_sales'), function ($join) {
+                    $join->on('course_sales.course_id', '=', DB::raw("FIND_IN_SET(course_sales.course_id, bundle_courses.selected_course)"));
                 })
                 ->groupBy('bundle_courses.id')
-                ->orderBy('course_count', 'desc');
+                ->orderBy('total_sale_count', 'desc')
+                ->get();
+
 
 
             } elseif ($status == 'newest') {
