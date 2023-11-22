@@ -149,11 +149,15 @@ class MessageController extends Controller
             $data['myInfo'] = User::find(Auth::id());
             $data['currentGroup'] = Group::where('id', $request->receiver_id)->with('participants')->firstOrFail();
 
-            Chat::where(['receiver_id' => $request->receiver_id])->update(['is_read' => 1]);
+            Chat::where(['group_id' => $request->receiver_id])->update(['is_read' => 1]);
 
-            $data['messages'] = Chat::where(['sender_id' => Auth::id(), 'group_id' => $request->receiver_id])
-                ->orWhere(["receiver_id" => Auth::id(), "group_id" => $request->receiver_id])
-                ->get();
+            $data['messages'] = Chat::where(function ($query) use ($request) {
+                $query->where(['sender_id' => Auth::id(), 'group_id' => $request->receiver_id, "message_type" => 2])
+                        ->orWhere(['receiver_id' => Auth::id(), 'group_id' => $request->receiver_id, "message_type" => 2]);
+            })
+            ->get();
+
+            dd( $data['messages']->toArray() );
 
             $maxUpdatedAt = $data['messages']->max('updated_at');
 
@@ -174,21 +178,18 @@ class MessageController extends Controller
             ]);
 
             $sender_Id = Auth::id();
-            $participants = GroupParticipant::where('group_id',$request->receiver_id)->get();
+            $participants = GroupParticipant::where('group_id', $request->receiver_id)->get();
 
+            Chat::create([
+                'sender_id' => $sender_Id,
+                'receiver_id' => null,
+                'group_id' => $request->receiver_id,
+                'message' => $request->message,
+                'message_type' => 2,
+                'is_read' => false
+            ]);
             foreach ($participants as $member) {
-                // echo "<pre>";
-                // print_r( $member);
-                Chat::create(
-                    $data = array(
-                        'sender_id' => $sender_Id,
-                        'receiver_id' => $member->user_id,
-                        'group_id' => $request->receiver_id,
-                        'message' => $request->message,
-                        'message_type' => 2,
-                        'is_read' => false
-                    )
-                );
+
                 // if ($request->hasFile('file')) {
                 //     $file = $request->file('file');
                 //     $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
@@ -217,7 +218,6 @@ class MessageController extends Controller
 
                 $notify = '' . $member->user_id . '';
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);
-
             }
         }
     }

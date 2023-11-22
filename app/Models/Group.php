@@ -9,8 +9,7 @@ use App\Models\User;
 class Group extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    protected $fillable = ['updated_at'];
+    protected $fillable = ['name','code','admin_id','updated_at'];
 
     public function user()
     {
@@ -32,8 +31,7 @@ class Group extends Model
     // New Code
     public function participants()
     {
-        // return $this->hasMany(GroupParticipant::class, 'group_id');
-        return $this->belongsToMany(User::class, 'group_participants', 'group_id', 'user_id');
+        return $this->hasMany(GroupParticipant::class, 'group_id');
     }
 
 }
