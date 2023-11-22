@@ -28,7 +28,7 @@ class StudentController extends Controller
     public function index()
      {
         $course = Course::where('user_id', auth()->user()->id)->get();
-       $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
+        $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
 
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
@@ -66,6 +66,7 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string',
+            'password' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
@@ -153,8 +154,9 @@ class StudentController extends Controller
 
          $user = User::where('id', $userId)->first();
          $user->name = $request->name;
+
          if ($request->subdomain) {
-            $user->subdomain =  Str::slug($request->subdomain);
+            $user->subdomain =  Auth::user()->subdomain;
          }else{
             $user->subdomain = $user->subdomain;
         }
@@ -168,8 +170,14 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-         $user->email = $request->email;
+       
 
+         if ($request->email) {
+             $user->email =  $request->email;
+         }else{
+             $user->email = $user->email;
+         }
+         
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{

@@ -36,10 +36,9 @@ View Bundle
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
-                                     
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/courses/' . $course->slug) }}">{{
+                                    <a href="{{ url('instructor/courses/overview/' . $course->slug) }}">{{
                                         Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->short_description, $limit = 30, $end = '...') }}
                                     </p>

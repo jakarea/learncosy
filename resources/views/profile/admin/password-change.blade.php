@@ -9,8 +9,7 @@
 {{-- page style @S --}}
 
 {{-- page content @S --}}
-@section('content')
-<!-- === Instructor update page @S === -->
+@section('content') 
 <main class="profile-update-page">
   <div class="container-fluid">
     <div class="row align-items-center">
@@ -75,6 +74,9 @@
 
 {{-- page script @S --}}
 @section('script')
+{{-- form save js --}}
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+
 <script>
   function changeType() {
     let field = document.getElementById("password");

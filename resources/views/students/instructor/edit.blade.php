@@ -189,9 +189,14 @@
                                 </div>
                             </div> 
                             <div class="col-lg-12">
-                                <div class="form-group mt-3">
+                                <div class="form-group form-error">
                                     <label for="password">Password </label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="********">
+                                    <input type="password" name="password" placeholder="*********"
+                                        class="form-control @error('password') is-invalid @enderror" id="password">
+                                    <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
+                                    <div class="pass-icon">
+                                        <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -219,31 +224,8 @@
 @section('script')
 
 {{-- form save js --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var formChanged = false; 
-        function markFormChanged() {
-            formChanged = true;
-        }
- 
-        var formElements = document.querySelectorAll('form input, form select, form textarea');
-        formElements.forEach(function (element) {
-            element.addEventListener('change', markFormChanged);
-        });
- 
-        window.addEventListener('beforeunload', function (e) {
-            if (formChanged) {
-                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
-                e.returnValue = confirmationMessage;  
-                return confirmationMessage;  
-            }
-        });
- 
-        document.querySelector('form').addEventListener('submit', function () {
-            formChanged = false;
-        });
-    });
-</script>
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+<script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
  {{-- drag & drop image upload js --}}
 <script>
