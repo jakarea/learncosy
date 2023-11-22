@@ -14,7 +14,7 @@ class GroupController extends Controller
     public function createGroup(Request $request)
     {
 
-        // dd( $request->all() );
+
         $this->validate($request, [
             'name' => 'required| min:3'
         ]);

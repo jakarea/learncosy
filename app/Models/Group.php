@@ -9,8 +9,7 @@ use App\Models\User;
 class Group extends Model
 {
     use HasFactory;
-    protected $guarded = [];
-    protected $fillable = ['updated_at'];
+    protected $fillable = ['name','code','admin_id','updated_at'];
 
     public function user()
     {
