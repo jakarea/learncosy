@@ -152,10 +152,8 @@ class MessageController extends Controller
             Chat::where(['group_id' => $request->receiver_id])->update(['is_read' => 1]);
 
             $data['messages'] = Chat::where(function ($query) use ($request) {
-                $query->where(['sender_id' => Auth::id(), 'group_id' => $request->receiver_id, "message_type" => 2])
-                        ->orWhere(['receiver_id' => Auth::id(), 'group_id' => $request->receiver_id, "message_type" => 2]);
-            })
-            ->get();
+                $query->where(['group_id' => $request->receiver_id, "message_type" => 2]);
+            })->get();
 
             // dd( $data['messages']->toArray() );
 

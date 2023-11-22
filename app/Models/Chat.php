@@ -20,4 +20,9 @@ class Chat extends Model
         return $this->belongsTo(Group::class, 'group_id');
     }
 
+    public function groupUserName()
+    {
+        return $this->belongsTo(User::class, 'sender_id', 'id');
+    }
+
 }

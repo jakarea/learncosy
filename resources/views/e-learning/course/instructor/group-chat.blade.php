@@ -63,7 +63,7 @@
             </div>
             <div class="media-body">
                 <div class="d-flex">
-                    <h6 class="open-profile">{{ $message->user->name ?? "" }} &nbsp; </h6>
+                    <h6 class="open-profile">{{ $message->groupUserName->name ?? "" }} &nbsp; </h6>
                     <span> {{ $message->created_at->format('F j, Y') }}
                     </span>
                 </div>
@@ -116,7 +116,7 @@
 
 
 <form method="POST" class="send-actions w-100" id="groupChatMessage" autocomplete="off">
-    <div class="dock-bottom"> 
+    <div class="dock-bottom">
         <div id="file-preview" class="file-preview">
             <img src="" alt="" class="preview-image img-fluid" id="preview-image">
             <div class="preview-actions">
@@ -137,10 +137,10 @@
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
                     Send
-                </button> 
+                </button>
             </div>
         </div>
-    </div> 
+    </div>
 
 </form>
 
