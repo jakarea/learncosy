@@ -18,8 +18,10 @@ class CreateGroupParticipantsTable extends Migration
             $table->unsignedBigInteger('group_id');
             $table->unsignedBiginteger('user_id');
             $table->boolean('status')->default(false);
-            $table->unique(['group_id', 'user_id']);
             $table->timestamps();
+
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

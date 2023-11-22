@@ -24,7 +24,10 @@ class CreateChatsTable extends Migration
             $table->tinyInteger('file_type')->default(1)->comment('1:Message, 2:File');
             $table->tinyInteger('message_type')->default(1)->comment('1:Personal message, 2:Group message');
             $table->tinyInteger('is_read');
-            // $table->boolean('send_receive_identifier')->default(false)->comment('0: sender, 1: receiver');
+
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('sender_id')->references('id')->on('users');
+            $table->foreign('receiver_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
