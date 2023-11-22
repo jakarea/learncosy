@@ -103,22 +103,24 @@
 
 
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-    <div class="dock-bottom">
+    
+    <div class="dock-bottom"> 
+        <div id="file-preview" class="file-preview">
+            <img src="" alt="" class="preview-image img-fluid" id="preview-image">
+            <div class="preview-actions">
+                <span id="file-type-icon"></span>
+                <span class="close-icon" id="close-icon" onclick="removeFile()">✖</span>
+            </div>
+        </div>
+
         <div class="message-send-box">
             <div class="form-group">
-                <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message" name="message">
+                <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                    name="message">
             </div>
             <div class="file-attach-bttns">
-                {{-- <button type="button" class="btn btn-emoji">
-                    <img src="{{ asset('latest/assets/images/icons/messages/wmoji.svg') }}" alt="Avatar"
-                        class="img-fluid">
-                </button> --}}
-                {{-- <button type="button" class="btn btn-emoji">
-
-                </button> --}}
-
-                <label for="attached">
-                    <img src="{{ asset('latest/assets/images/icons/messages/line.svg') }}" alt="Avatar" class="img-fluid">
+                <label for="attached" class="message-attached">
+                    <i class="fa-solid fa-paperclip"></i>
                 </label>
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
@@ -127,5 +129,6 @@
             </div>
         </div>
     </div> 
+    
 </form>
 

@@ -1,24 +1,24 @@
 @extends('layouts.latest.instructor')
 @section('title')
-    Messsages Page
+Messsages Page
 @endsection
 
 {{-- page style @S --}}
 @section('style')
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css" />
-    <style>
-        .message-list-page-wrap {
-            font-family: 'Poppins', sans-serif !important;
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .message-list-page-wrap {
+        font-family: 'Poppins', sans-serif !important;
+    }
+</style>
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
-    {{-- ==== message list page @S ==== --}}
-    <main class="message-list-page-wrap student-messages-page">
+{{-- ==== message list page @S ==== --}}
+<main class="message-list-page-wrap student-messages-page">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -28,21 +28,24 @@
                         {{-- title --}}
                         <div class="title">
                             <h1>Messages <span>{{ count($users) + count($groups) }}</span></h1>
+
                             {{-- create group box start --}}
-                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                            <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                class="img-fluid"> Create Group
+                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
+                                    class="img-fluid"> Create Group
                             </a>
                         </div>
                         <div class="collapse" id="collapseExample">
                             <div class="create-group-form">
                                 <h4>Create Group</h4>
+
                                 @include('e-learning.course.instructor.group-admin.admin-info')
                                 <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
-                                        <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
+                                        <input type="text" placeholder="Group Name" class="form-control" name="name"
+                                            value="{{ old('name') }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Add People</label>
@@ -55,10 +58,12 @@
                                     {{-- suggested name box --}}
                                     <div class="suggested-name-box load-suggested-people"></div>
                                     {{-- suggested name box --}}
+
                                     {{-- person list box start --}}
                                     <div class="person-box-list person-tab-body load-chat-user-for-group"
                                         id="load-chat-user-for-group"></div>
                                     {{-- person list box end --}}
+
                                     {{-- form submit --}}
                                     <div class="form-submit form-group-submit">
                                         <button type="reset" class="btn btn-cancel">Cancel</button>
@@ -69,6 +74,7 @@
                             </div>
                         </div>
                         {{-- create group box end --}}
+
                         {{-- title --}}
                         {{-- chat filter --}}
                         <div class="header-filter">
@@ -79,10 +85,9 @@
                             </div>
                             <div class="chat-filter">
                                 <div class="dropdown">
-                                    <button class="btn" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <img src="{{ asset('latest/assets/images/icons/filter-2.svg') }}" alt="ic"
-                                        class="img-fluid"> All Chat
+                                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{ asset('latest/assets/images/icons/filter-2.svg') }}" alt="ic"
+                                            class="img-fluid"> All Chat
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item active" href="#">All Chat</a></li>
@@ -92,6 +97,7 @@
                             </div>
                         </div>
                         {{-- chat filter --}}
+
                         {{-- leftbar person list start --}}
                         <div class="person-tab-body chat-user-load" id="chat-user-load">
                             {{-- single person start --}}
@@ -102,11 +108,15 @@
                         {{-- leftbar person list end --}}
                     </div>
                     {{-- leftbar side end --}}
-                    {{-- chat body list start --}}
-                    <div class="main-chat-room" id=chat-message>
-                        <div class="blank-chat-page">
-                            <i class="fa-regular fa-circle-user"></i>
-                            <h3>Select a person or group to start a chat</h3>
+
+                    {{-- chat body right side start --}}
+                    <div class="chat-main-body-box">
+                        {{-- chat body list start --}}
+                        <div class="main-chat-room" id=chat-message>
+                            <div class="blank-chat-page">
+                                <i class="fa-regular fa-circle-user"></i>
+                                <h3>Select a person or group to start a chat</h3>
+                            </div>
                         </div>
                     </div>
                     {{-- chat body right side end --}}
@@ -116,6 +126,7 @@
     </div>
 </main>
 {{-- ==== message list page @E ==== --}}
+
 {{-- add people to group modal start --}}
 <div class="custom-modal-box">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -126,38 +137,34 @@
                         <div class="form-group mt-0">
                             <label for="" style="font-size: 1.25rem">Add People</label>
                             <input type="text" placeholder="Name" class="form-control">
-                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
-                                class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
                         </div>
                         {{-- suggested name box --}}
                         <div class="suggested-name-box">
                             {{-- suggested person --}}
                             <div>
-                                <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt=""
-                                    class="img-fluid">
+                                <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="" class="img-fluid">
                                 <span>Mollie Hall</span>
                                 <a href="#">
-                                <i class="fas fa-close"></i>
+                                    <i class="fas fa-close"></i>
                                 </a>
                             </div>
                             {{-- suggested person --}}
                             {{-- suggested person --}}
                             <div>
-                                <img src="{{ asset('latest/assets/images/avatar.png') }}" alt=""
-                                    class="img-fluid">
+                                <img src="{{ asset('latest/assets/images/avatar.png') }}" alt="" class="img-fluid">
                                 <span>Mollie Hall</span>
                                 <a href="#">
-                                <i class="fas fa-close"></i>
+                                    <i class="fas fa-close"></i>
                                 </a>
                             </div>
                             {{-- suggested person --}}
                             {{-- suggested person --}}
                             <div>
-                                <img src="{{ asset('latest/assets/images/update-5.png') }}" alt=""
-                                    class="img-fluid">
+                                <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="" class="img-fluid">
                                 <span>Mollie Hall</span>
                                 <a href="#">
-                                <i class="fas fa-close"></i>
+                                    <i class="fas fa-close"></i>
                                 </a>
                             </div>
                             {{-- suggested person --}}
@@ -257,10 +264,10 @@
     </div>
 </div>
 {{-- add people to group modal end --}}
+
 {{-- add specific person to group modal start --}}
 <div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="create-group-form">
@@ -269,7 +276,8 @@
                     <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
                         <div class="form-group">
                             <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
+                            <input type="text" placeholder="Group Name" class="form-control" name="name"
+                                value="{{ old('name') }}">
                         </div>
                         <div class="form-group">
                             <label for="">Add People</label>
@@ -281,7 +289,8 @@
                         <div class="suggested-name-box load-suggested-people"></div>
                         {{-- suggested name box --}}
                         {{-- person list box start --}}
-                        <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
+                        <div class="person-box-list person-tab-body load-chat-user-for-group"
+                            id="load-chat-user-for-group"></div>
                         {{-- person list box end --}}
                         {{-- form submit --}}
                         <div class="form-submit">
@@ -296,35 +305,34 @@
     </div>
 </div>
 {{-- add specific person to group modal end --}}
+
 {{-- rename group modal start --}}
 <div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="create-group-form">
                     <h4>Rename Group</h4>
                     <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar"
-                                class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar" class="img-fluid">
                             <div class="media-body">
                                 <h5 class="name">Math Education </h5>
                                 <ul class="peoples">
                                     <li><img src="{{ asset('latest/assets/images/update-2.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                        class="img-fluid"></li>
+                                            class="img-fluid"></li>
                                     <li><span>+5</span></li>
                                 </ul>
                             </div>
@@ -350,13 +358,11 @@
 {{-- rename group modal end --}}
 {{-- delete group modal start --}}
 <div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="create-group-form text-center">
-                    <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a"
-                        class="img-fluid">
+                    <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a" class="img-fluid">
                     <h4 class="border-0 pb-0 mt-4">Delete This Group</h4>
                     <p>Are you sure you want to delete this group?</p>
                     <form action="">
@@ -372,7 +378,7 @@
         </div>
     </div>
 </div>
-    {{-- delete group modal end --}}
+{{-- delete group modal end --}}
 @endsection
 {{-- page content @E --}}
 
@@ -481,7 +487,7 @@ document.addEventListener('click', function (event) {
 </script>
 
 <script>
-var receiver_id = '';
+    var receiver_id = '';
 var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
@@ -759,8 +765,8 @@ function scrollToBottomFunc() {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 
-<script >
-const toggleBttn = document.querySelector('.create-toggle');
+<script>
+    const toggleBttn = document.querySelector('.create-toggle');
 const headerFilter = document.querySelector('.header-filter');
 const userList = document.querySelector('.person-tab-body.chat-user-load');
 
@@ -772,7 +778,7 @@ toggleBttn.addEventListener('click', function (e) {
 </script>
 
 {{--close profile box--}}
-<script >
+<script>
     // const openPorifles = document.querySelectorAll('.open-profile');
     // const closeIcon = document.getElementById('closeProfile');
     // const profileBox = document.getElementById('profileBox');
@@ -789,9 +795,9 @@ toggleBttn.addEventListener('click', function (e) {
     // }
     // closeIcon.addEventListener('click', closeProfileBox);
 
-    </script>
+</script>
 
-<script >
+<script>
     function displayFileName() {
         var input = document.getElementById('attached');
         var fileName = input.files[0].name;

@@ -186,7 +186,7 @@ Route::get('students/lessons/{id}', function ($id) {
 
 // One to one chat system
 Route::middleware('auth')->prefix('messages')->controller(MessageController::class)->group(function () {
-    Route::get('/', 'index')->name('message');
+    Route::get('/', 'index')->name('message'); 
     Route::get('/chat', 'getChatMessage')->name('messages.chat');
     Route::post('/chat', 'sendChatMessage')->name('messages.chat');
     Route::get('/group/chat', 'getGroupChatMessage')->name('messages.group.chat');

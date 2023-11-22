@@ -163,7 +163,7 @@ class MessageController extends Controller
 
             $data['currentGroup']->update(['updated_at' => $maxUpdatedAt]);
 
-            return view('e-learning.course/instructor.group-chat', $data);
+            return view('e-learning.course.instructor.group-chat', $data);
         }
     }
 
