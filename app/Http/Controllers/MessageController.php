@@ -147,7 +147,7 @@ class MessageController extends Controller
             // dd( $request->all() );
 
             $data['myInfo'] = User::find(Auth::id());
-            $data['currentGroup'] = Group::where('id', $request->receiver_id)->with('participants')->firstOrFail();
+            $data['currentGroup'] = Group::with('participants')->where('id', $request->receiver_id)->with('participants')->firstOrFail();
 
             Chat::where(['group_id' => $request->receiver_id])->update(['is_read' => 1]);
 
