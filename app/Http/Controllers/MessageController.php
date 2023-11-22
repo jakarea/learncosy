@@ -8,6 +8,7 @@ use Pusher\Pusher;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -173,18 +174,21 @@ class MessageController extends Controller
             ]);
 
             $sender_Id = Auth::id();
-            $group = Group::with('participants')->findOrFail($request->receiver_id);
+            $participants = GroupParticipant::where('group_id',$request->receiver_id)->get();
 
-            foreach ($group->participants as $member) {
-                Chat::create(
-                    $data = array(
-                        'sender_id' => $sender_Id,
-                        'group_id' => $request->receiver_id,
-                        'message' => $request->message,
-                        'message_type' => 2,
-                        'is_read' => false
-                    )
-                );
+            foreach ($participants as $member) {
+                // echo "<pre>";
+                // print_r( $member);
+                // Chat::create(
+                //     $data = array(
+                //         'sender_id' => $sender_Id,
+                //         'receiver_id' => $member->user_id,
+                //         'group_id' => $request->receiver_id,
+                //         'message' => $request->message,
+                //         'message_type' => 2,
+                //         'is_read' => false
+                //     )
+                // );
                 // if ($request->hasFile('file')) {
                 //     $file = $request->file('file');
                 //     $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
@@ -209,11 +213,9 @@ class MessageController extends Controller
                     $options
                 );
 
-                $data = ['from' => $sender_Id, 'to' => $member->group_id];
+                $data = ['from' => $sender_Id, 'to' => $member->user_id];
 
-
-                // $pusher->trigger('my-channel', 'my-event', $data);
-                $notify = '' . $member->id . '';
+                $notify = '' . $member->user_id . '';
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);
 
             }
