@@ -136,6 +136,22 @@
     }
 }
 
+span.avatar-big-box {
+    border-radius: 6.25rem;
+    border: 4px solid var(--neutral-10, #FFF);
+    width: 8.75rem;
+    height: 8.75rem;
+    object-fit: cover;
+    margin-right: 2rem;
+    font-size: 3.5rem;
+    background-color: #E0E0E0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #294CFF;
+    margin: 1rem 0;
+}
+
 // vimeo player css
 .vimeo-player {
     position: relative;

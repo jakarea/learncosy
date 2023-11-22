@@ -38,11 +38,13 @@ class AdminManagementController extends Controller
     $request->validate([
            'name' => 'required|string',
            'phone' => 'required|string', 
+           'password' => 'required|string', 
            'email' => 'required|email|unique:users,email',
            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
        [
-           'avatar' => 'Max file size is 5 MB!'
+           'avatar' => 'Max file size is 5 MB!',
+           'phone' => 'Phone Number is required'
        ]);
 
        $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
@@ -72,7 +74,7 @@ class AdminManagementController extends Controller
         }
 
         $admin->save();
-        return redirect('admin/alladmin')->with('success', 'Admin Added Successfully!');
+        return redirect('admin/alladmin')->with('success', 'Admin Created Successfully!');
     }
 
       // show page
@@ -110,6 +112,8 @@ class AdminManagementController extends Controller
          $user->name = $request->name;
          $user->subdomain = $user->subdomain;
          if ($request->email) {
+            $user->email =  $request->email;
+         }else{
             $user->email =  $user->email;
          }
          $social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;

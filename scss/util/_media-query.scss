@@ -15,6 +15,9 @@
         @media (min-width: 1199px) and (max-width: 1399px) {@content}
     }
     @else if $breakpoints == large { 
-        @media (min-width: 1399px) {@content}
+        @media (min-width: 1199px) and (max-width: 1999px) {@content}
+    }
+    @else if $breakpoints == extralarge { 
+        @media (min-width: 1999px) {@content}
     }
 }

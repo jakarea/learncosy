@@ -145,6 +145,26 @@ Account Management
                                                                     </div>
                                                                 </div>
                                                                 <div class="media">
+                                                                    <img src="{{ asset('latest/assets/images/icons/color.svg') }}"
+                                                                        alt="Color" class="img-fluid">
+                                                                    <div class="media-body">
+                                                                        <h5>Menu Text Color</h5>
+                                                                        <p>This is the color of your menu text. Your menubar
+                                                                            should look good on this.</p>
+                                                                    </div>
+
+                                                                    <div class="color-position">
+                                                                        <input type="color" class="form-control p-0"
+                                                                            name="menu_color" id="menu_color"
+                                                                            value="{{ old('menu_color', $module_settings->value->menu_color ? $module_settings->value->menu_color : '#ffffff') }}">
+
+                                                                        <label for="menu_color">
+                                                                            <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                                                alt="Color" class="img-fluid me-0">
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media">
                                                                     <img src="{{ asset('latest/assets/images/icons/color-2.svg') }}"
                                                                         alt="Color" class="img-fluid">
                                                                     <div class="media-body">

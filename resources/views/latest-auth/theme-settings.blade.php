@@ -27,10 +27,9 @@ if ($module_settings) {
 }else{
     $module_settings = new App\Models\InstructorModuleSetting;
     $module_settings->instructor_id =  auth()->user()->id;
-    $module_settings->value = '{"primary_color":"#f4f8fc","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}';
+    $module_settings->value = '{"primary_color":"#f4f8fc","menu_color":"#000000","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}';
     $module_settings->save();
-    $module_settings->value = json_decode('{"primary_color":"#f4f8fc","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}');
-    
+    $module_settings->value = json_decode('{"primary_color":"#f4f8fc","menu_color":"#000000","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}');
 }
 
 @endphp

@@ -37,23 +37,23 @@
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="name">Name <sup class="text-danger">*</sup>
-                                    </label> 
-                                        <input type="text" placeholder="Enter your Name" name="name"
-                                            class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ $user->name }}" id="name">
-                                     
+                                    </label>
+                                    <input type="text" placeholder="Enter your Name" name="name"
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        value="{{ $user->name }}" id="name">
+
                                     <span class="invalid-feedback">@error('name'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="phone">Phone <sup class="text-danger">*</sup>
-                                    </label> 
-                                        <input type="text" placeholder="Enter Phone Number" name="phone"
-                                            class="form-control @error('phone') is-invalid @enderror"
-                                            value="{{ $user->phone }}" id="phone">
-                                     
+                                    </label>
+                                    <input type="text" placeholder="Enter Phone Number" name="phone"
+                                        class="form-control @error('phone') is-invalid @enderror"
+                                        value="{{ $user->phone }}" id="phone">
+
                                     <span class="invalid-feedback">@error('phone'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -61,11 +61,11 @@
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="email">Email <sup class="text-danger">*</sup>
-                                    </label> 
-                                        <input type="email" placeholder="Enter email" name="email"
-                                            class="form-control @error('email') is-invalid @enderror"
-                                            value="{{ $user->email }}" id="email" disabled>
-                                    
+                                    </label>
+                                    <input type="email" placeholder="Enter email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ $user->email }}" id="email">
+
                                     <span class="invalid-feedback">@error('email'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -80,7 +80,8 @@
                                 <div class="form-group form-error">
                                     <label for="company_name">Company name </label>
 
-                                    <input type="text" name="company_name" id="company_name" value="{{  $user->company_name }}"
+                                    <input type="text" name="company_name" id="company_name"
+                                        value="{{  $user->company_name }}"
                                         class="form-control @error('company_name') is-invalid @enderror"
                                         placeholder="Company Name">
 
@@ -100,34 +101,37 @@
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">  
+                            <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="features" class="mb-1">Social Media </label> 
-                                    @php $socialLinks = explode(",",$user->social_links); @endphp 
-                                     
+                                    <label for="features" class="mb-1">Social Media </label>
+                                    @php $socialLinks = explode(",",$user->social_links); @endphp
+
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
-                                            <input class="form-control" multiple="" type="url" placeholder="Enter Social Link" name="social_links[]" value="{{ $social }}"> 
+                                            <input class="form-control" multiple="" type="url"
+                                                placeholder="Enter Social Link" name="social_links[]"
+                                                value="{{ $social }}">
                                         </div>
                                         @endforeach
-                                    </div> 
+                                    </div>
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
-                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
+                                    <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i
+                                            class="fas fa-plus"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="description" class="mb-2">About </label> 
-                                        <textarea name="description" id="description"
-                                            class="form-control @error('description') is-invalid @enderror"
-                                            placeholder="Type here..">{{ $user->description }}</textarea>
-                                    
+                                    <label for="description" class="mb-2">About </label>
+                                    <textarea name="description" id="description"
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Type here..">{{ $user->description }}</textarea>
+
                                     <span class="invalid-feedback">@error('description'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
@@ -161,7 +165,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group"> 
+                                <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
                                     <div class="row mt-2">
                                         <div class="col-md-2">
@@ -184,18 +188,22 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
-                            {{-- <div class="col-lg-12">
-                                <div class="form-group mt-3">
-                                    <label for="">Initial Password for this Admin </label>
-                                    <input type="text" class="form-control " value="1234567890" disabled> 
-                                    <span class="can-change">*Can be Change it Later</span>
+                            </div>
+                            <div class="col-lg-12"> 
+                                <div class="form-group form-error">
+                                    <label for="password">Password </label>
+                                    <input type="password" name="password" placeholder="*********"
+                                        class="form-control @error('password') is-invalid @enderror" id="password">
+                                    <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
+                                    <div class="pass-icon">
+                                        <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                    </div>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -214,7 +222,6 @@
         </div>
     </div>
 </main>
-<!-- === user update page @E === -->
 @endsection
 {{-- page content @E --}}
 
@@ -222,32 +229,8 @@
 @section('script')
 
 {{-- form save js --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var formChanged = false; 
-        function markFormChanged() {
-            formChanged = true;
-        }
- 
-        var formElements = document.querySelectorAll('form input, form select, form textarea');
-        formElements.forEach(function (element) {
-            element.addEventListener('change', markFormChanged);
-        });
- 
-        window.addEventListener('beforeunload', function (e) {
-            if (formChanged) {
-                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
-                e.returnValue = confirmationMessage;  
-                return confirmationMessage;  
-            }
-        });
- 
-        document.querySelector('form').addEventListener('submit', function () {
-            formChanged = false;
-        });
-    });
-</script>
-
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+<script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
 {{-- drag & drop image upload js --}}
 <script>
@@ -358,7 +341,7 @@ for (const input of existingInputs) {
 
   extraFields.appendChild(div);
 }
-  </script>
-  
+</script>
+
 @endsection
 {{-- page script @E --}}
