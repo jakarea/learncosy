@@ -477,7 +477,7 @@ document.addEventListener('click', function (event) {
             }
         });
     }
-}); 
+});
 </script>
 
 <script>
@@ -751,15 +751,9 @@ function scrollToBottomFunc() {
     $('.main-chat-room').animate({
         scrollTop: $('.main-chat-room').get(0).scrollHeight
     }, 50);
-} 
+}
 </script>
 
-
-{
-    {
-        --tooltip active js--
-    }
-} 
 <script>
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -777,7 +771,7 @@ toggleBttn.addEventListener('click', function (e) {
 
 </script>
 
-{{--close profile box--}} 
+{{--close profile box--}}
 <script >
     // const openPorifles = document.querySelectorAll('.open-profile');
     // const closeIcon = document.getElementById('closeProfile');
@@ -794,7 +788,7 @@ toggleBttn.addEventListener('click', function (e) {
     //     this.parentNode.parentNode.classList.remove('active');
     // }
     // closeIcon.addEventListener('click', closeProfileBox);
-    
+
     </script>
 
 <script >
@@ -832,4 +826,5 @@ function removeFile() {
 }
 
 </script>
+
 @endsection
