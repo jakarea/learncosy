@@ -32,6 +32,7 @@ use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
 use App\Http\Controllers\Admin\AdminManagementController;
+use App\Http\Controllers\Admin\AdminCourseStepController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
@@ -229,10 +230,8 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
 
     Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
 
-
     // Instructor Notification
     Route::get('/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
-
     Route::post('/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
     Route::get('/profile/step-4/complete', function () {
@@ -331,9 +330,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // module page routes
         Route::prefix('modules')->controller(ModuleController::class)->group(function () {
-            Route::get('/', 'index');
-            // data table route
-            Route::get('/datatable', 'modulesDataTable')->name('modules.data.table');
+            Route::get('/', 'index'); 
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('module.store');
             Route::get('/{slug}/edit', 'edit')->name('module.edit');
@@ -573,18 +570,65 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('courses')->controller(CourseManagementController::class)->group(function () {
             Route::get('/', 'index')->name('admin.courses');
             Route::get('/file-download/{course_id}/{extension}', 'fileDownload')->name('admin.file.download');
-            Route::get('/create', 'create');
-            Route::post('/create', 'store')->name('admin.course.store');
-            Route::get('/{slug}', 'show')->name('admin.course.show');
+            Route::get('/{slug}/show', 'show')->name('admin.course.show');
             Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
             Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
             Route::post('/{slug}/edit', 'update')->name('admin.course.update');
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
         });
+
+        // admin course edit
+        Route::prefix('courses/create')->controller(AdminCourseStepController::class)->group(function () {
+            Route::get('/', 'start')->name('admin.course.create.step-1');
+            Route::post('created/', 'startSet')->name('admin.course.create.start');
+
+            Route::get('/{id}/facts', 'step1');
+            Route::post('/{id}/facts', 'step1c')->name('admin.course.store.step-1');
+
+            Route::get('{id}', 'step3');
+            Route::post('{id}', 'step3c');
+
+            Route::post('{id}/factsd', 'step3cd')->name('admin.course.module.step.create');
+            Route::post('{id}/factsu', 'step3cu')->name('admin.course.module.step.update');
+            Route::post('{id}/facts-update', 'step3d')->name('admin.course.lesson.step.update');
+
+            Route::get('{id}/text/{module_id}/content/{lesson_id}', 'stepLessonText');
+            Route::post('{lesson_id}/step-lesson-content', 'stepLessonContent')->name('admin.course.lesson.text.update');
+
+            Route::get('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudio');
+            Route::post('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudioSet')->name('admin.course.lesson.audio.create');
+
+            Route::get('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideo');
+            Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
+
+            Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
+
+            Route::get('{id}/objects', 'courseObjects');
+
+            Route::post('{id}/objects', 'courseObjectsSet');
+            Route::post('/{courseId}/delete-objects/{dataIndex}', 'deleteObjective');
+
+            Route::post('/updateObjectives/{id}', 'updateObjectives')->name('admin.updateObjectives');
+
+            Route::get('{id}/price', 'coursePrice');
+            Route::post('{id}/price', 'coursePriceSet');
+
+            Route::get('{id}/design', 'courseDesign');
+            Route::post('{id}/design', 'courseDesignSet');
+
+            Route::get('{id}/certificate', 'courseCertificate');
+            Route::post('{id}/certificate', 'courseCertificateSet');
+
+            Route::get('{id}/visibility', 'visibility');
+            Route::post('{id}/visibility', 'visibilitySet');
+
+            Route::get('{id}/share', 'courseShare');
+
+        });
+
         // Subscription paege modify routes for admin
         Route::prefix('manage/subscriptionpackage')->controller(AdminSubscriptionPackageController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.subscription');
-            Route::get('/datatable', 'subscriptionDataTable')->name('admin.subscription.data.table');
+            Route::get('/', 'index')->name('admin.subscription'); 
             Route::get('/create', 'create')->name('admin.subscription.create');
             Route::post('/store', 'store')->name('admin.subscription.store');
             Route::get('/{slug}', 'show')->name('admin.subscription.show');

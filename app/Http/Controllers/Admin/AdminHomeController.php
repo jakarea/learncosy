@@ -68,7 +68,8 @@ class AdminHomeController extends Controller
             ->get();
 
 
-        $lastMessages = Chat::lastMessagePerUser()->with('user')->take(10)->get();
+        // $lastMessages = Chat::lastMessagePerUser()->with('user')->take(10)->get();
+        $lastMessages = [];
 
          //9
         $currentMonthStart = $this->currentMonthStart;

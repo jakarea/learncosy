@@ -81,9 +81,13 @@
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
+                                                    
                                                     <li><a class="dropdown-item"
-                                                            href="{{ url('admin/courses/' . $course->slug) }}">View</a>
+                                                            href="{{ url('admin/courses/' . $course->slug.'/show') }}">View</a>
                                                     </li>
+                                                    <li><a class="dropdown-item"
+                                                        href="{{ url('admin/courses/create/' . $course->id) }}">Edit</a>
+                                                </li>
                                                     <li>
                                                         <form method="post" class="d-inline"
                                                             action="{{ url('admin/courses/' . $course->id . '/destroy') }}">
@@ -101,7 +105,7 @@
                                     </div>
                                     <div class="course-txt-box">
                                         <a
-                                            href="{{ url('admin/courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                            href="{{ url('admin/courses/' . $course->slug.'/show') }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
                                         <p>{{ $course->user->subdomain }}</p>
                                         <ul>
                                             <li><span>{{ $review_avg }}</span></li>
