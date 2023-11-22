@@ -71,7 +71,7 @@ Messsages Page
                                     </div>
                                     {{-- form submit --}}
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                         {{-- create group box end --}}
 
@@ -275,46 +275,45 @@ Messsages Page
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{{-- add people to group modal end --}}
+    </div> 
+    {{-- add people to group modal end --}}
 
-{{-- add specific person to group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <h4>Create Group</h4>
-                    @include('e-learning.course.instructor.group-admin.admin-info')
-                    <form method="post" class="createGroupModal" action="{{ route('course.messages.group') }}">
-                        <div class="form-group">
-                            <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control" name="name"
-                                value="{{ old('name') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control search-group-chat-user">
-                            <input class="addUserId" type="hidden" name="user_id">
-                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
-                        </div>
-                        {{-- suggested name box --}}
-                        <div class="suggested-name-box load-suggested-people"></div>
-                        {{-- suggested name box --}}
+    {{-- add specific person to group modal start --}}
+    <div class="custom-modal-box">
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="create-group-form">
+                        <h4>Create Group</h4>
+                        @include('e-learning.course.instructor.group-admin.admin-info')
+                        <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
+                            <div class="form-group">
+                                <label for="">Group Name</label>
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Add People</label>
+                                <input type="text" placeholder="Name" class="form-control search-group-chat-user">
+                                <input class="addUserId" type="hidden" name="user_id">
+                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
+                            </div>
+                            {{-- suggested name box --}}
+                            <div class="suggested-name-box load-suggested-people"></div>
+                            {{-- suggested name box --}}
 
-                        {{-- person list box start --}}
-                        <div class="person-box-list person-tab-body load-chat-user-for-group"
-                            id="load-chat-user-for-group"></div>
-                        {{-- person list box end --}}
+                            {{-- person list box start --}}
+                            <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
+                            {{-- person list box end --}}
 
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-create">Create</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
+                            {{-- form submit --}}
+                            <div class="form-submit">
+                                <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-create">Create</button>
+                            </div>
+                            {{-- form submit --}}
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -428,7 +427,7 @@ Messsages Page
             console.log(searchTerm);
             if (searchTerm !== "") {
                 $.ajax({
-                    url: "{{ route('course.messages.search') }}",
+                    url: "{{ route('messages.search') }}",
                     type: 'GET',
                     data: {
                         term: searchTerm,
@@ -451,7 +450,7 @@ Messsages Page
             var userId = $(this).attr('id');
             $.ajax({
                 type: "get",
-                url: "{{ route('course.messages.suggested.people') }}",
+                url: "{{ route('messages.suggested.people') }}",
                 data: {
                     userId: userId
                 },
@@ -491,7 +490,7 @@ Messsages Page
 
                 $.ajax({
                     type: 'get',
-                    url: "{{ route('course.messages.delete.singlechat') }}",
+                    url: "{{ route('messages.delete.singlechat') }}",
                     data: {
                         userId: userId
                     },
@@ -510,6 +509,7 @@ Messsages Page
 <script>
     var receiver_id = '';
         var my_id = "{{ Auth::id() }}";
+
         $(document).ready(function() {
             // ajax setup form csrf token
             $.ajaxSetup({
@@ -560,7 +560,6 @@ Messsages Page
 
 
             var channel = pusher.subscribe('my-channel');
-
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
                     $('#user_' + data.to).click();
@@ -581,6 +580,30 @@ Messsages Page
                 }
             });
 
+
+            var channelGroup = pusher.subscribe(my_id);
+
+            channelGroup.bind('App\\Events\\Notify', function(data) {
+                console(JSON.stringify(data));
+                if (my_id == data.from) {
+                    $('#group_' + data.to).click();
+                } else if (my_id == data.to) {
+                    if (receiver_id == data.from) {
+                        // if receiver is selected, reload the selected user ...
+                        $('#group_' + data.from).click();
+                    } else {
+                        // if receiver is not seleted, add notification for that user
+                        var pending = parseInt($('#group_' + data.from).find('.pending').html());
+
+                        if (pending) {
+                            $('#group_' + data.from).find('.pending').html(pending + 1);
+                        } else {
+                            $('#group_' + data.from).append('<span class="pending">1</span>');
+                        }
+                    }
+                }
+            });
+
         });
 
         $(document).on('click', '.user', function() {
@@ -592,8 +615,8 @@ Messsages Page
             receiver_id =  user_receive_id.split('_')[1];
             $.ajax({
                 type: "get",
-                url: '/course/messages/chat/' + receiver_id, // need to create this route
-                data: "",
+                url: "{{ route('messages.chat') }}",
+                data: {receiver_id: receiver_id},
                 cache: false,
                 success: function(data) {
                     $('#chat-message').html(data);
@@ -615,24 +638,32 @@ Messsages Page
 
             $.ajax({
                 type: "get",
-                url: "{{ route('course.messages.group.chat') }}",
+                url: "{{ route('messages.group.chat') }}",
                 data: { receiver_id : receiver_id },
                 cache: false,
                 success: function(data) {
-                    console.log( data)
-                    // $('#chat-message').html(data);
+                    $('#chat-message').html(data);
                     // $('#chat-message-input').emojioneArea();
-                    // scrollToBottomFunc();
-
+                    scrollToBottomFunc();
                 }
             });
         });
 
 
+        // Send one to one chate
         $(document).on('submit', '#chatMessage', function(e) {
             e.preventDefault();
             sendMessage();
         });
+
+        // Send group message
+        $(document).on('submit', '#groupChatMessage', function(e) {
+            e.preventDefault();
+            sendGroupMessage();
+        });
+
+
+
 
         // $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
         //     alert("hi")
@@ -662,7 +693,7 @@ Messsages Page
             if (receiver_id !== '') {
                 $.ajax({
                     type: "post",
-                    url: "messages/chat",
+                    url: "{{ route('messages.chat') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -686,13 +717,13 @@ Messsages Page
 
         function sendGroupMessage() {
             // var messageText = $('.chat-message-input').emojioneArea().getText();
-            var formData = new FormData($('#chatMessage')[0]);
+            var formData = new FormData($('#groupChatMessage')[0]);
             formData.append("receiver_id", receiver_id);
             var messageText = $('.chat-message-input').val();
             if (receiver_id !== '') {
                 $.ajax({
                     type: "post",
-                    url: "messages/chat",
+                    url: "{{ route('messages.group.chat') }}",
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -700,8 +731,7 @@ Messsages Page
                     success: function(data) {
                         $('.chat-message-input').val('');
                         $('.chat-message-input').emojioneArea().val('');
-                        $('#chatMessage')[0].reset();
-
+                        $('#groupChatMessage')[0].reset();
                     },
                     error: function(jqXHR, status, err) {
                         // Handle error if needed
@@ -719,7 +749,7 @@ Messsages Page
             var formData = new FormData($(formSelector)[0]);
             $.ajax({
                 type: "post",
-                url: "{{ route('course.messages.group') }}",
+                url: "{{ route('messages.group') }}",
                 data: formData,
                 processData: false,
                 contentType: false,

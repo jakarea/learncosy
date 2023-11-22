@@ -1,8 +1,12 @@
 @isset($friend)
-<div class="chat-room-head w-100">
-    <div class="media">
-        <img src="{{ asset($friend->avatar) }}" alt="Avatar" class="img-fluid">
 
+    <div class="chat-room-head w-100">
+        <div class="media">
+            @isset( $friend->avatar )
+                <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
+            @else
+                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $friend->name }}" class="img-fluid">
+            @endisset 
         <div class="media-body">
             <h5 class="name">{{ $friend->name }}
                 @if(Cache::has('user-is-online-' . $friend->id))
@@ -30,17 +34,21 @@
 
 
 @forelse ($messages as $message)
+ 
 <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
     <div class="media main-media">
         <div class="avatar">
-            <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}" alt="Avatar" class="img-fluid">
+            @isset( $message->user->avatar )
+                    <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
+                @else
+                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $message->user->name }}" class="img-fluid">
+                @endisset
             <i class="fas fa-circle"></i>
         </div>
         <div class="media-body">
             <div class="d-flex">
                 <h6 class="open-profile">{{ $message->user->name ?? "" }} &nbsp; </h6>
-                <span> {{ $message->created_at->format('F j, Y') }}
-                </span>
+                <span> {{ $message->created_at->format('F j, Y') }}  </span> 
             </div>
 
             <div class="text">

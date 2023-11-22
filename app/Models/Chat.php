@@ -8,19 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     use HasFactory;
-    protected $fillable = ['sender_id', 'receiver_id','group_id', 'message','file','file_extension','type', 'is_read'];
+    protected $fillable = ['sender_id', 'receiver_id','group_id', 'message','file','file_extension','file_type','message_type', 'is_read'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'receiver_id', 'id');
     }
 
-    public function scopeLastMessagePerUser($query)
+    public function group()
     {
-        return $query->whereIn('id', function ($subquery) {
-            $subquery->selectRaw('MAX(id)')
-                ->from('chats')
-                ->groupBy('sender_id','receiver_id');
-        });
+        return $this->belongsTo(Group::class, 'group_id');
     }
+
 }

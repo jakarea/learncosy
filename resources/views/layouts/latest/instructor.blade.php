@@ -42,6 +42,7 @@
 
     <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
 
     @yield('style')
     {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css" /> --}}
@@ -76,7 +77,6 @@
 
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 

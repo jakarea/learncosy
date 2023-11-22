@@ -27,7 +27,7 @@
                             <i class="fas fa-angle-down"></i></a>
                         <ul class="submenu-box">
                             <li><a href="{{ url('instructor/courses') }}" class="{{ Request::is('instructor/courses') ? ' active' : '' }}">All Courses</a></li>
-                            <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create') ? ' active' : '' }}">Add New Course</a></li> 
+                            <li><a href="{{ url('instructor/courses/create') }}" class="{{ Request::is('instructor/courses/create') ? ' active' : '' }}">Add New Course</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -55,8 +55,8 @@
                             href="{{ url('instructor/payments') }}">Earning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ Request::is('course/messages*') ? ' active' : '' }} nav-link"
-                            href="{{ url('course/messages') }}">Messaging</a>
+                        <a class="{{ Request::is('messages*') ? ' active' : '' }} nav-link"
+                            href="{{ url('messages') }}">Messaging</a>
                     </li>
                 </ul>
             @endcan
