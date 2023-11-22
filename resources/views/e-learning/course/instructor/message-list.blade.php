@@ -29,105 +29,19 @@ Messsages Page
                         <div class="title">
                             <h1>Messages <span>{{ count($users) + count($groups) }}</span></h1>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                {{-- create group box start --}}
-                                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                                    aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                        class="img-fluid"> Create Group
-                                </a>
-                            </div>
-                            <div class="collapse" id="collapseExample">
-                                <div class="create-group-form">
-                                    <h4>Create Group</h4>
-
-                                    @include('e-learning.course.instructor.group-admin.admin-info')
-                                    <form method="post" class="createGroup" action="{{ route('messages.group') }}">
-                                        <div class="form-group">
-                                            <label for="">Group Name</label>
-                                            <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Add People</label>
-                                            <input type="text" placeholder="Name"
-                                                class="form-control search-group-chat-user">
-                                            <input class="addUserId" type="hidden" name="user_id">
-                                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
-                                                class="img-fluid">
-                                        </div>
-                                        {{-- suggested name box --}}
-                                        <div class="suggested-name-box load-suggested-people"></div>
-                                        {{-- suggested name box --}}
-
-                                        {{-- person list box start --}}
-                                        <div class="person-box-list person-tab-body load-chat-user-for-group"
-                                            id="load-chat-user-for-group"></div>
-                                        {{-- person list box end --}}
-
-                                        {{-- form submit --}}
-                                        <div class="form-submit">
-                                            <button type="reset" class="btn btn-cancel">Cancel</button>
-                                            <button type="submit" class="btn btn-create">Create</button>
-                                        </div>
-                                        {{-- form submit --}}
-                                    </form>
-                                </div>
-                            </div>
-                            {{-- create group box end --}}
-
-                            {{-- title --}}
-                            {{-- chat filter --}}
-                            <div class="header-filter">
-                                <div class="search">
-                                    <img src="{{ asset('latest/assets/images/icons/search-m.svg') }}" alt="ic"
-                                        class="img-fluid">
-                                    <input type="text" placeholder="Search" class="form-control search-chat-user">
-                                </div>
-                                <div class="chat-filter">
-                                    <div class="dropdown">
-                                        <button class="btn" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                            <img src="{{ asset('latest/assets/images/icons/filter-2.svg') }}" alt="ic"
-                                                class="img-fluid"> All Chat
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item active" href="#">All Chat</a></li>
-                                            <li><a class="dropdown-item" href="#">Groups</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- chat filter --}}
-
-                            {{-- leftbar person list start --}}
-                            <div class="person-tab-body chat-user-load" id="chat-user-load">
-                                {{-- single person start --}}
-                                @include('e-learning.course.instructor.message-group.group-list')
-                                @include('e-learning.course.instructor.chat-user.search-users')
-                                {{-- single person end --}}
-                            </div>
-                            {{-- leftbar person list end --}}
-=======
-=======
->>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                             {{-- create group box start --}}
-                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                                aria-expanded="false" aria-controls="collapseExample">
                                 <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
                                     class="img-fluid"> Create Group
                             </a>
-<<<<<<< HEAD
->>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
-=======
->>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                         </div>
                         <div class="collapse" id="collapseExample">
                             <div class="create-group-form">
                                 <h4>Create Group</h4>
 
                                 @include('e-learning.course.instructor.group-admin.admin-info')
-                                <form method="post" class="createGroup" action="{{ route('course.messages.group') }}">
+                                <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
                                         <input type="text" placeholder="Group Name" class="form-control" name="name"
@@ -151,13 +65,13 @@ Messsages Page
                                     {{-- person list box end --}}
 
                                     {{-- form submit --}}
-                                    <div class="form-submit form-group-submit">
+                                    <div class="form-submit">
                                         <button type="reset" class="btn btn-cancel">Cancel</button>
                                         <button type="submit" class="btn btn-create">Create</button>
                                     </div>
                                     {{-- form submit --}}
                                 </form>
-                            </div> 
+                            </div>
                         </div>
                         {{-- create group box end --}}
 
@@ -169,228 +83,6 @@ Messsages Page
                                     class="img-fluid">
                                 <input type="text" placeholder="Search" class="form-control search-chat-user">
                             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            {{-- suggested name box --}}
-                            <div class="suggested-name-box">
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/avatar.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                                {{-- suggested person --}}
-                                <div>
-                                    <img src="{{ asset('latest/assets/images/update-5.png') }}" alt=""
-                                        class="img-fluid">
-                                    <span>Mollie Hall</span>
-                                    <a href="#">
-                                        <i class="fas fa-close"></i>
-                                    </a>
-                                </div>
-                                {{-- suggested person --}}
-                            </div>
-                            {{-- suggested name box --}}
-
-                            {{-- person list box start --}}
-                            <div class="person-box-list person-tab-body">
-
-                                {{-- person --}}
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>I’ve just published the site again. Looks like...</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>I’ve just published the site again. Looks like...</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>I’ve just published the site again. Looks like...</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-2.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>I’ve just published the site again. Looks like...</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="single-person border-0">
-                                    <div class="media p-0 border-0">
-                                        <div class="avatar">
-                                            <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                                class="img-fluid me-0">
-                                            <i class="fas fa-circle"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="name">
-                                                <a href="#" class="name">Katherine Moss</a>
-                                            </div>
-                                            <p>I’ve just published the site again. Looks like...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- person --}}
-
-                            </div>
-                            {{-- person list box end --}}
-
-                            {{-- form submit --}}
-                            <div class="form-submit">
-                                <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                                <button class="btn btn-create" type="submit">Add</button>
-                            </div>
-                            {{-- form submit --}}
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- add people to group modal end --}}
-
-    {{-- add specific person to group modal start --}}
-    <div class="custom-modal-box">
-        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="create-group-form">
-                        <h4>Create Group</h4>
-                        @include('e-learning.course.instructor.group-admin.admin-info')
-                        <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
-                            <div class="form-group">
-                                <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Add People</label>
-                                <input type="text" placeholder="Name" class="form-control search-group-chat-user">
-                                <input class="addUserId" type="hidden" name="user_id">
-                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
-                            </div>
-                            {{-- suggested name box --}}
-                            <div class="suggested-name-box load-suggested-people"></div>
-                            {{-- suggested name box --}}
-
-                            {{-- person list box start --}}
-                            <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
-                            {{-- person list box end --}}
-
-                            {{-- form submit --}}
-                            <div class="form-submit">
-                                <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-create">Create</button>
-                            </div>
-                            {{-- form submit --}}
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- add specific person to group modal end --}}
-
-    {{-- rename group modal start --}}
-    <div class="custom-modal-box">
-        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="create-group-form">
-                        <h4>Rename Group</h4>
-
-                        <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
-                            <div class="media">
-                                <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar"
-                                    class="img-fluid">
-
-                                <div class="media-body">
-                                    <h5 class="name">Math Education </h5>
-
-                                    <ul class="peoples">
-                                        <li><img src="{{ asset('latest/assets/images/update-2.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                                class="img-fluid"></li>
-                                        <li><span>+5</span></li>
-=======
-=======
->>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                             <div class="chat-filter">
                                 <div class="dropdown">
                                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -400,10 +92,6 @@ Messsages Page
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item active" href="#">All Chat</a></li>
                                         <li><a class="dropdown-item" href="#">Groups</a></li>
-<<<<<<< HEAD
->>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
-=======
->>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                                     </ul>
                                 </div>
                             </div>
@@ -417,25 +105,121 @@ Messsages Page
                             @include('e-learning.course.instructor.chat-user.search-users')
                             {{-- single person end --}}
                         </div>
-                        {{-- leftbar person list end --}}
+                        {{-- leftbar person list end --}} 
                     </div>
-                    {{-- leftbar side end --}}
-
-                    {{-- chat body right side start --}}
-                    <div class="chat-main-body-box">
-                        {{-- chat body list start --}}
-                        <div class="main-chat-room" id=chat-message>
-                            <div class="blank-chat-page">
-                                <i class="fa-regular fa-circle-user"></i>
-                                <h3>Select a person or group to start a chat</h3>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- chat body right side end --}}
                 </div>
             </div>
         </div>
-    </div>
+        {{-- add people to group modal end --}}
+
+        {{-- add specific person to group modal start --}}
+        <div class="custom-modal-box">
+            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="create-group-form">
+                            <h4>Create Group</h4>
+                            @include('e-learning.course.instructor.group-admin.admin-info')
+                            <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
+                                <div class="form-group">
+                                    <label for="">Group Name</label>
+                                    <input type="text" placeholder="Group Name" class="form-control" name="name"
+                                        value="{{ old('name') }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Add People</label>
+                                    <input type="text" placeholder="Name" class="form-control search-group-chat-user">
+                                    <input class="addUserId" type="hidden" name="user_id">
+                                    <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
+                                        class="img-fluid">
+                                </div>
+                                {{-- suggested name box --}}
+                                <div class="suggested-name-box load-suggested-people"></div>
+                                {{-- suggested name box --}}
+
+                                {{-- person list box start --}}
+                                <div class="person-box-list person-tab-body load-chat-user-for-group"
+                                    id="load-chat-user-for-group"></div>
+                                {{-- person list box end --}}
+
+                                {{-- form submit --}}
+                                <div class="form-submit">
+                                    <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-create">Create</button>
+                                </div>
+                                {{-- form submit --}}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- add specific person to group modal end --}}
+
+        {{-- rename group modal start --}}
+        <div class="custom-modal-box">
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="create-group-form">
+                            <h4>Rename Group</h4>
+
+                            <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
+                                <div class="media">
+                                    <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar"
+                                        class="img-fluid">
+
+                                    <div class="media-body">
+                                        <h5 class="name">Math Education </h5>
+
+                                        <ul class="peoples">
+                                            <li><img src="{{ asset('latest/assets/images/update-2.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
+                                                    class="img-fluid"></li>
+                                            <li><span>+5</span></li>
+                                        </ul>
+                                    </div>
+                                    {{-- chat filter --}}
+
+                                    {{-- leftbar person list start --}}
+                                    <div class="person-tab-body chat-user-load" id="chat-user-load">
+                                        {{-- single person start --}}
+                                        @include('e-learning.course.instructor.message-group.group-list')
+                                        @include('e-learning.course.instructor.chat-user.search-users')
+                                        {{-- single person end --}}
+                                    </div>
+                                    {{-- leftbar person list end --}}
+                                </div>
+                                {{-- leftbar side end --}}
+
+                                {{-- chat body right side start --}}
+                                <div class="chat-main-body-box">
+                                    {{-- chat body list start --}}
+                                    <div class="main-chat-room" id=chat-message>
+                                        <div class="blank-chat-page">
+                                            <i class="fa-regular fa-circle-user"></i>
+                                            <h3>Select a person or group to start a chat</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- chat body right side end --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </main>
 {{-- ==== message list page @E ==== --}}
 
@@ -587,7 +371,7 @@ Messsages Page
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     {{-- add people to group modal end --}}
 
     {{-- add specific person to group modal start --}}
@@ -602,20 +386,23 @@ Messsages Page
                         <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
                             <div class="form-group">
                                 <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
+                                <input type="text" placeholder="Group Name" class="form-control" name="name"
+                                    value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Add People</label>
                                 <input type="text" placeholder="Name" class="form-control search-group-chat-user">
                                 <input class="addUserId" type="hidden" name="user_id">
-                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
+                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
+                                    class="img-fluid">
                             </div>
                             {{-- suggested name box --}}
                             <div class="suggested-name-box load-suggested-people"></div>
                             {{-- suggested name box --}}
 
                             {{-- person list box start --}}
-                            <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
+                            <div class="person-box-list person-tab-body load-chat-user-for-group"
+                                id="load-chat-user-for-group"></div>
                             {{-- person list box end --}}
 
                             {{-- form submit --}}
