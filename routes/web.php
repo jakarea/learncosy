@@ -636,20 +636,17 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show');
-            Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
-
-            Route::get('{slug}/edit', 'edit1')->name('admin.select.again.bundle.course');
-            // dummy start  
-
             
+            Route::get('{slug}/edit', 'edit1')->name('admin.select.again.bundle.course');
             Route::post('{id}/select-update', 'update1');
 
             Route::get('{slug}/edit-final', 'edit2');
-            Route::post('{slug}/edit-final', 'update2')->name('create.update.bundle.course');
+            Route::post('{slug}/edit-final', 'update2')->name('admin.create.update.bundle.course');
 
-            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('reove.select.bundle.course');
-            Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
-            // dummy end
+            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('admin.reove.select.bundle.course');
+            Route::post('/remove/{course_id}', 'removeSelect')->name('admin.reove.select.bundle.course');
+
+            Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {

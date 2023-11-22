@@ -230,7 +230,8 @@ class CourseBundleController extends Controller
         
      }
 
-     public function update1($courseId){
+     public function update1($courseId)
+     {
 
         $bundleSelected = session()->has('bundleSelected') ? session('bundleSelected') : [];
  
