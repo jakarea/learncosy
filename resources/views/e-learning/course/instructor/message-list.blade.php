@@ -66,8 +66,8 @@ Messsages Page
 
                                     {{-- form submit --}}
                                     <div class="form-submit form-group-submit">
-                                        <button type="reset" class="btn btn-cancel">Cancel</button>
-                                        <button type="submit" class="btn btn-create">Create</button>
+                                        <button type="reset" class="btn btn-cancel" id="btn-cancel-group">Cancel</button>
+                                        <button type="submit" class="btn btn-create" id="btn-create-group">Create</button>
                                     </div>
                                     {{-- form submit --}}
                                 </form>
@@ -422,7 +422,6 @@ function searchUser(searchTerm, resultContainer, layout) {
     }
 }
 
-
 // Load suggested user
 var existsUsers = [];
 $(document).on('click', '.suggest-people', function () {
@@ -767,15 +766,37 @@ function scrollToBottomFunc() {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
 
+{{-- toggle of group create form shwo hide --}}
 <script>
     const toggleBttn = document.querySelector('.create-toggle');
-const headerFilter = document.querySelector('.header-filter');
-const userList = document.querySelector('.person-tab-body.chat-user-load');
+    const headerFilter = document.querySelector('.header-filter');
+    const userList = document.querySelector('.person-tab-body.chat-user-load');
 
-toggleBttn.addEventListener('click', function (e) {
-    userList.classList.toggle('active');
-    headerFilter.classList.toggle('active');
-});
+    toggleBttn.addEventListener('click', function (e) {
+        userList.classList.toggle('active');
+        headerFilter.classList.toggle('active');
+    });
+
+
+    const collapseExamples = document.querySelector('#collapseExample');
+    const groupCancelBttn = document.querySelector('#btn-cancel-group');
+    const groupCreateBttn = document.querySelector('#btn-create-group');
+
+    function groupShowHide(){
+        userList.classList.remove('active');
+        headerFilter.classList.remove('active');
+        collapseExamples.classList.remove('show');
+    }
+
+    groupCancelBttn.addEventListener('click', function (e) {
+        groupShowHide();
+    });
+
+    groupCreateBttn.addEventListener('click', function (e) {
+        setTimeout(function () {
+            groupShowHide();
+        }, 1000);
+    });
 
 </script>
 
@@ -799,6 +820,7 @@ toggleBttn.addEventListener('click', function (e) {
 
 </script>
 
+{{-- show upload image preview --}}
 <script>
     function displayFileName() {
         var input = document.getElementById('attached');
