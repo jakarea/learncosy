@@ -157,13 +157,13 @@ class MessageController extends Controller
             })
             ->get();
 
-            dd( $data['messages']->toArray() );
+            // dd( $data['messages']->toArray() );
 
             $maxUpdatedAt = $data['messages']->max('updated_at');
 
             $data['currentGroup']->update(['updated_at' => $maxUpdatedAt]);
 
-            return view('e-learning.course/instructor.group-chat', $data);
+            return view('e-learning.course.instructor.group-chat', $data);
         }
     }
 
