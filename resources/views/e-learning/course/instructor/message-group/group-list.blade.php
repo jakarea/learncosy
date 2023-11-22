@@ -17,12 +17,6 @@
                             <i class="fa-solid fa-circle" style="color: #a1a1a5;"></i>
                         @endif
                     </div>
-                @else
-                    <div class="avatar">
-                        <img src="{{ asset('/latest/assets/images/update-5.png') }}"
-                            alt="Avatar" class="img-fluid">
-                        <i class="fas fa-circle"></i>
-                    </div>
                 @endisset
 
                 <div class="media-body">
