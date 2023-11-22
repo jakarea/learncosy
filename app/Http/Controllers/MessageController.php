@@ -149,7 +149,7 @@ class MessageController extends Controller
             $data['myInfo'] = User::find(Auth::id());
             $data['currentGroup'] = Group::where('id', $request->receiver_id)->with('participants')->firstOrFail();
 
-            Chat::where(['sender_id' => Auth::id(), 'receiver_id' => $request->receiver_id])->update(['is_read' => 1]);
+            Chat::where(['receiver_id' => $request->receiver_id])->update(['is_read' => 1]);
 
             $data['messages'] = Chat::where(['sender_id' => Auth::id(), 'group_id' => $request->receiver_id])
                 ->orWhere(["receiver_id" => Auth::id(), "group_id" => $request->receiver_id])
@@ -179,16 +179,16 @@ class MessageController extends Controller
             foreach ($participants as $member) {
                 // echo "<pre>";
                 // print_r( $member);
-                // Chat::create(
-                //     $data = array(
-                //         'sender_id' => $sender_Id,
-                //         'receiver_id' => $member->user_id,
-                //         'group_id' => $request->receiver_id,
-                //         'message' => $request->message,
-                //         'message_type' => 2,
-                //         'is_read' => false
-                //     )
-                // );
+                Chat::create(
+                    $data = array(
+                        'sender_id' => $sender_Id,
+                        'receiver_id' => $member->user_id,
+                        'group_id' => $request->receiver_id,
+                        'message' => $request->message,
+                        'message_type' => 2,
+                        'is_read' => false
+                    )
+                );
                 // if ($request->hasFile('file')) {
                 //     $file = $request->file('file');
                 //     $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
@@ -213,7 +213,7 @@ class MessageController extends Controller
                     $options
                 );
 
-                $data = ['from' => $sender_Id, 'to' => $member->user_id];
+                $data = ['from' => $request->receiver_id, 'to' => $member->user_id];
 
                 $notify = '' . $member->user_id . '';
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);

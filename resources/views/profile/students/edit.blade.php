@@ -217,6 +217,10 @@
 
 {{-- page script @S --}}
 @section('script') 
+
+{{-- form save js --}}
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+
 {{-- drag & drop image upload js --}}
 <script>
     function handleFileSelect(evt) {

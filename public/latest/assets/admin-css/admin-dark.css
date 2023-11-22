@@ -1703,6 +1703,27 @@
 .dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .dock-bottom {
   background-color: #0D0D0D;
 }
+.dark-mode .main-chat-room::-webkit-scrollbar-track,
+.dark-mode .create-group-form::-webkit-scrollbar-track,
+.dark-mode .person-tab-body::-webkit-scrollbar-track {
+  background: #000 !important;
+}
+.dark-mode .main-chat-room::-webkit-scrollbar-thumb,
+.dark-mode .create-group-form::-webkit-scrollbar-thumb,
+.dark-mode .person-tab-body::-webkit-scrollbar-thumb {
+  background: #7289FF !important;
+}
+.dark-mode .main-chat-room::-webkit-scrollbar-thumb:hover,
+.dark-mode .create-group-form::-webkit-scrollbar-thumb:hover,
+.dark-mode .person-tab-body::-webkit-scrollbar-thumb:hover {
+  background: #7289FF !important;
+}
+.dark-mode .form-group-submit {
+  background-color: transparent !important;
+}
+.dark-mode .blank-chat-page i {
+  color: #7289FF;
+}
 
 .dark-mode-bttn {
   z-index: 999999;

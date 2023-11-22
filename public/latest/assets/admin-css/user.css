@@ -409,6 +409,12 @@
   line-height: 1.25rem;
   margin-bottom: 0.4rem;
 }
+.user-add-form-wrap form .form-group .pass-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 47px;
+  cursor: pointer;
+}
 .user-add-form-wrap form .form-group .form-control {
   border-radius: 0.375rem;
   border: 1px solid var(--neutral-color-neutral-30, #E5ECF6);
@@ -419,7 +425,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem;
-  /* 142.857% */
 }
 .user-add-form-wrap form .form-group textarea {
   resize: none;

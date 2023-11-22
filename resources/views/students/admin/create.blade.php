@@ -196,11 +196,15 @@
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group mt-3">
-                                    <label for="">Password </label>
-                                    <input type="text" class="form-control" name="password" placeholder="********">
-                                    {{-- <span class="can-change">*Can be Change it Later</span> --}}
+                            <div class="col-lg-12 mt-3">
+                                <div class="form-group form-error">
+                                    <label for="password">Password </label>
+                                    <input type="password" name="password" placeholder="*********"
+                                        class="form-control @error('password') is-invalid @enderror" id="password">
+                                    <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
+                                    <div class="pass-icon">
+                                        <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -217,13 +221,16 @@
             </div>
         </div>
     </div>
-</main>
-<!-- === Student add page @E === -->
+</main> 
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
+
+{{-- form save js --}}
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+<script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
 {{-- drag & drop image upload js --}}
 <script>

@@ -587,29 +587,24 @@
 
 
             var channelGroup = pusher.subscribe(my_id);
-
             channelGroup.bind('App\\Events\\Notify', function(data) {
-                console.log(JSON.stringify(data));
+                if (my_id == data.from) {
+                    $('#group_' + data.to).click();
 
-                alert( receiver_id )
+                } else if (my_id == data.to) {
 
-                // if (my_id == data.from) {
-                //     $('#group_' + data.to).click();
-                // } else if (my_id == data.to) {
-                //     if (receiver_id == data.from) {
-                //         // if receiver is selected, reload the selected user ...
-                //         $('#group_' + data.from).click();
-                //     } else {
-                //         // if receiver is not seleted, add notification for that user
-                //         var pending = parseInt($('#group_' + data.from).find('.pending').html());
-
-                //         if (pending) {
-                //             $('#group_' + data.from).find('.pending').html(pending + 1);
-                //         } else {
-                //             $('#group_' + data.from).append('<span class="pending">1</span>');
-                //         }
-                //     }
-                // }
+                    receiver_id = data.from;
+                    if (receiver_id == data.from) {
+                        $('#group_' + data.from).click();
+                    } else {
+                        var pending = parseInt($('#group_' + data.from).find('.pending').html());
+                        if (pending) {
+                            $('#group_' + data.from).find('.pending').html(pending + 1);
+                        } else {
+                            $('#group_' + data.from).append('<span class="pending">1</span>');
+                        }
+                    }
+                }
             });
 
         });

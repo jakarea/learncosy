@@ -1,38 +1,3 @@
-{{-- @isset($friend)
-    <div class="chat-room-head w-100">
-        <div class="media">
-
-            @isset( $currentGroup->avatar )
-                <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
-            @else
-                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
-            @endisset
-
-            <div class="media-body">
-                <h5 class="name">{{ $currentGroup->name }}
-                    @if(Cache::has('user-is-online-' . $friend->id))
-                        <span class="online">
-                            <i class="fas fa-circle"></i>
-                            Online
-                        </span>
-                    @else
-                        <span class="offline">
-                            <i class="fas fa-circle"></i>
-                            Offline
-                        </span>
-                    @endif
-                </h5>
-                @php
-                    $emailParts = explode("@", $friend->email);
-                    $username = $emailParts[0];
-                @endphp
-                <p>{{ $username }}</p>
-            </div>
-            <a href="javascript:;" class="view-bttn open-profile">View Profile</a>
-        </div>
-    </div>
-@endisset --}}
-
 @isset($currentGroup)
     <div class="chat-room-head group-room-header">
         <div class="media">
@@ -46,13 +11,13 @@
                 <h5 class="name">{{ $currentGroup->name }}</h5>
 
                 <ul class="peoples">
-                    @if( $currentGroup->participants )
+                    {{-- @if( $currentGroup->participants )
                         @foreach ($currentGroup->participants as $participant)
                             <li>
                                 <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
                             </li>
                         @endforeach
-                    @endif
+                    @endif --}}
                 </ul>
 
             </div>

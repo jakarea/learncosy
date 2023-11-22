@@ -32,7 +32,8 @@ class Group extends Model
     // New Code
     public function participants()
     {
-        return $this->hasMany(GroupParticipant::class, 'group_id');
+        // return $this->hasMany(GroupParticipant::class, 'group_id');
+        return $this->belongsToMany(User::class, 'group_participants', 'group_id', 'user_id');
     }
 
 }
