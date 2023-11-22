@@ -81,7 +81,7 @@ $i = 0;
                         @if(!empty($group_files))
                         <div class="files">
                             @foreach($group_files as $fileExtension)
-                                <a href="{{ route('admin.file.download', [$course->id,$fileExtension]) }}">
+                                <a href="javascript:void(0)">
                                     {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
                                 </a>
                             @endforeach

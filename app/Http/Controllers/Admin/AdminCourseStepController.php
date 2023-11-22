@@ -323,9 +323,7 @@ class AdminCourseStepController extends Controller
         ]);
         
         $lesson = Lesson::find($lesson_id);
-
         $lesson->short_description = $request->input('description');
-
         $uploadedFilenames = [];
         
         if ($request->hasFile('lesson_file')) {
