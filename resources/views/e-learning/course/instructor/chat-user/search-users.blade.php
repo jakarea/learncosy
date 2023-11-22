@@ -5,11 +5,12 @@
             <div class="media">
                 @if($user)
                     <div class="avatar">
-                        @isset( $user->avatar )
+                        {{-- @isset( $user->avatar )
                             <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
                         @else
                             <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $user->name }}" class="img-fluid">
-                        @endisset
+                        @endisset --}}
+                        <span class="user-name-avatar">{!! strtoupper($user->name[0]) !!}</span>
                         @if(Cache::has('user-is-online-' . $user->id))
                             <i class="fas fa-circle"></i>
                         @else
