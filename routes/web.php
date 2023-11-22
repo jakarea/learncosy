@@ -571,17 +571,13 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index')->name('admin.courses');
             // Route::get('/file-download/{course_id}/{extension}', 'filePreview')->name('admin.file.download');
             Route::get('/{slug}/show', 'show')->name('admin.course.show');
-            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
-            Route::get('/{slug}/edit', 'edit')->name('admin.course.edit');
-            Route::post('/{slug}/edit', 'update')->name('admin.course.update');
+            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview'); 
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
         });
 
         // admin course edit
         Route::prefix('courses/create')->controller(AdminCourseStepController::class)->group(function () {
-            Route::get('/', 'start')->name('admin.course.create.step-1');
-            Route::post('created/', 'startSet')->name('admin.course.create.start');
-
+             
             Route::get('/{id}/facts', 'step1');
             Route::post('/{id}/facts', 'step1c')->name('admin.course.store.step-1');
 
@@ -641,6 +637,19 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show');
             Route::delete('/{id}/delete', 'delete')->name('admin.course.bundle.destroy');
+
+            Route::get('{slug}/edit', 'edit1')->name('admin.select.again.bundle.course');
+            // dummy start  
+
+            
+            Route::post('{id}/select-update', 'update1');
+
+            Route::get('{slug}/edit-final', 'edit2');
+            Route::post('{slug}/edit-final', 'update2')->name('create.update.bundle.course');
+
+            Route::post('/remove-new/{course_id}', 'removeSelectNew')->name('reove.select.bundle.course');
+            Route::post('/remove/{course_id}', 'removeSelect')->name('reove.select.bundle.course');
+            // dummy end
         });
         // module page routes for admin
         Route::prefix('modules')->controller(ModuleManagementController::class)->group(function () {

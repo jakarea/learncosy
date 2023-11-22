@@ -74,6 +74,52 @@ class BundleCourseManagementController extends Controller
         return view('bundle/admin/view',compact('updatingCourse','bundleSelected','selectedCourses')); 
      }
 
+    //  bundle edit
+     public function edit1($bundleSlug)
+     {
+        // return $bundleSlug;
+
+        $bundleCourse = BundleCourse::where('slug',$bundleSlug)->first();
+
+        $title = isset($_GET['title']) ? $_GET['title'] : '';
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
+
+        $courses = Course::where('user_id',$bundleCourse->instructor_id);
+
+        if ($title) {
+            $courses->where('title', 'like', '%' . trim($title) . '%');
+        }
+
+        if ($status) {
+            if ($status == 'oldest') {
+                $courses->orderBy('id', 'asc');
+            }
+            
+            if ($status == 'newest') {
+                $courses->orderBy('id', 'desc');
+            }
+        }else{
+            $courses->orderBy('id', 'desc'); 
+        }
+
+       $courses = $courses->paginate(12); 
+ 
+        $courseIds = explode(',', $bundleCourse->selected_course);
+ 
+        $bundleSelected = Course::whereIn('id', $courseIds)
+        ->with('reviews')
+        ->get();
+
+        session()->put('bundleSelected', $bundleSelected);
+ 
+        if (!$bundleSelected->isEmpty()) {
+            return view('bundle/instructor/edit1',compact('courses','bundleCourse')); 
+        } else {
+            return redirect('admin/bundle/courses')->with('error','No Bundle Found!');
+        }
+        
+     }
+
     public function delete($bundleId)
      {   
          $bundleCourse = BundleCourse::where('id', $bundleId)->first();
