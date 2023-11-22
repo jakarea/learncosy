@@ -622,7 +622,7 @@
                                                                 <div class="media-body">
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
-                                                                        <h5>{{ $certificate->course->title }}</h5>
+                                                                        <h5>{{ optional($certificate->course)->title }} </h5>
                                                                         <div>
                                                                             <a href="#"><img
                                                                                     src="{{ asset('latest/assets/images/icons/pen.svg') }}"
@@ -654,7 +654,7 @@
                                                                         <i class="fas fa-circle"></i> {{
                                                                         $certificate->updated_at->format('d F Y') }}
                                                                     </h6>
-                                                                    <p>{{$certificate->course->short_description}}</p>
+                                                                    <p>{{ optional($certificate->course)->short_description }} </p>
                                                                 </div>
                                                             </div>
                                                             @endforeach

@@ -146,10 +146,12 @@ class InstructorController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'phone' => 'required|string',
+            'password' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
+            'avatar' => 'Max file size is 5 MB!',
+            'phone' => 'Phone number is required'
         ]);
 
 
@@ -168,7 +170,13 @@ class InstructorController extends Controller
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
-        $user->email = $user->email;
+         
+        if ($request->email) {
+            $user->email =  $request->email;
+        }else{
+            $user->email = $user->email;
+        }
+        
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }else{

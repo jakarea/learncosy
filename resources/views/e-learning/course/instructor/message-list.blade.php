@@ -30,6 +30,7 @@ Messsages Page
                             <h1>Messages <span>{{ count($users) + count($groups) }}</span></h1>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 {{-- create group box start --}}
                                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button"
                                     aria-expanded="false" aria-controls="collapseExample">
@@ -108,13 +109,18 @@ Messsages Page
                             </div>
                             {{-- leftbar person list end --}}
 =======
+=======
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                             {{-- create group box start --}}
                             <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
                                 role="button" aria-expanded="false" aria-controls="collapseExample">
                                 <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
                                     class="img-fluid"> Create Group
                             </a>
+<<<<<<< HEAD
 >>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
+=======
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                         </div>
                         <div class="collapse" id="collapseExample">
                             <div class="create-group-form">
@@ -151,7 +157,7 @@ Messsages Page
                                     </div>
                                     {{-- form submit --}}
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                         {{-- create group box end --}}
 
@@ -163,6 +169,7 @@ Messsages Page
                                     class="img-fluid">
                                 <input type="text" placeholder="Search" class="form-control search-chat-user">
                             </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
                             {{-- suggested name box --}}
                             <div class="suggested-name-box">
@@ -382,6 +389,8 @@ Messsages Page
                                                 class="img-fluid"></li>
                                         <li><span>+5</span></li>
 =======
+=======
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                             <div class="chat-filter">
                                 <div class="dropdown">
                                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -391,7 +400,10 @@ Messsages Page
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item active" href="#">All Chat</a></li>
                                         <li><a class="dropdown-item" href="#">Groups</a></li>
+<<<<<<< HEAD
 >>>>>>> 5e2f32609c337f259fac136f5633404c447e70dd
+=======
+>>>>>>> ff1d2e51e184b82fe36ddedadb58721c95c3e2b2
                                     </ul>
                                 </div>
                             </div>
@@ -575,46 +587,45 @@ Messsages Page
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{{-- add people to group modal end --}}
+    </div> 
+    {{-- add people to group modal end --}}
 
-{{-- add specific person to group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <h4>Create Group</h4>
-                    @include('e-learning.course.instructor.group-admin.admin-info')
-                    <form method="post" class="createGroupModal" action="{{ route('course.messages.group') }}">
-                        <div class="form-group">
-                            <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control" name="name"
-                                value="{{ old('name') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control search-group-chat-user">
-                            <input class="addUserId" type="hidden" name="user_id">
-                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
-                        </div>
-                        {{-- suggested name box --}}
-                        <div class="suggested-name-box load-suggested-people"></div>
-                        {{-- suggested name box --}}
+    {{-- add specific person to group modal start --}}
+    <div class="custom-modal-box">
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="create-group-form">
+                        <h4>Create Group</h4>
+                        @include('e-learning.course.instructor.group-admin.admin-info')
+                        <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
+                            <div class="form-group">
+                                <label for="">Group Name</label>
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Add People</label>
+                                <input type="text" placeholder="Name" class="form-control search-group-chat-user">
+                                <input class="addUserId" type="hidden" name="user_id">
+                                <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
+                            </div>
+                            {{-- suggested name box --}}
+                            <div class="suggested-name-box load-suggested-people"></div>
+                            {{-- suggested name box --}}
 
-                        {{-- person list box start --}}
-                        <div class="person-box-list person-tab-body load-chat-user-for-group"
-                            id="load-chat-user-for-group"></div>
-                        {{-- person list box end --}}
+                            {{-- person list box start --}}
+                            <div class="person-box-list person-tab-body load-chat-user-for-group" id="load-chat-user-for-group"></div>
+                            {{-- person list box end --}}
 
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-create">Create</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
+                            {{-- form submit --}}
+                            <div class="form-submit">
+                                <button type="reset" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-create">Create</button>
+                            </div>
+                            {{-- form submit --}}
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

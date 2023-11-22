@@ -118,13 +118,10 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="description" class="mb-2">About </label>
-
                                     <textarea name="description" id="description"
                                         class="form-control @error('description') is-invalid @enderror"
                                         placeholder="Type here..">{{ old('description') }}</textarea>
-
-                                    <span class="invalid-feedback">@error('description'){{ $message }}
-                                        @enderror</span>
+                                    <span class="invalid-feedback">@error('description'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6">
@@ -180,9 +177,14 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-group mt-3">
-                                    <label for="">Password </label>
-                                    <input type="password" class="form-control" name="password" placeholder="********">  
+                                <div class="form-group form-error">
+                                    <label for="password">Password </label>
+                                    <input type="password" name="password" placeholder="*********"
+                                        class="form-control @error('password') is-invalid @enderror" id="password">
+                                    <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
+                                    <div class="pass-icon">
+                                        <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
+                                    </div>
                                 </div>
                             </div> 
                         </div>
@@ -207,6 +209,10 @@
 
 {{-- script @S --}}
 @section('script')
+
+{{-- form save js --}}
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
+<script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
 {{-- drag & drop image upload js --}}
 <script>
