@@ -85,7 +85,6 @@ class CourseBundleController extends Controller
         return view('bundle/instructor/step-1',compact('courses','bundleSelected')); 
      }
 
-
      public function selectBundle($course_id)
      {
         $userId = Auth::user()->id;
@@ -231,7 +230,8 @@ class CourseBundleController extends Controller
         
      }
 
-     public function update1($courseId){
+     public function update1($courseId)
+     {
 
         $bundleSelected = session()->has('bundleSelected') ? session('bundleSelected') : [];
  

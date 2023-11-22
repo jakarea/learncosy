@@ -74,6 +74,8 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">View</a>
                                                 </li> 
+                                                <li><a class="dropdown-item" href="{{url('admin/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
+                                                </li>
                                                 <li>
                                                     <form method="POST" class="d-inline" action="{{ route('admin.course.bundle.destroy', $course->id) }}">
                                                         @csrf 

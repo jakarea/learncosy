@@ -39,7 +39,7 @@ View Bundle
                                      
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('admin/courses/' . $course->slug) }}">{{
+                                    <a href="{{url('admin/courses/overview/'.$course->slug)}}">{{
                                         Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->short_description, $limit = 30, $end = '...') }}
                                     </p>

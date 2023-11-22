@@ -34,6 +34,7 @@
 
 
 @forelse ($messages as $message)
+
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
@@ -45,6 +46,7 @@
                 @endisset
 
                 <i class="fas fa-circle"></i>
+
             </div>
             <div class="media-body">
                 <div class="d-flex">
@@ -121,10 +123,9 @@
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
                     Send
-                </button>
+                </button> 
             </div>
         </div>
-    </div>
+    </div> 
 </form>
-
 
