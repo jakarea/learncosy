@@ -306,79 +306,6 @@ Messsages Page
 </div>
 {{-- add specific person to group modal end --}}
 
-{{-- rename group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <h4>Rename Group</h4>
-                    <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5 class="name">Math Education </h5>
-                                <ul class="peoples">
-                                    <li><img src="{{ asset('latest/assets/images/update-2.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><span>+5</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <form action="">
-                        <div class="form-group mt-0">
-                            <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control">
-                        </div>
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Save</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- rename group modal end --}}
-{{-- delete group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form text-center">
-                    <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a" class="img-fluid">
-                    <h4 class="border-0 pb-0 mt-4">Delete This Group</h4>
-                    <p>Are you sure you want to delete this group?</p>
-                    <form action="">
-                        {{-- form submit --}}
-                        <div class="form-submit mt-5 error-bttn">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Delete</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- delete group modal end --}}
 @endsection
 {{-- page content @E --}}
 
@@ -483,6 +410,136 @@ document.addEventListener('click', function (event) {
         });
     }
 });
+
+
+// Delete group chat history
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('deleteGroupChatMsg')) {
+        event.stopPropagation();
+        var groupId = event.target.getAttribute('data-group-id');
+
+        $.ajax({
+            type: 'get',
+            url: "{{ route('messages.delete.groupchat') }}",
+            data: { groupId: groupId },
+            success: function (data) {
+                console.log( data )
+                $('#group-chat-message-wrap').empty();
+                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                toastr.success(data.success, 'Success');
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+});
+
+// Update group
+$(document).on('submit', '#updateGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#updateGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.update.group') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#updateGroup')[0].reset();
+            $('#exampleModal2').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            fetchGroupData(groupId)
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
+// Delete group
+$(document).on('submit', '#deleteGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#deleteGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.delete.group') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#group-chat-message-wrap').empty();
+            $('#exampleModal3').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            $("#chat-message").load(location.href + " #chat-message>*", "");
+
+
+
+            toastr.success(data.success, 'Success');
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
+
+$(document).on('click', '.user', function () {
+    $('.user').removeClass('active');
+    $('.group').removeClass('active');
+    $(this).addClass('active');
+    $(this).find('.pending').remove();
+
+    var user_receive_id = $(this).attr('id');
+    receiver_id = user_receive_id.split('_')[1];
+    $.ajax({
+        type: "get",
+        url: "{{ route('messages.chat') }}",
+        data: {
+            receiver_id: receiver_id
+        },
+        cache: false,
+        success: function (data) {
+            $('#chat-message').html(data);
+            // $('#chat-message-input').emojioneArea();
+            scrollToBottomFunc();
+
+        }
+    });
+});
+
+
+$(document).on('click', '.group', function () {
+    $('.group').removeClass('active');
+    $('.user').removeClass('active');
+    $(this).addClass('active');
+    $(this).find('.pending').remove();
+
+    var group_id = $(this).attr('id');
+    receiver_id = group_id.split('_')[1];
+    fetchGroupData(receiver_id);
+});
+
+function fetchGroupData(receiver_id){
+    $.ajax({
+        type: "get",
+        url: "{{ route('messages.group.chat') }}",
+        data: {
+            receiver_id: receiver_id
+        },
+        cache: false,
+        success: function (data) {
+            $('#chat-message').html(data);
+            // $('#chat-message-input').emojioneArea();
+            scrollToBottomFunc();
+        }
+    });
+}
+
 </script>
 
 <script>
@@ -581,55 +638,6 @@ $(document).ready(function () {
         }
     });
 
-});
-
-$(document).on('click', '.user', function () {
-    $('.user').removeClass('active');
-    $('.group').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.pending').remove();
-
-    var user_receive_id = $(this).attr('id');
-    receiver_id = user_receive_id.split('_')[1];
-    $.ajax({
-        type: "get",
-        url: "{{ route('messages.chat') }}",
-        data: {
-            receiver_id: receiver_id
-        },
-        cache: false,
-        success: function (data) {
-            $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
-            scrollToBottomFunc();
-
-        }
-    });
-});
-
-
-$(document).on('click', '.group', function () {
-    $('.group').removeClass('active');
-    $('.user').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.pending').remove();
-
-    var group_id = $(this).attr('id');
-    receiver_id = group_id.split('_')[1];
-
-    $.ajax({
-        type: "get",
-        url: "{{ route('messages.group.chat') }}",
-        data: {
-            receiver_id: receiver_id
-        },
-        cache: false,
-        success: function (data) {
-            $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
-            scrollToBottomFunc();
-        }
-    });
 });
 
 

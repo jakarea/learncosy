@@ -42,7 +42,7 @@
                 @isset( $message->user->avatar )
                     <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
                 @else
-                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $message->user->name }}" class="img-fluid">
+                    <span class="user-name-avatar">{!! strtoupper($message->user->name[0]) !!}</span>
                 @endisset
 
                 <i class="fas fa-circle"></i>
@@ -103,8 +103,8 @@
 
 
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-    
-    <div class="dock-bottom"> 
+
+    <div class="dock-bottom">
         <div id="file-preview" class="file-preview">
             <img src="" alt="" class="preview-image img-fluid" id="preview-image">
             <div class="preview-actions">
@@ -125,10 +125,10 @@
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
                     Send
-                </button> 
+                </button>
             </div>
         </div>
-    </div> 
-    
+    </div>
+
 </form>
 

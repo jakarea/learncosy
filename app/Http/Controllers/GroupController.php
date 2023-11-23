@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use App\Models\User;
 use App\Models\Group;
-use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
-
+use App\Models\GroupParticipant;
+use File;
 class GroupController extends Controller
 {
-
-
     public function createGroup(Request $request)
     {
-
-
         $this->validate($request, [
             'name' => 'required| min:3'
         ]);
@@ -43,10 +40,33 @@ class GroupController extends Controller
         $data = [
             "success" => "Group successfully created!!",
         ];
-
         return response()->json($data);
     }
 
+    public function updateGroup( Request $request ){
+        $group = Group::findOrFail( $request->groupId  );
+
+        $group->update(["name" => $request->name]);
+        return response()->json(['success' => 'Group update successfully!!']);
+    }
+
+    public function deleteGroup( Request $request ){
+        $chats = Chat::where('group_id', $request->groupId);
+        $chats->each(function ($chat) {
+            $fileName = $chat->file_name;
+            $path = storage_path("app/public/chat/{$fileName}");
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        });
+        $chats->delete();
+
+        $group = Group::with('participants')->findOrFail( $request->groupId  );
+        $group->participants()->delete();
+        $group->delete();
+        return response()->json(['success' => 'Group deleted successfully!!']);
+    }
     public function loadSuggestedPeople(Request $request)
     {
         if ($request->ajax()) {
@@ -54,4 +74,5 @@ class GroupController extends Controller
             return view('e-learning.course.instructor.message-group.suggested-people', $data);
         }
     }
+
 }

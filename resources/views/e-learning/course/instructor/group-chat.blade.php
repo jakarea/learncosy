@@ -14,7 +14,12 @@
                     @if( $currentGroup->participants )
                         @foreach ($currentGroup->participants as $participant)
                             <li>
-                                <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
+                                @isset( $participant->user->avatar )
+                                    <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
+                                @else
+                                    <span class="user-name-avatar">{!! strtoupper($participant->user->name[0]) !!}</span>
+                                @endisset
+
                             </li>
                         @endforeach
                     @endif
@@ -35,13 +40,13 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        <a class="dropdown-item updateGroup" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                             <img src="{{ asset('latest/assets/images/icons/messages/pencil.svg') }}"
                                 alt="ic" class="img-fluid"> Rename Group
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                        <a class="dropdown-item groupDelete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
                             <img src="{{ asset('latest/assets/images/icons/messages/delete.svg') }}"
                                 alt="ic" class="img-fluid"> Delete Group
                         </a>
@@ -57,8 +62,13 @@
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
-                <img src="{{ asset('latest/assets/images/icons/messages/avatar.png') }}" alt="Avatar"
-                    class="img-fluid">
+
+                @isset( $message->groupUserName->avatar )
+                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}" class="img-fluid">
+                @else
+                    <span class="user-name-avatar">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
+                @endisset
+
                 <i class="fas fa-circle"></i>
             </div>
             <div class="media-body">
@@ -144,4 +154,83 @@
 
 </form>
 
+{{-- rename group modal start --}}
+    <div class="custom-modal-box">
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="create-group-form">
+                        <h4>Rename Group</h4>
+                        <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
+                            <div class="media">
+                                @isset( $currentGroup->avatar )
+                                    <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                                @else
+                                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                                @endisset
+                                <div class="media-body">
+                                    <h5 class="name"> {{ $currentGroup->name }} </h5>
+                                    <ul class="peoples">
+                                        @if( $currentGroup->participants )
+                                            @foreach ($currentGroup->participants as $participant)
+                                                <li>
+                                                    @isset( $participant->user->avatar )
+                                                        <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
+                                                    @else
+                                                        <span class="user-name-avatar">{!! strtoupper($participant->user->name[0]) !!}</span>
+                                                    @endisset
 
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{{ route('messages.update.group') }}" method="POST" id="updateGroup">
+                            @csrf
+                            <div class="form-group mt-0">
+                                <label for="">Group Name</label>
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}"/>
+                                <input type="hidden" class="form-control" name="groupId" value="{{ $currentGroup->id }}"/>
+                            </div>
+                            {{-- form submit --}}
+                            <div class="form-submit">
+                                <button class="btn btn-cancel" data-bs-dismiss="modal" type="reset">Cancel</button>
+                                <button class="btn btn-create" type="submit">Save</button>
+                            </div>
+                            {{-- form submit --}}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{-- rename group modal end --}}
+
+
+{{-- delete group modal start --}}
+<div class="custom-modal-box">
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="create-group-form text-center">
+                    <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a" class="img-fluid">
+                    <h4 class="border-0 pb-0 mt-4">Delete This Group</h4>
+                    <p>Are you sure you want to delete this group?</p>
+                    <form action="{{ route('messages.delete.group') }}" method="POST" id="deleteGroup">
+                        @csrf
+                        <input type="hidden" class="form-control" name="groupId" value="{{ $currentGroup->id }}"/>
+                        {{-- form submit --}}
+                        <div class="form-submit mt-5 error-bttn">
+                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
+                            <button class="btn btn-create" type="submit">Delete</button>
+                        </div>
+                        {{-- form submit --}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- delete group modal end --}}

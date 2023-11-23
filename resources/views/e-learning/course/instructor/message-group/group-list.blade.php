@@ -8,7 +8,7 @@
                         @isset( $group->avatar )
                             <img src="{{ asset($group->avatar) }}" alt="{{ $group->name }}" class="img-fluid">
                         @else
-                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $group->id }}" class="img-fluid">
+                            <span class="user-name-avatar">{!! strtoupper($group->name[0]) !!}</span>
                         @endisset
 
                         @if(Cache::has('user-is-online-' . $group->id))
@@ -43,7 +43,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a data-chat-user-id="{{ $group->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
+                            <a data-group-id="{{ $group->id }}" class="dropdown-item deleteGroupChatMsg" href="javascript:;">
                                 <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
                                     alt="ic" class="img-fluid"> Delete chat
                             </a>
@@ -53,7 +53,7 @@
                                 data-bs-target="#exampleModal4">
                                 <img src="{{ asset('latest/assets/images/icons/messages/users.svg') }}"
                                     alt="ic" class="img-fluid"> Create group with
-                                Katherine
+                                {{ Auth::user()->name }}
                             </a>
                         </li>
                         <li>
