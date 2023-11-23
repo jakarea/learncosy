@@ -585,6 +585,7 @@ $(document).ready(function () {
 
 $(document).on('click', '.user', function () {
     $('.user').removeClass('active');
+    $('.group').removeClass('active');
     $(this).addClass('active');
     $(this).find('.pending').remove();
 
@@ -609,6 +610,7 @@ $(document).on('click', '.user', function () {
 
 $(document).on('click', '.group', function () {
     $('.group').removeClass('active');
+    $('.user').removeClass('active');
     $(this).addClass('active');
     $(this).find('.pending').remove();
 

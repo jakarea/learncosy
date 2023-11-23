@@ -11,13 +11,13 @@
                 <h5 class="name">{{ $currentGroup->name }}</h5>
 
                 <ul class="peoples">
-                    {{-- @if( $currentGroup->participants )
+                    @if( $currentGroup->participants )
                         @foreach ($currentGroup->participants as $participant)
                             <li>
                                 <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
                             </li>
                         @endforeach
-                    @endif --}}
+                    @endif
                 </ul>
 
             </div>
