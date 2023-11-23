@@ -127,144 +127,6 @@ Messsages Page
 </main>
 {{-- ==== message list page @E ==== --}}
 
-{{-- add people to group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <form action="">
-                        <div class="form-group mt-0">
-                            <label for="" style="font-size: 1.25rem">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control">
-                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
-                        </div>
-                        {{-- suggested name box --}}
-                        <div class="suggested-name-box">
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/avatar.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                        </div>
-                        {{-- suggested name box --}}
-                        {{-- person list box start --}}
-                        <div class="person-box-list person-tab-body">
-                            {{-- person --}}
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-2.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- person --}}
-                        </div>
-                        {{-- person list box end --}}
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Add</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- add people to group modal end --}}
-
 {{-- add specific person to group modal start --}}
 <div class="custom-modal-box">
     <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
@@ -306,31 +168,39 @@ Messsages Page
 </div>
 {{-- add specific person to group modal end --}}
 
+
 @endsection
 {{-- page content @E --}}
 
 @section('script')
 <script>
-    // Search single chat user
-    $(document).ready(function () {
-        $(".search-group-chat-user").on("keyup click paste", function (e) {
-            e.preventDefault();
-            searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
-        });
+// Search single chat user
+$(document).ready(function () {
+    $(".search-group-chat-user").on("keyup click paste", function (e) {
+        searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
     });
+});
+
+
+// Search people for specific group on modal
+
+$(document).ready(function () {
+    $(document).on("keyup click paste", ".search-people-specific-group", function (e) {
+        searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
+    });
+});
 
 // Search group chat user
 $(document).ready(function () {
     $(".search-chat-user").on("keyup click paste", function (e) {
-        e.preventDefault();
         searchUser($.trim(this.value), ".chat-user-load", "layout2");
     });
 });
 
 // Search User
 function searchUser(searchTerm, resultContainer, layout) {
+
     searchTerm = $.trim(searchTerm);
-    console.log(searchTerm);
     if (searchTerm !== "") {
         $.ajax({
             url: "{{ route('messages.search') }}",
@@ -340,7 +210,6 @@ function searchUser(searchTerm, resultContainer, layout) {
                 layout: layout
             },
             success: function (data) {
-                console.log(data)
                 $(resultContainer).html(data);
             }
         });
@@ -353,30 +222,48 @@ function searchUser(searchTerm, resultContainer, layout) {
 var existsUsers = [];
 $(document).on('click', '.suggest-people', function () {
     var userId = $(this).attr('id');
+    // $.ajax({
+    //     type: "get",
+    //     url: "{{ route('messages.suggested.people') }}",
+    //     data: { userId: userId },
+    //     success: function (data) {
+    //         if ($.inArray(userId, existsUsers) === -1) {
+    //             existsUsers.push(userId);
+    //             $('.load-suggested-people').append(data);
+    //             $(".addUserId").val(function (_, currentValues) {
+    //                 return currentValues ? currentValues + ',' + userId : userId;
+    //             });
+    //         } else {
+    //             toastr.error('User already exits!!', 'Error');
+    //         }
+    //     }
+    // });
+    loadSuggestedPeople(userId, '.load-suggested-people', '.addUserId');
+});
+
+
+function loadSuggestedPeople(userId, container, input) {
     $.ajax({
         type: "get",
         url: "{{ route('messages.suggested.people') }}",
-        data: {
-            userId: userId
-        },
+        data: { userId: userId },
         success: function (data) {
             if ($.inArray(userId, existsUsers) === -1) {
                 existsUsers.push(userId);
-                $('.load-suggested-people').append(data);
-                $(".addUserId").val(function (_, currentValues) {
+                $(container).append(data);
+                $(input).val(function (_, currentValues) {
                     return currentValues ? currentValues + ',' + userId : userId;
                 });
             } else {
-                toastr.error('User already exits!!', 'Error');
+                toastr.error('User already exists!!', 'Error');
             }
         }
     });
-});
+}
 
 // Remove suggested people
 $(document).on('click', '.remove-suggested-people', function () {
     var userId = $(this).closest(".suggest-user").attr('id');
-
     userId = parseInt(userId, 10);
     var indexToRemove = existsUsers.indexOf(userId.toString());
     if (indexToRemove !== -1) {
@@ -423,7 +310,6 @@ document.addEventListener('click', function (event) {
             url: "{{ route('messages.delete.groupchat') }}",
             data: { groupId: groupId },
             success: function (data) {
-                console.log( data )
                 $('#group-chat-message-wrap').empty();
                 $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 toastr.success(data.success, 'Success');
@@ -434,6 +320,32 @@ document.addEventListener('click', function (event) {
         });
     }
 });
+
+
+// Add People to Groupe
+$(document).on('submit', '#addPeopleToGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#addPeopleToGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.group.add.people') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#addPeopleToGroup')[0].reset();
+            $('#exampleModal').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            fetchGroupData(groupId)
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
 
 // Update group
 $(document).on('submit', '#updateGroup', function () {

@@ -154,6 +154,44 @@
 
 </form>
 
+
+
+{{-- add people to group modal start --}}
+<div class="custom-modal-box">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="create-group-form">
+                    <form action="{{ route('messages.group.add.people') }}" method="POST" id="addPeopleToGroup">
+                        @csrf
+                        <div class="form-group mt-0">
+                            <label for="" style="font-size: 1.25rem">Add People</label>
+                            <input type="text" placeholder="Name" class="form-control search-people-specific-group t"/>
+                            <input class="addUserId" type="hidden" name="user_id">
+                            <input name="groupId" type="hidden" value="{{ $currentGroup->id }}">
+                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
+                        </div>
+                        {{-- suggested name box --}}
+                        <div class="suggested-name-box load-suggested-people"></div>
+                        {{-- suggested name box --}}
+                        {{-- person list box start --}}
+                        <div class="person-box-list person-tab-body fetch-people-for-specificgroup"></div>
+                        {{-- person list box end --}}
+                        {{-- form submit --}}
+                        <div class="form-submit">
+                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="reset">Cancel</button>
+                            <button class="btn btn-create" type="submit">Add</button>
+                        </div>
+                        {{-- form submit --}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- add people to group modal end --}}
+
+
 {{-- rename group modal start --}}
     <div class="custom-modal-box">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">

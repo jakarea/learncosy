@@ -274,8 +274,8 @@ class MessageController extends Controller
         return response()->json(['success' => 'Chat messages deleted successfully!!']);
     }
 
-    public function deleteGroupChatHistory( Request $request ){
-
+    public function deleteGroupChatHistory(Request $request)
+    {
         $chats = Chat::where('group_id', $request->groupId);
 
         $chats->each(function ($chat) {

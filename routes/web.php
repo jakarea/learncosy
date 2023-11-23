@@ -195,18 +195,15 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
     Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
     Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
-    // // Route::get('/', 'index')->name('message');
-    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
-    // Route::post('/', 'sendMessage')->name('message-send');
-    // Route::get('/send/{id}', 'send')->name('get.message');
-    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
 });
 
 // Group message
 Route::middleware('auth')->prefix('messages')->controller(GroupController::class)->group(function () {
     Route::post('/create-group', 'createGroup')->name('messages.group');
+    Route::post('/add-people/group', 'addPeopleToGroup')->name('messages.group.add.people');
+
+
+
     Route::post('/update-group', 'updateGroup')->name('messages.update.group');
     Route::post('/delete-group', 'deleteGroup')->name('messages.delete.group');
     Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');

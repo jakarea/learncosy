@@ -1,6 +1,6 @@
 @if( count( $users ) > 0)
     @foreach ($users as $user)
-        <div class="single-person suggest-people border-0" id="{{ $user->id }}">
+        <div class="single-person suggest-people border-0" id="{{ $user->id }}" data-suggest-people="suggestpeople{{ $user->id }}">
             <div class="media p-0 border-0">
                 @isset($user)
                     <div class="avatar">
