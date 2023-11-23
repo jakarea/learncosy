@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="images/favicon.png" rel="icon" />
-    <title>Payment From Student - Learncosy</title>
+    <title>Payment From Instructor - Learncosy</title>
 
     <style>
         * {
@@ -132,8 +132,9 @@
     <table border="0" cellspacing="0" cellpadding="0" style="width: 70%; margin: 0 auto;">
         <tr>
             <th class="border-0" style="text-align: left;">
-                <a href="#">
-                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Learncosy" class="img-fluid" height="90px" width="90px">
+                <a href="#"> 
+
+                    <img src="{{ public_path('latest/assets/images/black-logo.png') }}" alt="Logo" class="img-fluid" style="width: 7rem">
                 </a>
             </th>
             <th class=" border-0" style="text-align: right;">
@@ -149,10 +150,10 @@
             <td style="padding-top: 1rem;">
                 <address>
                     <strong>Payment By: </strong> <br>
-                    Name: {{ $payment->user->name}} <br />
+                    Name: {{ isset($payment->instructor->name) ? $payment->instructor->name : "Instructor has been removed"; }} <br />
                     Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
-                    Payment Date : {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
-                    Payment Type : {{ $payment->payment_method }} <br>
+                    Start Date : {{ date(' d M, Y',strtotime($payment->start_at)) }} <br>
+                    End Date : {{ date(' d M, Y',strtotime($payment->end_at)) }} <br> 
                     Payment Status : {{ ucfirst( $payment->payment_status) }}
 
                 </address>
@@ -160,12 +161,12 @@
             <td style="padding-top: 1rem; text-align: right;" class="" valign="top">
                 <address>
                     <strong>Billed To: </strong> <br>
-                    Name: {{ $payment->instructor->name}}<br />
-                    @if ($payment->instructor->company_name)
-                    Company Name: {{ $payment->instructor->company_name }} <br />
+                    Name: {{ Auth::user()->name }}<br />
+                    @if (Auth::user()->company_name)
+                    Company Name: {{ Auth::user()->company_name }} <br />
                     @endif
 
-                    Email: {{ $payment->instructor->email }}
+                    Email: {{ Auth::user()->email }}
                 </address>
             </td>
         </tr>
@@ -174,39 +175,35 @@
                 <table border="0" cellspacing="0" cellpadding="0" class="billed-table">
                     <thead class="card-header">
                         <tr>
-                            <td class="br-0" width="50%"><strong>Course Name</strong></td>
-                            <td class="bl-0 br-0" width="15%"><strong>Category</strong></td>
+                            <td class="br-0" width="50%"><strong>Package Name</strong></td>
+                            <td class="bl-0 br-0" width="15%"><strong>Package Type</strong></td>
                             <td class="bl-0 " width="15%" style="text-align: right;"><strong>Amount</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="br-0">{{ $payment->course->title }}</td>
-                            <td class="bl-0 br-0">{{ $payment->course->categories }}</td>
-                            <td class="bl-0 " style="text-align: right;">€{{ $payment->course->price }}</td>
+                            <td class="br-0">{{ isset($payment->subscriptionPackage->name) ? $payment->subscriptionPackage->name : "Package has been removed"; }}</td>
+                            <td class="bl-0 br-0">{{ isset($payment->subscriptionPackage->type) ? $payment->subscriptionPackage->type : "Package has been removed"; }}  </td>
+                            <td class="bl-0 " style="text-align: right;">€{{ isset($payment->subscriptionPackage->type) ? $payment->subscriptionPackage->type : $payment->amount }}  </td>
                         </tr>
                         <tr class="" style="text-align: right;">
                             <td colspan="2" class="br-0">
                                 <strong>Discount:</strong>
                             </td>
                             <td class="bl-0">
-                                €{{ $payment->course->price - $payment->course->offer_price }}
+                                € @if (isset($payment->subscriptionPackage))
+                                    {{ $payment->subscriptionPackage->regular_price - $payment->subscriptionPackage->sales_price }}
+                                @else 
+                                    0
+                                @endif
                             </td>
-                        </tr>
-                        <tr class="" style="text-align: right;">
-                            <td colspan="2" class="br-0">
-                                <strong>Tax:</strong>
-                            </td>
-                            <td class="bl-0">
-                                € 0
-                            </td>
-                        </tr>
+                        </tr> 
                         <tr class="" style="text-align: right;">
                             <td colspan="2" class="br-0">
                                 <strong>Grand Total:</strong>
                             </td>
                             <td class="bl-0">
-                                €{{ $payment->course->offer_price }}
+                                €{{ $payment->amount }}
                             </td>
                         </tr>
                     </tbody>

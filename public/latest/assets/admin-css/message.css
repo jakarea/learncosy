@@ -513,6 +513,7 @@
   padding: 1rem 2rem;
   padding-right: 1rem;
   transition: ease-in-out 0.3s;
+  cursor: pointer;
 }
 .person-suggest-box-list .media:hover,
 .person-tab-body .media:hover {

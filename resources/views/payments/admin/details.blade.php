@@ -80,10 +80,10 @@
                         </tr>
                     </table>
                     <div class="download-inv-box">
-                        <a href="{{url('admin/profile/platform-fee')}}">Back</a>
-                        <a href="#" class="ms-3 d-inline-flex align-items-center">
+                        <a href="{{url('admin/payments/platform-fee')}}">Back</a>
+                        <a href="{{ route('admin.invoice-mail',encrypt($payment->stripe_plan)) }}" class="ms-3 d-inline-flex align-items-center">
                             <img src="{{asset('latest/assets/images/icons/email.svg')}}" alt="a" class="img-fluid me-2"> Mail Invoice</a>
-                        <a href="#"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
+                        <a href="{{route('admin.generate-pdf',encrypt($payment->stripe_plan))}}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
                         
                     </div>
                 </div>
