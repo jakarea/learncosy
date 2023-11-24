@@ -18,43 +18,43 @@
                 {{-- check permission --}}
                 @php
                     $host = request()->getHost();
-                    $subdomain = explode('.', $host)[0]; 
+                    $subdomain = explode('.', $host)[0];
                     $instructor = \App\Models\User::where('subdomain', $subdomain)->first();
                     $pageAccess = \App\Models\ManagePage::where('instructor_id', $instructor->id)->first();
                     $userPermissions = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
 
                     if ($pageAccess) {
-                        $userPermissions = json_decode($pageAccess->pagePermissions); 
+                        $userPermissions = json_decode($pageAccess->pagePermissions);
                     }
 
-                @endphp  
-                {{-- check permission --}}  
-                @if ($userPermissions->dashboard == 1) 
+                @endphp
+                {{-- check permission --}}
+                @if ($userPermissions->dashboard == 1)
                     <li class="nav-item">
                         <a href="{{ url('students/dashboard') }}"
                             class="{{ Request::is('students/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
-                    </li>  
-                @endif 
-                @if ($userPermissions->homePage == 1) 
+                    </li>
+                @endif
+                @if ($userPermissions->homePage == 1)
                 <li class="nav-item">
                     <a class="{{ Request::is('students/home*') || Request::is('students/courses')  ? ' active' : '' }} nav-link"
                         href="{{ url('students/home') }}">Home</a>
-                </li> 
+                </li>
                 @endif
                 <li class="nav-item">
                     <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link"
                         href="{{ url('students/dashboard/enrolled') }}">My Courses</a>
                 </li>
-                @if ($userPermissions->certificatePage == 1) 
+                @if ($userPermissions->certificatePage == 1)
                 <li class="nav-item">
                     <a class="{{ Request::is('students/courses-certificate*')  ? ' active' : '' }} nav-link"
                         href="{{ url('students/courses-certificate') }}">Certificate</a>
                 </li>
                 @endif
-                @if ($userPermissions->messagePage == 1) 
+                @if ($userPermissions->messagePage == 1)
                 <li class="nav-item">
-                    <a class="{{ Request::is('course/messages/students*')  ? ' active' : '' }} nav-link"
-                        href="{{ url('course/messages/students') }}">Message</a>
+                    <a class="{{ Request::is('/messages')  ? ' active' : '' }} nav-link"
+                        href="{{ url('/messages') }}">Message</a>
                 </li>
                 @endif
             </ul>

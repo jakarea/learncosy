@@ -178,27 +178,22 @@ Messsages Page
 @section('script')
 <script>
 // Search single chat user
-$(document).ready(function () {
-    $(".search-group-chat-user").on("keyup click paste", function (e) {
-        searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
-    });
-});
 
+$(document).on("input",".search-group-chat-user", function (e) {
+    searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
+});
 
 // Search people for specific group on modal
-
-$(document).ready(function () {
-    $(document).on("keyup click paste", ".search-people-specific-group", function (e) {
-        searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
-    });
+$(document).on("input", ".search-people-specific-group", function (e) {
+    searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
 });
+
 
 // Search group chat user
-$(document).ready(function () {
-    $(".search-chat-user").on("keyup click paste", function (e) {
-        searchUser($.trim(this.value), ".chat-user-load", "layout2");
-    });
+$(document).on("input",".search-chat-user", function (e) {
+    searchUser($.trim(this.value), ".chat-user-load", "layout2");
 });
+
 
 
 $(document).ready(function () {
@@ -523,17 +518,14 @@ $(document).ready(function () {
 
 
 
-        // const indicator = pusher.subscribe('typing-indicator');
+        // const indicator = pusher.subscribe('presence-typing-indicator');
         // const typingIndicator = document.getElementById('typing-indicator');
 
         // $(document).on('input','#chat-message-input', function() {
-        //     indicator.trigger('my-event', { typing: this.value.length > 0 });
+        //     indicator.trigger('client-typing', { typing: this.value.length > 0 });
         // });
-
         // indicator.bind('client-typing', function (data) {
-
         //     console.log( data)
-
         //     if (data.typing) {
         //         showTypingIndicator(data.userId);
         //     } else {
@@ -553,14 +545,14 @@ $(document).ready(function () {
 
 
 
-
+    var currentInputValue = '';
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
             $('#user_' + data.to).click();
         } else if (my_id == data.to) {
             if (receiver_id == data.from) {
-                // If the receiver is selected, reload the selected user...
+
                 $('#user_' + data.from).click();
             } else {
                 // If the receiver is not selected, add a notification for that user
@@ -646,17 +638,15 @@ function sendMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('.chat-message-input').val('');
-                $('.chat-message-input').emojioneArea().val('');
+                // $('.chat-message-input').val('');
+                // $('.chat-message-input').emojioneArea().val('');
                 $('#chatMessage')[0].reset();
+                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                // scrollToBottomFunc();
 
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
-            },
-            complete: function () {
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                scrollToBottomFunc();
             }
         });
     }
@@ -676,16 +666,15 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('.chat-message-input').val('');
-                $('.chat-message-input').emojioneArea().val('');
+                // $('.chat-message-input').val('');
+                // $('.chat-message-input').emojioneArea().val('');
                 $('#groupChatMessage')[0].reset();
+
+                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                // scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
-            },
-            complete: function () {
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                scrollToBottomFunc();
             }
         });
     }
