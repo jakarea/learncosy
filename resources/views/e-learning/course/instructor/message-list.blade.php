@@ -30,17 +30,20 @@ Messsages Page
                             <h1>Messages <span>{{ count($users) + count($groups) }}</span></h1>
 
                             {{-- create group box start --}}
-                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                    class="img-fluid"> Create Group
-                            </a>
+                            @if( $adminInfo->user_role !== 'student')
+                                <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
+                                    role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
+                                        class="img-fluid"> Create Group
+                                </a>
+                            @endif
                         </div>
                         <div class="collapse" id="collapseExample">
                             <div class="create-group-form">
                                 <h4>Create Group</h4>
 
                                 @include('e-learning.course.instructor.group-admin.admin-info')
+
                                 <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
@@ -197,6 +200,16 @@ $(document).ready(function () {
     });
 });
 
+
+$(document).ready(function () {
+    $(".create-group-by-user").on("click", function (e) {
+        var userId = $(this).closest('.single-person').attr('id').split('_')[1];
+        loadSuggestedPeople(userId, '.load-suggested-people', '.addUserId');
+    });
+});
+
+
+
 // Search User
 function searchUser(searchTerm, resultContainer, layout) {
 
@@ -248,6 +261,7 @@ function loadSuggestedPeople(userId, container, input) {
         url: "{{ route('messages.suggested.people') }}",
         data: { userId: userId },
         success: function (data) {
+            console.log( data )
             if ($.inArray(userId, existsUsers) === -1) {
                 existsUsers.push(userId);
                 $(container).append(data);
@@ -338,7 +352,7 @@ $(document).on('submit', '#addPeopleToGroup', function () {
             $('#addPeopleToGroup')[0].reset();
             $('#exampleModal').modal('hide');
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-            fetchGroupData(groupId)
+            $(".load-suggested-people").empty();
         },
         error: function (jqXHR, status, err) {
             // Handle error if needed
@@ -424,7 +438,7 @@ $(document).on('click', '.user', function () {
     });
 });
 
-
+// Show group message
 $(document).on('click', '.group', function () {
     $('.group').removeClass('active');
     $('.user').removeClass('active');
@@ -455,7 +469,7 @@ function fetchGroupData(receiver_id){
 </script>
 
 <script>
-    var receiver_id = '';
+var receiver_id = '';
 var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
@@ -507,6 +521,39 @@ $(document).ready(function () {
     // <<<<<========== User Online Activity ===============>>>>>
 
 
+
+
+        // const indicator = pusher.subscribe('typing-indicator');
+        // const typingIndicator = document.getElementById('typing-indicator');
+
+        // $(document).on('input','#chat-message-input', function() {
+        //     indicator.trigger('my-event', { typing: this.value.length > 0 });
+        // });
+
+        // indicator.bind('client-typing', function (data) {
+
+        //     console.log( data)
+
+        //     if (data.typing) {
+        //         showTypingIndicator(data.userId);
+        //     } else {
+        //         hideTypingIndicator(data.userId);
+        //     }
+        // });
+
+        // function showTypingIndicator(userId) {
+        //     typingIndicator.innerHTML = `User ${userId} is typing...`;
+        //     typingIndicator.style.display = 'block';
+        // }
+
+        // function hideTypingIndicator(userId) {
+        //     typingIndicator.innerHTML = '';
+        //     typingIndicator.style.display = 'none';
+        // }
+
+
+
+
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
@@ -531,11 +578,10 @@ $(document).ready(function () {
 
     var channelGroup = pusher.subscribe(my_id);
     channelGroup.bind('App\\Events\\Notify', function (data) {
+        console.log( JSON.stringify(data) )
         if (my_id == data.from) {
             $('#group_' + data.to).click();
-
         } else if (my_id == data.to) {
-
             receiver_id = data.from;
             if (receiver_id == data.from) {
                 $('#group_' + data.from).click();

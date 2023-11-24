@@ -177,6 +177,7 @@ class MessageController extends Controller
 
             $sender_Id = Auth::id();
             $participants = GroupParticipant::where('group_id', $request->receiver_id)->get();
+            // dd($participants );
 
             $data = new Chat();
 
@@ -200,7 +201,6 @@ class MessageController extends Controller
             }
 
             foreach ($participants as $member) {
-
                 // pusher
                 $options = array(
                     'cluster' => 'ap2',

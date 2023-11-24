@@ -7,7 +7,7 @@
                         @isset( $user->avatar )
                             <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
                         @else
-                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $user->name }}" class="img-fluid">
+                            <span class="user-name-avatar">{!! strtoupper($user->name[0]) !!}</span>
                         @endisset
                         @if(Cache::has('user-is-online-' . $user->id))
                             <i class="fas fa-circle"></i>

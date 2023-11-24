@@ -11,11 +11,11 @@
                             <span class="user-name-avatar">{!! strtoupper($group->name[0]) !!}</span>
                         @endisset
 
-                        @if(Cache::has('user-is-online-' . $group->id))
+                        {{-- @if(Cache::has('user-is-online-' . Auth::user()->id))
                             <i class="fas fa-circle"></i>
                         @else
                             <i class="fa-solid fa-circle" style="color: #a1a1a5;"></i>
-                        @endif
+                        @endif --}}
                     </div>
                 @endisset
 
@@ -48,14 +48,14 @@
                                     alt="ic" class="img-fluid"> Delete chat
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal4">
                                 <img src="{{ asset('latest/assets/images/icons/messages/users.svg') }}"
                                     alt="ic" class="img-fluid"> Create group with
                                 {{ Auth::user()->name }}
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a class="dropdown-item" href="#">
                                 <img src="{{ asset('latest/assets/images/icons/messages/mail-open.svg') }}"

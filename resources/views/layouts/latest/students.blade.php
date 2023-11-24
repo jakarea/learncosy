@@ -43,6 +43,24 @@
     <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
+
+    <style>
+        .user-name-avatar{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--transparent-grey-24, rgba(145, 158, 171, 0.24));
+            color: var(--neutral-color-neutral-60, #66768E);
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.375rem;
+        }
+    </style>
+
     @yield('seo')
 </head>
 

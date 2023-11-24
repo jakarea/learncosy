@@ -201,9 +201,6 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
 Route::middleware('auth')->prefix('messages')->controller(GroupController::class)->group(function () {
     Route::post('/create-group', 'createGroup')->name('messages.group');
     Route::post('/add-people/group', 'addPeopleToGroup')->name('messages.group.add.people');
-
-
-
     Route::post('/update-group', 'updateGroup')->name('messages.update.group');
     Route::post('/delete-group', 'deleteGroup')->name('messages.delete.group');
     Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');

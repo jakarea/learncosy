@@ -50,11 +50,11 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            <a class="dropdown-item create-group-by-user" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal4">
                                 <img src="{{ asset('latest/assets/images/icons/messages/users.svg') }}"
                                     alt="ic" class="img-fluid"> Create group with
-                                Katherine
+                                {{ $user->name }}
                             </a>
                         </li>
                         <li>

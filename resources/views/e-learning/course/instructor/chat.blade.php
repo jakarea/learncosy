@@ -4,7 +4,7 @@
             @isset( $friend->avatar )
                 <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
             @else
-                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $friend->name }}" class="img-fluid">
+                <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
             @endisset
 
             <div class="media-body">
@@ -101,6 +101,7 @@
 @empty
 @endforelse
 
+{{-- <div id="typing-indicator">Someone is typing...</div> --}}
 
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
 

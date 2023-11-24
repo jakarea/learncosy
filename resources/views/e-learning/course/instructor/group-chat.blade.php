@@ -9,7 +9,6 @@
 
             <div class="media-body">
                 <h5 class="name">{{ $currentGroup->name }}</h5>
-
                 <ul class="peoples">
                     @if( $currentGroup->participants )
                         @foreach ($currentGroup->participants as $participant)
@@ -24,7 +23,6 @@
                         @endforeach
                     @endif
                 </ul>
-
             </div>
             {{-- action --}}
             <div class="dropdown">
