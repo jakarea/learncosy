@@ -577,38 +577,42 @@ $(document).ready(function () {
 
     const indicatorAppendElement = document.getElementById('indicator-append');
 
-    const generateAvatarContent = (user) => {
-        const assetUrl = "{{ asset('') }}";
-        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        return user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
-    };
 
     const startTyping = (user) => {
-        indicatorAppendElement.innerHTML = `
-            <div class="message-item">
-                <div class="media main-media">
-                    <div class="avatar">
-                        ${generateAvatarContent(user)}
-                        <i class="fas fa-circle"></i>
+        const newUserMessageItem = document.createElement('div');
+        newUserMessageItem.classList.add('message-item');
+
+        const assetUrl = "{{ asset('') }}";
+        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+        const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
+
+        newUserMessageItem.innerHTML = `
+            <div class="media main-media">
+                <div class="avatar">
+                    ${avatarContent}
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div class="d-flex">
+                        <h6>${user.name}</h6>
                     </div>
-                    <div class="media-body">
-                        <div class="d-flex">
-                            <h6>${user.name}</h6>
-                        </div>
-                        <div class="typing">
-                            <i class="fa-solid fa-ellipsis fa-fade"></i>
-                        </div>
+                    <div class="typing">
+                        <i class="fa-solid fa-ellipsis fa-fade"></i>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        `;
+
+        // Append the new message item to the designated container
+        indicatorAppendElement.innerHTML = newUserMessageItem.outerHTML;
     };
 
     const stopTyping = (user) => {
         const assetUrl = "{{ asset('') }}";
         const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        const existingUserMessageItem = indicatorAppendElement.querySelector(`.avatar img[src="${avatarUrl}"], .avatar span.user-name-avatar`);
+        const existingUserMessageItem = indicatorAppendElement.querySelector(`.avatar img[src="${avatarUrl}/${user.avatar}"], .avatar span.user-name-avatar`);
         if (existingUserMessageItem) {
-            existingUserMessageItem.closest('.message-item').remove();
+            existingUserMessageItem.parentNode.parentNode.parentNode.remove();
         }
     };
 
@@ -653,16 +657,13 @@ $(document).ready(function () {
     };
 
     // Add event listeners for typing events
-    const inputId = document.getElementById('chat-message-input');
-
-    inputId.addEventListener('input', () => {
+    $(document).on("input", "#chat-message-input", () => {
         startTypingEvent();
     });
 
-    inputId.addEventListener('blur', () => {
+    $(document).on("blur", "#chat-message-input", () => {
         stopTypingEvent();
     });
-
     // Close typing indicator
 
 
