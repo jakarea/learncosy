@@ -25,32 +25,34 @@
                 </ul>
             </div>
             {{-- action --}}
-            <div class="dropdown">
-                <a class="btn" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-ellipsis"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a class="dropdown-item active" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <img src="{{ asset('latest/assets/images/icons/messages/add.svg') }}"
-                                alt="ic" class="img-fluid"> Add People
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item updateGroup" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                            <img src="{{ asset('latest/assets/images/icons/messages/pencil.svg') }}"
-                                alt="ic" class="img-fluid"> Rename Group
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item groupDelete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-                            <img src="{{ asset('latest/assets/images/icons/messages/delete.svg') }}"
-                                alt="ic" class="img-fluid"> Delete Group
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            @if ( $currentGroup->admin_id == Auth::id())
+                <div class="dropdown">
+                    <a class="btn" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item active" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <img src="{{ asset('latest/assets/images/icons/messages/add.svg') }}"
+                                    alt="ic" class="img-fluid"> Add People
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item updateGroup" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                <img src="{{ asset('latest/assets/images/icons/messages/pencil.svg') }}"
+                                    alt="ic" class="img-fluid"> Rename Group
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item groupDelete" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                                <img src="{{ asset('latest/assets/images/icons/messages/delete.svg') }}"
+                                    alt="ic" class="img-fluid"> Delete Group
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
             {{-- action --}}
         </div>
     </div>
@@ -87,12 +89,12 @@
 
                         @if (in_array(strtolower($extension), $allowedImageExtensions))
                             <div class="single-chat-image">
-                                <a href="{{ asset('storage/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
-                                    <img src="{{ asset('storage/chat/'.$message->file) }}" alt="Image" class="img-fluid">
+                                <a href="{{ asset('uploads/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
+                                    <img src="{{ asset('uploads/chat/'.$message->file) }}" alt="Image" class="img-fluid">
                                 </a>
                             </div>
                         @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
-                            <video src="{{ asset('storage/chat/'.$message->file) }}"></video>
+                            <video src="{{ asset('uploads/chat/'.$message->file) }}"></video>
                         @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                             @if (strtolower($extension) === 'zip')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
@@ -123,7 +125,7 @@
 @endforelse
 
 
-<form method="POST" class="send-actions w-100" id="groupChatMessage" autocomplete="off">
+{{-- <form method="POST" class="send-actions w-100" id="groupChatMessage" autocomplete="off">
     <div class="dock-bottom">
         <div id="file-preview" class="file-preview">
             <img src="" alt="" class="preview-image img-fluid" id="preview-image">
@@ -149,8 +151,7 @@
             </div>
         </div>
     </div>
-
-</form>
+</form> --}}
 
 
 

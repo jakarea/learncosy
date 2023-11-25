@@ -11,6 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TypingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
@@ -31,8 +32,8 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
-use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminCourseStepController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
@@ -195,6 +196,12 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
     Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
     Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
+    // Route::post('/typing-indicator', 'typingIndicator')->name('messages.typing.indicator');
+});
+
+Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
+    Route::post('/start-typing', 'startTyping')->name('messages.typing.start');
+    Route::post('/stop-typing', 'stopTyping')->name('messages.typing.stop');
 });
 
 // Group message

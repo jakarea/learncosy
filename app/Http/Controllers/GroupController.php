@@ -59,8 +59,9 @@ class GroupController extends Controller
         if ($request->ajax()) {
             $chats = Chat::where('group_id', $request->groupId);
             $chats->each(function ($chat) {
-                $fileName = $chat->file_name;
-                $path = storage_path("app/public/chat/{$fileName}");
+                $fileName = $chat->file;
+                $uploadsDirectory = "/uploads/chat/";
+                $path = public_path($uploadsDirectory . $fileName);
 
                 if (File::exists($path)) {
                     File::delete($path);

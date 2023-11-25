@@ -66,12 +66,12 @@
 
                         @if (in_array(strtolower($extension), $allowedImageExtensions))
                             <div class="single-chat-image">
-                                <a href="{{ asset('storage/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
-                                    <img src="{{ asset('storage/chat/'.$message->file) }}" alt="Image" class="img-fluid">
+                                <a href="{{ asset('uploads/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
+                                    <img src="{{ asset('uploads/chat/'.$message->file) }}" alt="Image" class="img-fluid">
                                 </a>
                             </div>
                         @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
-                            <video src="{{ asset('storage/chat/'.$message->file) }}"></video>
+                            <video src="{{ asset('uploads/chat/'.$message->file) }}"></video>
                         @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                             @if (strtolower($extension) === 'zip')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
@@ -102,9 +102,8 @@
 @endforelse
 
 {{-- <div id="typing-indicator">Someone is typing...</div> --}}
-
+{{--
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-
     <div class="dock-bottom">
         <div id="file-preview" class="file-preview">
             <img src="" alt="" class="preview-image img-fluid" id="preview-image">
@@ -130,6 +129,5 @@
             </div>
         </div>
     </div>
-
 </form>
-
+ --}}

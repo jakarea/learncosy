@@ -60,7 +60,7 @@ class MessageController extends Controller
 
 
         // return $data;
-        // return view('e-learning/course/instructor/message-list-backup', $data);
+        return view('e-learning/course/instructor/message-list-backup', $data);
 
         return view('e-learning/course/instructor/message-list', $data);
     }
@@ -109,12 +109,14 @@ class MessageController extends Controller
             $data->is_read = false;
             $data->save();
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
-                $fileName = $file->storeAs('chat', $image, 'public');
+            if($request->hasFile('file')){
+                $file =  $request->file('file');
+                $fileName  = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+                $destination  = "uploads/chat";
+                $file->move($destination, $fileName);
+
                 $data->update([
-                    'file' => $image,
+                    'file' => $fileName,
                     'file_extension' => $file->getClientOriginalExtension(),
                     'file_type' => 2
                 ]);
@@ -189,13 +191,15 @@ class MessageController extends Controller
             $data->is_read = false;
             $data->save();
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
-                $fileName = $file->storeAs('chat', $image, 'public');
+            if($request->hasFile('file')){
+                $image =  $request->file('file');
+                $imagename  = substr(md5(time()), 0, 10) . '.' . $image->getClientOriginalExtension();
+                $destination  = "uploads/chat";
+                $image->move($destination, $imagename);
+
                 $data->update([
-                    'file' => $image,
-                    'file_extension' => $file->getClientOriginalExtension(),
+                    'file' => $imagename,
+                    'file_extension' => $image->getClientOriginalExtension(),
                     'file_type' => 2
                 ]);
             }
@@ -263,8 +267,12 @@ class MessageController extends Controller
         $chats = Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId);
 
         $chats->each(function ($chat) {
-            $fileName = $chat->file_name;
-            $path = storage_path("app/public/chat/{$fileName}");
+
+            $fileName = $chat->file;
+            $uploadsDirectory = "/uploads/chat/";
+
+            $path = public_path($uploadsDirectory . $fileName);
+
             if (File::exists($path)) {
                 File::delete($path);
             }
@@ -279,23 +287,28 @@ class MessageController extends Controller
         $chats = Chat::where('group_id', $request->groupId);
 
         $chats->each(function ($chat) {
-            $fileName = $chat->file_name;
-            $path = storage_path("app/public/chat/{$fileName}");
+            $fileName = $chat->file;
+            $uploadsDirectory = "/uploads/chat/";
+            $path = public_path($uploadsDirectory . $fileName);
 
             if (File::exists($path)) {
                 File::delete($path);
             }
         });
+
         $chats->delete();
         return response()->json(['success' => 'Group messages deleted successfully!!']);
     }
 
-    public function downloadChatFile($filename)
+    public function downloadChatFile($fileName)
     {
-        $path = storage_path('app/public/chat/' . $filename);
+        $uploadsDirectory = "/uploads/chat/";
+        $path = public_path($uploadsDirectory . $fileName);
         if (!File::exists($path)) {
             abort(404);
         }
-        return response()->download($path, $filename);
+        return response()->download($path, $fileName);
     }
+
+
 }

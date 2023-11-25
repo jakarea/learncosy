@@ -72,7 +72,12 @@
         {{-- Main Root Wrapper @S --}}
 
         {{-- header start --}}
-        @include('partials/latest/instructor/header')
+        {{-- @include('partials/latest/instructor/header') --}}
+        @if (Auth::user()->user_role == 'instructor')
+            @include('partials/latest/instructor/header')
+        @else
+            @include('partials/latest/students/header')
+        @endif
         {{-- header end --}}
 
         @yield('content')
