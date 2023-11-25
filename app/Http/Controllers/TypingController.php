@@ -9,23 +9,25 @@ class TypingController extends Controller
 {
     public function startTyping(Request $request)
     {
-        $user = $request->user();
+        $user = auth()->user();
         $channel = 'typing-channel';
         $event = 'typing-started';
 
-        $this->broadcastTypingEvent($channel, $event, $user->name);
+        $userInfo = $this->getUserInfo($user);
+        $this->broadcastTypingEvent($channel, $event, $userInfo);
     }
 
     public function stopTyping(Request $request)
     {
-        $user = $request->user();
+        $user = auth()->user();
+        $userInfo = $this->getUserInfo($user);
         $channel = 'typing-channel';
         $event = 'typing-stopped';
 
-        $this->broadcastTypingEvent($channel, $event, $user->name);
+        $this->broadcastTypingEvent($channel, $event, $userInfo);
     }
 
-    private function broadcastTypingEvent($channel, $event, $message)
+    private function broadcastTypingEvent($channel, $event, $userInfo)
     {
         $options = array(
             'cluster' => 'ap2',
@@ -39,8 +41,15 @@ class TypingController extends Controller
             $options
         );
 
+        $pusher->trigger($channel, $event, ['user_info' => $userInfo]);
+    }
 
 
-        $pusher->trigger($channel, $event, ['message' => $message]);
+    private function getUserInfo($user)
+    {
+        return [
+            'name' => $user->name,
+            'avatar' => $user->avatar, // Replace with the actual field in your users table
+        ];
     }
 }

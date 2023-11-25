@@ -117,15 +117,11 @@ Messsages Page
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
-                        <div class="main-chat-room" id="chat-message">
+                        <div class="main-chat-room" id=chat-message>
                             <div class="blank-chat-page">
                                 <i class="fa-regular fa-circle-user"></i>
                                 <h3>Select a person or group to start a chat</h3>
                             </div>
-                        </div>
-
-                        <div class="main-chat-room">
-                            <div id="indicator-append"></div>
                         </div>
 
                         <form method="POST" class="send-actions w-100 d-none" id="chatMessage" autocomplete="off">
@@ -293,6 +289,22 @@ function searchUser(searchTerm, resultContainer, layout) {
 var existsUsers = [];
 $(document).on('click', '.suggest-people', function () {
     var userId = $(this).attr('id');
+    // $.ajax({
+    //     type: "get",
+    //     url: "{{ route('messages.suggested.people') }}",
+    //     data: { userId: userId },
+    //     success: function (data) {
+    //         if ($.inArray(userId, existsUsers) === -1) {
+    //             existsUsers.push(userId);
+    //             $('.load-suggested-people').append(data);
+    //             $(".addUserId").val(function (_, currentValues) {
+    //                 return currentValues ? currentValues + ',' + userId : userId;
+    //             });
+    //         } else {
+    //             toastr.error('User already exits!!', 'Error');
+    //         }
+    //     }
+    // });
     loadSuggestedPeople(userId, '.load-suggested-people', '.addUserId');
 });
 
@@ -574,87 +586,65 @@ $(document).ready(function () {
 
 
     // Typing indicator
-
-    const indicatorAppendElement = document.getElementById('indicator-append');
-
-    const generateAvatarContent = (user) => {
-        const assetUrl = "{{ asset('') }}";
-        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        return user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
-    };
+    const indicator = pusher.subscribe('typing-channel');
+    //const selector = document.getElementById('typing-indicator');
 
     const startTyping = (user) => {
-        indicatorAppendElement.innerHTML = `
-            <div class="message-item">
-                <div class="media main-media">
-                    <div class="avatar">
-                        ${generateAvatarContent(user)}
-                        <i class="fas fa-circle"></i>
-                    </div>
-                    <div class="media-body">
-                        <div class="d-flex">
-                            <h6>${user.name}</h6>
-                        </div>
-                        <div class="typing">
-                            <i class="fa-solid fa-ellipsis fa-fade"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
+        console.log(user + ' is typing...');
+        // Add your logic to display typing indicator
     };
 
     const stopTyping = (user) => {
-        const assetUrl = "{{ asset('') }}";
-        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        const existingUserMessageItem = indicatorAppendElement.querySelector(`.avatar img[src="${avatarUrl}"], .avatar span.user-name-avatar`);
-        if (existingUserMessageItem) {
-            existingUserMessageItem.closest('.message-item').remove();
-        }
+        console.log(user + ' stopped typing.');
+        // Add your logic to hide typing indicator
     };
 
-    const indicator = pusher.subscribe('typing-channel');
+
+    // Function to fetch user information from the server
+    const fetchUserInfo = () => {
+        $.ajax({
+            method: 'GET',
+            url: "{{ route('messages.user.info') }}",
+            success: (response) => {
+                const { name, avatar } = response;
+                updateUserInfo(name, avatar);
+            },
+            error: (error) => {
+                console.error('Error fetching user information:', error);
+            },
+        });
+    };
+
+    const updateUserInfo = (userName, avatarSrc) => {
+        const userNameElement = document.querySelector('.message-item .media-body h6');
+        const avatarElement = document.querySelector('.message-item .avatar img');
+        userNameElement.textContent = userName;
+        avatarElement.src = avatarSrc;
+    };
+
+
     indicator.bind('typing-started', (data) => {
+        fetchUserInfo();
         startTyping(data.user_info);
     });
 
     indicator.bind('typing-stopped', (data) => {
+        fetchUserInfo();
         stopTyping(data.user_info);
     });
 
     // Trigger start typing event
     const startTypingEvent = () => {
-        $.ajax({
-            method: 'POST',
-            url: "{{ route('messages.typing.start') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            success: (response) => {
-
-            },
-            error: (error) => {
-            },
-        });
+        fetchUserInfo();
     };
 
     // Trigger stop typing event
     const stopTypingEvent = () => {
-        $.ajax({
-            method: 'POST',
-            url: "{{ route('messages.typing.stop') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            success: (response) => {
-            },
-            error: (error) => {
-            },
-        });
+        fetchUserInfo();
     };
 
-    // Add event listeners for typing events
-    const inputId = document.getElementById('chat-message-input');
 
+    const inputId = document.getElementById('chat-message-input'); // replace with your textarea id
     inputId.addEventListener('input', () => {
         startTypingEvent();
     });
