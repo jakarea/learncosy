@@ -1216,32 +1216,8 @@
 
 {{-- page script @S --}}
 @section('script')
-  {{-- form save js --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var formChanged = false; 
-        function markFormChanged() {
-            formChanged = true;
-        }
- 
-        var formElements = document.querySelectorAll('.profile-frm input, .profile-frm select, .profile-frm textarea');
-        formElements.forEach(function (element) {
-            element.addEventListener('change', markFormChanged);
-        });
- 
-        window.addEventListener('beforeunload', function (e) {
-            if (formChanged) {
-                var confirmationMessage = 'Your changes have not been saved. Are you sure you want to leave?';
-                e.returnValue = confirmationMessage;  
-                return confirmationMessage;  
-            }
-        });
- 
-        document.querySelector('form').addEventListener('submit', function () {
-            formChanged = false;
-        });
-    });
-</script>
+{{-- form change js  --}}
+<script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
 {{-- drag & drop image upload js --}}
 <script>
     function handleFileSelect(evt) {
