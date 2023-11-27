@@ -108,7 +108,8 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-6',compact('modules'));
     }
 
-    public function step3c(Request $request, $id){
+    public function step3c(Request $request, $id)
+    { 
 
          if(!$id){
             return redirect('instructor/courses');
@@ -132,7 +133,18 @@ class CourseCreateStepController extends Controller
         $lesson->type = $request->input('lesson_type');
         $lesson->save();
 
-        return redirect()->back()->with('success', 'Lesson Created Successfully');
+        if ($lesson->type == 'audio') {
+            return redirect('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id)->with('info', 'Set The audio to complete this Lesson');
+            
+        }elseif($lesson->type == 'video'){
+            return redirect('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id)->with('info', 'Upload The video to complete this Lesson');
+
+        }elseif($lesson->type == 'text'){
+            return redirect('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id)->with('info', 'Set The Text to complete this Lesson');
+        }else{
+            return redirect()->back()->with('error', 'Failed to Create Lesson');
+        }
+
     }
 
     public function step3cd(Request $request, $id){

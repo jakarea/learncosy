@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Messsages Page - a
+Messsages Page
 @endsection
 
 {{-- page style @S --}}
@@ -19,7 +19,8 @@ Messsages Page - a
 {{-- page content @S --}}
 @section('content')
 {{-- ==== message list page @S ==== --}}
-<main class="message-list-page-wrap student-messages-page">
+<main class="message-list-page-wrap student-messages-page"> 
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -117,7 +118,8 @@ Messsages Page - a
 
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
-                        {{-- chat body list start --}}
+                        {{-- chat body list start --}} 
+
                         <div class="main-chat-room">
                             <div id="chat-message" class="main-chat-inner-room">
                                 <div class="blank-chat-page">
@@ -875,25 +877,31 @@ function scrollToBottomFunc() {
 
 </script>
 
-{{--close profile box--}}
-<script>
-    // const openPorifles = document.querySelectorAll('.open-profile');
-    // const closeIcon = document.getElementById('closeProfile');
-    // const profileBox = document.getElementById('profileBox');
 
-    // openPorifles.forEach(openPorifle => {
-    //     openPorifle.addEventListener('click', function() {
-    //         profileBox.classList.add('active');
-    //     });
-    // });
+ {{-- open profile box--}}
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const openProfiles = document.querySelectorAll('.open-profile');
+        const closeIcon = document.getElementById('closeProfile');
+        const profileBox = document.getElementById('profileBox');
 
-    // function closeProfileBox(e) {
-    //     e.preventDefault();
-    //     this.parentNode.parentNode.classList.remove('active');
-    // }
-    // closeIcon.addEventListener('click', closeProfileBox);
+        openProfiles.forEach(openProfile => {
+            openProfile.addEventListener('click', function () {
+                profileBox.classList.add('active'); 
+            });
+        });
 
+        function closeProfileBox(e) {
+            e.preventDefault();
+            this.parentNode.parentNode.classList.remove('active');
+        }
+
+        if (closeIcon) {
+            closeIcon.addEventListener('click', closeProfileBox);
+        }
+    });
 </script>
+
 
 {{-- show upload image preview --}}
 <script>
