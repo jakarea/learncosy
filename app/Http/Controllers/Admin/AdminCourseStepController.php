@@ -96,6 +96,9 @@ class AdminCourseStepController extends Controller
         $request->validate([
             'lesson_name' => 'required',
             'lesson_type' => 'required'
+        ],
+        [
+            'lesson_name' => 'Lesson Name is Required',
         ]);
 
         $lesson = new Lesson();
@@ -118,6 +121,9 @@ class AdminCourseStepController extends Controller
 
         $request->validate([
             'module_name' => 'required'
+        ],
+        [
+            'module_name' => 'Module Name is Required',
         ]);
 
         $module = new Module();
@@ -137,6 +143,9 @@ class AdminCourseStepController extends Controller
 
         $request->validate([
             'module_name' => 'required'
+        ],
+        [
+            'module_name' => 'Module Name is Required',
         ]);
 
         $module_id = $request->input('module_id');
@@ -160,6 +169,9 @@ class AdminCourseStepController extends Controller
         $request->validate([
             'lesson_name' => 'required',
             'lesson_type' => 'required'
+        ],
+        [
+            'lesson_name' => 'Lesson Name is Required',
         ]);
 
         $lesson_id = $request->input('lesson_id');

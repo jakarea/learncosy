@@ -56,7 +56,10 @@ Course Update - Initial Step
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="content-step-wrap"> 
-
+                    <div class="text-center mb-2">
+                        <span class="invalid-feedback">@error('module_name'){{ $message }} @enderror</span>
+                        <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span>
+                    </div>
                     @foreach ($modules as $module)
                     {{-- course with page --}}
                     <div class="course-with-page">
@@ -109,9 +112,9 @@ Course Update - Initial Step
                                                                 @csrf
                                                                 <input type="hidden" name="module_id"
                                                                     value="{{$module->id}}">
-                                                                <div class="form-group">
+                                                                <div class="form-group form-error">
                                                                     <input type="text" placeholder="Enter Module Name"
-                                                                        name="module_name" class="form-control"
+                                                                        name="module_name" class="form-control @error('module_name') is-invalid @enderror"
                                                                         value="{{$module->title}}">
                                                                 </div>
                                                                 <div class="form-check form-switch">
@@ -220,10 +223,10 @@ Course Update - Initial Step
                                                                     value="{{$module->id}}">
                                                                 <input type="hidden" name="lesson_id"
                                                                     value="{{$lesson->id}}">
-                                                                <div class="form-group">
+                                                                <div class="form-group form-error">
                                                                     <input type="text" placeholder="Enter Lesson Name"
                                                                         name="lesson_name" value="{{ $lesson->title }}"
-                                                                        class="form-control">
+                                                                        class="form-control @error('lesson_name') is-invalid @enderror">
                                                                 </div>
                                                                 <div class="page-type mb-4">
                                                                     <h6>Type</h6>
@@ -297,9 +300,9 @@ Course Update - Initial Step
                                                     <form action="" method="post">
                                                         @csrf
                                                         <input type="hidden" name="module_id" value="{{$module->id}}">
-                                                        <div class="form-group">
+                                                        <div class="form-group form-error">
                                                             <input type="text" placeholder="Enter Lesson Name"
-                                                                name="lesson_name" class="form-control">
+                                                                name="lesson_name" class="form-control @error('lesson_name') is-invalid @enderror">
                                                         </div>
                                                         <div class="page-type mb-4">
                                                             <h6>Type</h6>
@@ -378,9 +381,9 @@ Course Update - Initial Step
 
                         <form action="{{ route('admin.course.module.step.create',request()->route('id')) }}" method="post">
                             @csrf
-                            <div class="form-group">
+                            <div class="form-group form-error">
                                 <input type="text" placeholder="Enter Module Name" name="module_name"
-                                    class="form-control">
+                                    class="form-control @error('module_name') is-invalid @enderror">
                             </div>
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="is_module">Is a Modual</label>
