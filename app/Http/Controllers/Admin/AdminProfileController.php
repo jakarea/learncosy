@@ -117,8 +117,7 @@ class AdminProfileController extends Controller
     }
 
     public function postChangePassword(Request $request)
-    {
-        //  return $request->all();
+    { 
 
         //validate password and confirm password
         $this->validate($request, [
@@ -134,130 +133,7 @@ class AdminProfileController extends Controller
         // Send email
         Mail::to($user->email)->send(new PasswordChanged($user));
         return redirect()->route('admin.profile')->with('success', 'Your password has been changed successfully!');
-    }
-
-    public function adminPayment()
-    { 
-
-        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
-        $enrolments = Subscription::with('instructor');
-
-        if ($status) {
-            if ($status == 'asc') {
-                $enrolments->orderBy('id', 'asc');
-            }
-            
-            if ($status == 'desc') {
-                $enrolments->orderBy('id', 'desc');
-            }
-        }else{
-            $enrolments->orderBy('id', 'desc'); 
-        }
-
-        $enrolments = $enrolments->paginate(6); 
- 
-
-        $today = Carbon::today();
-
-        // last one year
-        $oneYearAgo = Carbon::parse($today)->subYear();
-        $lastOneyear = $enrolments
-            ->where('start_at', '>=', $oneYearAgo)
-            ->where('start_at', '<', $today)
-            ->sum('amount'); 
-
-        // last 2 years
-        $oneTwoYearAgo = Carbon::parse($today)->subYears(2);
-        $earningsLastTwoYears = $enrolments
-            ->where('start_at', '>=', $oneTwoYearAgo)
-            ->where('start_at', '<', Carbon::parse($today)->subYears(1))
-            ->sum('amount');
-       
-        // todays earning
-        $earningsToday = $enrolments
-            ->where('start_at', '>=', $today)
-            ->where('start_at', '<', $today->copy()->addDay())
-            ->sum('amount'); 
-
-        // yesterday earnings
-        $yesterday = Carbon::parse($today)->subDay();
-        $earningsYesterday = $enrolments
-        ->where('start_at', '>=', $yesterday)
-        ->where('start_at', '<', $today)
-        ->sum('amount');
-
-        // total enrollments
-        $totalEnrollments = Checkout::count();
-        $enrollesToday = Checkout::
-            where('start_date', '>=', $today)
-            ->where('start_date', '<', $today->copy()->addDay())
-            ->count(); 
-
-        // today enrollments
-        $todaysEnrolments = Subscription::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
-
-        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments','earningsYesterday','lastOneyear','earningsLastTwoYears','earningsToday','totalEnrollments','enrollesToday'));
-    }
-
-    public function details($stripe_plan)
-    {
-        $stripe_plan = Crypt::decrypt($stripe_plan);
-
-        $payment = Subscription::where('stripe_plan',$stripe_plan)->with('instructor','subscriptionPakage')->first();
-        return view('payments/admin/details', compact('payment'));
-    }
-
-    public function export($payment_id){
-        $payment_id = Crypt::decrypt($payment_id);
-        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
-        $data = array(
-            'payment' => $payment
-        );
-        $pdf = Pdf::loadView('adminInvoice',$data);
-        return $pdf->download('invoice-'.$payment_id.'.pdf');
-    }
-    
-
-    public function view($payment_id)
-    {
-        $payment_id = Crypt::decrypt($payment_id);
-        $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
-        return view('payments/admin/view', compact('payment'));
-    }
-
-    // public function generatePdf($payment_id){
-    //     $payment_id = Crypt::decrypt($payment_id);
-    //     $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
-    //     $data = array(
-    //         'payment' => $payment
-    //     );
-    //     $pdf = Pdf::loadView('adminInvoice',$data);
-    //     return $pdf->download('invoice-'.$payment_id.'.pdf');
-    // }
-
-    // public function mailInvoice($payment_id){
-    //     $payment_id = Crypt::decrypt($payment_id);
-    //     $payment = Checkout::where('payment_id',$payment_id)->with('instructor','user','course')->first();
-    //     $data = array(
-    //         'payment' => $payment,
-    //         'mail' => $payment->user->email,
-    //         'payment_id' => 'invoice-'.$payment_id.'.pdf',
-    //     );
-    //     $pdf = Pdf::loadView('adminInvoice',$data);
-    //     if($data['mail'] != '')
-    //     {
-    //         Mail::send('adminInvoice', $data, function($message) use ($data,$pdf) {
-    //                     $message->to($data['mail'])
-    //                             ->subject('Payment Invoice')
-    //                             ->attachData($pdf->output(),$data['payment_id']);
-    //         });
-    //         return redirect()->back()->with('success', 'Payment Invoice sent to mail successfully.');
-    //     }
-    //     else
-    //     {
-    //         return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
-    //     }
-    // } 
+    } 
 
 
     public function coverUpload(Request $request)

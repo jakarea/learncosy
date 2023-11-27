@@ -28,6 +28,7 @@ use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\ProfileManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
@@ -674,12 +675,17 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::post('/edit', 'update')->name('admin.profile.update');
             Route::get('/change-password', 'passwordUpdate');
             Route::post('/change-password', 'postChangePassword')->name('admin.password.update');
+        });
+
+        // admin payment routes
+        Route::prefix('payments')->controller(AdminPaymentController::class)->group(function () {
             Route::get('/platform-fee', 'adminPayment');
-            Route::get('/platform-fee/{stripe_plan}', 'details')->name('admin.payment.details');
-            Route::get('/export/{id}', 'export')->name('export');
-            Route::get('/view/{id}', 'view')->name('view');
-            Route::get('/pdf-generate/{id}', 'generatePdf')->name('pdf-generate');
-            Route::get('/mail-invoice/{id}', 'mailInvoice')->name('mail-invoice');
+            Route::get('/platform-fee/{stripe_plan}', 'details')->name('admin.payment.details');  
+            Route::get('/admin-export/{stripe_plan}', 'export')->name('admin-export'); 
+            Route::get('/generate-pdf/{stripe_plan}', 'generatePdf')->name('admin.generate-pdf'); 
+            Route::get('/invoice-mail/{stripe_plan}', 'invoiceMail')->name('admin.invoice-mail');
+            
+            // ins
         });
     });
 });

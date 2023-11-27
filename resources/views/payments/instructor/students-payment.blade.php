@@ -146,13 +146,13 @@
                             </td>
                             <td>
                                 @if ($payment->course)
-                                    <h5>{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</h5>
+                                    <h5><a href="{{ url('instructor/courses/overview/'.$payment->course->slug) }}">{{ (strlen($payment->course->title ) > 50) ? substr($payment->course->title, 0, 47) . "..." : $payment->course->title }}</a></h5>
                                 @else 
                                 <h5 class="mishty-clr">Course has been removed</h5>
                                 @endif
                             </td>
                             <td>
-                                <p>{{$payment->user->name}}</p>
+                                <p><a href="{{ url('instructor/students/profile/'.$payment->user->id) }}">{{$payment->user->name}}</a></p>
                             </td>
                             <td>
                                 <p>{{ $payment->created_at->format('d M Y') }}</p>
@@ -173,8 +173,8 @@
                             </td>
                             <td>
                                 <a href="{{ route('instructor-export',encrypt($payment->payment_id)) }}" class="btn-view btn-export">Export</a>
-                                <a href="{{ url('instructor/payments', encrypt($payment->payment_id)) }}"
-                                    class="btn-view">View</a>
+
+                                <a href="{{ url('instructor/payments', encrypt($payment->payment_id)) }}" class="btn-view">View</a>
                             </td>
                         </tr>
                         @endforeach

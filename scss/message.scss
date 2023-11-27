@@ -625,6 +625,7 @@
         padding: 1rem 2rem;
         padding-right: 1rem;
         transition: ease-in-out .3s;
+        cursor: pointer;
 
         &:hover {
             background: #EDEFFC;
@@ -736,6 +737,26 @@
         }
 
     }
+
+}
+
+span.user-name-avatar{
+    border-radius: 6.25rem;
+    border: 2px solid var(--neutral-10, #FFF);
+    width: 2.5rem;
+    height: 2.5rem;
+    -o-object-fit: cover;
+       object-fit: cover; 
+    font-size: 1rem;
+    background-color: #E0E0E0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #294CFF;
+}
+
+.person-tab-body .single-person.active .media{
+    background: #EDEFFC!important;
 }
 
 .person-tab-body.chat-user-load.active {
