@@ -19,7 +19,7 @@ Messsages Page
 {{-- page content @S --}}
 @section('content')
 {{-- ==== message list page @S ==== --}}
-<main class="message-list-page-wrap student-messages-page"> 
+<main class="message-list-page-wrap student-messages-page">
 
     <div class="container-fluid">
         <div class="row">
@@ -118,7 +118,7 @@ Messsages Page
 
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
-                        {{-- chat body list start --}} 
+                        {{-- chat body list start --}}
 
                         <div class="main-chat-room">
                             <div id="chat-message" class="main-chat-inner-room">
@@ -584,9 +584,11 @@ $(document).ready(function () {
 
     const startTyping = (user) => {
 
-        console.log(user.id, receiver_id )
+        console.log(user.id )
+        console.log( receiver_id)
 
         if(user.id == receiver_id){
+        // if(user.is_receiver === true){
             const newUserMessageItem = document.createElement('div');
             newUserMessageItem.classList.add('message-item-wrap');
 
@@ -887,7 +889,7 @@ function scrollToBottomFunc() {
 
         openProfiles.forEach(openProfile => {
             openProfile.addEventListener('click', function () {
-                profileBox.classList.add('active'); 
+                profileBox.classList.add('active');
             });
         });
 
