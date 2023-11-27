@@ -60,7 +60,7 @@ class MessageController extends Controller
 
 
         // return $data;
-        return view('e-learning/course/instructor/message-list-backup', $data);
+        // return view('e-learning/course/instructor/message-list-backup', $data);
 
         return view('e-learning/course/instructor/message-list', $data);
     }
