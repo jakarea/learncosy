@@ -8,14 +8,14 @@
                         @isset( $group->avatar )
                             <img src="{{ asset($group->avatar) }}" alt="{{ $group->name }}" class="img-fluid">
                         @else
-                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $group->id }}" class="img-fluid">
+                            <span class="user-name-avatar">{!! strtoupper($group->name[0]) !!}</span>
                         @endisset
 
-                        @if(Cache::has('user-is-online-' . $group->id))
+                        {{-- @if(Cache::has('user-is-online-' . Auth::user()->id))
                             <i class="fas fa-circle"></i>
                         @else
                             <i class="fa-solid fa-circle" style="color: #a1a1a5;"></i>
-                        @endif
+                        @endif --}}
                     </div>
                 @endisset
 
@@ -43,19 +43,19 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a data-chat-user-id="{{ $group->id }}" class="dropdown-item deleteChatMsg" href="javascript:;">
+                            <a data-group-id="{{ $group->id }}" class="dropdown-item deleteGroupChatMsg" href="javascript:;">
                                 <img src="{{ asset('latest/assets/images/icons/messages/trash.svg') }}"
                                     alt="ic" class="img-fluid"> Delete chat
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal4">
                                 <img src="{{ asset('latest/assets/images/icons/messages/users.svg') }}"
                                     alt="ic" class="img-fluid"> Create group with
-                                Katherine
+                                {{ Auth::user()->name }}
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a class="dropdown-item" href="#">
                                 <img src="{{ asset('latest/assets/images/icons/messages/mail-open.svg') }}"

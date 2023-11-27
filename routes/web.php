@@ -11,6 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TypingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
@@ -32,8 +33,8 @@ use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
-use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminCourseStepController;
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\Admin\LessonManagementController;
 use App\Http\Controllers\Admin\ModuleManagementController;
@@ -187,7 +188,7 @@ Route::get('students/lessons/{id}', function ($id) {
 
 // One to one chat system
 Route::middleware('auth')->prefix('messages')->controller(MessageController::class)->group(function () {
-    Route::get('/', 'index')->name('message'); 
+    Route::get('/', 'index')->name('message');
     Route::get('/chat', 'getChatMessage')->name('messages.chat');
     Route::post('/chat', 'sendChatMessage')->name('messages.chat');
     Route::get('/group/chat', 'getGroupChatMessage')->name('messages.group.chat');
@@ -195,18 +196,21 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/search-user', 'searchChatUser')->name('messages.search');
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
     Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
-    // // Route::get('/', 'index')->name('message');
-    // Route::get('/students', 'index2')->name('message.students')->middleware('page.access');
-    // Route::post('/', 'sendMessage')->name('message-send');
-    // Route::get('/send/{id}', 'send')->name('get.message');
-    // Route::get('/chat_room/{id}', 'getChatRoomMessages')->name('get.chat_room.message');
-    // Route::post('/chat_room/{chat_room}', 'postChatRoomMessages')->name('post.chat_room.message');
-    // Route::post('/send/{course_id}', 'submitMessage')->name('post.message');
+    Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
+    // Route::post('/typing-indicator', 'typingIndicator')->name('messages.typing.indicator');
+});
+
+Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
+    Route::post('/start-typing', 'startTyping')->name('messages.typing.start');
+    Route::post('/stop-typing', 'stopTyping')->name('messages.typing.stop');
 });
 
 // Group message
 Route::middleware('auth')->prefix('messages')->controller(GroupController::class)->group(function () {
     Route::post('/create-group', 'createGroup')->name('messages.group');
+    Route::post('/add-people/group', 'addPeopleToGroup')->name('messages.group.add.people');
+    Route::post('/update-group', 'updateGroup')->name('messages.update.group');
+    Route::post('/delete-group', 'deleteGroup')->name('messages.delete.group');
     Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');
 });
 /* ============================================================= */
@@ -331,7 +335,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
         });
         // module page routes
         Route::prefix('modules')->controller(ModuleController::class)->group(function () {
-            Route::get('/', 'index'); 
+            Route::get('/', 'index');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('module.store');
             Route::get('/{slug}/edit', 'edit')->name('module.edit');
@@ -572,13 +576,13 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::get('/', 'index')->name('admin.courses');
             // Route::get('/file-download/{course_id}/{extension}', 'filePreview')->name('admin.file.download');
             Route::get('/{slug}/show', 'show')->name('admin.course.show');
-            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview'); 
+            Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
         });
 
         // admin course edit
         Route::prefix('courses/create')->controller(AdminCourseStepController::class)->group(function () {
-             
+
             Route::get('/{id}/facts', 'step1');
             Route::post('/{id}/facts', 'step1c')->name('admin.course.store.step-1');
 
@@ -625,7 +629,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 
         // Subscription paege modify routes for admin
         Route::prefix('manage/subscriptionpackage')->controller(AdminSubscriptionPackageController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.subscription'); 
+            Route::get('/', 'index')->name('admin.subscription');
             Route::get('/create', 'create')->name('admin.subscription.create');
             Route::post('/store', 'store')->name('admin.subscription.store');
             Route::get('/{slug}', 'show')->name('admin.subscription.show');
@@ -637,7 +641,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         Route::prefix('bundle/courses')->controller(BundleCourseManagementController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/{slug}/view', 'view')->name('admin.course.bundle.show');
-            
+
             Route::get('{slug}/edit', 'edit1')->name('admin.select.again.bundle.course');
             Route::post('{id}/select-update', 'update1');
 
@@ -689,7 +693,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         });
     });
 });
- 
+
 // Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {

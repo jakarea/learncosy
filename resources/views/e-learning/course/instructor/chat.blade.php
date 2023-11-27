@@ -4,7 +4,7 @@
             @isset( $friend->avatar )
                 <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
             @else
-                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $friend->name }}" class="img-fluid">
+                <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
             @endisset
 
             <div class="media-body">
@@ -42,7 +42,7 @@
                 @isset( $message->user->avatar )
                     <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
                 @else
-                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $message->user->name }}" class="img-fluid">
+                    <span class="user-name-avatar">{!! strtoupper($message->user->name[0]) !!}</span>
                 @endisset
 
                 <i class="fas fa-circle"></i>
@@ -66,12 +66,12 @@
 
                         @if (in_array(strtolower($extension), $allowedImageExtensions))
                             <div class="single-chat-image">
-                                <a href="{{ asset('storage/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
-                                    <img src="{{ asset('storage/chat/'.$message->file) }}" alt="Image" class="img-fluid">
+                                <a href="{{ asset('uploads/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
+                                    <img src="{{ asset('uploads/chat/'.$message->file) }}" alt="Image" class="img-fluid">
                                 </a>
                             </div>
                         @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
-                            <video src="{{ asset('storage/chat/'.$message->file) }}"></video>
+                            <video src="{{ asset('uploads/chat/'.$message->file) }}"></video>
                         @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                             @if (strtolower($extension) === 'zip')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
@@ -101,10 +101,10 @@
 @empty
 @endforelse
 
-
+{{-- <div id="typing-indicator">Someone is typing...</div> --}}
+{{--
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-    
-    <div class="dock-bottom"> 
+    <div class="dock-bottom">
         <div id="file-preview" class="file-preview">
             <img src="" alt="" class="preview-image img-fluid" id="preview-image">
             <div class="preview-actions">
@@ -125,10 +125,9 @@
                 <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
                 <button class="btn btn-submit" type="submit">
                     Send
-                </button> 
+                </button>
             </div>
         </div>
-    </div> 
-    
+    </div>
 </form>
-
+ --}}

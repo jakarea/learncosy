@@ -30,17 +30,20 @@ Messsages Page
                             <h1>Messages <span>{{ count($users) + count($groups) }}</span></h1>
 
                             {{-- create group box start --}}
-                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                    class="img-fluid"> Create Group
-                            </a>
+                            @if( $adminInfo->user_role !== 'student')
+                                <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
+                                    role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
+                                        class="img-fluid"> Create Group
+                                </a>
+                            @endif
                         </div>
                         <div class="collapse" id="collapseExample">
                             <div class="create-group-form">
                                 <h4>Create Group</h4>
 
                                 @include('e-learning.course.instructor.group-admin.admin-info')
+
                                 <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
@@ -99,10 +102,12 @@ Messsages Page
                         {{-- chat filter --}}
 
                         {{-- leftbar person list start --}}
-                        <div class="person-tab-body chat-user-load" id="chat-user-load">
+                        <div class="person-tab-body">
                             {{-- single person start --}}
-                            @include('e-learning.course.instructor.message-group.group-list')
-                            @include('e-learning.course.instructor.chat-user.search-users')
+                            <div class="chat-user-load" id="chat-user-load">
+                                @include('e-learning.course.instructor.message-group.group-list')
+                                @include('e-learning.course.instructor.chat-user.search-users')
+                            </div>
                             {{-- single person end --}}
                         </div>
                         {{-- leftbar person list end --}}
@@ -112,12 +117,73 @@ Messsages Page
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
-                        <div class="main-chat-room" id=chat-message>
+                        <div class="main-chat-room" id="chat-message">
                             <div class="blank-chat-page">
                                 <i class="fa-regular fa-circle-user"></i>
                                 <h3>Select a person or group to start a chat</h3>
                             </div>
                         </div>
+
+                        <div class="main-chat-room">
+                            <div id="indicator-append"></div>
+                        </div>
+
+                        <form method="POST" class="send-actions w-100 d-none" id="chatMessage" autocomplete="off">
+                            <div class="dock-bottom">
+                                <div id="file-preview" class="file-preview">
+                                    <img src="" alt="" class="preview-image img-fluid" id="preview-image">
+                                    <div class="preview-actions">
+                                        <span id="file-type-icon"></span>
+                                        <span class="close-icon" id="close-icon" onclick="removeFile()">✖</span>
+                                    </div>
+                                </div>
+
+                                <div class="message-send-box">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                                            name="message">
+                                    </div>
+                                    <div class="file-attach-bttns">
+                                        <label for="attached" class="message-attached">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </label>
+                                        <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
+                                        <button class="btn btn-submit" type="submit">
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form method="POST" class="send-actions w-100 d-none" id="groupChatMessage" autocomplete="off">
+                            <div class="dock-bottom">
+                                <div id="file-preview" class="file-preview">
+                                    <img src="" alt="" class="preview-image img-fluid" id="preview-image">
+                                    <div class="preview-actions">
+                                        <span id="file-type-icon"></span>
+                                        <span class="close-icon" id="close-icon" onclick="removeFile()">✖</span>
+                                    </div>
+                                </div>
+
+                                <div class="message-send-box">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                                            name="message">
+                                    </div>
+                                    <div class="file-attach-bttns">
+                                        <label for="attached" class="message-attached">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </label>
+                                        <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
+                                        <button class="btn btn-submit" type="submit">
+                                            Send
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                     {{-- chat body right side end --}}
                 </div>
@@ -126,144 +192,6 @@ Messsages Page
     </div>
 </main>
 {{-- ==== message list page @E ==== --}}
-
-{{-- add people to group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <form action="">
-                        <div class="form-group mt-0">
-                            <label for="" style="font-size: 1.25rem">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control">
-                            <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
-                        </div>
-                        {{-- suggested name box --}}
-                        <div class="suggested-name-box">
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/m-avatar.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/avatar.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                            {{-- suggested person --}}
-                            <div>
-                                <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="" class="img-fluid">
-                                <span>Mollie Hall</span>
-                                <a href="#">
-                                    <i class="fas fa-close"></i>
-                                </a>
-                            </div>
-                            {{-- suggested person --}}
-                        </div>
-                        {{-- suggested name box --}}
-                        {{-- person list box start --}}
-                        <div class="person-box-list person-tab-body">
-                            {{-- person --}}
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-4.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-3.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-2.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-person border-0">
-                                <div class="media p-0 border-0">
-                                    <div class="avatar">
-                                        <img src="{{ asset('latest/assets/images/update-5.png') }}" alt="Avatar"
-                                            class="img-fluid me-0">
-                                        <i class="fas fa-circle"></i>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="name">
-                                            <a href="#" class="name">Katherine Moss</a>
-                                        </div>
-                                        <p>I’ve just published the site again. Looks like...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- person --}}
-                        </div>
-                        {{-- person list box end --}}
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Add</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- add people to group modal end --}}
 
 {{-- add specific person to group modal start --}}
 <div class="custom-modal-box">
@@ -306,104 +234,44 @@ Messsages Page
 </div>
 {{-- add specific person to group modal end --}}
 
-{{-- rename group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form">
-                    <h4>Rename Group</h4>
-                    <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
-                        <div class="media">
-                            <img src="{{ asset('latest/assets/images/group-img.png') }}" alt="Avatar" class="img-fluid">
-                            <div class="media-body">
-                                <h5 class="name">Math Education </h5>
-                                <ul class="peoples">
-                                    <li><img src="{{ asset('latest/assets/images/update-2.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-3.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-4.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><img src="{{ asset('latest/assets/images/update-5.png') }}" alt="a"
-                                            class="img-fluid"></li>
-                                    <li><span>+5</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <form action="">
-                        <div class="form-group mt-0">
-                            <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control">
-                        </div>
-                        {{-- form submit --}}
-                        <div class="form-submit">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Save</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- rename group modal end --}}
-{{-- delete group modal start --}}
-<div class="custom-modal-box">
-    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="create-group-form text-center">
-                    <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a" class="img-fluid">
-                    <h4 class="border-0 pb-0 mt-4">Delete This Group</h4>
-                    <p>Are you sure you want to delete this group?</p>
-                    <form action="">
-                        {{-- form submit --}}
-                        <div class="form-submit mt-5 error-bttn">
-                            <button class="btn btn-cancel" data-bs-dismiss="modal" type="button">Cancel</button>
-                            <button class="btn btn-create" type="submit">Delete</button>
-                        </div>
-                        {{-- form submit --}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- delete group modal end --}}
+
 @endsection
 {{-- page content @E --}}
 
 @section('script')
 <script>
-    // Search single chat user
-    $(document).ready(function () {
-        $(".search-group-chat-user").on("keyup click paste", function (e) {
-            e.preventDefault();
-            searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
-        });
-    });
+// Search single chat user
+
+$(document).on("input",".search-group-chat-user", function (e) {
+    searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
+});
+
+// Search people for specific group on modal
+$(document).on("input", ".search-people-specific-group", function (e) {
+    searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
+});
+
 
 // Search group chat user
+$(document).on("input",".search-chat-user", function (e) {
+    searchUser($.trim(this.value), ".chat-user-load", "layout2");
+});
+
+
+
 $(document).ready(function () {
-    $(".search-chat-user").on("keyup click paste", function (e) {
-        e.preventDefault();
-        searchUser($.trim(this.value), ".chat-user-load", "layout2");
+    $(".create-group-by-user").on("click", function (e) {
+        var userId = $(this).closest('.single-person').attr('id').split('_')[1];
+        loadSuggestedPeople(userId, '.load-suggested-people', '.addUserId');
     });
 });
 
+
+
 // Search User
 function searchUser(searchTerm, resultContainer, layout) {
+
     searchTerm = $.trim(searchTerm);
-    console.log(searchTerm);
     if (searchTerm !== "") {
         $.ajax({
             url: "{{ route('messages.search') }}",
@@ -413,7 +281,6 @@ function searchUser(searchTerm, resultContainer, layout) {
                 layout: layout
             },
             success: function (data) {
-                console.log(data)
                 $(resultContainer).html(data);
             }
         });
@@ -426,30 +293,33 @@ function searchUser(searchTerm, resultContainer, layout) {
 var existsUsers = [];
 $(document).on('click', '.suggest-people', function () {
     var userId = $(this).attr('id');
+    loadSuggestedPeople(userId, '.load-suggested-people', '.addUserId');
+});
+
+
+function loadSuggestedPeople(userId, container, input) {
     $.ajax({
         type: "get",
         url: "{{ route('messages.suggested.people') }}",
-        data: {
-            userId: userId
-        },
+        data: { userId: userId },
         success: function (data) {
+            console.log( data )
             if ($.inArray(userId, existsUsers) === -1) {
                 existsUsers.push(userId);
-                $('.load-suggested-people').append(data);
-                $(".addUserId").val(function (_, currentValues) {
+                $(container).append(data);
+                $(input).val(function (_, currentValues) {
                     return currentValues ? currentValues + ',' + userId : userId;
                 });
             } else {
-                toastr.error('User already exits!!', 'Error');
+                toastr.error('User already exists!!', 'Error');
             }
         }
     });
-});
+}
 
 // Remove suggested people
 $(document).on('click', '.remove-suggested-people', function () {
     var userId = $(this).closest(".suggest-user").attr('id');
-
     userId = parseInt(userId, 10);
     var indexToRemove = existsUsers.indexOf(userId.toString());
     if (indexToRemove !== -1) {
@@ -483,10 +353,174 @@ document.addEventListener('click', function (event) {
         });
     }
 });
+
+
+// Delete group chat history
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('deleteGroupChatMsg')) {
+        event.stopPropagation();
+        var groupId = event.target.getAttribute('data-group-id');
+
+        $.ajax({
+            type: 'get',
+            url: "{{ route('messages.delete.groupchat') }}",
+            data: { groupId: groupId },
+            success: function (data) {
+                $('#group-chat-message-wrap').empty();
+                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                toastr.success(data.success, 'Success');
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+});
+
+
+// Add People to Groupe
+$(document).on('submit', '#addPeopleToGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#addPeopleToGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.group.add.people') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#addPeopleToGroup')[0].reset();
+            $('#exampleModal').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            $(".load-suggested-people").empty();
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
+
+// Update group
+$(document).on('submit', '#updateGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#updateGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.update.group') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#updateGroup')[0].reset();
+            $('#exampleModal2').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            fetchGroupData(groupId)
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
+// Delete group
+$(document).on('submit', '#deleteGroup', function () {
+    event.preventDefault();
+    var formData = new FormData($('#deleteGroup')[0]);
+    var groupId = formData.get('groupId');
+    $.ajax({
+        type: "post",
+        url: "{{ route('messages.delete.group') }}",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+            $('#group-chat-message-wrap').empty();
+            $('#exampleModal3').modal('hide');
+            $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            $("#chat-message").load(location.href + " #chat-message>*", "");
+
+
+
+            toastr.success(data.success, 'Success');
+        },
+        error: function (jqXHR, status, err) {
+            // Handle error if needed
+        }
+    });
+});
+
+
+$(document).on('click', '.user', function () {
+
+    $('.user').removeClass('active');
+    $('.group').removeClass('active');
+    $(this).addClass('active');
+    $(this).find('.pending').remove();
+
+    var user_receive_id = $(this).attr('id');
+    receiver_id = user_receive_id.split('_')[1];
+    $.ajax({
+        type: "get",
+        url: "{{ route('messages.chat') }}",
+        data: {
+            receiver_id: receiver_id
+        },
+        cache: false,
+        success: function (data) {
+            $('#chat-message').html(data);
+            // $('#chat-message-input').emojioneArea();
+            scrollToBottomFunc();
+
+        },
+        complete: function () {
+            $("#groupChatMessage").addClass("d-none");
+            $("#chatMessage").removeClass("d-none").fadeIn("slow");
+        }
+    });
+});
+
+// Show group message
+$(document).on('click', '.group', function () {
+    $('.group').removeClass('active');
+    $('.user').removeClass('active');
+    $(this).addClass('active');
+    $(this).find('.pending').remove();
+
+    var group_id = $(this).attr('id');
+    receiver_id = group_id.split('_')[1];
+    fetchGroupData(receiver_id);
+});
+
+function fetchGroupData(receiver_id){
+    $.ajax({
+        type: "get",
+        url: "{{ route('messages.group.chat') }}",
+        data: {
+            receiver_id: receiver_id
+        },
+        cache: false,
+        success: function (data) {
+            $('#chat-message').html(data);
+            // $('#chat-message-input').emojioneArea();
+            scrollToBottomFunc();
+        },
+        complete: function () {
+            $("#chatMessage").addClass("d-none");
+            $("#groupChatMessage").removeClass("d-none").fadeIn("slow");
+        }
+    });
+}
+
 </script>
 
 <script>
-    var receiver_id = '';
+var receiver_id = '';
 var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
@@ -502,9 +536,9 @@ $(document).ready(function () {
 
     // Set pusher key
     var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
-            cluster: 'ap2',
-            forceTLS: true
-        });
+        cluster: 'ap2',
+        forceTLS: true
+    });
 
 
     // <<<<<========== User Online Activity ===============>>>>>
@@ -538,13 +572,95 @@ $(document).ready(function () {
     // <<<<<========== User Online Activity ===============>>>>>
 
 
+
+    // Typing indicator
+
+    const indicatorAppendElement = document.getElementById('indicator-append');
+
+
+    const startTyping = (user) => {
+        const newUserMessageItem = document.createElement('div');
+        newUserMessageItem.classList.add('message-item');
+
+        const assetUrl = "{{ asset('') }}";
+        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+        const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
+
+        newUserMessageItem.innerHTML = `
+            <div class="media main-media">
+                <div class="avatar">
+                    ${avatarContent}
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div class="d-flex">
+                        <h6>${user.name}</h6>
+                    </div>
+                    <div class="typing">
+                        <i class="fa-solid fa-ellipsis fa-fade"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Append the new message item to the designated container
+        indicatorAppendElement.innerHTML = newUserMessageItem.outerHTML;
+    };
+
+    const stopTyping = (user) => {
+        const assetUrl = "{{ asset('') }}";
+        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+        const existingUserMessageItem = indicatorAppendElement.querySelector(`.avatar img[src="${avatarUrl}/${user.avatar}"], .avatar span.user-name-avatar`);
+        if (existingUserMessageItem) {
+            existingUserMessageItem.parentNode.parentNode.parentNode.remove();
+        }
+    };
+
+    const indicator = pusher.subscribe('typing-channel');
+
+    indicator.bind('typing-started', (data) => {
+        startTyping(data.user_info);
+    });
+
+    indicator.bind('typing-stopped', (data) => {
+        stopTyping(data.user_info);
+    });
+
+    // Trigger start and stop typing event
+
+    const routeStart = "{{ route('messages.typing.start') }}";
+    const routeStop = "{{ route('messages.typing.stop') }}";
+
+    $(document).on("input","#chat-message-input", () => sendTypingEvent('start'));
+    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
+
+    const sendTypingEvent = (action) => {
+        const route = action === 'start' ? routeStart : routeStop;
+        $.ajax({
+            method: 'POST',
+            url: route,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: (response) => {
+                // Handle success if needed
+            },
+            error: (error) => {
+                // Handle error if needed
+            },
+        });
+    };
+
+    // Close typing indicator
+
+
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
             $('#user_' + data.to).click();
         } else if (my_id == data.to) {
             if (receiver_id == data.from) {
-                // If the receiver is selected, reload the selected user...
+
                 $('#user_' + data.from).click();
             } else {
                 // If the receiver is not selected, add a notification for that user
@@ -562,11 +678,10 @@ $(document).ready(function () {
 
     var channelGroup = pusher.subscribe(my_id);
     channelGroup.bind('App\\Events\\Notify', function (data) {
+        console.log( JSON.stringify(data) )
         if (my_id == data.from) {
             $('#group_' + data.to).click();
-
         } else if (my_id == data.to) {
-
             receiver_id = data.from;
             if (receiver_id == data.from) {
                 $('#group_' + data.from).click();
@@ -581,55 +696,6 @@ $(document).ready(function () {
         }
     });
 
-});
-
-$(document).on('click', '.user', function () {
-    $('.user').removeClass('active');
-    $('.group').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.pending').remove();
-
-    var user_receive_id = $(this).attr('id');
-    receiver_id = user_receive_id.split('_')[1];
-    $.ajax({
-        type: "get",
-        url: "{{ route('messages.chat') }}",
-        data: {
-            receiver_id: receiver_id
-        },
-        cache: false,
-        success: function (data) {
-            $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
-            scrollToBottomFunc();
-
-        }
-    });
-});
-
-
-$(document).on('click', '.group', function () {
-    $('.group').removeClass('active');
-    $('.user').removeClass('active');
-    $(this).addClass('active');
-    $(this).find('.pending').remove();
-
-    var group_id = $(this).attr('id');
-    receiver_id = group_id.split('_')[1];
-
-    $.ajax({
-        type: "get",
-        url: "{{ route('messages.group.chat') }}",
-        data: {
-            receiver_id: receiver_id
-        },
-        cache: false,
-        success: function (data) {
-            $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
-            scrollToBottomFunc();
-        }
-    });
 });
 
 
@@ -680,17 +746,15 @@ function sendMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('.chat-message-input').val('');
-                $('.chat-message-input').emojioneArea().val('');
+                // $('.chat-message-input').val('');
+                // $('.chat-message-input').emojioneArea().val('');
                 $('#chatMessage')[0].reset();
+                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                scrollToBottomFunc();
 
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
-            },
-            complete: function () {
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                scrollToBottomFunc();
             }
         });
     }
@@ -710,16 +774,14 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('.chat-message-input').val('');
-                $('.chat-message-input').emojioneArea().val('');
+                // $('.chat-message-input').val('');
+                // $('.chat-message-input').emojioneArea().val('');
                 $('#groupChatMessage')[0].reset();
+                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
-            },
-            complete: function () {
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                scrollToBottomFunc();
             }
         });
     }

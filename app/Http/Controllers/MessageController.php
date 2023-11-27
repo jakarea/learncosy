@@ -79,9 +79,9 @@ class MessageController extends Controller
 
             // Get all message from selected user
             $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $user_id, "receiver_id" => $my_id, "message_type" => 1]);
+                $query->where(["sender_id" => $user_id, "receiver_id" => $my_id, "message_type" => 1, "is_read" => 1]);
             })->orWhere(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $my_id, "receiver_id" => $user_id, "message_type" => 1]);
+                $query->where(["sender_id" => $my_id, "receiver_id" => $user_id, "message_type" => 1, "is_read" => 1]);
             })->get();
 
             return view('e-learning.course/instructor.chat', $data);
@@ -109,12 +109,14 @@ class MessageController extends Controller
             $data->is_read = false;
             $data->save();
 
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
-                $fileName = $file->storeAs('chat', $image, 'public');
+            if($request->hasFile('file')){
+                $file =  $request->file('file');
+                $fileName  = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
+                $destination  = "uploads/chat";
+                $file->move($destination, $fileName);
+
                 $data->update([
-                    'file' => $image,
+                    'file' => $fileName,
                     'file_extension' => $file->getClientOriginalExtension(),
                     'file_type' => 2
                 ]);
@@ -139,7 +141,7 @@ class MessageController extends Controller
     }
 
 
-    // One to many  get chat message
+    // One to many get chat message
     public function getGroupChatMessage(Request $request)
     {
         if ($request->ajax()) {
@@ -152,7 +154,7 @@ class MessageController extends Controller
             Chat::where(['group_id' => $request->receiver_id])->update(['is_read' => 1]);
 
             $data['messages'] = Chat::where(function ($query) use ($request) {
-                $query->where(['group_id' => $request->receiver_id, "message_type" => 2]);
+                $query->where(['group_id' => $request->receiver_id, "message_type" => 2, "is_read" => 1]);
             })->get();
 
             // dd( $data['messages']->toArray() );
@@ -177,28 +179,32 @@ class MessageController extends Controller
 
             $sender_Id = Auth::id();
             $participants = GroupParticipant::where('group_id', $request->receiver_id)->get();
+            // dd($participants );
 
-            Chat::create([
-                'sender_id' => $sender_Id,
-                'receiver_id' => null,
-                'group_id' => $request->receiver_id,
-                'message' => $request->message,
-                'message_type' => 2,
-                'is_read' => false
-            ]);
+            $data = new Chat();
+
+            $data->sender_id = $sender_Id;
+            $data->receiver_id = null;
+            $data->group_id = $request->receiver_id;
+            $data->message = $request->message;
+            $data->message_type = 2;
+            $data->is_read = false;
+            $data->save();
+
+            if($request->hasFile('file')){
+                $image =  $request->file('file');
+                $imagename  = substr(md5(time()), 0, 10) . '.' . $image->getClientOriginalExtension();
+                $destination  = "uploads/chat";
+                $image->move($destination, $imagename);
+
+                $data->update([
+                    'file' => $imagename,
+                    'file_extension' => $image->getClientOriginalExtension(),
+                    'file_type' => 2
+                ]);
+            }
+
             foreach ($participants as $member) {
-
-                // if ($request->hasFile('file')) {
-                //     $file = $request->file('file');
-                //     $image = substr(md5(time()), 0, 10) . '.' . $file->getClientOriginalExtension();
-                //     $fileName = $file->storeAs('chat', $image, 'public');
-                //     $data->update([
-                //         'file' => $image,
-                //         'file_extension' => $file->getClientOriginalExtension(),
-                //         'file_type' => 2
-                //     ]);
-                // }
-
                 // pusher
                 $options = array(
                     'cluster' => 'ap2',
@@ -258,26 +264,52 @@ class MessageController extends Controller
     {
         $userId = $request->userId;
 
-        $chats = Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId)->get();
+        $chats = Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId);
 
         $chats->each(function ($chat) {
-            $fileName = $chat->file_name;
-            $path = storage_path("app/public/chat/{$fileName}");
+
+            $fileName = $chat->file;
+            $uploadsDirectory = "/uploads/chat/";
+
+            $path = public_path($uploadsDirectory . $fileName);
+
             if (File::exists($path)) {
                 File::delete($path);
             }
         });
 
-        Chat::where('sender_id', $userId)->orWhere('receiver_id', $userId)->delete();
+        $chats->delete();
         return response()->json(['success' => 'Chat messages deleted successfully!!']);
     }
 
-    public function downloadChatFile($filename)
+    public function deleteGroupChatHistory(Request $request)
     {
-        $path = storage_path('app/public/chat/' . $filename);
+        $chats = Chat::where('group_id', $request->groupId);
+
+        $chats->each(function ($chat) {
+            $fileName = $chat->file;
+            $uploadsDirectory = "/uploads/chat/";
+            $path = public_path($uploadsDirectory . $fileName);
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        });
+
+        $chats->delete();
+        return response()->json(['success' => 'Group messages deleted successfully!!']);
+    }
+
+    public function downloadChatFile($fileName)
+    {
+        $uploadsDirectory = "/uploads/chat/";
+        $path = public_path($uploadsDirectory . $fileName);
         if (!File::exists($path)) {
             abort(404);
         }
-        return response()->download($path, $filename);
+        return response()->download($path, $fileName);
     }
+
+
+
 }

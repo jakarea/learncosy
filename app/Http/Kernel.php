@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'subscription.check' => \App\Http\Middleware\CheckSubscription::class,
         'page.access' => \App\Http\Middleware\ManagePageAccess::class,
+        'owner' => \App\Http\Middleware\GroupOwner::class,
+        'member' => \App\Http\Middleware\GroupMember::class,
     ];
 }

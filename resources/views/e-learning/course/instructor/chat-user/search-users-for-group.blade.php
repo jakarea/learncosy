@@ -1,13 +1,13 @@
 @if( count( $users ) > 0)
     @foreach ($users as $user)
-        <div class="single-person suggest-people border-0" id="{{ $user->id }}">
+        <div class="single-person suggest-people border-0" id="{{ $user->id }}" data-suggest-people="suggestpeople{{ $user->id }}">
             <div class="media p-0 border-0">
                 @isset($user)
                     <div class="avatar">
                         @isset( $user->avatar )
                             <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
                         @else
-                            <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $user->name }}" class="img-fluid">
+                            <span class="user-name-avatar">{!! strtoupper($user->name[0]) !!}</span>
                         @endisset
                         @if(Cache::has('user-is-online-' . $user->id))
                             <i class="fas fa-circle"></i>
