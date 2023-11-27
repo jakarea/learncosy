@@ -122,6 +122,8 @@ class MessageController extends Controller
                 ]);
             }
 
+            User::find([$sender_Id, $receiver_id])->each->update(['last_activity_at' => now()]);
+
             // pusher
             $options = array(
                 'cluster' => 'ap2',
