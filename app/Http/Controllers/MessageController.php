@@ -32,6 +32,7 @@ class MessageController extends Controller
                 },
             ])
             ->where('users.id', '!=', Auth::id())
+            ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
@@ -61,8 +62,12 @@ class MessageController extends Controller
 
         // return $data;
         // return view('e-learning/course/instructor/message-list-backup', $data);
+        // return view('e-learning/course/instructor/chat-user/search-users', $data);
 
         return view('e-learning/course/instructor/message-list', $data);
+
+
+
     }
 
 
@@ -205,6 +210,8 @@ class MessageController extends Controller
                     'file_type' => 2
                 ]);
             }
+
+            User::find($sender_Id)->update(['last_activity_at' => now()]);
 
             foreach ($participants as $member) {
                 // pusher
