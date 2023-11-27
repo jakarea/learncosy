@@ -149,6 +149,11 @@
   top: 13.5px;
   width: 1.2rem;
 }
+.message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room {
   display: flex;
   padding: 2.5rem 2rem 2rem 2rem;
@@ -1126,7 +1131,54 @@ span.user-name-avatar {
 }
 
 .typing-status-area {
-  background-color: red;
+  width: 80%;
+}
+.typing-status-area .message-item {
+  margin-top: auto;
+}
+.typing-status-area .message-item .media.main-media {
+  align-items: flex-start;
+  display: inline-flex;
+}
+.typing-status-area .message-item .media.main-media .avatar {
+  position: relative;
+  margin-right: 0.75rem;
+}
+.typing-status-area .message-item .media.main-media .avatar img {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.typing-status-area .message-item .media.main-media .avatar i {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 8px;
+  color: #43B324;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.typing-status-area .message-item .media.main-media .d-flex {
+  align-items: center;
+  justify-content: space-between;
+}
+.typing-status-area .message-item .media.main-media .d-flex h6 {
+  color: var(--neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+.typing-status-area .message-item .media.main-media .d-flex span {
+  display: inline-block;
+  color: var(--neutral-60, #66768E);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.125rem;
 }
 
 @media (min-width: 320px) and (max-width: 574px) {

@@ -1,12 +1,13 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Messsages Page
+Messsages Page - a
 @endsection
 
 {{-- page style @S --}}
 @section('style')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css"> --}}
+<link href="{{ asset('latest/assets/admin-css/test.css') }}" rel="stylesheet" type="text/css">
 <style>
     .message-list-page-wrap {
         font-family: 'Poppins', sans-serif !important;
@@ -117,16 +118,18 @@ Messsages Page
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
-                        <div class="main-chat-room" id="chat-message">
-                            <div class="blank-chat-page">
-                                <i class="fa-regular fa-circle-user"></i>
-                                <h3>Select a person or group to start a chat</h3>
-                            </div>
-                        </div>
-
                         <div class="main-chat-room">
-                            <div id="indicator-append"></div>
-                        </div>
+                            <div id="chat-message" class="main-chat-inner-room">
+                                <div class="blank-chat-page">
+                                    <i class="fa-regular fa-circle-user"></i>
+                                    <h3>Select a person or group to start a chat</h3>
+                                </div>
+                            </div>
+
+                            {{-- typing status --}}
+                            <div class="typing-status-area" id="indicator-append"></div>
+
+                        </div>  
 
                         <form method="POST" class="send-actions w-100 d-none" id="chatMessage" autocomplete="off">
                             <div class="dock-bottom">
