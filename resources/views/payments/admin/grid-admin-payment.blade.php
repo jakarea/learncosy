@@ -192,8 +192,8 @@
                             </td>
                             <td> 
                                 <ul>
-                                    <a href="#" class="btn-view btn-export">Export</a>
-                                    <a href="{{ url('admin/profile/platform-fee', encrypt($payment->stripe_plan)) }}" class="btn-view">View</a>
+                                    <a href="{{ route('admin-export',encrypt($payment->stripe_plan)) }}" class="btn-view btn-export">Export</a>
+                                    <a href="{{ url('admin/payments/platform-fee', encrypt($payment->stripe_plan)) }}" class="btn-view">View</a>
                                 </ul>
                             </td>
                         </tr>

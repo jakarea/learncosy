@@ -39,8 +39,8 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="{{ Request::is('admin/profile/platform-fee*') || Request::is('admin/profile/view*') ? ' active' : '' }} nav-link"
-                            href="{{ url('/admin/profile/platform-fee') }}">Platform Fee</a>
+                        <a class="{{ Request::is('admin/payments/platform-fee*') ? ' active' : '' }} nav-link"
+                            href="{{ url('/admin/payments/platform-fee') }}">Platform Fee</a>
                     </li>
                 </ul>
             @endcan

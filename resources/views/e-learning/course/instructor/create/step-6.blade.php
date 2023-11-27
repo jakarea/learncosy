@@ -55,11 +55,11 @@ Course Create - Initial Step
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
-                <div class="content-step-wrap">
-                    {{-- session message @S --}}
-                    @include('partials/session-message')
-                    {{-- session message @E --}}
-
+                <div class="content-step-wrap">  
+                    <div class="text-center mb-2">
+                        <span class="invalid-feedback">@error('module_name'){{ $message }} @enderror</span>
+                        <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span>
+                    </div>
                     @foreach ($modules as $module)
                     {{-- course with page --}}
                     <div class="course-with-page">
@@ -76,7 +76,6 @@ Course Create - Initial Step
                                 </div>
                             </div>
                             <div class="actions module-dropdown-box">
-
                                 <div class="dropdown">
                                     <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis"></i>
@@ -106,16 +105,15 @@ Course Create - Initial Step
                                                     <div class="modal-body">
                                                         <div class="course-name-txt">
                                                             <h5>Module name</h5>
-                                                            <form
-                                                                action="{{ route('course.module.step.update',$module->course_id) }}"
-                                                                method="post">
+                                                            <form action="{{ route('course.module.step.update',$module->course_id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="module_id"
-                                                                    value="{{$module->id}}">
-                                                                <div class="form-group">
+                                                                <input type="hidden" name="module_id" value="{{$module->id}}">
+                                                                <div class="form-group form-error">
                                                                     <input type="text" placeholder="Enter Module Name"
-                                                                        name="module_name" class="form-control"
+                                                                        name="module_name" class="form-control @error('module_name') is-invalid @enderror"
                                                                         value="{{$module->title}}">
+
+                                                                    {{-- <span class="invalid-feedback">@error('module_name'){{ $message }} @enderror</span> --}}
                                                                 </div>
                                                                 <div class="form-check form-switch">
                                                                     <label class="form-check-label" for="is_module">Is a
@@ -139,9 +137,7 @@ Course Create - Initial Step
                                         </div>
                                     </div>
                                     {{-- module update modal --}}
-
                                 </div>
-
                                 <a href="#" class="accrodin-bttn"><i class="fas fa-angle-down"></i></a>
                             </div>
                         </div>
@@ -223,10 +219,12 @@ Course Create - Initial Step
                                                                     value="{{$module->id}}">
                                                                 <input type="hidden" name="lesson_id"
                                                                     value="{{$lesson->id}}">
-                                                                <div class="form-group">
+                                                                <div class="form-group form-error">
                                                                     <input type="text" placeholder="Enter Lesson Name"
                                                                         name="lesson_name" value="{{ $lesson->title }}"
-                                                                        class="form-control">
+                                                                        class="form-control @error('lesson_name') is-invalid @enderror">
+
+                                                                    {{-- <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span> --}}
                                                                 </div>
                                                                 <div class="page-type mb-4">
                                                                     <h6>Type</h6>
@@ -300,9 +298,11 @@ Course Create - Initial Step
                                                     <form action="" method="post">
                                                         @csrf
                                                         <input type="hidden" name="module_id" value="{{$module->id}}">
-                                                        <div class="form-group">
+                                                        <div class="form-group form-error">
                                                             <input type="text" placeholder="Enter Lesson Name"
-                                                                name="lesson_name" class="form-control">
+                                                                name="lesson_name" class="form-control @error('lesson_name') is-invalid @enderror">
+
+                                                            {{-- <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span> --}}
                                                         </div>
                                                         <div class="page-type mb-4">
                                                             <h6>Type</h6>
@@ -381,9 +381,10 @@ Course Create - Initial Step
 
                         <form action="{{ route('course.module.step.create',request()->route('id')) }}" method="post">
                             @csrf
-                            <div class="form-group">
+                            <div class="form-group form-error">
                                 <input type="text" placeholder="Enter Module Name" name="module_name"
-                                    class="form-control">
+                                    class="form-control @error('module_name') is-invalid @enderror"> 
+                                    
                             </div>
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="is_module">Is a Modual</label>
