@@ -9,18 +9,27 @@ class TypingController extends Controller
 {
     public function startTyping(Request $request)
     {
+        $this->validate($request, [
+            'receiver_id' => 'required|integer',
+        ]);
+
         $user = auth()->user();
         $channel = 'typing-channel';
         $event = 'typing-started';
-
-        $userInfo = $this->getUserInfo($user);
+        $receiver_id = $request->receiver_id;
+        $userInfo = $this->getUserInfo($user, $receiver_id);
         $this->broadcastTypingEvent($channel, $event, $userInfo);
     }
 
     public function stopTyping(Request $request)
     {
+        $this->validate($request, [
+            'receiver_id' => 'required|integer',
+        ]);
+
         $user = auth()->user();
-        $userInfo = $this->getUserInfo($user);
+        $receiver_id = $request->receiver_id;
+        $userInfo = $this->getUserInfo($user, $receiver_id);
         $channel = 'typing-channel';
         $event = 'typing-stopped';
 
@@ -45,11 +54,15 @@ class TypingController extends Controller
     }
 
 
-    private function getUserInfo($user)
+    private function getUserInfo($user, $receiver_id)
     {
+        $currentUserId = $user->id;
+        $receiver = $receiver_id;
+
         return [
+            'id' => $user->id,
             'name' => $user->name,
-            'avatar' => $user->avatar, // Replace with the actual field in your users table
+            'avatar' => $user->avatar,
         ];
     }
 }
