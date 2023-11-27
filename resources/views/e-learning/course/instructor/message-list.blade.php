@@ -617,6 +617,7 @@ $(document).ready(function () {
     };
 
     const indicator = pusher.subscribe('typing-channel');
+
     indicator.bind('typing-started', (data) => {
         startTyping(data.user_info);
     });
@@ -625,45 +626,31 @@ $(document).ready(function () {
         stopTyping(data.user_info);
     });
 
-    // Trigger start typing event
-    const startTypingEvent = () => {
+    // Trigger start and stop typing event
+
+    const routeStart = "{{ route('messages.typing.start') }}";
+    const routeStop = "{{ route('messages.typing.stop') }}";
+
+    $(document).on("input","#chat-message-input", () => sendTypingEvent('start'));
+    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
+
+    const sendTypingEvent = (action) => {
+        const route = action === 'start' ? routeStart : routeStop;
         $.ajax({
             method: 'POST',
-            url: "{{ route('messages.typing.start') }}",
+            url: route,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             success: (response) => {
-
+                // Handle success if needed
             },
             error: (error) => {
+                // Handle error if needed
             },
         });
     };
 
-    // Trigger stop typing event
-    const stopTypingEvent = () => {
-        $.ajax({
-            method: 'POST',
-            url: "{{ route('messages.typing.stop') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            success: (response) => {
-            },
-            error: (error) => {
-            },
-        });
-    };
-
-    // Add event listeners for typing events
-    $(document).on("input", "#chat-message-input", () => {
-        startTypingEvent();
-    });
-
-    $(document).on("blur", "#chat-message-input", () => {
-        stopTypingEvent();
-    });
     // Close typing indicator
 
 
