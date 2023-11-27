@@ -129,7 +129,7 @@ Messsages Page - a
                             {{-- typing status --}}
                             <div class="typing-status-area" id="indicator-append"></div>
 
-                        </div>  
+                        </div>
 
                         <form method="POST" class="send-actions w-100 d-none" id="chatMessage" autocomplete="off">
                             <div class="dock-bottom">
@@ -580,34 +580,41 @@ $(document).ready(function () {
 
     const indicatorAppendElement = document.getElementById('indicator-append');
 
-
     const startTyping = (user) => {
-        const newUserMessageItem = document.createElement('div');
-        newUserMessageItem.classList.add('message-item');
 
-        const assetUrl = "{{ asset('') }}";
-        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
+        console.log(user.id, receiver_id )
 
-        newUserMessageItem.innerHTML = `
-            <div class="media main-media">
-                <div class="avatar">
-                    ${avatarContent}
-                    <i class="fas fa-circle"></i>
-                </div>
-                <div class="media-body">
-                    <div class="d-flex">
-                        <h6>${user.name}</h6>
+        if(user.id == receiver_id){
+            const newUserMessageItem = document.createElement('div');
+            newUserMessageItem.classList.add('message-item-wrap');
+
+            const assetUrl = "{{ asset('') }}";
+            const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+            const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
+
+            newUserMessageItem.innerHTML = `
+                <div class="message-item">
+                    <div class="media main-media">
+                        <div class="avatar">
+                            ${avatarContent}
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="media-body">
+                            <div class="d-flex">
+                                <h6>${user.name}</h6>
+                            </div>
+                            <div class="typing">
+                                <i class="fa-solid fa-ellipsis fa-fade"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div class="typing">
-                        <i class="fa-solid fa-ellipsis fa-fade"></i>
-                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
-        // Append the new message item to the designated container
-        indicatorAppendElement.innerHTML = newUserMessageItem.outerHTML;
+            // Append the new message item to the designated container
+            indicatorAppendElement.innerHTML = newUserMessageItem.outerHTML;
+        }
+
     };
 
     const stopTyping = (user) => {
@@ -631,6 +638,7 @@ $(document).ready(function () {
 
     // Trigger start and stop typing event
 
+
     const routeStart = "{{ route('messages.typing.start') }}";
     const routeStop = "{{ route('messages.typing.stop') }}";
 
@@ -638,10 +646,12 @@ $(document).ready(function () {
     $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
 
     const sendTypingEvent = (action) => {
+
         const route = action === 'start' ? routeStart : routeStop;
         $.ajax({
             method: 'POST',
             url: route,
+            data: { receiver_id: receiver_id},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
