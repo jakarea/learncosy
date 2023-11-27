@@ -678,7 +678,7 @@ span.user-name-avatar {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 47vh;
 }
 .blank-chat-page i {
   font-size: 3rem;
