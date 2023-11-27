@@ -197,7 +197,6 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
     Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
     Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
-    // Route::post('/typing-indicator', 'typingIndicator')->name('messages.typing.indicator');
 });
 
 Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
@@ -684,11 +683,11 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
         // admin payment routes
         Route::prefix('payments')->controller(AdminPaymentController::class)->group(function () {
             Route::get('/platform-fee', 'adminPayment');
-            Route::get('/platform-fee/{stripe_plan}', 'details')->name('admin.payment.details');  
-            Route::get('/admin-export/{stripe_plan}', 'export')->name('admin-export'); 
-            Route::get('/generate-pdf/{stripe_plan}', 'generatePdf')->name('admin.generate-pdf'); 
+            Route::get('/platform-fee/{stripe_plan}', 'details')->name('admin.payment.details');
+            Route::get('/admin-export/{stripe_plan}', 'export')->name('admin-export');
+            Route::get('/generate-pdf/{stripe_plan}', 'generatePdf')->name('admin.generate-pdf');
             Route::get('/invoice-mail/{stripe_plan}', 'invoiceMail')->name('admin.invoice-mail');
-            
+
             // ins
         });
     });

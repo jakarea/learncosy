@@ -100,8 +100,7 @@
     </div>
 @empty
 @endforelse
-
-{{-- <div id="typing-indicator">Someone is typing...</div> --}}
+ 
 {{--
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
     <div class="dock-bottom">

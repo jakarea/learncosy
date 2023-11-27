@@ -191,6 +191,11 @@
         }
 
         .chat-main-body-box {
+            .main-chat-inner-room{
+                display: flex;
+                flex-direction: column;
+                gap: 2rem; 
+            }
             .main-chat-room {
                 display: flex;
                 padding: 2.5rem 2rem 2rem 2rem;
@@ -256,10 +261,7 @@
                                 font-weight: 400;
                                 line-height: 1.125rem;
                             }
-                        }
-
-
-
+                        } 
                     }
 
                     .text {
@@ -787,7 +789,7 @@ span.user-name-avatar{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    height: 47vh;
 
     i {
         font-size: 3rem;
@@ -1298,9 +1300,66 @@ span.user-name-avatar{
 }
 
 .typing-status-area{
-    background-color: red;
-}
+    // position: absolute;
+    // left: 30px;
+    // bottom: 90px;
+    // z-index: 9;
+    width: 80%;
 
+    .message-item{
+        // width: 80%;
+        margin-top: auto;
+        .media.main-media {
+            align-items: flex-start;
+            display: inline-flex;
+
+            .avatar {
+                position: relative;
+                margin-right: 0.75rem;
+
+                img {
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    display: inline-block;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                i {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    font-size: 8px;
+                    color: #43B324;
+                    border: 2px solid #fff;
+                    border-radius: 50%;
+                }
+            }
+
+            .d-flex {
+                align-items: center;
+                justify-content: space-between;
+
+                h6 {
+                    color: var(--neutral-70, #2F3A4C);
+                    font-size: 0.875rem;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 1.25rem;
+                }
+
+                span {
+                    display: inline-block;
+                    color: var(--neutral-60, #66768E);
+                    font-size: 0.75rem;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1.125rem;
+                }
+            } 
+        }
+    }
+}
 
 
 
