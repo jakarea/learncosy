@@ -33,22 +33,6 @@ class TypingController extends Controller
         $this->broadcastTypingEvent($channel, $event, $userInfo);
     }
 
-
-    public function startGroupTyping(Request $request){
-        $this->validate($request, [
-            'receiver_id' => 'required|integer',
-        ]);
-    }
-
-    public function stopGroupTyping(Request $request){
-
-    }
-
-
-
-
-
-
     private function broadcastTypingEvent($channel, $event, $userInfo)
     {
         $options = array(
@@ -67,6 +51,49 @@ class TypingController extends Controller
     }
 
 
+    public function startGroupTyping(Request $request)
+    {
+        $this->validate($request, [
+            'group_id' => 'required|integer',
+        ]);
+
+        $channel = 'typing-channel';
+        $event = 'group-typing-started';
+        $group_id = $request->receiver_id;
+        $userInfo = $this->getUserInfo(auth()->id());
+        $this->broadcastGroupTypingEvent($channel, $event, $userInfo, $group_id);
+    }
+
+    public function stopGroupTyping(Request $request)
+    {
+        $this->validate($request, [
+            'group_id' => 'required|integer',
+        ]);
+
+        $channel = 'typing-channel';
+        $event = 'group-typing-stopped';
+        $group_id = $request->receiver_id;
+        $userInfo = $this->getUserInfo(auth()->id());
+        $this->broadcastGroupTypingEvent($channel, $event, $userInfo, $group_id);
+    }
+
+    private function broadcastGroupTypingEvent($channel, $event, $userInfo, $group_id)
+    {
+        $options = [
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $pusher->trigger("group-{$group_id}-{$channel}", $event, ['user_info' => $userInfo]);
+    }
+
     private function getUserInfo($receiver_id)
     {
         $user = auth()->user();
@@ -75,6 +102,7 @@ class TypingController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'avatar' => $user->avatar,
+            'receiver' => $receiver,
         ];
     }
 }

@@ -130,6 +130,7 @@ Messsages Page
 
                             {{-- typing status --}}
                             <div class="typing-status-area" id="indicator-append"></div>
+                            <div class="typing-status-area" id="group-indicator-append"></div>
 
                         </div>
 
@@ -620,12 +621,7 @@ $(document).ready(function () {
         };
 
         const stopTyping = (user) => {
-            const assetUrl = "{{ asset('') }}";
-            const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-            const existingUserMessageItem = indicatorAppendElement.find(`.avatar img[src="${avatarUrl}/${user.avatar}"], .avatar span.user-name-avatar`);
-            if (existingUserMessageItem.length) {
-                existingUserMessageItem.closest('.message-item-wrap').remove();
-            }
+            indicatorAppendElement.find('.message-item').remove().fadeOut(5000);
         };
         const indicator = pusher.subscribe('typing-channel');
 
@@ -640,6 +636,10 @@ $(document).ready(function () {
     });
 
 
+    // stopGroupTyping(data.user_info);
+    // startGroupTyping(data.user_info);
+
+
 
 
     // Trigger start and stop typing event
@@ -648,17 +648,15 @@ $(document).ready(function () {
     const routeStart = "{{ route('messages.typing.start') }}";
     const routeStop = "{{ route('messages.typing.stop') }}";
 
-    $(document).on("input","#chat-message-input", () => sendTypingEvent('start','one-to-one'));
-    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop','one-to-one'));
+    $(document).on("input","#chat-message-input", () => sendTypingEvent('start'));
+    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
 
     const sendTypingEvent = (action, chatType) => {
-
         const route = action === 'start' ? routeStart : routeStop;
-        const data = { receiver_id: receiver_id, chat_type: chatType };
         $.ajax({
             method: 'POST',
             url: route,
-            data: data,
+            data: { receiver_id: receiver_id},
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
@@ -770,6 +768,7 @@ function sendMessage() {
                 // $('.chat-message-input').emojioneArea().val('');
                 $('#chatMessage')[0].reset();
                 $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+
                 scrollToBottomFunc();
 
             },
