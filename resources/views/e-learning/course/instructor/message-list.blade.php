@@ -586,7 +586,6 @@ $(document).ready(function () {
         const indicatorAppendElement = $('#indicator-append');
 
         const startTyping = (user) => {
-            console.log( user)
 
             const newUserMessageItem = $('<div>').addClass('message-item-wrap');
             const assetUrl = "{{ asset('') }}";
@@ -724,7 +723,7 @@ $(document).ready(function () {
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
-            // console.log( "sender:" + my_id, "Recever:" + data.from)
+            console.log( "sender:" + my_id, "Recever:" + data.to)
             $('#user_' + data.to).click();
         } else if (my_id == data.to) {
             if (receiver_id == data.from) {
