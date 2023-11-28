@@ -75,6 +75,8 @@
         {{-- @include('partials/latest/instructor/header') --}}
         @if (Auth::user()->user_role == 'instructor')
             @include('partials/latest/instructor/header')
+        @elseif(Auth::user()->user_role == 'admin')
+            @include('partials/latest/dashboard/header')
         @else
             @include('partials/latest/students/header')
         @endif
