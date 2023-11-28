@@ -23,10 +23,6 @@ class Group extends Model
     // }
 
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class)->withTimestamps();
-    }
 
     // New Code
     public function participants()

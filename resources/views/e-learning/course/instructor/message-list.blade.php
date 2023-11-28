@@ -146,7 +146,7 @@ Messsages Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                                        <input type="text" class="form-control chat-message-input-single" id="chat-message-input" placeholder="Send a message"
                                             name="message">
                                     </div>
                                     <div class="file-attach-bttns">
@@ -174,7 +174,7 @@ Messsages Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                                        <input type="text" class="form-control chat-message-input-group" id="chat-message-input" placeholder="Send a message"
                                             name="message">
                                     </div>
                                     <div class="file-attach-bttns">
@@ -538,7 +538,7 @@ $(document).ready(function () {
     });
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
     // Set pusher key
     var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
@@ -582,42 +582,43 @@ $(document).ready(function () {
     // Typing indicator
 
     $(document).ready(function() {
+
         const indicatorAppendElement = $('#indicator-append');
 
         const startTyping = (user) => {
-            if (user.id == receiver_id) {
-                const newUserMessageItem = $('<div>').addClass('message-item-wrap');
+            console.log( user)
 
-                const assetUrl = "{{ asset('') }}";
-                const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-                const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
+            const newUserMessageItem = $('<div>').addClass('message-item-wrap');
+            const assetUrl = "{{ asset('') }}";
+            const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+            const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
 
-                newUserMessageItem.html(`
-                    <div class="message-item">
-                        <div class="media main-media">
-                            <div class="avatar">
-                                ${avatarContent}
-                                <i class="fas fa-circle"></i>
+            newUserMessageItem.html(`
+                <div class="message-item">
+                    <div class="media main-media">
+                        <div class="avatar">
+                            ${avatarContent}
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="media-body">
+                            <div class="d-flex">
+                                <h6>${user.name}</h6>
                             </div>
-                            <div class="media-body">
-                                <div class="d-flex">
-                                    <h6>${user.name}</h6>
-                                </div>
-                                <div class="typing">
-                                    <i class="fa-solid fa-ellipsis fa-fade"></i>
-                                </div>
+                            <div class="typing">
+                                <i class="fa-solid fa-ellipsis fa-fade"></i>
                             </div>
                         </div>
                     </div>
-                `);
+                </div>
+            `);
 
-                // Append the new message item to the designated container
-                if (indicatorAppendElement.length) {
+            // Append the new message item to the designated container
+            if (indicatorAppendElement.length) {
+                if (user.id == receiver_id) {
                     indicatorAppendElement.html(newUserMessageItem);
-                } else {
-                    console.error('indicatorAppendElement is null or undefined.');
                 }
             }
+
         };
 
         const stopTyping = (user) => {
@@ -633,6 +634,27 @@ $(document).ready(function () {
             stopTyping(data.user_info);
         });
 
+
+
+
+        indicator.bind('group-typing-started', (data) => {
+            const typingUsers = data.typing_users || {};
+            for (const userId in typingUsers) {
+                if (typingUsers.hasOwnProperty(userId)) {
+                    startTyping(typingUsers[userId]);
+                }
+            }
+        });
+
+        indicator.bind('group-typing-stopped', (data) => {
+            const typingUsers = data.typing_users || {};
+            for (const userId in typingUsers) {
+                if (typingUsers.hasOwnProperty(userId)) {
+                    stopTyping(typingUsers[userId]);
+                }
+            }
+        });
+
     });
 
 
@@ -644,14 +666,14 @@ $(document).ready(function () {
 
     // Trigger start and stop typing event
 
-
+    // One to one Chat typing indicator
     const routeStart = "{{ route('messages.typing.start') }}";
     const routeStop = "{{ route('messages.typing.stop') }}";
 
-    $(document).on("input","#chat-message-input", () => sendTypingEvent('start'));
-    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
+    $(document).on("input",".chat-message-input-single", () => sendTypingEvent('start'));
+    $(document).on("blur",".chat-message-input-single", () => sendTypingEvent('stop'));
 
-    const sendTypingEvent = (action, chatType) => {
+    const sendTypingEvent = (action) => {
         const route = action === 'start' ? routeStart : routeStop;
         $.ajax({
             method: 'POST',
@@ -669,12 +691,40 @@ $(document).ready(function () {
         });
     };
 
+
+    // Send group type event
+    const routeGroupStart = "{{ route('messages.group.typing.start') }}";
+    const routeGroupStop = "{{ route('messages.group.typing.stop') }}";
+
+    $(document).on("input",".chat-message-input-group", () => sendGroupTypingEvent('start'));
+    $(document).on("blur",".chat-message-input-group", () => sendGroupTypingEvent('stop'));
+
+    const sendGroupTypingEvent = (action) => {
+        const route = action === 'start' ? routeGroupStart : routeGroupStop;
+        $.ajax({
+            method: 'POST',
+            url: route,
+            data: { receiver_id: receiver_id},
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            success: (response) => {
+                // Handle success if needed
+            },
+            error: (error) => {
+                // Handle error if needed
+            },
+        });
+    };
+
+
     // Close typing indicator
 
 
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
+            // console.log( "sender:" + my_id, "Recever:" + data.from)
             $('#user_' + data.to).click();
         } else if (my_id == data.to) {
             if (receiver_id == data.from) {

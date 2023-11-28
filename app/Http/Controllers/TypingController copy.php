@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Pusher\Pusher;
 use App\Models\Group;
-use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
 
 class TypingController extends Controller
@@ -61,8 +60,8 @@ class TypingController extends Controller
 
         $channel = 'typing-channel';
         $event = 'group-typing-started';
-        $group_id = $request->receiver_id;
-        $userInfo = $this->getUserInfo($group_id);
+        $groupId = $request->receiver_id;
+        $userInfo = $this->getUserInfo($groupId);
         $this->broadcastGroupTypingEvent($channel, $event, $userInfo);
     }
 
@@ -82,6 +81,17 @@ class TypingController extends Controller
     private function broadcastGroupTypingEvent($channel, $event, $userInfo)
     {
 
+        // $group = Group::with('participants')->findOrFail($groupId);
+
+        // $userInfo = $group->participants->pluck('user')->map(function ($user) use ($groupId) {
+        //     return [
+        //         'id' => $user->id,
+        //         'name' => $user->name,
+        //         'avatar' => $user->avatar,
+        //         'group_id' => $groupId,
+        //     ];
+        // });
+
         $options = [
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'useTLS' => true,
@@ -94,15 +104,7 @@ class TypingController extends Controller
             $options
         );
 
-        $typingUsers = session('typingUsers', []);
-
-        $typingUsers[$userInfo['id']] = $userInfo;
-
-        session(['typingUsers' => $typingUsers]);
-
-        // // dd( $typingUsers );
-
-        $pusher->trigger($channel, $event, ['typing_users' => $typingUsers]);
+        $pusher->trigger($channel, $event, ['typing_users' => $userInfo]);
 
     }
 
