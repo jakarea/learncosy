@@ -42,6 +42,10 @@
                         <a class="{{ Request::is('admin/payments/platform-fee*') ? ' active' : '' }} nav-link"
                             href="{{ url('/admin/payments/platform-fee') }}">Platform Fee</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="{{ Request::is('messages*') ? ' active' : '' }} nav-link"
+                            href="{{ url('/messages') }}">Messages</a>
+                    </li>
                 </ul>
             @endcan
             <div class="d-flex">
