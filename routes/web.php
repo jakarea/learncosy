@@ -200,8 +200,14 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
 });
 
 Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
+    // One to one
     Route::post('/start-typing', 'startTyping')->name('messages.typing.start');
     Route::post('/stop-typing', 'stopTyping')->name('messages.typing.stop');
+
+    // Group chate
+    Route::post('/group/start-typing', 'startGroupTyping')->name('messages.group.typing.start');
+    Route::post('/group/stop-typing', 'stopGroupTyping')->name('messages.group.typing.stop');
+
 });
 
 // Group message
