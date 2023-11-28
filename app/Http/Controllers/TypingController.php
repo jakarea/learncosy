@@ -33,6 +33,22 @@ class TypingController extends Controller
         $this->broadcastTypingEvent($channel, $event, $userInfo);
     }
 
+
+    public function startGroupTyping(Request $request){
+        $this->validate($request, [
+            'receiver_id' => 'required|integer',
+        ]);
+    }
+
+    public function stopGroupTyping(Request $request){
+
+    }
+
+
+
+
+
+
     private function broadcastTypingEvent($channel, $event, $userInfo)
     {
         $options = array(
@@ -55,13 +71,10 @@ class TypingController extends Controller
     {
         $user = auth()->user();
         $receiver = $receiver_id;
-        $currentUserInfo = $user->id == $receiver;
-
         return [
             'id' => $user->id,
             'name' => $user->name,
             'avatar' => $user->avatar,
-            'is_receiver' => true
         ];
     }
 }

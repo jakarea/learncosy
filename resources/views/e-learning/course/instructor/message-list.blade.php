@@ -580,65 +580,67 @@ $(document).ready(function () {
 
     // Typing indicator
 
-    const indicatorAppendElement = document.getElementById('indicator-append');
+    $(document).ready(function() {
+        const indicatorAppendElement = $('#indicator-append');
 
-    const startTyping = (user) => {
+        const startTyping = (user) => {
+            if (user.id == receiver_id) {
+                const newUserMessageItem = $('<div>').addClass('message-item-wrap');
 
-        console.log(user.id )
-        console.log( receiver_id)
+                const assetUrl = "{{ asset('') }}";
+                const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+                const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
 
-        if(user.id == receiver_id){
-        // if(user.is_receiver === true){
-            const newUserMessageItem = document.createElement('div');
-            newUserMessageItem.classList.add('message-item-wrap');
-
-            const assetUrl = "{{ asset('') }}";
-            const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-            const avatarContent = user.avatar ? `<img src="${avatarUrl}" alt="${user.name} Avatar" class="img-fluid">` : `<span class="user-name-avatar">${user.name[0].toUpperCase()}</span>`;
-
-            newUserMessageItem.innerHTML = `
-                <div class="message-item">
-                    <div class="media main-media">
-                        <div class="avatar">
-                            ${avatarContent}
-                            <i class="fas fa-circle"></i>
-                        </div>
-                        <div class="media-body">
-                            <div class="d-flex">
-                                <h6>${user.name}</h6>
+                newUserMessageItem.html(`
+                    <div class="message-item">
+                        <div class="media main-media">
+                            <div class="avatar">
+                                ${avatarContent}
+                                <i class="fas fa-circle"></i>
                             </div>
-                            <div class="typing">
-                                <i class="fa-solid fa-ellipsis fa-fade"></i>
+                            <div class="media-body">
+                                <div class="d-flex">
+                                    <h6>${user.name}</h6>
+                                </div>
+                                <div class="typing">
+                                    <i class="fa-solid fa-ellipsis fa-fade"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `);
 
-            // Append the new message item to the designated container
-            indicatorAppendElement.innerHTML = newUserMessageItem.outerHTML;
-        }
+                // Append the new message item to the designated container
+                if (indicatorAppendElement.length) {
+                    indicatorAppendElement.html(newUserMessageItem);
+                } else {
+                    console.error('indicatorAppendElement is null or undefined.');
+                }
+            }
+        };
 
-    };
+        const stopTyping = (user) => {
+            const assetUrl = "{{ asset('') }}";
+            const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
+            const existingUserMessageItem = indicatorAppendElement.find(`.avatar img[src="${avatarUrl}/${user.avatar}"], .avatar span.user-name-avatar`);
+            if (existingUserMessageItem.length) {
+                existingUserMessageItem.closest('.message-item-wrap').remove();
+            }
+        };
+        const indicator = pusher.subscribe('typing-channel');
 
-    const stopTyping = (user) => {
-        const assetUrl = "{{ asset('') }}";
-        const avatarUrl = user.avatar ? `${assetUrl}/${user.avatar}` : '';
-        const existingUserMessageItem = indicatorAppendElement.querySelector(`.avatar img[src="${avatarUrl}/${user.avatar}"], .avatar span.user-name-avatar`);
-        if (existingUserMessageItem) {
-            existingUserMessageItem.parentNode.parentNode.parentNode.remove();
-        }
-    };
+        indicator.bind('typing-started', (data) => {
+            startTyping(data.user_info);
+        });
 
-    const indicator = pusher.subscribe('typing-channel');
+        indicator.bind('typing-stopped', (data) => {
+            stopTyping(data.user_info);
+        });
 
-    indicator.bind('typing-started', (data) => {
-        startTyping(data.user_info);
     });
 
-    indicator.bind('typing-stopped', (data) => {
-        stopTyping(data.user_info);
-    });
+
+
 
     // Trigger start and stop typing event
 
@@ -646,16 +648,17 @@ $(document).ready(function () {
     const routeStart = "{{ route('messages.typing.start') }}";
     const routeStop = "{{ route('messages.typing.stop') }}";
 
-    $(document).on("input","#chat-message-input", () => sendTypingEvent('start'));
-    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop'));
+    $(document).on("input","#chat-message-input", () => sendTypingEvent('start','one-to-one'));
+    $(document).on("blur","#chat-message-input", () => sendTypingEvent('stop','one-to-one'));
 
-    const sendTypingEvent = (action) => {
+    const sendTypingEvent = (action, chatType) => {
 
         const route = action === 'start' ? routeStart : routeStop;
+        const data = { receiver_id: receiver_id, chat_type: chatType };
         $.ajax({
             method: 'POST',
             url: route,
-            data: { receiver_id: receiver_id},
+            data: data,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },

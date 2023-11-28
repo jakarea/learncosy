@@ -166,7 +166,9 @@
     </div>
 @empty
 @endforelse
- 
+
+
+{{-- <div class="typing-status-area" id="indicator-append"></div> --}}
 {{--
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
     <div class="dock-bottom">
