@@ -61,9 +61,6 @@
     @endif
 
 
-
-
-
     <div class="message-item {{ $message->sender_id == Auth::id() ? '' : 'sender-item' }}">
         <div class="media main-media">
             <div class="avatar">
