@@ -58,7 +58,34 @@
     </div>
 @endisset
 
+
+@php
+    $lastDate = null;
+@endphp
 @forelse ($messages as $message)
+
+    @php
+        $messageDate = \Carbon\Carbon::parse($message->created_at)->toDateString();
+    @endphp
+
+    @if ($lastDate != $messageDate)
+        <div class="date-status">
+            <hr>
+            <span>
+                @if ($messageDate == now()->toDateString())
+                    Today
+                @elseif ($messageDate == now()->subDay()->toDateString())
+                    Yesterday
+                @else
+                {{ \Carbon\Carbon::parse($messageDate)->format('F j, Y') }}
+                @endif
+            </span>
+        </div>
+        @php
+            $lastDate = $messageDate;
+        @endphp
+    @endif
+
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
