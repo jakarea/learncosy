@@ -621,7 +621,7 @@ $(document).ready(function () {
         };
 
         const stopTyping = (user) => {
-            indicatorAppendElement.find('.message-item').remove().fadeOut(5000);
+            indicatorAppendElement.find('.message-item').remove();
         };
         const indicator = pusher.subscribe('typing-channel');
 
@@ -723,11 +723,9 @@ $(document).ready(function () {
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
-            console.log( "sender:" + my_id, "Recever:" + data.to)
-            $('#user_' + data.to).click();
+            // $('#user_' + data.to).click();
         } else if (my_id == data.to) {
             if (receiver_id == data.from) {
-
                 $('#user_' + data.from).click();
             } else {
                 // If the receiver is not selected, add a notification for that user
@@ -813,11 +811,12 @@ function sendMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
+                console.log(data)
                 // $('.chat-message-input').val('');
                 // $('.chat-message-input').emojioneArea().val('');
                 $('#chatMessage')[0].reset();
                 $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-
+                $("#chat-message").append(data);
                 scrollToBottomFunc();
 
             },

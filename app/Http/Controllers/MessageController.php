@@ -75,18 +75,19 @@ class MessageController extends Controller
     public function getChatMessage(Request $request)
     {
         if ($request->ajax()) {
-            $user_id = $request->receiver_id;
+            $receiver_id = $request->receiver_id;
             $my_id = Auth::id();
-            $data['friend'] = User::findOrFail($user_id);
+            $data['friend'] = User::findOrFail($receiver_id);
 
             // Make read all unread message
-            Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
+            Chat::where(['sender_id' => $receiver_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
 
             // Get all message from selected user
-            $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $user_id, "receiver_id" => $my_id, "message_type" => 1, "is_read" => 1]);
-            })->orWhere(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $my_id, "receiver_id" => $user_id, "message_type" => 1, "is_read" => 1]);
+
+            $data['messages'] = Chat::where(function ($query) use ($receiver_id, $my_id) {
+                $query->where(["sender_id" => $receiver_id, "receiver_id" => $my_id, "message_type" => 1, "is_read" => 1]);
+            })->orWhere(function ($query) use ($receiver_id, $my_id) {
+                $query->where(["sender_id" => $my_id, "receiver_id" => $receiver_id, "message_type" => 1, "is_read" => 1]);
             })->get();
 
             return view('e-learning.course/instructor.chat', $data);
@@ -144,6 +145,10 @@ class MessageController extends Controller
 
             $data = ['from' => $sender_Id, 'to' => $receiver_id];
             $pusher->trigger('my-channel', 'my-event', $data);
+
+            $user = User::findOrFail($sender_Id);
+
+            return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
 
