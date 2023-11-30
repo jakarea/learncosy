@@ -629,6 +629,9 @@ $(document).ready(function () {
             indicatorAppendElement.find('.message-item').remove();
         };
 
+
+        // console.log( receiver_id );
+        // const indicatorChannel = `private-typing-channel-${my_id}-${receiver_id}`;
         const indicator = pusher.subscribe('typing-channel');
 
         indicator.bind('typing-started', (data) => {
@@ -640,25 +643,23 @@ $(document).ready(function () {
         });
 
 
+        // indicator.bind('group-typing-started', (data) => {
+        //     const typingUsers = data.typing_users || {};
+        //     for (const userId in typingUsers) {
+        //         if (typingUsers.hasOwnProperty(userId)) {
+        //             startTyping(typingUsers[userId]);
+        //         }
+        //     }
+        // });
 
-
-        indicator.bind('group-typing-started', (data) => {
-            const typingUsers = data.typing_users || {};
-            for (const userId in typingUsers) {
-                if (typingUsers.hasOwnProperty(userId)) {
-                    startTyping(typingUsers[userId]);
-                }
-            }
-        });
-
-        indicator.bind('group-typing-stopped', (data) => {
-            const typingUsers = data.typing_users || {};
-            for (const userId in typingUsers) {
-                if (typingUsers.hasOwnProperty(userId)) {
-                    stopTyping(typingUsers[userId]);
-                }
-            }
-        });
+        // indicator.bind('group-typing-stopped', (data) => {
+        //     const typingUsers = data.typing_users || {};
+        //     for (const userId in typingUsers) {
+        //         if (typingUsers.hasOwnProperty(userId)) {
+        //             stopTyping(typingUsers[userId]);
+        //         }
+        //     }
+        // });
 
     });
 
