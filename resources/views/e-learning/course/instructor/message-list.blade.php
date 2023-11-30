@@ -98,8 +98,8 @@ Messsages Page
                                             class="img-fluid"> All Chat
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item active" href="#">All Chat</a></li>
-                                        <li><a class="dropdown-item" href="#">Groups</a></li>
+                                        <li><a id="chats" class="dropdown-item active" href="#">All Chat</a></li>
+                                        <li><a id="groups" class="dropdown-item" href="#">Groups</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -368,6 +368,17 @@ document.addEventListener('click', function (event) {
 });
 
 
+// Load groups click by group button
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('groups')) {
+        event.stopPropagation();
+        var userId = event.target.getAttribute('data-chat-user-id');
+
+
+    }
+});
+
+
 // Delete group chat history
 document.addEventListener('click', function (event) {
     if (event.target.classList.contains('deleteGroupChatMsg')) {
@@ -630,36 +641,48 @@ $(document).ready(function () {
         };
 
 
-        // console.log( receiver_id );
-        // const indicatorChannel = `private-typing-channel-${my_id}-${receiver_id}`;
-        const indicator = pusher.subscribe('typing-channel');
+        $(document).on('click', '.user', function () {
 
-        indicator.bind('typing-started', (data) => {
-            startTyping(data.user_info);
+            var user_receive_id = $(this).attr('id');
+            receiver_id = user_receive_id.split('_')[1];
+            const indicatorChannel = `private-typing-channel-${my_id}-${receiver_id}`;
+            // const indicator = pusher.subscribe(indicatorChannel);
+
+
+            const indicator = pusher.subscribe('typing-channel');
+
+            indicator.bind('typing-started', (data) => {
+                console.log('Received typing-started event:', data);
+                startTyping(data.user_info);
+            });
+
+            indicator.bind('typing-stopped', (data) => {
+                stopTyping(data.user_info);
+            });
+
+
+            // indicator.bind('group-typing-started', (data) => {
+            //     const typingUsers = data.typing_users || {};
+            //     for (const userId in typingUsers) {
+            //         if (typingUsers.hasOwnProperty(userId)) {
+            //             startTyping(typingUsers[userId]);
+            //         }
+            //     }
+            // });
+
+            // indicator.bind('group-typing-stopped', (data) => {
+            //     const typingUsers = data.typing_users || {};
+            //     for (const userId in typingUsers) {
+            //         if (typingUsers.hasOwnProperty(userId)) {
+            //             stopTyping(typingUsers[userId]);
+            //         }
+            //     }
+            // });
+
+
         });
 
-        indicator.bind('typing-stopped', (data) => {
-            stopTyping(data.user_info);
-        });
 
-
-        // indicator.bind('group-typing-started', (data) => {
-        //     const typingUsers = data.typing_users || {};
-        //     for (const userId in typingUsers) {
-        //         if (typingUsers.hasOwnProperty(userId)) {
-        //             startTyping(typingUsers[userId]);
-        //         }
-        //     }
-        // });
-
-        // indicator.bind('group-typing-stopped', (data) => {
-        //     const typingUsers = data.typing_users || {};
-        //     for (const userId in typingUsers) {
-        //         if (typingUsers.hasOwnProperty(userId)) {
-        //             stopTyping(typingUsers[userId]);
-        //         }
-        //     }
-        // });
 
     });
 

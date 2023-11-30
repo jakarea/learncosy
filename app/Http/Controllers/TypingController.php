@@ -16,10 +16,10 @@ class TypingController extends Controller
         ]);
 
 
-        $sender_id = auth()->user();
+        $sender_id = auth()->user()->id;
         $receiver_id = $request->receiver_id;
+        // $channel = 'private-typing-channel-' . $sender_id . '-' . $receiver_id;
         $channel = 'typing-channel';
-        //$channel = 'private-typing-channel-' . $sender_id . '-' . $receiver_id;
         $event = 'typing-started';
         $userInfo = $this->getUserInfo($receiver_id);
         $this->broadcastTypingEvent($channel, $event, $userInfo);
@@ -31,10 +31,10 @@ class TypingController extends Controller
             'receiver_id' => 'required|integer',
         ]);
 
-        $sender_id = auth()->user();
+        $sender_id = auth()->user()->id;
         $receiver_id = $request->receiver_id;
         $userInfo = $this->getUserInfo($receiver_id);
-        //$channel = 'private-typing-channel-' . $sender_id . '-' . $receiver_id;
+        // $channel = 'private-typing-channel-' . $sender_id . '-' . $receiver_id;
         $channel = 'typing-channel';
         $event = 'typing-stopped';
 
@@ -55,7 +55,9 @@ class TypingController extends Controller
             $options
         );
 
+        // dd( $channel );
         $pusher->trigger($channel, $event, ['user_info' => $userInfo]);
+
     }
 
 
