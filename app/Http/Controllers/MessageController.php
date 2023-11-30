@@ -21,11 +21,11 @@ class MessageController extends Controller
     {
         $data['adminInfo'] = Auth::user();
         $data['users'] = User::select(
-            'users.id',
-            'users.name',
-            'users.avatar',
-            'users.email',
-        )
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+            )
             ->withCount([
                 'chats as unread' => function ($query) {
                     $query->where('is_read', 0)->where('receiver_id', Auth::id());
@@ -97,6 +97,7 @@ class MessageController extends Controller
     // One to one send chat message
     public function sendChatMessage(Request $request)
     {
+        // dd( $request->all() );
         if ($request->ajax()) {
             $request->validate([
                 'message' => 'required_without:file', // Message is required if file is not present
@@ -147,7 +148,7 @@ class MessageController extends Controller
             $pusher->trigger('my-channel', 'my-event', $data);
 
             $user = User::findOrFail($sender_Id);
-
+            $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
             return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
@@ -236,7 +237,12 @@ class MessageController extends Controller
 
                 $notify = '' . $member->user_id . '';
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);
+
             }
+
+            $user = User::findOrFail($sender_Id);
+            $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
+            return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
 

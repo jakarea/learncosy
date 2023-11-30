@@ -61,13 +61,13 @@
     @endif
 
 
-    <div class="message-item {{ $message->sender_id == Auth::id() ? '' : 'sender-item' }}">
+    <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
 
 
                 @isset( $message->groupUserName->avatar )
-                    <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->groupUserName->name }}" class="img-fluid">
+                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}" class="img-fluid">
                 @else
                     <span class="user-name-avatar">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
                 @endisset

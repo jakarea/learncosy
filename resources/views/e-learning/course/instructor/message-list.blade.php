@@ -6,7 +6,8 @@ Messsages Page
 {{-- page style @S --}}
 @section('style')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-{{-- <link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css"> --}}
+{{--
+<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css"> --}}
 <link href="{{ asset('latest/assets/admin-css/test.css') }}" rel="stylesheet" type="text/css">
 <style>
     .message-list-page-wrap {
@@ -33,11 +34,11 @@ Messsages Page
 
                             {{-- create group box start --}}
                             @if( $adminInfo->user_role !== 'student')
-                                <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
-                                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                        class="img-fluid"> Create Group
-                                </a>
+                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
+                                    class="img-fluid"> Create Group
+                            </a>
                             @endif
                         </div>
                         <div class="collapse" id="collapseExample">
@@ -71,8 +72,10 @@ Messsages Page
 
                                     {{-- form submit --}}
                                     <div class="form-submit form-group-submit">
-                                        <button type="reset" class="btn btn-cancel" id="btn-cancel-group">Cancel</button>
-                                        <button type="submit" class="btn btn-create" id="btn-create-group">Create</button>
+                                        <button type="reset" class="btn btn-cancel"
+                                            id="btn-cancel-group">Cancel</button>
+                                        <button type="submit" class="btn btn-create"
+                                            id="btn-create-group">Create</button>
                                     </div>
                                     {{-- form submit --}}
                                 </form>
@@ -146,14 +149,16 @@ Messsages Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text" class="form-control chat-message-input-single" id="chat-message-input" placeholder="Send a message"
-                                            name="message">
+                                        <input type="text"
+                                            class="form-control chat-message-input-single chat-emoji-input"
+                                            id="chat-message-input" placeholder="Send a message" name="message">
                                     </div>
                                     <div class="file-attach-bttns">
                                         <label for="attached" class="message-attached">
                                             <i class="fa-solid fa-paperclip"></i>
                                         </label>
-                                        <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
+                                        <input type="file" name="file" class="d-none" id="attached"
+                                            onchange="displayFileName()">
                                         <button class="btn btn-submit" type="submit">
                                             Send
                                         </button>
@@ -174,14 +179,16 @@ Messsages Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text" class="form-control chat-message-input-group" id="chat-message-input" placeholder="Send a message"
-                                            name="message">
+                                        <input type="text"
+                                            class="form-control chat-message-input-group chat-gruop-emoji"
+                                            id="chat-group-message-input" placeholder="Send a message" name="message">
                                     </div>
                                     <div class="file-attach-bttns">
                                         <label for="attached" class="message-attached">
                                             <i class="fa-solid fa-paperclip"></i>
                                         </label>
-                                        <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
+                                        <input type="file" name="file" class="d-none" id="attached"
+                                            onchange="displayFileName()">
                                         <button class="btn btn-submit" type="submit">
                                             Send
                                         </button>
@@ -246,7 +253,7 @@ Messsages Page
 
 @section('script')
 <script>
-// Search single chat user
+    // Search single chat user
 
 $(document).on("input",".search-group-chat-user", function (e) {
     searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
@@ -480,9 +487,7 @@ $(document).on('click', '.user', function () {
         cache: false,
         success: function (data) {
             $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
             scrollToBottomFunc();
-
         },
         complete: function () {
             $("#groupChatMessage").addClass("d-none");
@@ -526,7 +531,7 @@ function fetchGroupData(receiver_id){
 </script>
 
 <script>
-var receiver_id = '';
+    var receiver_id = '';
 var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
@@ -623,6 +628,7 @@ $(document).ready(function () {
         const stopTyping = (user) => {
             indicatorAppendElement.find('.message-item').remove();
         };
+
         const indicator = pusher.subscribe('typing-channel');
 
         indicator.bind('typing-started', (data) => {
@@ -655,15 +661,6 @@ $(document).ready(function () {
         });
 
     });
-
-
-    // stopGroupTyping(data.user_info);
-    // startGroupTyping(data.user_info);
-
-
-
-
-    // Trigger start and stop typing event
 
     // One to one Chat typing indicator
     const routeStart = "{{ route('messages.typing.start') }}";
@@ -743,9 +740,8 @@ $(document).ready(function () {
 
     var channelGroup = pusher.subscribe(my_id);
     channelGroup.bind('App\\Events\\Notify', function (data) {
-        console.log( JSON.stringify(data) )
         if (my_id == data.from) {
-            $('#group_' + data.to).click();
+            // $('#group_' + data.to).click();
         } else if (my_id == data.to) {
             receiver_id = data.from;
             if (receiver_id == data.from) {
@@ -765,6 +761,17 @@ $(document).ready(function () {
 
 
 // Send one to one chate
+
+
+$(document).on('keydown', '#chat-message-input', function (e) {
+    console.log(e)
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        insertData();
+    }
+});
+
+
 $(document).on('submit', '#chatMessage', function (e) {
     e.preventDefault();
     sendMessage();
@@ -798,10 +805,11 @@ $(document).on('submit', '.createGroupModal', function (e) {
 
 // Send one to on chat message
 function sendMessage() {
-    // var messageText = $('.chat-message-input').emojioneArea().getText();
+   var messageText = $("#chat-message-input").data("emojioneArea").getText();
     var formData = new FormData($('#chatMessage')[0]);
     formData.append("receiver_id", receiver_id);
-    var messageText = $('.chat-message-input').val();
+    formData.append("message", messageText);
+    // var messageText = $('.chat-message-input').val();
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -811,9 +819,8 @@ function sendMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                console.log(data)
-                // $('.chat-message-input').val('');
-                // $('.chat-message-input').emojioneArea().val('');
+                  // console.log(data)
+                $('#chat-message-input').data("emojioneArea").setText("");
                 $('#chatMessage')[0].reset();
                 $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
@@ -828,10 +835,10 @@ function sendMessage() {
 }
 
 function sendGroupMessage() {
-    // var messageText = $('.chat-message-input').emojioneArea().getText();
+    var messageText = $("#chat-group-message-input").data("emojioneArea").getText();
     var formData = new FormData($('#groupChatMessage')[0]);
     formData.append("receiver_id", receiver_id);
-    var messageText = $('.chat-message-input').val();
+    formData.append("message", messageText);
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -841,10 +848,10 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                // $('.chat-message-input').val('');
-                // $('.chat-message-input').emojioneArea().val('');
+                $('#chat-group-message-input').data("emojioneArea").setText("");
                 $('#groupChatMessage')[0].reset();
                 $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                $("#chat-message").append(data);
                 scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
@@ -888,6 +895,27 @@ function scrollToBottomFunc() {
         scrollTop: $('.main-chat-room').get(0).scrollHeight
     }, 50);
 }
+
+
+function setupEmojiArea(inputSelector, formSelector) {
+    $(inputSelector).emojioneArea({
+        events: {
+            keydown: function(editor, event) {
+                if (event.which == 13) {
+                    $(formSelector).submit();
+                }
+            }
+        }
+    });
+}
+
+$(document).ready(function() {
+    setupEmojiArea("#chat-message-input", "#chatMessage");
+    setupEmojiArea("#chat-group-message-input", "#groupChatMessage");
+});
+
+
+
 </script>
 
 <script>
@@ -930,8 +958,8 @@ function scrollToBottomFunc() {
 </script>
 
 
- {{-- open profile box--}}
- <script>
+{{-- open profile box--}}
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         const openProfiles = document.querySelectorAll('.open-profile');
         const closeIcon = document.getElementById('closeProfile');
