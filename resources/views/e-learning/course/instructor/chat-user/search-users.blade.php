@@ -40,7 +40,11 @@
                                 $formattedTime = $timeDifference->s . 's';
                             }
                         @endphp
-                        <p>{{  Str::limit($user->chats->first()->message, 20, '...') }} <span>{{ $formattedTime }}</span></p>
+                        <p>{{  Str::limit($user->chats->first()->message, 20, '...') }}
+                            @if ( $user->chats->first()->message !== null )
+                                <span>{{ $formattedTime }}</span>
+                            @endif
+                        </p>
                     @endif
 
                 </div>

@@ -203,9 +203,9 @@ class MessageController extends Controller
 
             $pusher->trigger('my-channel', 'my-event', $data);
 
-            $user = auth()->user();
-            $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
-            return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
+            // $user = auth()->user();
+            // $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
+            // return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
 

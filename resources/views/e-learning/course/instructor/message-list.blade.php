@@ -249,6 +249,13 @@ Messsages Page
     </div>
 </div>
 {{-- add specific person to group modal end --}}
+@php
+    $user = auth()->user();
+    $userAvatar = $user->avatar ? asset($user->avatar) : "";
+    $alterAvatar = strtoupper($user->name[0]);
+    $userName = $user->name;
+    $createTime = $user->created_at->format('F j, Y');
+@endphp
 
 
 @endsection
@@ -594,7 +601,7 @@ function getUserList(){
 
 <script>
     var receiver_id = '';
-var my_id = "{{ Auth::id() }}";
+    var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
     // ajax setup form csrf token
@@ -811,7 +818,6 @@ $(document).ready(function () {
         }
 
         if (data.signal === 'update-user-list') {
-            console.log( data.signal)
             getUserList();
         }
     });
@@ -881,15 +887,71 @@ $(document).on('submit', '.createGroupModal', function (e) {
     createGroup(".createGroupModal");
 });
 
+
+// var initalImage = '123';
+// $(document).on('keydown','#attached', function(){
+//     const file = this.files[0];
+
+//     if (file){
+//         let reader = new FileReader();
+
+//         reader.onload = function(event){
+//             console.log(event.target.result);
+//             initalImage = event.target.result
+//         }
+//     }
+// });
+
+
 // Send one to on chat message
-function sendMessage() {
-   var messageText = $("#chat-message-input").data("emojioneArea").getText();
+
+function sendMessage(event) {
+
+    initalImage = $('#preview-image').attr('src');
+
+    var messageText = $("#chat-message-input").data("emojioneArea").getText();
+
+    var messageInnner = $("#chat-message");
 
     var formData = new FormData($('#chatMessage')[0]);
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
     $('#chat-message-input').data("emojioneArea").setText("");
-    // var messageText = $('.chat-message-input').val();
+
+    var avatarContent = {!! json_encode($userAvatar) !!};
+    var alterAvatar = {!! json_encode($alterAvatar) !!}
+    var userName = {!! json_encode($userName) !!};
+    var createTime = {!! json_encode($createTime) !!};
+
+    if (!initalImage) {
+            $('.initailImage').addClass('d-none');
+    } else {
+        $('.initailImage').attr('src', initalImage);
+    }
+    var myLastMessage = `<div class="message-item sender-item">
+            <div class="media main-media">
+                <div class="avatar">
+                    <img src="${avatarContent}" class="img-fluid" alt="${alterAvatar}">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div class="d-flex">
+                        <h6 class="open-profile">${userName} &nbsp; </h6>
+                        <span> ${createTime} </span>
+                    </div>
+                    <div class="text">
+                        <a href="${initalImage}" data-lightbox="image-1" data-title="dsfdsf">
+                            <img src="${initalImage}" class="img-fluid initailImage">
+                        </a>
+                        <p>${messageText}</p>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    messageInnner.append(myLastMessage);
+
+
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -898,11 +960,11 @@ function sendMessage() {
             processData: false,
             contentType: false,
             cache: false,
+            beforeSend: function () {
+
+            },
             success: function (data) {
-                  // console.log(data)
-                // $('#chat-message-input').data("emojioneArea").setText("");
                 $('#chatMessage')[0].reset();
-                $("#chat-message").append(data);
                 scrollToBottomFunc();
 
             },
