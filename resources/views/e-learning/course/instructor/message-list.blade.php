@@ -884,9 +884,11 @@ $(document).on('submit', '.createGroupModal', function (e) {
 // Send one to on chat message
 function sendMessage() {
    var messageText = $("#chat-message-input").data("emojioneArea").getText();
+
     var formData = new FormData($('#chatMessage')[0]);
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
+    $('#chat-message-input').data("emojioneArea").setText("");
     // var messageText = $('.chat-message-input').val();
     if (receiver_id !== '') {
         $.ajax({
@@ -898,9 +900,8 @@ function sendMessage() {
             cache: false,
             success: function (data) {
                   // console.log(data)
-                $('#chat-message-input').data("emojioneArea").setText("");
+                // $('#chat-message-input').data("emojioneArea").setText("");
                 $('#chatMessage')[0].reset();
-                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
                 scrollToBottomFunc();
 
@@ -917,6 +918,8 @@ function sendGroupMessage() {
     var formData = new FormData($('#groupChatMessage')[0]);
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
+    $('#chat-group-message-input').data("emojioneArea").setText("");
+
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -926,7 +929,7 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('#chat-group-message-input').data("emojioneArea").setText("");
+
                 $('#groupChatMessage')[0].reset();
                 // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
