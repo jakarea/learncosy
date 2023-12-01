@@ -23,7 +23,7 @@ class CreateChatsTable extends Migration
             $table->string('file_extension', 50)->nullable();
             $table->tinyInteger('file_type')->default(1)->comment('1:Message, 2:File');
             $table->tinyInteger('message_type')->default(1)->comment('1:Personal message, 2:Group message');
-            $table->tinyInteger('is_read');
+            $table->tinyInteger('is_read')->default(false);
 
             $table->foreign('group_id')->references('id')->on('groups');
             $table->foreign('sender_id')->references('id')->on('users');

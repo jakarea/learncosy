@@ -25,6 +25,7 @@ Messsages Page
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
+
                 <div class="messages-box">
                     {{-- leftbar side start --}}
                     <div class="chat-person-list-box">
@@ -98,8 +99,8 @@ Messsages Page
                                             class="img-fluid"> All Chat
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a id="chats" class="dropdown-item active" href="#">All Chat</a></li>
-                                        <li><a id="groups" class="dropdown-item" href="#">Groups</a></li>
+                                        <li><a class="dropdown-item active chats" href="javascript:;">All Chat</a></li>
+                                        <li><a class="dropdown-item groups" href="javascript:;">Groups</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -167,6 +168,7 @@ Messsages Page
                             </div>
                         </form>
 
+
                         <form method="POST" class="send-actions w-100 d-none" id="groupChatMessage" autocomplete="off">
                             <div class="dock-bottom">
                                 <div id="file-preview" class="file-preview">
@@ -196,6 +198,7 @@ Messsages Page
                                 </div>
                             </div>
                         </form>
+
 
                     </div>
                     {{-- chat body right side end --}}
@@ -264,12 +267,16 @@ $(document).on("input", ".search-people-specific-group", function (e) {
     searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
 });
 
-
 // Search group chat user
 $(document).on("input",".search-chat-user", function (e) {
     searchUser($.trim(this.value), ".chat-user-load", "layout2");
 });
 
+
+// Search group
+$(document).on("input",".search-chat-user", function (e) {
+    searchUser($.trim(this.value), ".chat-user-load", "layout3");
+});
 
 
 $(document).ready(function () {
@@ -293,8 +300,12 @@ function searchUser(searchTerm, resultContainer, layout) {
                 term: searchTerm,
                 layout: layout
             },
+            beforeSend: function () {
+                $("#mySpinner").removeClass('d-none');
+            },
             success: function (data) {
                 $(resultContainer).html(data);
+                $("#mySpinner").addClass('d-none');
             }
         });
     } else {
@@ -372,12 +383,39 @@ document.addEventListener('click', function (event) {
 document.addEventListener('click', function (event) {
     if (event.target.classList.contains('groups')) {
         event.stopPropagation();
-        var userId = event.target.getAttribute('data-chat-user-id');
-
+        $.ajax({
+            type: 'get',
+            url: "{{ route('messages.groups') }}",
+            success: function (data) {
+                $("#chat-user-load").empty();
+                $("#chat-user-load").html(data);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
 
     }
 });
 
+// Load click click by chat button
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('chats')) {
+        event.stopPropagation();
+        $.ajax({
+            type: 'get',
+            url: "{{ route('messages.chats') }}",
+            success: function (data) {
+                $("#chat-user-load").empty();
+                $("#chat-user-load").html(data);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+    }
+});
 
 // Delete group chat history
 document.addEventListener('click', function (event) {
@@ -652,7 +690,6 @@ $(document).ready(function () {
             const indicator = pusher.subscribe('typing-channel');
 
             indicator.bind('typing-started', (data) => {
-                console.log('Received typing-started event:', data);
                 startTyping(data.user_info);
             });
 
@@ -786,7 +823,6 @@ $(document).ready(function () {
 
 // Send one to one chate
 
-
 $(document).on('keydown', '#chat-message-input', function (e) {
     console.log(e)
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -846,7 +882,7 @@ function sendMessage() {
                   // console.log(data)
                 $('#chat-message-input').data("emojioneArea").setText("");
                 $('#chatMessage')[0].reset();
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
                 scrollToBottomFunc();
 
@@ -874,7 +910,7 @@ function sendGroupMessage() {
             success: function (data) {
                 $('#chat-group-message-input').data("emojioneArea").setText("");
                 $('#groupChatMessage')[0].reset();
-                $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
                 scrollToBottomFunc();
             },
