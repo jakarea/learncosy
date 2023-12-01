@@ -190,7 +190,8 @@ Route::get('students/lessons/{id}', function ($id) {
 Route::middleware('auth')->prefix('messages')->controller(MessageController::class)->group(function () {
     Route::get('/', 'index')->name('messages.message');
 
-    Route::get('/all-chats', 'allChats')->name('messages.chats');
+    Route::get('/all-chats-groups', 'allChatsAndGroups')->name('messages.chats');
+    Route::get('/all-user', 'getUserList')->name('messages.users');
     Route::get('/all-groups', 'allGroups')->name('messages.groups');
 
     Route::get('/chat', 'getChatMessage')->name('messages.chat');

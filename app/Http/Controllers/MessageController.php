@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 class MessageController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $data['adminInfo'] = Auth::user();
         $data['users'] = User::select(
@@ -29,6 +29,15 @@ class MessageController extends Controller
             ->withCount([
                 'chats as unread' => function ($query) {
                     $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                },
+            ])
+            ->with([
+                'chats' => function ($query) {
+                    $query->where(function ($query) {
+                        $query->where('sender_id', Auth::id())->orWhere('receiver_id', Auth::id());
+                    })
+                    ->latest()
+                    ->limit(1);
                 },
             ])
             ->where('users.id', '!=', Auth::id())
@@ -43,11 +52,9 @@ class MessageController extends Controller
 
         return view('e-learning/course/instructor/message-list', $data);
 
-
-
     }
 
-    public function allChats(){
+    public function allChatsAndGroups(){
         $data['adminInfo'] = Auth::user();
         $data['users'] = User::select(
                 'users.id',
@@ -71,9 +78,8 @@ class MessageController extends Controller
             })->get();
 
         return view('e-learning/course/instructor/groups-chats', $data);
-
-
     }
+
     public function allGroups(Request $request){
         if( $request->ajax() ){
             $user = auth()->user();
@@ -82,6 +88,41 @@ class MessageController extends Controller
             })->get();
             return view('e-learning.course.instructor.message-group.group-list', $data);
         }
+    }
+
+
+    public function getUserList()
+    {
+        $data['adminInfo'] = Auth::user();
+        $data['users'] = User::select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+            )
+            ->withCount([
+                'chats as unread' => function ($query) {
+                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                },
+            ])
+            ->with([
+                'chats' => function ($query) {
+                    $query->where(function ($query) {
+                        $query->where('sender_id', Auth::id())->orWhere('receiver_id', Auth::id());
+                    })
+                    ->latest()
+                    ->limit(1);
+                },
+            ])
+            ->where('users.id', '!=', Auth::id())
+            ->orderByDesc('last_activity_at')
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
+
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
+                $query->where('user_id', $data['adminInfo']->id);
+            })->latest()->get();
+        return view('e-learning/course/instructor/groups-chats', $data);
     }
 
 
@@ -158,7 +199,8 @@ class MessageController extends Controller
                 $options
             );
 
-            $data = ['from' => $sender_Id, 'to' => $receiver_id];
+            $data = ['from' => $sender_Id, 'to' => $receiver_id, 'signal' => 'update-user-list'];
+
             $pusher->trigger('my-channel', 'my-event', $data);
 
             $user = User::findOrFail($sender_Id);

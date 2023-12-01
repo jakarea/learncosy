@@ -577,6 +577,19 @@ function fetchGroupData(receiver_id){
     });
 }
 
+function getUserList(){
+    $.ajax({
+        url: "{{ route('messages.users') }}",
+        method: 'get',
+        success: function(data) {
+            $("#chat-user-load").html(data);
+        },
+        error: function(error) {
+            console.error('Error fetching user list:', error);
+        }
+    });
+}
+
 </script>
 
 <script>
@@ -795,6 +808,11 @@ $(document).ready(function () {
                     $('#user_' + data.from).append('<span class="pending">1</span>');
                 }
             }
+        }
+
+        if (data.signal === 'update-user-list') {
+            console.log( data.signal)
+            getUserList();
         }
     });
 
