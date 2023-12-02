@@ -923,11 +923,14 @@ function sendMessage(event) {
     var userName = {!! json_encode($userName) !!};
     var createTime = {!! json_encode($createTime) !!};
 
-    if (!initalImage) {
-            $('.initailImage').addClass('d-none');
-    } else {
-        $('.initailImage').attr('src', initalImage);
+    var imageElement = '';
+    if (initalImage) {
+        imageElement = `<a href="${initalImage}" data-lightbox="image-1" data-title="dsfdsf">
+                            <img src="${initalImage}" class="img-fluid initailImage">
+                        </a>`;
+        $('#preview-image').attr('src', '');
     }
+
     var myLastMessage = `<div class="message-item sender-item">
             <div class="media main-media">
                 <div class="avatar">
@@ -940,9 +943,7 @@ function sendMessage(event) {
                         <span> ${createTime} </span>
                     </div>
                     <div class="text">
-                        <a href="${initalImage}" data-lightbox="image-1" data-title="dsfdsf">
-                            <img src="${initalImage}" class="img-fluid initailImage">
-                        </a>
+                        ${imageElement}
                         <p>${messageText}</p>
                     </div>
                 </div>
@@ -951,6 +952,7 @@ function sendMessage(event) {
 
     messageInnner.append(myLastMessage);
 
+    removeFile();
 
     if (receiver_id !== '') {
         $.ajax({
