@@ -103,7 +103,7 @@
                                 <button class="btn btn-submit" type="submit">Register</button>
                             </div>
                             <div class="optional-txt">
-                                <p>Already have an account? <a href="{{ url('/auth-login') }}">Log in</a></p>
+                                <p>Already have an account? <a href="{{ url('/login') }}">Log in</a></p>
                             </div>
                         </form>
                     </div>

@@ -6,7 +6,7 @@ Register Page
 
 @section('content')
 
-<!-- ====== register page content @S ====== --> 
+<!-- ====== register page content @S ====== -->
 <section class="auth-part-sec">
     <div class="container-fluid">
         <div class="row">
@@ -66,26 +66,26 @@ Register Page
                             <input type="hidden" name="user_role" value="instructor">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="password-field">{{ __('Password') }}</label> 
+                                    <label for="password-field">{{ __('Password') }}</label>
                                     <input id="password-field" placeholder="••••••••" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror 
+                                    @enderror
                                     <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
                                 </div>
                                 <div class="form-group">
                                     <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                
+
                                     <input id="password-confirm" type="password" placeholder="••••••••" class="form-control" name="password_confirmation" autocomplete="new-password">
-                                  
+
                                     <i class="fa-regular fa-eye" onclick="changeType2()" id="eye-click2"></i>
-                                </div> 
+                                </div>
                             </div>
 
                         </div>
- 
+
                         <div class="d-flex">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="aggred" checked>
@@ -99,7 +99,7 @@ Register Page
                             <button class="btn btn-submit" type="submit">Register</button>
                         </div>
                         <div class="optional-txt">
-                            <p>Already have an account? <a href="{{url('/login')}}">Log in</a></p>
+                            <p>Already have an account? <a href="{{url('/admin/login')}}">Log in</a></p>
                         </div>
                     </form>
                 </div>

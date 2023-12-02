@@ -73,48 +73,48 @@ Route::get('login-as-student/{userSessionId}/{userId}/{stuId}', [HomepageControl
 Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardController::class, 'loginAsStudent']);
 
 // custom login for student and instructor
-Route::get('/auth-login', function () {
+// Route::get('/login', function () {
 
-    // match user sessionId
-    if(isset(request()->singnature)){
-        $user = User::where('session_id', request()->singnature)->first();
-        if($user){
-            Auth::login($user);
-            $user->session_id = null;
-            $user->save();
-            return redirect()->intended($user->user_role.'/dashboard');
-        }
-    }
+//     // match user sessionId
+//     if(isset(request()->singnature)){
+//         $user = User::where('session_id', request()->singnature)->first();
+//         if($user){
+//             Auth::login($user);
+//             $user->session_id = null;
+//             $user->save();
+//             return redirect()->intended($user->user_role.'/dashboard');
+//         }
+//     }
 
-    $subdomain = explode('.', request()->getHost())[0];
-    $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
+//     $subdomain = explode('.', request()->getHost())[0];
+//     $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
 
-    // module settings
-    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
+//     // module settings
+//     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
 
-    if ($instrcutorModuleSettings) {
-        $loginPageStyle = json_decode($instrcutorModuleSettings->value);
-    } else {
-        $loginPageStyle = json_decode("{'primary_color':','secondary_color':','lp_layout':','meta_title':','meta_desc':'}");
-    }
+//     if ($instrcutorModuleSettings) {
+//         $loginPageStyle = json_decode($instrcutorModuleSettings->value);
+//     } else {
+//         $loginPageStyle = json_decode("{'primary_color':','secondary_color':','lp_layout':','meta_title':','meta_desc':'}");
+//     }
 
-    if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
-        if ($loginPageStyle->lp_layout == 'fullwidth') {
-            return view('custom-auth/login/login2');
-        } elseif ($loginPageStyle->lp_layout == 'default') {
-            return view('custom-auth/login/login');
-        } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
-            return view('custom-auth/login/login5');
-        } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {
-            return view('custom-auth/login/login4');
-        } else {
-            return view('custom-auth/login/login');
-        }
-    } else {
-        return view('auth/login');
-    }
+//     if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
+//         if ($loginPageStyle->lp_layout == 'fullwidth') {
+//             return view('custom-auth/login/login2');
+//         } elseif ($loginPageStyle->lp_layout == 'default') {
+//             return view('custom-auth/login/login');
+//         } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
+//             return view('custom-auth/login/login5');
+//         } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {
+//             return view('custom-auth/login/login4');
+//         } else {
+//             return view('custom-auth/login/login');
+//         }
+//     } else {
+//         return view('auth/login');
+//     }
 
-})->name('tlogin')->middleware('guest');
+// })->middleware('guest');
 
 // theme settings register page
 Route::get('/auth-register', function () {
@@ -542,6 +542,7 @@ Route::prefix('students')->controller(CartController::class)->group(function () 
 /* ======================================================== */
 /* ===================== Admin Routes ===================== */
 /* ======================================================== */
+
 Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::class)->group(function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::get('/dashboard', 'dashboard')->name('admin.dashboard');
@@ -716,8 +717,7 @@ Route::get('/logout', function () {
  * if page not found then redirect to 404 page
  */
 Route::fallback(function () {
-    return redirect()->route('tlogin');
+    return redirect()->route('login');
 });
-
 
 

@@ -19,7 +19,7 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    { 
+    {
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);
@@ -351,9 +351,9 @@ class DashboardController extends Controller
         return view('dashboard/instructor/dashboard',compact('courses','payments','recentUpdates'));
     }
 
-    // instructor notification 
+    // instructor notification
     public function notifications()
-    { 
+    {
 
         $currentYear = Carbon::now()->subDays(365);
         $today = Carbon::now();
@@ -367,23 +367,23 @@ class DashboardController extends Controller
             ->orderBy('notifications.created_at', 'DESC')
             ->get();
 
-                                              
+
         // Get today's date
         $today = now();
-        
+
         // Initialize arrays for each category
         $todays = [];
         $yestardays = [];
         $sevenDays = [];
         $thirtyDays = [];
         $lastOneYears = [];
-        
+
         foreach ($data as $item) {
             $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
-        
+
             // Calculate the interval in days
             $interval = $today->diffInDays($createdAt);
-        
+
             if ($interval == 0) {
                 // Today
                 $todays[] = $item;
@@ -394,17 +394,17 @@ class DashboardController extends Controller
                 // Last 7 days
                 $sevenDays[] = $item;
             } elseif ($interval >= 8 && $interval <= 30) {
-                    
+
                 $thirtyDays[] = $item;
             } elseif ($interval >= 31 && $interval <= 365) {
-                    
+
                 $lastOneYears[] = $item;
             }
-        } 
- 
-                        
-        return view('instructor.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
-        
+        }
+
+
+        return view('instructor.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
+
     }
 
     // instructor notification delete
@@ -500,7 +500,7 @@ class DashboardController extends Controller
         foreach ($enrolments as $enrolment) {
             $students[$enrolment->user_id] = $enrolment->user;
             if ($enrolment->course) {
-                 
+
                 $title = substr($enrolment->course->title, 0, 20);
                 if (strlen($enrolment->course->title) > 20) {
                     $title .= "...";
@@ -605,14 +605,14 @@ class DashboardController extends Controller
     public function loginAsStudent($userSessionId, $userId, $stuId)
     {
         if (!$userId || !$userSessionId) {
-            return redirect('/login')->with('error', 'Failed to Login as Student');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
         }
 
         $instructorUserId = Crypt::decrypt($userId);
         $instructorUser = User::find($instructorUserId);
 
         if (!$instructorUser) {
-            return redirect('/login')->with('error', 'Failed to Login as Student');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
         }
 
         $reqSessionId = Crypt::decrypt($userSessionId);
@@ -629,6 +629,6 @@ class DashboardController extends Controller
             }
         }
 
-        return redirect('/login')->with('error', 'Failed to Login as Student');
+        return redirect('/admin/login')->with('error', 'Failed to Login as Student');
     }
 }

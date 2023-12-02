@@ -8,7 +8,7 @@
                 @else
                     <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
                 @endif
-            @else 
+            @else
             <a class="navbar-brand" href="{{ route('instructor.dashboard.index') }}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
@@ -19,7 +19,7 @@
             @endcan
         </a>
         @else
-        <a class="navbar-brand" href="{{ route('tlogin') }}">
+        <a class="navbar-brand" href="{{ route('login') }}">
             @if ( modulesetting('logo') )
                 <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
             @else
@@ -38,23 +38,23 @@
                 </li>
                 <li class="nav-item">
                     <a style="color: {{modulesetting('secondary_color')}}" class="nav-link" href="#b_course_sec">Bundle Courses</a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a style="color: {{modulesetting('secondary_color')}}" class="nav-link" href="#feedback_sec">Feedback</a>
-                </li> 
+                </li>
             </ul>
             @if (auth()->user() && auth()->user()->user_role == 'instructor')
-                <div class="d-flex">  
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/instructor/dashboard')}}">Dashboard</a> 
+                <div class="d-flex">
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/instructor/dashboard')}}">Dashboard</a>
                 </div>
 			@elseif (auth()->user() && auth()->user()->user_role == 'student')
-                <div class="d-flex">  
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/students/dashboard')}}">Dashboard</a> 
-                </div> 
-            @else  
-                <div class="d-flex" >  
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tlogin') }}">Login</a>
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister') }}">Register</a> 
+                <div class="d-flex">
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/students/dashboard')}}">Dashboard</a>
+                </div>
+            @else
+                <div class="d-flex" >
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login') }}">Login</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister') }}">Register</a>
                 </div>
             @endif
         </div>

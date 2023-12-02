@@ -20,10 +20,10 @@ class Authenticate extends Middleware
             if (strpos($host, 'app.'.$domain) !== false) {
                 return route('login');
             } else {
-                return route('tlogin');
+                return route('login');
             }
-        }    
-        
+        }
+
         // if (! $request->expectsJson()) {
         //     return route('login');
         // }

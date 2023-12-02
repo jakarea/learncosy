@@ -153,26 +153,6 @@
 
 
 
-<script>
-
-
-    function fetchUsers() {
-        $.ajax({
-            url: "{{ route('message') }}",
-            type: 'GET',
-            success: function (data) {
-                // $('#chat-user-load').html(data);
-            },
-            error: function (error) {
-                console.log('Error fetching users:', error);
-            }
-        });
-    }
-    // fetchUsers();
-
-</script>
-
-
 
 
 

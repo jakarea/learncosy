@@ -30,6 +30,11 @@ class AdminHomeController extends Controller
         $this->previousMonthEnd = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
     }
 
+
+    // public function showForm(){
+    //     return view('auth.admin-login');
+    // }
+
     // dashboard
     public function dashboard(Request $request)
     {
@@ -282,7 +287,7 @@ class AdminHomeController extends Controller
             $today = now();
             if ($status == 'one') {
                 $courses->whereYear('courses.created_at', '=', $today->year)
-                    ->whereMonth('courses.created_at', '=', $today->month); 
+                    ->whereMonth('courses.created_at', '=', $today->month);
             } elseif ($status == 'three') {
                 $courses->where('courses.created_at', '>=', $today->subMonths(3));
             } elseif ($status == 'six') {
@@ -619,11 +624,11 @@ class AdminHomeController extends Controller
 
     public function notification()
     {
-        
-        $currentYear = Carbon::now()->subDays(365); 
+
+        $currentYear = Carbon::now()->subDays(365);
         $today = Carbon::now();
         $data = Notification::leftJoin('users', 'notifications.user_id', '=', 'users.id')
-      
+
        ->where('notifications.created_at', '>', $currentYear)
        ->join('courses', 'notifications.course_id', '=', 'courses.id')
        ->select('notifications.id', 'courses.thumbnail AS thumbnail','courses.title AS title', 'notifications.type', 'notifications.course_id', 'notifications.message', 'users.avatar', 'notifications.created_at')
@@ -631,23 +636,23 @@ class AdminHomeController extends Controller
        ->get();
 
        //$data = Notification::all();
-                                              
+
         // Get today's date
         $today = now();
-        
+
         // Initialize arrays for each category
         $todays = [];
         $yestardays = [];
         $sevenDays = [];
         $thirtyDays = [];
         $lastOneYears = [];
-        
+
         foreach ($data as $item) {
             $createdAt = $item['created_at']; // Assuming 'created_at' is already a Carbon instance
-        
+
             // Calculate the interval in days
             $interval = $today->diffInDays($createdAt);
-        
+
             if ($interval == 0) {
                 // Today
                 $todays[] = $item;
@@ -658,17 +663,17 @@ class AdminHomeController extends Controller
                 // Last 7 days
                 $sevenDays[] = $item;
             } elseif ($interval >= 8 && $interval <= 30) {
-                    
+
                 $thirtyDays[] = $item;
             } elseif ($interval >= 31 && $interval <= 365) {
-                    
+
                 $lastOneYears[] = $item;
             }
-        } 
+        }
 
         // return $todays;
-                        
-        return view('admin.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears')); 
+
+        return view('admin.notification',compact('todays','yestardays','sevenDays','thirtyDays','lastOneYears'));
 
     }
 }

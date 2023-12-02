@@ -36,16 +36,16 @@ class HomepageController extends Controller
      public function instructorHome()
      {
          // get subdomain from subdomain
-         $domain = env('APP_DOMAIN', 'learncosy.com');
-         $request = app('request');
-         $subdomain = $request->getHost(); // Get the host (e.g., "instructor.learncosy.com")
-         $segments = explode('.', $subdomain); // Split the host into segments
-         $subdomain = $segments[0]; // Get the first segment as the subdomain
+        $domain = env('APP_DOMAIN', 'learncosy.com');
+        $request = app('request');
+        $subdomain = $request->getHost(); // Get the host (e.g., "instructor.learncosy.com")
+        $segments = explode('.', $subdomain); // Split the host into segments
+        $subdomain = $segments[0]; // Get the first segment as the subdomain
 
          if ( request()->getHost() != 'app.'.$domain && $subdomain != 'app' && !empty($subdomain) ) {
              $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
              if(!$instructors){
-                 return redirect('//app.'.$domain.'/login');
+                 return redirect('//app.'.$domain.'/admin/login');
              }
              // filter course
              $title = isset($_GET['title']) ? $_GET['title'] : '';
@@ -106,7 +106,7 @@ class HomepageController extends Controller
 
              return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
             }else{
-             return redirect('//app.'.$domain.'/login');
+             return redirect('//app.'.$domain.'/admin/login');
          }
      }
 
@@ -195,14 +195,14 @@ class HomepageController extends Controller
     public function loginAsInstructor($userSessionId, $userId, $insId)
     {
         if (!$userId || !$userSessionId) {
-            return redirect('/login')->with('error', 'Failed to Login as Instructor');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Instructor');
         }
 
         $adminUserId = Crypt::decrypt($userId);
         $adminUser = User::find($adminUserId);
 
         if (!$adminUser) {
-            return redirect('/login')->with('error', 'Failed to Login as Instructor');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Instructor');
         }
 
         $reqSessionId = Crypt::decrypt($userSessionId);
@@ -219,21 +219,21 @@ class HomepageController extends Controller
             }
         }
 
-        return redirect('/login')->with('error', 'Failed to Login as Instructor');
+        return redirect('/admin/login')->with('error', 'Failed to Login as Instructor');
     }
 
     // login as student
     public function loginAsStudent($userSessionId, $userId, $stuId)
     {
         if (!$userId || !$userSessionId) {
-            return redirect('/login')->with('error', 'Failed to Login as Student');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
         }
 
         $adminUserId = Crypt::decrypt($userId);
         $adminUser = User::find($adminUserId);
 
         if (!$adminUser) {
-            return redirect('/login')->with('error', 'Failed to Login as Student');
+            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
         }
 
         $reqSessionId = Crypt::decrypt($userSessionId);
@@ -250,7 +250,7 @@ class HomepageController extends Controller
             }
         }
 
-        return redirect('/login')->with('error', 'Failed to Login as Student');
+        return redirect('/admin/login')->with('error', 'Failed to Login as Student');
     }
 
 
