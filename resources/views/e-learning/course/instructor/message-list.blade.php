@@ -868,13 +868,6 @@ $(document).on('submit', '#groupChatMessage', function (e) {
 });
 
 
-// $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
-//     alert("hi")
-//     if (event.which === 13) {
-//         event.preventDefault();
-//         sendMessage();
-//     }
-// });
 
 
 $(document).on('submit', '.createGroup', function (e) {
@@ -887,24 +880,7 @@ $(document).on('submit', '.createGroupModal', function (e) {
     createGroup(".createGroupModal");
 });
 
-
-// var initalImage = '123';
-// $(document).on('keydown','#attached', function(){
-//     const file = this.files[0];
-
-//     if (file){
-//         let reader = new FileReader();
-
-//         reader.onload = function(event){
-//             console.log(event.target.result);
-//             initalImage = event.target.result
-//         }
-//     }
-// });
-
-
 // Send one to on chat message
-
 function sendMessage(event) {
 
     initalImage = $('#preview-image').attr('src');
