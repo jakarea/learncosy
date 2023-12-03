@@ -32,83 +32,44 @@
     </div>
 @endisset
 
-{{-- view profile box start --}}
-<div class="view-profile-box" id="profileBox">
-    <div class="profile-box">
-        <a href="#" id="closeProfile">
-            <i class="fas fa-close"></i>
-        </a>
-        <div class="avatar">
-            <img src="{{ asset('latest/assets/images/icons/messages/big-avatar.png') }}" alt="a"
-                class="img-fluid">
-            <i class="fas fa-circle"></i>
-        </div>
-        <h5>Katherine Moss</h5>
-        <p>Student</p>
 
-        <button type="button" class="btn btn-remove">Remove from group</button>
-    </div>
-
-    <hr>
-
-    <h5>Contact</h5>
-
-    <div class="media">
-        <i class="fa-regular fa-envelope"></i>
-        <div class="media-body">
-            <h6>Email</h6>
-            <a href="#">kellyleannon@gemail.com</a>
-        </div>
-    </div>
-    <div class="media">
-        <i class="fa-solid fa-mobile-screen"></i>
-        <div class="media-body">
-            <h6>Phone</h6>
-            <a href="#">+11 1234 567 890</a>
-        </div>
-    </div>
-    <div class="media">
-        <i class="fa-brands fa-instagram"></i>
-        <div class="media-body">
-            <h6>Instagram</h6>
-            <a href="#">instagram.com/kellyleannon</a>
-        </div>
-    </div>
-    <hr class="my-3">
-
-    <div class="media">
-        <div class="media-body">
-            <h6>Date of birth</h6>
-            <a href="#">21 Jan, 2002</a>
-        </div>
-    </div>
-    <div class="media">
-        <div class="media-body">
-            <h6>Gender</h6>
-            <a href="#">Female</a>
-        </div>
-    </div>
-    <div class="media">
-        <div class="media-body">
-            <h6>Country</h6>
-            <a href="#">United State</a>
-        </div>
-    </div>
-
-</div>
-{{-- view profile box end --}}
-
+@php
+    $lastDate = null;
+@endphp
 
 @forelse ($messages as $message)
+    @php
+        $messageDate = \Carbon\Carbon::parse($message->created_at)->toDateString();
+    @endphp
+
+    @if ($lastDate != $messageDate)
+        <div class="date-status">
+            <hr>
+            <span>
+                @if ($messageDate == now()->toDateString())
+                    Today
+                @elseif ($messageDate == now()->subDay()->toDateString())
+                    Yesterday
+                @else
+                {{ \Carbon\Carbon::parse($messageDate)->format('F j, Y') }}
+                @endif
+            </span>
+        </div>
+        @php
+            $lastDate = $messageDate;
+        @endphp
+    @endif
+
 
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
 
-                @isset( $message->user->avatar )
-                    <img src="{{ asset($message->user->avatar) }}" alt="{{ $message->user->name }}" class="img-fluid">
+
+                @isset( $message->groupUserName->avatar )
+                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}" class="img-fluid">
                 @else
-                    <span class="user-name-avatar">{!! strtoupper($message->user->name[0]) !!}</span>
+                    <span class="user-name-avatar">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
                 @endisset
 
                 <i class="fas fa-circle"></i>
@@ -116,8 +77,8 @@
             </div>
             <div class="media-body">
                 <div class="d-flex">
-                    <h6 class="open-profile">{{ $message->user->name ?? "" }} &nbsp; </h6>
-                    <span> {{ $message->created_at->format('F j, Y') }}
+                    <h6 class="open-profile">{{ $message->groupUserName->name ?? "" }} &nbsp; </h6>
+                    <span> {{ $message->created_at->format('D H:s a') }}
                     </span>
                 </div>
 
@@ -166,7 +127,9 @@
     </div>
 @empty
 @endforelse
- 
+
+
+{{-- <div class="typing-status-area" id="indicator-append"></div> --}}
 {{--
 <form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
     <div class="dock-bottom">

@@ -17,15 +17,51 @@ use Illuminate\Support\Facades\Storage;
 class MessageController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $data['adminInfo'] = Auth::user();
         $data['users'] = User::select(
-            'users.id',
-            'users.name',
-            'users.avatar',
-            'users.email',
-        )
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+            )
+            ->withCount([
+                'chats as unread' => function ($query) {
+                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                },
+            ])
+            ->with([
+                'chats' => function ($query) {
+                    $query->where(function ($query) {
+                        $query->where('sender_id', Auth::id())->orWhere('receiver_id', Auth::id());
+                    })
+                    ->latest()
+                    ->limit(1);
+                },
+            ])
+            ->where('users.id', '!=', Auth::id())
+            ->orderByDesc('last_activity_at')
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
+
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
+                $query->where('user_id', $data['adminInfo']->id);
+            })->latest()->get();
+
+
+        return view('e-learning/course/instructor/message-list', $data);
+
+    }
+
+    public function allChatsAndGroups(){
+        $data['adminInfo'] = Auth::user();
+        $data['users'] = User::select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+            )
             ->withCount([
                 'chats as unread' => function ($query) {
                     $query->where('is_read', 0)->where('receiver_id', Auth::id());
@@ -36,38 +72,57 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-        $data['groups'] = Group::whereHas('participants')->latest()->get();
+            $user = auth()->user();
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get();
 
-        // $userId = Auth::id();
-        // return $data['users']=  Chat::join(DB::raw('(SELECT
-        // LEAST(sender_id, receiver_id) AS min_user_id,
-        // GREATEST(sender_id, receiver_id) AS max_user_id,
-        // MAX(created_at) AS last_message_time
-        // FROM chats
-        // WHERE sender_id = ? OR receiver_id = ?
-        // GROUP BY min_user_id, max_user_id) AS subquery'), function ($jToin) {
-        //     $join->on(DB::raw('LEAST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.min_user_id')
-        //          ->on(DB::raw('GREATEST(chats.sender_id, chats.receiver_id)'), '=', 'subquery.max_user_id')
-        //          ->on('chats.created_at', '=', 'subquery.last_message_time');
-        // })
-        // ->where(function ($query) use ($userId) {
-        //     $query->where('chats.sender_id', $userId)
-        //         ->orWhere('chats.receiver_id', $userId);
-        // })
-        // ->addBinding($userId, 'select')
-        // ->addBinding($userId, 'select')
-        // ->get();
+        return view('e-learning/course/instructor/groups-chats', $data);
+    }
+
+    public function allGroups(Request $request){
+        if( $request->ajax() ){
+            $user = auth()->user();
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get();
+            return view('e-learning.course.instructor.message-group.group-list', $data);
+        }
+    }
 
 
+    public function getUserList()
+    {
+        $data['adminInfo'] = Auth::user();
+        $data['users'] = User::select(
+                'users.id',
+                'users.name',
+                'users.avatar',
+                'users.email',
+            )
+            ->withCount([
+                'chats as unread' => function ($query) {
+                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
+                },
+            ])
+            ->with([
+                'chats' => function ($query) {
+                    $query->where(function ($query) {
+                        $query->where('sender_id', Auth::id())->orWhere('receiver_id', Auth::id());
+                    })
+                    ->latest()
+                    ->limit(1);
+                },
+            ])
+            ->where('users.id', '!=', Auth::id())
+            ->orderByDesc('last_activity_at')
+            ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+            ->get();
 
-        // return $data;
-        // return view('e-learning/course/instructor/message-list-backup', $data);
-        // return view('e-learning/course/instructor/chat-user/search-users', $data);
-
-        return view('e-learning/course/instructor/message-list', $data);
-
-
-
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
+                $query->where('user_id', $data['adminInfo']->id);
+            })->latest()->get();
+        return view('e-learning/course/instructor/groups-chats', $data);
     }
 
 
@@ -75,18 +130,19 @@ class MessageController extends Controller
     public function getChatMessage(Request $request)
     {
         if ($request->ajax()) {
-            $user_id = $request->receiver_id;
+            $receiver_id = $request->receiver_id;
             $my_id = Auth::id();
-            $data['friend'] = User::findOrFail($user_id);
+            $data['friend'] = User::findOrFail($receiver_id);
 
             // Make read all unread message
-            Chat::where(['sender_id' => $user_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
+            Chat::where(['sender_id' => $receiver_id, 'receiver_id' => $my_id])->update(['is_read' => 1]);
 
             // Get all message from selected user
-            $data['messages'] = Chat::where(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $user_id, "receiver_id" => $my_id, "message_type" => 1, "is_read" => 1]);
-            })->orWhere(function ($query) use ($user_id, $my_id) {
-                $query->where(["sender_id" => $my_id, "receiver_id" => $user_id, "message_type" => 1, "is_read" => 1]);
+
+            $data['messages'] = Chat::where(function ($query) use ($receiver_id, $my_id) {
+                $query->where(["sender_id" => $receiver_id, "receiver_id" => $my_id, "message_type" => 1, "is_read" => 1]);
+            })->orWhere(function ($query) use ($receiver_id, $my_id) {
+                $query->where(["sender_id" => $my_id, "receiver_id" => $receiver_id, "message_type" => 1, "is_read" => 1]);
             })->get();
 
             return view('e-learning.course/instructor.chat', $data);
@@ -96,6 +152,7 @@ class MessageController extends Controller
     // One to one send chat message
     public function sendChatMessage(Request $request)
     {
+        // dd( $request->all() );
         if ($request->ajax()) {
             $request->validate([
                 'message' => 'required_without:file', // Message is required if file is not present
@@ -111,7 +168,7 @@ class MessageController extends Controller
             $data->receiver_id = $receiver_id;
             $data->message = $message;
             $data->message_type = 1;
-            $data->is_read = false;
+            $data->is_read = true;
             $data->save();
 
             if($request->hasFile('file')){
@@ -142,8 +199,13 @@ class MessageController extends Controller
                 $options
             );
 
-            $data = ['from' => $sender_Id, 'to' => $receiver_id];
+            $data = ['from' => $sender_Id, 'to' => $receiver_id, 'signal' => 'update-user-list'];
+
             $pusher->trigger('my-channel', 'my-event', $data);
+
+            // $user = auth()->user();
+            // $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
+            // return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
 
@@ -152,7 +214,6 @@ class MessageController extends Controller
     public function getGroupChatMessage(Request $request)
     {
         if ($request->ajax()) {
-
             // dd( $request->all() );
 
             $data['myInfo'] = User::find(Auth::id());
@@ -231,7 +292,12 @@ class MessageController extends Controller
 
                 $notify = '' . $member->user_id . '';
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);
+
             }
+
+            $user = User::findOrFail($sender_Id);
+            $message = Chat::where("sender_id", $user->id) ->latest('created_at')->firstOrFail();
+            return view('e-learning/course/instructor/chat-user/sender',compact('user', 'message'));
         }
     }
 
@@ -261,10 +327,19 @@ class MessageController extends Controller
 
             // dd( $data['users']->toArray() );
 
+            $user = auth()->user();
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->where('name', 'LIKE', '%' . $searchTerm . '%')
+            ->get();
+
             if ($layoutDesing == "layout1") {
                 return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
-            } else {
+            } elseif($layoutDesing == "layout2") {
                 return view('e-learning.course.instructor.chat-user.search-users', $data);
+            }else{
+                return view('e-learning.course.instructor.message-group.group-list', $data);
             }
         }
     }

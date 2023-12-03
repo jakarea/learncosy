@@ -37,7 +37,7 @@
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
                 </a>
-                <a href="{{url('/login')}}" class="signup-bttn">
+                <a href="{{url('/admin/login')}}" class="signup-bttn">
                     SIGN IN
                 </a>
             </div>
@@ -62,7 +62,7 @@
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Name') }}</label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter your Name" autocomplete="name" autofocus>
-                
+
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
                                     <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-                
+
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -89,16 +89,16 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror 
+                                @enderror
                                 <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
 
                             </div>
                             <div class="form-group mt-3">
                                 <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                
+
                                     <input id="password-confirm" type="password" placeholder="********" class="form-control" name="password_confirmation" autocomplete="new-password">
 
-                            </div> 
+                            </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">Register</button>
                             </div>
@@ -141,7 +141,7 @@
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
-    
+
           if (field.type === "password") {
             field.type = "text";
             clickk.classList.add('fa-eye-slash');
@@ -151,7 +151,7 @@
             clickk.classList.remove('fa-eye-slash');
             clickk.classList.add('fa-eye');
           }
-    
+
         }
     </script>
 

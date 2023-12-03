@@ -24,15 +24,27 @@
                     <div class="name">
                         <a href="javascript:;" class="name">{{ $user->name }}</a>
                     </div>
-                    @if (!empty($user->last_message))
-                        {{-- <p>{{ Str::limit($user->last_message, 20, '...') }} <span>{{ $user->last_message_timestamp->diffForHumans() }}</span></p> --}}
-                        <p>{{ Str::limit($user->last_message, 20, '...') }} </p>
-                    @else
-                        {{-- @if ($user->received_file)
-                            {{ __("You have received a file")}}
-                        @elseif($user->sent_file)
-                        {{ __("You have sent a file ") }}
-                        @endif --}}
+
+                    @if($user->chats->isNotEmpty())
+                        @php
+                            $timeDifference = $user->chats->first()->created_at->diff(now());
+                            $formattedTime = '';
+
+                            if ($timeDifference->days > 0) {
+                                $formattedTime = $timeDifference->days . 'd';
+                            } elseif ($timeDifference->h > 0) {
+                                $formattedTime = $timeDifference->h . 'h';
+                            } elseif ($timeDifference->i > 0) {
+                                $formattedTime = $timeDifference->i . 'm';
+                            } else {
+                                $formattedTime = $timeDifference->s . 's';
+                            }
+                        @endphp
+                        <p>{{  Str::limit($user->chats->first()->message, 20, '...') }}
+                            @if ( $user->chats->first()->message !== null )
+                                <span>{{ $formattedTime }}</span>
+                            @endif
+                        </p>
                     @endif
 
                 </div>

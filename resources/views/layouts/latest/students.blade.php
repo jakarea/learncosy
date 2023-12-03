@@ -155,6 +155,7 @@
             document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + cookieDomain + "; secure; samesite=Strict";
     </script>
 
+<<<<<<< HEAD
     <script>
         function fetchUsers() {
                 $.ajax({
@@ -170,6 +171,12 @@
             }
             // fetchUsers();
     </script>
+=======
+
+
+
+
+>>>>>>> 03b4466025657bd7fadf720c93f9740b4b79c973
 
     @yield('script')
 </body>
