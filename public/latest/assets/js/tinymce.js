@@ -6,6 +6,7 @@ function darkFunction() {
     height: '300px',
     skin: "oxide-dark",
     content_css: "dark",
+    apiKey: 'qmijgms39dmc06urbtcpbgq3h84ylgnbzsup0df61hg3mwd0',
 
   });
 }
@@ -17,6 +18,7 @@ function lightFunction() {
     height: '300px',
     skin: "oxide",
     content_css: "default",
+    apiKey: 'qmijgms39dmc06urbtcpbgq3h84ylgnbzsup0df61hg3mwd0',
 
   });
 }
