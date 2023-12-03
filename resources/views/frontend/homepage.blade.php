@@ -204,7 +204,7 @@
                                                 </p>
                                             </div>
                                             <div class="bttns">
-                                                <a href="{{ url($instructors->subdomain . '/courses/' . $course->slug) }}">More
+                                                <a href="{{ url('/overview-courses/' . $course->slug) }}">More
                                                     Details</a>
                                                     <a href="#" class="d-none"></a>
 
