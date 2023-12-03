@@ -38,7 +38,7 @@
                         <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem; max-height: 5rem;">
                     @else
                     <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
-                    @endif 
+                    @endif
                 </a>
             </div>
         </div>
@@ -54,7 +54,7 @@
                             <h6>Create a <span>Account!</span></h6>
                             <div>
                                 <p>Have Account ?</p>
-                                <a href="{{ url('/auth-login') }}">Sign in</a>
+                                <a href="{{ url('/login') }}">Sign in</a>
                             </div>
                         </div>
                         <h1>Sign Up</h1>

@@ -239,7 +239,7 @@
                                     <a href="{{ route('instructor.dashboard.index') }}">Get more details!</a>
                                 @endcan
                             @else
-                                <a href="{{ route('tlogin') }}">Get more details!</a>
+                                <a href="{{ route('login') }}">Get more details!</a>
                             @endif
                         </div>
                     </div>
@@ -271,7 +271,7 @@
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('tlogin') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>
@@ -323,7 +323,7 @@
                                             style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                     @endcan
                                 @else
-                                    <a href="{{ route('tlogin') }}"
+                                    <a href="{{ route('login') }}"
                                         style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                 @endif
                             </div>
@@ -356,7 +356,7 @@
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('tlogin') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>

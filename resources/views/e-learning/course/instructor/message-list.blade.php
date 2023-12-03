@@ -249,6 +249,13 @@ Messsages Page
     </div>
 </div>
 {{-- add specific person to group modal end --}}
+@php
+    $user = auth()->user();
+    $userAvatar = $user->avatar ? asset($user->avatar) : "";
+    $alterAvatar = strtoupper($user->name[0]);
+    $userName = $user->name;
+    $createTime = $user->created_at->format('F j, Y');
+@endphp
 
 
 @endsection
@@ -577,11 +584,24 @@ function fetchGroupData(receiver_id){
     });
 }
 
+function getUserList(){
+    $.ajax({
+        url: "{{ route('messages.users') }}",
+        method: 'get',
+        success: function(data) {
+            $("#chat-user-load").html(data);
+        },
+        error: function(error) {
+            console.error('Error fetching user list:', error);
+        }
+    });
+}
+
 </script>
 
 <script>
     var receiver_id = '';
-var my_id = "{{ Auth::id() }}";
+    var my_id = "{{ Auth::id() }}";
 
 $(document).ready(function () {
     // ajax setup form csrf token
@@ -796,6 +816,10 @@ $(document).ready(function () {
                 }
             }
         }
+
+        if (data.signal === 'update-user-list') {
+            getUserList();
+        }
     });
 
 
@@ -844,13 +868,6 @@ $(document).on('submit', '#groupChatMessage', function (e) {
 });
 
 
-// $(".chat-message-input .emojionearea-editor").on('keypress', function (event) {
-//     alert("hi")
-//     if (event.which === 13) {
-//         event.preventDefault();
-//         sendMessage();
-//     }
-// });
 
 
 $(document).on('submit', '.createGroup', function (e) {
@@ -864,12 +881,55 @@ $(document).on('submit', '.createGroupModal', function (e) {
 });
 
 // Send one to on chat message
-function sendMessage() {
-   var messageText = $("#chat-message-input").data("emojioneArea").getText();
+function sendMessage(event) {
+
+    initalImage = $('#preview-image').attr('src');
+
+    var messageText = $("#chat-message-input").data("emojioneArea").getText();
+
+    var messageInnner = $("#chat-message");
+
     var formData = new FormData($('#chatMessage')[0]);
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
-    // var messageText = $('.chat-message-input').val();
+    $('#chat-message-input').data("emojioneArea").setText("");
+
+    var avatarContent = {!! json_encode($userAvatar) !!};
+    var alterAvatar = {!! json_encode($alterAvatar) !!}
+    var userName = {!! json_encode($userName) !!};
+    var createTime = {!! json_encode($createTime) !!};
+
+    var imageElement = '';
+    if (initalImage) {
+        imageElement = `<a href="${initalImage}" data-lightbox="image-1" data-title="dsfdsf">
+                            <img src="${initalImage}" class="img-fluid initailImage">
+                        </a>`;
+        $('#preview-image').attr('src', '');
+    }
+
+    var myLastMessage = `<div class="message-item sender-item">
+            <div class="media main-media">
+                <div class="avatar">
+                    <img src="${avatarContent}" class="img-fluid" alt="${alterAvatar}">
+                    <i class="fas fa-circle"></i>
+                </div>
+                <div class="media-body">
+                    <div class="d-flex">
+                        <h6 class="open-profile">${userName} &nbsp; </h6>
+                        <span> ${createTime} </span>
+                    </div>
+                    <div class="text">
+                        ${imageElement}
+                        <p>${messageText}</p>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    messageInnner.append(myLastMessage);
+
+    removeFile();
+
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -878,12 +938,11 @@ function sendMessage() {
             processData: false,
             contentType: false,
             cache: false,
+            beforeSend: function () {
+
+            },
             success: function (data) {
-                  // console.log(data)
-                $('#chat-message-input').data("emojioneArea").setText("");
                 $('#chatMessage')[0].reset();
-                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                $("#chat-message").append(data);
                 scrollToBottomFunc();
 
             },
@@ -899,6 +958,8 @@ function sendGroupMessage() {
     var formData = new FormData($('#groupChatMessage')[0]);
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
+    $('#chat-group-message-input').data("emojioneArea").setText("");
+
     if (receiver_id !== '') {
         $.ajax({
             type: "post",
@@ -908,7 +969,7 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-                $('#chat-group-message-input').data("emojioneArea").setText("");
+
                 $('#groupChatMessage')[0].reset();
                 // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
                 $("#chat-message").append(data);
