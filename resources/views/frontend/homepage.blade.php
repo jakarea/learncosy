@@ -27,6 +27,10 @@
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
         }
+
+        .navbar .navbar-nav .nav-item .nav-link{
+            color:  {{ modulesetting('menu_color') }};
+        }
     </style>
 @endsection
 {{-- page style @S --}}
@@ -202,11 +206,12 @@
                                             <div class="bttns">
                                                 <a href="{{ url($instructors->subdomain . '/courses/' . $course->slug) }}">More
                                                     Details</a>
+                                                    <a href="#" class="d-none"></a>
 
                                                     {{-- <a href="{{ url('/students/dashboard/enrolled') }}"
                                                     style="background: {{ modulesetting('secondary_color') }}">Enroll
                                                     Now!</a> --}}
-                                                    <form action="{{ route('cart.added', $course) }}" method="POST">
+                                                    {{-- <form action="{{ route('cart.added', $course) }}" method="POST">
                                                         @csrf
                                                         @if ($cartCourses->pluck('course_id')->contains($course->id))
                                                             <button type="button" class="btn add-to-cart-button bg-secondary"
@@ -214,7 +219,7 @@
                                                         @else
                                                             <button style="background: {{ modulesetting('secondary_color') }}" type="submit" class="btn add-to-cart-button">Add to Cart</button>
                                                         @endif
-                                                    </form>
+                                                    </form> --}}
                                             </div>
                                         </div>
                                     </div>

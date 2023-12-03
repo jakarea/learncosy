@@ -160,7 +160,12 @@
   margin-top: 5rem;
   margin-bottom: 8rem;
 }
-.message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item:nth-child(2) {
+.message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .main-chat-inner-room {
+  height: 100%;
+  min-height: 70vh;
+  max-height: 70vh;
+}
+.message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .main-chat-inner-room .message-item:nth-child(3) {
   margin-top: auto;
 }
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item {
@@ -354,18 +359,18 @@
   padding: 1rem 2rem;
   position: relative;
 }
-.message-list-page-wrap .messages-box .chat-main-body-box .message-send-box input {
-  border-radius: 0.5rem;
-  border: 1px solid var(--neutral-30, #E5ECF6);
-  background: var(--neutral-white, #FFF);
-  padding: 0.625rem 0.875rem;
-  height: 3.5rem;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  color: var(--neutral-60, #66768E);
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1.5rem;
+.message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .form-control {
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--neutral-30, #E5ECF6) !important;
+  background: var(--neutral-white, #FFF) !important;
+  padding: 0.625rem 0.875rem !important;
+  height: 3.5rem !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+  color: var(--neutral-60, #66768E) !important;
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
 }
 .message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns {
   position: absolute;
@@ -674,6 +679,7 @@ span.user-name-avatar {
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  background-color: #fff;
 }
 .blank-chat-page i {
   font-size: 3rem;
@@ -693,7 +699,7 @@ span.user-name-avatar {
   margin-right: 0.5rem;
 }
 .message-attached i {
-  color: #475467;
+  color: #66768E;
 }
 
 .file-preview {

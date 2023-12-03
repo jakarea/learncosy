@@ -13,6 +13,34 @@ Messsages Page
     .message-list-page-wrap {
         font-family: 'Poppins', sans-serif !important;
     }
+
+    .emojionearea.form-control.chat-message-input-single.emojionearea-inline {
+        height: 3.5rem !important;
+        border-radius: 0.5rem !important;
+        border: 1px solid var(--neutral-30, #E5ECF6) !important;
+        background: var(--neutral-white, #FFF) !important;
+        padding: 0.625rem 0.875rem !important;
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+        color: var(--neutral-60, #66768E) !important;
+        font-size: 1rem !important;
+        font-style: normal !important;
+        font-weight: 400 !important;
+        line-height: 1.5rem !important;
+        position: relative !important;
+    }
+
+    .emojionearea-button {
+        position: absolute !important;
+        right: 128px !important;
+        top: 15px !important;
+    }
+
+    .emojionearea.emojionearea-inline>.emojionearea-editor {
+        height: 3rem!important;
+        min-height: 3rem!important;
+        top: 11px!important;
+        left: 12px!important;
+    }
 </style>
 @endsection
 {{-- page style @S --}}
@@ -165,6 +193,7 @@ Messsages Page
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
                         </form>
 
@@ -198,7 +227,6 @@ Messsages Page
                                 </div>
                             </div>
                         </form>
-
 
                     </div>
                     {{-- chat body right side end --}}
@@ -250,11 +278,11 @@ Messsages Page
 </div>
 {{-- add specific person to group modal end --}}
 @php
-    $user = auth()->user();
-    $userAvatar = $user->avatar ? asset($user->avatar) : "";
-    $alterAvatar = strtoupper($user->name[0]);
-    $userName = $user->name;
-    $createTime = $user->created_at->format('F j, Y');
+$user = auth()->user();
+$userAvatar = $user->avatar ? asset($user->avatar) : "";
+$alterAvatar = strtoupper($user->name[0]);
+$userName = $user->name;
+$createTime = $user->created_at->format('F j, Y');
 @endphp
 
 
