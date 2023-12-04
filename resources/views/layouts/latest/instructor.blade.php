@@ -41,8 +41,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
         <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
 
         <style>
             .user-name-avatar{
@@ -59,10 +58,24 @@
                 font-weight: 600;
                 line-height: 1.375rem;
             }
+            .header-area .navbar-nav .nav-item .submenu-box li a:hover,
+            .header-area .navbar-nav .nav-item .submenu-box,
+            .header-area{
+                background: {{ modulesetting('primary_color') }}
+            }
+
+            .header-area .navbar-nav .nav-item .nav-link,
+            .header-area .navbar-nav .nav-item .submenu-box li a{
+                color: {{ modulesetting('menu_color') }}
+            }
+
+            /* .header-area .d-flex a.bttn{
+                background: {{ modulesetting('menu_color') }}
+            } */
         </style>
 
         @yield('style')
-        {{-- <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css" /> --}}
+        <link href="{{ asset('latest/assets/admin-css/ins-responsive.css') }}" rel="stylesheet" type="text/css">
         <!-- all css end -->
 
         @yield('seo')
@@ -151,8 +164,6 @@
         </script>
 
         @yield('script')
-
-
+        
     </body>
-
 </html>

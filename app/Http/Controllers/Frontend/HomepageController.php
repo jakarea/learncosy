@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\BundleCourse;
+use App\Models\Checkout;
 use App\Models\CourseReview;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,6 +33,44 @@ class HomepageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function courseDetails($slug)
+     {
+        $course = Course::where('slug', $slug)->with('modules.lessons')->first();
+ 
+        $promo_video_link = '';
+        if($course->promo_video != ''){
+            $ytarray=explode("/", $course->promo_video);
+            $ytendstring=end($ytarray);
+            $ytendarray=explode("?v=", $ytendstring);
+            $ytendstring=end($ytendarray);
+            $ytendarray=explode("&", $ytendstring);
+            $ytcode=$ytendarray[0];
+            $promo_video_link = $ytcode;
+        }
+ 
+        $course_reviews = CourseReview::where('course_id', $course->id)->get(); 
+        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+        $related_course = [];
+        if ($course) {
+            if($course->categories){
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query();  
+
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+                $related_course = $query->take(4)->get();
+            }
+
+
+            return view('frontend.course-details', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+        } else {
+            return redirect('/')->with('error', 'Course not found!');
+        } 
+ 
+     }
 
      public function instructorHome()
      {
