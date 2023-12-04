@@ -4,7 +4,7 @@
 {{-- page style @S --}}
 @section('style')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="{{ asset('latest/assets/admin-css/message.css?v=' . time()) }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css" />
 <style>
     .message-list-page-wrap {
         font-family: 'Poppins', sans-serif !important;
