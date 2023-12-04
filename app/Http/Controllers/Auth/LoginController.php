@@ -8,9 +8,10 @@ use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Cookie;
+use App\Providers\RouteServiceProvider;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -48,9 +49,12 @@ class LoginController extends Controller
      * Login
      */
 
+
+
+
+
     public function login(Request $request)
     {
-
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
@@ -88,4 +92,26 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Invalid Credentials');
         }
     }
+
+
+
+    public function socialLogin($social)
+    {
+        return Socialite::driver($social)->redirect();
+    }
+
+    public function handleProviderCallback($social)
+    {
+        dd( $social );
+        $userSocial = Socialite::driver($social)->user();
+        $user = User::where(['email' => $userSocial->getEmail()])->first();
+        if($user){
+            Auth::login($user);
+            return redirect()->action('HomeController@index');
+        }else{
+            return view('auth.register',['name' => $userSocial->getName(), 'email' => $userSocial->getEmail()]);
+        }
+    }
+
+
 }

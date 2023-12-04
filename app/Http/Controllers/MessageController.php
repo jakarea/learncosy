@@ -26,11 +26,11 @@ class MessageController extends Controller
                 'users.avatar',
                 'users.email',
             )
-            ->withCount([
-                'chats as unread' => function ($query) {
-                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
-                },
-            ])
+            // ->withCount([
+            //     'chats as unread' => function ($query) {
+            //         $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            //     },
+            // ])
             ->with([
                 'chats' => function ($query) {
                     $query->where(function ($query) {
@@ -48,7 +48,6 @@ class MessageController extends Controller
             $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
                 $query->where('user_id', $data['adminInfo']->id);
             })->latest()->get();
-
 
         return view('e-learning/course/instructor/message-list', $data);
 

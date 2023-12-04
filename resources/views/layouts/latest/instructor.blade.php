@@ -41,7 +41,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
         <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <style>
             .user-name-avatar{
@@ -164,6 +164,6 @@
         </script>
 
         @yield('script')
-        
+
     </body>
 </html>

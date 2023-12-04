@@ -155,29 +155,6 @@
             document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + cookieDomain + "; secure; samesite=Strict";
     </script>
 
-<<<<<<< HEAD
-    <script>
-        function fetchUsers() {
-                $.ajax({
-                    url: "{{ route('message') }}",
-                    type: 'GET',
-                    success: function (data) {
-                        // $('#chat-user-load').html(data);
-                    },
-                    error: function (error) {
-                        console.log('Error fetching users:', error);
-                    }
-                });
-            }
-            // fetchUsers();
-    </script>
-=======
-
-
-
-
->>>>>>> 03b4466025657bd7fadf720c93f9740b4b79c973
-
     @yield('script')
 </body>
 </html>

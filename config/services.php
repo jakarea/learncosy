@@ -34,4 +34,18 @@ return [
         'secret' => env('STRIPE_SECRET'),
    ],
 
+
+   'facebook' => [
+        'client_id' => '1120224634748024', //Facebook API
+        'client_secret' => '7303691d807eaff92bbb1657b96b1e', //Facebook Secret
+        'redirect' => 'http://laravel.localhost/login/facebook/callback',
+    ],
+
+
+    'google' => [
+        'client_id' => '1120224634748024', //google API
+        'client_secret' => '7303691d807eaff92bbb1657b96b1e', //google Secret
+        'redirect' => 'http://laravel.localhost/login/facebook/callback',
+    ],
+
 ];
