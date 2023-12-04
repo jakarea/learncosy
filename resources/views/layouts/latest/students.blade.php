@@ -24,10 +24,10 @@
     <!-- all css start -->
     <!-- App css -->
     <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/style.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/header.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/dashboard.css?v='.time()) }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/admin-dark.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/header.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/dashboard.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/admin-dark.css') }}" rel="stylesheet" type="text/css" />
 
     {{-- Light box image popup --}}
     <link href="{{ asset('magnify-popup/css/lightbox.min.css') }}" rel="stylesheet" type="text/css" />
@@ -40,7 +40,7 @@
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> --}}
 
     @yield('style')
-    <link href="{{ asset('latest/assets/admin-css/responsive.css?v='.time()) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('latest/assets/admin-css/responsive.css') }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
 
