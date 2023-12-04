@@ -1129,6 +1129,7 @@ $(document).ready(function() {
             closeIcon.addEventListener('click', closeProfileBox);
         }
     });
+
 </script>
 
 

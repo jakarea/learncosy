@@ -2,10 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Student\CheckoutController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\CheckoutBundleController;
 use App\Http\Controllers\Student\StudentProfileController;
+
+
+Route::post('/students/stripe-process-payment', [PaymentController::class, 'processPayment'])->name('process-payment');
+
+
+//Start Notification
+Route::get('students/notification-details', [NotificationController::class, 'notificationDetails'])->name('notification.details');
+Route::post('students/notification-details/destroy/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
+//End Notification
+
+
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('students.dashboard')->middleware('page.access');

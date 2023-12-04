@@ -23,3 +23,4 @@ Route::get('/courses', [HomepageController::class, 'instructorHome']);
 Route::get('/courses/{slug}', [HomepageController::class, 'homeInstructorCourseDetails']);
 
 // Route::get('/{instructor}', [HomepageController::class, 'instructorHome'])->name('instructor.home');
+

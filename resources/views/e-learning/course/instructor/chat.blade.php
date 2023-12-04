@@ -27,7 +27,7 @@
                 @endphp
                 <p>{{ $username }}</p>
             </div>
-            <a href="#" class="view-bttn open-profile">View Profiles</a>
+            <a href="javascript:;" class="view-bttn open-profile">View Profiles</a>
         </div>
     </div>
 @endisset
