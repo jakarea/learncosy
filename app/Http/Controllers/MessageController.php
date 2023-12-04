@@ -26,11 +26,11 @@ class MessageController extends Controller
                 'users.avatar',
                 'users.email',
             )
-            ->withCount([
-                'chats as unread' => function ($query) {
-                    $query->where('is_read', 0)->where('receiver_id', Auth::id());
-                },
-            ])
+            // ->withCount([
+            //     'chats as unread' => function ($query) {
+            //         $query->where('is_read', 0)->where('receiver_id', Auth::id());
+            //     },
+            // ])
             ->with([
                 'chats' => function ($query) {
                     $query->where(function ($query) {
