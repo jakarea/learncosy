@@ -1109,26 +1109,38 @@ $(document).ready(function() {
 
 {{-- open profile box--}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const openProfiles = document.querySelectorAll('.open-profile');
-        const closeIcon = document.getElementById('closeProfile');
-        const profileBox = document.getElementById('profileBox');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const openProfiles = document.querySelectorAll('.open-profile');
+    //     const closeIcon = document.getElementById('closeProfile');
+    //     const profileBox = document.getElementById('profileBox');
 
-        openProfiles.forEach(openProfile => {
-            openProfile.addEventListener('click', function () {
-                profileBox.classList.add('active');
-            });
-        });
+    //     console.log( openProfiles)
 
-        function closeProfileBox(e) {
-            e.preventDefault();
-            this.parentNode.parentNode.classList.remove('active');
-        }
+    //     openProfiles.forEach(openProfile => {
+    //         openProfile.addEventListener('click', function () {
+    //             profileBox.classList.add('active');
+    //         });
+    //     });
 
-        if (closeIcon) {
-            closeIcon.addEventListener('click', closeProfileBox);
-        }
+    //     function closeProfileBox(e) {
+    //         e.preventDefault();
+    //         this.parentNode.parentNode.classList.remove('active');
+    //     }
+
+    //     if (closeIcon) {
+    //         closeIcon.addEventListener('click', closeProfileBox);
+    //     }
+    // });
+
+
+    $(document).on('click','.own-profile', function () {
+        $('#profileBox').addClass('active');
     });
+
+    $(document).on('click','#closeProfile', function () {
+        $('#profileBox').removeClass('active');
+    });
+
 
 </script>
 

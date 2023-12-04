@@ -1,7 +1,7 @@
 @isset($friend)
     <div class="chat-room-head w-100">
         <div class="media">
-            @isset( $friend->avatar )
+            @isset($friend->avatar)
                 <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid">
             @else
                 <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
@@ -9,7 +9,7 @@
 
             <div class="media-body">
                 <h5 class="name">{{ $friend->name }}
-                    @if(Cache::has('user-is-online-' . $friend->id))
+                    @if (Cache::has('user-is-online-' . $friend->id))
                         <span class="online">
                             <i class="fas fa-circle"></i>
                             Online
@@ -22,12 +22,12 @@
                     @endif
                 </h5>
                 @php
-                    $emailParts = explode("@", $friend->email);
+                    $emailParts = explode('@', $friend->email);
                     $username = $emailParts[0];
                 @endphp
                 <p>{{ $username }}</p>
             </div>
-            <a href="javascript:;" class="view-bttn open-profile">View Profiles</a>
+            <a href="javascript:;" class="view-bttn own-profile">View Profiles</a>
         </div>
     </div>
 @endisset
@@ -48,10 +48,12 @@
             <span>
                 @if ($messageDate == now()->toDateString())
                     Today
-                @elseif ($messageDate == now()->subDay()->toDateString())
+                @elseif (
+                    $messageDate ==
+                        now()->subDay()->toDateString())
                     Yesterday
                 @else
-                {{ \Carbon\Carbon::parse($messageDate)->format('F j, Y') }}
+                    {{ \Carbon\Carbon::parse($messageDate)->format('F j, Y') }}
                 @endif
             </span>
         </div>
@@ -66,8 +68,9 @@
             <div class="avatar">
 
 
-                @isset( $message->groupUserName->avatar )
-                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}" class="img-fluid">
+                @isset($message->groupUserName->avatar)
+                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}"
+                        class="img-fluid">
                 @else
                     <span class="user-name-avatar">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
                 @endisset
@@ -77,7 +80,7 @@
             </div>
             <div class="media-body">
                 <div class="d-flex">
-                    <h6 class="open-profile">{{ $message->groupUserName->name ?? "" }} &nbsp; </h6>
+                    <h6 class="open-profile">{{ $message->groupUserName->name ?? '' }} &nbsp; </h6>
                     <span> {{ $message->created_at->format('D H:s a') }}
                     </span>
                 </div>
@@ -86,31 +89,36 @@
                     @if ($message->file)
                         @php
                             $allowedImageExtensions = ['jpg', 'png', 'jpeg', 'gif'];
-                            $allowedVideoExtensions = ['webm','mkv','avi','wmv','amv','mp4','mpg','mpeg','m4v','3gp','flv'];
-                            $allowedDocumentExtensions = ['pdf', 'zip', 'doc','docx'];
+                            $allowedVideoExtensions = ['webm', 'mkv', 'avi', 'wmv', 'amv', 'mp4', 'mpg', 'mpeg', 'm4v', '3gp', 'flv'];
+                            $allowedDocumentExtensions = ['pdf', 'zip', 'doc', 'docx'];
                             $extension = pathinfo($message->file, PATHINFO_EXTENSION);
                         @endphp
 
                         @if (in_array(strtolower($extension), $allowedImageExtensions))
                             <div class="single-chat-image">
-                                <a href="{{ asset('uploads/chat/'.$message->file) }}" data-lightbox="image-1" data-title="{{ $message->message }}">
-                                    <img src="{{ asset('uploads/chat/'.$message->file) }}" alt="Image" class="img-fluid">
+                                <a href="{{ asset('uploads/chat/' . $message->file) }}" data-lightbox="image-1"
+                                    data-title="{{ $message->message }}">
+                                    <img src="{{ asset('uploads/chat/' . $message->file) }}" alt="Image"
+                                        class="img-fluid">
                                 </a>
                             </div>
-                        @elseif( in_array(strtolower($extension), $allowedVideoExtensions) )
-                            <video src="{{ asset('uploads/chat/'.$message->file) }}"></video>
+                        @elseif(in_array(strtolower($extension), $allowedVideoExtensions))
+                            <video src="{{ asset('uploads/chat/' . $message->file) }}"></video>
                         @elseif (in_array(strtolower($extension), $allowedDocumentExtensions))
                             @if (strtolower($extension) === 'zip')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
-                                    <img src="{{ asset('latest/assets/images/icons/messages/zip.png') }}" alt="Avatar" class="img-fluid">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/zip.png') }}"
+                                        alt="Avatar" class="img-fluid">
                                 </a>
                             @elseif (strtolower($extension) === 'pdf')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
-                                    <img src="{{ asset('latest/assets/images/icons/messages/pdf.svg') }}" alt="Avatar" class="img-fluid">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/pdf.svg') }}"
+                                        alt="Avatar" class="img-fluid">
                                 </a>
                             @elseif (strtolower($extension) === 'docx')
                                 <a href="{{ route('course.messages.file.download', ['filename' => $message->file]) }}">
-                                    <img src="{{ asset('latest/assets/images/icons/messages/docx.png') }}" alt="Avatar" class="img-fluid">
+                                    <img src="{{ asset('latest/assets/images/icons/messages/docx.png') }}"
+                                        alt="Avatar" class="img-fluid">
                                 </a>
                             @else
                             @endif
@@ -129,34 +137,122 @@
 @endforelse
 
 
-{{-- <div class="typing-status-area" id="indicator-append"></div> --}}
-{{--
-<form method="POST" class="send-actions w-100" id="chatMessage" autocomplete="off">
-    <div class="dock-bottom">
-        <div id="file-preview" class="file-preview">
-            <img src="" alt="" class="preview-image img-fluid" id="preview-image">
-            <div class="preview-actions">
-                <span id="file-type-icon"></span>
-                <span class="close-icon" id="close-icon" onclick="removeFile()">✖</span>
-            </div>
-        </div>
+{{-- view profile box start --}}
+<div class="view-profile-box" id="profileBox">
+    <div class="profile-box">
+        <a href="javascript:;" id="closeProfile">
+            <i class="fas fa-close"></i>
+        </a>
+        <div class="avatar">
+            @isset($friend->avatar)
+                <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid rounded-circle">
+            @else
+                <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
+            @endisset
 
-        <div class="message-send-box">
-            <div class="form-group">
-                <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
-                    name="message">
-            </div>
-            <div class="file-attach-bttns">
-                <label for="attached" class="message-attached">
-                    <i class="fa-solid fa-paperclip"></i>
-                </label>
-                <input type="file" name="file" class="d-none" id="attached" onchange="displayFileName()">
-                <button class="btn btn-submit" type="submit">
-                    Send
-                </button>
-            </div>
+            @if (Cache::has('user-is-online-' . $friend->id))
+                <i class="fas fa-circle"></i>
+            @else
+                <i class="fas fa-circle"></i>
+            @endif
+        </div>
+        <h5>{{ $friend->name }}</h5>
+        <p>{{ $friend->user_role }}</p>
+
+        {{-- <button type="button" class="btn btn-remove">Remove from group</button> --}}
+    </div>
+
+    <hr>
+
+    <h5>Contact</h5>
+
+    <div class="media">
+        <i class="fa-regular fa-envelope"></i>
+        <div class="media-body">
+            <h6>Email</h6>
+            <a href="mailto: {{ $friend->email ?? "" }}">{{ $friend->email ?? "" }}</a>
         </div>
     </div>
-</form>
- --}}
+    <div class="media">
+        <i class="fa-solid fa-mobile-screen"></i>
+        <div class="media-body">
+            <h6>Phone</h6>
+            <a href="tel: {{ $friend->phone ?? "" }}">{{ $friend->phone ?? "" }}</a>
+        </div>
+    </div>
 
+    @php
+        $socialLinks = explode(',', $friend->social_links);
+    @endphp
+
+    @foreach(explode(',', $friend->social_links) as $link)
+        @php
+            $trimmedLink = trim($link);
+            $isInstagram = strpos($trimmedLink, 'instagram.com') !== false;
+            $isFacebook = strpos($trimmedLink, 'facebook.com') !== false;
+            $isLinkedIn = strpos($trimmedLink, 'linkedin.com') !== false;
+            $isTwitter = strpos($trimmedLink, 'twitter.com') !== false;
+        @endphp
+
+        <div class="media">
+            @if($isInstagram)
+                <i class="fa-brands fa-instagram"></i>
+            @elseif($isFacebook)
+                <i class="fa-brands fa-square-facebook"></i>
+            @elseif($isLinkedIn)
+                <i class="fa-brands fa-linkedin"></i>
+            @elseif($isTwitter)
+                <i class="fa-brands fa-twitter"></i>
+            @else
+                <!-- You can add an icon for an unknown social media platform here -->
+            @endif
+
+            <div class="media-body">
+                <h6>
+                    @if($isInstagram)
+                        Instagram
+                    @elseif($isFacebook)
+                        Facebook
+                    @elseif($isLinkedIn)
+                        LinkedIn
+                    @elseif($isTwitter)
+                        Twitter
+                    @else
+                        Unknown social media
+                    @endif
+                </h6>
+                <a href="{{ $trimmedLink }}">{{ $trimmedLink }}</a>
+            </div>
+        </div>
+    @endforeach
+
+
+    <hr class="my-3">
+
+    <div class="media">
+        <div class="media-body">
+            <h6>{{ $friend->email ?? "" }}</h6>
+            <a href="javascript:;">{{ $friend->email ?? "" }}</a>
+        </div>
+    </div>
+
+    @isset( $friend->company_name )
+        <div class="media">
+            <div class="media-body">
+                <h6>Company Name</h6>
+                <a href="javascript:;">{{ $friend->company_name }}</a>
+            </div>
+        </div>
+    @endisset
+
+    @isset( $friend->short_bio )
+        <div class="media">
+            <div class="media-body">
+                <h6>Website</h6>
+                <a href="{{ $friend->short_bio }}">{{ $friend->short_bio }}</a>
+            </div>
+        </div>
+        @endisset
+
+</div>
+{{-- view profile box end --}}

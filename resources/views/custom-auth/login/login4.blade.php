@@ -38,7 +38,7 @@
                         <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem; max-height: 5rem;">
                     @else
                     <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
-                    @endif 
+                    @endif
                 </a>
             </div>
         </div>
@@ -46,7 +46,7 @@
 
     <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{ asset(modulesetting('lp_bg_image') ? modulesetting('lp_bg_image') : 'latest/assets/images/login-left.svg') }}); background-size: contain;">
         <div class="container">
-            <div class="row justify-content-end"> 
+            <div class="row justify-content-end">
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
                         <div class="login-heading">
@@ -56,7 +56,7 @@
                                 <a href="{{url('/auth-register')}}">Sign up</a>
                             </div>
                         </div>
-                        <h1>Sign in</h1> 
+                        <h1>Sign in</h1>
 
                         <form method="POST" action="{{ route('login') }}" class="login-from">
                             @csrf
@@ -77,13 +77,13 @@
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror 
+                                    @enderror
                                     <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
                             </div>
                             <div class="checbox-wrap">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                
+
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember me for 30 days') }}
                                     </label>
@@ -102,11 +102,11 @@
                         <h6 class="or">or</h6>
 
                         <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                            <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                     class="img-fluid"> Sign in with Google</a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
+                            <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
                                     class="img-fluid"></a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                            <a href="{{ url('login/apple') }}"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
                                     class="img-fluid"></a>
                         </div>
 
@@ -133,7 +133,7 @@
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
-    
+
           if (field.type === "password") {
             field.type = "text";
             clickk.classList.add('fa-eye-slash');
@@ -143,7 +143,7 @@
             clickk.classList.remove('fa-eye-slash');
             clickk.classList.add('fa-eye');
           }
-    
+
         }
     </script>
 

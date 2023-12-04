@@ -49,7 +49,6 @@ class MessageController extends Controller
                 $query->where('user_id', $data['adminInfo']->id);
             })->latest()->get();
 
-
         return view('e-learning/course/instructor/message-list', $data);
 
     }

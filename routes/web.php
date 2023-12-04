@@ -8,6 +8,7 @@ use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TypingController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Instructor\DashboardController;
 
@@ -155,3 +156,8 @@ Route::get('/logout', function () {
 Route::fallback(function () {
     return redirect()->route('login');
 });
+
+
+// Social Login
+Route::get('/login/{social}',[LoginController::class,'socialLogin'])->where('social','facebook|google|apple');
+Route::get('/login/{social}/callback',[LoginController::class,'handleProviderCallback'])->where('social','facebook|google|apple');
