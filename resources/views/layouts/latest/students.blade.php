@@ -45,7 +45,7 @@
 
 
     <style>
-        .user-name-avatar{
+        .user-name-avatar {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -71,6 +71,8 @@
         {{-- header start --}}
         @if (Auth::user()->user_role == 'instructor')
             @include('partials/latest/instructor/header')
+        @elseif(Auth::user()->user_role == 'admin')
+            @include('partials/latest/dashboard/header')
         @else
             @include('partials/latest/students/header')
         @endif
@@ -100,11 +102,13 @@
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 
     {{-- Emoji area --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
+        integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     {{-- Lightbox --}}
     <script src="{{ asset('magnify-popup/js/lightbox.min.js') }}"></script>
-    {{--  Toaster js --}}
+    {{-- Toaster js --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     {{-- dark mode js --}}
@@ -142,19 +146,37 @@
         }
     </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
-        <script>
-            var userIdentifier = uuidv4();
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.0/dist/umd/uuidv4.min.js"></script>
+    <script>
+        var userIdentifier = uuidv4();
             var domainParts = window.location.hostname.split('.');
             var topLevelDomain = domainParts.slice(-2).join('.');
             var cookieDomain = '.' + topLevelDomain;
             document.cookie = "userIdentifier=" + userIdentifier + "; path=/; domain=" + cookieDomain + "; secure; samesite=Strict";
-        </script>
+    </script>
+
+<<<<<<< HEAD
+    <script>
+        function fetchUsers() {
+                $.ajax({
+                    url: "{{ route('message') }}",
+                    type: 'GET',
+                    success: function (data) {
+                        // $('#chat-user-load').html(data);
+                    },
+                    error: function (error) {
+                        console.log('Error fetching users:', error);
+                    }
+                });
+            }
+            // fetchUsers();
+    </script>
+=======
 
 
 
 
-
+>>>>>>> 03b4466025657bd7fadf720c93f9740b4b79c973
 
     @yield('script')
 </body>

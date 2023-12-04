@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-xl header-area" style="background: {{ modulesetting('primary_color') }}">
+<nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/instructor/dashboard') }}">
             @if (modulesetting('logo'))

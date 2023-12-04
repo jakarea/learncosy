@@ -143,6 +143,8 @@ Route::get('/auth-register', function () {
 
 })->name('tregister')->middleware('guest');
 
+Route::get('/overview-courses/{slug}', [HomepageController::class, 'courseDetails']);
+
 // password reset
 Route::get('/auth/password/reset', function () {
     return view('custom-auth/passwords/email');
