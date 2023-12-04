@@ -68,14 +68,13 @@ class LoginController extends Controller
 
                 if ($user->user_role == 'admin') {
                     return redirect()->route('admin.dashboard');
-
                 } elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
-                    if ($user->subdomain && !$request->is('//app.',$domain)) {
+                    if ($user->subdomain && !$request->is('//app.', $domain)) {
                         $sessionId = session()->getId();
                         $user->session_id = $sessionId;
                         $user->save();
-                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature='. $sessionId );
+                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
                     } else {
                         return redirect()->intended('/instructor/dashboard');
                     }
@@ -83,7 +82,7 @@ class LoginController extends Controller
                     $sessionId = session()->getId();
                     $user->session_id = $sessionId;
                     $user->save();
-                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature='. $sessionId );
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
                 }
             } else {
                 return redirect()->back()->with('error', 'Invalid Credentials');
@@ -102,16 +101,66 @@ class LoginController extends Controller
 
     public function handleProviderCallback($social)
     {
-        dd( $social );
+
+
+        $domain = env('APP_DOMAIN', 'learncosy.com');
+
         $userSocial = Socialite::driver($social)->user();
+
         $user = User::where(['email' => $userSocial->getEmail()])->first();
-        if($user){
+
+        if ($user) {
+            $user->session_id = null;
+            $user->save();
             Auth::login($user);
-            return redirect()->action('HomeController@index');
-        }else{
-            return view('auth.register',['name' => $userSocial->getName(), 'email' => $userSocial->getEmail()]);
+
+            if ($user->user_role == 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->user_role == 'instructor') {
+                // for live domain $user->subdomain
+                if ($user->subdomain && !request()->is('//app.', $domain)) {
+                    $sessionId = session()->getId();
+                    $user->session_id = $sessionId;
+                    $user->save();
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+                } else {
+                    return redirect()->intended('/instructor/dashboard');
+                }
+            } elseif ($user->user_role == 'student') {
+                $sessionId = session()->getId();
+                $user->session_id = $sessionId;
+                $user->save();
+                return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+            }
+        } else {
+
+            $sessionId = session()->getId();
+            $serverName = $_SERVER['SERVER_NAME'];
+            $subdomain = explode('.', $serverName);
+
+            if (count($subdomain) > 1) {
+                $subdomain = $subdomain[0];
+            }
+
+            $newUser                  = new User;
+            $newUser->name            = $userSocial->name;
+            $newUser->user_role       = "student";
+
+            $newUser->email           = $userSocial->email;
+            $newUser->avatar          = $userSocial->avatar;
+            $newUser->email_verified_at = null;
+            $newUser->subdomain = $subdomain;
+            $newUser->password = bcrypt("123465");
+
+            $newUser->email_verified_at = now()->format('Y-m-d H:i:s');
+
+            $newUser->session_id = $sessionId;
+
+            $newUser->save();
+
+            return redirect()->to('//' . $newUser->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
         }
+
+
     }
-
-
 }

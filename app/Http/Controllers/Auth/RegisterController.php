@@ -82,7 +82,7 @@ class RegisterController extends Controller
 
         // return $data;
         $email_verified_at = null;
-        
+
         if ($data['user_role'] == 'student') {
             $email_verified_at = now()->format('Y-m-d H:i:s');
         }
