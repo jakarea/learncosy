@@ -14,14 +14,14 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
- 
+
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
+
+    <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('latest/assets/auth-css/custom-login-2.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
@@ -55,14 +55,14 @@
                         world. Unlock a world of knowledge and growth with us today!</p>
                 </div>
                 <div class="login-promo-image">
-                    @if (modulesetting('lp_bg_image')) 
+                    @if (modulesetting('lp_bg_image'))
                      <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
                     title="Login BG" class="login2-logo rounded" style="max-width: 25rem">
-                    @else 
+                    @else
                     <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy Promo Image"
                         title="Leancosy Promo Image" class="login2-logo" />
-                    @endif  
-                    
+                    @endif
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -76,11 +76,11 @@
                     </div>
                     <h1>Sign in</h1>
                     <div class="buttons-group">
-                        <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                        <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                 class="img-fluid"> Sign in with Google</a>
-                        <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
+                        <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
                                 class="img-fluid"></a>
-                        <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                        <a href="{{ url('login/apple') }}"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
                                 class="img-fluid"></a>
                     </div>
 

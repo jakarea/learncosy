@@ -26,11 +26,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
         $this->configureRateLimiting();
 
         $this->routes(function () {
             $domain = env('APP_DOMAIN', 'learncosy.com');
+
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
@@ -41,7 +42,16 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/instructor.php'));
 
             Route::middleware('web')
+                ->group(base_path('routes/instructor-child.php'));
+
+            Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/admin.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/student.php'));
         });
     }
 
