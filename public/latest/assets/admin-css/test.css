@@ -154,19 +154,21 @@
   flex-direction: column;
   gap: 2rem;
   height: 100%;
-  min-height: 70vh;
-  max-height: 70vh;
+  min-height: 42vh;
+  max-height: 42vh;
+}
+.message-list-page-wrap .messages-box .chat-main-body-box .single-chat-image img {
+  max-width: 200px;
 }
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room {
   display: flex;
   padding: 2.5rem 2rem 2rem 2rem;
   flex-direction: column;
   gap: 2rem;
-  min-height: 70vh;
-  max-height: 70vh;
+  min-height: 50vh;
+  max-height: 50vh;
   overflow-y: auto;
   margin-top: 5rem;
-  margin-bottom: 8rem;
 }
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room .message-item:nth-child(3) {
   margin-top: auto;
@@ -1290,7 +1292,7 @@ span.user-name-avatar {
 }
 @media (min-width: 1199px) and (max-width: 1999px) {
   .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-room {
-    min-height: 62vh;
-    max-height: 62vh;
+    min-height: 58vh;
+    max-height: 58vh;
   }
 }
