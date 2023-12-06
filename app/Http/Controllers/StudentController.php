@@ -15,7 +15,7 @@ use App\Models\BundleCourse;
 use App\Models\Certificate;
 use App\Models\CourseReview;
 use App\Models\Cart;
-use App\Models\course_like; 
+use App\Models\course_like;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +27,10 @@ class StudentController extends Controller
     // list page
     public function index()
      {
+
+
         $course = Course::where('user_id', auth()->user()->id)->get();
+        // return  $course;
         $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
 
         $name = isset($_GET['name']) ? $_GET['name'] : '';
@@ -73,7 +76,7 @@ class StudentController extends Controller
         [
             'avatar' => 'Max file size is 5 MB!',
             'phone' => 'Phone number is required'
-        ]); 
+        ]);
 
         // add student
         $student = new User([
@@ -107,7 +110,7 @@ class StudentController extends Controller
      }
 
     // show page
-    public function show($id)
+    public function show($domain, $id)
      {
         $checkout = Checkout::where('user_id', $id)->get();
         $course = Course::whereIn('id', $checkout->pluck('course_id'))->where('user_id', auth()->user()->id)->get();
@@ -137,7 +140,7 @@ class StudentController extends Controller
      }
 
      public function update(Request $request,$id)
-     { 
+     {
 
          $userId = $id;
 
@@ -170,14 +173,14 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-       
+
 
          if ($request->email) {
              $user->email =  $request->email;
          }else{
              $user->email = $user->email;
          }
-         
+
          if ($request->password) {
              $user->password = Hash::make($request->password);
          }else{
@@ -207,8 +210,8 @@ class StudentController extends Controller
 
      //  upload cover photo for all instructor
     public function coverUpload(Request $request)
-    { 
-        
+    {
+
         if ($request->hasFile('cover_photo')) {
             $coverPhoto = $request->file('cover_photo');
 
@@ -228,23 +231,23 @@ class StudentController extends Controller
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
 
-            $user->cover_photo = $image_path; 
+            $user->cover_photo = $image_path;
             $user->save();
-    
+
             return response()->json(['message' => "UPLOADED"]);
         }
-    
+
         return response()->json(['error' => 'No image uploaded'], 400);
-    } 
+    }
 
      public function destroy($id)
      {
         $userId = intval($id);
 
-        // delete cart 
+        // delete cart
         $cartSelects = Cart::where(['user_id' => $userId])->get();
         if ($cartSelects) {
-            foreach ($cartSelects as $cartSelect) { 
+            foreach ($cartSelects as $cartSelect) {
                 $cartSelect->delete();
             }
         }
@@ -261,7 +264,7 @@ class StudentController extends Controller
         // course activities
         $totalActivity = CourseActivity::where(['user_id' => $userId])->get();
         if ($totalActivity) {
-            foreach ($totalActivity as $activity) { 
+            foreach ($totalActivity as $activity) {
                 $activity->delete();
             }
         }
@@ -269,7 +272,7 @@ class StudentController extends Controller
          // course likes
          $course_likes = course_like::where(['user_id' => $userId])->get();
          if ($course_likes) {
-             foreach ($course_likes as $course_liked) { 
+             foreach ($course_likes as $course_liked) {
                  $course_liked->delete();
              }
          }
@@ -277,7 +280,7 @@ class StudentController extends Controller
          // course Log
         $course_logs = CourseLog::where(['user_id' => $userId])->get();
         if ($course_logs) {
-            foreach ($course_logs as $course_log) { 
+            foreach ($course_logs as $course_log) {
                 $course_log->delete();
             }
         }
@@ -285,7 +288,7 @@ class StudentController extends Controller
         // course review
         $course_reviews = CourseReview::where(['user_id' => $userId])->get();
         if ($course_reviews) {
-            foreach ($course_reviews as $course_review) { 
+            foreach ($course_reviews as $course_review) {
                 $course_review->delete();
             }
         }
@@ -293,7 +296,7 @@ class StudentController extends Controller
          // course users
         $course_useres = DB::table('course_user')->where(['user_id' => $userId])->get();
         if ($course_useres) {
-            foreach ($course_useres as $course_usere) { 
+            foreach ($course_useres as $course_usere) {
                 DB::table('course_user')
                 ->where('user_id', $userId)
                 ->delete();
@@ -303,13 +306,13 @@ class StudentController extends Controller
         // delete notification for this user
         $user_notifications = Notification::where(['user_id' => $userId])->get();
         if ($user_notifications) {
-            foreach ($user_notifications as $user_notification) { 
+            foreach ($user_notifications as $user_notification) {
                 $user_notification->delete();
             }
-        } 
+        }
 
-        $student = User::find($userId); 
-        
+        $student = User::find($userId);
+
          $studentOldThumbnail = public_path($student->avatar);
          if (file_exists($studentOldThumbnail)) {
              @unlink($studentOldThumbnail);

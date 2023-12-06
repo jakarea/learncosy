@@ -19,7 +19,7 @@
             @endcan
         </a>
         @else
-        <a class="navbar-brand" href="{{ route('login') }}">
+        <a class="navbar-brand" href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">
             @if ( modulesetting('logo') )
                 <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
             @else
@@ -53,8 +53,8 @@
                 </div>
             @else
                 <div class="d-flex" >
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login') }}">Login</a>
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister') }}">Register</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Login</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister', ['subdomain' => config('app.subdomain')]) }}">Register</a>
                 </div>
             @endif
         </div>

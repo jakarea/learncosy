@@ -27,7 +27,7 @@ Login Page
                     </a>
                     <h1>Welcome back</h1>
                     <p>Welcome back! Please enter your details.</p>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('check-login', ['subdomain' => config('app.subdomain')]) }}">
                         @csrf
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>

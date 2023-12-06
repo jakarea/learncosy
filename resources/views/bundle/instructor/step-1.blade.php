@@ -122,10 +122,10 @@ Bundle Course Select
             {{-- course single box end --}}
             @endforeach
 
-            <div class="form-submit-bttns"> 
+            <div class="form-submit-bttns">
                 <a href="{{ url('instructor/bundle/courses/create') }}" class="btn btn-primary px-4 py-2">
                     Next
-                </a> 
+                </a>
             </div>
 
             @else
@@ -192,17 +192,17 @@ Bundle Course Select
     document.addEventListener('DOMContentLoaded', function () {
 
         let currentURL = window.location.href;
-        const baseUrl = currentURL.split('/').slice(0, 3).join('/'); 
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const selectedBundle = document.querySelectorAll('.select-bundle');
- 
+
         selectedBundle.forEach(item => {
             item.addEventListener('click', function() {
 
                 item.disabled = true;
                 item.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i> Please Wait..';
 
-                let courseId = item.getAttribute('data-course-id');  
-                 
+                let courseId = item.getAttribute('data-course-id');
+
                     if (courseId) {
                         fetch(`${baseUrl}/instructor/bundle/courses/select/${courseId}`, {
                                 method: 'POST',
@@ -239,7 +239,7 @@ Bundle Course Select
 
             });
         });
-         
+
 </script>
 
 @endsection

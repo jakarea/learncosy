@@ -21,6 +21,7 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 
 
 Route::middleware(['auth', 'verified', 'role:student'])->prefix('students')->controller(StudentHomeController::class)->group(function () {
+
     Route::get('/dashboard', 'dashboard')->name('students.dashboard')->middleware('page.access');
     Route::get('/dashboard/enrolled', 'enrolled')->name('students.dashboard.enrolled');
     Route::get('/home', 'catalog')->name('students.catalog.courses')->middleware('page.access');

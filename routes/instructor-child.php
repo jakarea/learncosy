@@ -12,9 +12,11 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseBundleController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ModuleSettingController;
 use App\Http\Controllers\CourseCreateStepController;
 use App\Http\Controllers\ProfileManagementController;
+use App\Http\Controllers\SubscriptionPaymentController;
 use App\Http\Controllers\Instructor\DashboardController;
 
 /* ============================================================= */
@@ -99,7 +101,7 @@ Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')
             Route::get('/{id}/facts', 'step1');
             Route::post('/{id}/facts', 'step1c')->name('course.store.step-1');
 
-            Route::get('{id}', 'step3');
+            // Route::get('{id}', 'step3');
             Route::post('{id}', 'step3c');
 
             Route::post('{id}/factsd', 'step3cd')->name('course.module.step.create');

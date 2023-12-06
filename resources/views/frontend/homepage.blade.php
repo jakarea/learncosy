@@ -53,7 +53,7 @@
                                 <a href="{{ route('instructor.dashboard.index') }}"
                                     style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @else
-                                <a href="{{ route('tregister') }}"
+                                <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}"
                                     style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @endif
                         </div>
@@ -244,7 +244,7 @@
                                     <a href="{{ route('instructor.dashboard.index') }}">Get more details!</a>
                                 @endcan
                             @else
-                                <a href="{{ route('login') }}">Get more details!</a>
+                                <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Get more details!</a>
                             @endif
                         </div>
                     </div>
@@ -276,7 +276,7 @@
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>
@@ -328,7 +328,7 @@
                                             style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                     @endcan
                                 @else
-                                    <a href="{{ route('login') }}"
+                                    <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}"
                                         style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                 @endif
                             </div>
@@ -361,7 +361,7 @@
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login', ['subdomain' => config('app.subdomain')])}}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>

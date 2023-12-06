@@ -59,7 +59,8 @@ Course Create - Step 3
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="{{ route('course.store.step-1', [$course ? $course->id : '']) }}" method="POST">
+                {{-- <form action="{{ route('course.store.step-1', [$course ? $course->id : '']) }}" method="POST"> --}}
+                    <form action="{{ route('courses.create.facts', ['id' =>  $course ? $course->id : '', 'subdomain' => config('app.subdomain')]) }}" method="POST">
                     @csrf
                     <div class="content-settings-form-wrap">
                         <h4>Course Information</h4>
@@ -123,7 +124,7 @@ Course Create - Step 3
 @endsection
 {{-- page content @E --}}
 
-@section('script') 
+@section('script')
 <script>
     const titleInput = document.getElementById('title');
         const slugInput = document.getElementById('slug');
@@ -131,7 +132,7 @@ Course Create - Step 3
         titleInput.addEventListener('keyup', function() {
             const titleValue = titleInput.value;
             const slugValue = slugify(titleValue);
-            slugInput.value = slugValue; // Set the slug value 
+            slugInput.value = slugValue; // Set the slug value
         });
 
         function slugify(text) {

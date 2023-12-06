@@ -8,8 +8,8 @@ Login Page
 <link href="{{ asset('assets/css/login/login.css') }}" rel="stylesheet" type="text/css" />
 @if ( modulesetting('lp_bg_image') )
 <style>
-    .login-bg-img{ 
-        background-image:url({{asset('assets/images/setting/'.modulesetting('lp_bg_image'))}});; 
+    .login-bg-img{
+        background-image:url({{asset('assets/images/setting/'.modulesetting('lp_bg_image'))}});;
     }
 </style>
 @endif
@@ -30,10 +30,10 @@ Login Page
                                     <a class="d-flex justify-content-center" href="#"  title="Cosy">
                                         @if ( modulesetting('logo') )
                                             <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" width="180">
-                                            @else 
+                                            @else
                                             <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" width="180">
-                                            @endif 
-                                        </a> 
+                                            @endif
+                                        </a>
                                 </div>
                             </div>
                         </div>
@@ -42,10 +42,10 @@ Login Page
                             <div class="col-10 col-lg-9 col-xl-8 mx-auto {{ modulesetting('lp_layout') == 'fullwidth' || modulesetting('lp_layout') == 'default' ? 'third-bg-primary px-5 py-4' : '' }} {{ modulesetting('lp_layout') == 'default' ? 'bg-white' : '' }}">
                                 <h3 class="fw-600 mb-4">Log In</h3>
                                {{-- ============ main form start ========= --}}
-                               <form method="POST" action="{{ route('login') }}">
+                               <form method="POST" action="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="emailAddress" class="form-label">Email Address</label>  
+                                    <label for="emailAddress" class="form-label">Email Address</label>
                                     <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -54,21 +54,21 @@ Login Page
                                     @enderror
                                 </div>
                                 <div class="mb-3 form--group">
-                                    <label for="password-field" class="form-label">Password</label> 
+                                    <label for="password-field" class="form-label">Password</label>
                                     <input id="password-field" placeholder="*******" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror 
+                                    @enderror
                                     <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
 
                                 </div>
                                 <div class="row mt-4">
-                                    <div class="col"> 
+                                    <div class="col">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        
+
                                             <label class="form-check-label" for="remember">
                                                 {{ __('Remember Me') }}
                                             </label>
@@ -80,7 +80,7 @@ Login Page
                                             <a href="{{ route('password.request') }}" style="color: {{ modulesetting('secondary_color') }}">
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
-                                        @endif  
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="d-grid my-4">
@@ -113,10 +113,10 @@ Login Page
                                         <a class="d-flex" href="#" title="Cosy">
                                             @if ( modulesetting('logo') )
                                             <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" width="180">
-                                            @else 
+                                            @else
                                             <img src="{{asset('assets/images/learncosy-logo.png')}}" alt="Logo" width="180">
                                             @endif
-                                            
+
                                         </a>
                                     </div>
                                 </div>

@@ -50,11 +50,16 @@ class LoginController extends Controller
      */
 
 
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
 
 
 
     public function login(Request $request)
     {
+
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 

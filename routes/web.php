@@ -36,30 +36,30 @@ Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardCo
 
 
 // theme settings register page
-Route::get('/auth-register', function () {
+// Route::get('/auth-register', function () {
 
-    $subdomain = explode('.', request()->getHost())[0];
-    $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
-    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
-    $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
-    $registerPageStyle = json_decode($instrcutorModuleSettings->value ? $instrcutorModuleSettings->value : $value);
+//     $subdomain = explode('.', request()->getHost())[0];
+//     $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
+//     $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
+//     $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
+//     $registerPageStyle = json_decode($instrcutorModuleSettings->value ? $instrcutorModuleSettings->value : $value);
 
-    if ($registerPageStyle) {
-        if ($registerPageStyle->lp_layout == 'fullwidth') {
-            return view('custom-auth/register/register2');
-        } elseif ($registerPageStyle->lp_layout == 'default') {
-            return view('custom-auth/register/register');
-        } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
-            return view('custom-auth/register/register3');
-        } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
-            return view('custom-auth/register/register4');
-        } else {
-            return view('custom-auth/register/register');
-        }
-    } else {
-        return view('custom-auth/register/register');
-    }
-})->name('tregister')->middleware('guest');
+//     if ($registerPageStyle) {
+//         if ($registerPageStyle->lp_layout == 'fullwidth') {
+//             return view('custom-auth/register/register2');
+//         } elseif ($registerPageStyle->lp_layout == 'default') {
+//             return view('custom-auth/register/register');
+//         } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
+//             return view('custom-auth/register/register3');
+//         } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
+//             return view('custom-auth/register/register4');
+//         } else {
+//             return view('custom-auth/register/register');
+//         }
+//     } else {
+//         return view('custom-auth/register/register');
+//     }
+// })->name('tregister')->middleware('guest');
 
 Route::get('/overview-courses/{slug}', [HomepageController::class, 'courseDetails']);
 
@@ -69,32 +69,33 @@ Route::get('/auth/password/reset', function () {
 })->name('auth.password.request')->middleware('guest');
 
 // after registration redirect user
-Route::get('/home', function (Request $request) {
-    // user role
-    $role = Auth::user()->user_role;
+// Route::get('/home', function (Request $request) {
+//     // user role
 
-    // instructor rediretion
-    if ($role == 'instructor' && isset(Auth::user()->email_verified_at)) {
-        return redirect('instructor/dashboard');
-    } elseif ($role == 'instructor' && !isset(Auth::user()->email_verified_at)) {
-        return redirect('instructor/profile/step-1/complete');
-    }
+//     $role = Auth::user()->user_role;
 
-    // admin rediretion
-    if ($role == 'admin') {
-        return redirect('/admin/dashboard');
-    }
+//     // instructor rediretion
+//     if ($role == 'instructor' && isset(Auth::user()->email_verified_at)) {
+//         return redirect('instructor/dashboard');
+//     } elseif ($role == 'instructor' && !isset(Auth::user()->email_verified_at)) {
+//         return redirect('instructor/profile/step-1/complete');
+//     }
 
-    // students rediretion
-    if ($role == 'student') {
-        return redirect('/students/dashboard');
-    }
+//     // admin rediretion
+//     if ($role == 'admin') {
+//         return redirect('/admin/dashboard');
+//     }
 
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect('/');
-})->name('home')->middleware('auth');
+//     // students rediretion
+//     if ($role == 'student') {
+//         return redirect('/students/dashboard');
+//     }
+
+//     Auth::logout();
+//     $request->session()->invalidate();
+//     $request->session()->regenerateToken();
+//     return redirect('/');
+// })->name('home')->middleware('auth');
 
 // auth route
 Auth::routes(['verify' => true]);

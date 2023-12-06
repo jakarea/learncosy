@@ -375,7 +375,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form">
-                                                            <form action="{{ route('certificate.update') }}"
+                                                            <form action="{{ route('certificate.update', config('app.subdomain')) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
@@ -629,7 +629,7 @@
                                                                                     alt="img" class="img-fluid"></a>
 
                                                                             <form class="d-inline"
-                                                                                action="{{route('certificate.delete',$certificate->id)}}"
+                                                                                action="{{route('certificate.delete', ['id' => $certificate->id, 'subdomain' => config('app.subdomain')])}}"
                                                                                 method="post">
                                                                                 @csrf
 
@@ -670,7 +670,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form create-certificate-form-2">
-                                                            <form action="{{ route('certificate.generate') }}"
+                                                            <form action="{{ route('certificate.generate', config('app.subdomain')) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
@@ -1016,7 +1016,7 @@
                                             <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
                                                 @if (isVimeoConnected()[1] == 'Connected')
                                                     Connected
-                                                @else 
+                                                @else
                                                     Connect
                                                 @endif
                                             </a>
@@ -1036,7 +1036,7 @@
                                             <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
                                                 @if (isConnectedWithStripe()[1] == 'Connected')
                                                     Connected
-                                                @else 
+                                                @else
                                                     Connect
                                                 @endif
                                             </a>
@@ -1055,7 +1055,7 @@
                             {{-- password tab start --}}
                             <div class="row user-add-form-wrap user-add-form-wrap-2 mt-0">
                                 <div class="col-12">
-                                    <form action="{{ route('instructor.password.update',$user->id) }}" method="POST">
+                                    <form action="{{ route('instructor.password.update', ['id' => $user->id, 'subdomain' => config('app.subdomain')]) }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -1096,7 +1096,7 @@
                                                 <div class="form-submit-bttns">
                                                     <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                     <button type="submit" class="btn btn-submit">Save Changes</button>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1127,11 +1127,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.vimeo.update') }}" method="POST">
+                            <form action="{{ route('instructor.vimeo.update', config('app.subdomain')) }}" method="POST">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group">
-                                        <label for="client_id">CLIENT ID 
+                                        <label for="client_id">CLIENT ID
                                         </label>
                                         <input type="text" class="form-control" placeholder="Enter Client ID"
                                             name="client_id" value="{{ isVimeoConnected()[0]->client_id ?? '' }}">
@@ -1174,12 +1174,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.stripe.update') }}" method="post">
+                            <form action="{{ route('instructor.stripe.update', config('app.subdomain')) }}" method="post">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group mb-3">
                                         <label for="stripe_public_key">STRIPE KEY
-                                             
+
                                         </label>
                                         <input type="text" class="form-control" name="stripe_public_key"
                                             placeholder="Enter Secret Key"
@@ -1240,9 +1240,9 @@
 
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.classList.add('img-fluid', 'd-block', 'avatar-preview'); 
-                
-                
+                img.classList.add('img-fluid', 'd-block', 'avatar-preview');
+
+
                 imageContainer.appendChild(img);
 
                 const closeIcon = document.createElement('a');
@@ -1490,7 +1490,7 @@
 
         });
     });
-     
+
 </script>
 
 <script>
@@ -1507,7 +1507,7 @@
 
         });
     });
-     
+
 </script>
 
 {{-- tab open js --}}
@@ -1577,28 +1577,28 @@
         else if (tabToOpen == 'profile') {
             tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
             tabLinks.forEach(tab => tab.classList.remove('active'));
-            
+
             homesTabLink.classList.add('active');
             homesTabContent.classList.add('show', 'active');
         }
- 
+
     });
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
           var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
-          var currentParam = '';  
-        
+          var currentParam = '';
+
           tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('click', function(event) {
-              event.preventDefault(); 
-              var param = tabLink.getAttribute('data-param'); 
-              if (param !== currentParam) { 
+              event.preventDefault();
+              var param = tabLink.getAttribute('data-param');
+              if (param !== currentParam) {
                 var currentURL = window.location.href;
-                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
-                window.history.pushState(null, '', newURL); 
-                currentParam = param; 
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param;
+                window.history.pushState(null, '', newURL);
+                currentParam = param;
               }
             });
           });
@@ -1608,17 +1608,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
           var tabLinks = document.querySelectorAll('.inner-tab .nav-link');
-          var currentParam = '';  
-        
+          var currentParam = '';
+
           tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('click', function(event) {
-              event.preventDefault(); 
-              var param = tabLink.getAttribute('data-params'); 
-              if (param !== currentParam) { 
+              event.preventDefault();
+              var param = tabLink.getAttribute('data-params');
+              if (param !== currentParam) {
                 var currentURL = window.location.href;
-                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
-                window.history.pushState(null, '', newURL); 
-                currentParam = param; 
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param;
+                window.history.pushState(null, '', newURL);
+                currentParam = param;
               }
             });
           });

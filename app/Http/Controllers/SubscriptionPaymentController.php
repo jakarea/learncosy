@@ -7,10 +7,10 @@ use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
-use App\Models\SubscriptionPackage; 
+use App\Models\SubscriptionPackage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Charge; 
+use Stripe\Charge;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SubscriptionPaymentController extends Controller
@@ -32,8 +32,8 @@ class SubscriptionPaymentController extends Controller
 
         return view('subscription/instructor/list',compact('packages','activePackageId'));
     }
-    
-    public function createPayment($id){
+
+    public function createPayment($domain, $id){
         $package = SubscriptionPackage::findorfail($id);
         return view('subscription/payment/payment',compact('package'));
     }
@@ -81,7 +81,7 @@ class SubscriptionPaymentController extends Controller
 
                 $pdf = PDF::loadView('emails.package.subscribe', ['data' => $package, 'subscription' => $subscription]);
                 $pdfContent = $pdf->output();
-        
+
                 // Send the email with the PDF attachment
                 $mailInfo = Mail::send('emails.invoice', ['data' => $package, 'subscription' => $subscription], function($message) use ($package, $pdfContent, $subscription) {
                     $message->to(auth()->user()->email)
@@ -94,7 +94,7 @@ class SubscriptionPaymentController extends Controller
                 }else{
                     return redirect('instructor/profile/step-3/complete')->with('success', 'Subscribed Successfully');
                 }
-                
+
             }
 
         } catch (\Exception $e) {
@@ -108,7 +108,7 @@ class SubscriptionPaymentController extends Controller
         //
         return redirect()->route('instructor.dashboard.index')->with('error', 'Subscription cancelled');
     }
-    public function status($id)
+    public function status($doamin, $id)
     {
         //
         $subscription = Subscription::where('subscription_packages_id',$id)->where('instructor_id',Auth::user()->id)->latest('created_at')->first();

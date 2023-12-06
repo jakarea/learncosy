@@ -6,14 +6,14 @@
 {{-- page style @S --}}
 @section('style')
     <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('latest/assets/admin-css/ins-dashboard.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
 @section('content')
     <main class="user-profile-view-page">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             {{-- profile information @S --}}
             <div class="row">
                 <div class="col-lg-8">
@@ -38,13 +38,13 @@
                             <div class="upload-form">
                                 <button id="cancelBtn" class="d-none btn common-bttn" type="button">Cancel</button>
                                 <button id="uploadBtn" class="d-none btn common-bttn" type="button">Save</button>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         {{-- user cover photo --}}
                         <div class="media">
-                            @if ($user->avatar) 
+                            @if ($user->avatar)
                                 <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
-                        
+
                             @else
                                 <span class="avatar-box">{!! strtoupper($user->name[0]) !!}</span>
                             @endif
@@ -55,17 +55,17 @@
                             <a href="{{ url('/instructor/profile/account-settings') }}" class="edit-profile">Edit
                                 Profile</a>
                         </div>
-                    </div> 
+                    </div>
                         <div class="user-details-box">
-                            <h5>About Me</h5> 
+                            <h5>About Me</h5>
                             {!! $user->description !!}
-                        </div> 
+                        </div>
 
                     <div class="user-expperience-box">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4>Experiences</h4>
                             <div>
-                                <a href="{{ route('account.settings', ['tab' => 'experience']) }}"><img
+                                <a href="{{ route('account.settings', ['tab' => 'experience', 'subdomain' => config('app.subdomain') ]) }}"><img
                                         src="{{ asset('latest/assets/images/icons/plus.svg') }}" alt="img"
                                         class="img-fluid"></a>
                             </div>
@@ -119,7 +119,7 @@
                                     <a href="#">{{ $user->phone ? $user->phone : '--' }}</a>
                                 </div>
                             </div>
-                        @endif 
+                        @endif
                         @if ($user->short_bio)
                             <div class="media">
                                 <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email"
@@ -129,11 +129,11 @@
                                     <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
                                 </div>
                             </div>
-                        @endif 
+                        @endif
                         @php
                         $social_links = explode(",", $user->social_links);
                         use Illuminate\Support\Str;
-                        @endphp 
+                        @endphp
 
                         @foreach ($social_links as $social_link)
                         @php
@@ -141,8 +141,8 @@
                         $host = parse_url($url, PHP_URL_HOST);
                         $domain = Str::after($host, 'www.');
                         $domain = Str::before($domain, '.');
-                        @endphp 
-                        
+                        @endphp
+
                         <div class="media">
                             @if ($domain == 'linkedin')
                             <img src="{{ asset('latest/assets/images/icons/linkedin.svg') }}" alt="linkedin" class="img-fluid">
@@ -157,7 +157,7 @@
                             @else
                             <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="linkedin" class="img-fluid">
                             @endif
-                            
+
                             <div class="media-body">
                                 <h6 class="text-capitalize">{{ $domain ? $domain : '' }}</h6>
                                 <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '' }}</a>
@@ -214,8 +214,8 @@
 
     // Handle upload button click
     uploadBtn.addEventListener('click', function () {
-        const file = bannerInput.files[0]; 
-        uploadFile(file); 
+        const file = bannerInput.files[0];
+        uploadFile(file);
 
     });
 
@@ -250,38 +250,38 @@
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
-        if (file) { 
+        if (file) {
 
             const formData = new FormData();
-            formData.append('cover_photo', file); 
-            
+            formData.append('cover_photo', file);
+
             cancelBtn.classList.add('d-none');
             uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> Uploading`;
- 
+
             fetch(`${baseUrl}/instructor/profile/cover/upload`, {
-                    method: 'POST', 
+                    method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
                 })
                 .then(response => response.json())
-                .then(data => { 
+                .then(data => {
                     if (data.message === 'UPLOADED') {
                         uploadBtn.innerHTML = `Save`;
                         uploadBtn.classList.add('d-none');
                         cancelBtn.classList.add('d-none');
                     }
                 })
-                .catch(error => { 
+                .catch(error => {
                     uploadBtn.innerHTML = `Failed`;
                 });
         }
     }
 
     // Function to handle cancel button click
-    function cancelUpload() { 
-    const userCoverPhoto = "{{ $user->cover_photo ?? null }}"; 
+    function cancelUpload() {
+    const userCoverPhoto = "{{ $user->cover_photo ?? null }}";
     coverImg.src = userCoverPhoto
         ? "{{ asset('') }}" + userCoverPhoto
         : "{{ asset('latest/assets/images/cover.svg') }}";
@@ -292,9 +292,9 @@
     // Hide the upload and cancel buttons
     uploadBtn.classList.add('d-none');
     cancelBtn.classList.add('d-none');
-} 
+}
 });
 </script>
- 
+
 @endsection
 {{-- script --}}

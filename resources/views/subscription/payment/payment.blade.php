@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <form
             role="form"
-            action="{{ route('instructor.subscription.payment') }}"
+            action="{{ route('instructor.subscription.payment', ['subdomain' => config('app.subdomain') ]) }}"
             method="post"
             class="require-validation needs-validation"
             data-cc-on-file="false"
