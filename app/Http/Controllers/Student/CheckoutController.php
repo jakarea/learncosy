@@ -27,7 +27,7 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($slug)
+    public function index($domain ,$slug)
     {
         //
         // $cart = Cart::select('course_id')->where('user_id', auth()->id())->get();
@@ -52,10 +52,11 @@ class CheckoutController extends Controller
         $checkout = $course->checkouts()->where('user_id', auth()->user()->id)->first();
 
         if($checkout){
-            return redirect()->route('students.show.courses', $course->slug)->with('error', 'You have already enrolled in this course');
+            return redirect()->route('students.show.courses', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])->with('error', 'You have already enrolled in this course');
         }
 
         // Create a checkout session
+
         $checkout_session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -70,8 +71,8 @@ class CheckoutController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('checkout.success', $course->slug) . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('checkout.cancel', $course->slug),
+            'success_url' => route('checkout.success', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('checkout.cancel', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]),
         ]);
 
         return redirect($checkout_session->url);
@@ -86,7 +87,7 @@ class CheckoutController extends Controller
         foreach ($courses as $course) {
             Stripe::setApiKey( $course->user->stripe_secret_key);
             if($course->user->stripe_secret_key == null){
-                return redirect()->route('students.show.courses', $course->slug)->with('error', 'Instructor has not connected with stripe yet. Remove that course from cart first please');
+                return redirect()->route('students.show.courses', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])->with('error', 'Instructor has not connected with stripe yet. Remove that course from cart first please');
             }
             $courseTitles[] = $course->title;
 
@@ -120,8 +121,8 @@ class CheckoutController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => route('checkout.success', $idsString ) . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('checkout.cancel', $idsString ),
+            'success_url' => route('checkout.success', ['slug' => $idsString, 'subdomain' => config('app.subdomain') ] ) . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('checkout.cancel', ['slug' => $idsString, 'subdomain' => config('app.subdomain') ] ),
         ]);
 
         return redirect($checkout_session->url);
@@ -203,7 +204,7 @@ class CheckoutController extends Controller
             } catch (\Exception $e) {
                 // Handle any exceptions that occur during the process
                 // return redirect()->route('students.show.courses', $slug)->with('error', $e->getMessage());
-                return redirect()->route('students.catalog.courses')->with('error', $e->getMessage());
+                return redirect()->route('students.catalog.courses', config('app.subdomain') )->with('error', $e->getMessage());
 
             }
 
@@ -213,7 +214,7 @@ class CheckoutController extends Controller
         foreach ($cartItems as $cartItem) {
             $cartItem->delete();
         }
- 
+
         // set notification for instructor
         // $notify = new Notification([
         //     'user_id'   => Auth::user()->id,
@@ -236,7 +237,7 @@ class CheckoutController extends Controller
         // });
 
 
-        return redirect()->route('students.catalog.courses')->with('success', 'You have successfully enrolled in this course');
+        return redirect()->route('students.catalog.courses', config('app.subdomain') )->with('success', 'You have successfully enrolled in this course');
 
     }
 
@@ -249,7 +250,7 @@ class CheckoutController extends Controller
     public function cancel($slug)
     {
         //
-        return redirect()->route('students.show.courses', $slug)->with('error', 'You have cancelled the payment');
+        return redirect()->route('students.show.courses', ['slug' => $slug, 'subdomain' => config('app.subdomain') ])->with('error', 'You have cancelled the payment');
     }
 
     /**

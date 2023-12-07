@@ -84,17 +84,17 @@ $i = 0;
                         {!! $course->description !!}
                     </div>
                 </div>
-               
+
                 <div class="download-files-box">
                     <h4>Download Files </h4>
-                    <div id="dataTextContainer" class="mb-3"> 
+                    <div id="dataTextContainer" class="mb-3">
                     </div>
                     @if(!empty($group_files))
-                   
-                    
+
+
                     <div class="files">
                         @foreach($group_files as $fileExtension)
-                        <a href="{{ route('file.download', [$course->id,$fileExtension]) }}">
+                        <a href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
                             {{strtoupper($fileExtension)}}<img
                                 src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title=""
                                 class="img-fluid">
@@ -112,7 +112,7 @@ $i = 0;
                     </div>
                     @endif
                 </div>
-                
+
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -126,7 +126,7 @@ $i = 0;
                         <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
                         @endif
                         <div class="media-body">
-                            <form action="{{ route('students.review.courses', $course->slug) }}" method="POST"
+                            <form action="{{ route('students.review.courses', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
@@ -219,7 +219,7 @@ $i = 0;
                                         @foreach ($module->lessons as $lesson)
                                         <li>
                                             @if (!isEnrolled($course->id))
-                                            <a href="{{ route('students.checkout', $course->slug) }}"
+                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
                                                 class="video_list_play d-inline-block">
                                                 <i class="fas fa-lock"></i>
                                                 {{ $lesson->title }}
@@ -252,9 +252,9 @@ $i = 0;
                                                 @elseif($lesson->type == 'video')
                                                 <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
                                                 <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                @endif  
+                                                @endif
 
-                                                {{ $lesson->title }} 
+                                                {{ $lesson->title }}
                                             </a>
                                             @endif
                                         </li>
@@ -273,7 +273,7 @@ $i = 0;
                     class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
                 @endif
                 @if (!isEnrolled($course->id))
-                <form action="{{ route('students.checkout', $course->slug) }}" method="GET">
+                <form action="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}" method="GET">
                     <input type="hidden" name="course_id" value="{{ $course->id }}">
                     <input type="hidden" name="price" value="{{ $course->price }}">
                     <input type="hidden" name="instructor_id" value="{{ $course->instructor_id }}">
@@ -360,7 +360,7 @@ $i = 0;
                 moduleId: firstModuleId
             };
             $.ajax({
-                url: '{{ route('students.log.courses') }}',
+                url: '{{ route('students.log.courses', config('app.subdomain') ) }}',
                 method: 'GET',
                 data: data,
                 success: function(response) {
@@ -387,12 +387,12 @@ $i = 0;
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault();
- 
+
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
 
                 let type = this.getAttribute('data-lesson-type');
-               
+
                 if(type == 'video'){
                     document.querySelector('.video-iframe-vox').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
@@ -405,12 +405,12 @@ $i = 0;
                     var courseId = $(this).data('course-id');
                     var lessonId = $(this).data('lesson-id');
                     var moduleId = $(this).data('modules-id');
-                    var videoUrl = $(this).attr('href'); 
+                    var videoUrl = $(this).attr('href');
 
                         // console.log({videoUrl})
                         videoUrl = videoUrl.replace('/videos/', '');
                         player.loadVideo(videoUrl);
-                        
+
                     @else
                         alert('Please enroll the course');
                     @endif
@@ -419,23 +419,23 @@ $i = 0;
                     player.pause();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');  
+                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');
                     let audioPlayer = document.getElementById('audioPlayer');
                     let audioSource = audioPlayer.querySelector('source');
-                    audioSource.src = laravelURL; 
-                    audioPlayer.load(); 
-                    audioPlayer.play(); 
+                    audioSource.src = laravelURL;
+                    audioPlayer.load();
+                    audioPlayer.play();
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
 
                 }else if(type == 'text'){
-                    player.pause(); 
+                    player.pause();
                     audioPlayer.pause();
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
 
-                   let lessonId =  this.getAttribute('data-lesson-id') 
+                   let lessonId =  this.getAttribute('data-lesson-id')
 
                     fetch(`${baseUrl}/students/lessons/${lessonId}`, {
                         method: 'GET',
@@ -445,7 +445,7 @@ $i = 0;
                         },
                     })
                     .then(response => response.json())
-                    .then(data => {  
+                    .then(data => {
                          document.getElementById('dataTextContainer').innerHTML = data.text;
 
                     })
@@ -455,14 +455,14 @@ $i = 0;
 
 
                 }
- 
+
                 var data = {
                     courseId: courseId,
                     lessonId: lessonId,
                     moduleId: moduleId
                 };
                 $.ajax({
-                    url: '{{ route('students.log.courses') }}',
+                    url: '{{ route('students.log.courses', config('app.subdomain')) }}',
                     method: 'GET',
                     data: data,
                     success: function(response) {
@@ -493,7 +493,7 @@ $i = 0;
                     var $element = $(this); // Store reference to $(this) in a variable
 
                     $.ajax({
-                        url: '{{ route('students.complete.lesson') }}',
+                        url: '{{ route('students.complete.lesson', config('app.subdomain')) }}',
                         method: 'GET',
                         data: data,
                         beforeSend: function() {

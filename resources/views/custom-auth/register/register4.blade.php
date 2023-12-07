@@ -117,9 +117,9 @@
                         <h6 class="or">or</h6>
 
                         <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}"
+                            <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}"
                                     alt="google" class="img-fluid"> Sign up with Google</a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
+                            <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
                                     alt="google" class="img-fluid"></a>
                             <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}"
                                     alt="google" class="img-fluid"></a>

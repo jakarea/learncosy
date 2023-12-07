@@ -27,7 +27,7 @@ Login Page
                     </a>
                     <h1>Welcome back</h1>
                     <p>Welcome back! Please enter your details.</p>
-                    <form method="POST" action="{{ route('check-login', ['subdomain' => config('app.subdomain')]) }}">
+                    <form method="POST" action="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">
                         @csrf
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
@@ -75,8 +75,8 @@ Login Page
                             <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
                         </div>
 
-                        <a href="{{ url('login/facebook') }}">Facebook / </a>
-                        <a href="{{ url('login/google') }}">Google</a>
+                        {{-- <a href="{{ url('login/facebook') }}">Facebook / </a>
+                        <a href="{{ url('login/google') }}">Google</a> --}}
 
 
                     </form>

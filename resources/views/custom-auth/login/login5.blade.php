@@ -119,8 +119,8 @@
                             <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                     class="img-fluid"></a>
                             <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
-                                    alt="google" class="img-fluid"></a>
-                            <a href="{{ url('login/apple') }}"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                                    alt="facebook" class="img-fluid"></a>
+                            <a href="javascript:;"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="apple"
                                         class="img-fluid"></a>
                         </div>
 

@@ -2,14 +2,14 @@
     <div class="container">
         @if ( Auth::check() )
             @can('student')
-            <a class="navbar-brand" href="{{ route('students.dashboard')}}">
+            <a class="navbar-brand" href="{{ route('students.dashboard', config('app.subdomain') )}}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
                 @else
                     <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
                 @endif
             @else
-            <a class="navbar-brand" href="{{ route('instructor.dashboard.index') }}">
+            <a class="navbar-brand" href="{{ route('instructor.dashboard.index', config('app.subdomain')) }}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset('assets/images/setting/'.modulesetting('logo'))}}" alt="Logo" class="-img-fluid">
                 @else

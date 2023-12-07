@@ -1,18 +1,15 @@
 <?php
-use Illuminate\Http\Request;
-use App\Models\User;
+
 use App\Models\SubscriptionPackage;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\InstructorModuleSetting;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseBundleController;
@@ -51,74 +48,9 @@ Route::get('/courses/{slug}', [HomepageController::class, 'homeInstructorCourseD
 
 
 
-
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
-// Route::middleware(['auth', 'verified', 'role:instructor'])->prefix('instructor')->group(function () {
-
-Route::domain('{subdomain}.' . $domain)->group(function () {
-    Route::get('/auth-register', function () {
-        $subdomain = explode('.', request()->getHost())[0];
-        $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
-        $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
-        $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
-        $registerPageStyle = json_decode($instrcutorModuleSettings->value ? $instrcutorModuleSettings->value : $value);
-
-        if ($registerPageStyle) {
-            if ($registerPageStyle->lp_layout == 'fullwidth') {
-                return view('custom-auth/register/register2');
-            } elseif ($registerPageStyle->lp_layout == 'default') {
-                return view('custom-auth/register/register');
-            } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
-                return view('custom-auth/register/register3');
-            } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
-                return view('custom-auth/register/register4');
-            } else {
-                return view('custom-auth/register/register');
-            }
-        } else {
-            return view('custom-auth/register/register');
-        }
-    })->name('tregister')->middleware('guest');
-
-
-    Route::get('/login',[LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login',[LoginController::class, 'login'])->name('check-login');
-});
-
 Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
-
-
-    Route::get('/home', function (Request $request) {
-        // user role
-
-        $role = Auth::user()->user_role;
-
-        // instructor rediretion
-        if ($role == 'instructor' && isset(Auth::user()->email_verified_at)) {
-            return redirect('instructor/dashboard');
-        } elseif ($role == 'instructor' && !isset(Auth::user()->email_verified_at)) {
-            return redirect('instructor/profile/step-1/complete');
-        }
-
-        // admin rediretion
-        if ($role == 'admin') {
-            return redirect('/admin/dashboard');
-        }
-
-        // students rediretion
-        if ($role == 'student') {
-            return redirect('/students/dashboard');
-        }
-
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
-    })->name('home')->middleware('auth');
-
-
-
 
     Route::group(['middleware' => ['subscription.check']], function () {
 
@@ -363,13 +295,8 @@ Route::middleware(['auth', 'verified'])->prefix('instructor/subscription')->cont
 
 
 
-
-
-
-
-
-Route::match(['get', 'post'], '/logout', function () {
-    Auth::logout();
-    session()->regenerate(); // Regenerate the session ID
-    return redirect('/');
-})->name('logout');
+// Route::match(['get', 'post'], '/logout', function () {
+//     Auth::logout();
+//     session()->regenerate(); // Regenerate the session ID
+//     return redirect('/');
+// })->name('logout');

@@ -95,7 +95,7 @@ class StudentHomeController extends Controller
 
         if ($enrolments) {
             foreach ($enrolments as $enrolment) {
-                if ($enrolment->course) { 
+                if ($enrolment->course) {
                     $allCourses = StudentActitviesProgress(auth()->user()->id, $enrolment->course->id);
 
                     if ($allCourses == 0) {
@@ -294,7 +294,7 @@ class StudentHomeController extends Controller
     }
 
     // course show
-    public function show($slug)
+    public function show($domain,$slug)
     {
 
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
@@ -338,7 +338,7 @@ class StudentHomeController extends Controller
         }
     }
 
-    public function fileDownload($course_id,$file_extension){
+    public function fileDownload($domain,$course_id,$file_extension){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
@@ -413,7 +413,7 @@ class StudentHomeController extends Controller
         }
     }
 
-    public function certificateDownload($slug)
+    public function certificateDownload($domain, $slug)
     {
             $course = Course::where('slug', $slug)
             ->with('certificate')
@@ -512,7 +512,7 @@ class StudentHomeController extends Controller
     }
 
     // course overview
-    public function overview($slug)
+    public function overview( $domain,$slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $promo_video_link = '';
@@ -559,7 +559,7 @@ class StudentHomeController extends Controller
     }
 
       // my course details
-        public function courseDetails($slug){
+    public function courseDetails($domain, $slug){
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
 
@@ -662,7 +662,7 @@ class StudentHomeController extends Controller
         return view('e-learning/course/students/activity', compact('courseActivities'));
     }
 
-    public function review(Request $request,$slug){
+    public function review(Request $request, $domain, $slug){
         $userId = Auth()->user()->id;
         $lessons = Lesson::orderby('id', 'desc')->paginate(10);
         $modules = Module::orderby('id', 'desc')->paginate(10);
@@ -694,7 +694,7 @@ class StudentHomeController extends Controller
                 $notify->save();
         }
 
-        return redirect()->route('students.show.courses',$slug)->with('message', 'comment submitted successfully!');
+        return redirect()->route('students.show.courses', ['slug' => $slug, 'subdomain' => config('app.subdomain') ] )->with('message', 'comment submitted successfully!');
     }
 
     public function certificate()
