@@ -18,7 +18,6 @@ use Intervention\Image\Facades\Image;
 class CourseCreateStepController extends Controller
 {
     public function start(){
-
         return view('e-learning/course/instructor/create/step-0');
     }
 
@@ -40,7 +39,11 @@ class CourseCreateStepController extends Controller
         return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started Successfuly');
     }
 
-    public function step1($id){
+    public function step1($subdomain, $id){
+
+        // return 23456;
+
+        // return $id;
 
         if(!$id){
             return redirect('instructor/courses');
@@ -51,7 +54,7 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-1',compact('course'));
     }
 
-    public function step1c(Request $request, $id){
+    public function step1c(Request $request, $subdomain, $id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -73,7 +76,7 @@ class CourseCreateStepController extends Controller
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
         $platform = $request->input('platform');
- 
+
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
@@ -94,11 +97,12 @@ class CourseCreateStepController extends Controller
 
         $course->save();
 
-        return redirect('instructor/courses/create/'.$id.'/objects')->with('success', 'Course Facts Info Saved successfully');
+
+        return redirect()->route('course.create.object', ['id' =>  $id, 'subdomain' => config('app.subdomain')])->with('success', 'Course Facts Info Saved successfully');
     }
 
 
-    public function step3($id){
+    public function step3($subdomain,$id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -108,8 +112,8 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-6',compact('modules'));
     }
 
-    public function step3c(Request $request, $id)
-    { 
+    public function step3c(Request $request, $subdomain, $id)
+    {
 
          if(!$id){
             return redirect('instructor/courses');
@@ -135,7 +139,7 @@ class CourseCreateStepController extends Controller
 
         if ($lesson->type == 'audio') {
             return redirect('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id)->with('info', 'Set The audio to complete this Lesson');
-            
+
         }elseif($lesson->type == 'video'){
             return redirect('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id)->with('info', 'Upload The video to complete this Lesson');
 
@@ -147,7 +151,7 @@ class CourseCreateStepController extends Controller
 
     }
 
-    public function step3cd(Request $request, $id){
+    public function step3cd(Request $request,$subdomain, $id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -170,7 +174,7 @@ class CourseCreateStepController extends Controller
         return redirect()->back()->with('success', 'Module Created successfully');
     }
 
-    public function step3cu(Request $request, $id){
+    public function step3cu(Request $request, $subdomain,$id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -195,7 +199,7 @@ class CourseCreateStepController extends Controller
         return redirect()->back()->with('success', 'Module Updated successfully');
     }
 
-    public function step3d(Request $request, $id){
+    public function step3d(Request $request, $subdomain,$id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -223,7 +227,7 @@ class CourseCreateStepController extends Controller
         return redirect()->back()->with('success', 'Lesson Updated successfully');
     }
 
-    public function stepLessonText($course_id,$module_id,$lesson_id){
+    public function stepLessonText($subdomain,$course_id,$module_id,$lesson_id){
 
         if(!$lesson_id){
             return redirect('instructor/courses');
@@ -234,7 +238,7 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
     }
 
-    public function stepLessonContent(Request $request, $lesson_id){
+    public function stepLessonContent(Request $request, $subdomain,$lesson_id){
 
         if(!$lesson_id){
             return redirect('instructor/courses');
@@ -251,16 +255,16 @@ class CourseCreateStepController extends Controller
 
         if ($request->hasFile('lesson_file')) {
             $uploadedFilenames = [];
-        
+
             foreach ($request->file('lesson_file') as $file) {
                 $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
-        
+
 
         $lesson->save();
 
@@ -280,33 +284,33 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-3',compact('course','lesson'));
     }
 
-    public function stepLessonAudio($id,$module_id,$lesson_id){
+    public function stepLessonAudio($subdomain,$id,$module_id,$lesson_id){
 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
-        } 
+        }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-4',compact('lesson'));
     }
 
-    public function stepLessonAudioSet(Request $request, $id, $module_id, $lesson_id){
+    public function stepLessonAudioSet(Request $request,$subdomain, $id, $module_id, $lesson_id){
 
         if (!$id) {
             return redirect('instructor/courses');
         }
-        
+
         $request->validate([
             'description' => 'string',
             'audio' => 'mimes:mp3,wav|max:50000',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
 
         ]);
-        
+
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $lesson->short_description = $request->input('description');
-        
+
         // Handle audio file upload
         if ($request->hasFile('audio')) {
             // Check if a previous audio file exists and delete it
@@ -316,33 +320,33 @@ class CourseCreateStepController extends Controller
                     unlink($previousAudioPath);
                 }
             }
-        
+
             $audio = $request->file('audio');
             $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
             $lesson->audio = 'uploads/audio/'.$audioName;
         }
-        
+
         $uploadedFilenames = [];
-        
+
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
-        
+
         $lesson->save();
-        
+
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
-        
+
     }
 
-    public function stepLessonVideo($id,$module_id,$lesson_id)
+    public function stepLessonVideo($subdomain,$id,$module_id,$lesson_id)
     {
         // return 2345;
         if(!$id){
@@ -355,31 +359,31 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
 
-    public function stepLessonVideoSet(Request $request, $id,$module_id,$lesson_id)
+    public function stepLessonVideoSet(Request $request, $subdomain,$id,$module_id,$lesson_id)
     {
 
         $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
             // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
             'video_link.max' => 'Max file size is 1 GB!',
         ]);
-        
-        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
+
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $lesson->short_description = $request->input('description');
 
         $uploadedFilenames = [];
-        
+
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
 
@@ -418,77 +422,79 @@ class CourseCreateStepController extends Controller
         }
     }
 
-    public function courseObjects($id){
+    public function courseObjects($subdomain, $id){
+
+        // return $id;
 
         if(!$id){
             return redirect('instructor/courses');
         }
 
-        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail(); 
+        $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/objects',compact('course'));
     }
 
-    public function courseObjectsSet(Request $request, $id){
+    public function courseObjectsSet(Request $request, $subdomain,$id){
 
 
-       $data = $request->json()->all(); 
- 
+       $data = $request->json()->all();
+
        if ($data['dataIndex'] != null) {
 
         $dataIndex = $data['dataIndex'];
         $dataObjective = $data['objective'];
 
-        $course = Course::findOrFail($id); 
-            
-        $existingObjectives = explode('[objective]', $course->objective); 
+        $course = Course::findOrFail($id);
+
+        $existingObjectives = explode('[objective]', $course->objective);
         $existingObjectives[$dataIndex] = $dataObjective;
 
         $updatedObjectiveString = implode('[objective]', $existingObjectives);
 
         $trimmedStringUp = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $updatedObjectiveString);
-    
+
         $course->objective = $trimmedStringUp;
-        $course->save(); 
+        $course->save();
 
         return response()->json([
             'message' => 'UPDATED'
         ]);
 
-       }else{ 
+       }else{
 
-            $course = Course::findOrFail($id); 
-            
-            $existingObjectives = explode('[objective]', $course->objective); 
+            $course = Course::findOrFail($id);
+
+            $existingObjectives = explode('[objective]', $course->objective);
             $newObjectives = [$data['objective']];
-    
-            $allObjectives = array_merge($existingObjectives, $newObjectives); 
-    
+
+            $allObjectives = array_merge($existingObjectives, $newObjectives);
+
             $newObjectiveString = implode('[objective]', $allObjectives);
 
             $trimmedString = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $newObjectiveString);
-    
+
             $course->objective = $trimmedString;
             $course->save();
 
             return response()->json([
                 'message' => 'ADDED'
             ]);
-       } 
+       }
     }
 
-    public function deleteObjective(Request $request, $id,$index)
-    { 
+    public function deleteObjective(Request $request, $subdomain,$id,$index)
+    {
         // return  $index;
 
         $course = Course::findOrFail($id);
         $existingObjectives = explode('[objective]', $course->objective);
- 
-        if (isset($existingObjectives[$index])) { 
+
+        if (isset($existingObjectives[$index])) {
             unset($existingObjectives[$index]);
-             
+
             $existingObjectives = array_values($existingObjectives);
- 
+
             $course->objective = implode('[objective]', $existingObjectives);
             $course->save();
 
@@ -505,7 +511,7 @@ class CourseCreateStepController extends Controller
 
     }
 
-    public function coursePrice($id){
+    public function coursePrice($subdomain,$id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -515,7 +521,7 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-7',compact('course'));
     }
 
-    public function coursePriceSet(Request $request, $id){
+    public function coursePriceSet(Request $request,$subdomain, $id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -536,7 +542,7 @@ class CourseCreateStepController extends Controller
 
     }
 
-    public function courseDesign($id){
+    public function courseDesign($subdomain,$id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -547,7 +553,7 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-8',compact('course'));
     }
 
-    public function courseDesignSet(Request $request,$id){
+    public function courseDesignSet(Request $request,$subdomain, $id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -564,7 +570,7 @@ class CourseCreateStepController extends Controller
 
         $slugg = Str::slug(Auth::user()->name);
 
-        if ($request->hasFile('thumbnail')) { 
+        if ($request->hasFile('thumbnail')) {
             if ($course->thumbnail) {
                $oldFile = public_path($course->thumbnail);
                if (file_exists($oldFile)) {
@@ -587,7 +593,7 @@ class CourseCreateStepController extends Controller
     }
 
 
-    public function courseCertificate($id){
+    public function courseCertificate($subdomain,$id){
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -598,7 +604,7 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-9',compact('course','certificates'));
     }
 
-    public function courseCertificateSet(Request $request, $id){
+    public function courseCertificateSet(Request $request, $subdomain, $id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -612,8 +618,8 @@ class CourseCreateStepController extends Controller
         $certificateStyle = Certificate::find($request->certificateStyle);
 
         if ($certificateStyle) {
-            $newCertificateStyle = $certificateStyle->replicate(); 
-            $newCertificateStyle->course_id = $id; 
+            $newCertificateStyle = $certificateStyle->replicate();
+            $newCertificateStyle->course_id = $id;
             $newCertificateStyle->save();
         }
 
@@ -622,19 +628,19 @@ class CourseCreateStepController extends Controller
         if ($request->hasFile('sample_certificates')) {
             $file = $request->file('sample_certificates');
             $image = Image::make($file);
-            $image->encode('jpg', 40); 
+            $image->encode('jpg', 40);
             $image_path = 'uploads/courses/sample_certificates_'.$course->slug . '.jpg';
             $image->save(public_path('uploads/courses/sample_certificates_') . $course->slug . '.jpg');
         }
 
-        // Store other form data 
+        // Store other form data
         $course->sample_certificates = $image_path;
         $course->save();
 
         return redirect('instructor/courses/create/'.$course->id.'/visibility')->with('success', 'Course Certificate Set successfully');
     }
 
-    public function visibility($id){
+    public function visibility(string $subdomain, $id){
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -644,7 +650,8 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-10',compact('course'));
     }
 
-    public function visibilitySet(Request $request,$id){
+    public function visibilitySet(Request $request,$subdomain, $id){
+
        if(!$id){
             return redirect('instructor/courses');
         }
@@ -678,7 +685,7 @@ class CourseCreateStepController extends Controller
         return redirect('instructor/courses/create/'.$course->id.'/share')->with('success', 'Course Status Set successfully');
     }
 
-    public function courseShare($id){
+    public function courseShare($subdomain,$id){
         if(!$id){
             return redirect('instructor/courses');
         }

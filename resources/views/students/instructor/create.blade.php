@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="user-add-form-wrap">
-                        <form action="{{route('student.add')}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
+                        <form action="{{route('student.add', config('app.subdomain'))}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-12">
@@ -147,7 +147,7 @@
                                 </div>
                                 <div id="imageContainer" class="drop-container">
                                     <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
-                                    <img src="" alt="" class="img-fluid d-block" id="uploadedImage"> 
+                                    <img src="" alt="" class="img-fluid d-block" id="uploadedImage">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -202,12 +202,12 @@
             </div>
         </div>
     </div>
-</main> 
+</main>
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script') 
+@section('script')
 
 {{-- form save js --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
@@ -280,16 +280,16 @@
 <script>
     // JavaScript
     const urlBttn = document.querySelector('#url_increment');
-    let extraFields = document.querySelector('.url-extra-field'); 
+    let extraFields = document.querySelector('.url-extra-field');
 
-    const createField = () => { 
+    const createField = () => {
     let div = document.createElement("div");
-    let node = document.createElement("input"); 
+    let node = document.createElement("input");
     node.setAttribute("class", "form-control w-100 @error('social_links') is-invalid @enderror");
-    node.setAttribute("multiple", ""); 
-    node.setAttribute("type", "url"); 
-    node.setAttribute("placeholder", "Enter Social Link"); 
-    node.setAttribute("name", "social_links[]");    
+    node.setAttribute("multiple", "");
+    node.setAttribute("type", "url");
+    node.setAttribute("placeholder", "Enter Social Link");
+    node.setAttribute("name", "social_links[]");
     let link = document.createElement("a");
     link.innerHTML = "<i class='fas fa-minus'></i>";
     link.addEventListener("click", () => removeField(div));

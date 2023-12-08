@@ -14,7 +14,7 @@ Course Create - Step 10
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                {{-- course step --}} 
+                {{-- course step --}}
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -72,9 +72,9 @@ Course Create - Step 10
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <form action="" method="POST" > 
+                <form action="" method="POST" >
                     @csrf
-                    <div class="content-settings-form-wrap visibility-form-wrap"> 
+                    <div class="content-settings-form-wrap visibility-form-wrap">
                         <h4>Visibility</h4>
                         <hr>
                         <div class="form-group">
@@ -86,17 +86,17 @@ Course Create - Step 10
                             </select>
                             <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down" class="img-fluid euro" style="top: 3rem">
                             <span class="invalid-feedback d-block">@error('status'){{ $message }} @enderror</span>
-                        </div>   
+                        </div>
                         <div class="media auto-text">
-                            <div class="media-body"> 
+                            <div class="media-body">
                                 <h6>Review for the course</h6>
                                 <p>If you don't want any review about your course please turn off checkmark.</p>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" name="allow_review" role="switch" id="flexSwitchCheckChecked" value="1"  {{ $course->allow_review == '1' ? 'checked' : ''}} > 
+                                <input class="form-check-input" type="checkbox" name="allow_review" role="switch" id="flexSwitchCheckChecked" value="1"  {{ $course->allow_review == '1' ? 'checked' : ''}} >
                                 <span class="invalid-feedback d-block">@error('allow_review'){{ $message }} @enderror</span>
                             </div>
-                        </div>  
+                        </div>
                     </div>
 
                     {{-- step next bttns --}}
@@ -114,5 +114,5 @@ Course Create - Step 10
 {{-- page content @E --}}
 
 @section('script')
- 
+
 @endsection

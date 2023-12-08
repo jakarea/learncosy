@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Certificate 
+Course Create - Certificate
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -106,12 +106,12 @@ Course Create - Certificate
                         <hr>
                         <div class="form-group">
                             <h6>Select Certificate</h6>
-                            <select class="form-control" name="certificateStyle"> 
+                            <select class="form-control" name="certificateStyle">
                                 <option value="">Select Below</option>
-                                @foreach ($certificates as $certificate) 
+                                @foreach ($certificates as $certificate)
                                     <option value="{{ $certificate->id }}" {{ $certificate->course_id ==  $course->id ? 'selected' : ''}}>{{ $certificate->course->title }}</option>
                                 @endforeach
-                                
+
                             </select>
                             <img src="{{asset('latest/assets/images/icons/arrow-down.svg')}}" alt="arrow-down"
                                 class="img-fluid euro" style="top: 3rem">
@@ -121,7 +121,7 @@ Course Create - Certificate
                             <div class="media-body">
                                 <p>Or Create a new Certificate</p>
                             </div>
-                            <a href="{{ route('account.settings', ['tab' => 'certificate']) }}" class="btn btn-primary"
+                            <a href="{{ route('account.settings', ['tab' => 'certificate', 'subdomain' => config('app.subdomain') ]) }}" class="btn btn-primary"
                                 target="_blank">Create</a>
                         </div>
                         <hr class="mb-0">

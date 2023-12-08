@@ -50,10 +50,10 @@
                         </p>
                         <div class="hero-bttn">
                             @if (Auth::check())
-                                <a href="{{ route('instructor.dashboard.index') }}"
+                                <a href="{{ route('instructor.dashboard.index', config('app.subdomain') ) }}"
                                     style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @else
-                                <a href="{{ route('tregister') }}"
+                                <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}"
                                     style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @endif
                         </div>
@@ -239,12 +239,12 @@
                             <h5>{{ Str::limit($instructors->short_bio, $limit = 58, $end = '...') }}</h5>
                             @if (Auth::check())
                                 @can('student')
-                                    <a href="{{ route('students.dashboard') }}">Get more details!</a>
+                                    <a href="{{ route('students.dashboard', config('app.subdomain')) }}">Get more details!</a>
                                 @else
-                                    <a href="{{ route('instructor.dashboard.index') }}">Get more details!</a>
+                                    <a href="{{ route('instructor.dashboard.index', config('app.subdomain')) }}">Get more details!</a>
                                 @endcan
                             @else
-                                <a href="{{ route('login') }}">Get more details!</a>
+                                <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Get more details!</a>
                             @endif
                         </div>
                     </div>
@@ -270,13 +270,13 @@
                     <div class="browse-all">
                         @if (Auth::check())
                             @can('student')
-                                <a href="{{ route('students.dashboard') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                                <a href="{{ route('students.dashboard', config('app.subdomain')) }}">Browse all <i class="fas fa-angle-right"></i></a>
                             @else
-                                <a href="{{ route('instructor.dashboard.index') }}">Browse all <i
+                                <a href="{{ route('instructor.dashboard.index' ,config('app.subdomain')) }}">Browse all <i
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>
@@ -321,14 +321,14 @@
                                         {{-- </form> --}}
                                 @if (Auth::check())
                                     @can('student')
-                                        <a href="{{ route('students.dashboard') }}"
+                                        <a href="{{ route('students.dashboard', config('app.subdomain')) }}"
                                             style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                     @else
-                                        <a href="{{ route('instructor.dashboard.index') }}"
+                                        <a href="{{ route('instructor.dashboard.index' , config('app.subdomain')) }}"
                                             style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                     @endcan
                                 @else
-                                    <a href="{{ route('login') }}"
+                                    <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}"
                                         style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
                                 @endif
                             </div>
@@ -355,13 +355,13 @@
                     <div class="browse-all">
                         @if (Auth::check())
                             @can('student')
-                                <a href="{{ route('students.dashboard') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                                <a href="{{ route('students.dashboard', config('app.subdomain')) }}">Browse all <i class="fas fa-angle-right"></i></a>
                             @else
-                                <a href="{{ route('instructor.dashboard.index') }}">Browse all <i
+                                <a href="{{ route('instructor.dashboard.index', config('app.subdomain')) }}">Browse all <i
                                         class="fas fa-angle-right"></i></a>
                             @endcan
                         @else
-                            <a href="{{ route('login') }}">Browse all <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ route('login', ['subdomain' => config('app.subdomain')])}}">Browse all <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>

@@ -47,11 +47,11 @@ class PaymentController extends Controller
                 'description' => $courseNames,
             ]);
 
-            $this->success($charge);     
+            $this->success($charge);
 
-            return redirect(route('students.catalog.courses'))->with('success', 'You have successfully enrolled in this course');;
+            return redirect(route('students.catalog.courses', config('app.subdomain') ))->with('success', 'You have successfully enrolled in this course');;
         } catch (\Exception $e) {
-            return redirect()->route('students.catalog.courses')->with('error', $e->getMessage());
+            return redirect()->route('students.catalog.courses', config('app.subdomain'))->with('error', $e->getMessage());
         }
     }
 
@@ -82,10 +82,10 @@ class PaymentController extends Controller
                     'status'   => 'unseen',
                 ]);
                 $notify->save();
-        
+
                 // $pdf = PDF::loadView('emails.invoice', ['data' => $checkout]);
                 // $pdfContent = $pdf->output();
-        
+
                 // // Send the email with the PDF attachment
                 // $mailInfo = Mail::send('emails.invoice', ['data' => $checkout], function($message) use ($checkout, $pdfContent) {
                 //     $message->to(auth()->user()->email)

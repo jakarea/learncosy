@@ -14,10 +14,10 @@ Course Create - Initial Step
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                {{-- course step --}} 
+                {{-- course step --}}
                 <div class="course-create-step-wrap">
                     <div class="step-box current">
-                        <span class="circle"> 
+                        <span class="circle">
                         </span>
                         <p>Contents</p>
                     </div>
@@ -55,7 +55,7 @@ Course Create - Initial Step
         </div>
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
-                <div class="content-step-wrap">  
+                <div class="content-step-wrap">
                     <div class="text-center mb-2">
                         <span class="invalid-feedback">@error('module_name'){{ $message }} @enderror</span>
                         <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span>
@@ -85,7 +85,7 @@ Course Create - Initial Step
                                             <a class="dropdown-item" href="#" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop_{{$module->id}}">Edit Module</a>
                                         </li>
-                                        <form action="{{ route('module.destroy', $module->slug) }}" method="post"
+                                        <form action="{{ route('module.destroy', ['slug' => $module->slug, 'subdomain' => config('app.subdomain') ]) }}" method="post"
                                             class="d-inline">
                                             @csrf
                                             @method('delete')
@@ -105,7 +105,7 @@ Course Create - Initial Step
                                                     <div class="modal-body">
                                                         <div class="course-name-txt">
                                                             <h5>Module name</h5>
-                                                            <form action="{{ route('course.module.step.update',$module->course_id) }}" method="post">
+                                                            <form action="{{ route('course.module.step.update', ['id' => $module->course_id, 'subdomain' => config('app.subdomain')]) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="module_id" value="{{$module->id}}">
                                                                 <div class="form-group form-error">
@@ -182,7 +182,7 @@ Course Create - Initial Step
                                                 href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add Content </a>
                                             @elseif($lesson->type == 'text')
                                             <a class="dropdown-item"
-                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add  Content </a> 
+                                                href="{{ url('instructor/courses/create/'.$lesson->course_id.'/text/'.$lesson->module_id.'/content/'.$lesson->id) }}">Add  Content </a>
 
                                             @else
                                             <a class="dropdown-item" href="#">Invalid Type</a>
@@ -191,7 +191,7 @@ Course Create - Initial Step
                                         </li>
                                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                                 data-bs-target="#lessonAddModal_{{ $lesson->id }}">Edit Lesson</a></li>
-                                        <form action="{{ route('lesson.destroy', $lesson->slug) }}" method="post"
+                                        <form action="{{ route('lesson.destroy', ['slug' => $lesson->slug, 'subdomain' => config('app.subdomain')]) }}" method="post"
                                             class="d-inline">
                                             @csrf
                                             @method('delete')
@@ -210,7 +210,7 @@ Course Create - Initial Step
                                                         <div class="course-name-txt">
                                                             <h5>Lesson name</h5>
                                                             <form
-                                                                action="{{ route('course.lesson.step.update',$lesson->id) }}"
+                                                                action="{{ route('course.lesson.step.update', ['id' => $lesson->id, 'subdomain' => config('app.subdomain')]) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="course_id"
@@ -256,14 +256,14 @@ Course Create - Initial Step
                                                                             class="{{ $lesson->type == 'video' ? 'active' : '' }}"><img
                                                                                 src="{{asset('latest/assets/images/icons/video.svg')}}"
                                                                                 alt="a" class="img-fluid"> Video</label>
-                                                                    </div> 
+                                                                    </div>
                                                                 </div>
 
                                                                 <p>Select the Lesson type.</p>
 
                                                                 <div class="form-submit">
                                                                     <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                                                                    <button type="submit" class="btn btn-submit">Update</button> 
+                                                                    <button type="submit" class="btn btn-submit">Update</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -275,7 +275,7 @@ Course Create - Initial Step
 
                                 </div>
                             </div>
-                            {{-- course page box end --}} 
+                            {{-- course page box end --}}
                             @endforeach
 
                             {{-- course page add box start --}}
@@ -314,7 +314,7 @@ Course Create - Initial Step
                                                             <input type="radio" name="lesson_type" class="opacity-0"
                                                                 id="les_video_{{$module->id}}" value="video" checked>
 
-                                                            <div class="d-flex lesson-types"> 
+                                                            <div class="d-flex lesson-types">
                                                                 <label for="les_text_{{$module->id}}"
                                                                     class=""><img
                                                                         src="{{asset('latest/assets/images/icons/file.svg')}}"
@@ -343,7 +343,7 @@ Course Create - Initial Step
                                 </div>
                             </div>
                             {{-- Lesson modal --}}
-                        </div> 
+                        </div>
                     </div>
                     {{-- course with page --}}
                     @endforeach
@@ -356,10 +356,10 @@ Course Create - Initial Step
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
                         <a href="{{ url('instructor/courses/create/') }}">Back</a>
- 
+
                         @if (count($modules) > 0)
-                            <a href="{{ url('instructor/courses/create/'.request()->route('id').'/facts') }}">Next</a>
-                        @else 
+                            <a href="{{ route('courses.create.facts', ['id' => request()->route('id'), 'subdomain' => config('app.subdomain')]) }}">Next</a>
+                        @else
                             <a href="#" data-bs-toggle="modal" data-bs-target="#moduleModal">Add Module</a>
                         @endif
                     </div>
@@ -377,14 +377,14 @@ Course Create - Initial Step
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="course-name-txt">
-                        <h5>Module name</h5> 
+                        <h5>Module name</h5>
 
-                        <form action="{{ route('course.module.step.create',request()->route('id')) }}" method="post">
+                        <form action="{{ route('course.module.step.create',['id' => request()->route('id'), 'subdomain' => config('app.subdomain') ]) }}" method="post">
                             @csrf
                             <div class="form-group form-error">
                                 <input type="text" placeholder="Enter Module Name" name="module_name"
-                                    class="form-control @error('module_name') is-invalid @enderror"> 
-                                    
+                                    class="form-control @error('module_name') is-invalid @enderror">
+
                             </div>
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="is_module">Is a Modual</label>
@@ -416,7 +416,7 @@ Course Create - Initial Step
     buttons.forEach(function(button) {
         button.addEventListener("click", function(e) {
             e.preventDefault();
-            const toggleBoxWrap = this.parentElement.parentElement.parentElement.querySelector(".toggle-box-wrap"); 
+            const toggleBoxWrap = this.parentElement.parentElement.parentElement.querySelector(".toggle-box-wrap");
 
             if (toggleBoxWrap) {
 
@@ -440,7 +440,7 @@ Course Create - Initial Step
     typeBttns.forEach(function(bttn) {
         bttn.addEventListener("click", function(e) {
             typeBttns.forEach(c => c.classList.remove("active"));
-            this.classList.add("active");    
+            this.classList.add("active");
         });
     });
 });
@@ -449,7 +449,7 @@ Course Create - Initial Step
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    const typeBttns2 = document.querySelectorAll(".lesson-types2 label");  
+    const typeBttns2 = document.querySelectorAll(".lesson-types2 label");
     typeBttns2.forEach(function(bttn2) {
         bttn2.addEventListener("click", function(e) {
             typeBttns2.forEach(c2 => c2.classList.remove("active"));

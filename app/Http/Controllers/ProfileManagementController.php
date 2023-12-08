@@ -30,8 +30,8 @@ class ProfileManagementController extends Controller
     }
 
     // profile edit
-    public function edit(Request $request)
-    { 
+    public function edit(Request $request, $domain)
+    {
         $experience_id = $request->query('id');
         $userId = Auth()->user()->id;
         $user = User::find($userId);
@@ -137,8 +137,8 @@ class ProfileManagementController extends Controller
 
    //  upload cover photo for instructor
    public function coverUpload(Request $request)
-   { 
-       
+   {
+
        if ($request->hasFile('cover_photo')) {
            $coverPhoto = $request->file('cover_photo');
 
@@ -158,12 +158,12 @@ class ProfileManagementController extends Controller
            $image->save(public_path('uploads/users/') . $uniqueFileName);
            $image_path = 'uploads/users/' . $uniqueFileName;
 
-           $user->cover_photo = $image_path; 
+           $user->cover_photo = $image_path;
            $user->save();
-   
+
            return response()->json(['message' => "UPLOADED"]);
        }
-   
+
        return response()->json(['error' => 'No image uploaded'], 400);
-   } 
+   }
 }

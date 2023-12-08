@@ -105,7 +105,7 @@ Bundle Course create
                     </div>
                 </div>
                 <div class="bundle-create-form-wrap">
-                    <form action="{{ route('create.bundle.course') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('create.bundle.course', config('app.subdomain')) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
@@ -237,17 +237,17 @@ Bundle Course create
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const removeBundle = document.querySelectorAll('.btn-remove');
-        let selectedCourseId; 
-        let courseIdArray; 
-        let selectPage; 
- 
+        let selectedCourseId;
+        let courseIdArray;
+        let selectPage;
+
         removeBundle.forEach(item => {
-            item.addEventListener('click', function() { 
+            item.addEventListener('click', function() {
                 let grandparent = item.parentNode.parentNode.parentNode.parentNode;
                 grandparent.style.display = 'none';
 
-                let courseId = item.getAttribute('data-course-id');  
-                 
+                let courseId = item.getAttribute('data-course-id');
+
                     if (courseId) {
                         fetch(`${baseUrl}/instructor/bundle/courses/remove/${courseId}`, {
                                 method: 'POST',
@@ -260,12 +260,12 @@ Bundle Course create
                             .then(data => {
                                 if (data.message === 'DONE') {
                                     // top counter increase
-                                    const countDisplay = document.querySelector('.counter');  
-                                    const currentCount = parseInt(countDisplay.textContent); 
-                                    countDisplay.textContent = currentCount - 1; 
-                                     
+                                    const countDisplay = document.querySelector('.counter');
+                                    const currentCount = parseInt(countDisplay.textContent);
+                                    countDisplay.textContent = currentCount - 1;
+
                                     // redirecet to select page
-                                    if (countDisplay.textContent < 1) { 
+                                    if (countDisplay.textContent < 1) {
                                         window.location.reload();
                                     }
 
@@ -273,17 +273,17 @@ Bundle Course create
                                     grandparent.style.display = 'none';
 
                                     // remove id from hidden field
-                                    selectedCourseId = document.querySelector('#selectedCourseId'); 
+                                    selectedCourseId = document.querySelector('#selectedCourseId');
                                     courseIdArray = selectedCourseId.value.split(',');
                                     courseIdArray = courseIdArray.filter(cId => cId != courseId);
-                                    selectedCourseId.value = courseIdArray.join(','); 
+                                    selectedCourseId.value = courseIdArray.join(',');
 
                                 } else {
                                      grandparent.style.display = 'block';
                                 }
                             })
                             .catch(error => {
-                                    grandparent.style.display = 'block';   
+                                    grandparent.style.display = 'block';
                             });
                     }
                 });
@@ -291,7 +291,7 @@ Bundle Course create
 
             });
         });
-         
+
 </script>
 
 @endsection

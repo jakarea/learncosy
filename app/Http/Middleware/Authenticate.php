@@ -15,17 +15,27 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         $domain = env('APP_DOMAIN', 'learncosy.com');
+
         if (!$request->expectsJson()) {
+
             $host = $request->getHost();
+            $subdomain = explode('.', $host)[0];
+
+            // dd($subdomain );
+
             if (strpos($host, 'app.'.$domain) !== false) {
-                return route('login');
+                return route('login', ['subdomain' => $subdomain]);
             } else {
-                return route('login');
+
+                return route('login', ['subdomain' => $subdomain]);
             }
         }
+
 
         // if (! $request->expectsJson()) {
         //     return route('login');
         // }
     }
+
+
 }

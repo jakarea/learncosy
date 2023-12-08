@@ -77,11 +77,11 @@
                         </div>
                         <h1>Sign up</h1>
                         <div class="buttons-group">
-                            <a href="#"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                            <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                     class="img-fluid"> Sign up with Google</a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
+                            <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="google"
                                     class="img-fluid"></a>
-                            <a href="#"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
+                            <a href="javascript:;"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="google"
                                     class="img-fluid"></a>
                         </div>
 

@@ -57,7 +57,7 @@ Course Create - Step 1
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="content-step-wrap">
-                    <form action="{{ route('course.create.start') }}" method="POST" id="myForm">
+                    <form action="{{ route('course.create.start', ['subdomain' => config('app.subdomain') ]) }}" method="POST" id="myForm">
                         @csrf
                         {{-- course content add box start --}}
                         <div class="add-content-box">
@@ -68,7 +68,7 @@ Course Create - Step 1
 
                         {{-- step next bttns --}}
                         <div class="back-next-bttns">
-                            <button type="submit" class="btn btn-submit">Next</button> 
+                            <button type="submit" class="btn btn-submit">Next</button>
                         </div>
                         {{-- step next bttns --}}
                     </form>
@@ -85,9 +85,9 @@ Course Create - Step 1
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="course-name-txt">
-                        <h5>Module name</h5> 
+                        <h5>Module name</h5>
 
-                        <form action="{{ route('course.create.start') }}" method="post">
+                        <form action="{{ route('course.create.start', ['subdomain' => config('app.subdomain') ]) }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <input type="text" placeholder="Enter Module Name" name="module_name"
@@ -113,4 +113,3 @@ Course Create - Step 1
 {{-- course name modal --}}
 @endsection
 {{-- page content @E --}}
- 

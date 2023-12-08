@@ -12,14 +12,14 @@
 @section('content')
 {{-- ==== admin payment list page @S ==== --}}
 <main class="admin-payment-list-page">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="payment-details-title">
                     <h1>Payment Details</h1>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="row">
             <div class="col-lg-9">
                 <div class="payment-name-box">
@@ -69,9 +69,9 @@
                     </table>
                     <div class="download-inv-box">
                         <a href="{{url('instructor/payments')}}">Back</a>
-                        <a href="{{ route('invoice-mail',encrypt($payment->payment_id)) }}" class="ms-3 d-inline-flex align-items-center"><img src="{{asset('latest/assets/images/icons/email.svg')}}" alt="a" class="img-fluid me-2"> Mail Invoice</a>
-                        <a href="{{route('generate-pdf',encrypt($payment->payment_id))}}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
-                        
+                        <a href="{{ route('invoice-mail', ['id' => encrypt($payment->payment_id), 'subdomain' => config('app.subdomain') ]) }}" class="ms-3 d-inline-flex align-items-center"><img src="{{asset('latest/assets/images/icons/email.svg')}}" alt="a" class="img-fluid me-2"> Mail Invoice</a>
+                        <a href="{{route('generate-pdf', ['id' => encrypt($payment->payment_id), 'subdomain' => config('app.subdomain') ])}}"><img src="{{asset('latest/assets/images/icons/upload-3.svg')}}" alt="a" class="img-fluid"> Download Invoice</a>
+
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                             @php
                             $social_links = explode(",", $payment->user->social_links);
                             use Illuminate\Support\Str;
-                            @endphp 
+                            @endphp
 
                             @foreach ($social_links as $social_link)
                             @php
@@ -103,7 +103,7 @@
                             @endphp
 
                             <li>
-                                @if ($domain == 'instagram') 
+                                @if ($domain == 'instagram')
                                 <a href="{{ $social_link ? $social_link : '#' }}" target="_blank" style="word-break: break-all">
                                     <img src="{{asset('latest/assets/images/icons/p-3.svg')}}" alt="a" class="img-fluid">{{ $social_link ? $social_link : '' }}</a>
                                 @endif
@@ -112,7 +112,7 @@
                         </ul>
                         <a href="{{url('instructor/students/profile/'.$payment->user->id)}}" class="common-bttn d-block w-100">View profile</a>
                     </div>
-                    
+
                 </div>
             </div>
          </div>

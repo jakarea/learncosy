@@ -4,7 +4,7 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" /> 
+<link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -35,7 +35,7 @@
                         <div class="tab-pane fade show active tab-link" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             {{-- profile edit form start --}}
-                            <form action="{{ route('students.profile.update',$user->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('students.profile.update',['subdomain' => config('app.subdomain')] ) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
@@ -63,7 +63,7 @@
                                                     Messages</label>
 
                                                     <input class="form-check-input" type="checkbox" name="recivingMessage" value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ? 'checked' : '' }}>
- 
+
                                             </div>
                                         </div>
                                     </div>
@@ -120,12 +120,12 @@
                                                    <div class="form-group">
                                                     <label for="social_links" class="social-label">Social Media</label>
                                                    </div>
-                                                    @foreach ($socialLinks as $socialLink) 
+                                                    @foreach ($socialLinks as $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
                                                             <input type="url" class="form-control" id="social_links"
                                                                 name="social_links[]" value="{{ $socialLink }}" >
-                                                            
+
                                                             <span class="invalid-feedback">@error('social_links'){{ $message }}  @enderror</span>
                                                         </div>
                                                     </div>
@@ -134,7 +134,7 @@
                                                         <a href="javascript:void(0)" id="social_increment"><i class="fas fa-plus"></i>
                                                             Add</a>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <textarea name="description" id="description"
@@ -199,7 +199,7 @@
                                                     <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script') 
+@section('script')
 
 {{-- form save js --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
@@ -243,9 +243,9 @@
 
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.classList.add('img-fluid', 'd-block', 'avatar-preview'); 
-                
-                
+                img.classList.add('img-fluid', 'd-block', 'avatar-preview');
+
+
                 imageContainer.appendChild(img);
 
                 const closeIcon = document.createElement('a');
@@ -372,7 +372,7 @@
 
     avatarInput.addEventListener("change", function(event) {
         const file = event.target.files[0];
-        
+
         if (file) {
             const reader = new FileReader();
 
@@ -397,9 +397,9 @@
             const homeTabLink = document.getElementById('pills-home-tab');
             const homeTabContent = document.getElementById('pills-home');
 
-            const profileTabLink = document.getElementById('pills-profile-tab'); 
+            const profileTabLink = document.getElementById('pills-profile-tab');
             const profileTabContent = document.getElementById('pills-profile');
- 
+
             if (tabToOpen == 'profile') {
                 tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
                 tabLinks.forEach(tab => tab.classList.remove('active'));
@@ -419,17 +419,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
           var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
-          var currentParam = '';  
-        
+          var currentParam = '';
+
           tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('click', function(event) {
-              event.preventDefault(); 
-              var param = tabLink.getAttribute('data-param'); 
-              if (param !== currentParam) { 
+              event.preventDefault();
+              var param = tabLink.getAttribute('data-param');
+              if (param !== currentParam) {
                 var currentURL = window.location.href;
-                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
-                window.history.pushState(null, '', newURL); 
-                currentParam = param; 
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param;
+                window.history.pushState(null, '', newURL);
+                currentParam = param;
               }
             });
           });

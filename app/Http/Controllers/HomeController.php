@@ -88,7 +88,7 @@ class HomeController extends Controller
         // return view('payments/instructor/students-payment', compact('payments','todaysEarnings','todaysEnrolment','totalEarnings','totalEnrolment'));
     }
 
-    public function details($payment_id)
+    public function details($domain, $payment_id)
     {
         $payment_id = Crypt::decrypt($payment_id);
         $payment = Checkout::where('payment_id',$payment_id)->where('instructor_id',Auth::user()->id)->with('instructor','user','course')->first();
@@ -122,7 +122,7 @@ class HomeController extends Controller
             ->make(true);
     }
 
-    public function generatePdf($payment_id){
+    public function generatePdf($domain, $payment_id){
         $payment_id = Crypt::decrypt($payment_id);
         $payment = Checkout::where('payment_id',$payment_id)->where('instructor_id',Auth::user()->id)->with('instructor','user','course')->first();
         $data = array(
@@ -132,7 +132,7 @@ class HomeController extends Controller
         return $pdf->download('invoice-'.$payment_id.'.pdf');
     }
 
-    public function invoiceMail($payment_id){
+    public function invoiceMail($domain, $payment_id){
         $payment_id = Crypt::decrypt($payment_id);
         $payment = Checkout::where('payment_id',$payment_id)->where('instructor_id',Auth::user()->id)->with('instructor','user','course')->first();
         $data = array(
@@ -156,13 +156,22 @@ class HomeController extends Controller
         }
     }
 
-    public function export($payment_id){
+
+
+    public function export($domain ,$payment_id){
+
         $payment_id = Crypt::decrypt($payment_id);
+
+
         $payment = Checkout::where('payment_id',$payment_id)->where('instructor_id',Auth::user()->id)->with('instructor','user','course')->first();
+
         $data = array(
             'payment' => $payment
         );
+
+
         $pdf = Pdf::loadView('adminInvoice',$data);
+
         return $pdf->download('invoice-'.$payment_id.'.pdf');
     }
 

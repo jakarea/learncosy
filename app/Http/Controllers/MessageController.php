@@ -20,6 +20,7 @@ class MessageController extends Controller
     public function index()
     {
         $data['adminInfo'] = Auth::user();
+
         $data['users'] = User::select(
                 'users.id',
                 'users.name',
@@ -40,6 +41,7 @@ class MessageController extends Controller
                     ->limit(1);
                 },
             ])
+            ->where('users.subdomain', '=', config('app.subdomain') )
             ->where('users.id', '!=', Auth::id())
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
@@ -66,6 +68,8 @@ class MessageController extends Controller
                     $query->where('is_read', 0)->where('receiver_id', Auth::id());
                 },
             ])
+
+            ->where('users.subdomain', '=', config('app.subdomain') )
             ->where('users.id', '!=', Auth::id())
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
@@ -113,6 +117,7 @@ class MessageController extends Controller
                     ->limit(1);
                 },
             ])
+            ->where('users.subdomain', '=', config('app.subdomain') )
             ->where('users.id', '!=', Auth::id())
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
@@ -319,6 +324,7 @@ class MessageController extends Controller
                         $query->where('is_read', 0)->where('receiver_id', Auth::id());
                     },
                 ])
+                ->where('users.subdomain', '=', config('app.subdomain') )
                 ->where('users.id', '!=', Auth::id())
                 ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
                 ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')

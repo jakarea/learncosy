@@ -136,7 +136,9 @@
                                         @endforeach
                                     </ul>
                                     @if (!isEnrolled($course->id))
-                                        <form action="{{ route('cart.add', $course) }}" method="POST">
+
+
+                                        <form action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
                                             @csrf
                                             @if ($cartCourses->pluck('course_id')->contains($course->id))
                                                 <button type="button" class="btn add-to-cart-button bg-secondary"

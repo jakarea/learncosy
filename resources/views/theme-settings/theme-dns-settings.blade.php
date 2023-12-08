@@ -50,7 +50,7 @@ Account Management
                             <div class="row justify-content-center">
                                 <div class="col-lg-10 col-xl-9">
                                     <div class="theme-settings-wrap">
-                                        <form action="{{ route('module.setting.update') }}" method="POST"
+                                        <form action="{{ route('module.setting.update', config('app.subdomain') ) }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="theme-settings-box theme-dns-settings-box">
@@ -800,7 +800,7 @@ Account Management
         }
     });
 
-    closeButton.addEventListener('click', function () { 
+    closeButton.addEventListener('click', function () {
         logoInput.value = '';
         logoPreview.src = '{{ asset('latest/assets/images/logo-view.svg') }}';
         closeButton.style.display = 'none';
@@ -825,7 +825,7 @@ Account Management
         }
     });
 
-    appCloseButton.addEventListener('click', function () { 
+    appCloseButton.addEventListener('click', function () {
         appLogoInput.value = '';
         appLogoPreview.src = '{{ asset('latest/assets/images/app-logo.png') }}';
         appCloseButton.style.display = 'none';
@@ -976,9 +976,9 @@ Account Management
             const homeTabLink = document.getElementById('pills-home-tab');
             const homeTabContent = document.getElementById('pills-home');
 
-            const profileTabLink = document.getElementById('pills-experience-tab'); 
+            const profileTabLink = document.getElementById('pills-experience-tab');
             const profileTabContent = document.getElementById('pills-experience');
- 
+
             if (tabToOpen == 'dns') {
                 tabPanes.forEach(tab => tab.classList.remove('show', 'active'));
                 tabLinks.forEach(tab => tab.classList.remove('active'));
@@ -998,17 +998,17 @@ Account Management
 <script>
     document.addEventListener('DOMContentLoaded', function() {
           var tabLinks = document.querySelectorAll('.main-navigator .nav-link');
-          var currentParam = '';  
-        
+          var currentParam = '';
+
           tabLinks.forEach(function(tabLink) {
             tabLink.addEventListener('click', function(event) {
-              event.preventDefault(); 
-              var param = tabLink.getAttribute('data-param'); 
-              if (param !== currentParam) { 
+              event.preventDefault();
+              var param = tabLink.getAttribute('data-param');
+              if (param !== currentParam) {
                 var currentURL = window.location.href;
-                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param; 
-                window.history.pushState(null, '', newURL); 
-                currentParam = param; 
+                var newURL = currentURL.replace(/(\?|&)tab=[^&]*/, '') + (currentURL.includes('?') ? '?' : '?') + 'tab=' + param;
+                window.history.pushState(null, '', newURL);
+                currentParam = param;
               }
             });
           });

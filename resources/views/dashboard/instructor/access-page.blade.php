@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-11 col-lg-10 col-xl-9">
-                <form action="{{ route('instructor.manage.pages') }}" method="POST" id="access-form">
+                <form action="{{ route('instructor.manage.pages', config('app.subdomain') ) }}" method="POST" id="access-form">
                     @csrf
                     <div class="access-page-box">
                         <div class="title">
@@ -72,8 +72,8 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <h6>Access Permission</h6> 
-                                
+                                <h6>Access Permission</h6>
+
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" name="messagePage" id="messagePage"
                                     {{ $permission->messagePage == 1 ? 'checked' : ''}}>

@@ -68,7 +68,7 @@
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror 
+                                    @enderror
                                     <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
 
                                 </div>
@@ -76,7 +76,7 @@
                                 <div class="form-footer-text d-flex justify-content-between">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                
+
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember me for 30 days') }}
                                     </label>
@@ -126,7 +126,7 @@
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
-    
+
           if (field.type === "password") {
             field.type = "text";
             clickk.classList.add('fa-eye-slash');
@@ -136,7 +136,7 @@
             clickk.classList.remove('fa-eye-slash');
             clickk.classList.add('fa-eye');
           }
-    
+
         }
     </script>
 

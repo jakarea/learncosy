@@ -3,7 +3,7 @@
 Login Page
 @endsection
 
-@section('content') 
+@section('content')
 
 <section class="auth-part-sec">
     <div class="container-fluid">
@@ -24,10 +24,10 @@ Login Page
                     @endif
                     <a href="#">
                         <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="Logo" class="img-fluid">
-                    </a>  
+                    </a>
                     <h1>Welcome back</h1>
                     <p>Welcome back! Please enter your details.</p>
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">
                         @csrf
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
@@ -74,8 +74,13 @@ Login Page
                         <div class="optional-txt">
                             <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
                         </div>
+
+                        {{-- <a href="{{ url('login/facebook') }}">Facebook / </a>
+                        <a href="{{ url('login/google') }}">Google</a> --}}
+
+
                     </form>
-                </div> 
+                </div>
             </div>
             <div class="col-lg-6 px-0">
                 <div class="auth-side-img d-none d-lg-block">
@@ -84,7 +89,11 @@ Login Page
             </div>
         </div>
     </div>
-</section> 
+</section>
+
+
+
+
 
 @endsection
 

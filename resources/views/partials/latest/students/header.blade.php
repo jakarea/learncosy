@@ -63,7 +63,7 @@
                 <a href="#" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                <a href="{{ route('cart.index') }}" class="bttn {{ Request::is('students/cart*')  ? ' active' : '' }}">
+                <a href="{{ route('cart.index', config('app.subdomain') ) }}" class="bttn {{ Request::is('students/cart*')  ? ' active' : '' }}">
 
                     <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="Cart" class="img-fluid">
 

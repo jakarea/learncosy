@@ -20,8 +20,8 @@ class CertificateController extends Controller
     {
 
         $this->validate($request, [
-            'course_id' => 'required|string', 
-            'certificate_style' => 'required', 
+            'course_id' => 'required|string',
+            'certificate_style' => 'required',
             'logo' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
             'signature' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
@@ -48,7 +48,7 @@ class CertificateController extends Controller
 
             if ($request->input('certificate_style')) {
                 $certificate->style = $request->input('certificate_style');
-            } 
+            }
 
             $insSlug = Str::slug(Auth::user()->name);
 
@@ -65,7 +65,7 @@ class CertificateController extends Controller
                 $image->save(public_path('uploads/certificate/') . $uniqueFileName);
                 $image_path = 'uploads/certificate/' . $uniqueFileName;
                $certificate->logo = $image_path;
-           } 
+           }
 
             if ($request->hasFile('signature')) {
                 if ($certificate->signature) {
@@ -80,12 +80,12 @@ class CertificateController extends Controller
                 $image2->save(public_path('uploads/certificate/') . $uniqueFileName2);
                 $image_path2 = 'uploads/certificate/' . $uniqueFileName2;
                $certificate->signature = $image_path2;
-           } 
+           }
 
             $certificate->save();
 
             return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Your certificate has been Updated successfully');
- 
+
 
         } else {
 
@@ -99,29 +99,29 @@ class CertificateController extends Controller
 
             $newCertificate->style = $request->input('certificate_style');
 
-            if ($request->hasFile('logo')) { 
+            if ($request->hasFile('logo')) {
                 $file3 = $request->file('logo');
                 $image3 = Image::make($file3);
                 $uniqueFileName3 = $insSlug . '-' . uniqid() . '.png';
                 $image3->save(public_path('uploads/certificate/') . $uniqueFileName3);
                 $newLogoPath = 'uploads/certificate/' . $uniqueFileName3;
                $newCertificate->logo = $newLogoPath;
-           } 
+           }
 
-            if ($request->hasFile('signature')) { 
+            if ($request->hasFile('signature')) {
                 $file4 = $request->file('signature');
                 $image4 = Image::make($file4);
                 $uniqueFileName4 = $insSlug . '-' . uniqid() . '.png';
                 $image4->save(public_path('uploads/certificate/') . $uniqueFileName4);
                 $newSigPath = 'uploads/certificate/' . $uniqueFileName4;
                $newCertificate->signature = $newSigPath;
-           }  
-            
+           }
+
             $newCertificate->save();
 
-            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Your certificate has been SET successfully!'); 
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Your certificate has been SET successfully!');
         }
-        
+
     }
 
     // custom certificate generate
@@ -129,11 +129,11 @@ class CertificateController extends Controller
     {
        $courseId = $request->input('c_course_id');
 
-        if (!$courseId) { 
+        if (!$courseId) {
             return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate');
         }else{
             $course = Course::where('id', $courseId)->first();
-        }    
+        }
 
         $this->validate($request, [
             'c_first_name' => 'required|string',
@@ -160,15 +160,15 @@ class CertificateController extends Controller
             $certStyle =  $request->input('c_certificate_style');
 
             if ($certStyle == 3) {
-                $certificate_path = 'certificates/generate/certificate1'; 
+                $certificate_path = 'certificates/generate/certificate1';
             }elseif ($certStyle == 2) {
                 $certificate_path = 'certificates/generate/certificate2';
 
             }elseif ($certStyle == 1) {
                 $certificate_path = 'certificates/generate/certificate3';
-            }else{ 
+            }else{
                 return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate');
-            } 
+            }
 
             // logo
             $logoPath = '';
@@ -189,11 +189,11 @@ class CertificateController extends Controller
 
            }else{
                 $logoPath = 'latest/assets/images/certificate/one/logo.png';
-            } 
+            }
 
             // signature
             $signaturePath = '';
-            if ($request->hasFile('c_signature')) { 
+            if ($request->hasFile('c_signature')) {
 
                     $oldFile = public_path('uploads/certificate/temp/temp-signature.png');
                     if (file_exists($oldFile)) {
@@ -209,10 +209,10 @@ class CertificateController extends Controller
 
                } else{
                 $signaturePath = 'latest/assets/images/certificate/one/signature.png';
-            } 
+            }
 
             // completion date
-            $courseCompletionDate = ''; 
+            $courseCompletionDate = '';
             if ($request->input('c_completion_date')) {
                 $courseCompletionDate = $request->input('c_completion_date');
             }
@@ -223,7 +223,7 @@ class CertificateController extends Controller
                 $courseIssueDate = $request->input('c_issue_date');
             }
 
-            // name 
+            // name
             $fullName = $request->input('c_first_name') .' '. $request->input('c_last_name');
 
             // certificate color
@@ -239,33 +239,34 @@ class CertificateController extends Controller
             }
 
             $pdf = PDF::loadView($certificate_path, ['course' => $course, 'courseCompletionDate' => $courseCompletionDate,'courseIssueDate' => $courseIssueDate, 'signature' => $signaturePath, 'logo' => $logoPath, 'fullName' => $fullName, 'certColor' => $certColor, 'accentColor' => $accentColor]);
-        
-            return $pdf->download('Learncosy-custom-certificate.pdf');
-            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Certificate Generated Succesfully'); 
-            
 
-        }else{  
-            return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate'); 
+            return $pdf->download('Learncosy-custom-certificate.pdf');
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('success', 'Certificate Generated Succesfully');
+
+
+        }else{
+            return redirect('instructor/profile/account-settings?tab=certificate')->with('error', 'Failedd to Generate Certificate');
         }
     }
 
-    // delete certficate 
+    // delete certficate
     public function certificateDelete($id){
 
-       $certificate = Certificate::find($id); 
-       
-         $certificateOldLogo = public_path($certificate->logo);
-         if (file_exists($certificateOldLogo)) {
-             @unlink($certificateOldLogo);
-         }
+        $certificate = Certificate::findOrFail($id);
 
-         $certificateOldSignature = public_path($certificate->signature);
-         if (file_exists($certificateOldSignature)) {
-             @unlink($certificateOldSignature);
-         }
+        $certificateOldLogo = public_path($certificate->logo);
+        if (file_exists($certificateOldLogo)) {
+            @unlink($certificateOldLogo);
+        }
 
-         $certificate->delete();
-    
+        $certificateOldSignature = public_path($certificate->signature);
+        if (file_exists($certificateOldSignature)) {
+            @unlink($certificateOldSignature);
+        }
+
+        $certificate->delete();
+
         return redirect()->back()->with('success', 'Certificate has been Deleted successfully!');
+
     }
 }

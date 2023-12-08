@@ -20,7 +20,7 @@ Student Dashboard
                     <h1>Yearly Analytics</h1>
 
                     {{-- yearly filter box --}}
-                    <div class="dropdown">
+                    {{-- <div class="dropdown">
                         <button type="button" class="btn btn-filter" data-bs-toggle="dropdown"
                             aria-expanded="false"><img src="{{ asset('latest/assets/images/icons/filter.svg') }}"
                                 alt="a" class="img-fluid"> Filters</button>
@@ -31,7 +31,7 @@ Student Dashboard
                             <li><a class="dropdown-item" href="#">Six Months</a></li>
                             <li><a class="dropdown-item" href="#">One Year</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                     {{-- yearly filter box --}}
                 </div>
             </div>
@@ -200,7 +200,7 @@ Student Dashboard
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <form action="{{ route('students.course.unlike',['course_id' => $likeCourse->course->id, 'ins_id' => $likeCourse->course->user_id]) }}" method="POST" class="d-block">
+                                        <form action="{{ route('students.course.unlike',['course_id' => $likeCourse->course->id, 'ins_id' => $likeCourse->course->user_id, 'subdomain' => config('app.subdomain') ]) }}" method="POST" class="d-block">
                                             @csrf
                                             <button type="submit" class="btn p-0 dropdown-item">Unlike</button>
                                         </form>
@@ -289,7 +289,7 @@ Student Dashboard
                             <td class="text-end">
                                 <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
                             </td>
-                        </tr>                            
+                        </tr>
                         @endif
                         @endforeach
                     </table>

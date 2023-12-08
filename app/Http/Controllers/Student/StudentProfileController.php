@@ -37,8 +37,6 @@ class StudentProfileController extends Controller
 
     public function update(Request $request)
     {
-        
-
         $userId = Auth()->user()->id;
 
         $this->validate($request, [

@@ -42,65 +42,65 @@
                 tabindex="0">
                 <div class="row justify-content-center">
                     @foreach ($packages as $package)
-                    @php
-                    $package_featurelist = explode(',', $package->features);
-                    @endphp
-                    @if ($package->type == 'monthly')
-                    <div class="col-xl-4 col-sm-10 col-md-6 mb-3">
-                        <div class="pricing-box">
-                            @if ($activePackageId == $package->id)
-                                <span class="current-plan">
-                                    Current Plan
-                                </span>
-                            @endif
-                            <div>
-                                <div class="pricing-icon">
-                                    <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici" class="img-fluid light-ele">
-                                    <img src="{{ asset('latest/assets/images/icons/pricing-01-d.svg') }}" alt="Prici" class="img-fluid dark-ele mx-auto">
-                                </div>
+                        @php
+                            $package_featurelist = explode(',', $package->features);
+                        @endphp
+                        @if ($package->type == 'monthly')
+                            <div class="col-xl-4 col-sm-10 col-md-6 mb-3">
+                                <div class="pricing-box">
+                                    @if ($activePackageId == $package->id)
+                                        <span class="current-plan">
+                                            Current Plan
+                                        </span>
+                                    @endif
+                                    <div>
+                                        <div class="pricing-icon">
+                                            <img src="{{ asset('latest/assets/images/icons/pricing-01.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                            <img src="{{ asset('latest/assets/images/icons/pricing-01-d.svg') }}" alt="Prici" class="img-fluid dark-ele mx-auto">
+                                        </div>
 
-                                <div class="txt">
-                                    <h5>{{ $package->name }}</h5>
-                                    <h3>
+                                        <div class="txt">
+                                            <h5>{{ $package->name }}</h5>
+                                            <h3>
 
-                                        @if ($package->sales_price)
-                                        €
-                                        {{ str_replace('.00', '', $package->sales_price) }}
+                                                @if ($package->sales_price)
+                                                €
+                                                {{ str_replace('.00', '', $package->sales_price) }}
+                                                @else
+                                                €
+                                                    {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
+                                                @endif
+
+                                                <span>/{{ $package->type[0] }}</span>
+                                            </h3>
+                                            <h6>Billed {{ $package->type }}</h6>
+
+                                            <ul>
+                                                @foreach ($package_featurelist as $feature)
+                                                <li>
+                                                    <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
+                                                    <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
+                                                    <span>{{ $feature }}</span>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="bttn">
+                                        @if ($activePackageId == $package->id)
+                                        <a href="{{ route('instructor.subscription.status', ['id' => $package->id, 'subdomain' => config('app.subdomain') ]) }}"
+                                            class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                         @else
-                                        €
-                                            {{ $package->regular_price > 0 ? ' ' . str_replace('.00', '', $package->regular_price) : 'Free' }}
+                                        {{-- <a href="{{ route('instructor.subscription.create', $package->id) }}"
+                                            class="will-subscribe">Get started</a> --}}
+
+                                            <a href="{{ route('instructor.subscription.create.payment', ['id' => $package->id, 'subdomain' => config('app.subdomain') ]) }}"
+                                                class="will-subscribe">Get started</a>
                                         @endif
-
-                                        <span>/{{ $package->type[0] }}</span>
-                                    </h3>
-                                    <h6>Billed {{ $package->type }}</h6>
-
-                                    <ul>
-                                        @foreach ($package_featurelist as $feature)
-                                        <li>
-                                            <img src="{{ asset('latest/assets/images/icons/check-circle.svg') }}" alt="Prici" class="img-fluid light-ele">
-                                            <img src="{{ asset('latest/assets/images/icons/check-circle-d.svg') }}" alt="Prici" class="img-fluid dark-ele">
-                                            <span>{{ $feature }}</span>
-                                        </li>
-                                        @endforeach
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="bttn">
-                                @if ($activePackageId == $package->id)
-                                <a href="{{ route('instructor.subscription.status', $package->id) }}"
-                                    class="will-subscribe current-plan-bttn">Cancel Plan</a>
-                                @else
-                                {{-- <a href="{{ route('instructor.subscription.create', $package->id) }}"
-                                    class="will-subscribe">Get started</a> --}}
-
-                                    <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
-                                        class="will-subscribe">Get started</a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    @endif
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -154,13 +154,13 @@
                             </div>
                             <div class="bttn">
                                 @if ($activePackageId == $package->id)
-                                <a href="{{ route('instructor.subscription.status', $package->id) }}"
+                                <a href="{{ route('instructor.subscription.status', ['id' => $package->id, 'subdomain' => config('app.subdomain') ]) }}"
                                     class="will-subscribe current-plan-bttn">Cancel Plan</a>
                                 @else
                                 {{-- <a href="{{ route('instructor.subscription.create', $package->id) }}"
                                     class="will-subscribe">Get started</a> --}}
 
-                                    <a href="{{ route('instructor.subscription.create.payment', $package->id) }}"
+                                    <a href="{{ route('instructor.subscription.create.payment', ['id' => $package->id, 'subdomain' => config('app.subdomain') ]) }}"
                                         class="will-subscribe">Get started</a>
 
 

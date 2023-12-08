@@ -12,7 +12,7 @@
 
 @section('content')
     <main class="courses-lists-pages">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
@@ -64,7 +64,7 @@
                     @foreach ($bundleCourses as $course)
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mb-4">
                             <div class="course-single-item">
-                                <div class="course-thumb-box"> 
+                                <div class="course-thumb-box">
                                     <div class="header-action">
                                         <div class="dropdown">
                                             <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
@@ -77,8 +77,8 @@
                                                 <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" class="d-inline" action="{{ route('delete.bundle.course', $course->id) }}">
-                                                        @csrf 
+                                                    <form method="POST" class="d-inline" action="{{ route('delete.bundle.course', ['bundle_id' => $course->id, 'subdomain' => config('app.subdomain') ]) }}">
+                                                        @csrf
                                                         <button type="submit" class="dropdown-item btn text-danger">Delete
                                                         </button>
                                                     </form>
@@ -91,18 +91,18 @@
                                 <div class="course-txt-box">
                                     <a href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
-                                
+
                                     @php
-                                    $courseIds = explode(',', $course->selected_course); 
+                                    $courseIds = explode(',', $course->selected_course);
                                     $bundleSelected = App\Models\Course::whereIn('id', $courseIds)
                                         ->where('user_id', Auth::user()->id)
                                         ->with('reviews')
                                         ->get();
-                                
+
                                     $review_sum = 0;
                                     $total = 0;
                                     @endphp
-                                
+
                                     @foreach ($bundleSelected as $selectedCourse)
                                         @foreach ($selectedCourse->reviews as $review)
                                             @php
@@ -111,11 +111,11 @@
                                             @endphp
                                         @endforeach
                                     @endforeach
-                                
+
                                     @php
                                     $review_avg = ($total > 0) ? $review_sum / $total : 0;
                                     @endphp
-                                
+
                                     <ul>
                                         <li><span>{{ number_format($review_avg, 2) }}</span></li>
                                         @for ($i = 0; $i < $review_avg; $i++)
@@ -123,14 +123,14 @@
                                         @endfor
                                         <li><span>({{ $total }})</span></li>
                                     </ul>
-                                
+
                                     @if ($course->sales_price)
                                         <h5>€ {{ $course->sales_price }} <span>€ {{ $course->regular_price }}</span></h5>
                                     @else
                                         <h5>{{ $course->regular_price > 0 ? '€ ' . $course->regular_price : 'Free' }}</h5>
                                     @endif
                                 </div>
-                                
+
                             </div>
                         </div>
                         {{-- course single box end --}}
