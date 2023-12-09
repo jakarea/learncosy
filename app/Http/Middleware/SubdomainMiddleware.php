@@ -12,8 +12,6 @@ class SubdomainMiddleware
     {
         $subdomain = $this->getSubdomain($request);
         config(['app.subdomain' => $subdomain]);
-
-        // $request->query->set('subdomain', $subdomain);
         return $next($request);
     }
 

@@ -15,9 +15,9 @@ class CreateChatsTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('sender_id');
-            $table->bigInteger('receiver_id')->nullable();
-            $table->unsignedInteger('group_id')->nullable();
+            $table->bigInteger('sender_id')->unsigned();
+            $table->bigInteger('receiver_id')->unsigned()->nullable();
+            $table->bigInteger('group_id')->unsigned()->nullable();
             $table->longText('message')->nullable();
             $table->string('file')->nullable();
             $table->string('file_extension', 50)->nullable();
@@ -27,9 +27,10 @@ class CreateChatsTable extends Migration
 
             $table->foreign('group_id')->references('id')->on('groups');
             $table->foreign('sender_id')->references('id')->on('users');
-            $table->foreign('receiver_id')->references('id')->on('users');
+            $table->foreign('receiver_id')->references('id')->on('users')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('apple_icon')->nullable();
             $table->longText('value')->nullable();
             $table->string('image')->nullable();
-            $table->string('logo')->nullable(); 
+            $table->string('logo')->nullable();
             $table->string('lp_bg_image')->nullable();
             $table->timestamps();
         });

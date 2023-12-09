@@ -10,6 +10,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\DNSSettingController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseBundleController;
@@ -167,8 +168,13 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/theme/setting/dns', [ModuleSettingController::class, 'dnsTheme'])->name('module.setting.dns');
         Route::get('instructor/theme/setting/{id}/edit', [ModuleSettingController::class, 'edit'])->name('module.setting.edit');
         Route::post('instructor/theme/setting/reset/{id}', [ModuleSettingController::class, 'reset'])->name('module.theme.reset');
+
         // Route::post('/updateorinsert', [ModuleSettingController::class, 'store'])->name('module.setting.update');
 
+        // DNS Setting
+
+        Route::post('instructor/dns/add', [DNSSettingController::class, 'storeDNS'])->name('dns.setting.store');
+        Route::post('instructor/dns/verify', [DNSSettingController::class, 'verifyDNS'])->name('dns.setting.verify');
 
         // profile management page routes
         Route::post('instructor/profile/edit/{id}', [DashboardController::class,'checkSubdomain'])->name('instructor.subdomain.update');

@@ -15,7 +15,7 @@ class InstructorModuleSetting extends Model
         'value',
         'logo',
         'app_logo',
-        'image',
+        'image'
     ];
 
     public function instructor()

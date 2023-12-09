@@ -513,14 +513,15 @@ Account Management
                                 <div class="dns-main-body">
                                     {{-- add domain start --}}
                                     <div class="add-domain-box d-block">
-                                        <form action="">
+                                        <form action="{{ route("dns.setting.store", config('app.subdomain')) }}" method="POST">
+                                            @csrf
                                             <h1>Add a domain</h1>
                                             <p>If you already own a domain like learncosy.com, you can add it to your
                                                 account here.</p>
                                             <h5>Domain name</h5>
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="ex: learncosy">
+                                                <input name="domain" type="text" class="form-control" placeholder="ex: learncosy" required>
                                             </div>
 
                                             <div class="form-submit-bttns">
@@ -532,15 +533,15 @@ Account Management
                                     {{-- add domain end --}}
 
                                     {{-- verification domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="">
+                                    <div class="add-domain-box domain-verify-box">
+                                        <form action="{{ route('dns.setting.verify' , config('app.subdomain')) }}" method="POST">
+                                            @csrf
                                             <h2>How do you want to verify your domain?</h2>
                                             <p>Before we can set up your domain, we need to verify that you are the
                                                 owner of learncosy.com.</p>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault2" checked>
+                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault2" value="a_txt" checked required>
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Add a TXT record to the domain's DNS record
                                                 </label>
@@ -548,8 +549,7 @@ Account Management
                                                     hosting provider. </h6>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault3" checked>
+                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="mx_txt" checked required>
                                                 <label class="form-check-label" for="flexRadioDefault3">
                                                     If you can't TXT record, add an MX record to the domain's DNS
                                                     records
@@ -558,8 +558,7 @@ Account Management
                                                     or register.</h6>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                    id="flexRadioDefault3" checked>
+                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="file" checked required>
                                                 <label class="form-check-label" for="flexRadioDefault3">
                                                     Add a text file to the domain’s website
                                                 </label>
@@ -577,7 +576,7 @@ Account Management
                                     {{-- verification domain end --}}
 
                                     {{-- connect your domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
+                                    <div class="add-domain-box domain-verify-box">
                                         <form action="">
                                             <h2>Connect your domain</h2>
                                             <h3>Sign in to your DNS hosting provider and add this record to your
