@@ -173,8 +173,11 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         // DNS Setting
 
-        Route::post('instructor/dns/add', [DNSSettingController::class, 'storeDNS'])->name('dns.setting.store');
-        Route::post('instructor/dns/verify', [DNSSettingController::class, 'verifyDNS'])->name('dns.setting.verify');
+        // Route::post('instructor/dns/add', [DNSSettingController::class, 'storeDNS'])->name('dns.setting.store');
+        Route::post('instructor/dns/verify', [DNSSettingController::class, 'verifyDNS'])->name('dns.setting.verify-view');
+        Route::post('instructor/dns/store', [DNSSettingController::class, 'verifyDNSStore'])->name('dns.setting.verify');
+        Route::get('instructor/dns/connect', [DNSSettingController::class, 'connectDNS'])->name('dns.setting.connect.dns');
+        Route::post('instructor/dns/connect/store', [DNSSettingController::class, 'connectDNSStore'])->name('dns.setting.connect.store');
 
         // profile management page routes
         Route::post('instructor/profile/edit/{id}', [DashboardController::class,'checkSubdomain'])->name('instructor.subdomain.update');
