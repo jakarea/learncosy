@@ -10,6 +10,7 @@
         "barryvdh/laravel-snappy": "^1.0",
         "fakerphp/faker": "^1.23",
         "guzzlehttp/guzzle": "^7.2",
+        "hazaveh/verify-domain": "^1.0",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

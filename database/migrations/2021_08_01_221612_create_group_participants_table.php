@@ -16,13 +16,14 @@ class CreateGroupParticipantsTable extends Migration
         Schema::create('group_participants', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('group_id');
-            $table->unsignedBiginteger('user_id');
+            $table->unsignedBigInteger('user_id'); // Corrected the case
             $table->boolean('status')->default(false);
             $table->timestamps();
 
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
     }
 
     /**

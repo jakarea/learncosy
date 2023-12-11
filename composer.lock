@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c3b3e9d19ed1b8078e8ed6926e14aa4",
+    "content-hash": "54dfaebaa6b751728aa931a24a67f9fc",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -1468,6 +1468,50 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "hazaveh/verify-domain",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hazaveh/verify-domain.git",
+                "reference": "56adf46d185b72eafc30d499dacb4b1b89bc37e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hazaveh/verify-domain/zipball/56adf46d185b72eafc30d499dacb4b1b89bc37e7",
+                "reference": "56adf46d185b72eafc30d499dacb4b1b89bc37e7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.30",
+                "pestphp/pest": "^2.19"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hazaveh\\VerifyDomain\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mahdi Hazaveh",
+                    "email": "me@hazaveh.net"
+                }
+            ],
+            "description": "Verify Domain Ownership with PHP",
+            "support": {
+                "issues": "https://github.com/hazaveh/verify-domain/issues",
+                "source": "https://github.com/hazaveh/verify-domain/tree/1.0.3"
+            },
+            "time": "2023-10-03T16:49:45+00:00"
         },
         {
             "name": "intervention/image",

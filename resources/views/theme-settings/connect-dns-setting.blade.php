@@ -511,73 +511,11 @@ Account Management
                                     </div>
                                 </div>
                                 <div class="dns-main-body">
-                                    {{-- add domain start --}}
-                                    <div class="add-domain-box d-block">
-                                        <form action="{{ route("dns.setting.verify-view", config('app.subdomain')) }}" method="post">
-                                            @csrf
-                                            <h1>Add a domain</h1>
-                                            <p>If you already own a domain like learncosy.com, you can add it to your
-                                                account here.</p>
-                                            <h5>Domain name</h5>
-
-                                            <div class="form-group">
-                                                <input name="domain" type="text" class="form-control" placeholder="ex: learncosy" required>
-                                            </div>
-
-                                            <div class="form-submit-bttns">
-                                                <button class="btn btn-cancel" type="reset">Cancel</button>
-                                                <button class="btn btn-submit" type="submit">Add Domain</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {{-- add domain end --}}
-
-                                    {{-- verification domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="{{ route('dns.setting.verify' , config('app.subdomain')) }}" method="POST">
-                                            @csrf
-                                            <h2>How do you want to verify your domain?</h2>
-                                            <p>Before we can set up your domain, we need to verify that you are the
-                                                owner of learncosy.com.</p>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault2" value="A" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Add a TXT record to the domain's DNS record
-                                                </label>
-                                                <h6>Recommended if you can create new DNS record at your register or DNS
-                                                    hosting provider. </h6>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="MX" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault3">
-                                                    If you can't TXT record, add an MX record to the domain's DNS
-                                                    records
-                                                </label>
-                                                <h6>Recommended only if TXT records aren't supported by your domain host
-                                                    or register.</h6>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="file" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault3">
-                                                    Add a text file to the domain’s website
-                                                </label>
-                                                <h6>Recommended if you’ve already set up a website using this domain,
-                                                    for example, www.learncosy.com.</h6>
-                                            </div>
-
-
-                                            <div class="form-submit-bttns">
-                                                <button class="btn btn-cancel" type="reset">Back</button>
-                                                <button class="btn btn-submit" type="submit">Verify</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {{-- verification domain end --}}
 
                                     {{-- connect your domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="">
+                                    <div class="add-domain-box domain-verify-box">
+                                        <form action="{{ route('dns.setting.connect.store', config('app.subdomain') ) }}" method="POST">
+                                            @csrf
                                             <h2>Connect your domain</h2>
                                             <h3>Sign in to your DNS hosting provider and add this record to your
                                                 learncosy.com domain.</h3>
