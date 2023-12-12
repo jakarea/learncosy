@@ -541,26 +541,29 @@ Account Management
                                                         <div class="media-body">
                                                             <h5>TXT name</h5>
                                                             <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if
+                                                                    alt="copy-1" class="img-fuid"> {{ $existingDomain->verify_by }} (or skip if
                                                                 not
                                                                 supported by provider)</h6>
                                                         </div>
                                                     </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>TXT value</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> MSem58456895</h6>
+
+                                                        <div class="media">
+                                                            <div class="media-body">
+                                                                <h5>TXT value</h5>
+                                                                <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
+                                                                        alt="copy-1" class="img-fuid"> {{ $existingDomain->verify_token }}</h6>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>TTL</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> 3600 (or your
-                                                                provider default)</h6>
+
+                                                        <div class="media">
+                                                            <div class="media-body">
+                                                                <h5>TTL</h5>
+                                                                <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
+                                                                        alt="copy-1" class="img-fuid"> 3600 (or your
+                                                                    provider default)</h6>
+                                                            </div>
                                                         </div>
-                                                    </div>
+
 
                                                 </div>
                                                 <div class="tab-pane fade" id="nav-profile" role="tabpanel"
@@ -570,7 +573,7 @@ Account Management
                                                         <div class="media-body">
                                                             <h5>MXT name</h5>
                                                             <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if
+                                                                    alt="copy-1" class="img-fuid"> {{ $existingDomain->verify_by }} (or skip if
                                                                 not
                                                                 supported by provider)</h6>
                                                         </div>
@@ -579,7 +582,7 @@ Account Management
                                                         <div class="media-body">
                                                             <h5>MXT value</h5>
                                                             <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid">MSem58456895</h6>
+                                                                    alt="copy-1" class="img-fuid">{{ $existingDomain->verify_token }}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="media">
