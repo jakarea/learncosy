@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\SubdomainMiddleware::class,
-        \App\Http\Middleware\ExternalDomainRedirect::class,
+        // \App\Http\Middleware\ExternalDomainRedirect::class,
     ];
 
     /**

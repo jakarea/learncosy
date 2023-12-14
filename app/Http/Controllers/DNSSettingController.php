@@ -18,7 +18,12 @@ class DNSSettingController extends Controller
             $module_settings->value = json_decode($module_settings->value);
         }
 
-        $request->session()->put('getDomain', $request->domain);
+
+        $originalUrl = $request->domain;
+
+        $cleanedDomain = preg_replace('#^https?://|/$#', '', $originalUrl);
+
+        $request->session()->put('getDomain', $cleanedDomain);
 
         return view('theme-settings/verify-dns-settings', compact('module_settings'));
     }
@@ -42,7 +47,7 @@ class DNSSettingController extends Controller
                 'instructor_id' => auth()->user()->id,
                 'domain' => $domain,
                 'verify_by' => $request->verify_by,
-                'verify_token' => substr(md5(time()), 0, 7),
+                'verify_token' => substr(md5(time()), 0, 20),
             ]);
         }
 
@@ -57,15 +62,19 @@ class DNSSettingController extends Controller
             $module_settings->value = json_decode($module_settings->value);
         }
 
-        return view('theme-settings/connect-dns-setting', compact('module_settings'));
+        $domain = request()->session()->get('getDomain');
+        $existingDomain = DNSSetting::where([ 'instructor_id' => auth()->user()->id, 'domain' => $domain])->first();
+
+        return view('theme-settings/connect-dns-setting', compact('module_settings','existingDomain'));
     }
 
     public function connectDNSStore(){
 
+        // $dns_records = dns_get_record('parisworldbd.com', DNS_TXT);
+        // dd($dns_records);
+
         $domain = request()->session()->get('getDomain');
-
         $existingDomain = DNSSetting::where([ 'instructor_id' => auth()->user()->id, 'domain' => $domain])->first();
-
         if ($existingDomain->domain !== $domain ){
             return back()->with('error', 'Your domain missmatch');
         }
@@ -73,17 +82,12 @@ class DNSSettingController extends Controller
         $domain = $existingDomain->domain;
         $verificationCode = $existingDomain->verify_token;
 
-
-        // return dd( $verificationCode );
-
-        // $ip = gethostbyname('www.cr7.ltd');
-        // $dns_records = dns_get_record('cr7.ltd', DNS_TXT);
-
+        // $ip = gethostbyname('app.learncosy.com');
+        // dd($ip);
 
         $verify = new VerifyDomain();
-
-        // Verify by DNS
         $byDNS = $verify->verifyByDNS($domain, $verificationCode);
+
         if( $byDNS ){
             $module_settings = InstructorModuleSetting::where('instructor_id', auth()->user()->id)->first();
             if ($module_settings) {
@@ -94,8 +98,6 @@ class DNSSettingController extends Controller
             return back()->with('error', 'Your domain missmatch');
         }
 
-        // dd( $byDNS );
-
         // // Verify by File Content
         // $byFile = $verify->verifyByFile($domain, 'verification.txt', $verificationCode);
 
@@ -105,7 +107,7 @@ class DNSSettingController extends Controller
         // // Determine if verification is successful
         // $verificationStatus = $byDNS || $byFile || $byMeta;
 
-        // request()->session()->forget('getDomain');
+        request()->session()->forget('getDomain');
 
 
     }
