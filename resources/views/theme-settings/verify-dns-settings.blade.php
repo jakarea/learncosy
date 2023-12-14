@@ -521,7 +521,7 @@ Account Management
                                                 owner of learncosy.com.</p>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault2" value="A" checked required>
+                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault2" value="TXT" checked required>
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Add a TXT record to the domain's DNS record
                                                 </label>
