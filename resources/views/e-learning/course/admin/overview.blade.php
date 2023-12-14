@@ -109,7 +109,7 @@
                                         @foreach($module->lessons as $lesson)
                                         <li>
                                             @if ( !isEnrolled($course->id) )
-                                            <a href="{{route('students.checkout', $course->slug)}}"
+                                            <a href="{{route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])}}"
                                                 class="video_list_play d-flex">
                                                 <div>
                                                     <img src="{{asset('latest/assets/images/icons/lok.svg')}}" alt="a" class="img-fluid me-2">
