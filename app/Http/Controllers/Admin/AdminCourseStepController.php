@@ -518,12 +518,11 @@ class AdminCourseStepController extends Controller
         $course = Course::find($id);
 
         $request->validate([
-            'thumbnail' => 'nullable|file|mimes:jpg,png,jpg|max:5121',
+            'thumbnail' => 'nullable|file|mimes:jpg,png,jpeg,webp,svg,gif|max:5121',
         ],
         [
             'thumbnail' => 'Max file size is 5 MB!'
         ]);
- 
 
         if ($request->hasFile('thumbnail')) { 
             if ($course->thumbnail) {
@@ -644,8 +643,9 @@ class AdminCourseStepController extends Controller
         }
 
         $course = Course::find($id);
+        $Urlsubdomain = $course->user->subdomain;
 
-        return view('e-learning/course/admin/create/step-11',compact('course'));
+        return view('e-learning/course/admin/create/step-11',compact('course','Urlsubdomain'));
     }
 
 

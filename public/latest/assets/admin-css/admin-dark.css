@@ -196,6 +196,22 @@
 .dark-mode .form-submit-bttns .btn-submit:hover {
   color: #fff !important;
 }
+.dark-mode .form-submit-bttns .btn-cancel a{
+  color: #2F3A4C!important ;
+}
+.dark-mode .filter-sort-box .dropdown-menu{
+  border: 1px solid #313A49 !important;
+  background: #0D0D0D !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+}
+
+.dark-mode .filter-sort-box .dropdown-menu li a{
+  color: #fff!important;
+}
+
+.dark-mode .dropdown-menu li a:hover{
+  background-color: #000A39!important;
+}
 .dark-mode .form-submit-bttns .btn-cancel {
   border: 1px solid #313A49 !important;
   background: #0D0D0D !important;

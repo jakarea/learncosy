@@ -217,7 +217,7 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="//www.youtube.com/embed/{{$promo_video_link}}"></iframe>
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
@@ -378,8 +378,7 @@
                 <span id="notify" style="color: green; font-size: 14px;"></span>
             </div>
             <div class="copy-link">
-                <input type="text" placeholder="Link" value="{{ url('courses/overview', $course->slug)}}"
-                    class="form-control" id="linkToCopy">
+                <input type="text" placeholder="Link" value="{{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}"  class="form-control" id="linkToCopy">
                 <a href="#" id="copyButton" class="ms-1 px-0">Copy</a>
             </div>
         </div>
