@@ -63,17 +63,17 @@
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="https://cdn.tiny.cloud/1/your-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/24z531gtj4tkxagq9eshg386rnnrwmmo91drwhvc19g5szrb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 
     {{-- dark mode js --}}
     <script>
-        const htmlBody = document.querySelector("body"); 
+        const htmlBody = document.querySelector("body");
         const modeBttn = document.getElementById("darkModeBttn");
-       
+
         function toggleMode() {
-            htmlBody.classList.toggle('dark-mode'); 
-            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : ''; 
+            htmlBody.classList.toggle('dark-mode');
+            const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
             localStorage.setItem('dark-mode', mode);
 
             if (htmlBody.classList.contains('dark-mode')) {
@@ -83,15 +83,15 @@
                 tinymce.remove('#description');
                 lightFunction();
             }
-        } 
+        }
         const storedMode = localStorage.getItem('dark-mode');
         if (storedMode === 'dark-mode') {
             htmlBody.classList.add('dark-mode');
-        } 
+        }
         modeBttn.addEventListener('change', toggleMode);
     </script>
 
-    <script> 
+    <script>
         if (document.querySelector("body").classList.contains('dark-mode')) {
             tinymce.remove('#description');
             darkFunction();

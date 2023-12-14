@@ -14,7 +14,7 @@ Course Update - Final Step
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                {{-- course step --}} 
+                {{-- course step --}}
                 <div class="course-create-step-wrap">
                     <div class="step-box active">
                         <span class="circle">
@@ -124,18 +124,18 @@ Course Update - Final Step
                         <h6>Or copy link</h6>
                         <span id="notify" style="color: green; font-size: 14px;"></span>
                     </div>
-                    
+
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="{{ url('admin/courses/overview', $course->slug)}}"
+                        <input type="text" placeholder="Link" value="{{ url('courses/overview', $course->slug)}}"
                             class="form-control" id="linkToCopy">
                         <a href="#" id="copyButton">Copy</a>
                     </div>
                 </div>
-                
+
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
                     <a href="{{ url('admin/courses/create/'.$course->id.'/visibility')}}">Back</a>
-                    <a href="{{ url('admin/courses')}}">Finish</a> 
+                    <a href="{{ url('admin/courses')}}">Finish</a>
                 </div>
                 {{-- step next bttns --}}
             </div>
@@ -153,7 +153,7 @@ Course Update - Final Step
     copyButton.addEventListener("click", (e) => {
         e.preventDefault();
         linkToCopy.select();
-        document.execCommand("copy"); 
+        document.execCommand("copy");
         notify.innerText = 'Copied!';
 
         setTimeout(() => {
