@@ -162,5 +162,5 @@ Route::fallback(function () {
 
 
 // Social Login
-Route::get('/login/{social}',[LoginController::class,'socialLogin'])->where('social','facebook|google|apple');
-Route::get('/login/{social}/callback',[LoginController::class,'handleProviderCallback'])->where('social','facebook|google|apple');
+Route::get('/login/{social}',[LoginController::class,'socialLogin'])->where('social','facebook|google|apple')->name('social.login');
+Route::get('/login/{social}/callback',[LoginController::class,'handleProviderCallback'])->where('social','facebook|google|apple')->name('social.callback');
