@@ -99,7 +99,7 @@ Connect
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.vimeo.update') }}" method="POST">
+                            <form action="{{ route('instructor.vimeo.update',['subdomain' => config('app.subdomain')]) }}" method="POST">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group">
@@ -149,7 +149,7 @@ Connect
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.stripe.update') }}" method="post">
+                            <form action="{{ route('instructor.stripe.update',['subdomain' => config('app.subdomain')]) }}" method="post">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group mb-3">

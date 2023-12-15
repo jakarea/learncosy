@@ -52,28 +52,24 @@ if (!function_exists('hasSubscription')) {
  */
 if (!function_exists('isSubscribed')) {
     function isSubscribed($package_id)
-    {
-        $user = auth()->user();
+    { 
+ 
+        $user = auth()->user();  
 
-        if ($user) {
-            // Retrieve the user's subscription based on instructor_id
-            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->first();
-
-            if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cencel')) { 
-                // Subscription expired
+        if ($user) { 
+            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->where('subscription_packages_id',$package_id)->first(); 
+        
+            if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cancel')) { 
                 return false;
             }
 
-            if (!$subscription || $subscription->name != $package_id) {
-                // Subscription not found or not matching package_id
+            if (!$subscription || $subscription->subscription_packages_id != $package_id) { 
                 return false;
             }
-        } else {
-            // User is not authenticated
+        } else {  
             return false;
         }
-
-        // User is subscribed and matches the package_id
+ 
         return true;
     }
 }
@@ -328,7 +324,7 @@ if (!function_exists('modulesetting')) {
 
             if (!$user) {
                 // Redirect the user to set up their subdomain
-                return redirect()->route('instructor.dashboard.index');
+                return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')]);
             }
 
             $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();

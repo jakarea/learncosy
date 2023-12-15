@@ -27,9 +27,9 @@ if ($module_settings) {
 }else{
     $module_settings = new App\Models\InstructorModuleSetting;
     $module_settings->instructor_id =  auth()->user()->id;
-    $module_settings->value = '{"primary_color":"#f4f8fc","menu_color":"#000000","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}';
+    $module_settings->value = '{"primary_color":"#f4f8fc","menu_color":"#141415","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}';
     $module_settings->save();
-    $module_settings->value = json_decode('{"primary_color":"#f4f8fc","menu_color":"#000000","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}');
+    $module_settings->value = json_decode('{"primary_color":"#f4f8fc","menu_color":"#141415","secondary_color":"#294cff","lp_layout":"","meta_title":"","meta_desc":""}');
 }
 
 @endphp
@@ -83,7 +83,7 @@ if ($module_settings) {
             <div class="col-lg-10">
                 <div class="theme-settings-wrap">
                     <h4>Your theme Settings</h4>
-                    <form action="{{ route('module.setting.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('module.setting.update',['subdomain' => config('app.subdomain')] ) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="theme-settings-box theme-dns-settings-box" style="padding: 2.5rem!important">
                             <div class="row">
@@ -166,6 +166,26 @@ if ($module_settings) {
                                                         value="{{ old('primary_color', $module_settings->value->primary_color ? $module_settings->value->primary_color : '#ffffff') }}" style="width: 30px!important; height: 30px!important">
 
                                                     <label for="primary_color">
+                                                        <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
+                                                            alt="Color" class="img-fluid me-0">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="media">
+                                                <img src="{{ asset('latest/assets/images/icons/color.svg') }}"
+                                                    alt="Color" class="img-fluid">
+                                                <div class="media-body">
+                                                    <h5>Menu Text Color</h5>
+                                                    <p>This is the color of your menu text. Your menubar
+                                                        should look good on this.</p>
+                                                </div>
+
+                                                <div class="color-position">
+                                                    <input type="color" class="form-control p-0"
+                                                        name="menu_color" id="menu_color"
+                                                        value="{{ old('menu_color', $module_settings->value->menu_color ? $module_settings->value->menu_color : '#ffffff') }}" style="width: 30px!important">
+
+                                                    <label for="menu_color">
                                                         <img src="{{ asset('latest/assets/images/icons/pen-ic.svg') }}"
                                                             alt="Color" class="img-fluid me-0">
                                                     </label>

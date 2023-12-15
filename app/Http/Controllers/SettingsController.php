@@ -65,9 +65,8 @@ class SettingsController extends Controller
 
      public function vimeoUpdate(Request $request)
      {
+        // return 1234;
         $user = auth()->user();
-
-
 
         // Define custom error messages
         $messages = [

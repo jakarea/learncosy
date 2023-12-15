@@ -233,6 +233,7 @@ class HomepageController extends Controller
     // login as instructor
     public function loginAsInstructor($userSessionId, $userId, $insId)
     {
+
         if (!$userId || !$userSessionId) {
             return redirect('/admin/login')->with('error', 'Failed to Login as Instructor');
         }

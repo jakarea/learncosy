@@ -52,8 +52,13 @@
                         @php 
                             $domain = env('APP_DOMAIN', 'learncosy.com');
                             $url = '//'.$instructor->subdomain.'.'.$domain.'/login-as-instructor/'.$userSessionId.'/'.$userId.'/'.$insId;
-                        @endphp  
-                        <a href="{{$url}}" class="edit-profile">Login as {{ $instructor->name }}</a>
+                        @endphp
+                        @if ($instructor->subdomain)
+                            <a href="{{$url}}" class="edit-profile">Login as {{ $instructor->name }}</a>
+                        @else 
+                            <a href="{{ url('admin/instructor/'.$instructor->id.'/edit') }}" class="edit-profile">Edit Profile</a>
+                        @endif
+                        
                     </div>
                 </div>
                 <div class="user-details-box">

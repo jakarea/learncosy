@@ -12,6 +12,7 @@ use App\Models\ManagePage;
 use App\Models\Checkout;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
@@ -517,14 +518,14 @@ class DashboardController extends Controller
 
     public function subdomain()
     {
+        // return 234;
         return view('latest-auth.subdomain');
     }
 
-    public function checkSubdomain($user_id, Request $request)
-    {
+    public function checkSubdomain(Request $request,$subdomain,$user_id)
+    {  
         $request->validate([
-            'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
-            // 'subdomain' => 'required|string|max:32,'.$user_id,
+            'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u', 
         ]);
 
         $proposedUsername = $request->subdomain;
@@ -553,6 +554,17 @@ class DashboardController extends Controller
 
             if (session('suggestedUsernames')) {
                 session()->forget('suggestedUsernames');
+            }
+            
+            $request = Request::capture();
+            $host = $request->getHost();
+            $sub_domain = explode('.', $host)[0];
+
+            if ($sub_domain == 'app' && $user->user_role == 'instructor') {
+                $sessionId = session()->getId();
+                $user->session_id = $sessionId;
+                $user->save();
+                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId);
             }
 
             return redirect('instructor/profile/step-4/complete');

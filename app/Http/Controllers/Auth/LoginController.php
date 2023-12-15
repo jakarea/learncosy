@@ -51,13 +51,13 @@ class LoginController extends Controller
      */
 
 
-
     public function login(Request $request)
     {
+        
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
-        $user = User::where('email', $request->email)->first();
+        return $user = User::where('email', $request->email)->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {

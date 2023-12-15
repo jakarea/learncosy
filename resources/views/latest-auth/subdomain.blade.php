@@ -68,7 +68,7 @@ Verify Email
                     </a>
                     <h1>Choose Subdomain</h1>
                     <p>Choose your subdomain.</p>
-                    <form action="{{ route('instructor.subdomain.update', Auth::user()->id) }}" method="POST"
+                    <form action="{{ route('instructor.subdomain.update',['id' => auth()->user()->id, 'subdomain' => config('app.subdomain')]) }}" method="POST"
                         class="profile-form create-form-box ms-0 username-form" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

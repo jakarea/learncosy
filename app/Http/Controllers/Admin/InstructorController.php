@@ -123,8 +123,8 @@ class InstructorController extends Controller
         $adminUser->session_id = $value;
         $adminUser->save();
 
-       $userId = Crypt::encrypt($adminUser->id);
-       $insId = Crypt::encrypt($id);
+        $userId = Crypt::encrypt($adminUser->id);
+        $insId = Crypt::encrypt($id);
 
        return view('instructor/admin/show',compact('instructor', 'subscription','experiences','userSessionId','userId','insId'));
      }
@@ -145,8 +145,7 @@ class InstructorController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'phone' => 'required|string',
-            'password' => 'string',
+            'phone' => 'required|string', 
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [

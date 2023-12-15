@@ -55,8 +55,7 @@ class ModuleSettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    { 
         // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
