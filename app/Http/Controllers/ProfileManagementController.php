@@ -46,11 +46,10 @@ class ProfileManagementController extends Controller
         return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
-    public function update(Request $request)
-    {
-        // return $request->all();
 
-        $userId = Auth()->user()->id;
+    public function update(Request $request, $domain)
+    {
+        $userId = auth()->user()->id; 
 
         $this->validate($request, [
             'name' => 'required|string',
@@ -104,7 +103,7 @@ class ProfileManagementController extends Controller
         // Send email
         Mail::to($user->email)->send(new ProfileUpdated($user));
 
-        return redirect()->route('instructor.profile')->with('success', 'Your Profile has been Updated successfully!');
+        return redirect()->route('instructor.profile', config('app.subdomain'))->with('success', 'Your Profile has been Updated successfully!');
     }
 
 

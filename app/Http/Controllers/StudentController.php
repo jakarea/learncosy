@@ -133,17 +133,16 @@ class StudentController extends Controller
      }
 
     // show page
-    public function edit($id)
+    public function edit($domain, $id)
      {
         $student = User::where('id', $id)->first();
         return view('students/instructor/edit',compact('student'));
      }
 
-     public function update(Request $request,$id)
+     public function update(Request $request, $domain ,$id)
      {
 
          $userId = $id;
-
          $this->validate($request, [
              'name' => 'required|string',
              'phone' => 'required|string',
@@ -205,7 +204,7 @@ class StudentController extends Controller
         }
 
          $user->save();
-         return redirect()->route('allStudents')->with('success', 'Students Profile has been Updated successfully!');
+         return redirect()->route('allStudents', config('app.subdomain') )->with('success', 'Students Profile has been Updated successfully!');
      }
 
      //  upload cover photo for all instructor
@@ -240,7 +239,7 @@ class StudentController extends Controller
         return response()->json(['error' => 'No image uploaded'], 400);
     }
 
-     public function destroy($id)
+     public function destroy($domain, $id)
      {
         $userId = intval($id);
 

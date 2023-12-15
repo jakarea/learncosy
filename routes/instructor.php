@@ -138,7 +138,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::post('instructor/bundle/courses/create',  [CourseBundleController::class,'createBundle'])->name('create.bundle.course');
 
         Route::get('instructor/bundle/courses/{slug}/edit',  [CourseBundleController::class, 'edit1'])->name('select.again.bundle.course');
-        Route::post('instructor/bundle/courses/{id}/select-update',  [CourseBundleController::class,'update1']);
+        Route::post('instructor/bundle/courses/{id}/select-update',  [CourseBundleController::class,'update1'])->name('select.again.bundle.course.update');
 
         Route::get('instructor/bundle/courses/{slug}/edit-final',  [CourseBundleController::class,'edit2']);
         Route::post('instructor/bundle/courses/{slug}/edit-final',  [CourseBundleController::class,'update2'])->name('create.update.bundle.course');
@@ -207,7 +207,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/profile/myprofile', [ProfileManagementController::class ,'show'])->name('instructor.profile');
         Route::post('instructor/profile/cover/upload', [ProfileManagementController::class ,'coverUpload']);
         Route::get('instructor/profile/account-settings', [ProfileManagementController::class ,'edit'])->name('account.settings');
-        Route::post('instructor/profile/edit', [ProfileManagementController::class ,'update'])->name('instructor.profile.update');
+        Route::post('instructor/profile/update', [ProfileManagementController::class ,'update'])->name('instructor.profile.update');
         Route::get('instructor/profile/change-password', [ProfileManagementController::class ,'passwordUpdate']);
         Route::post('instructor/profile/change-password', [ProfileManagementController::class ,'postChangePassword'])->name('instructor.password.update');
 
@@ -230,7 +230,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::post('instructor/students/create', [StudentController::class, 'store'])->name('student.add');
         Route::post('instructor/students/cover/upload', [StudentController::class, 'coverUpload']);
         Route::get('instructor/students/profile/{id}', [StudentController::class, 'show'])->name('studentProfile');
-        Route::get('instructor/students/{id}/edit', [StudentController::class, 'edit']);
+        Route::get('instructor/students/{id}/edit', [StudentController::class, 'edit'])->name('student.edit');
         Route::post('instructor/students/{id}/edit', [StudentController::class, 'update'])->name('updateStudentProfile');
         Route::delete('instructor/students/{id}/destroy', [StudentController::class, 'destroy'])->name('student.destroy');
 
@@ -263,7 +263,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
     // Instructor Notification
     Route::get('instructor/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
-    Route::post('instructor/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
+    Route::post('instructor/notification/remove/{id}', [DashboardController::class, 'notifyRemove'])->name('instructor.notify.destroy');
 
     Route::get('instructor/profile/step-4/complete', function () {
         return view('latest-auth.connect');
