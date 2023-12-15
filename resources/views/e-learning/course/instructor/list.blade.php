@@ -150,9 +150,9 @@ All Courses
 
                         </div>
                         @else
-                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}"
+                        <a href="{{ route('instructor.course.overview', ['slug' => $course->slug, config('app.subdomain') ]) }}"
                             class="view-as-bttn">Overview</a>
-                        @endif 
+                        @endif
                     </div>
                 </div>
             </div>

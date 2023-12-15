@@ -72,7 +72,7 @@
                                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">View</a>
+                                                <li><a class="dropdown-item" href="{{route('course.bundle.view', ['slug' => $course->slug, config('app.subdomain') ])}}">View</a>
                                                 </li>
                                                 <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
                                                 </li>
