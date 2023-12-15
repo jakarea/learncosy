@@ -61,7 +61,7 @@
                         </div>
                         <h1>Password Reset</h1> 
 
-                        <form method="POST" action="{{ route('password.email') }}" class="login-from">
+                        <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
                             <div class="form-group">
                                 <label>Enter your email address</label>

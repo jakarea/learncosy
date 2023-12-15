@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserCreated;
+use App\Models\InstructorModuleSetting;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Auth;
@@ -64,12 +65,41 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function showRegistrationForm()
+    {
+        $subdomain = explode('.', request()->getHost())[0];
+        if ($subdomain == 'app') {
+            return view('custom-auth/register/register');
+        }
+        $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
+        $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
+        $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
+        $registerPageStyle = json_decode($instrcutorModuleSettings->value ?$instrcutorModuleSettings->value :$value);
+
+        if ($registerPageStyle) {
+            if ($registerPageStyle->lp_layout == 'fullwidth') {
+                return view('custom-auth/register/register2');
+            } elseif ($registerPageStyle->lp_layout == 'default') {
+                return view('custom-auth/register/register');
+            } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
+                return view('custom-auth/register/register3');
+            } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
+                return view('custom-auth/register/register4');
+            } else {
+                return view('custom-auth/register/register');
+            }
+        } else {
+            return view('custom-auth/register/register');
+        }
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\Models\User
      */
+    
     protected function create(array $data)
     {
 

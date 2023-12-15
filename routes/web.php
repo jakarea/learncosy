@@ -177,7 +177,7 @@ $domain = env('APP_DOMAIN', 'learncosy.com');
 Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 // custom login for student and instructor 
 Route::get('/login', function () {
- 
+  
     // match user sessionId
     if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();

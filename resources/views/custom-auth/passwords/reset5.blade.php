@@ -69,7 +69,7 @@
                         <h1>Password Update</h1>
                         <p>Welcome back! Please enter your emal address.</p>
 
-                        <form method="POST" action="{{ route('password.update') }}" class="login-from">
+                        <form method="POST" action="{{ route('password.update',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <input type="hidden" name="email" value="{{ $email }}">

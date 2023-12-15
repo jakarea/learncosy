@@ -71,7 +71,7 @@
                         <h6>Welcome to <span>Learn Cosy</span></h6>
                         <div>
                             <p>No Account ?</p>
-                            <a href="{{ url('/auth-register') }}">Sign up</a>
+                            <a href="{{ url('/register') }}">Sign up</a>
                         </div>
                     </div>
                     <h1>Sign in</h1>
@@ -84,7 +84,7 @@
                                 class="img-fluid"></a>
                     </div>
 
-                    <form method="POST" action="{{ route('login') }}" class="login-from">
+                    <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                         @csrf
 
                         <div class="form-group">
