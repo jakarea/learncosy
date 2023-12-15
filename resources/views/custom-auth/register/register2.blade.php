@@ -85,7 +85,7 @@
                                     class="img-fluid"></a>
                         </div>
 
-                        <form method="POST" action="{{ route('register') }}" class="login-from">
+                        <form method="POST" action="{{ route('register',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
 
                             <div class="form-group mt-3">

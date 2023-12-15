@@ -59,7 +59,7 @@
                         </div>
                         <h1>Sign Up</h1>
 
-                        <form method="POST" action="{{ route('register') }}" class="login-from">
+                        <form method="POST" action="{{ route('register',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Name') }}</label>

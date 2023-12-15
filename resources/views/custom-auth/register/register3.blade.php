@@ -67,7 +67,7 @@
                         <h1>Sign up to Learn Cosy</h1>
                         <p>Create an account! Start your 30-day free trial</p>
 
-                        <form method="POST" action="{{ route('register') }}" class="login-from">
+                        <form method="POST" action="{{ route('register',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Name') }}</label>

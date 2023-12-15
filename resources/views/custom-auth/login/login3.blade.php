@@ -46,7 +46,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-8">
                     <div class="left-side-form">
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <div class="login3form">
                                 <h1>Welcome back</h1>
@@ -93,7 +93,7 @@
                                         type="submit">Next</button>
                                 </div>
 
-                                <p class="register">Don't have an account? <a href="{{url('/auth-register')}}">Register</a></p>
+                                <p class="register">Don't have an account? <a href="{{url('/register')}}">Register</a></p>
                             </div>
                         </form>
                     </div>

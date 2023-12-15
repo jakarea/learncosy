@@ -28,7 +28,7 @@
                         </a>
                         <h1>Welcome back</h1>
                         <p>Welcome back! Please enter your details.</p>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <div class="form-group">
                                 <label for="email">{{ __('Email') }}</label>
@@ -73,7 +73,7 @@
                                 <button class="btn btn-submit" type="submit">Login</button>
                             </div>
                             <div class="optional-txt">
-                                <p>Dont't have an account? <a href="{{ url('/auth-register') }}">Register</a></p>
+                                <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
                             </div>
                         </form>
                     </div>

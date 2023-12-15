@@ -92,7 +92,7 @@ class SubscriptionPaymentController extends Controller
                 if (Auth::user()->subdomain) {
                     return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')])->with('success', 'Subscribed Successfully');
                 }else{
-                    return redirect('instructor/profile/step-3/complete',['subdomain' => config('app.subdomain')])->with('success', 'Subscribed Successfully');
+                    return redirect('instructor/profile/step-3/complete')->with('success', 'Subscribed Successfully');
                 }
 
             }

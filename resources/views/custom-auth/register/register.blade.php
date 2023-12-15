@@ -17,7 +17,7 @@
                         </a>
                         <h1>Create an account</h1>
                         <p>Start your 30-day free trial.</p>
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-12">
