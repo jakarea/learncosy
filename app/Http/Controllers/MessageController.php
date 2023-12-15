@@ -373,6 +373,7 @@ class MessageController extends Controller
 
     public function deleteGroupChatHistory(Request $request)
     {
+        dd( $request->all() );
         $chats = Chat::where('group_id', $request->groupId);
 
         $chats->each(function ($chat) {

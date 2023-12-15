@@ -42,8 +42,9 @@ class CourseBundleController extends Controller
          return view('bundle/instructor/list',compact('bundleCourses'));
      }
 
-     public function view($bundleSlug)
+     public function view($model, $bundleSlug)
      {
+
         if (!$bundleSlug) {
             return redirect('instructor/bundle/courses')->with('warning','No Bundle Found!');
         }

@@ -127,7 +127,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         // Course bundle
         Route::get('instructor/bundle/courses', [CourseBundleController::class,'index']);
-        Route::get('instructor/bundle/courses/{slug}/view',  [CourseBundleController::class,'view']);
+        Route::get('instructor/bundle/courses/{slug}/view',  [CourseBundleController::class,'view'])->name('course.bundle.view');
 
         Route::get('instructor/bundle/courses/select',  [CourseBundleController::class,'step1']);
         Route::post('instructor/bundle/courses/select/{course_id}',  [CourseBundleController::class,'selectBundle'])->name('select.bundle.course');

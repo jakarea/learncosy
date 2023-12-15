@@ -123,7 +123,7 @@ class CourseController extends Controller
 
 
     // course overview
-    public function overview($sub, $slug)
+    public function overview($model, $slug)
     { 
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $promo_video_link = '';

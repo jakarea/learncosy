@@ -147,7 +147,6 @@ All Courses
                                 Sold {{ $course->sale_count }} Times
                                 @endif
                             </span>
-
                         </div> 
                         @endif 
                     </div>

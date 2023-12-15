@@ -1,5 +1,5 @@
 @extends('layouts/latest/instructor')
-@section('title','Course Overview') 
+@section('title','Course Overview')
 
 
 {{-- style section @S --}}
@@ -66,7 +66,7 @@
                     @endphp
 
                     <ul>
-                        @foreach ($objectives as $object) 
+                        @foreach ($objectives as $object)
                         <li><i class="fas fa-check"></i> {{$object}} </li>
                         @endforeach
                     </ul>
@@ -89,15 +89,15 @@
                                     </div>
                                 </button>
                                 {{-- lessons total minutes --}}
-                                @php 
+                                @php
                                     $totalDuration = 0;
 
                                     foreach ($module->lessons as $lesson) {
                                         if (isset($lesson->duration) && is_numeric($lesson->duration)) {
                                             $totalDuration += $lesson->duration;
                                         }
-                                    } 
-                                @endphp 
+                                    }
+                                @endphp
 
                                 <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
                                 {{-- lessons total minutes --}}
@@ -215,10 +215,10 @@
             </div>
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                 <div class="course-overview-right-part">
-                    <div class="course-main-thumb"> 
+                    <div class="course-main-thumb">
                         @if ($promo_video_link != '')
                             <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
-                        @else 
+                        @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
                         <div class="d-flex justify-content-between align-items-center">
@@ -234,16 +234,16 @@
                             <button type="button" class="btn btn-preview" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">Preview</button>
                         </div>
- 
+
                         <button type="button" class="btn enrol-bttn btn-share" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="{{ asset('latest/assets/images/icons/share.svg') }}" alt="a" class="img-fluid me-2" style="width: 1.5rem"> Share this course</button>
-                 
+
                     </div>
                     <div class="course-desc-txt">
                         <h4>Course Description</h4>
                         <p>{{ $course->short_description }}</p>
                     </div>
                     <div class="course-details-txt">
-                        <h4>Course Details</h4> 
+                        <h4>Course Details</h4>
 
                         <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
                             class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
@@ -259,7 +259,7 @@
                         @if ($course->platform)
                         <p><img src="{{asset('latest/assets/images/icons/platform.svg')}}" alt="platform" class="img-fluid">
                             {{ $course->platform }}</p>
-                        @endif 
+                        @endif
                         <p><img src="{{asset('latest/assets/images/icons/loop.svg')}}" alt="users"
                             class="img-fluid">  Full Lifetime Access</p>
                         @if ($course->hascertificate)
@@ -296,7 +296,7 @@
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
                             <iframe style="border-radius: 1rem" width="100%" height="320" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
-                            @else 
+                            @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif
                         </div>
@@ -306,8 +306,8 @@
                         <div class="free-sample-video-list">
                             <h5 class="mb-4">Course Videos:</h5>
                             @foreach ($course->modules as $module)
-                                @foreach ($module->lessons as $lesson)  
-                                    @if ($lesson->type == 'video') 
+                                @foreach ($module->lessons as $lesson)
+                                    @if ($lesson->type == 'video')
                                         {{-- item --}}
                                         <div class="media d-flex py-2">
                                             <img src="{{ asset('latest/assets/images/icons/icon-play.svg') }}" alt="video-thumb" class="img-fluid icon">
@@ -315,8 +315,8 @@
                                                 <h4 class="mt-0">{{$lesson->title}}</h4>
                                             </div>
                                             <img src="{{ asset('latest/assets/images/icons/lok.svg') }}" alt="video-thumb" class="img-fluid icon">
-                                        </div> 
-                                    {{-- item --}} 
+                                        </div>
+                                    {{-- item --}}
                                     @endif
                                 @endforeach
                             @endforeach
@@ -432,7 +432,7 @@
     copyButton.addEventListener("click", (e) => {
         e.preventDefault();
         linkToCopy.select();
-        document.execCommand("copy"); 
+        document.execCommand("copy");
         notify.innerText = 'Copied!';
 
         setTimeout(() => {

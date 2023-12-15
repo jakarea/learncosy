@@ -75,8 +75,8 @@ Login Page
                             <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
                         </div>
 
-                        {{-- <a href="{{ url('login/facebook') }}">Facebook / </a>
-                        <a href="{{ url('login/google') }}">Google</a> --}}
+                        <!-- <a href="{{ route('social.login', ['social' => 'facebook']) }}">Facebook / </a>
+                        <a href="{{ url('login/google') }}">Google</a> -->
 
 
                     </form>
