@@ -168,12 +168,16 @@ Route::get('/logout', function () {
  * if page not found then redirect to 404 page
  */
 Route::fallback(function () {
-    return redirect()->route('login');
+    return redirect()->route('login',['subdomain' => config('app.subdomain')]);
 });
 
+
+$domain = env('APP_DOMAIN', 'learncosy.com');
+
+Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 // custom login for student and instructor 
 Route::get('/login', function () {
-
+ 
     // match user sessionId
     if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();
@@ -214,6 +218,7 @@ Route::get('/login', function () {
     }
 
 })->middleware('guest')->name('login');
+});
 
 
 // Social Login
