@@ -32,7 +32,7 @@
         <div class="container">
             <div class="logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
+                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo" style="max-width: 100px!important;">
                 </a>
             </div>
         </div>
