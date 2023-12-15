@@ -178,3 +178,7 @@ body.dark-mode .dark-mode-bttn label:last-child {
 body.dark-mode .dark-mode-bttn label:last-child i{
   color: #fff;
 }
+
+.login-header .logo img {
+  max-width: 10rem!important; 
+}
