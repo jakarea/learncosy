@@ -10,7 +10,7 @@
 
 @section('content')
 <main class="courses-lists-pages">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="user-title-box">
@@ -40,15 +40,15 @@
             <div class="col-lg-12">
                 <hr class="line">
                 <div class="notification-box-wrapper">
-                    @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 ) 
+                    @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 )
                     @include('partials/no-data')
-                    @else 
+                    @else
                     <div class="show-notification-item">
-                        
+
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
-                            
+
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -64,21 +64,21 @@
                                     <div class="icon">
                                         @if ($today['thumbnail'])
                                         <img src="{{asset($today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else 
+                                        @else
                                         <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
                                             class="img-fluid">
                                         @endif
                                         <i class="fas fa-heart"></i>
-                                    </div> 
-                                    <div class="media-body">  
+                                    </div>
+                                    <div class="media-body">
 
                                         @if ($course && $user)
                                             @if ($today->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>   
+                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
                                             @elseif($today->message == 'review')
                                                 <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
                                             @endif
-                                        @else 
+                                        @else
                                             <h5>{{$today['message']}}</h5>
                                         @endif
 
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="delete-item">
-                                    <form action="{{ route('instructor.notify.destroy',$today->id) }}" method="POST">
+                                    <form action="{{ route('instructor.notify.destroy', ['id' => $today->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn"><img
                                                 src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="single" data-value="2">
-                            {{-- day --}}  
+                            {{-- day --}}
                             <h5 class="mt-5">Yesterday</h5>
 
                             {{-- day --}}
@@ -125,15 +125,15 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">  
+                                    <div class="media-body">
 
                                         @if ($course && $user)
                                             @if ($yestarday->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>   
+                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
                                             @elseif($yestarday->message == 'review')
                                                 <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
                                             @endif
-                                        @else 
+                                        @else
                                             <h5>{{$yestarday['message']}}</h5>
                                         @endif
 
@@ -143,7 +143,7 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <form action="{{ route('instructor.notify.destroy',$yestarday->id) }}" method="POST">
+                                    <form action="{{ route('instructor.notify.destroy',['id' => $yestarday->id, config('app.subdomain') ]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn"><img
                                                 src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
@@ -156,7 +156,7 @@
                         </div>
 
                         <div class="single" data-value="7">
-                            {{-- day --}}  
+                            {{-- day --}}
                             <h5 class="mt-5">Last 7 Days</h5>
                             {{-- day --}}
 
@@ -180,15 +180,15 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">  
+                                    <div class="media-body">
 
                                         @if ($course && $user)
                                             @if ($sevenDay->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>   
+                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
                                             @elseif($sevenDay->message == 'review')
                                                 <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
                                             @endif
-                                        @else 
+                                        @else
                                             <h5>{{$sevenDay['message']}}</h5>
                                         @endif
 
@@ -198,7 +198,7 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <form action="{{ route('instructor.notify.destroy',$sevenDay->id) }}" method="POST">
+                                    <form action="{{ route('instructor.notify.destroy', ['id' => $sevenDay->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn"><img
                                                 src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
@@ -211,8 +211,8 @@
                         </div>
 
                         <div class="single" data-value="30">
-                            {{-- day --}} 
-                            <h5 class="mt-5">Last 30 Days</h5> 
+                            {{-- day --}}
+                            <h5 class="mt-5">Last 30 Days</h5>
 
                             {{-- notify item start --}}
                             @foreach($thirtyDays as $thirtyDay)
@@ -234,15 +234,15 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">  
+                                    <div class="media-body">
 
                                         @if ($course && $user)
                                             @if ($thirtyDay->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>   
+                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
                                             @elseif($thirtyDay->message == 'review')
                                                 <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
                                             @endif
-                                        @else 
+                                        @else
                                             <h5>{{$thirtyDay['message']}}</h5>
                                         @endif
 
@@ -252,7 +252,7 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <form action="{{ route('instructor.notify.destroy',$thirtyDay->id) }}" method="POST">
+                                    <form action="{{ route('instructor.notify.destroy', ['id' => $thirtyDay->id, 'subdomain' => config('app.subdomain') ] ) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn"><img
                                                 src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
@@ -265,7 +265,7 @@
                         </div>
 
                         <div class="single" data-value="365">
-                            {{-- day --}} 
+                            {{-- day --}}
 
                             <h5 class="mt-5">Last 1 year</h5>
                             {{-- day --}}
@@ -276,7 +276,7 @@
                             @php
                                 $course = App\Models\Course::find($lastOneYear->course_id);
                                 $user = App\Models\User::find($lastOneYear->user_id);
-                            @endphp 
+                            @endphp
 
                             <div class="notify-item-box">
                                 <div class="media">
@@ -290,15 +290,15 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body">  
+                                    <div class="media-body">
 
                                         @if ($course && $user)
                                             @if ($lastOneYear->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>   
+                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
                                             @elseif($lastOneYear->message == 'review')
                                                 <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
                                             @endif
-                                        @else 
+                                        @else
                                             <h5>{{$lastOneYear['message']}}</h5>
                                         @endif
 
@@ -308,7 +308,7 @@
                                 </div>
 
                                 <div class="delete-item">
-                                    <form action="{{ route('instructor.notify.destroy',$lastOneYear->id) }}" method="POST">
+                                    <form action="{{ route('instructor.notify.destroy', ['id' => $lastOneYear->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn"><img
                                                 src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
@@ -345,7 +345,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let inputField = document.getElementById("inputField");
-        let dropbtn = document.getElementById("dropdownBttn");  
+        let dropbtn = document.getElementById("dropdownBttn");
         let dropdownItems = document.querySelectorAll(".filterItem");
         let itemWrapperItems = document.querySelectorAll(".show-notification-item .single");
         let status;
@@ -368,34 +368,34 @@
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'none';
                     document.querySelector(".single[data-value='7']").style.display = 'none';
-                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'none';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "7"){
-                    dropbtn.innerText = 'Last 7 days'; 
+                    dropbtn.innerText = 'Last 7 days';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
-                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'none';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "30"){
-                    dropbtn.innerText = 'Last 30 days'; 
+                    dropbtn.innerText = 'Last 30 days';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
-                    document.querySelector(".single[data-value='30']").style.display = 'block'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "365"){
-                    dropbtn.innerText = 'Last 1 year'; 
+                    dropbtn.innerText = 'Last 1 year';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
                     document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'block';
                 }
- 
+
 
             });
         });
