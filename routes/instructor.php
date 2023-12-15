@@ -217,7 +217,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::post('instructor/profile/certificate-delete/{id}', [CertificateController::class,'certificateDelete'])->name('certificate.delete');
 
         // experience route
-        Route::post('instructor/profile/experience', [ExperienceController::class, 'store'])->name('instructor.profile.experience');
+        Route::post('instructor/profile/experience/add', [ExperienceController::class, 'store'])->name('instructor.profile.experience');
 
 
         // settings page routes

@@ -386,7 +386,7 @@ class StudentHomeController extends Controller
         }
     }
 
-    public function cousreDownloadPDF($course_id){
+    public function cousreDownloadPDF($subdomain,$course_id){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             $file_name = $lesson_file->file;
@@ -461,7 +461,7 @@ class StudentHomeController extends Controller
 
     }
 
-    public function certificateView($slug)
+    public function certificateView($subdomain,$slug)
     {
             $course = Course::where('slug', $slug)
             ->with('certificate')
@@ -512,7 +512,7 @@ class StudentHomeController extends Controller
     }
 
     // course overview
-    public function overview( $domain,$slug)
+    public function overview($domain,$slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $promo_video_link = '';
@@ -709,7 +709,7 @@ class StudentHomeController extends Controller
         return view('e-learning/course/students/message-2');
     }
 
-    public function courseLike($course_id, $ins_id)
+    public function courseLike($subdomain,$course_id, $ins_id)
     {
 
         $course_liked = course_like::where('course_id', $course_id)->where('instructor_id', $ins_id)->first();
@@ -732,7 +732,7 @@ class StudentHomeController extends Controller
         return response()->json(['message' => $status]);
     }
 
-    public function courseUnLike($course_id, $ins_id)
+    public function courseUnLike($subdomain,$course_id, $ins_id)
     {
 
         $course_liked = course_like::where('course_id', $course_id)->where('instructor_id', $ins_id)->first();

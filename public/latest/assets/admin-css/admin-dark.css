@@ -1135,6 +1135,15 @@
   color: #66768E !important;
 }
 
+.dark-mode .form-switch .form-check-input {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")!important;
+}
+
+.form-switch .form-check-input:checked {
+  background-position: right center;
+  
+}
+
 .dark-mode .lesson-edit-form-wrap .form-upload #upload-box {
   border: 1.5px dashed var(--others-dark-stroke, #7C7C7C) !important;
   background: #0D0D0D !important;

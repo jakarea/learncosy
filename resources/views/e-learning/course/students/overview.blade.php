@@ -371,6 +371,7 @@
         likeBttn.addEventListener('click', (e) => {
 
             const course_id = {{ $course->id }};
+            console.log({course_id});
             const ins_id = {{ $course->user_id }};
 
             fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
