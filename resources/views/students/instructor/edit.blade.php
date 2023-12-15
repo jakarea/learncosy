@@ -29,30 +29,30 @@
             <div class="col-12">
                 <div class="user-add-form-wrap">
                     {{-- user update form @s --}}
-                    <form action="{{route('updateStudentProfile',$student->id)}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
+                    <form action="{{route('updateStudentProfile',['id' => $student->id, config('app.subdomain') ])}}" method="POST" class="profile-form create-form-box" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="name">Name <sup class="text-danger">*</sup>
-                                    </label> 
+                                    </label>
                                         <input type="text" placeholder="Enter your Name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
                                             value="{{ $student->name }}" id="name">
-                                     
+
                                     <span class="invalid-feedback">@error('name'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="phone">Phone <sup class="text-danger">*</sup>
-                                    </label> 
+                                    </label>
                                         <input type="text" placeholder="Enter Phone Number" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ $student->phone }}" id="phone">
-                                     
+
                                     <span class="invalid-feedback">@error('phone'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -60,11 +60,11 @@
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="email">Email <sup class="text-danger">*</sup>
-                                    </label> 
+                                    </label>
                                         <input type="email" placeholder="Enter email" name="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             value="{{ $student->email }}" id="email">
-                                    
+
                                     <span class="invalid-feedback">@error('email'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -78,11 +78,11 @@
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="company_name">Company Name
-                                    </label> 
+                                    </label>
                                         <input type="text" name="company_name" id="company_name"
                                             class="form-control @error('company_name') is-invalid @enderror"
                                             placeholder="Enter company name" value="{{ $student->company_name }}">
-                                     
+
                                     <span class="invalid-feedback">@error('company_name'){{ $message }}
                                         @enderror</span>
                                 </div>
@@ -90,27 +90,27 @@
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="website">Website
-                                    </label> 
+                                    </label>
                                         <input type="url" name="website" id="website"
                                             class="form-control @error('website') is-invalid @enderror"
                                             placeholder="Enter web address" value="{{ $student->short_bio }}">
-                                     
+
                                     <span class="invalid-feedback">@error('website'){{ $message }}
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-12">  
+                            <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="features" class="mb-1">Social Media </label> 
-                                    @php $socialLinks = explode(",",$student->social_links); @endphp 
-                                    
+                                    <label for="features" class="mb-1">Social Media </label>
+                                    @php $socialLinks = explode(",",$student->social_links); @endphp
+
                                     <div class="url-extra-field">
                                         @foreach ($socialLinks as $social)
                                         <div>
-                                            <input class="form-control" multiple="" type="url" placeholder="Enter Social Link" name="social_links[]" value="{{ $social }}"> 
+                                            <input class="form-control" multiple="" type="url" placeholder="Enter Social Link" name="social_links[]" value="{{ $social }}">
                                         </div>
                                         @endforeach
-                                    </div> 
+                                    </div>
                                     <span class="invalid-feedback">@error('social_links'){{ $message }}
                                         @enderror</span>
                                     <a href="javascript:void(0)" id="url_increment" style="top: 0;"><i class="fas fa-plus"></i></a>
@@ -118,15 +118,15 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="description" class="mb-2">About </label> 
+                                    <label for="description" class="mb-2">About </label>
                                         <textarea name="description" id="description"
                                             class="form-control @error('description') is-invalid @enderror"
                                             placeholder="Type here..">{{ $student->description }}</textarea>
-                                    
+
                                     <span class="invalid-feedback">@error('description'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-0">
@@ -160,7 +160,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group"> 
+                                <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
                                     <div class="row mt-2">
                                         <div class="col-md-2">
@@ -183,11 +183,11 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                         @enderror</span>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="password">Password </label>
@@ -260,7 +260,7 @@
             closeIcon.onclick = removeImage;
 
             imageContainer.appendChild(closeIcon);
- 
+
             closeIcon.style.display = 'inline';
         };
 
@@ -276,7 +276,7 @@
         document.getElementById('avatar').value = '';
 
         const closeIcon = document.getElementById('closeIcon');
-        closeIcon.style.display = 'none';  
+        closeIcon.style.display = 'none';
         }
 
         const dropContainers = document.querySelectorAll('.drop-container');
@@ -336,6 +336,6 @@
     extraFields.appendChild(div);
     }
 </script>
-  
+
 @endsection
 {{-- page script @E --}}

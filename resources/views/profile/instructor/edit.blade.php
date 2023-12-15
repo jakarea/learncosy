@@ -58,7 +58,7 @@
                         {{-- profile tab start --}}
                         <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
-                            <form action="{{ route('instructor.profile.update',$user->id) }}" method="POST"
+                            <form action="{{ route('instructor.profile.update', config('app.subdomain') ) }}" method="POST"
                                 class="profile-form create-form-box profile-frm" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">

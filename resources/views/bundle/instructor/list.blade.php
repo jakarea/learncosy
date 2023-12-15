@@ -74,7 +74,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="{{route('course.bundle.view', ['slug' => $course->slug, config('app.subdomain') ])}}">View</a>
                                                 </li>
-                                                <li><a class="dropdown-item" href="{{url('instructor/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
+                                                <li><a class="dropdown-item" href="{{ route ('select.again.bundle.course', ['slug' => $course->slug, config('app.subdomain') ])}}">Edit</a>
                                                 </li>
                                                 <li>
                                                     <form method="POST" class="d-inline" action="{{ route('delete.bundle.course', ['bundle_id' => $course->id, 'subdomain' => config('app.subdomain') ]) }}">
@@ -89,7 +89,7 @@
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{url('instructor/bundle/courses/'.$course->slug.'/view')}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
+                                    <a href="{{route('course.bundle.view', ['slug' => $course->slug, config('app.subdomain') ])}}">{{ Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->sub_title, $limit = 30, $end = '...') }}</p>
 
                                     @php

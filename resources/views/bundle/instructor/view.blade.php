@@ -38,7 +38,7 @@ View Bundle
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/courses/overview/' . $course->slug) }}">{{
+                                    <a href="{{ route('instructor.course.overview', ['slug' => $course->slug, config('app.subdomain') ] ) }}">{{
                                         Str::limit($course->title, $limit = 45, $end = '..') }}</a>
                                     <p>{{ Str::limit($course->short_description, $limit = 30, $end = '...') }}
                                     </p>
@@ -129,7 +129,7 @@ View Bundle
                                             class="img-fluid rounded">
                                     </label>
                                     @endif
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>

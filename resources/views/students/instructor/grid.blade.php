@@ -13,7 +13,7 @@
 @section('content')
     {{-- ==== Students list page @S ==== --}}
     <main class="user-list-page">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             <form action="" method="GET" id="myForm">
                 <div class="row">
                     <div class="col-lg-7 col-xl-7">
@@ -66,11 +66,11 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item"
-                                                    href="{{ url('instructor/students/' . $user->id . '/edit') }}">Edit</a>
+                                                    href="{{ route('student.edit', ['id' => $user->id, 'subdomain' => config('app.subdomain') ] ) }}">Edit</a>
                                             </li>
                                             <li>
                                                 <form method="post" class="d-inline"
-                                                    action="{{ url('instructor/students/' . $user->id . '/destroy') }}">
+                                                    action="{{ route('student.destroy', ['id' => $user->id, 'subdomain' => config('app.subdomain') ]) }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"

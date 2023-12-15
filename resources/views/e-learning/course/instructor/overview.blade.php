@@ -377,7 +377,7 @@
                 <h6>Or copy link</h6>
                 <span id="notify" style="color: green; font-size: 14px;"></span>
             </div>
-            <div class="copy-link"> 
+            <div class="copy-link">
                 <input type="text" placeholder="Link" value="{{ url('courses/overview-courses', $course->slug)}}" class="form-control" id="linkToCopy">
                 <a href="#" id="copyButton" class="ms-1 px-0">Copy</a>
             </div>
