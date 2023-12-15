@@ -27,7 +27,7 @@
     <div class="container">
         <form
             role="form"
-            action="{{ route('instructor.subscription.payment') }}"
+            action="{{ route('instructor.subscription.payment',['subdomain' => config('app.subdomain')]) }}"
             method="post"
             class="require-validation needs-validation mt-5"
             data-cc-on-file="false"
@@ -181,7 +181,7 @@
                                         </div>
                                     </div>
                                     <div class="cart-close">
-                                        {{-- <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                        {{-- <form action="{{ route('cart.remove',['id' => $item->id, 'subdomain' => config('app.subdomain')]) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><i class="fas fa-close"></i></button>
                                         </form> --}}
@@ -220,10 +220,7 @@
                                 </div>
 
                                 <div class="cart-checkout-bttn-wrap">
-                                    <button class="common-bttn d-flex w-100 text-center justify-content-center" type="submit" id="stripe-pay-now">Pay €{{ number_format($total, 2) }} with
-                                        <span class="stripe-bg pe-3">
-                                            <i class="fa-brands fa-stripe"></i>
-                                        </span></button>
+                                    <button class="common-bttn d-flex w-100 text-center justify-content-center" type="submit" id="stripe-pay-now">Pay €{{ number_format($total, 2) }}</button>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +233,7 @@
             </div>
         </form>
 
-         {{-- <form id="cartItemRemove" action="{{ route('cart.remove', $item->id) }}" method="POST">
+         {{-- <form id="cartItemRemove" action="{{ route('cart.remove', ['id' => $item->id, 'subdomain' => config('app.subdomain')]) }}" method="POST">
             @csrf
         </form> --}}
     </div>

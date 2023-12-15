@@ -160,6 +160,50 @@ Route::fallback(function () {
     return redirect()->route('login');
 });
 
+// custom login for student and instructor 
+Route::get('/login', function () {
+
+    // match user sessionId
+    if(isset(request()->singnature)){
+        $user = User::where('session_id', request()->singnature)->first();
+        if($user){
+            Auth::login($user);
+            $user->session_id = null;
+            $user->save();
+            return redirect()->intended($user->user_role.'/dashboard');
+        }
+    }
+
+    $subdomain = explode('.', request()->getHost())[0];
+     $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
+
+    // module settings
+    $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->first();
+
+    if ($instrcutorModuleSettings) {
+        $loginPageStyle = json_decode($instrcutorModuleSettings->value);
+    } else {
+        $loginPageStyle = json_decode("{'primary_color':','menu_color':','secondary_color':','lp_layout':','meta_title':','meta_desc':'}");
+    }
+
+    if (isset($loginPageStyle) && property_exists($loginPageStyle, 'lp_layout')) {
+        if ($loginPageStyle->lp_layout == 'fullwidth') {
+            return view('custom-auth/login/login2');
+        } elseif ($loginPageStyle->lp_layout == 'default') {
+            return view('custom-auth/login/login');
+        } elseif ($loginPageStyle->lp_layout == 'leftsidebar') {
+            return view('custom-auth/login/login5');
+        } elseif ($loginPageStyle->lp_layout == 'rightsidebar') {
+            return view('custom-auth/login/login4');
+        } else {
+            return view('custom-auth/login/login');
+        }
+    } else {
+        return view('auth/login');
+    }
+
+})->middleware('guest')->name('login');
+
 
 // Social Login
 Route::get('/login/{social}',[LoginController::class,'socialLogin'])->where('social','facebook|google|apple')->name('social.login');

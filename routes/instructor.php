@@ -53,6 +53,8 @@ $domain = env('APP_DOMAIN', 'learncosy.com');
 
 Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 
+
+
     Route::group(['middleware' => ['subscription.check']], function () {
 
         // Dashboard controller
@@ -157,11 +159,6 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/payments/platform-fee/data', [HomeController::class,'adminPaymentData'])->name('instructor.admin-payment');
 
 
-        // Setting controller
-        Route::post('instructor/settings/stripe/request', [SettingsController::class, 'stripeUpdate'])->name('instructor.stripe.update');
-        Route::post('instructor/settings//vimeo/request', [SettingsController::class,'vimeoUpdate'])->name('instructor.vimeo.update');
-
-
         // ModuleSetting controller
         Route::post('instructor/theme/setting/updateorinsert', [ModuleSettingController::class, 'store'])->name('module.setting.update');
         Route::get('instructor/theme/setting', [ModuleSettingController::class, 'index'])->name('module.setting');
@@ -179,8 +176,6 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/dns/connect', [DNSSettingController::class, 'connectDNS'])->name('dns.setting.connect.dns');
         Route::post('instructor/dns/connect/store', [DNSSettingController::class, 'connectDNSStore'])->name('dns.setting.connect.store');
 
-        // profile management page routes
-        Route::post('instructor/profile/edit/{id}', [DashboardController::class,'checkSubdomain'])->name('instructor.subdomain.update');
 
         // Module controller
         Route::get('instructor/modules', [ModuleController::class, 'index']);
@@ -244,36 +239,44 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
 
 
-
-
-    Route::get('/profile/step-1/complete', function () {
+    Route::get('instructor/profile/step-1/complete', function () {       
         if (Auth::user()->email_verified_at == null) {
             return view('auth.verify');
-        } else {
+            
+        } else { 
             return redirect('/profile/step-2/complete');
         }
     });
-    Route::get('/profile/step-2/complete', function () {
+
+    Route::get('instructor/profile/step-2/complete', function () {
+       
         return view('latest-auth.price');
     });
-    Route::get('/profile/step-2/payment/{id}', function ($id) {
+    Route::get('instructor/profile/step-2/payment/{id}', function ($sub,$id) {
+        // return $id;
         $package = SubscriptionPackage::findorfail($id);
         return view('latest-auth.payment', compact('package'));
     });
 
-    Route::get('/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+    Route::get('instructor/profile/step-3/complete', [DashboardController::class, 'subdomain']);
+    Route::post('instructor/profile/step-3/complete/{id}', [DashboardController::class,'checkSubdomain'])->name('instructor.subdomain.update');
 
     // Instructor Notification
     Route::get('instructor/notifications', [DashboardController::class, 'notifications'])->name('instructor.notify');
     Route::post('instructor/notification/destroy/{id}', [DashboardController::class, 'notifyDestroy'])->name('instructor.notify.destroy');
 
-    Route::get('/profile/step-4/complete', function () {
+    Route::get('instructor/profile/step-4/complete', function () {
         return view('latest-auth.connect');
     });
-    Route::get('/profile/step-5/complete', function () {
+
+    // Setting controller
+    Route::post('instructor/settings/stripe/request', [SettingsController::class, 'stripeUpdate'])->name('instructor.stripe.update');
+    Route::post('instructor/settings//vimeo/request', [SettingsController::class,'vimeoUpdate'])->name('instructor.vimeo.update');
+
+    Route::get('instructor/profile/step-5/complete', function () {
         return view('latest-auth.theme-settings');
     });
-    Route::get('/profile/step-6/complete', function () {
+    Route::get('instructor/profile/step-6/complete', function () {
         return view('latest-auth.make-course');
     });
     // settings page routes

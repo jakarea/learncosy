@@ -125,7 +125,7 @@ class SubscriptionPaymentController extends Controller
                     ->attachData($pdfContent,  $subscription->name.'.pdf', ['mime' => 'application/pdf']);
         });
 
-        return redirect()->back()->with('error', 'Subscription Cancelled');
+        return redirect()->back()->with('success', 'Subscription Cancelled!');
     }
 
 }

@@ -1,7 +1,7 @@
 @extends('layouts.latest.auth')
 
 @section('title')
-Make Course
+Final Step Profile Completion
 @endsection
 
 @section('style')
