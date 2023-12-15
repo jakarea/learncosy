@@ -81,7 +81,7 @@ Course Update - Final Step
                     <h6>As a post</h6>
 
                     <div class="d-flex">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('admin/courses/overview',$course->slug)}}"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}"
                             target="_blank">
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
@@ -90,12 +90,12 @@ Course Update - Final Step
                             <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
                             <span>Telegram</span>
                         </a>
-                        <a href="https://www.linkedin.com/shareArticle?url={{ url('admin/courses/overview',$course->slug)}}" target="_blank">
+                        <a href="https://www.linkedin.com/shareArticle?url={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}" target="_blank">
                             <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
                                 class="img-fluid">
                             <span>LinkedIn</span>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ url('admin/courses/overview',$course->slug)}}&text={{ $course->title }}"
+                        <a href="https://twitter.com/intent/tweet?url={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}&text={{ $course->title }}"
                             target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB"
                                 class="img-fluid">
                             <span>Twitter</span>
@@ -106,15 +106,15 @@ Course Update - Final Step
 
                     <div class="d-flex">
 
-                        <a href="https://www.messenger.com/share.php?text={{ url('admin/courses/overview',$course->slug) }}">
+                        <a href="https://www.messenger.com/share.php?text={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}">
                             <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                             <span>Messenger</span>
                         </a>
-                        <a href="https://api.whatsapp.com/send?text={{ url('admin/courses/overview',$course->slug) }}">
+                        <a href="https://api.whatsapp.com/send?text={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}">
                             <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                             <span>Whatsapp</span>
                         </a>
-                        <a href="https://telegram.me/share/url?url={{ url('admin/courses/overview',$course->slug) }}">
+                        <a href="https://telegram.me/share/url?url={{ $Urlsubdomain ? "https://$Urlsubdomain.localhost" : '' }}{{ '/courses/overview-courses/'.$course->slug }}">
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
