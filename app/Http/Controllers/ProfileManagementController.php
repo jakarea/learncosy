@@ -46,9 +46,9 @@ class ProfileManagementController extends Controller
         return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        return $request->all();
+        // return $request->all();
 
         $userId = Auth()->user()->id;
 

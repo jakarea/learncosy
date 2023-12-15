@@ -122,7 +122,7 @@ Bundle Course Select
             {{-- course single box end --}}
             @endforeach
 
-            <div class="form-submit-bttns">
+            <div class="form-submit-bttns mt-4">
                 <a href="{{ url('instructor/bundle/courses/create') }}" class="btn btn-primary px-4 py-2">
                     Next
                 </a>
