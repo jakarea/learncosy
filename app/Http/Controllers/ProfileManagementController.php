@@ -46,9 +46,10 @@ class ProfileManagementController extends Controller
         return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
+
     public function update(Request $request, $domain)
     {
-        $userId = auth()->user()->id;
+        $userId = auth()->user()->id; 
 
         $this->validate($request, [
             'name' => 'required|string',
