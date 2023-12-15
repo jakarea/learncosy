@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\InstructorModuleSetting;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TypingController;
 use App\Http\Controllers\MessageController;
@@ -22,6 +23,16 @@ use App\Http\Controllers\Instructor\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+// all cache clear route
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    Artisan::call('clear-compiled');
+    return redirect('/');
+});
 
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {

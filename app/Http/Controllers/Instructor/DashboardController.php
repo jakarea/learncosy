@@ -408,7 +408,7 @@ class DashboardController extends Controller
     }
 
     // instructor notification delete
-    public function notifyDestroy($id)
+    public function notifyRemove($domain, $id)
     {
         $notify = Notification::find($id);
         $notify->delete();

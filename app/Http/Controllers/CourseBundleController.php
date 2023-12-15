@@ -42,7 +42,7 @@ class CourseBundleController extends Controller
          return view('bundle/instructor/list',compact('bundleCourses'));
      }
 
-     public function view($model, $bundleSlug)
+     public function view($domain, $bundleSlug)
      {
 
         if (!$bundleSlug) {
@@ -184,7 +184,7 @@ class CourseBundleController extends Controller
         return redirect('instructor/bundle/courses')->with('success','Bundle Created Successfully');
      }
 
-     public function edit1($bundleSlug)
+     public function edit1($domain, $bundleSlug)
      {
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
