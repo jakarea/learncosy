@@ -102,7 +102,7 @@ All Courses
                             <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                         </div>
                         <div class="course-txt-box">
-                            <a href="{{ url('instructor/courses/' . $course->id) }}">{{ Str::limit($course->title ?
+                            <a href="{{ url('instructor/courses/overview/' . $course->slug) }}">{{ Str::limit($course->title ?
                                 $course->title : 'Untitled course', $limit = 52, $end = '..') }}</a>
                             <p>{{ Str::limit($course->short_description, $limit = 34, $end = '...') }}</p>
 
@@ -148,10 +148,7 @@ All Courses
                                 @endif
                             </span>
 
-                        </div>
-                        @else
-                        <a href="{{ url('instructor/courses/overview/' . $course->slug) }}"
-                            class="view-as-bttn">Overview</a>
+                        </div> 
                         @endif 
                     </div>
                 </div>
