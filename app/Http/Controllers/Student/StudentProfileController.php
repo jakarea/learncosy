@@ -88,7 +88,7 @@ class StudentProfileController extends Controller
         // Send email
         Mail::to($user->email)->send(new ProfileUpdated($user));
 
-        return redirect()->route('students.profile')->with('success', 'Your Profile has been Updated successfully!');
+        return redirect()->route('students.profile',['subdomain' => config('app.subdomain')])->with('success', 'Your Profile has been Updated successfully!');
     }
 
     // password update

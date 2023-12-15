@@ -171,22 +171,33 @@ Student Dashboard
                     <div class="course-box-overflown liked-courses">
                         @if (count($likeCourses) > 0)
                         @foreach ($likeCourses as $likeCourse)
+
+
                         @php
-                         $totalLessons = 0;
-                            foreach ($likeCourse->course->modules as $module) {
-                                $totalLessons = count($module->lessons);
+                            $totalLessons = 0;
+                            $course = $likeCourse->course;
+
+                            if ($course && $course->modules) {
+                                foreach ($course->modules as $module) {
+                                    if ($module && $module->lessons) {
+                                        $totalLessons += count($module->lessons);
+                                    }
+                                }
                             }
                         @endphp
+
                         <div class="media">
-                            @if ($likeCourse->course->thumbnail)
+                            @if ($likeCourse->course && $likeCourse->course->thumbnail)
                             <img src="{{ asset($likeCourse->course->thumbnail) }}" alt="a" class="img-fluid me-3 thumab">
                             @else
                             <img src="{{ asset('latest/assets/images/course-small.svg') }}" alt="a"
                                 class="img-fluid me-3 thumab">
                             @endif
                             <div class="media-body">
-                                <h5>{{ $likeCourse->course->title }}</h5>
-                                <p class="user"><i class="fa-solid fa-user"></i> {{ $likeCourse->course->user->name }} &nbsp; - &nbsp;{{ $likeCourse->course->platform }}</p>
+                                <h5>{{ optional($likeCourse->course)->title }}</h5>
+                                <p class="user"><i class="fa-solid fa-user"></i> {{ optional($likeCourse->course->user)->name }}
+
+                                    &nbsp; - &nbsp;{{ optional($likeCourse->course)->platform }}</p>
                                 <p class="lessons">
                                     <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
                                      {{ count($likeCourse->course->modules) }} Modules &nbsp;&nbsp;

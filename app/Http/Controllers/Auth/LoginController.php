@@ -57,7 +57,7 @@ class LoginController extends Controller
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
-        return $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {

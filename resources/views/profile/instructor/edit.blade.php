@@ -196,7 +196,7 @@
 
                                 <div class="col-12">
                                     <div class="add-experience-form" id="experience-form">
-                                        <form action="{{ route('instructor.profile.experience',$user->id) }}"
+                                        <form action="{{ route('instructor.profile.experience',['subdomain' => config('app.subdomain')]) }}"
                                             method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $editExp ? $editExp->id:''}}" />
@@ -290,7 +290,7 @@
                                                     <div class="col-12">
                                                         <div class="form-submit-bttns mt-5">
                                                             <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
-                                                            <button type="submit" class="btn btn-submit">Add</button>
+                                                            <button type="submit" class="btn btn-submit" id="submitFrm">Add</button>
                                                         </div>
                                                     </div>
                                                 </div>

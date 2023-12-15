@@ -25,4 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
             formChanged = false;
         });
     }
+
+    var submitButtons = document.querySelectorAll('.btn-submit');
+    submitButtons.forEach(function(sButton) {
+        sButton.addEventListener('click', function() {
+            formChanged = false; 
+        });
+    });
+
 }); 

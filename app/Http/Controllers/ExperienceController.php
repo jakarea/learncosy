@@ -21,6 +21,7 @@ class ExperienceController extends Controller
 
     public function store(Request $request)
     {
+        // return $request->all();
         $validatedData = $request->validate([
             'id' => 'nullable|integer',
             'profession' => 'required|string',
@@ -46,8 +47,7 @@ class ExperienceController extends Controller
             $message = 'Experience created successfully.';
         }
 
-        return redirect('instructor/profile/edit')
-            ->with('success', $message);
+        return redirect('instructor/profile/myprofile')->with('success', $message);
     }
 
     public function edit(Experience $experience)

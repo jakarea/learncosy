@@ -131,7 +131,7 @@ class ProfileManagementController extends Controller
         // Send email
         Mail::to($user->email)->send(new PasswordChanged($user));
 
-        return redirect()->route('instructor.profile')->with('success', 'Your password has been changed successfully!');
+        return redirect()->route('instructor.profile',['subdomain' => config('app.subdomain')])->with('success', 'Your password has been changed successfully!');
     }
 
    //  upload cover photo for instructor

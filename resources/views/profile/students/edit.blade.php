@@ -161,7 +161,7 @@
                             {{-- password tab start --}}
                             <div class="row  user-add-form-wrap user-add-form-wrap-2">
                                 <div class="col-12">
-                                    <form action="{{ route('students.password.update',$user->id) }}" method="POST">
+                                    <form action="{{ route('students.password.update',['subdomain' => config('app.subdomain')]) }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-4">
