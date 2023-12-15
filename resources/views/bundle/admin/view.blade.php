@@ -36,7 +36,7 @@ View Bundle
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
-                                     
+
                                 </div>
                                 <div class="course-txt-box">
                                     <a href="{{url('admin/courses/overview/'.$course->slug)}}">{{
@@ -71,7 +71,7 @@ View Bundle
                                     @else
                                     <h5>€ {{ $course->price }}</h5>
                                     @endif
-                                    <a href="{{url('admin/courses/overview/'.$course->slug)}}" class="view-as-bttn">Overview</a>
+
                                    </div>
                                 </div>
                             </div>
@@ -85,9 +85,9 @@ View Bundle
                         <div class="col-lg-4">
                             <div class="basic-info-txt">
                                 <h5>Bundle Course Information</h5>
-                                @php 
+                                @php
                                     $instructor = \App\Models\User::find($updatingCourse->instructor_id);
-                                @endphp 
+                                @endphp
                                 <p>Instructor: {{ $instructor->name }}</p>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ View Bundle
                                             class="img-fluid rounded">
                                     </label>
                                     @endif
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>

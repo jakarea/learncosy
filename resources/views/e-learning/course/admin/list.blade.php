@@ -2,7 +2,7 @@
 @section('title','All Courses')
 
 {{-- style section @S --}}
-@section('style') 
+@section('style')
     <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
 @endsection
@@ -10,7 +10,7 @@
 
 @section('content')
     <main class="courses-lists-pages">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             <form action="" method="GET" id="myForm">
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 col-xl-9">
@@ -50,7 +50,7 @@
                                         class="fas fa-search text-white me-2"></i> Search</button>
                             </div> --}}
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </form>
             <div class="row">
@@ -81,7 +81,7 @@
                                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    
+
                                                     <li><a class="dropdown-item"
                                                             href="{{ url('admin/courses/' . $course->slug.'/show') }}">View</a>
                                                     </li>
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="course-txt-box">
                                         <a
-                                            href="{{ url('admin/courses/' . $course->slug.'/show') }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                            href="{{ url('admin/courses/overview/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
                                         <p>{{ $course->user->subdomain }}</p>
                                         <ul>
                                             <li><span>{{ $review_avg }}</span></li>
@@ -125,7 +125,7 @@
                                     <h5>€ {{ $course->price }}</h5>
                                     @endif
 
-                                    @if ($course->sale_count) 
+                                    @if ($course->sale_count)
                                     <div>
                                         <span class="sold-item">
                                             @if($course->sale_count == 0)
@@ -136,11 +136,11 @@
                                                 Sold {{ $course->sale_count }} Times
                                             @endif
                                         </span>
-                                       
+
                                     </div>
-                                    @else 
-                                     <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a>
-                                    @endif 
+                                    {{-- @else
+                                     <a href="{{ url('admin/courses/overview/' . $course->slug) }}" class="view-as-bttn">Overview</a> --}}
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -39,7 +39,7 @@ class AdminPaymentController extends Controller
             $enrolments->orderBy('id', 'desc'); 
         }
 
-        $enrolments = $enrolments->paginate(6); 
+        $enrolments = $enrolments->paginate(12); 
  
 
         $today = Carbon::today();

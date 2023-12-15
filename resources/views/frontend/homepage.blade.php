@@ -185,7 +185,7 @@
                                                 <p>{{ Str::limit($course->short_description, $limit = 158, $end = '...') }}
                                                 </p>
 
-                                                <a href="#">Read More</a>
+                                                <a href="{{ url('courses/overview-courses/' . $course->slug) }}">Read More</a>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@
                                                 </p>
                                             </div>
                                             <div class="bttns">
-                                                <a href="{{ url('/overview-courses/' . $course->slug) }}">More
+                                                <a href="{{ url('courses/overview-courses/' . $course->slug) }}">More
                                                     Details</a>
                                                     <a href="#" class="d-none"></a>
 

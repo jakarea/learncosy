@@ -139,14 +139,14 @@ class InstructorController extends Controller
 
     public function update(Request $request,$id)
     {
-       //  return $request->all();
+        // return $request->all();
 
         $userId = $id;
 
         $this->validate($request, [
             'name' => 'required|string',
             'phone' => 'required|string',
-            'password' => 'required|string',
+            'password' => 'string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [

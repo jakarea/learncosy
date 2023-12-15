@@ -146,9 +146,11 @@ class CourseManagementController extends Controller
                 }
                 $related_course = $query->take(4)->get();
             }
+ 
+            $Urlsubdomain = $course->user->subdomain;
 
 
-            return view('e-learning/course/admin/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+            return view('e-learning/course/admin/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber','Urlsubdomain'));
         } else {
             return redirect('admin/dashboard')->with('error', 'Course not found!');
         }
