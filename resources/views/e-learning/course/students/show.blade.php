@@ -105,7 +105,7 @@ $i = 0;
                         @endphp
 
                         @if ($progress > 90)
-                        <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug]) }}">Certificate
+                        <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}">Certificate
                             Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
                                 title="120MB" class="img-fluid"></a>
                         @endif
