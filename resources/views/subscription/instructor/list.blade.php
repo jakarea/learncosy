@@ -48,6 +48,7 @@
                         @if ($package->type == 'monthly')
                             <div class="col-xl-4 col-sm-10 col-md-6 mb-3">
                                 <div class="pricing-box">
+                                   
                                     @if ($activePackageId == $package->id)
                                         <span class="current-plan">
                                             Current Plan
@@ -115,7 +116,8 @@
                     @if ($package->type == 'yearly')
 
                     <div class="col-xl-4 col-sm-10 col-md-6 mb-3">
-                        <div class="pricing-box">
+                        
+                        <div class="pricing-box"> 
                             @if ($activePackageId == $package->id)
                                 <span class="current-plan">
                                     Current Plan

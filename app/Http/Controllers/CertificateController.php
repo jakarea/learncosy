@@ -250,7 +250,7 @@ class CertificateController extends Controller
     }
 
     // delete certficate
-    public function certificateDelete($id){
+    public function certificateDelete($subdomain,$id){
 
         $certificate = Certificate::findOrFail($id);
 

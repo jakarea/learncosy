@@ -23,7 +23,7 @@ class LessonController extends Controller
     {   
          $title = isset($_GET['title']) ? $_GET['title'] : '';
          $status = isset($_GET['status']) ? $_GET['status'] : '';
-        $lessons = Lesson::where('user_id',Auth::user()->id)->orderby('id', 'desc');
+        $lessons = Lesson::where('instructor_id',Auth::user()->id)->orderby('id', 'desc');
          if (!empty($title)) {
              $lessons->where('title', 'like', '%' . trim($title) . '%');
          }
@@ -181,11 +181,12 @@ class LessonController extends Controller
     }
 
      // lesson edit
-     public function edit($slug)
+     public function edit($subdomain,$slug)
      {   
-        $userId = Auth::user()->id;
-        $courses = Course::where('user_id', $userId)->get(); 
-        $modules = Module::where('user_id', $userId)->get();
+        // return $slug;
+         $userId = Auth::user()->id;
+         $courses = Course::where('instructor_id', $userId)->get(); 
+         $modules = Module::where('instructor_id', $userId)->get();
 
          $lesson = Lesson::where('slug', $slug)->first();
          if ($lesson) {

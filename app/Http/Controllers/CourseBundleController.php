@@ -184,7 +184,7 @@ class CourseBundleController extends Controller
         return redirect('instructor/bundle/courses')->with('success','Bundle Created Successfully');
      }
 
-     public function edit1($domain, $bundleSlug)
+     public function edit1($subdomain, $bundleSlug)
      {
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
@@ -231,7 +231,7 @@ class CourseBundleController extends Controller
 
      }
 
-     public function update1($courseId)
+     public function update1($subdomain,$courseId)
      {
 
         $bundleSelected = session()->has('bundleSelected') ? session('bundleSelected') : [];
@@ -248,7 +248,7 @@ class CourseBundleController extends Controller
         return response()->json(['message' => 'DONE']);
      }
 
-     public function edit2($bundleSlug)
+     public function edit2($subdomain,$bundleSlug)
      {
 
        $bundleCourse = BundleCourse::where('instructor_id', Auth::user()->id)
@@ -263,7 +263,7 @@ class CourseBundleController extends Controller
 
      }
 
-     public function update2(Request $request, $courseId){
+     public function update2(Request $request,$subdomain, $courseSlug){
 
         // return $request->all();
 
@@ -278,7 +278,7 @@ class CourseBundleController extends Controller
             'thumbnail' => 'Max file size is 5 MB!'
         ]);
 
-        $bundleCourse = BundleCourse::where('id', $courseId)->where('instructor_id',$userId)->firstOrFail();
+        $bundleCourse = BundleCourse::where('slug', $courseSlug)->where('instructor_id',$userId)->firstOrFail();
         $bundleCourse->title = $request->title;
         $bundleCourse->slug = Str::slug($request->title);
         $bundleCourse->sub_title = $request->sub_title;
@@ -337,7 +337,7 @@ class CourseBundleController extends Controller
         return response()->json(['message' => 'DONE']);
      }
 
-     public function delete($bundleId)
+     public function delete($subdomain,$bundleId)
      {
          $bundleCourse = BundleCourse::where('id', $bundleId)->first();
         if ($bundleCourse) {

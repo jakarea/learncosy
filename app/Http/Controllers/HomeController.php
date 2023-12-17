@@ -170,7 +170,7 @@ class HomeController extends Controller
         );
 
 
-        $pdf = Pdf::loadView('adminInvoice',$data);
+        $pdf = Pdf::loadView('invoice',$data);
 
         return $pdf->download('invoice-'.$payment_id.'.pdf');
     }

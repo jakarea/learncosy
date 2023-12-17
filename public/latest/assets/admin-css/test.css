@@ -380,7 +380,7 @@
 .message-list-page-wrap .messages-box .chat-main-body-box .message-send-box .file-attach-bttns {
   position: absolute;
   right: 45px;
-  top: 24px;
+  top: 22px;
   z-index: 99;
   display: inline-flex;
   align-items: center;
@@ -1186,6 +1186,10 @@ span.user-name-avatar {
   line-height: 1.125rem;
 }
 
+.emojionearea.emojionearea-inline {
+  height: 52px!important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .message-list-page-wrap .messages-box .chat-person-list-box .header-filter .chat-filter .dropdown .btn {
     font-size: 1rem;
@@ -1295,4 +1299,8 @@ span.user-name-avatar {
     min-height: 58vh;
     max-height: 58vh;
   }
+}
+
+.emojionearea.emojionearea-inline>.emojionearea-editor { 
+  top: 9px!important; 
 }

@@ -19,18 +19,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Disable form confirmation when submitting
-    var submitButton = document.querySelector('form [type="submit"]');
+    var submitButton = document.querySelector('form[type="submit"]');
     if (submitButton) {
         submitButton.addEventListener('click', function () {
             formChanged = false;
         });
     }
 
-    var submitButtons = document.querySelectorAll('.btn-submit');
+    var submitButtons = document.querySelectorAll('button[type="submit"]');
     submitButtons.forEach(function(sButton) {
         sButton.addEventListener('click', function() {
             formChanged = false; 
         });
     });
 
+    var submitButtons2 = document.querySelectorAll('.btn-submit');
+    submitButtons2.forEach(function(sButton2) {
+        sButton2.addEventListener('click', function() {
+            formChanged = false; 
+        });
+    });
 }); 
