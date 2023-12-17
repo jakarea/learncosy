@@ -292,7 +292,7 @@ Bundle Course Update
                                     // redirecet to select page
                                     if (countDisplay.textContent < 1) {
                                         var slug = @json($bundleCourse->slug);
-                                        var routeUrl = '{{ route('select.again.bundle.course', ['slug' => ':slug', 'subdomain' => config('app.subdomain')]]) }}';
+                                        var routeUrl = '{{ route('select.again.bundle.course', ['slug' => ':slug', 'subdomain' => config('app.subdomain')]) }}';
                                         routeUrl = routeUrl.replace(':slug', slug);
                                         window.location.href = routeUrl;
                                     }

@@ -1304,3 +1304,7 @@ span.user-name-avatar {
 .emojionearea.emojionearea-inline>.emojionearea-editor { 
   top: 9px!important; 
 }
+
+.view-profile-box{
+  overflow-x: hidden;
+}
