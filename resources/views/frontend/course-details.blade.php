@@ -230,7 +230,7 @@
                             </div>
 
                             <div class="course-txt-box">
-                                <a href="{{url('overview-courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
+                                <a href="{{url('courses/overview-courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
                                     40, $end = '..') }}</a>
                                 <p>{{ $course->user->subdomain }}</p>
                                 <ul>
@@ -255,7 +255,7 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
@@ -333,7 +333,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif
@@ -376,7 +376,7 @@
             <h4>Share</h4>
             <h6>As a post</h6>
             <div class="d-flex">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('overview-courses',$course->slug)}}"
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('courses/overview-courses',$course->slug)}}"
                     target="_blank">
                     <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                     <span>Facebook</span>
@@ -385,12 +385,12 @@
                     <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
                     <span>Telegram</span>
                 </a>
-                <a href="https://www.linkedin.com/shareArticle?url={{ url('overview-courses',$course->slug)}}" target="_blank">
+                <a href="https://www.linkedin.com/shareArticle?url={{ url('courses/overview-courses',$course->slug)}}" target="_blank">
                     <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
                         class="img-fluid">
                     <span>LinkedIn</span>
                 </a>
-                <a href="https://twitter.com/intent/tweet?url={{ url('overview-courses',$course->slug)}}&text={{ $course->title }}"
+                <a href="https://twitter.com/intent/tweet?url={{ url('courses/overview-courses',$course->slug)}}&text={{ $course->title }}"
                     target="_blank"> <img src="{{asset('latest/assets/images/icons/twt.svg')}}" alt="FB"
                         class="img-fluid">
                     <span>Twitter</span>
@@ -398,15 +398,15 @@
             </div>
             <h6>As a message</h6>
             <div class="d-flex">
-                <a href="https://www.messenger.com/share.php?text={{ url('overview-courses',$course->slug) }}">
+                <a href="https://www.messenger.com/share.php?text={{ url('courses/overview-courses',$course->slug) }}">
                     <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                     <span>Messenger</span>
                 </a>
-                <a href="https://api.whatsapp.com/send?text={{ url('overview-courses',$course->slug) }}">
+                <a href="https://api.whatsapp.com/send?text={{ url('courses/overview-courses',$course->slug) }}">
                     <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                     <span>Whatsapp</span>
                 </a>
-                <a href="https://telegram.me/share/url?url={{ url('overview-courses',$course->slug) }}">
+                <a href="https://telegram.me/share/url?url={{ url('courses/overview-courses',$course->slug) }}">
                     <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                     <span>Telegram</span>
                 </a>
@@ -416,7 +416,7 @@
                 <span id="notify" style="color: green; font-size: 14px;"></span>
             </div>
             <div class="copy-link">
-                <input type="text" placeholder="Link" value="{{ url('overview-courses', $course->slug)}}"
+                <input type="text" placeholder="Link" value="{{ url('courses/overview-courses', $course->slug)}}"
                     class="form-control" id="linkToCopy">
                 <a href="#" id="copyButton" class="ms-1 px-0">Copy</a>
             </div>
