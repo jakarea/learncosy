@@ -60,7 +60,7 @@
             </ul>
             @endcan
             <div class="d-flex">
-                <a href="#" class="bttn">
+                <a href="{{ url('students/home') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
                 <a href="{{ route('cart.index', config('app.subdomain') ) }}" class="bttn {{ Request::is('students/cart*')  ? ' active' : '' }}">

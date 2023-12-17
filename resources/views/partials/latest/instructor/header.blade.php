@@ -61,7 +61,7 @@
                 </ul>
             @endcan
             <div class="d-flex">
-                <a href="#" class="bttn">
+                <a href="{{ url('instructor/courses') }}" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="icon" class="img-fluid">
                 </a>
                 <a href="{{ url('instructor/notifications') }}" class="bttn {{ Request::is('instructor/notifications') ? ' active' : '' }}">

@@ -179,6 +179,8 @@ class StudentManagementController extends Controller
         }
         $user->subdomain = $request->instructor;
 
+        // return $user;
+
          $user->save();
          return redirect()->route('admin.allStudents')->with('success', 'Students Profile has been Updated successfully!');
      }

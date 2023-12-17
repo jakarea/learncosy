@@ -49,7 +49,7 @@
                 </ul>
             @endcan
             <div class="d-flex">
-                <a href="#" class="bttn">
+                <a href="{{ url('admin/courses') }}" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="Search icon"
                         class="img-fluid">
                 </a>
