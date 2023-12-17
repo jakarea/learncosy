@@ -159,7 +159,7 @@ class CourseController extends Controller
         }
     }
 
-    public function fileDownload($course_id,$file_extension){
+    public function fileDownload($subdomain,$course_id,$file_extension){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
@@ -206,7 +206,7 @@ class CourseController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($subdomain,$id)
     {
         // update bundle course for this course
         $selectedCourseValue = intval($id);

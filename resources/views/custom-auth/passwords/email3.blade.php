@@ -32,7 +32,7 @@
         <div class="container">
             <div class="logo">
                 <a href="{{url('/')}}">
-                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
+                    <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo" style="max-width: 100px!important;">
                 </a>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-8">
                     <div class="left-side-form">
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <div class="login3form">
                                 {{-- session alert --}}

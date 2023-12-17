@@ -35,10 +35,10 @@
             <div class="logo">
                 <a href="{{ url('/') }}">
                     @if (modulesetting('logo'))
-                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid">
+                    <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem!important;">
                     @else
-                    <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
-                    <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
+                    <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele" style="max-width: 100px!important;">
+                    <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele" style="max-width: 100px!important;">
                     @endif 
                 </a>
             </div>
@@ -80,7 +80,7 @@
                         </div> 
                         <h1>Password Reset</h1> 
 
-                        <form method="POST" action="{{ route('password.email') }}" class="login-from">
+                        <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
 
                             <div class="form-group">

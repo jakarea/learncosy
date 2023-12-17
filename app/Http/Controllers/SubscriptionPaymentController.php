@@ -19,16 +19,20 @@ class SubscriptionPaymentController extends Controller
     public function index()
     {
 
-        // dd( Auth::id());
-
         $packages = SubscriptionPackage::where('status','active')->get();
         $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
 
+        if (!$insPackage) {
+            $activePackageId = null;
+        }
+
         if ($insPackage && $insPackage->status == 'cancel') {
             $activePackageId = null;
-        }else{
-            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
         }
+        
+        if ($insPackage && $insPackage->status != 'cancel' && $insPackage->subscription_packages_id) {
+            $activePackageId = $insPackage->subscription_packages_id;
+        } 
 
         return view('subscription/instructor/list',compact('packages','activePackageId'));
     }
@@ -90,7 +94,7 @@ class SubscriptionPaymentController extends Controller
                 });
 
                 if (Auth::user()->subdomain) {
-                    return redirect()->route('instructor.dashboard.index')->with('success', 'Subscribed Successfully');
+                    return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')])->with('success', 'Subscribed Successfully');
                 }else{
                     return redirect('instructor/profile/step-3/complete')->with('success', 'Subscribed Successfully');
                 }
@@ -98,7 +102,7 @@ class SubscriptionPaymentController extends Controller
             }
 
         } catch (\Exception $e) {
-            return redirect()->route('instructor.dashboard.index')->with('error', $e->getMessage());
+            return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')])->with('error', $e->getMessage());
         }
 
     }

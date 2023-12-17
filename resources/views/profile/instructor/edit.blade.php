@@ -596,7 +596,7 @@
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
                                                                             <button type="submit"
-                                                                                class="common-bttn border-0">Save</button>
+                                                                                class="common-bttn border-0 btn-submit">Save</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -964,8 +964,8 @@
                                                                     <div class="col-12">
                                                                         <div class="text-end mt-4">
 
-                                                                            <button
-                                                                                class="btn common-bttn border-0"><img
+                                                                            <button type="submit"
+                                                                                class="btn btn-submit common-bttn border-0"><img
                                                                                     src="{{asset('latest/assets/images/icons/download4.svg')}}"
                                                                                     alt="Color" class="img-fluid me-2">
                                                                                 Download</button>

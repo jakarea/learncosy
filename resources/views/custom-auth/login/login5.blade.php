@@ -42,7 +42,7 @@
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
                     @endif
                 </a>
-                <a href="{{ url('/auth-register') }}" class="signup-bttn">
+                <a href="{{ url('/register') }}" class="signup-bttn">
                     SIGN UP
                 </a>
             </div>
@@ -67,7 +67,11 @@
                         <h1>Sign in to Learn Cosy</h1>
                         <p>Welcome back! Please enter your details.</p>
 
-                        <form method="POST" action="{{ route('login') }}" class="login-from">
+                        <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')]
+
+
+
+                            ) }}" class="login-from">
                             @csrf
                             <div class="form-group">
                                 <label>Enter your email address</label>

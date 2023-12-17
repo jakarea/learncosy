@@ -63,6 +63,7 @@ class ExperienceController extends Controller
 
     public function update(Request $request, Experience $experience)
     {
+        // return 123456789;
         // Check if the authenticated user has permission to update the experience
         if ($this->canEdit($experience)) {
             $validatedData = $request->validate([

@@ -18,7 +18,7 @@
                         </a>
                         <h1>Password Reset</h1>
                         <p>Welcome back! Please enter your details.</p>
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <div class="form-group">
                                 <label for="email">{{ __('Email') }}</label>

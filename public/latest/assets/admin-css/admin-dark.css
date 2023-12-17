@@ -1314,6 +1314,11 @@
   color: #d7def4;
 }
 
+.dark-mode .emojionearea.emojionearea-inline{
+  background: #000!important;
+  border-color: #171717!important;
+}
+
 .dark-mode .user-details-box h2,
 .dark-mode .user-details-box h3,
 .dark-mode .user-details-box h4,

@@ -156,7 +156,7 @@ class CourseManagementController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($subdomain,$id)
     {
          // update bundle course for this course
          $selectedCourseValue = intval($id); 

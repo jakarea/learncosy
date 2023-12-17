@@ -54,7 +54,6 @@ $domain = env('APP_DOMAIN', 'learncosy.com');
 Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 
 
-
     Route::group(['middleware' => ['subscription.check']], function () {
 
         // Dashboard controller

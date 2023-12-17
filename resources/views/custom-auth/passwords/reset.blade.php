@@ -18,7 +18,7 @@
                         </a>
                         <h1>Welcome back</h1>
                         <p>Welcome back! Please enter your details.</p>
-                        <form method="POST" action="{{ route('password.update') }}">
+                        <form method="POST" action="{{ route('password.update',['subdomain' => config('app.subdomain')] ) }}">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <input type="hidden" name="email" value="{{ $email }}">
