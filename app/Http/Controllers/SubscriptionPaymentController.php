@@ -19,16 +19,20 @@ class SubscriptionPaymentController extends Controller
     public function index()
     {
 
-        // dd( Auth::id());
-
         $packages = SubscriptionPackage::where('status','active')->get();
         $insPackage = Subscription::where('instructor_id', Auth::id())->latest('created_at')->first();
 
+        if (!$insPackage) {
+            $activePackageId = null;
+        }
+
         if ($insPackage && $insPackage->status == 'cancel') {
             $activePackageId = null;
-        }else{
-            $activePackageId = $insPackage ? $insPackage->subscriptionPakage->id : null;
         }
+        
+        if ($insPackage && $insPackage->status != 'cancel' && $insPackage->subscription_packages_id) {
+            $activePackageId = $insPackage->subscription_packages_id;
+        } 
 
         return view('subscription/instructor/list',compact('packages','activePackageId'));
     }

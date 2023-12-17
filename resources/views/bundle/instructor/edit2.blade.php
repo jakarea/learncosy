@@ -116,7 +116,7 @@ Bundle Course Update
                     </div>
                 </div>
                 <div class="bundle-create-form-wrap">
-                    <form action="{{ route('create.update.bundle.course',$bundleCourse->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('create.update.bundle.course',['slug' => $bundleCourse->slug, 'subdomain' => config('app.subdomain')] ) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
@@ -292,7 +292,7 @@ Bundle Course Update
                                     // redirecet to select page
                                     if (countDisplay.textContent < 1) { 
                                         var slug = @json($bundleCourse->slug);
-                                        var routeUrl = '{{ route('select.again.bundle.course', ['slug' => ':slug']) }}';
+                                        var routeUrl = '{{ route('select.again.bundle.course', ['slug' => ':slug','subdomain' => config('app.subdomain')]) }}';
                                         routeUrl = routeUrl.replace(':slug', slug);
                                         window.location.href = routeUrl;
                                     }
