@@ -22,6 +22,10 @@ class Group extends Model
     //     return $this->belongsToMany(User::class, 'group_participants', 'group_id', 'user_id');
     // }
 
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
 
 
     // New Code

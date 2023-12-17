@@ -47,9 +47,9 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
-                $query->where('user_id', $data['adminInfo']->id);
-            })->latest()->get();
+                $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
+                    $query->where('user_id', $data['adminInfo']->id);
+                })->orWhere('admin_id', $data['adminInfo']->id)->latest()->get();
 
         return view('e-learning/course/instructor/message-list', $data);
 
