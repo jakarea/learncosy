@@ -333,9 +333,13 @@ class MessageController extends Controller
             // dd( $data['users']->toArray() );
 
             $user = auth()->user();
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+
+            $data['groups'] = Group::where(function ($query) use ($user) {
+                $query->whereHas('participants', function ($subQuery) use ($user) {
+                    $subQuery->where('user_id', $user->id);
+                })->orWhere('admin_id', $user->id);
             })
+
             ->where('name', 'LIKE', '%' . $searchTerm . '%')
             ->get();
 
