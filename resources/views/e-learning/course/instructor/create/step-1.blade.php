@@ -99,15 +99,21 @@ Course Create - Step 3
                         </div>
 
                         <div class="form-group">
+                            <h6>Total Curriculum</h6>
+                            <input id="curriculum" name="curriculum" class="form-control" placeholder="Total Curriculum" type="text"
+                                value="{{ $course ? $course->curriculum : old('curriculum') }}">
+                        </div>
+
+                        <div class="form-group">
                             <h6>Language</h6>
                             <input id="language" name="language" class="form-control" placeholder="Language" type="text"
                                 value="{{ $course ? $course->language : old('language') }}">
                         </div>
                         <div class="form-group">
-                            <h6>Platform</h6>
-                            <input id="platform" name="platform" class="form-control"
-                                placeholder="ex: Figma/ Adobe XD/ Photoshop" type="text"
-                                value="{{ $course ? $course->platform : old('platform') }}">
+                            <h6>Category</h6>
+                            <input id="categories" data-role="tagsinput" name="categories" class="form-control"
+                                placeholder="ex: Figma, Adobe XD, Photoshop" type="text"
+                                value="{{ $course ? $course->categories : old('categories') }}"> 
                         </div>
                     </div>
 
@@ -125,6 +131,9 @@ Course Create - Step 3
 {{-- page content @E --}}
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="{{ asset('latest/assets/js/tags.js') }}"></script>
+
 <script>
     const titleInput = document.getElementById('title');
         const slugInput = document.getElementById('slug');

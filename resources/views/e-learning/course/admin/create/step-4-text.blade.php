@@ -35,7 +35,7 @@ Course Create - Lesson Text Content Add
                 <div class="lesson-edit-form-wrap mt-4">
                     <h4>{{ $lesson->title }}</h4>
 
-                    <form action="{{ route('course.lesson.text.update',$lesson->id) }}" method="POST"
+                    <form action="{{ route('admin.course.lesson.text.update',['id' => $lesson->id, 'subdomain' => config('app.subdomain')] ) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

@@ -53,8 +53,7 @@
                         <span class="avatar-box">{!! $student ? strtoupper($student->name[0]) : '' !!}</span>
                         @endif
                         <div class="media-body">
-                            <h3>{!! optional($student)->name ? strtoupper($student->name[0]) : '' !!}
-                            </h3>
+                            <h3>{{ $student->name }}</h3>
                             <p>{{ optional($student)->user_role }}</p>
                         </div>
 
@@ -69,7 +68,7 @@
                             }
                         @endphp
 
-                        <a href="{{ $url }}" class="edit-profile">Login as {{ optional($student)->user_role }}</a>
+                        <a href="{{ $url }}" class="edit-profile">Login as {{ optional($student)->name }}</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +82,6 @@
                             @if ($student && $student->email)
                                 <a href="mailto:{{ $student->email }}">{{ $student->email }}</a>
                             @endif
-
                         </div>
                     </div>
                     <div class="media">

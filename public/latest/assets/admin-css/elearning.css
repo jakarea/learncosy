@@ -929,7 +929,8 @@ span.finsihLesson {
   font-weight: 600;
   line-height: 1.25rem;
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.75rem!important;
+  display: block;
 }
 .lesson-edit-form-wrap .form-upload #upload-box {
   display: flex;
@@ -965,6 +966,7 @@ span.finsihLesson {
   border: 0;
   border-bottom: 1px solid #EBEFF2;
   margin: 0;
+  margin-top: 1rem;
 }
 .lesson-edit-form-wrap .course-page-edit-box .dropdown span {
   display: inline-block;
@@ -2770,3 +2772,29 @@ span.stripe-bg i {
     width: 100%;
   }
 }
+
+ .bootstrap-tagsinput{
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  padding: 0.625rem 0.875rem;
+  color: var(--neutral-color-neutral-70, #2F3A4C);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.75rem;
+ }
+
+ .bootstrap-tagsinput .tag.label.label-info{
+  display: inline-block;
+  background-color: #00AB55;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 0px 6px;
+ }
+ .bootstrap-tagsinput input{
+  border: 0;
+  background-color: transparent;
+ }

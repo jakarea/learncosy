@@ -38,7 +38,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="">New Password <sup class="text-danger">*</sup></label>
-                  <input type="password" name="password" placeholder="*********"
+                  <input type="password" name="password" placeholder="Enter Password"
                     class="form-control @error('password') is-invalid @enderror" id="password">
                   <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
                   <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
@@ -47,7 +47,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="">Confirm New Password <sup class="text-danger">*</sup></label>
-                  <input type="password" name="password_confirmation" placeholder="*********"
+                  <input type="password" name="password_confirmation" placeholder="Enter Password"
                     class="form-control @error('password_confirmation') is-invalid @enderror"
                     id="password_confirmation">
                   <span class="invalid-feedback">@error('password_confirmation'){{ $message }} @enderror</span>

@@ -68,7 +68,7 @@ Course Create - Step 1
 
                         {{-- step next bttns --}}
                         <div class="back-next-bttns">
-                            <button type="submit" class="btn btn-submit">Next</button>
+                            <button type="button" class="btn btn-submit" data-bs-toggle="modal" data-bs-target="#moduleModal"> Next</button> 
                         </div>
                         {{-- step next bttns --}}
                     </form>

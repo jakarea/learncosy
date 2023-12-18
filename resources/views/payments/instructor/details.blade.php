@@ -52,19 +52,19 @@
                             <th>Amount</th>
                         </tr>
                         <tr>
-                            <td>{{ $payment->course->title }}</td>
+                            <td>{{ optional($payment->course)->title }}</td>
                             <td>
-                            {{ $payment->course->categories }}
+                            {{ optional($payment->course)->categories }}
                             </td>
-                            <td>€{{ $payment->course->price }}</td>
+                            <td>€{{ optional($payment->course)->price }}</td>
                         </tr>
                         <tr>
                             <td colspan="2"> discount</td>
-                            <td>€{{ $payment->course->price - $payment->course->offer_price }}</td>
+                            <td>€{{ optional($payment->course)->price - optional($payment->course)->offer_price }}</td>
                         </tr>
                         <tr>
                             <td colspan="2">Grand Total</td>
-                            <td>€{{ $payment->course->offer_price }}</td>
+                            <td>€{{ optional($payment->course)->offer_price }}</td>
                         </tr>
                     </table>
                     <div class="download-inv-box">

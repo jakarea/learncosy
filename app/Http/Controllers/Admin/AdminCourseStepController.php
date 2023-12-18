@@ -51,7 +51,7 @@ class AdminCourseStepController extends Controller
         $description = $request->input('description');
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
-        $platform = $request->input('platform');
+        $categories = $request->input('categories');
  
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
@@ -66,7 +66,7 @@ class AdminCourseStepController extends Controller
             'description' => $description,
             'curriculum' => $curriculum,
             'language' => $language,
-            'platform' => $platform,
+            'categories' => $categories,
             'auto_complete' => $auto_complete
         ]);
 
@@ -199,6 +199,8 @@ class AdminCourseStepController extends Controller
 
     // done
     public function stepLessonContent(Request $request, $lesson_id){
+
+        // return $lesson_id;
 
         if(!$lesson_id){
             return redirect('admin/courses');

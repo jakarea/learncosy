@@ -78,7 +78,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::post('{id}/facts-update', 'step3d')->name('admin.course.lesson.step.update');
 
             Route::get('{id}/text/{module_id}/content/{lesson_id}', 'stepLessonText');
-            Route::post('{lesson_id}/step-lesson-content', 'stepLessonContent')->name('admin.course.lesson.text.update');
+            Route::post('{id}/step-lesson-content', 'stepLessonContent')->name('admin.course.lesson.text.update');
 
             Route::get('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudio');
             Route::post('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudioSet')->name('admin.course.lesson.audio.create');

@@ -168,7 +168,12 @@ class InstructorController extends Controller
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
+<<<<<<< HEAD
+        $user->status = $request->status;
+         
+=======
 
+>>>>>>> cba915303209433a87ef98e84379df5791c76ea6
         if ($request->email) {
             $user->email =  $request->email;
         }else{

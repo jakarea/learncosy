@@ -76,7 +76,7 @@ Course Create - Step 4
                     <h4>{{$lesson->title}}</h4>
 
                     <form
-                        action="{{ route('course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id]) }}"
+                        action="{{ route('admin.course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id ,'subdomain' => config('app.subdomain')]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="file" class="d-none" id="audio" name="audio">
