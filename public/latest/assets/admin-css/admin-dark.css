@@ -1907,6 +1907,12 @@
   background-color: transparent;
 }
 
+.dark-mode .liked-courses .dropdown .dropdown-menu{
+  color: #fff;
+  border-color: #101C2D;
+  background-color: #000!important;
+}
+
 .bootstrap-tagsinput input{
   color: #fff;
 }
