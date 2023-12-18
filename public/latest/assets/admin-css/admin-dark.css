@@ -1314,6 +1314,14 @@
   color: #d7def4;
 }
 
+
+.dark-mode .user-profile-picture .cover-img .ol-upload .icons i{
+  color: #fff!important;
+}
+.dark-mode .user-profile-picture .cover-img .ol-upload .icons{
+  background-color: #7289FF!important;
+}
+
 .dark-mode .emojionearea.emojionearea-inline{
   background: #000!important;
   border-color: #171717!important;
