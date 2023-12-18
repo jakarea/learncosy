@@ -93,15 +93,20 @@
                         @if (count($payments) > 0)
                         @foreach ($payments->slice(0, 5) as $payment)
                             <div class="payment-box">
-                                <h5><img src="{{ asset($payment->user->avatar) }}" alt="Avatar"
-                                        class="img-fluid"> {{ $payment->user->name }}</h5>
+                                <h5>
+                                    @if ($payment->user)
+                                        <img src="{{ asset($payment->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                    @else 
+                                        <img src="{{ asset('latest/assets/images/removed-user.png') }}" alt="Avatar" class="img-fluid">
+                                    @endif
+                                    {{ $payment->user->name }}
+                                </h5>
 
                                 <p>
                                     @if ($payment->status == 'completed')
                                         <span style="color: #2A920B;">{{ $payment->status }}</span>
                                     @else
-                                        <span
-                                            style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
+                                        <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
                                     @endif
                                 </p>
                                 <p>€ {{ $payment->amount }}</p>
