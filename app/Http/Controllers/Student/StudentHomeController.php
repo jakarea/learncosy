@@ -339,15 +339,18 @@ class StudentHomeController extends Controller
     }
 
     public function fileDownload($domain,$course_id,$file_extension){
-        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
+         
+          $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
                 $file_arr = explode('.', $file_name);
                 $extension = $file_arr['1'];
                 if($file_extension == $extension){
-                    $files[] = public_path('uploads/lessons/files/'.$file_name);
+                    $files[] = public_path('storage/uploads/lessons/'.$file_name);
                }
+
+               
             }
         }
 
@@ -364,7 +367,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-                return redirect('students/dashboard')->with('error', $is_have_file);
+                return redirect('students/courses')->with('error', $is_have_file);
               //return $is_have_file;
             }
             $zip->close();

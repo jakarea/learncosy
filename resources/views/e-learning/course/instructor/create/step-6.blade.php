@@ -117,7 +117,7 @@ Course Create - Initial Step
                                                                 </div>
                                                                 <div class="form-check form-switch">
                                                                     <label class="form-check-label" for="is_module">Is a
-                                                                        Modual</label>
+                                                                        Module</label>
                                                                     <input class="form-check-input" type="checkbox"
                                                                         name="is_module" value="1" role="switch"
                                                                         id="is_module" checked>
@@ -387,7 +387,7 @@ Course Create - Initial Step
 
                             </div>
                             <div class="form-check form-switch">
-                                <label class="form-check-label" for="is_module">Is a Modual</label>
+                                <label class="form-check-label" for="is_module">Is a Module</label>
                                 <input class="form-check-input" type="checkbox" name="is_module" value="1" role="switch"
                                     id="is_module" checked>
                             </div>
