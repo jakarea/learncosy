@@ -74,7 +74,7 @@ $i = 0;
                     </div>
                     
                     
-                    <div class="download-files-box">
+                    {{-- <div class="download-files-box">
                         <h4>Download Files </h4>
                         <div id="dataTextContainer" class="mb-3"> 
                         </div>
@@ -87,7 +87,7 @@ $i = 0;
                             @endforeach
                         </div>
                         @endif
-                    </div>
+                    </div> --}}
                    
                     {{-- course review --}}
                     <div class="course-review-wrap">

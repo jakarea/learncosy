@@ -198,11 +198,11 @@ Student Profile Edit Page
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
                                     <div class="row mt-2">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
                                                     id="flexRadioDefault1" value="1" {{ $student->recivingMessage == 1 ?
@@ -212,7 +212,7 @@ Student Profile Edit Page
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
                                                     id="flexRadioDefault2" value="0" {{ $student->recivingMessage == 0 ?
@@ -230,10 +230,36 @@ Student Profile Edit Page
                                     </span>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="recivingMessage">Status: </label>
+                                    <div class="row mt-2">
+                                        <div class="col-md-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status"
+                                                    id="flexRadioDefault12" value="active" {{ $student->status == 'active' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="flexRadioDefault12">
+                                                    Active
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status"
+                                                    id="flexRadioDefault22" value="inactive" {{ $student->status == 'inactive' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="flexRadioDefault22">
+                                                    Inactive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="invalid-feedback">@error('recivingMessage'){{ $message }}@enderror</span>
+                                </div>
+                            </div>
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group form-error">
                                     <label for="password">Password </label>
-                                    <input type="password" name="password" placeholder="*********"
+                                    <input type="password" name="password" placeholder="Enter Password"
                                         class="form-control @error('password') is-invalid @enderror" id="password">
                                     <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
                                     <div class="pass-icon">

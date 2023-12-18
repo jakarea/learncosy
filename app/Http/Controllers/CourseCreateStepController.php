@@ -41,10 +41,6 @@ class CourseCreateStepController extends Controller
 
     public function step1($subdomain, $id){
 
-        // return 23456;
-
-        // return $id;
-
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -54,8 +50,11 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-1',compact('course'));
     }
 
-    public function step1c(Request $request, $subdomain, $id){
+    public function step1c(Request $request, $subdomain, $id)
+    {
 
+        // return $request->all();
+        
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -75,7 +74,7 @@ class CourseCreateStepController extends Controller
         $description = $request->input('description');
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
-        $platform = $request->input('platform');
+        $categories = $request->input('categories');
 
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
@@ -91,7 +90,7 @@ class CourseCreateStepController extends Controller
             'description' => $description,
             'curriculum' => $curriculum,
             'language' => $language,
-            'platform' => $platform,
+            'categories' => $categories,
             'auto_complete' => $auto_complete
         ]);
 
@@ -555,6 +554,7 @@ class CourseCreateStepController extends Controller
 
     public function courseDesignSet(Request $request,$subdomain, $id){
 
+        // return $request->al();
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -562,7 +562,7 @@ class CourseCreateStepController extends Controller
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         $request->validate([
-            'thumbnail' => 'nullable|file|mimes:jpg,png,jpg|max:5121',
+            'thumbnail' => 'nullable|file|mimes:jpg,png,jpg,webp,gif,svg|max:5121',
         ],
         [
             'thumbnail' => 'Max file size is 5 MB!'

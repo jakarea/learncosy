@@ -46,7 +46,8 @@
                                     class="img-fluid me-3 thumab">
                                 @endif
                                 <div class="media-body">
-                                    <h5>{{ $myCourses->title }}</h5>
+                                    <h5>{{ Str::limit($myCourses->title, $limit = 38, $end = '..') }}</h5>
+
                                     <p class="user">{{ $myCourses->platform }}</p>
                                     <p class="lessons">
                                         <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
@@ -69,7 +70,7 @@
                                             </form>
 
                                         </li>
-                                        <li><a class="dropdown-item" href="{{ url('instructor/courses/'.$myCourses->slug) }}">View</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('instructor/courses/overview/'.$myCourses->slug) }}">View</a></li>
                                     </ul>
                                 </div>
                             </div>

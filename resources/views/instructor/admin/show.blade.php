@@ -52,11 +52,11 @@
                         @php 
                             $domain = env('APP_DOMAIN', 'learncosy.com');
                             $url = '//'.$instructor->subdomain.'.'.$domain.'/login-as-instructor/'.$userSessionId.'/'.$userId.'/'.$insId;
-                        @endphp
+                        @endphpz
                         @if ($instructor->subdomain)
-                            <a href="{{$url}}" class="edit-profile">Login as {{ $instructor->name }}</a>
+                            <a href="{{$url}}" class="edit-profile">Login as {{ Str::limit($instructor->name, $limit = 12, $end = '..') }}</a>
                         @else 
-                            <a href="{{ url('admin/instructor/'.$instructor->id.'/edit') }}" class="edit-profile">Edit Profile</a>
+                            <a href="{{ url('admin/instructor/'.$instructor->id.'/edit') }}"z class="edit-profile">Edit Profile</a>
                         @endif
                         
                     </div>

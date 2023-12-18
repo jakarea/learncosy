@@ -156,7 +156,7 @@ class CourseManagementController extends Controller
         }
     }
 
-    public function destroy($subdomain,$id)
+    public function destroy($id)
     {
          // update bundle course for this course
          $selectedCourseValue = intval($id); 
@@ -182,7 +182,7 @@ class CourseManagementController extends Controller
         }
 
         // update cart 
-        $cartSelect = Cart::where(['course_id'=> $selectedCourseValue])->first();
+        $cartSelects = Cart::where(['course_id'=> $selectedCourseValue])->first();
         if ($cartSelects) {
             foreach ($cartSelects as $cartSelect) { 
                 $cartSelect->delete();

@@ -181,16 +181,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="br-0">{{ $payment->course->title }}</td>
-                            <td class="bl-0 br-0">{{ $payment->course->categories }}</td>
-                            <td class="bl-0 " style="text-align: right;">€{{ $payment->course->price }}</td>
+                            <td class="br-0">{{ optional($payment->course)->title }}</td>
+                            <td class="bl-0 br-0">{{ optional($payment->course)->categories }}</td>
+                            <td class="bl-0 " style="text-align: right;">€{{ optional($payment->course)->price }}</td>
                         </tr>
                         <tr class="" style="text-align: right;">
                             <td colspan="2" class="br-0">
                                 <strong>Discount:</strong>
                             </td>
                             <td class="bl-0">
-                                €{{ $payment->course->price - $payment->course->offer_price }}
+                                €{{ optional($payment->course)->price - optional($payment->course)->offer_price }}
                             </td>
                         </tr>
                         <tr class="" style="text-align: right;">
@@ -206,7 +206,7 @@
                                 <strong>Grand Total:</strong>
                             </td>
                             <td class="bl-0">
-                                €{{ $payment->course->offer_price }}
+                                €{{ optional($payment->course)->offer_price }}
                             </td>
                         </tr>
                     </tbody>
