@@ -635,8 +635,8 @@ class DashboardController extends Controller
             $studentUser = User::find($studentUserId);
 
             if ($studentUser) {
+                Auth::logout();
                 Auth::login($studentUser);
-
                 return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
             }
         }
