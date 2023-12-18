@@ -1028,7 +1028,7 @@ function createGroup(formSelector) {
             $(".load-suggested-people").empty();
             $(".load-chat-user-for-group-user").empty();
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-            $(".chat-person-list-box .collapse").removeClass("show");
+            // $(".chat-person-list-box .collapse").removeClass("show");
         },
         error: function (jqXHR, status, err) {
             toastr.error('Something went wrong!', 'Error');
@@ -1076,6 +1076,7 @@ $(document).ready(function() {
 
 {{-- toggle of group create form shwo hide --}}
 <script>
+
     const toggleBttn = document.querySelector('.create-toggle');
     const headerFilter = document.querySelector('.header-filter');
     const userList = document.querySelector('.person-tab-body.chat-user-load');
@@ -1091,9 +1092,10 @@ $(document).ready(function() {
     const groupCreateBttn = document.querySelector('#btn-create-group');
 
     function groupShowHide(){
-        userList.classList.remove('active');
+        // userList.classList.remove('active');
         headerFilter.classList.remove('active');
         collapseExamples.classList.remove('show');
+        console.log(collapseExamples.classList);
     }
 
     groupCancelBttn.addEventListener('click', function (e) {
