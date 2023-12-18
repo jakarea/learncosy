@@ -311,7 +311,7 @@
             closeIcon.onclick = removeImage;
 
             imageContainer.appendChild(closeIcon);
- 
+
             closeIcon.style.display = 'inline';
         };
 
@@ -327,7 +327,7 @@
         document.getElementById('avatar').value = '';
 
         const closeIcon = document.getElementById('closeIcon');
-        closeIcon.style.display = 'none';  
+        closeIcon.style.display = 'none';
         }
 
         const dropContainers = document.querySelectorAll('.drop-container');

@@ -9,7 +9,7 @@ use App\Models\Course;
 use App\Models\Experience;
 use App\Models\Lesson;
 use Illuminate\Support\Str;
-use DB;  
+use DB;
 use App\Models\Checkout;
 use App\Models\ManagePage;
 use App\Models\VimeoData;
@@ -145,7 +145,7 @@ class InstructorController extends Controller
 
         $this->validate($request, [
             'name' => 'required|string',
-            'phone' => 'required|string', 
+            'phone' => 'required|string',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
@@ -156,7 +156,7 @@ class InstructorController extends Controller
 
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
-        if ($request->subdomain) {
+        if (!$user->subdomain && $request->subdomain) {
            $user->subdomain =  Str::slug($request->subdomain);
         }
         if ($request->user_role) {
@@ -165,18 +165,21 @@ class InstructorController extends Controller
         $user->short_bio = $request->website;
         $user->company_name = $request->company_name;
         $user->social_links = is_array($request->social_links) ? implode(",",$request->social_links) : $request->social_links;
-        $user->subdomain = $request->subdomain;
         $user->phone = $request->phone;
         $user->description = $request->description;
         $user->recivingMessage = $request->recivingMessage;
+<<<<<<< HEAD
         $user->status = $request->status;
          
+=======
+
+>>>>>>> cba915303209433a87ef98e84379df5791c76ea6
         if ($request->email) {
             $user->email =  $request->email;
         }else{
             $user->email = $user->email;
         }
-        
+
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }else{
@@ -206,8 +209,8 @@ class InstructorController extends Controller
 
     //  upload cover photo for all instructor
     public function coverUpload(Request $request)
-    { 
-        
+    {
+
         if ($request->hasFile('cover_photo')) {
             $coverPhoto = $request->file('cover_photo');
 
@@ -227,14 +230,14 @@ class InstructorController extends Controller
             $image->save(public_path('uploads/users/') . $uniqueFileName);
             $image_path = 'uploads/users/' . $uniqueFileName;
 
-            $user->cover_photo = $image_path; 
+            $user->cover_photo = $image_path;
             $user->save();
-    
+
             return response()->json(['message' => "UPLOADED"]);
         }
-    
+
         return response()->json(['error' => 'No image uploaded'], 400);
-    } 
+    }
 
     public function destroy($id){
 
@@ -247,11 +250,11 @@ class InstructorController extends Controller
         /// bundle course delete
         $bundleCourses = BundleCourse::where(['instructor_id' => $instructorId])->get();
         if ($bundleCourses) {
-            foreach ($bundleCourses as $bundleCourse) { 
+            foreach ($bundleCourses as $bundleCourse) {
                 $bundleThumbnail = public_path($bundleCourse->thumbnail);
                 if (file_exists($bundleThumbnail)) {
                     @unlink($bundleThumbnail);
-                } 
+                }
                 $bundleCourse->delete();
             }
         }
@@ -259,7 +262,7 @@ class InstructorController extends Controller
          // delete bundleselected for this user
          $bundleSelection = BundleSelect::where(['instructor_id' => $instructorId])->get();
          if ($bundleSelection) {
-             foreach ($bundleSelection as $bundleSelected) { 
+             foreach ($bundleSelection as $bundleSelected) {
                  $bundleSelected->delete();
              }
          }
@@ -267,7 +270,7 @@ class InstructorController extends Controller
          // certificate delete
         $allCertificates = Certificate::where(['instructor_id' => $instructorId])->get();
         if ($allCertificates) {
-            foreach ($allCertificates as $certificate) { 
+            foreach ($allCertificates as $certificate) {
                 $certificateOldLogo = public_path($certificate->logo);
                 if (file_exists($certificateOldLogo)) {
                     @unlink($certificateOldLogo);
@@ -277,7 +280,7 @@ class InstructorController extends Controller
                     @unlink($certificateOldSignature);
                 }
                 $certificate->delete();
-            }           
+            }
         }
 
         // checkout controller update
@@ -297,7 +300,7 @@ class InstructorController extends Controller
                 $oldThumbnail = public_path($course->thumbnail);
                 if (file_exists($oldThumbnail)) {
                     @unlink($oldThumbnail);
-                } 
+                }
                 //delete certficate
                 $oldCertificate = public_path($course->sample_certificates);
                 if (file_exists($oldCertificate)) {
@@ -319,7 +322,7 @@ class InstructorController extends Controller
                         if (file_exists($lessonOldFile)) {
                             @unlink($lessonOldFile);
                         }
-                        
+
                         $lesson->delete();
                     }
                     $module->delete();
@@ -331,7 +334,7 @@ class InstructorController extends Controller
         // experience table delete
         $totalExperiences = Experience::where(['user_id' => $instructorId])->get();
         if ($totalExperiences) {
-            foreach ($totalExperiences as $totalExperience) { 
+            foreach ($totalExperiences as $totalExperience) {
                 $totalExperience->delete();
             }
         }
@@ -351,7 +354,7 @@ class InstructorController extends Controller
         // delete notification for this course
         $course_notifications = Notification::where(['instructor_id' => $instructorId])->get();
         if ($course_notifications) {
-            foreach ($course_notifications as $course_notification) { 
+            foreach ($course_notifications as $course_notification) {
                 $course_notification->delete();
             }
         }
@@ -370,7 +373,7 @@ class InstructorController extends Controller
         if ($vimeoData) {
             $vimeoData->delete();
         }
-         //  delete instructor avatar 
+         //  delete instructor avatar
         $instructor = User::where('id', $id)->first();
         $instructorOldAvatar = public_path($instructor->avatar);
         if (file_exists($instructorOldAvatar)) {
