@@ -76,8 +76,8 @@
 
                                 </div>
                                 <div class="txt">
-                                    <h4>{{ $user->name }}</h4>
-                                    <h5>{{ $user->email }}</h5>
+                                    <h4>{{ Str::limit($user->name, $limit = 22, $end = '..') }}</h4>
+                                    <h5>{{ Str::limit($user->email, $limit = 25, $end = '..') }}</h5>
                                 </div>
                                 <div class="ftr">
                                     <a href="{{ url('admin/alladmin/profile/' . $user->id) }}">View Details</a>
