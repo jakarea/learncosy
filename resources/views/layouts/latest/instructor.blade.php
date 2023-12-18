@@ -24,6 +24,8 @@
             integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- all css start -->
+        {{-- jquery ui css --}}
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <!-- App css -->
         <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('latest/assets/admin-css/style.css') }}" rel="stylesheet" type="text/css" />
@@ -41,6 +43,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
         <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+
+        {{-- jquery ui --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <style>
@@ -127,6 +131,7 @@
 
         {{--  Toaster js --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
         {{-- dark mode js --}}
         <script>
@@ -161,6 +166,74 @@
                 tinymce.remove('#description');
                 lightFunction();
             }
+        </script>
+
+        <script>
+
+            // Module resorting
+            $(function() {
+                $("#moduleResorting").sortable({
+                    update: function(event, ui) {
+                        var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
+                        moduleOrder = moduleOrder.filter(function(item) {
+                            return item !== '';
+                        });
+                        updateModuleOrder( moduleOrder );
+                    }
+                });
+            });
+
+
+            // Lession resorting
+            $(function() {
+                $(".lessonResorting").sortable({
+                    update: function(event, ui) {
+                        var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
+                        moduleLessonOrder = moduleLessonOrder.filter(function(item) {
+                            return item !== '';
+                        });
+
+                        updateModuleLessionOrder( moduleLessonOrder );
+                    }
+                });
+            });
+
+
+            function updateModuleOrder(moduleOrder) {
+                $.ajax({
+                    url: "/instructor/module/sortable",
+                    type: "POST",
+                    data: {
+                        moduleOrder: moduleOrder,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log("Module reorder updated successfully");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating module order:", error);
+                    }
+                });
+            }
+
+            function updateModuleLessionOrder(moduleLessonOrder){
+                $.ajax({
+                    url: "/instructor/module/lesson/sortable",
+                    type: "POST",
+                    data: {
+                        lessonOrder: moduleLessonOrder,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log("Module lession reorder updated successfully");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating module order:", error);
+                    }
+                });
+            }
+
+
         </script>
 
         @yield('script')

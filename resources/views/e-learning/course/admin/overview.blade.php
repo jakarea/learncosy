@@ -250,6 +250,7 @@
                         <p><img src="{{asset('latest/assets/images/icons/alerm.svg')}}" alt="users"
                             class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
 
+
                         <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
                                 class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
                         @if ($course->language)

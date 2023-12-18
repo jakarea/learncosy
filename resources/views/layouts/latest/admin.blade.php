@@ -28,6 +28,8 @@
     <link href="{{ asset('latest/assets/admin-css/header.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/dashboard.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('latest/assets/admin-css/admin-dark.css') }}" rel="stylesheet" type="text/css" />
+    {{-- jquery ui css --}}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
     @yield('style')
     <link href="{{ asset('latest/assets/admin-css/responsive.css') }}" rel="stylesheet" type="text/css" />
@@ -65,6 +67,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/24z531gtj4tkxagq9eshg386rnnrwmmo91drwhvc19g5szrb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
+    {{-- jquery ui --}}
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 
     {{-- dark mode js --}}
     <script>
@@ -100,6 +105,74 @@
             lightFunction();
         }
     </script>
+
+
+<script>
+
+    // Module resorting
+    $(function() {
+        $("#moduleResort").sortable({
+            update: function(event, ui) {
+                var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
+                moduleOrder = moduleOrder.filter(function(item) {
+                    return item !== '';
+                });
+                updateModuleOrder( moduleOrder );
+            }
+        });
+    });
+
+
+    // Lession resorting
+    $(function() {
+        $(".lessonResort").sortable({
+            update: function(event, ui) {
+                var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
+                moduleLessonOrder = moduleLessonOrder.filter(function(item) {
+                    return item !== '';
+                });
+                updateModuleLessionOrder( moduleLessonOrder );
+            }
+        });
+    });
+
+
+    function updateModuleOrder(moduleOrder) {
+        $.ajax({
+            url: "/admin/courses/create/module/sortable",
+            type: "POST",
+            data: {
+                moduleOrder: moduleOrder,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                console.log("Module reorder updated successfully");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating module order:", error);
+            }
+        });
+    }
+
+    function updateModuleLessionOrder(moduleLessonOrder){
+        $.ajax({
+            url: "/admin/courses/create/lesson/sortable",
+            type: "POST",
+            data: {
+                lessonOrder: moduleLessonOrder,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                console.log("Module lession reorder updated successfully");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating module order:", error);
+            }
+        });
+    }
+
+
+</script>
 
     @yield('script')
 </body>

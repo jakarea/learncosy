@@ -108,9 +108,47 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        $modules = Module::with('lessons')->where('course_id', $id)->where('instructor_id', Auth::user()->id)->get();
+        $modules = Module::with('lessons')->where('course_id', $id)->where('instructor_id', Auth::user()->id)->orderBy('reorder', "ASC")->get();
         return view('e-learning/course/instructor/create/step-6',compact('modules'));
     }
+
+
+    public function moduleResorting( Request $request ){
+
+        $moduleOrder = $request->input('moduleOrder');
+
+        foreach ($moduleOrder as $index => $moduleId) {
+            $module = Module::find($moduleId);
+
+            if ($module) {
+                $module->reorder = $index + 1;
+                $module->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+
+    }
+
+    public function moduleLessonResorting( Request $request ){
+
+        $lessonsOrder = $request->input('lessonOrder');
+
+        foreach ($lessonsOrder as $index => $lessionId) {
+            $lesson = Lesson::find($lessionId);
+
+            if ($lesson) {
+                $lesson->reorder = $index + 1;
+                $lesson->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+
+
+
 
     public function step3c(Request $request, $subdomain, $id)
     {

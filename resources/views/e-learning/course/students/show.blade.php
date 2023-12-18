@@ -199,13 +199,16 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
+
+
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="media align-items-center">
-                                        <i class="fas fa-check-circle me-2"></i>
+
+                                        <i class="fas fa-check-circle me-2 {{ $module->isComplete() ? 'text-primary' : '' }}"></i>
                                         <div class="media-body">
                                             <p class="module-title">{{ $module->title }}</p>
                                         </div>
