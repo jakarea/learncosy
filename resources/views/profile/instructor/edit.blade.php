@@ -5,6 +5,7 @@
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" rel="stylesheet" type="text/css" />
 <style>
     .select-style-div-2,
     .select-style-div {
@@ -63,19 +64,25 @@
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box position-relative">
-                                            <input type="file" id="avatar" class="d-none" name="avatar">
-                                            <label for="avatar" class="img-upload">
-                                                <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
-                                                <p>Update photo</p>
-                                                <div class="ol">
-                                                    @if ($user->avatar)
-                                                        <img src="{{asset($user->avatar)}}" alt="Avatar" class="img-fluid static-image avatar-preview">
-                                                    @else
-                                                        <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
-                                                    @endif
-                                                </div>
-                                            </label>
+                                        <div class="profile-picture-box userEditeBtn position-relative">
+
+                                            <a href="javascript:;" id="image-container" class="drop-container">
+                                                <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile "> 
+
+                                                <label for="avatar" class="img-upload">
+                                                    <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
+                                                    <p>Update photo</p>
+                                                    <div class="ol">
+                                                        @if ($user->avatar)
+                                                            <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output"
+                                                            class="imgpreviewPrf img-fluid">
+                                                        @else
+                                                            <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
+                                                        @endif
+                                                    </div>
+                                                </label>
+                                            </a>
+                                            <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
 
                                              <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
 
@@ -1211,74 +1218,23 @@
     </div>
 </div>
 {{-- stripe viemo app modal --}}
+
+{{-- image crop modal start --}}
+@include('modals/image-resize')
+{{-- image crop modal end --}}
+
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
+
 {{-- form change js  --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
-{{-- drag & drop image upload js --}}
-<script>
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
-
-        if (files.length > 0) {
-            const file = files[0];
-
-            if (!file.type.match('image.*')) {
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                const imageContainer = document.querySelector('.img-upload .ol');
-                imageContainer.innerHTML = '';
-
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('img-fluid', 'd-block', 'avatar-preview');
-
-
-                imageContainer.appendChild(img);
-
-                const closeIcon = document.createElement('a');
-                closeIcon.innerHTML = '&#10006;';
-                closeIcon.id = 'closeIcon';
-                closeIcon
-                closeIcon.onclick = removeImage;
-                closeIcon.classList.add('cus-postion')
-                imageContainer.parentNode.parentNode.appendChild(closeIcon);
-
-                closeIcon.style.display = 'inline';
-            };
-
-            reader.readAsDataURL(file);
-        }
-    }
-
-    document.getElementById('avatar').addEventListener('change', handleFileSelect);
-
-    function removeImage() {
-        const imageContainer = document.querySelector('.img-upload .ol');
-        imageContainer.innerHTML = '';
-        document.getElementById('avatar').value = '';
-
-        const closeIcon = document.getElementById('closeIcon');
-        closeIcon.style.display = 'none';
-    }
-
-    const dropContainer = document.querySelector('.img-upload');
-    dropContainer.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-
-    dropContainer.addEventListener('drop', handleFileSelect);
-</script>
+ 
 {{-- add extra filed js --}}
 <script>
     const urlBttn = document.querySelector('#social_increment');

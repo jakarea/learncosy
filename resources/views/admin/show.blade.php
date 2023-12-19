@@ -49,6 +49,7 @@
                             <h3>{{$user->name}}</h3>
                             <p>{{$user->user_role}}</p>
                         </div>
+                        <a href="{{ url('/admin/alladmin/'.$user->id.'/edit') }}" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
                 <div class="user-details-box">

@@ -304,7 +304,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe> 
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif
