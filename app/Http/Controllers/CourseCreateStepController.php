@@ -24,6 +24,7 @@ class CourseCreateStepController extends Controller
     public function startSet(Request $request){
 
         $course = new Course();
+        $course->title = "Untitled Course";
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
@@ -698,6 +699,27 @@ class CourseCreateStepController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
+
+        $hasLessonsWithContent = 1;
+
+        if ($request->input('status') == 'published') {
+            $hasLessonsWithContent = collect($course['modules'])
+            ->flatMap(function ($module) {
+                return $module['lessons'];
+            })
+            ->where(function ($lesson) {
+                return $lesson['video_link'] !== null || $lesson['audio'] !== null || $lesson['text'] !== null;
+            })
+            ->count() > 0;
+        }
+
+        if ($request->input('status') == 'published' && $course->title == 'Untitled Course') {
+            $hasLessonsWithContent = 0;
+        }
+
+        if ($hasLessonsWithContent <= 0) {
+            return redirect()->back()->with('error','This course does not have lesson to Publish!');
+        }
 
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;

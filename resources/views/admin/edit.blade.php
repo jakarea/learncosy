@@ -5,7 +5,6 @@
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" rel="stylesheet" type="text/css" />
-
 @endsection
 {{-- page style @S --}}
 
@@ -135,87 +134,36 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-sm-6">
+                            <div class="col-lg-3 col-sm-6 userEditeBtn position-relative">
                                 <div class="form-group mb-0">
                                     <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container" class="drop-container userEditeBtn position-relative">
-                                    <a href="javascript:;" class="userEditeBtn position-relative">
+                                <a href="javascript:;" id="image-container" class="drop-container">
+                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile ">
                                     <label for="avatar" class="upload-box">
                                         <span>
-                                            <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
-                                                alt="Upload" class="img-fluid">
+                                            <img src="{{ asset('latest/assets/images/icons/camera-plus.svg') }}" alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    
-                                            <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none item-img file center-block filepreviewprofile"> 
-                                    </a>
-{{-- 
-                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none item-img file center-block filepreviewprofile"> --}}
                                     <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
-                                </div>
+                                </a>
+                                <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer" class="drop-container">
-                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
+                                <div id="imageContainer" class="drop-container"> 
                                     @if ($user->avatar)
-                                    <img src="{{asset($user->avatar)}}" alt="No Image" class="img-fluid d-block"
-                                        id="uploadedImage">
+                                    <img src="{{asset($user->avatar)}}" alt="No Image" class="img-fluid d-block imgpreviewPrf "
+                                        id="item-img-output">
                                     @else
-                                    <img src="https://image.flaticon.com/icons/svg/145/145867.svg"
-                                                    id="item-img-output" class="imgpreviewPrf img-fluid" alt="">
+                                    <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
+                                        class="imgpreviewPrf img-fluid" alt="">
                                     @endif
                                 </div>
                             </div>
-
-                           
-
-                            {{-- <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="confirm-identity">
-                                        <div class="ci-user d-flex align-items-center justify-content-center">
-                                            <div class="ci-user-picture">
-                                                
-                                            </div>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                            <div class="modal fade cropImageModal" id="cropImagePop" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <button type="button" class="close-modal-custom" data-dismiss="modal"
-                                        aria-label="Close"><i class="feather icon-x"></i></button>
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-body p-0">
-                                                <div class="modal-header-bg"></div>
-                                                <div class="up-photo-title">
-                                                    <h3 class="modal-title">Update Profile Photo</h3>
-                                                </div>
-                                                <div class="up-photo-content pb-5">
-
-                                                    <div id="upload-demo" class="center-block">
-                                                        <h5><i class="fas fa-arrows-alt mr-1"></i> Drag your photo as
-                                                            you require</h5>
-                                                    </div>
-                                                    <div class="upload-action-btn text-center px-2">
-                                                        <button type="button" id="cropImageBtn"
-                                                            class="btn btn-default btn-medium bg-blue px-3 mr-2">Save
-                                                            Photo</button>
-                                                        <button type="button"
-                                                            class="btn btn-default btn-medium bg-default-light px-3 ml-sm-2 replacePhoto position-relative">Replace
-                                                            Photo</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -275,6 +223,11 @@
         </div>
     </div>
 </main>
+
+{{-- image crop modal start --}}
+@include('modals/image-resize')
+{{-- image crop modal end --}}
+
 @endsection
 {{-- page content @E --}}
 
@@ -282,140 +235,10 @@
 @section('script')
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
 
-<script>
-    var $uploadCrop,
-		tempFilename,
-		rawImg,
-		imageId;
-		function readFile(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('.upload-demo').addClass('ready');
-					$('#cropImagePop').modal('show');
-					rawImg = e.target.result;
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-			else {
-				console.log("Sorry - you're browser doesn't support the FileReader API");
-			}
-		}
-
-		$uploadCrop = $('#upload-demo').croppie({
-			viewport: {
-				width: 160,
-				height: 160,
-				type: 'circle'
-			},
-			enforceBoundary: false,
-			enableExif: true
-		});
-		$('#cropImagePop').on('shown.bs.modal', function(){
-			$('.cr-slider-wrap').prepend('<p>Image Zoom</p>');
-			$uploadCrop.croppie('bind', {
-				url: rawImg
-			}).then(function(){
-				console.log('jQuery bind complete');
-			});
-		});
-
-		$('#cropImagePop').on('hidden.bs.modal', function(){
-			$('.item-img').val('');
-			$('.cr-slider-wrap p').remove();
-		});
-
-		$('.item-img').on('change', function () { 
-			readFile(this); 
-		});
-
-		$('.replacePhoto').on('click', function(){
-			$('#cropImagePop').modal('hide');
-			$('.item-img').trigger('click');
-		})
-		
-		$('#cropImageBtn').on('click', function (ev) {
-			$uploadCrop.croppie('result', {
-				type: 'base64',
-				// format: 'jpeg',
-        backgroundColor : "#000000",
-        format: 'png',
-				size: {width: 160, height: 160}
-			}).then(function (resp) {
-				$('#item-img-output').attr('src', resp);
-				$('#cropImagePop').modal('hide');
-				$('.item-img').val('');
-			});
-		});
-</script>
 {{-- form save js --}}
-{{-- <script src="{{ asset('latest/assets/js/form-change.js') }}"></script> --}}
 <script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
-
-{{-- drag & drop image upload js --}}
-{{-- <script>
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
-
-        if (files.length > 0) {
-        const file = files[0];
-
-        if (!file.type.match('image.*')) {
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const imageContainer = document.getElementById('imageContainer');
-            imageContainer.innerHTML = '';
-
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('img-fluid', 'd-block');
-            img.id = 'uploadedImage';
-
-            imageContainer.appendChild(img);
-
-            const closeIcon = document.createElement('span');
-            closeIcon.innerHTML = '&#10006;';
-            closeIcon.id = 'closeIcon';
-            closeIcon.onclick = removeImage;
-
-            imageContainer.appendChild(closeIcon);
- 
-            closeIcon.style.display = 'inline';
-        };
-
-        reader.readAsDataURL(file);
-        }
-        }
-
-        document.getElementById('avatar').addEventListener('change', handleFileSelect);
-
-        function removeImage() {
-        const imageContainer = document.getElementById('imageContainer');
-        imageContainer.innerHTML = '';
-        document.getElementById('avatar').value = '';
-
-        const closeIcon = document.getElementById('closeIcon');
-        closeIcon.style.display = 'none';  
-        }
-
-        const dropContainers = document.querySelectorAll('.drop-container');
-        dropContainers.forEach(function (dropContainer) {
-        dropContainer.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        });
-
-        dropContainer.addEventListener('drop', handleFileSelect);
-        });
-
-</script> --}}
 
 <script>
     const urlBttn = document.querySelector('#url_increment');

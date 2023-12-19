@@ -2774,6 +2774,11 @@ span.stripe-bg i {
   }
 }
 
+.course-create-step-page-wrap .course-create-step-wrap .step-box.current p a,
+.course-create-step-page-wrap .course-create-step-wrap .step-box.current p {
+  color: #294CFF;
+}
+
  .bootstrap-tagsinput{
   border-radius: 0.5rem;
   border: 1px solid var(--gray-300, #D0D5DD);

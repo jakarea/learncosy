@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class AdminProfileController extends Controller
 {
@@ -59,9 +60,10 @@ class AdminProfileController extends Controller
             'name' => 'required|string', 
             'phone' => 'required|string',
             'email' => 'required',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'base64_avatar' => 'nullable|string',
         ],
         [ 
+            'base64_avatar' => 'Max file size is 5 MB!',
             'avatar' => 'Max file size is 5 MB!'
         ]);
 
@@ -83,23 +85,24 @@ class AdminProfileController extends Controller
             $user->password = $user->password;
         }
 
-        $adSlugg = Str::slug($request->name);
-
-        if ($request->hasFile('avatar')) { 
+        if ($request->base64_avatar != NULL) {
+            $base64Image = $request->input('base64_avatar');
             if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-            $file = $request->file('avatar');
-            $image = Image::make($file);
-            $uniqueFileName = $adSlugg . '-' . uniqid() . '.png';
-            $image->save(public_path('uploads/users/') . $uniqueFileName);
-            $image_path = 'uploads/users/' . $uniqueFileName;
-
-           $user->avatar = $image_path;
-       }
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64Image);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $user->avatar = $path2;
+         }
 
         $user->save();
 

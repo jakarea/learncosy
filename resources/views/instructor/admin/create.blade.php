@@ -4,6 +4,7 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" rel="stylesheet" type="text/css" />
 @endsection
 {{-- page style @S --}}
 
@@ -142,31 +143,33 @@
                                         @enderror</span>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-sm-6">
+                            
+                            <div class="col-lg-3 col-sm-6 userEditeBtn position-relative">
                                 <div class="form-group mb-0">
                                     <label for="avatar">Avatar</label>
                                 </div>
-                                <div id="image-container" class="drop-container">
+                                <a href="javascript:;" id="image-container" class="drop-container">
+                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile ">
                                     <label for="avatar" class="upload-box">
                                         <span>
-                                            <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
-                                                alt="Upload" class="img-fluid">
+                                            <img src="{{ asset('latest/assets/images/icons/camera-plus.svg') }}" alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
-                                    <input type="file" name="avatar" accept="image/*" id="avatar" class="d-none">
                                     <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
-                                </div>
+                                </a>
+                                <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer" class="drop-container">
-                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
-                                    <img src="" alt="" class="img-fluid d-block" id="uploadedImage"> 
+                                <div id="imageContainer" class="drop-container"> 
+                                    <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
+                                    class="imgpreviewPrf img-fluid" alt="">
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
@@ -220,81 +223,23 @@
         </div>
     </div> 
 </main> 
+
+{{-- image crop modal start --}}
+@include('modals/image-resize')
+{{-- image crop modal end --}}
+
 @endsection
 {{-- page content @E --}}
 
 {{-- page script @S --}}
 @section('script')
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
 
 {{-- form save js --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
 <script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
-
-{{-- drag & drop image upload js --}}
-<script>
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        const files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
-
-        if (files.length > 0) {
-        const file = files[0];
-
-        if (!file.type.match('image.*')) {
-            return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            const imageContainer = document.getElementById('imageContainer');
-            imageContainer.innerHTML = '';
-
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('img-fluid', 'd-block');
-            img.id = 'uploadedImage';
-
-            imageContainer.appendChild(img);
-
-            const closeIcon = document.createElement('span');
-            closeIcon.innerHTML = '&#10006;';
-            closeIcon.id = 'closeIcon';
-            closeIcon.onclick = removeImage;
-
-            imageContainer.appendChild(closeIcon);
-
-            // Show the close icon
-            closeIcon.style.display = 'inline';
-        };
-
-        reader.readAsDataURL(file);
-        }
-        }
-
-        document.getElementById('avatar').addEventListener('change', handleFileSelect);
-
-        function removeImage() {
-        const imageContainer = document.getElementById('imageContainer');
-        imageContainer.innerHTML = '';
-        document.getElementById('avatar').value = '';
-
-        const closeIcon = document.getElementById('closeIcon');
-        closeIcon.style.display = 'none'; // Hide the close icon
-        }
-
-        const dropContainers = document.querySelectorAll('.drop-container');
-        dropContainers.forEach(function (dropContainer) {
-        dropContainer.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        });
-
-        dropContainer.addEventListener('drop', handleFileSelect);
-        });
-
-</script>
-
 
 <script>
     const urlBttn = document.querySelector('#url_increment');
