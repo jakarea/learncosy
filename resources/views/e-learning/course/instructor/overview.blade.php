@@ -51,6 +51,9 @@
                         <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
                             . {{ count($course_reviews) }} Reviews</h4>
 
+                        <a href="{{ url('instructor/courses/'.$course->id) }}" class="common-bttn"
+                                style="border-radius: 6.25rem; margin-top: 2rem">Go to Course</a>
+
                     </div>
                 </div>
             </div>
@@ -80,7 +83,7 @@
                         @foreach($course->modules as $module)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{$module->id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button pb-0" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">

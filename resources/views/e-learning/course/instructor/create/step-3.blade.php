@@ -14,17 +14,14 @@ Course Create - Step 3
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-4 col-xl-3">
-                {{-- course step --}}
-                {{-- add class "active" to "step-box" for the done step and add a checkmark image icon inside "circle"
-                class --}}
-                {{-- add class "current" to "step-box" for the current step --}}
+                
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box active">
                         <span class="circle">
                             <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
                                 class="img-fluid">
                         </span>
-                        <p>Content</p>
+                        <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box current">
                         <span class="circle"></span>
@@ -34,6 +31,7 @@ Course Create - Step 3
                 {{-- course step --}}
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7"> 
                 <form action="">

@@ -2726,10 +2726,12 @@ body{
 }
 
 .imgpreviewPrf {
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px dashed var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+  padding: 8px;
 }
 
 #upload-demo{

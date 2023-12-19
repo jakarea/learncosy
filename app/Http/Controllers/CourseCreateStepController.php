@@ -310,7 +310,7 @@ class CourseCreateStepController extends Controller
 
     }
 
-    public function stepLessonInstitue($id,$module_id,$lesson_id){
+    public function stepLessonInstitue($subdomain,$id,$module_id,$lesson_id){
 
         if(!$id){
             return redirect('instructor/courses');

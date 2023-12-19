@@ -20,11 +20,8 @@ Course Create - Step 4
                 {{-- add class "current" to "step-box" for the current step --}}
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
-                        <span class="circle">
-                            {{-- <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid"> --}}
-                        </span>
-                        <p>Content</p>
+                        <span class="circle"></span>
+                        <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -76,7 +73,7 @@ Course Create - Step 4
                     <h4>{{$lesson->title}}</h4>
 
                     <form
-                        action="{{ route('course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id]) }}"
+                        action="{{ route('course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id, 'subdomain' => config('app.subdomain')]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="file" class="d-none" id="audio" name="audio">

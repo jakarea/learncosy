@@ -19,7 +19,7 @@ Course Create - Video Upload
                     <div class="step-box current">
                         <span class="circle"> 
                         </span>
-                        <p>Content</p>
+                        <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>

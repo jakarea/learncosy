@@ -50,6 +50,9 @@
                         <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
                             . {{ count($course_reviews) }} Reviews</h4>
 
+                            <a href="{{ url('admin/courses/'.$course->slug.'/show') }}" class="common-bttn"
+                                style="border-radius: 6.25rem; margin-top: 2rem">Go to Course</a>
+
                     </div>
                 </div>
             </div>
