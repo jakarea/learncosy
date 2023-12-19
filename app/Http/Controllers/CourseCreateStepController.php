@@ -54,7 +54,7 @@ class CourseCreateStepController extends Controller
     {
 
         // return $request->all();
-        
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -102,7 +102,6 @@ class CourseCreateStepController extends Controller
 
 
     public function step3($subdomain,$id){
-
         if(!$id){
             return redirect('instructor/courses');
         }
