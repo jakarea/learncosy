@@ -5,7 +5,6 @@
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" rel="stylesheet" type="text/css" />
-
 @endsection
 {{-- page style @S --}}
 

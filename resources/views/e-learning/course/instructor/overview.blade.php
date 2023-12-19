@@ -226,7 +226,9 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
