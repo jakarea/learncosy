@@ -49,7 +49,7 @@ class ProfileManagementController extends Controller
 
     public function update(Request $request, $domain)
     {
-        $userId = auth()->user()->id; 
+        $userId = auth()->user()->id;
 
         $this->validate($request, [
             'name' => 'required|string',

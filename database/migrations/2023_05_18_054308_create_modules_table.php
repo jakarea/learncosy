@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->integer('course_id');
-            $table->unsignedBigInteger('instructor_id')->nullable(); 
+            $table->unsignedBigInteger('instructor_id')->nullable();
             $table->text('title');
             $table->text('slug');
             $table->string('status', 30)->default('draft');
+            $table->integer('reorder')->default(0);
             $table->timestamps();
         });
     }

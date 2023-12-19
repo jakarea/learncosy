@@ -19,6 +19,7 @@ class Lesson extends Model
         'video_link',
         'thumbnail',
         'short_description',
+        'reorder',
         'status',
         'type',
     ];

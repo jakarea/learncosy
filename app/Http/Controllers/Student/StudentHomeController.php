@@ -586,6 +586,8 @@ class StudentHomeController extends Controller
     }
 
     public function storeCourseLog(Request $request){
+
+        return "hi";
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');

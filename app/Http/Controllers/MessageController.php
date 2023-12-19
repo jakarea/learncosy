@@ -41,8 +41,14 @@ class MessageController extends Controller
                     ->limit(1);
                 },
             ])
-            ->where('users.subdomain', '=', config('app.subdomain') )
-            ->where('users.id', '!=', Auth::id())
+            // ->where('users.subdomain', '=', config('app.subdomain') )
+            // ->where('users.id', '!=', Auth::id())
+            ->where([
+                ['users.recivingMessage', true],
+                ['users.subdomain', config('app.subdomain')],
+                ['users.id', '!=', Auth::id()],
+            ])
+
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
@@ -69,8 +75,12 @@ class MessageController extends Controller
                 },
             ])
 
-            ->where('users.subdomain', '=', config('app.subdomain') )
-            ->where('users.id', '!=', Auth::id())
+            ->where([
+                ['users.recivingMessage', true],
+                ['users.subdomain', config('app.subdomain')],
+                ['users.id', '!=', Auth::id()],
+            ])
+
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
@@ -117,8 +127,13 @@ class MessageController extends Controller
                     ->limit(1);
                 },
             ])
-            ->where('users.subdomain', '=', config('app.subdomain') )
-            ->where('users.id', '!=', Auth::id())
+
+            ->where([
+                ['users.recivingMessage', true],
+                ['users.subdomain', config('app.subdomain')],
+                ['users.id', '!=', Auth::id()],
+            ])
+
             ->orderByDesc('last_activity_at')
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
@@ -314,18 +329,21 @@ class MessageController extends Controller
             $layoutDesing = $request->input('layout');
 
             $data['users'] = User::select(
-                'users.id',
-                'users.name',
-                'users.avatar',
-                'users.email',
-            )
+                    'users.id',
+                    'users.name',
+                    'users.avatar',
+                    'users.email',
+                )
                 ->withCount([
                     'chats as unread' => function ($query) {
                         $query->where('is_read', 0)->where('receiver_id', Auth::id());
                     },
                 ])
-                ->where('users.subdomain', '=', config('app.subdomain') )
-                ->where('users.id', '!=', Auth::id())
+                ->where([
+                    ['users.recivingMessage', true],
+                    ['users.subdomain', config('app.subdomain')],
+                    ['users.id', '!=', Auth::id()],
+                ])
                 ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
                 ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
                 ->get();
@@ -333,9 +351,13 @@ class MessageController extends Controller
             // dd( $data['users']->toArray() );
 
             $user = auth()->user();
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+
+            $data['groups'] = Group::where(function ($query) use ($user) {
+                $query->whereHas('participants', function ($subQuery) use ($user) {
+                    $subQuery->where('user_id', $user->id);
+                })->orWhere('admin_id', $user->id);
             })
+
             ->where('name', 'LIKE', '%' . $searchTerm . '%')
             ->get();
 

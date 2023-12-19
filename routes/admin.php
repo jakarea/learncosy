@@ -109,6 +109,12 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 
             Route::get('{id}/share', 'courseShare');
 
+
+            // Module Resorting
+            Route::post('module/sortable','moduleResorting');
+            Route::post('lesson/sortable','moduleLessonResorting');
+
+
         });
 
         // Subscription paege modify routes for admin

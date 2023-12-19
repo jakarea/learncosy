@@ -27,9 +27,10 @@ return new class extends Migration
             $table->text('short_description')->nullable();
             $table->string('status', 30)->default('pending');
             $table->string('type', 30)->default('video');
-            $table->string('audio')->nullable(); 
+            $table->string('audio')->nullable();
             $table->string('text')->nullable();
             $table->string('lesson_file')->nullable();
+            $table->integer('reorder')->default(0);
             $table->timestamps();
         });
     }
@@ -39,7 +40,7 @@ return new class extends Migration
      *
      * @return void
      */
-    
+
     public function down()
     {
         Schema::dropIfExists('lessons');

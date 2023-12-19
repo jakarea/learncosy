@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth; 
+use Auth;
 use Illuminate\Support\Str;
 use App\Models\Course;
 use App\Models\Notification;
@@ -52,14 +52,14 @@ class AdminCourseStepController extends Controller
         $curriculum = $request->input('curriculum');
         $language = $request->input('language');
         $categories = $request->input('categories');
- 
+
         while (Course::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
 
         $course = Course::findOrNew($id);
-        $course->fill([ 
+        $course->fill([
             'title' => $title,
             'slug' => $slug,
             'short_description' => $short_description,
@@ -82,9 +82,46 @@ class AdminCourseStepController extends Controller
             return redirect('admin/courses');
         }
 
-        $modules = Module::with('lessons')->where('course_id', $id)->get();
+        $modules = Module::with('lessons')->where('course_id', $id)->orderBy('reorder','ASC')->get();
         return view('e-learning/course/admin/create/step-6',compact('modules'));
     }
+
+
+    // Module Resorting
+    public function moduleResorting( Request $request ){
+
+        $moduleOrder = $request->input('moduleOrder');
+
+        foreach ($moduleOrder as $index => $moduleId) {
+            $module = Module::find($moduleId);
+
+            if ($module) {
+                $module->reorder = $index + 1;
+                $module->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+
+    }
+
+    // Lesson Resorting
+    public function moduleLessonResorting( Request $request ){
+
+        $lessonsOrder = $request->input('lessonOrder');
+
+        foreach ($lessonsOrder as $index => $lessionId) {
+            $lesson = Lesson::find($lessionId);
+
+            if ($lesson) {
+                $lesson->reorder = $index + 1;
+                $lesson->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 
     // done
     public function step3c(Request $request, $id){
@@ -127,7 +164,7 @@ class AdminCourseStepController extends Controller
         ]);
 
         $module = new Module();
-        $module->course_id = $id; 
+        $module->course_id = $id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();
@@ -151,7 +188,7 @@ class AdminCourseStepController extends Controller
         $module_id = $request->input('module_id');
 
         $module = Module::find($module_id);
-        $module->course_id = $id; 
+        $module->course_id = $id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();
@@ -177,7 +214,7 @@ class AdminCourseStepController extends Controller
         $lesson_id = $request->input('lesson_id');
         $lesson = Lesson::find($lesson_id);
 
-        $lesson->course_id = $request->input('course_id'); 
+        $lesson->course_id = $request->input('course_id');
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
@@ -217,16 +254,16 @@ class AdminCourseStepController extends Controller
 
         if ($request->hasFile('lesson_file')) {
             $uploadedFilenames = [];
-        
+
             foreach ($request->file('lesson_file') as $file) {
                 $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
-        
+
 
         $lesson->save();
 
@@ -240,7 +277,7 @@ class AdminCourseStepController extends Controller
         if(!$id){
             return redirect('admin/courses');
         }
- 
+
         $course = Course::find($id);
         $lesson = Lesson::find($lesson_id);
 
@@ -252,7 +289,7 @@ class AdminCourseStepController extends Controller
 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('admin/courses');
-        } 
+        }
 
         $lesson = Lesson::find($lesson_id);
 
@@ -265,17 +302,17 @@ class AdminCourseStepController extends Controller
         if (!$id) {
             return redirect('admin/courses');
         }
-        
+
         $request->validate([
             'description' => 'string',
             'audio' => 'mimes:mp3,wav|max:50000',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
 
         ]);
-        
+
         $lesson = Lesson::find($lesson_id);
         $lesson->short_description = $request->input('description');
-        
+
         // Handle audio file upload
         if ($request->hasFile('audio')) {
             // Check if a previous audio file exists and delete it
@@ -285,40 +322,40 @@ class AdminCourseStepController extends Controller
                     unlink($previousAudioPath);
                 }
             }
-        
+
             $audio = $request->file('audio');
             $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
             $lesson->audio = 'uploads/audio/'.$audioName;
         }
-        
+
         $uploadedFilenames = [];
-        
+
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
-        
+
         $lesson->save();
 
         return redirect('admin/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
-        
+
     }
 
     // done
     public function stepLessonVideo($id,$module_id,$lesson_id)
-    { 
+    {
         if(!$id){
             return redirect('admin/courses');
         }
 
         $lesson = Lesson::find($lesson_id);
-        $course = Course::find($id); 
+        $course = Course::find($id);
 
         return view('e-learning/course/admin/create/step-5',compact('course','lesson'));
     }
@@ -328,25 +365,25 @@ class AdminCourseStepController extends Controller
     {
 
         $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
+            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
             // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
         ],
         [
             'video_link.required' => 'Video file is required!',
             'video_link.max' => 'Max file size is 1 GB!',
         ]);
-        
+
         $lesson = Lesson::find($lesson_id);
         $lesson->short_description = $request->input('description');
         $uploadedFilenames = [];
-        
+
         if ($request->hasFile('lesson_file')) {
             foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName(); 
+                $filename = uniqid() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('uploads/lessons/files'), $filename);
                 $uploadedFilenames[] = $filename;
             }
-        
+
             $lesson->lesson_file = implode(",", $uploadedFilenames);
         }
 
@@ -391,7 +428,7 @@ class AdminCourseStepController extends Controller
         if(!$id){
             return redirect('admin/courses');
         }
-        $course = Course::find($id); 
+        $course = Course::find($id);
         return view('e-learning/course/admin/create/objects',compact('course'));
     }
 
@@ -399,61 +436,61 @@ class AdminCourseStepController extends Controller
     public function courseObjectsSet(Request $request, $id)
     {
 
-       $data = $request->json()->all(); 
- 
+       $data = $request->json()->all();
+
        if ($data['dataIndex'] != null) {
 
         $dataIndex = $data['dataIndex'];
         $dataObjective = $data['objective'];
 
-        $course = Course::findOrFail($id); 
-            
-        $existingObjectives = explode('[objective]', $course->objective); 
+        $course = Course::findOrFail($id);
+
+        $existingObjectives = explode('[objective]', $course->objective);
         $existingObjectives[$dataIndex] = $dataObjective;
 
         $updatedObjectiveString = implode('[objective]', $existingObjectives);
 
         $trimmedStringUp = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $updatedObjectiveString);
-    
+
         $course->objective = $trimmedStringUp;
-        $course->save(); 
+        $course->save();
 
         return response()->json([
             'message' => 'UPDATED'
         ]);
 
-       }else{ 
+       }else{
 
-            $course = Course::findOrFail($id); 
-            $existingObjectives = explode('[objective]', $course->objective); 
+            $course = Course::findOrFail($id);
+            $existingObjectives = explode('[objective]', $course->objective);
             $newObjectives = [$data['objective']];
-    
-            $allObjectives = array_merge($existingObjectives, $newObjectives); 
-    
+
+            $allObjectives = array_merge($existingObjectives, $newObjectives);
+
             $newObjectiveString = implode('[objective]', $allObjectives);
 
             $trimmedString = preg_replace('/^\[objective\]+|\[objective\]+$/', '', $newObjectiveString);
-    
+
             $course->objective = $trimmedString;
             $course->save();
 
             return response()->json([
                 'message' => 'ADDED'
             ]);
-       } 
+       }
     }
 
     public function deleteObjective(Request $request, $id,$index)
-    {  
+    {
 
         $course = Course::findOrFail($id);
         $existingObjectives = explode('[objective]', $course->objective);
- 
-        if (isset($existingObjectives[$index])) { 
+
+        if (isset($existingObjectives[$index])) {
             unset($existingObjectives[$index]);
-             
+
             $existingObjectives = array_values($existingObjectives);
- 
+
             $course->objective = implode('[objective]', $existingObjectives);
             $course->save();
 
@@ -526,7 +563,7 @@ class AdminCourseStepController extends Controller
             'thumbnail' => 'Max file size is 5 MB!'
         ]);
 
-        if ($request->hasFile('thumbnail')) { 
+        if ($request->hasFile('thumbnail')) {
             if ($course->thumbnail) {
                $oldFile = public_path($course->thumbnail);
                if (file_exists($oldFile)) {
@@ -576,8 +613,8 @@ class AdminCourseStepController extends Controller
         $certificateStyle = Certificate::find($request->certificateStyle);
 
         if ($certificateStyle) {
-            $newCertificateStyle = $certificateStyle->replicate(); 
-            $newCertificateStyle->course_id = $id; 
+            $newCertificateStyle = $certificateStyle->replicate();
+            $newCertificateStyle->course_id = $id;
             $newCertificateStyle->save();
         }
 
@@ -586,12 +623,12 @@ class AdminCourseStepController extends Controller
         if ($request->hasFile('sample_certificates')) {
             $file = $request->file('sample_certificates');
             $image = Image::make($file);
-            $image->encode('jpg', 40); 
+            $image->encode('jpg', 40);
             $image_path = 'uploads/courses/sample_certificates_'.$course->slug . '.jpg';
             $image->save(public_path('uploads/courses/sample_certificates_') . $course->slug . '.jpg');
         }
 
-        // Store other form data 
+        // Store other form data
         $course->sample_certificates = $image_path;
         $course->save();
 
@@ -602,7 +639,7 @@ class AdminCourseStepController extends Controller
         if(!$id){
             return redirect('admin/courses');
         }
-        $course = Course::find($id); 
+        $course = Course::find($id);
         return view('e-learning/course/admin/create/step-10',compact('course'));
     }
 
