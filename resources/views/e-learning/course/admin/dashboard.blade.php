@@ -144,7 +144,7 @@
                             <div class="media">
                                 <img src="{{ asset($course->thumbnail) }}" alt="Avatar" class="img-fluid">
                                 <div class="media-body">
-                                    <h5><a href="{{ url('admin/courses', $course->slug) }}">{{ substr($course->title, 0,
+                                    <h5><a href="{{ url('admin/courses/overview', $course->slug) }}">{{ substr($course->title, 0,
                                             20) . '...' }}</a>
                                     </h5>
                                     <p> {{ $course->categories }} </p>

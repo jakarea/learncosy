@@ -46,7 +46,8 @@
                                     class="img-fluid me-3 thumab">
                                 @endif
                                 <div class="media-body">
-                                    <h5>{{ $myCourses->title }}</h5>
+                                    <h5>{{ Str::limit($myCourses->title, $limit = 38, $end = '..') }}</h5>
+
                                     <p class="user">{{ $myCourses->platform }}</p>
                                     <p class="lessons">
                                         <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a" class="img-fluid">
@@ -69,7 +70,7 @@
                                             </form>
 
                                         </li>
-                                        <li><a class="dropdown-item" href="{{ url('instructor/courses/'.$myCourses->slug) }}">View</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('instructor/courses/overview/'.$myCourses->slug) }}">View</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -92,15 +93,20 @@
                         @if (count($payments) > 0)
                         @foreach ($payments->slice(0, 5) as $payment)
                             <div class="payment-box">
-                                <h5><img src="{{ asset($payment->user->avatar) }}" alt="Avatar"
-                                        class="img-fluid"> {{ $payment->user->name }}</h5>
+                                <h5>
+                                    @if ($payment->user)
+                                        <img src="{{ asset($payment->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                    @else 
+                                        <img src="{{ asset('latest/assets/images/removed-user.png') }}" alt="Avatar" class="img-fluid">
+                                    @endif
+                                    {{ $payment->user->name }}
+                                </h5>
 
                                 <p>
                                     @if ($payment->status == 'completed')
                                         <span style="color: #2A920B;">{{ $payment->status }}</span>
                                     @else
-                                        <span
-                                            style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
+                                        <span style="color: #ED5763; background: transparent;">{{ $payment->status }}</span>
                                     @endif
                                 </p>
                                 <p>€ {{ $payment->amount }}</p>

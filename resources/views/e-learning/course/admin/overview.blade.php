@@ -1,7 +1,6 @@
 @extends('layouts/latest/admin')
 @section('title','Course Overview')
 
-
 {{-- style section @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
@@ -99,7 +98,7 @@
                                     }
                                 @endphp
 
-                                <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
+                                <p class="common-para mb-4">{{ $totalDuration }} Min . {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
                                 {{-- lessons total minutes --}}
                             </div>
                             <div id="collapse_{{$module->id}}" class="accordion-collapse collapse "
@@ -170,13 +169,12 @@
                     <h3 class="mb-0">Similar Course</h3>
                 </div>
                 <div class="row">
-
-                    @foreach ($related_course as $course)
+                    @foreach ($related_course as $r_course)
                     @php
                     $review_sum = 0;
                     $review_avg = 0;
                     $total = 0;
-                    foreach($course->reviews as $review){
+                    foreach($r_course->reviews as $review){
                     $total++;
                     $review_sum += $review->star;
                     }
@@ -184,32 +182,42 @@
                     $review_avg = $review_sum / $total;
                     @endphp
                     {{-- course single box start --}}
-
-                    <div class="col-lg-5 col-sm-6">
+                    @if($r_course->id != $course->id)
+                    <div class="col-lg-5 col-sm-6 mb-4">
                         <div class="course-single-item">
-                            <div class="course-thumb-box">
-                                <img src="{{asset($course->thumbnail)}}" alt="Course Thumbanil" class="img-fluid">
-                            </div>
+                            <div>
+                                <div class="course-thumb-box">
+                                    <img src="{{ asset($r_course->thumbnail) }}" alt="{{ $r_course->slug }}"
+                                        class="img-fluid">
+                                </div>
+                                <div class="course-txt-box">
+                                    <a href="{{ url('admin/courses/overview/' . $r_course->slug) }}">
+                                        {{ Str::limit($r_course->title, 45) }}</a>
 
-                            <div class="course-txt-box">
-                                <a href="{{url('admin/courses/'.$course->slug)}}">{{ Str::limit($course->title, $limit =
-                                    40, $end = '..') }}</a>
-                                <p>{{ $course->user->subdomain }}</p>
-                                <ul>
-                                    <li><span>{{ $review_avg }}</span></li>
-                                    @for ($i = 0; $i<$review_avg; $i++) <li><i class="fas fa-star"></i></li>
+                                    <p>{{ Str::limit($r_course->short_description, $limit = 46, $end = '...') }}</p>
+                                    <ul>
+                                        <li><span>{{ $review_avg }}</span></li>
+                                        @for ($i = 0; $i < $review_avg; $i++)
+                                            <li><i class="fas fa-star"></i></li>
                                         @endfor
                                         <li><span>({{ $total }})</span></li>
-                                </ul>
-                                @if($course->offer_price)
-                                <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                                @else
-                                <h5> {{ $course->price > 0 ? '€ '.$course->price: 'Free' }} </h5>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="course-txt-box">
+                                @if ($r_course->offer_price)
+                                    <h5>€ {{ $r_course->offer_price }} <span>€ {{ $r_course->price }}</span></h5>
+                                 @elseif(!$r_course->offer_price && !$r_course->price)
+                                 <h5>Free</h5>
+
+                                    @else
+                                    <h5>€ {{ $r_course->price }}</h5>
                                 @endif
                             </div>
                         </div>
                     </div>
                     {{-- course single box end --}}
+                    @endif
                     @endforeach
                 </div>
             </div>

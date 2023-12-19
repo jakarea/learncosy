@@ -13,12 +13,12 @@ Top Perform Courses
 @section('content')
 <main class="top-perform-courses-lists-pages">
     <div class="container-fluid">
-        <div class="row mb-4 pb-3 brdr-bottom-1 align-items-center">
+        <div class="row align-items-end">
             <div class="col-lg-9 col-12 col-sm-8 col-md-8">
                 <div class="user-title-box mb-0">
                     <h1>Top Performing Courses</h1>
                 </div>
-            </div>
+            </div> 
             <div class="col-lg-3 col-12 col-sm-4 col-md-4">
                 <form action="" method="GET" id="myForm">
                     <input type="hidden" name="status" id="inputField">
@@ -41,6 +41,9 @@ Top Perform Courses
                         <i class="fas fa-angle-down"></i>
                     </div>
                 </form>
+            </div>
+            <div class="col-12 my-4">
+                <div class="brdr-bottom-1"></div>
             </div>
         </div>
         <div class="row">

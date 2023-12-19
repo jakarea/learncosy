@@ -154,6 +154,7 @@ class StudentManagementController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
+         $user->status = $request->status;
          $user->email = $user->email;
          if ($request->password) {
              $user->password = Hash::make($request->password);
