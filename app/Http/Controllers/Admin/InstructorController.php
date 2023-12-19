@@ -30,6 +30,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class InstructorController extends Controller
 {
@@ -67,10 +68,11 @@ class InstructorController extends Controller
            'name' => 'required|string',
            'phone' => 'required|string',
            'email' => 'required|email|unique:users,email',
-           'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+           'base64_avatar' => 'nullable|string'
+        //    'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
        ],
        [
-           'avatar' => 'Max file size is 5 MB!',
+            'base64_avatar' => 'Max file size is 5 MB!',
            'phone' => 'Phone number is required.',
        ]);
 
@@ -89,17 +91,24 @@ class InstructorController extends Controller
            'password' => Hash::make($request->password),
        ]);
 
-       $insSlugs = Str::slug($request->name);
-
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $image = Image::make($file);
-            $uniqueFileName = $insSlugs . '-' . uniqid() . '.png';
-            $image->save(public_path('uploads/users/') . $uniqueFileName);
-            $image_path = 'uploads/users/' . $uniqueFileName;
-           $instructor->avatar = $image_path;
-       }
-
+       if ($request->base64_avatar != NULL) {
+            $base64Image = $request->input('base64_avatar');
+            if ($instructor->avatar) {
+                $oldFile = public_path($instructor->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64Image);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $instructor->avatar = $path2;
+        }                                               
 
        $instructor->save();
        return redirect('admin/instructor')->with('success', 'Instructor Added Successfully!');
@@ -146,10 +155,11 @@ class InstructorController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'phone' => 'required|string',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'base64_avatar' => 'nullable|string',
+            // 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!',
+            'base64_avatar' => 'Max file size is 5 MB!',
             'phone' => 'Phone number is required'
         ]);
 
@@ -182,22 +192,24 @@ class InstructorController extends Controller
             $user->password = $user->password;
         }
 
-        $insSlugg = Str::slug($request->name);
-
-        if ($request->hasFile('avatar')) {
+        if ($request->base64_avatar != NULL) {
+            $base64Image = $request->input('base64_avatar');
             if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-            $file = $request->file('avatar');
-            $image = Image::make($file);
-            $uniqueFileName = $insSlugg . '-' . uniqid() . '.png';
-            $image->save(public_path('uploads/users/') . $uniqueFileName);
-            $image_path = 'uploads/users/' . $uniqueFileName;
-           $user->avatar = $image_path;
-       }
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64Image);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $user->avatar = $path2;
+         }
 
         $user->save();
         return redirect('admin/instructor')->with('success', 'Instructor Profile has been Updated successfully!');
