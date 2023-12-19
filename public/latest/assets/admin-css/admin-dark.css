@@ -1901,6 +1901,14 @@
   background: #0D0D0D;
 }
 
+.dark-mode .cropImageModal .modal-content{
+  background-color: #000A39!important;
+}
+
+.dark-mode .modal-header-bg{
+  background-color: #7289FF!important;
+}
+
 .dark-mode .bootstrap-tagsinput{
   color: #fff;
   border-color: #101C2D;

@@ -2725,6 +2725,13 @@ body{
   font-weight: 700;
 }
 
+.imgpreviewPrf {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 #upload-demo{
     position: relative;
 	width: 100%;

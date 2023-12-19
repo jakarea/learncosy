@@ -10,14 +10,12 @@
                     <h3 class="modal-title">Resize Photo</h3>
                 </div>
                 <div class="up-photo-content pb-5">
-
                     <div id="upload-demo" class="center-block">
-                        <h5><i class="fas fa-arrows-alt mr-1"></i> Drag your photo as
-                            you require</h5>
+                        <h5><i class="fas fa-arrows-alt mr-1"></i> Drag your photo as you require</h5>
                     </div>
-                    <div class="form-submit-bttns">
-                        <button type="button" id="cropImageBtn" class="btn btn-submit">Crop Photo</button>
-                        <button type="button" class="btn  replacePhoto position-relative btn-cancel">Replace Photo</button>
+                    <div class="form-submit-bttns upload-action-btn">
+                        <button type="button" class="btn  replacePhoto position-relative btn-cancel ms-2">Change Photo</button>
+                        <button type="button" id="cropImageBtn" class="btn btn-submit me-2">Crop Photo</button>
                     </div>
                 </div>
             </div>

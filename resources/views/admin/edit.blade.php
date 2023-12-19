@@ -135,33 +135,30 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-sm-6">
+                            <div class="col-lg-3 col-sm-6 userEditeBtn position-relative">
                                 <div class="form-group mb-0">
                                     <label for="avatar">Avatar</label>
                                 </div>
-                                <a href="javascript:;" id="image-container"
-                                    class="userEditeBtn position-relative drop-container">
-                                    <input type="file" name="avatar" accept="image/*" id="avatar"
-                                        class="item-img file center-block filepreviewprofile ">
+                                <a href="javascript:;" id="image-container" class="drop-container">
+                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile ">
                                     <label for="avatar" class="upload-box">
                                         <span>
-                                            <img src="{{asset('latest/assets/images/icons/camera-plus.svg')}}"
-                                                alt="Upload" class="img-fluid">
+                                            <img src="{{ asset('latest/assets/images/icons/camera-plus.svg') }}" alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
                                     <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
                                 </a>
+                                <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
                             </div>
                             <div class="col-lg-3 col-sm-6">
                                 <div class="form-group mb-2">
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer" class="drop-container">
-                                    <span id="closeIcon" onclick="removeImage()" style="display: none;">&#10006;</span>
+                                <div id="imageContainer" class="drop-container"> 
                                     @if ($user->avatar)
-                                    <img src="{{asset($user->avatar)}}" alt="No Image" class="img-fluid d-block"
-                                        id="uploadedImage">
+                                    <img src="{{asset($user->avatar)}}" alt="No Image" class="img-fluid d-block imgpreviewPrf "
+                                        id="item-img-output">
                                     @else
                                     <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
                                         class="imgpreviewPrf img-fluid" alt="">
@@ -228,7 +225,6 @@
     </div>
 </main>
 
-
 {{-- image crop modal start --}}
 @include('modals/image-resize')
 {{-- image crop modal end --}}
@@ -240,75 +236,9 @@
 @section('script')
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
 
-<script>
-    var $uploadCrop,
-		tempFilename,
-		rawImg,
-		imageId;
-		function readFile(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('.upload-demo').addClass('ready');
-					$('#cropImagePop').modal('show');
-					rawImg = e.target.result;
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-			else {
-				console.log("Sorry - you're browser doesn't support the FileReader API");
-			}
-		}
-
-		$uploadCrop = $('#upload-demo').croppie({
-			viewport: {
-				width: 160,
-				height: 160,
-				type: 'circle'
-			},
-			enforceBoundary: false,
-			enableExif: true
-		});
-		$('#cropImagePop').on('shown.bs.modal', function(){
-			$('.cr-slider-wrap').prepend('<p>Image Zoom</p>');
-			$uploadCrop.croppie('bind', {
-				url: rawImg
-			}).then(function(){
-				console.log('jQuery bind complete');
-			});
-		});
-
-		$('#cropImagePop').on('hidden.bs.modal', function(){
-			$('.item-img').val('');
-			$('.cr-slider-wrap p').remove();
-		});
-
-		$('.item-img').on('change', function () { 
-			readFile(this); 
-		});
-
-		$('.replacePhoto').on('click', function(){
-			$('#cropImagePop').modal('hide');
-			$('.item-img').trigger('click');
-		})
-		
-		$('#cropImageBtn').on('click', function (ev) {
-			$uploadCrop.croppie('result', {
-				type: 'base64',
-				// format: 'jpeg',
-        backgroundColor : "#000000",
-        format: 'png',
-				size: {width: 160, height: 160}
-			}).then(function (resp) {
-				$('#item-img-output').attr('src', resp);
-				$('#cropImagePop').modal('hide');
-				$('.item-img').val('');
-			});
-		});
-</script>
 {{-- form save js --}}
-{{-- <script src="{{ asset('latest/assets/js/form-change.js') }}"></script> --}}
 <script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
 <script>
