@@ -63,6 +63,8 @@ class CourseController extends Controller
                 ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
                 ->groupBy('courses.id');
 
+                // return $courses->get();
+
 
             }
 
@@ -124,7 +126,7 @@ class CourseController extends Controller
 
     // course overview
     public function overview($model, $slug)
-    { 
+    {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $promo_video_link = '';
         if($course->promo_video != ''){
