@@ -34,29 +34,29 @@ class HomepageController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function courseDetails($slug)
-     {
+    public function courseDetails($slug)
+    {
         $course = Course::where('slug', $slug)->with('modules.lessons')->first();
- 
+
         $promo_video_link = '';
-        if($course->promo_video != ''){
-            $ytarray=explode("/", $course->promo_video);
-            $ytendstring=end($ytarray);
-            $ytendarray=explode("?v=", $ytendstring);
-            $ytendstring=end($ytendarray);
-            $ytendarray=explode("&", $ytendstring);
-            $ytcode=$ytendarray[0];
+        if ($course->promo_video != '') {
+            $ytarray = explode("/", $course->promo_video);
+            $ytendstring = end($ytarray);
+            $ytendarray = explode("?v=", $ytendstring);
+            $ytendstring = end($ytendarray);
+            $ytendarray = explode("&", $ytendstring);
+            $ytcode = $ytendarray[0];
             $promo_video_link = $ytcode;
         }
- 
-        $course_reviews = CourseReview::where('course_id', $course->id)->get(); 
-        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+        $course_reviews = CourseReview::where('course_id', $course->id)->get();
+        $courseEnrolledNumber = Checkout::where('course_id', $course->id)->count();
 
         $related_course = [];
         if ($course) {
-            if($course->categories){
+            if ($course->categories) {
                 $categoryArray = explode(',', $course->categories);
-                $query = Course::query();  
+                $query = Course::query();
 
                 foreach ($categoryArray as $category) {
                     $query->orWhere('categories', 'like', '%' . trim($category) . '%');
@@ -65,94 +65,93 @@ class HomepageController extends Controller
             }
 
 
-            return view('frontend.course-details', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+            return view('frontend.course-details', compact('course', 'promo_video_link', 'course_reviews', 'related_course', 'courseEnrolledNumber'));
         } else {
             return redirect('/')->with('error', 'Course not found!');
-        } 
- 
-     }
+        }
+    }
 
-     public function instructorHome()
-     {
-         // get subdomain from subdomain
+    public function instructorHome()
+    {
+        // get subdomain from subdomain
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $request = app('request');
         $subdomain = $request->getHost(); // Get the host (e.g., "instructor.learncosy.com")
         $segments = explode('.', $subdomain); // Split the host into segments
         $subdomain = $segments[0]; // Get the first segment as the subdomain
 
-         if ( request()->getHost() != 'app.'.$domain && $subdomain != 'app' && !empty($subdomain) ) {
-             $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
-             if(!$instructors){
-                 return redirect('//app.'.$domain.'/admin/login');
-             }
-             // filter course
-             $title = isset($_GET['title']) ? $_GET['title'] : '';
-             $categories = isset($_GET['categories']) ? $_GET['categories'] : '';
-             $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
-             $price = isset($_GET['price']) ? $_GET['price'] : '';
+        if (request()->getHost() != 'app.' . $domain && $subdomain != 'app' && !empty($subdomain)) {
+            $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
+            if (!$instructors) {
+                return redirect('//app.' . $domain . '/admin/login');
+            }
+            // filter course
+            $title = isset($_GET['title']) ? $_GET['title'] : '';
+            $categories = isset($_GET['categories']) ? $_GET['categories'] : '';
+            $subscription_status = isset($_GET['subscription_status']) ? $_GET['subscription_status'] : '';
+            $price = isset($_GET['price']) ? $_GET['price'] : '';
 
-             $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
+            $instructors = User::with(['courses.reviews'])->where('subdomain', $subdomain)->first();
 
-             if(!empty($title)){
-                 $instructors = User::with(['courses' => function ($query) use ($title) {
-                     $query->where('title', 'like', '%' . $title . '%');
-                 }])->first();
-             }
-             if(!empty($categories)){
-                 $instructors = User::with(['courses' => function ($query) use ($categories) {
-                     $query->where('categories', 'like', '%' . $categories . '%');
-                 }])->first();
-             }
-             if(!empty($subscription_status)){
-                 $instructors = User::with(['courses' => function ($query) use ($subscription_status) {
-                     $query->where('subscription_status', 'like', '%' . $subscription_status . '%');
-                 }])->first();
-             }
-             if(!empty($price)){
-                 $instructors = User::with(['courses' => function ($query) use ($price) {
-                     $query->where('price', 'like', '%' . $price . '%');
-                 }])->first();
-             }
-             // filter end
+            if (!empty($title)) {
+                $instructors = User::with(['courses' => function ($query) use ($title) {
+                    $query->where('title', 'like', '%' . $title . '%');
+                }])->first();
+            }
+            if (!empty($categories)) {
+                $instructors = User::with(['courses' => function ($query) use ($categories) {
+                    $query->where('categories', 'like', '%' . $categories . '%');
+                }])->first();
+            }
+            if (!empty($subscription_status)) {
+                $instructors = User::with(['courses' => function ($query) use ($subscription_status) {
+                    $query->where('subscription_status', 'like', '%' . $subscription_status . '%');
+                }])->first();
+            }
+            if (!empty($price)) {
+                $instructors = User::with(['courses' => function ($query) use ($price) {
+                    $query->where('price', 'like', '%' . $price . '%');
+                }])->first();
+            }
+            // filter end
 
-             // $instructors = User::with(['courses'])->where('subdomain', $subdomain)->first();
+            // $instructors = User::with(['courses'])->where('subdomain', $subdomain)->first();
 
-             $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
-             $courses_review = CourseReview::with(['course','user'])->whereIn('course_id',$instructor_courses)->inRandomOrder()->take(5)->get();
-             $students = User::where('user_role','student')->get();
-             $bundle_courses = BundleCourse::where('instructor_id',$instructors->id)->get();
+            $instructor_courses = collect($instructors->courses)->pluck('id')->toArray();
+            $courses_review = CourseReview::with(['course', 'user'])->whereIn('course_id', $instructor_courses)->inRandomOrder()->take(5)->get();
+            $students = User::where('user_role', 'student')->get();
+            $bundle_courses = BundleCourse::where('instructor_id', $instructors->id)->get();
 
-             foreach ($bundle_courses as $course) {
-                 $courses_id = explode(",", $course->selected_course);
-                 $course_info = Course::whereIn('id',$courses_id)->get();
-                 $course['courses'] =  $course_info;
-             }
+            foreach ($bundle_courses as $course) {
+                $courses_id = explode(",", $course->selected_course);
+                $course_info = Course::whereIn('id', $courses_id)->get();
+                $course['courses'] =  $course_info;
+            }
 
-             // return $courses_review;
+            // return $courses_review;
 
 
-            $userIdentifier = isset( $_COOKIE['userIdentifier']) ? $_COOKIE['userIdentifier'] : null;
+            $userIdentifier = isset($_COOKIE['userIdentifier']) ? $_COOKIE['userIdentifier'] : null;
 
             $cartCourses = Cart::where(function ($query) use ($userIdentifier) {
-                if( auth()->id() ){
+                if (auth()->id()) {
                     $query->where('user_id', auth()->id());
-                }else{
+                } else {
                     $query->Where('user_identifier', $userIdentifier);
                 }
-
             })->get();
 
-             return view('frontend.homepage', compact('instructors','courses_review','bundle_courses','students','cartCourses'));
-            }else{
-             return redirect('//app.'.$domain.'/admin/login');
-         }
-     }
+            return view('frontend.homepage', compact('instructors', 'courses_review', 'bundle_courses', 'students', 'cartCourses'));
+        } else {
+            return redirect('//app.' . $domain . '/admin/login');
+        }
+    }
 
-    public function homeInstructorCourseDetails($subdomain,$slug){
+    public function homeInstructorCourseDetails($subdomain, $slug)
+    {
         $instructor = User::with(['courses'])->where('subdomain', $subdomain)->first();
-        $course = Course::with(['modules.lessons','user'])->where('user_id',$instructor->id)->where('slug',$slug)->first();
-        $courses_review = CourseReview::with(['course','user'])->where('course_id',$course->id)->inRandomOrder()->take(5)->get();
+        $course = Course::with(['modules.lessons', 'user'])->where('user_id', $instructor->id)->where('slug', $slug)->first();
+        $courses_review = CourseReview::with(['course', 'user'])->where('course_id', $course->id)->inRandomOrder()->take(5)->get();
 
         // return view('frontend.course', compact(['instructors', 'courses'));
         // return response()->json([
@@ -162,7 +161,7 @@ class HomepageController extends Controller
 
         // ]);
 
-        return view('frontend.course', compact('instructor', 'course','courses_review'));
+        return view('frontend.course', compact('instructor', 'course', 'courses_review'));
     }
 
     public function create()
@@ -255,7 +254,7 @@ class HomepageController extends Controller
             if ($instructorUser) {
                 Auth::login($instructorUser);
 
-                return redirect('instructor/dashboard')->with('success', 'You have successfully logged into the profile of '.$instructorUser->name);
+                return redirect('instructor/dashboard')->with('success', 'You have successfully logged into the profile of ' . $instructorUser->name);
             }
         }
 
@@ -286,13 +285,10 @@ class HomepageController extends Controller
             if ($studentUser) {
                 Auth::login($studentUser);
 
-                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of '.$studentUser->name);
+                return redirect('student/dashboard')->with('success', 'You have successfully logged into the profile of ' . $studentUser->name);
             }
         }
 
         return redirect('/admin/login')->with('error', 'Failed to Login as Student');
     }
-
-
-
 }

@@ -78,6 +78,12 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         // add course static route
         Route::get('instructor/courses/create', [CourseCreateStepController::class, 'start'])->name('course.create.step-1');
         Route::get('instructor/courses/create/{id}', [CourseCreateStepController::class, 'step3']);
+
+        // Module Resorting
+        Route::post('instructor/module/sortable',[CourseCreateStepController::class,'moduleResorting'])->name('instructor.module.sortable');
+        Route::post('instructor/module/lesson/sortable',[CourseCreateStepController::class,'moduleLessonResorting'])->name('instructor.module.lesson.sortable');
+
+
         Route::post('instructor/courses/create/{id}', [CourseCreateStepController::class, 'step3c']);
         Route::post('instructor/courses/created/', [CourseCreateStepController::class, 'startSet'])->name('course.create.start');
 
@@ -238,17 +244,17 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
 
 
-    Route::get('instructor/profile/step-1/complete', function () {       
+    Route::get('instructor/profile/step-1/complete', function () {
         if (Auth::user()->email_verified_at == null) {
             return view('auth.verify');
-            
-        } else { 
+
+        } else {
             return redirect('/profile/step-2/complete');
         }
     });
 
     Route::get('instructor/profile/step-2/complete', function () {
-       
+
         return view('latest-auth.price');
     });
     Route::get('instructor/profile/step-2/payment/{id}', function ($sub,$id) {

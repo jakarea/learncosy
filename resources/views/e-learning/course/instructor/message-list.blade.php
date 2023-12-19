@@ -1028,9 +1028,11 @@ function createGroup(formSelector) {
             $(".load-suggested-people").empty();
             $(".load-chat-user-for-group-user").empty();
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
+            // $(".chat-person-list-box .collapse").removeClass("show");
         },
         error: function (jqXHR, status, err) {
             toastr.error('Something went wrong!', 'Error');
+
         },
         complete: function () {
             scrollToBottomFunc();
@@ -1074,6 +1076,7 @@ $(document).ready(function() {
 
 {{-- toggle of group create form shwo hide --}}
 <script>
+
     const toggleBttn = document.querySelector('.create-toggle');
     const headerFilter = document.querySelector('.header-filter');
     const userList = document.querySelector('.person-tab-body.chat-user-load');
@@ -1089,9 +1092,10 @@ $(document).ready(function() {
     const groupCreateBttn = document.querySelector('#btn-create-group');
 
     function groupShowHide(){
-        userList.classList.remove('active');
+        // userList.classList.remove('active');
         headerFilter.classList.remove('active');
         collapseExamples.classList.remove('show');
+        console.log(collapseExamples.classList);
     }
 
     groupCancelBttn.addEventListener('click', function (e) {
@@ -1109,30 +1113,6 @@ $(document).ready(function() {
 
 {{-- open profile box--}}
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     const openProfiles = document.querySelectorAll('.open-profile');
-    //     const closeIcon = document.getElementById('closeProfile');
-    //     const profileBox = document.getElementById('profileBox');
-
-    //     console.log( openProfiles)
-
-    //     openProfiles.forEach(openProfile => {
-    //         openProfile.addEventListener('click', function () {
-    //             profileBox.classList.add('active');
-    //         });
-    //     });
-
-    //     function closeProfileBox(e) {
-    //         e.preventDefault();
-    //         this.parentNode.parentNode.classList.remove('active');
-    //     }
-
-    //     if (closeIcon) {
-    //         closeIcon.addEventListener('click', closeProfileBox);
-    //     }
-    // });
-
-
     $(document).on('click','.own-profile', function () {
         $('#profileBox').addClass('active');
     });
@@ -1140,7 +1120,6 @@ $(document).ready(function() {
     $(document).on('click','#closeProfile', function () {
         $('#profileBox').removeClass('active');
     });
-
 
 </script>
 
