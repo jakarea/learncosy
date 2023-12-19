@@ -17,10 +17,8 @@ Course Create - Lesson Text Content Add
                 {{-- course step --}}
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
-                        <span class="circle">
-
-                        </span>
-                        <p>Content</p>
+                        <span class="circle"></span>
+                        <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -35,7 +33,7 @@ Course Create - Lesson Text Content Add
                 <div class="lesson-edit-form-wrap mt-4">
                     <h4>{{ $lesson->title }}</h4>
 
-                    <form action="{{ route('course.lesson.text.update',$lesson->id) }}" method="POST"
+                    <form action="{{ route('course.lesson.text.update', ['lesson_id' => $lesson->id ,'subdomain' => config('app.subdomain')]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

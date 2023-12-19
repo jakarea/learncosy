@@ -559,6 +559,10 @@
   width: 100%;
 }
 
+.course-content.course-outline-wrap .accordion .lesson-wrap li{
+  margin-bottom: 10px!important;
+}
+
 .common-header {
   margin-bottom: 2rem;
   display: flex;

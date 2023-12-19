@@ -79,7 +79,7 @@
                         @foreach($course->modules as $module)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{$module->id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button pb-0" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">

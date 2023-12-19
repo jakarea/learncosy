@@ -63,7 +63,7 @@ Course Create - Add Objective
                 <form action="" method="POST" id="objectForm">
                     @csrf
                     <div class="content-settings-form-wrap">
-                        <h4>What You'll Learn</h4>
+                        <h4>Here’s what you’ll learn</h4>
 
                         <div class="object-list-wrap">
                             @if (!empty($course->objective))
@@ -90,7 +90,7 @@ Course Create - Add Objective
                         <div class="form-group">
                             <h6>Object Title</h6>
                             <textarea class="form-control" name="objective[]" placeholder="Enter objective"
-                                id="objective">{{ old('objective') }}</textarea>
+                                id="objective" required>{{ old('objective') }}</textarea>
                         </div>
                         <div class="submit-bttns-box">
                             <button class="btn btn-cancel" type="reset">Cancel</button>
