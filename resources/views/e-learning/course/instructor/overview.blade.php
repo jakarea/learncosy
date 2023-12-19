@@ -229,9 +229,7 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}?autoplay=1&mute=1&controls=0&modestbranding=1&showinfo=0&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
@@ -309,7 +307,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe class="youtubePlayer" style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif
@@ -456,6 +454,8 @@
     });
 
 </script>
+
+
 
 @endsection
 {{-- js --}}

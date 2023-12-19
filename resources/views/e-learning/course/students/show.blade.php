@@ -7,6 +7,11 @@
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/student-dash.css') }}" rel="stylesheet" type="text/css" />
+
+<style>#firstLesson .vp-sidedock {
+    display: none !important;
+}
+</style>
 @endsection
 {{-- style section @E --}}
 @section('seo')
@@ -555,6 +560,29 @@ $i = 0;
                 });
 
         });
+</script>
+
+
+<script>
+    var iframe = document.getElementById('firstLesson');
+
+    iframe.onload = function () {
+        // Wait for the Vimeo player to be ready
+        var playerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+        // Add custom CSS to hide the .vp-sidedock element
+        var customCSS = `
+            .vp-sidedock {
+                display: none !important;
+            }
+        `;
+
+        // Create a style element and append it to the player's document
+        var style = playerDoc.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(playerDoc.createTextNode(customCSS));
+        playerDoc.head.appendChild(style);
+    };
 </script>
 @endsection
 {{-- script section @E --}}
