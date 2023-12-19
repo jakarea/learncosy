@@ -120,9 +120,9 @@
                         <h6 class="or">or</h6>
 
                         <div class="buttons-group">
-                            <a href="{{ url('login/google') }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
+                            <a href="{{ route('social.login', ["social" => "google", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                     class="img-fluid"></a>
-                            <a href="{{ url('login/facebook') }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
+                            <a href="{{ route('social.login', ["social" => "facebook", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}"
                                     alt="facebook" class="img-fluid"></a>
                             <a href="javascript:;"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="apple"
                                         class="img-fluid"></a>
