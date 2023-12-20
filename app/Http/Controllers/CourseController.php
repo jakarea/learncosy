@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use File;
 use DataTables;
-use DB;
+use ZipArchive;
+use App\Models\Cart;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\Checkout;
-use App\Models\BundleSelect;
-use App\Models\CourseActivity;
-use App\Models\Notification;
-use App\Models\CourseLog;
-use App\Models\BundleCourse;
-use App\Models\Certificate;
-use App\Models\CourseReview;
-use App\Models\Cart;
-use App\Models\course_like;
 use App\Models\Module;
+use App\Models\Checkout;
+use App\Models\CourseLog;
+use App\Models\Certificate;
+use App\Models\course_like;
 use Illuminate\Support\Str;
+use App\Models\BundleCourse;
+use App\Models\BundleSelect;
+use App\Models\CourseReview;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Models\CourseActivity;
 
 class CourseController extends Controller
 {
@@ -128,7 +129,8 @@ class CourseController extends Controller
     public function overview($model, $slug)
     {
 
-        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
+        $title = 'Course Overview';
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->firstOrFail();
         $promo_video_link = '';
         if($course->promo_video != ''){
             $ytarray=explode("/", $course->promo_video);
@@ -156,11 +158,51 @@ class CourseController extends Controller
             }
 
 
-            return view('e-learning/course/instructor/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+            return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
         } else {
             return redirect('instructor/dashboard')->with('error', 'Course not found!');
         }
     }
+
+
+        // course overview
+        public function preview($model, $slug)
+        {
+            $title = 'Course Preview';
+            $course = Course::where('slug', $slug)->with('modules.lessons','user')->firstOrFail();
+            $promo_video_link = '';
+            if($course->promo_video != ''){
+                $ytarray=explode("/", $course->promo_video);
+                $ytendstring=end($ytarray);
+                $ytendarray=explode("?v=", $ytendstring);
+                $ytendstring=end($ytendarray);
+                $ytendarray=explode("&", $ytendstring);
+                $ytcode=$ytendarray[0];
+                $promo_video_link = $ytcode;
+            }
+
+            $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+            $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+
+            $related_course = [];
+            if ($course) {
+                if($course->categories){
+                    $categoryArray = explode(',', $course->categories);
+                    $query = Course::query();
+
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                    $related_course = $query->take(4)->get();
+                }
+
+
+                return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+            } else {
+                return redirect('instructor/dashboard')->with('error', 'Course not found!');
+            }
+        }
+
 
     public function fileDownload($subdomain,$course_id,$file_extension){
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();

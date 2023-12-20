@@ -41,6 +41,7 @@ class Course extends Model
         'objective',
         'curriculum',
         'objective_details',
+        'numbershow'
     ];
 
 
