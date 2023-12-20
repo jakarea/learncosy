@@ -27,9 +27,9 @@
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
         }
-
+        .navbar .d-flex a:first-child,
         .navbar .navbar-nav .nav-item .nav-link{
-            color:  {{ modulesetting('menu_color') }};
+            color:  {{ modulesetting('menu_color') }}!important;
         }
     </style>
 @endsection

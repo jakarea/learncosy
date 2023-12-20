@@ -30,7 +30,7 @@ class CourseCreateStepController extends Controller
     public function startSet(Request $request){
 
         $course = new Course();
-        $course->title = "Untitled Course";
+        // $course->title = "Untitled Course";
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
