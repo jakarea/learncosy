@@ -48,8 +48,22 @@ class GroupController extends Controller
     {
         if ($request->ajax()) {
             $group = Group::findOrFail($request->groupId);
+            $groupName = $request->name ? $request->name : $group->name;
 
-            $group->update(["name" => $request->name]);
+            $fullPath = $group->avatar;
+            if ($image = $request->file('avatar')) {
+                if (File::exists($group->avatar)) {
+                    File::delete($group->avatar);
+                }
+
+                $imageExt        = substr(md5(time()), 0, 10) . '.' . $image->getClientOriginalExtension();
+                $destinationPath = 'upload/chat/group/';
+                $fullPath        = $destinationPath . $imageExt;
+                $image->move($destinationPath, $imageExt);
+            }
+
+
+            $group->update(["name" =>  $groupName, 'avatar' => $fullPath]);
             return response()->json(['success' => 'Group update successfully!!']);
         }
     }

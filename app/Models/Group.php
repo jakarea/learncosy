@@ -9,7 +9,8 @@ use App\Models\User;
 class Group extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','code','admin_id','updated_at'];
+
+    protected $fillable = ['name','code','admin_id','avatar','updated_at'];
 
     public function user()
     {
