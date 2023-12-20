@@ -17,9 +17,9 @@ $i = 0;
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-9 col-lg-8 col-md-12 col-12">
-                <div class="course-left"> 
+                <div class="course-left">
 
-                    {{-- video player --}} 
+                    {{-- video player --}}
                     <div class="video-iframe-vox">
                         @if (getFirstLesson($course->id))
                         <div class="video-iframe-vox">
@@ -52,7 +52,7 @@ $i = 0;
                             </audio>
                         </div>
                     </div>
-                    {{-- audio player --}} 
+                    {{-- audio player --}}
 
                     {{-- course title --}}
                     <div class="media course-title">
@@ -73,13 +73,13 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
-                    
+
                     <div class="download-files-box">
-                        <h4>Download Files </h4> 
-                        <div id="dataTextContainer" class="mb-3"> 
+                        <h4>Download Files </h4>
+                        <div id="dataTextContainer" class="mb-3">
                         </div>
                         @if(!empty($group_files))
-                        
+
                         <div class="files">
                             @foreach($group_files as $fileExtension)
                                 <a href="{{ route('instructor.file.download', [$course->id,$fileExtension]) }}">
@@ -89,7 +89,7 @@ $i = 0;
                         </div>
                         @endif
                     </div>
-                    
+
                     {{-- course review --}}
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -137,7 +137,7 @@ $i = 0;
                                     data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p class="module-title">{{ $module->title }}</p> 
+                                        <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
                                     </div>
                                 </button>
                             </div>
@@ -151,7 +151,7 @@ $i = 0;
                                                 @can('instructor')
                                                     <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
                                                         <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
-                                                    </a> 
+                                                    </a>
                                                     @endcan
 
                                                 <a href="{{ $lesson->video_link }}"
@@ -159,7 +159,7 @@ $i = 0;
                                                     data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                     data-course-id="{{ $course->id }}"
                                                     data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
-                                                    data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important"> 
+                                                    data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important">
 
                                                     @if ($lesson->type == 'text')
                                                     <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
@@ -170,11 +170,11 @@ $i = 0;
                                                     @elseif($lesson->type == 'video')
                                                     <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
                                                     <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                    @endif 
-                                                    
+                                                    @endif
+
                                                     {{ $lesson->title }}
                                                 </a>
-                                                
+
                                             </div>
 
                                         </li>
@@ -267,20 +267,20 @@ $i = 0;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
             var options = {
-                id: '{{ 305108069 }}', 
+                id: '{{ 305108069 }}',
                 autoplay: true,
                 loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {
-                player.setCurrentTime(0); 
+                player.setCurrentTime(0);
                 player.play();
             });
 
 
             $('a.video_list_play').click(function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
@@ -298,31 +298,31 @@ $i = 0;
                     var videoId = $(this).data('video-id');
                     var videoUrl = $(this).attr('href');
                     videoUrl = videoUrl.replace('/videos/', '');
-                    player.loadVideo(videoUrl); 
+                    player.loadVideo(videoUrl);
 
                 }else if(type == 'audio'){
                     player.pause();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');  
+                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');
                     let audioPlayer = document.getElementById('audioPlayer');
                     let audioSource = audioPlayer.querySelector('source');
-                    audioSource.src = laravelURL; 
-                    audioPlayer.load(); 
-                    audioPlayer.play(); 
+                    audioSource.src = laravelURL;
+                    audioPlayer.load();
+                    audioPlayer.play();
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
 
                 }else if(type == 'text'){
-                    player.pause(); 
+                    player.pause();
                     audioPlayer.pause();
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
 
 
-                } 
-                
+                }
+
             });
 
         });

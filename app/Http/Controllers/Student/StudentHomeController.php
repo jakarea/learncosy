@@ -277,7 +277,7 @@ class StudentHomeController extends Controller
             }
         }
         $categories = array_unique($unique_array);
-        $courses = $courses->paginate(12);
+        $courses = $courses->where('status','published')->paginate(12);
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 

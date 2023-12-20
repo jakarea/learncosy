@@ -29,12 +29,14 @@ class CreateCoursesTable extends Migration
             $table->string('meta_description', 160)->nullable();
             $table->tinyInteger('hascertificate')->default(0);
             $table->string('sample_certificates', 191)->nullable();
+            $table->tinyInteger('numbershow')->nullable();
+            $table->string('numbervalue')->nullable();
             $table->string('status', 25)->default('draft');
             $table->tinyInteger('allow_review')->default(1);
             $table->string('language', 30)->nullable();
             $table->string('platform', 50)->nullable();
             $table->longText('objective')->nullable();
-            $table->string('curriculum', 191)->nullable(); 
+            $table->string('curriculum', 191)->nullable();
             $table->timestamps();
         });
     }

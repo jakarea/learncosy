@@ -282,7 +282,7 @@ $user = auth()->user();
 $userAvatar = $user->avatar ? asset($user->avatar) : "";
 $alterAvatar = strtoupper($user->name[0]);
 $userName = $user->name;
-$createTime = $user->created_at->format('F j, Y');
+$createTime = now()->format('D H:i a');
 @endphp
 
 

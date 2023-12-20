@@ -1,5 +1,5 @@
 @extends('layouts/latest/instructor')
-@section('title','Course Overview')
+@section('title', $title)
 
 
 {{-- style section @S --}}
@@ -87,7 +87,7 @@
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p>{{ $module->title }}</p>
+                                        <p>{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
                                         <i class="fas fa-angle-down"></i>
                                     </div>
                                 </button>

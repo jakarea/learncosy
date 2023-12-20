@@ -13,10 +13,16 @@ use App\Models\Module;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Traits\SlugTrait;
+
 
 
 class CourseCreateStepController extends Controller
 {
+
+
+    use SlugTrait;
+
     public function start(){
         return view('e-learning/course/instructor/create/step-0');
     }
@@ -67,6 +73,7 @@ class CourseCreateStepController extends Controller
         $title = $request->input('title');
         $auto_complete = $request->input('auto_complete');
         $slug = $request->input('slug');
+
         $slug = $slug ? Str::slug($slug) : Str::slug($title);
         $originalSlug = $slug;
         $counter = 2;
@@ -77,10 +84,8 @@ class CourseCreateStepController extends Controller
         $language = $request->input('language');
         $categories = $request->input('categories');
 
-        while (Course::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
-        }
+
+        $slug = $this->makeUniqueSlug($title,'Course');
 
         $course = Course::findOrNew($id);
         $course->fill([
@@ -592,7 +597,7 @@ class CourseCreateStepController extends Controller
 
     public function courseDesignSet(Request $request,$subdomain, $id){
 
-        // return $request->al();
+        // return $request->all();
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -624,6 +629,7 @@ class CourseCreateStepController extends Controller
            $course->thumbnail = $image_path;
        }
 
+        $course->numbershow = $request->numbershow;
         $course->promo_video = $request->input('promo_video');
         $course->save();
 

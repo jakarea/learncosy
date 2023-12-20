@@ -117,7 +117,7 @@ $i = 0;
                     </div>
                     @endif
                 </div>
-
+@if($course->allow_review)
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -192,6 +192,7 @@ $i = 0;
                     @endif
                 </div>
                 {{-- course review --}}
+            @endif
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
@@ -215,7 +216,7 @@ $i = 0;
 
                                         <i class="fas fa-check-circle me-2 {{ $module->isComplete() ? 'text-primary' : '' }}"></i>
                                         <div class="media-body">
-                                            <p class="module-title">{{ $module->title }}</p>
+                                            <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
                                         </div>
                                     </div>
                                 </button>

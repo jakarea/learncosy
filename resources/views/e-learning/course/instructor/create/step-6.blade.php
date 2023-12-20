@@ -62,6 +62,7 @@ Course Create - Initial Step
                     </div>
                     <div id="moduleResorting">
                         @foreach ($modules as $module)
+
                         {{-- course with page --}}
                             <div class="course-with-page" data-module-id="{{ $module->id }}">
                                 {{-- course content box start --}}
@@ -71,7 +72,7 @@ Course Create - Initial Step
                                             <img src="{{asset('latest/assets/images/icons/book.svg')}}" alt="Bar"
                                                 class="img-fluid">
                                             <div class="media-body">
-                                                <h5>{{ $module->title}}</h5>
+                                                <h5>{{ $module->title}} {{ $module->checkNumber() ? $loop->iteration : ""}}</h5>
                                                 <p>Module with {{ count($module->lessons) }} lessons</p>
                                             </div>
                                         </div>

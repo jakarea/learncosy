@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Design Step 
+Course Create - Design Step
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -83,21 +83,21 @@ Course Create - Design Step
                             <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
-                    
+
                     <div class="top-image-upload-box mt-2">
                         <img id="previewImage" src="" alt="" class="img-fluid rounded">
                         @if ($course->thumbnail)
                             <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid rounded">
                         @endif
-                    </div> 
-                    
+                    </div>
+
                     <div class="content-settings-form-wrap mt-0">
                         <h4>Appearance Course</h4>
                         <div class="form-group">
                             <input id="name" class="form-control" type="text" value="{{ $course->title }}" required>
                             <label for="name">Appearance Product Overview</label>
                             <span class="d-block mt-3"><img src="{{asset('latest/assets/images/icons/eye-2.svg')}}"
-                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/'.$course->slug)}}" target="_blank">Preview</a></span>
+                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/overview/'.$course->slug.'/preview')}}" target="_blank">Preview</a></span>
                         </div>
                         <div class="media auto-text">
                             <div class="media-body">
@@ -105,11 +105,11 @@ Course Create - Design Step
                                 <p>For example: Module 1 (Name), Module 2 (Name) etc.</p>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                    id="flexSwitchCheckChecked" checked>
+                                <input name="numbershow" value="1" @checked($course->numbershow == 1) class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckChecked">
                             </div>
                         </div>
-                    </div> 
+                    </div>
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
