@@ -37,7 +37,6 @@ class HomepageController extends Controller
     public function courseDetails($slug)
     {
         $course = Course::where('slug', $slug)->with('modules.lessons')->first();
-
         $promo_video_link = '';
         if ($course->promo_video != '') {
             $ytarray = explode("/", $course->promo_video);

@@ -14,63 +14,63 @@ Course Create - Final Step
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                {{-- course step --}} 
-                <div class="course-create-step-wrap">
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid">
-                        </span>
-                        <p>Contents</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Facts</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Objects</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Price</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Design</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Certificate</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Visibility</p>
-                    </div>
-                    <div class="step-box current">
-                        <span class="circle"></span>
-                        <p>Share</p>
-                    </div>
-                </div>
                 {{-- course step --}}
+               <div class="course-create-step-wrap">
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
+                </div>
+                <div class="step-box current">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
+                </div>
+            </div>
+            {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">
@@ -86,10 +86,10 @@ Course Create - Final Step
                             <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                             <span>Facebook</span>
                         </a>
-                        <a href="#">
+                        {{-- <a href="#">
                             <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
                             <span>Telegram</span>
-                        </a>
+                        </a> --}}
                         <a href="https://www.linkedin.com/shareArticle?url={{ url('courses/overview-courses', $course->slug)}}" target="_blank">
                             <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
                                 class="img-fluid">
@@ -106,15 +106,15 @@ Course Create - Final Step
 
                     <div class="d-flex">
 
-                        <a href="https://www.messenger.com/share.php?text={{ url('courses/overview-courses', $course->slug)}}">
+                        <a target="_blank" href="https://www.messenger.com/share.php?text={{ url('courses/overview-courses', $course->slug)}}">
                             <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                             <span>Messenger</span>
                         </a>
-                        <a href="https://api.whatsapp.com/send?text={{ url('courses/overview-courses', $course->slug)}}">
+                        <a target="_blank" href="https://api.whatsapp.com/send?text={{ url('courses/overview-courses', $course->slug)}}">
                             <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                             <span>Whatsapp</span>
                         </a>
-                        <a href="https://telegram.me/share/url?url={{ url('courses/overview-courses', $course->slug)}}">
+                        <a target="_blank" href="https://telegram.me/share/url?url={{ url('courses/overview-courses', $course->slug)}}">
                             <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                             <span>Telegram</span>
                         </a>
@@ -124,7 +124,7 @@ Course Create - Final Step
                         <h6>Or copy link</h6>
                         <span id="notify" style="color: green; font-size: 14px;"></span>
                     </div>
-                    
+
 
                     <div class="copy-link">
                         <input type="text" placeholder="Link" value="{{ url('courses/overview-courses', $course->slug)}}"
@@ -137,7 +137,7 @@ Course Create - Final Step
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
                     <a href="{{ url('instructor/courses/create/'.$course->id.'/visibility')}}">Back</a>
-                    <a href="{{ url('instructor/courses')}}">Finish</a> 
+                    <a href="{{ url('instructor/courses')}}">Finish</a>
                 </div>
                 {{-- step next bttns --}}
             </div>
@@ -155,7 +155,7 @@ Course Create - Final Step
     copyButton.addEventListener("click", (e) => {
         e.preventDefault();
         linkToCopy.select();
-        document.execCommand("copy"); 
+        document.execCommand("copy");
         notify.innerText = 'Copied!';
 
         setTimeout(() => {

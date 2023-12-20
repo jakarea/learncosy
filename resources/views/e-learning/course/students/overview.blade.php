@@ -79,7 +79,7 @@
                         @foreach($course->modules as $module)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{$module->id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button pb-0" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
@@ -232,7 +232,7 @@
                         @if ($course->thumbnail)
                             <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbnail" class="img-fluid">
                         @else
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                         @endif
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -334,7 +334,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="http://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif

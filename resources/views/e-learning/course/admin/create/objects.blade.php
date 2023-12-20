@@ -15,47 +15,47 @@ Course Update - Add Objective
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
-                <div class="course-create-step-wrap">
-                    <div class="step-box active">   
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid">
-                        </span>
-                        <p>Contents</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid">
-                        </span>
-                        <p>Facts</p>
-                    </div>
-                    <div class="step-box current">
-                        <span class="circle"></span>
-                        <p>Objects</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Price</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Design</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Certificate</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Visibility</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Share</p>
-                    </div>
+               <div class="course-create-step-wrap">
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                 </div>
-                {{-- course step --}}
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
+                </div>
+                <div class="step-box current">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
+                </div>
+            </div>
+            {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">
@@ -63,7 +63,7 @@ Course Update - Add Objective
                 <form action="" method="POST" id="objectForm">
                     @csrf
                     <div class="content-settings-form-wrap">
-                        <h4>What You'll Learn</h4>
+                        <h4>Here’s what you’ll learn</h4>
 
                         <div class="object-list-wrap">
                             @if (!empty($course->objective))
@@ -90,7 +90,7 @@ Course Update - Add Objective
                         <div class="form-group">
                             <h6>Object Title</h6>
                             <textarea class="form-control" name="objective[]" placeholder="Enter objective"
-                                id="objective">{{ old('objective') }}</textarea>
+                                id="objective" required>{{ old('objective') }}</textarea>
                         </div>
                         <div class="submit-bttns-box">
                             <button class="btn btn-cancel" type="reset">Cancel</button>

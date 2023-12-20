@@ -1,6 +1,6 @@
 @extends('layouts.latest.instructor')
 @section('title')
-Course Create - Design Step 
+Course Create - Design Step
 @endsection
 {{-- page style @S --}}
 @section('style')
@@ -14,54 +14,54 @@ Course Create - Design Step
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                {{-- course step --}} 
-                <div class="course-create-step-wrap">
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid">
-                        </span>
-                        <p>Contents</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+                 {{-- course step --}}
+               <div class="course-create-step-wrap">
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
                             class="img-fluid">
-                        </span>
-                        <p>Facts</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Objects</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Price</p>
-                    </div>
-                    <div class="step-box current">
-                        <span class="circle"></span>
-                        <p>Design</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Certificate</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Visibility</p>
-                    </div>
-                    <div class="step-box">
-                        <span class="circle"></span>
-                        <p>Share</p>
-                    </div>
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                 </div>
-                {{-- course step --}}
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
+                </div>
+                <div class="step-box current">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
+                </div>
+                <div class="step-box">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
+                </div>
+            </div>
+            {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">
@@ -83,21 +83,21 @@ Course Create - Design Step
                             <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF (max. 800x300px)</p>
                         </label>
                     </div>
-                    
+
                     <div class="top-image-upload-box mt-2">
                         <img id="previewImage" src="" alt="" class="img-fluid rounded">
                         @if ($course->thumbnail)
                             <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid rounded">
                         @endif
-                    </div> 
-                    
+                    </div>
+
                     <div class="content-settings-form-wrap mt-0">
                         <h4>Appearance Course</h4>
                         <div class="form-group">
                             <input id="name" class="form-control" type="text" value="{{ $course->title }}" required>
                             <label for="name">Appearance Product Overview</label>
                             <span class="d-block mt-3"><img src="{{asset('latest/assets/images/icons/eye-2.svg')}}"
-                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/'.$course->slug)}}" target="_blank">Preview</a></span>
+                                    alt="gallery-icon" class="img-fluid"> <a href="{{url('instructor/courses/overview/'.$course->slug.'/preview')}}" target="_blank">Preview</a></span>
                         </div>
                         <div class="media auto-text">
                             <div class="media-body">
@@ -105,11 +105,11 @@ Course Create - Design Step
                                 <p>For example: Module 1 (Name), Module 2 (Name) etc.</p>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                    id="flexSwitchCheckChecked" checked>
+                                <input name="numbershow" value="1" @checked($course->numbershow == 1) class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckChecked">
                             </div>
                         </div>
-                    </div> 
+                    </div>
 
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">

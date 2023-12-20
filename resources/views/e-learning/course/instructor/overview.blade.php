@@ -1,5 +1,5 @@
 @extends('layouts/latest/instructor')
-@section('title','Course Overview')
+@section('title', $title)
 
 
 {{-- style section @S --}}
@@ -51,6 +51,9 @@
                         <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
                             . {{ count($course_reviews) }} Reviews</h4>
 
+                        <a href="{{ url('instructor/courses/'.$course->id) }}" class="common-bttn"
+                                style="border-radius: 6.25rem; margin-top: 2rem">Go to Course</a>
+
                     </div>
                 </div>
             </div>
@@ -80,11 +83,11 @@
                         @foreach($course->modules as $module)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{$module->id}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button pb-0" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapse_{{$module->id}}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p>{{ $module->title }}</p>
+                                        <p>{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
                                         <i class="fas fa-angle-down"></i>
                                     </div>
                                 </button>
@@ -226,7 +229,7 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
@@ -304,7 +307,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe class="youtubePlayer" style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif
@@ -451,6 +454,8 @@
     });
 
 </script>
+
+
 
 @endsection
 {{-- js --}}

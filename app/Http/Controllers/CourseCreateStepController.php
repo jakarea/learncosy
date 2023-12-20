@@ -13,10 +13,16 @@ use App\Models\Module;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Traits\SlugTrait;
+
 
 
 class CourseCreateStepController extends Controller
 {
+
+
+    use SlugTrait;
+
     public function start(){
         return view('e-learning/course/instructor/create/step-0');
     }
@@ -24,6 +30,7 @@ class CourseCreateStepController extends Controller
     public function startSet(Request $request){
 
         $course = new Course();
+        $course->title = "Untitled Course";
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
@@ -54,7 +61,7 @@ class CourseCreateStepController extends Controller
     {
 
         // return $request->all();
-        
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -66,6 +73,7 @@ class CourseCreateStepController extends Controller
         $title = $request->input('title');
         $auto_complete = $request->input('auto_complete');
         $slug = $request->input('slug');
+
         $slug = $slug ? Str::slug($slug) : Str::slug($title);
         $originalSlug = $slug;
         $counter = 2;
@@ -76,10 +84,8 @@ class CourseCreateStepController extends Controller
         $language = $request->input('language');
         $categories = $request->input('categories');
 
-        while (Course::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $counter;
-            $counter++;
-        }
+
+        $slug = $this->makeUniqueSlug($title,'Course');
 
         $course = Course::findOrNew($id);
         $course->fill([
@@ -102,7 +108,6 @@ class CourseCreateStepController extends Controller
 
 
     public function step3($subdomain,$id){
-
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -309,7 +314,7 @@ class CourseCreateStepController extends Controller
 
     }
 
-    public function stepLessonInstitue($id,$module_id,$lesson_id){
+    public function stepLessonInstitue($subdomain,$id,$module_id,$lesson_id){
 
         if(!$id){
             return redirect('instructor/courses');
@@ -592,7 +597,7 @@ class CourseCreateStepController extends Controller
 
     public function courseDesignSet(Request $request,$subdomain, $id){
 
-        // return $request->al();
+        // return $request->all();
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -624,6 +629,7 @@ class CourseCreateStepController extends Controller
            $course->thumbnail = $image_path;
        }
 
+        $course->numbershow = $request->numbershow;
         $course->promo_video = $request->input('promo_video');
         $course->save();
 
@@ -699,6 +705,27 @@ class CourseCreateStepController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
+
+        $hasLessonsWithContent = 1;
+
+        if ($request->input('status') == 'published') {
+            $hasLessonsWithContent = collect($course['modules'])
+            ->flatMap(function ($module) {
+                return $module['lessons'];
+            })
+            ->where(function ($lesson) {
+                return $lesson['video_link'] !== null || $lesson['audio'] !== null || $lesson['text'] !== null;
+            })
+            ->count() > 0;
+        }
+
+        if ($request->input('status') == 'published' && $course->title == 'Untitled Course') {
+            $hasLessonsWithContent = 0;
+        }
+
+        if ($hasLessonsWithContent <= 0) {
+            return redirect()->back()->with('error','This course does not have lesson to Publish!');
+        }
 
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;

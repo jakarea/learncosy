@@ -133,6 +133,6 @@ class ModuleManagementController extends Controller
         }
         $module->delete();
 
-        return redirect('admin/modules')->with('success', 'Module deleted!');
+        return redirect()->back()->with('success', 'Module Deleted Successfully!');
     }
 }

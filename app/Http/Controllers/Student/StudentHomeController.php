@@ -277,7 +277,7 @@ class StudentHomeController extends Controller
             }
         }
         $categories = array_unique($unique_array);
-        $courses = $courses->paginate(12);
+        $courses = $courses->where('status','published')->paginate(12);
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
@@ -339,7 +339,7 @@ class StudentHomeController extends Controller
     }
 
     public function fileDownload($domain,$course_id,$file_extension){
-         
+
           $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
@@ -350,7 +350,7 @@ class StudentHomeController extends Controller
                     $files[] = public_path('storage/uploads/lessons/'.$file_name);
                }
 
-               
+
             }
         }
 

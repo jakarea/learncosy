@@ -50,6 +50,9 @@
                         <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in Course
                             . {{ count($course_reviews) }} Reviews</h4>
 
+                            <a href="{{ url('admin/courses/'.$course->slug.'/show') }}" class="common-bttn"
+                                style="border-radius: 6.25rem; margin-top: 2rem">Go to Course</a>
+
                     </div>
                 </div>
             </div>
@@ -225,7 +228,7 @@
                 <div class="course-overview-right-part">
                     <div class="course-main-thumb">
                         @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="300" height="220" src="//www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="300" height="220" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                         @else
                         <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid">
                         @endif
@@ -304,7 +307,7 @@
                         {{-- intro video --}}
                         <div class="intro-video-box">
                             @if ($promo_video_link != '')
-                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube.com/embed/{{$promo_video_link}}"></iframe>
+                            <iframe style="border-radius: 1rem" width="100%" height="320" src="https://www.youtube-nocookie.com/embed/{{$promo_video_link}}"></iframe>
                             @else
                             <img src="{{ asset($course->thumbnail) }}" alt="Thumbnail" class="img-fluid d-block w-100">
                             @endif

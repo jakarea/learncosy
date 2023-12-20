@@ -12,8 +12,9 @@ use App\Models\Checkout;
 use App\Models\CourseActivity;
 use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image; 
 
 class StudentProfileController extends Controller
 {
@@ -43,7 +44,12 @@ class StudentProfileController extends Controller
             'name' => 'required|string',
             'short_bio' => 'string',
             'phone' => 'required|string',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'base64_avatar' => 'nullable|string',
+            // 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+        ],
+        [
+            'base64_avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone Number is required'
         ]);
 
 
@@ -63,25 +69,24 @@ class StudentProfileController extends Controller
             $user->password = $user->password;
         }
 
-        $slugg = Str::slug($request->name);
-        $image_path = '';
-
-        if ($request->hasFile('avatar')) {
-            // Delete old file
+        if ($request->base64_avatar != NULL) {
+            $base64Image = $request->input('base64_avatar');
             if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-            $file = $request->file('avatar');
-            $image = Image::make($file);
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64Image);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
-            $image->save(public_path('uploads/users/') . $uniqueFileName);
-            $image_path = 'uploads/users/' . $uniqueFileName;
-
-           $user->avatar = $image_path;
-       }
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $user->avatar = $path2;
+         }
 
         $user->save();
 
@@ -117,5 +122,37 @@ class StudentProfileController extends Controller
          Mail::to($user->email)->send(new PasswordChanged($user));
 
         return redirect()->route('students.profile')->with('success', 'Your password has been changed successfully!');
+    }
+
+    public function coverUpload(Request $request)
+    {
+ 
+        if ($request->cover_photo != NULL) {
+
+            $userId = $request->userId;
+            $base64ImageCover = $request->cover_photo;
+            $user = User::where('id', $userId)->first();
+            
+            if ($user->cover_photo) {
+                $oldFile = public_path($user->cover_photo);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64ImageCover);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $user->cover_photo = $path2;
+
+            $user->save();
+            return response()->json(['message' => "UPLOADED"]);
+         }
+    
+        return response()->json(['error' => 'No cover image uploaded'], 400);
     }
 }

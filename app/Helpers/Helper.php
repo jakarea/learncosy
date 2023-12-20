@@ -52,24 +52,24 @@ if (!function_exists('hasSubscription')) {
  */
 if (!function_exists('isSubscribed')) {
     function isSubscribed($package_id)
-    { 
- 
-        $user = auth()->user();  
+    {
 
-        if ($user) { 
-            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->where('subscription_packages_id',$package_id)->first(); 
-        
-            if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cancel')) { 
+        $user = auth()->user();
+
+        if ($user) {
+            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->where('subscription_packages_id',$package_id)->first();
+
+            if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cancel')) {
                 return false;
             }
 
-            if (!$subscription || $subscription->subscription_packages_id != $package_id) { 
+            if (!$subscription || $subscription->subscription_packages_id != $package_id) {
                 return false;
             }
-        } else {  
+        } else {
             return false;
         }
- 
+
         return true;
     }
 }

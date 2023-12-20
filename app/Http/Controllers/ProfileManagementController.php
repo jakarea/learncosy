@@ -15,6 +15,7 @@ use App\Mail\PasswordChanged;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileManagementController extends Controller
 {
@@ -55,10 +56,12 @@ class ProfileManagementController extends Controller
             'name' => 'required|string',
             'short_bio' => 'string',
             'phone' => 'required|string',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
+            'base64_avatar' => 'nullable|string',
+            // 'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
-            'avatar' => 'Max file size is 5 MB!'
+            'base64_avatar' => 'Max file size is 5 MB!',
+             'phone' => 'Phone Number is required'
         ]);
 
         $user = User::where('id', $userId)->first();
@@ -81,22 +84,24 @@ class ProfileManagementController extends Controller
             $user->password = $user->password;
         }
 
-        $slugg = Str::slug($request->name);
-
-        if ($request->hasFile('avatar')) {
+        if ($request->base64_avatar != NULL) {
+            $base64Image = $request->input('base64_avatar');
             if ($user->avatar) {
-               $oldFile = public_path($user->avatar);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-            $file = $request->file('avatar');
-            $image = Image::make($file);
-            $uniqueFileName = $slugg . '-' . uniqid() . '.webp';
-            $image->save(public_path('uploads/users/') . $uniqueFileName);
-            $image_path = 'uploads/users/' . $uniqueFileName;
-           $user->avatar = $image_path;
-       }
+                $oldFile = public_path($user->avatar);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            } 
+            list($type, $data) = explode(';', $base64Image);
+            list(, $data) = explode(',', $data);
+            $decodedImage = base64_decode($data); 
+            $slugg = Str::slug($request->name); 
+            $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+            $path = 'public/uploads/users/' . $uniqueFileName;
+            $path2 = 'storage/uploads/users/' . $uniqueFileName;
+            Storage::put($path, $decodedImage); 
+            $user->avatar = $path2;
+         }
 
         $user->save();
 
@@ -138,31 +143,33 @@ class ProfileManagementController extends Controller
    public function coverUpload(Request $request)
    {
 
-       if ($request->hasFile('cover_photo')) {
-           $coverPhoto = $request->file('cover_photo');
+    if ($request->cover_photo != NULL) {
 
-           $userId = Auth::user()->id;
-           $user = User::where('id', $userId)->first();
-           $adSlugg = Str::slug($user->name);
+        $userId = $request->userId;
+        $base64ImageCover = $request->cover_photo;
+        $user = User::where('id', $userId)->first();
+        
+        if ($user->cover_photo) {
+            $oldFile = public_path($user->cover_photo);
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        } 
+        list($type, $data) = explode(';', $base64ImageCover);
+        list(, $data) = explode(',', $data);
+        $decodedImage = base64_decode($data); 
+        $slugg = Str::slug($request->name); 
+        $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+        $path = 'public/uploads/users/' . $uniqueFileName;
+        $path2 = 'storage/uploads/users/' . $uniqueFileName;
+        Storage::put($path, $decodedImage); 
+        $user->cover_photo = $path2;
 
-           if ($user->cover_photo) {
-               $oldFile = public_path($user->cover_photo);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-           $file = $request->file('cover_photo');
-           $image = Image::make($file);
-           $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
-           $image->save(public_path('uploads/users/') . $uniqueFileName);
-           $image_path = 'uploads/users/' . $uniqueFileName;
+        $user->save();
+        return response()->json(['message' => "UPLOADED"]);
+     }
 
-           $user->cover_photo = $image_path;
-           $user->save();
-
-           return response()->json(['message' => "UPLOADED"]);
-       }
-
-       return response()->json(['error' => 'No image uploaded'], 400);
+    return response()->json(['error' => 'No cover image uploaded'], 400);
+    
    }
 }

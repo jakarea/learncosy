@@ -1,12 +1,17 @@
 @extends('layouts.latest.students')
 @section('title')
-{{ $course->title ? $course->title : 'Course Details' }}
+{{ $course->title ? $course->title : 'Course Details' }} 
 @endsection
 
 {{-- style section @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/student-dash.css') }}" rel="stylesheet" type="text/css" />
+
+<style>#firstLesson .vp-sidedock {
+    display: none !important;
+}
+</style>
 @endsection
 {{-- style section @E --}}
 @section('seo')
@@ -112,7 +117,7 @@ $i = 0;
                     </div>
                     @endif
                 </div>
-
+@if($course->allow_review)
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -187,6 +192,7 @@ $i = 0;
                     @endif
                 </div>
                 {{-- course review --}}
+            @endif
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
@@ -199,8 +205,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
-
-
+                        @if (count($module->lessons) > 0) 
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -210,7 +215,7 @@ $i = 0;
 
                                         <i class="fas fa-check-circle me-2 {{ $module->isComplete() ? 'text-primary' : '' }}"></i>
                                         <div class="media-body">
-                                            <p class="module-title">{{ $module->title }}</p>
+                                            <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -220,52 +225,56 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                        <li>
-                                            @if (!isEnrolled($course->id))
-                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
-                                                class="video_list_play d-inline-block">
-                                                <i class="fas fa-lock"></i>
-                                                {{ $lesson->title }}
-                                            </a>
-                                            @else
-                                            <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
-                                                data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
-                                                data-audio-url="{{ $lesson->audio }}"
-                                                data-lesson-type="{{ $lesson->type }}">
+                                            @if(!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
+                                            <li>
+                                                @if(!isEnrolled($course->id))
+                                                <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
+                                                    class="video_list_play d-inline-block">
+                                                    <i class="fas fa-lock"></i>
+                                                    {{ $lesson->title }} 2
+                                                </a>
+                                                @else
+                                                <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
+                                                    data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
+                                                    data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
+                                                    data-audio-url="{{ $lesson->audio }}"
+                                                    data-lesson-type="{{ $lesson->type }}">
 
-                                                <span class="mt-2 ms-1" style="cursor:pointer;">
-                                                    @if (isLessonCompleted($lesson->id))
-                                                    <i class="fas fa-check-circle text-primary"></i>
-                                                    @else
-                                                    <i class="fas fa-check-circle is_complete_lesson"
-                                                        data-course="{{ $course->id }}" data-module="{{ $module->id }}"
-                                                        data-lesson="{{ $lesson->id }}"
-                                                        data-duration="{{ $lesson->duration }}"
-                                                        data-user="{{ Auth::user()->id }}"></i>
+                                                    <span class="mt-2 ms-1" style="cursor:pointer;">
+                                                        @if (isLessonCompleted($lesson->id))
+                                                        <i class="fas fa-check-circle text-primary"></i>
+                                                        @else
+                                                        <i class="fas fa-check-circle is_complete_lesson"
+                                                            data-course="{{ $course->id }}" data-module="{{ $module->id }}"
+                                                            data-lesson="{{ $lesson->id }}"
+                                                            data-duration="{{ $lesson->duration }}"
+                                                            data-user="{{ Auth::user()->id }}"></i>
+                                                        @endif
+                                                    </span>
+
+                                                    @if ($lesson->type == 'text') 
+                                                            <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
+                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                            {{ $lesson->title }} 
+                                                    @elseif($lesson->type == 'audio') 
+                                                            <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                            {{ $lesson->title }} 
+                                                    @elseif($lesson->type == 'video') 
+                                                            <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                            {{ $lesson->title }} 
                                                     @endif
-                                                </span>
-
-                                                @if ($lesson->type == 'text')
-                                                <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
-                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                @elseif($lesson->type == 'audio')
-                                                <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
-                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                @elseif($lesson->type == 'video')
-                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
-                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                </a>
                                                 @endif
-
-                                                {{ $lesson->title }}
-                                            </a>
+                                            </li>
                                             @endif
-                                        </li>
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -555,6 +564,29 @@ $i = 0;
                 });
 
         });
+</script>
+
+
+<script>
+    var iframe = document.getElementById('firstLesson');
+
+    iframe.onload = function () {
+        // Wait for the Vimeo player to be ready
+        var playerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+        // Add custom CSS to hide the .vp-sidedock element
+        var customCSS = `
+            .vp-sidedock {
+                display: none !important;
+            }
+        `;
+
+        // Create a style element and append it to the player's document
+        var style = playerDoc.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(playerDoc.createTextNode(customCSS));
+        playerDoc.head.appendChild(style);
+    };
 </script>
 @endsection
 {{-- script section @E --}}

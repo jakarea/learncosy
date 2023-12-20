@@ -137,9 +137,11 @@ class AdminCourseStepController extends Controller
         [
             'lesson_name' => 'Lesson Name is Required',
         ]);
+        $course = Course::find($id);
 
         $lesson = new Lesson();
         $lesson->course_id = $id;
+        $lesson->instructor_id = $course->instructor_id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
@@ -163,8 +165,11 @@ class AdminCourseStepController extends Controller
             'module_name' => 'Module Name is Required',
         ]);
 
+        $course = Course::find($id);
+
         $module = new Module();
         $module->course_id = $id;
+        $module->instructor_id = $course->instructor_id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();
@@ -653,6 +658,27 @@ class AdminCourseStepController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
+
+        $hasLessonsWithContent = 1;
+
+        if ($request->input('status') == 'published') {
+            $hasLessonsWithContent = collect($course['modules'])
+            ->flatMap(function ($module) {
+                return $module['lessons'];
+            })
+            ->where(function ($lesson) {
+                return $lesson['video_link'] !== null || $lesson['audio'] !== null || $lesson['text'] !== null;
+            })
+            ->count() > 0;
+        }
+
+        if ($request->input('status') == 'published' && $course->title == 'Untitled Course') {
+            $hasLessonsWithContent = 0;
+        }
+
+        if ($hasLessonsWithContent <= 0) {
+            return redirect()->back()->with('error','This course does not have lesson to Publish!');
+        }
 
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;

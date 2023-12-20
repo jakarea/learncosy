@@ -15,62 +15,62 @@ Course Update - Final Step
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
-                <div class="course-create-step-wrap">
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                                class="img-fluid">
-                        </span>
-                        <p>Contents</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
+               <div class="course-create-step-wrap">
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
                             class="img-fluid">
-                        </span>
-                        <p>Facts</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Objects</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Price</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Design</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Certificate</p>
-                    </div>
-                    <div class="step-box active">
-                        <span class="circle">
-                            <img src="{{asset('latest/assets/images/icons/check-mark.svg')}}" alt="icon"
-                            class="img-fluid">
-                        </span>
-                        <p>Visibility</p>
-                    </div>
-                    <div class="step-box current">
-                        <span class="circle"></span>
-                        <p>Share</p>
-                    </div>
+                    </span>
+                    <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                 </div>
-                {{-- course step --}}
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
+                </div>
+                <div class="step-box active">
+                    <span class="circle">
+                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                            class="img-fluid">
+                    </span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
+                </div>
+                <div class="step-box current">
+                    <span class="circle"></span>
+                    <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
+                </div>
+            </div>
+            {{-- course step --}}
             </div>
         </div>
         <div class="row justify-content-center">

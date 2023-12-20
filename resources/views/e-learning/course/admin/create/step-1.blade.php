@@ -21,37 +21,35 @@ Course Update - Course Name
                             <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
                                 class="img-fluid">
                         </span>
-                        <p>Contents</p>
+                        <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box current">
-                        <span class="circle">
-
-                        </span>
-                        <p>Facts</p>
+                        <span class="circle"></span>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Objects</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Price</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Design</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Certificate</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Visibility</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
-                        <p>Share</p>
+                        <p><a href="{{ url('admin/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
                     </div>
                 </div>
                 {{-- course step --}}
