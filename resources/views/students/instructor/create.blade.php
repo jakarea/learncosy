@@ -181,7 +181,7 @@
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group form-error">
                                     <label for="password">Password </label>
-                                    <input type="password" name="password" placeholder="*********"
+                                    <input type="password" name="password" placeholder="Enter Password"
                                         class="form-control @error('password') is-invalid @enderror" id="password">
                                     <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
                                     <div class="pass-icon">

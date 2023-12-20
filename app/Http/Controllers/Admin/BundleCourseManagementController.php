@@ -40,18 +40,16 @@ class BundleCourseManagementController extends Controller
                     ->orderBy('total_star', 'desc');
             } elseif ($status == 'most_purchased') {
 
-                $bundleCourses->select('bundle_courses.*')
-                ->selectRaw('SUM(course_sales.course_count) as total_sale_count')
-                ->leftJoin(DB::raw('(
-                    SELECT checkouts.course_id, COUNT(checkouts.course_id) as course_count
-                    FROM checkouts
-                    GROUP BY checkouts.course_id
-                ) as course_sales'), function ($join) {
-                    $join->on('course_sales.course_id', '=', DB::raw("FIND_IN_SET(course_sales.course_id, bundle_courses.selected_course)"));
-                })
-                ->groupBy('bundle_courses.id')
-                ->orderBy('total_sale_count', 'desc')
-                ->get();
+                $bundleCourses = DB::table('bundle_courses')
+    ->select('bundle_courses.*')
+    ->selectRaw('COALESCE(SUM(checkouts.course_count), 0) as total_sale_count')
+    ->leftJoin('checkouts', function ($join) {
+        $join->on('checkouts.course_id', '=', DB::raw('bundle_courses.selected_course'));
+    })
+    ->groupBy('bundle_courses.id')
+    ->orderBy('total_sale_count', 'desc')
+    ->get();
+
 
 
 
@@ -86,7 +84,7 @@ class BundleCourseManagementController extends Controller
      {
         // return $bundleSlug;
 
-        $bundleCourse = BundleCourse::where('slug',$bundleSlug)->first();
+         $bundleCourse = BundleCourse::where('slug',$bundleSlug)->first();
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
