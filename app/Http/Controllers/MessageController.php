@@ -53,9 +53,9 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-                $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
-                    $query->where('user_id', $data['adminInfo']->id);
-                })->orWhere('admin_id', $data['adminInfo']->id)->latest()->get();
+            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
+                $query->where('user_id', $data['adminInfo']->id);
+            })->orWhere('admin_id', $data['adminInfo']->id)->latest()->get();
 
         return view('e-learning/course/instructor/message-list', $data);
 
@@ -86,8 +86,11 @@ class MessageController extends Controller
             ->get();
 
             $user = auth()->user();
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+
+            $data['groups'] = Group::where(function ($query) use ($user) {
+                $query->whereHas('participants', function ($subQuery) use ($user) {
+                    $subQuery->where('user_id', $user->id);
+                })->orWhere('admin_id', $user->id);
             })->get();
 
         return view('e-learning/course/instructor/groups-chats', $data);
@@ -96,8 +99,10 @@ class MessageController extends Controller
     public function allGroups(Request $request){
         if( $request->ajax() ){
             $user = auth()->user();
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+            $data['groups'] = Group::where(function ($query) use ($user) {
+                $query->whereHas('participants', function ($subQuery) use ($user) {
+                    $subQuery->where('user_id', $user->id);
+                })->orWhere('admin_id', $user->id);
             })->get();
             return view('e-learning.course.instructor.message-group.group-list', $data);
         }
@@ -138,9 +143,12 @@ class MessageController extends Controller
             ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
             ->get();
 
-            $data['groups'] = Group::whereHas('participants', function ($query) use ($data) {
-                $query->where('user_id', $data['adminInfo']->id);
+            $data['groups'] = Group::where(function ($query) use ($data) {
+                $query->whereHas('participants', function ($subQuery) use ($data) {
+                    $subQuery->where('user_id', $data['adminInfo']->id);
+                })->orWhere('admin_id', $data['adminInfo']->id);
             })->latest()->get();
+
         return view('e-learning/course/instructor/groups-chats', $data);
     }
 
@@ -358,6 +366,9 @@ class MessageController extends Controller
                 })->orWhere('admin_id', $user->id);
             })
 
+
+            // dd( $data['groups']->get()->toArray());
+
             ->where('name', 'LIKE', '%' . $searchTerm . '%')
             ->get();
 
@@ -395,7 +406,6 @@ class MessageController extends Controller
 
     public function deleteGroupChatHistory(Request $request)
     {
-        dd( $request->all() );
         $chats = Chat::where('group_id', $request->groupId);
 
         $chats->each(function ($chat) {
