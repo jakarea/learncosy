@@ -137,9 +137,11 @@ class AdminCourseStepController extends Controller
         [
             'lesson_name' => 'Lesson Name is Required',
         ]);
+        $course = Course::find($id);
 
         $lesson = new Lesson();
         $lesson->course_id = $id;
+        $lesson->instructor_id = $course->instructor_id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
@@ -163,8 +165,11 @@ class AdminCourseStepController extends Controller
             'module_name' => 'Module Name is Required',
         ]);
 
+        $course = Course::find($id);
+
         $module = new Module();
         $module->course_id = $id;
+        $module->instructor_id = $course->instructor_id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
         $module->save();

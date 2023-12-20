@@ -1133,6 +1133,7 @@
   border-color: #5672FF !important;
 }
 
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box p a,
 .dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box p {
   color: #66768E !important;
 }
@@ -1861,6 +1862,7 @@
   color: #7289FF !important;
 }
 
+.dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.current p a,
 .dark-mode .course-create-step-page-wrap .course-create-step-wrap .step-box.current p {
   color: #7289FF !important;
 }
@@ -1868,6 +1870,10 @@
 .dark-mode .reset-modal .modal-content {
   border: 1px solid #1E222A !important;
   background: #0D0D0D !important;
+}
+
+.dark-mode .content-settings-form-wrap .form-group span a{
+  color: #66768E!important;
 }
 
 .dark-mode .modal-bttnss .btn-yes {

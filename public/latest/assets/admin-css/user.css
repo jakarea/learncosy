@@ -2730,8 +2730,8 @@ body{
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px dashed var(--components-input-outlined, rgba(145, 158, 171, 0.32));
-  padding: 8px;
+  /* border: 1px dashed var(--components-input-outlined, rgba(145, 158, 171, 0.32));
+  padding: 8px; */
 }
 
 #upload-demo{
@@ -2835,4 +2835,23 @@ figure figcaption {
     border-radius: 3px;
     border:none;
     color: transparent;
+}
+
+.banner-size-modal .modal-dialog{
+  max-width: 850px;
+  width: 90%;
+  margin: 0.5rem auto;
+}
+
+.banner-size-modal .modal-dialog .modal-header {
+  justify-content: center;
+}
+.banner-size-modal .modal-dialog .modal-header h2{
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.banner-size-modal .form-submit-bttns{
+  padding-bottom: 1.5rem;
 }

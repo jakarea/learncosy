@@ -69,12 +69,12 @@ Bundle Course Update
                             <div class="course-single-item">
                                 <div class="course-thumb-box bundle-course-thumb">
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
-                                    <div class="remove-bundle">
+                                    {{-- <div class="remove-bundle">
                                         <button type="button" class="btn btn-remove"
                                             data-course-id="{{ $course->id }}">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="course-txt-box">
                                     <a href="{{ url('admin/courses/' . $course->slug) }}">{{
@@ -183,7 +183,7 @@ Bundle Course Update
                                         </label>
 
                                         @if (isset($bundleCourse->thumbnail))
-                                            <label for="thumbnail" class="logo-upload-box">
+                                            <label for="thumbnail" class="logo-upload-box old-thumb">
                                                 <img src="{{ asset($bundleCourse->thumbnail) }}" alt="Uploaded" class="img-fluid rounded">
                                             </label>
                                         @endif
@@ -235,6 +235,7 @@ Bundle Course Update
     const lpBgImageInput = document.getElementById('thumbnail');
     const lpLogoPreview = document.getElementById('thumbnailImage');
     const lpCloseButton = document.getElementById('close-button');
+    const oldThumb = document.querySelector('.old-thumb');
 
     lpBgImageInput.addEventListener('change', function () {
         const file = this.files[0];
@@ -243,6 +244,7 @@ Bundle Course Update
             reader.onload = function (e) {
                 lpLogoPreview.src = e.target.result;
                 lpCloseButton.style.display = 'block';
+                oldThumb.style.display = 'none';
             };
             reader.readAsDataURL(file);
         }
@@ -250,8 +252,9 @@ Bundle Course Update
 
     lpCloseButton.addEventListener('click', function () {
         lpBgImageInput.value = '';
-        lpLogoPreview.src = ''; // Clear the preview
+        lpLogoPreview.src = '';
         lpCloseButton.style.display = 'none';
+        oldThumb.style.display = 'block';
     });
 </script>
 

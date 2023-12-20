@@ -4,12 +4,11 @@
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/user.css') }}" rel="stylesheet" type="text/css" />
+<link rel='stylesheet' href='https://foliotek.github.io/Croppie/croppie.css'>
 @endsection
 {{-- page style @S --}}
 
 {{-- page content @S --}}
-
-
 @section('content')
 @php
     $social_links = $student ? explode(",", $student->social_links) : [];
@@ -23,28 +22,30 @@
             <div class="col-lg-8">
                 <div class="user-profile-picture">
                     {{-- user cover photo --}}
-                   <div class="cover-img" id="coverImgContainer">
-                    @if ($student && $student->cover_photo)
+                    <div class="cover-img" id="coverImgContainer">
+                        @if ($student->cover_photo)
                         <img src="{{ asset($student->cover_photo) }}" alt="Cover Photo" class="img-fluid cover-img"
-                        id="coverImg">
-                    @else
-                        <img src="{{ asset('latest/assets/images/cover.svg') }}" alt="Cover Photo"
-                        class="img-fluid cover-img" id="coverImg">
-                    @endif
+                            id="item-img-output">
+                        @else
+                        <img src="{{ asset('latest/assets/images/cover.svg') }}" class="img-fluid cover-img"
+                            id="item-img-output" />
+                        @endif
 
-                    <input type="file" class="d-none" id="coverImage" accept="image/png, image/jpeg, image/svg+xml"
-                        name="cover_photo">
-                    <div class="ol-upload">
-                        <label for="coverImage" class="icons" id="uploadLabel">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </label>
+                        <input type="file" class="d-none item-img file center-block" id="coverImage"
+                            accept="image/png, image/jpeg, image/svg+xml" name="cover_photo">
+                        <input type="hidden" name="coverImgBase64" id="coverImgBase64">
+
+                        <div class="ol-upload">
+                            <label class="cabinet center-block icons" for="coverImage">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </label>
+                        </div>
+                        <div class="upload-form">
+                            <button id="cancelBtn" class="d-none btn common-bttn" type="button">Cancel</button>
+                            <button id="uploadBtn" class="d-none btn common-bttn" type="button">Save</button>
+                        </div>
                     </div>
-                    <div class="upload-form">
-                        <button id="cancelBtn" class="d-none btn common-bttn" type="button">Cancel</button>
-                        <button id="uploadBtn" class="d-none btn common-bttn" type="button">Save</button>
-                    </div>
-                </div>
-                {{-- user cover photo --}}
+                    {{-- user cover photo --}}
                     <div class="media">
                         @if($student && $student->avatar)
                         <img src="{{ asset($student->avatar) }}" alt="{{$student->name}}"
@@ -180,132 +181,86 @@
         {{-- profile information @E --}}
     </div>
 </main>
+
+{{-- upload banner modal start --}}
+@include('modals/banner-resize')
+{{-- upload banner modal end --}}
 @endsection
 {{-- page content @E --}}
 
 
 {{-- script --}}
 @section('script')
+<script src='https://foliotek.github.io/Croppie/croppie.js'></script>
+{{-- crop banenr image js --}}
+<script src="{{ asset('latest/assets/js/banner-crop.js') }}"></script>
 {{-- set user cover photo js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const coverImgContainer = document.getElementById('coverImgContainer');
-    const coverImg = document.getElementById('coverImg');
-    const bannerInput = document.getElementById('coverImage');
-    const uploadLabel = document.getElementById('uploadLabel');
+    document.addEventListener('DOMContentLoaded', function () { 
+    const coverImgOutput = document.getElementById('item-img-output'); 
     const uploadBtn = document.getElementById('uploadBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
-    // Handle file input change
-    bannerInput.addEventListener('change', handleFileSelect);
-
-    // Handle label click (trigger file input click)
-    uploadLabel.addEventListener('click', function (e) {
-        e.preventDefault();
-        bannerInput.click();
-    });
-
-    // Handle drag and drop
-    coverImgContainer.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        coverImgContainer.classList.add('drag-over');
-    });
-
-    coverImgContainer.addEventListener('dragleave', function () {
-        coverImgContainer.classList.remove('drag-over');
-    });
-
-    coverImgContainer.addEventListener('drop', function (e) {
-        e.preventDefault();
-        coverImgContainer.classList.remove('drag-over');
-        const file = e.dataTransfer.files[0];
-        handleFile(file);
-    });
-
     // Handle upload button click
-    uploadBtn.addEventListener('click', function () {
-        const file = bannerInput.files[0];
-        uploadFile(file);
-
+    const coverImgBase64 = document.getElementById('coverImgBase64');
+    uploadBtn.addEventListener('click', function () { 
+        let fileBase64 = coverImgBase64.value;
+        uploadFile(fileBase64);  
     });
 
     // Handle cancel button click
     cancelBtn.addEventListener('click', function () {
         cancelUpload();
-    });
-
-    // Function to handle file input change
-    function handleFileSelect() {
-        const file = bannerInput.files[0];
-        handleFile(file);
-    }
-
-    // Function to handle file (update image preview)
-    function handleFile(file) {
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                coverImg.src = e.target.result;
-                uploadBtn.classList.remove('d-none');
-                cancelBtn.classList.remove('d-none');
-            };
-
-            reader.readAsDataURL(file);
-        }
-    }
+    }); 
 
     // Function to handle file upload
-    function uploadFile(file) {
+    function uploadFile(fileBase64) {
 
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
-        if (file) {
-            const userId = "{{ $student->id }}";
-
-            const formData = new FormData();
-            formData.append('cover_photo', file);
-            formData.append('userId', userId);
-
+        if (fileBase64) {
+            const userId = "{{ $student->id }}"; 
+            const requestData = {
+                cover_photo: fileBase64,
+                userId: userId,
+            };
             cancelBtn.classList.add('d-none');
             uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> Uploading`;
-
+ 
             fetch(`${baseUrl}/instructor/students/cover/upload`, {
-                    method: 'POST',
-                    body: formData,
+                    method: 'POST', 
+                    body: JSON.stringify(requestData),
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', 
                     },
                 })
                 .then(response => response.json())
-                .then(data => {
+                .then(data => { 
                     if (data.message === 'UPLOADED') {
                         uploadBtn.innerHTML = `Save`;
                         uploadBtn.classList.add('d-none');
                         cancelBtn.classList.add('d-none');
                     }
                 })
-                .catch(error => {
+                .catch(error => { 
                     uploadBtn.innerHTML = `Failed`;
                 });
         }
     }
 
     // Function to handle cancel button click
-    function cancelUpload() {
-    const userCoverPhoto = "{{ $user->cover_photo ?? null }}";
-    coverImg.src = userCoverPhoto
-        ? "{{ asset('') }}" + userCoverPhoto
-        : "{{ asset('latest/assets/images/cover.svg') }}";
-
-    // Clear the file input value
-    bannerInput.value = '';
-
-    // Hide the upload and cancel buttons
-    uploadBtn.classList.add('d-none');
-    cancelBtn.classList.add('d-none');
-}
-});
+        function cancelUpload() { 
+            const userCoverPhoto = "{{ $student->cover_photo ?? null }}"; 
+            coverImgOutput.src = userCoverPhoto
+                ? "{{ asset('') }}" + userCoverPhoto
+                : "{{ asset('latest/assets/images/cover.svg') }}";
+            coverImgBase64.value = '';
+            uploadBtn.classList.add('d-none');
+            cancelBtn.classList.add('d-none');
+        } 
+    });
 </script>
 @endsection
 {{-- script --}}

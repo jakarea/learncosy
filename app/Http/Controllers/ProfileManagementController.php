@@ -143,31 +143,33 @@ class ProfileManagementController extends Controller
    public function coverUpload(Request $request)
    {
 
-       if ($request->hasFile('cover_photo')) {
-           $coverPhoto = $request->file('cover_photo');
+    if ($request->cover_photo != NULL) {
 
-           $userId = Auth::user()->id;
-           $user = User::where('id', $userId)->first();
-           $adSlugg = Str::slug($user->name);
+        $userId = $request->userId;
+        $base64ImageCover = $request->cover_photo;
+        $user = User::where('id', $userId)->first();
+        
+        if ($user->cover_photo) {
+            $oldFile = public_path($user->cover_photo);
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        } 
+        list($type, $data) = explode(';', $base64ImageCover);
+        list(, $data) = explode(',', $data);
+        $decodedImage = base64_decode($data); 
+        $slugg = Str::slug($request->name); 
+        $uniqueFileName = $slugg . '-' . uniqid() . '.png';
+        $path = 'public/uploads/users/' . $uniqueFileName;
+        $path2 = 'storage/uploads/users/' . $uniqueFileName;
+        Storage::put($path, $decodedImage); 
+        $user->cover_photo = $path2;
 
-           if ($user->cover_photo) {
-               $oldFile = public_path($user->cover_photo);
-               if (file_exists($oldFile)) {
-                   unlink($oldFile);
-               }
-           }
-           $file = $request->file('cover_photo');
-           $image = Image::make($file);
-           $uniqueFileName = $adSlugg . '-' . uniqid() . '.jpg';
-           $image->save(public_path('uploads/users/') . $uniqueFileName);
-           $image_path = 'uploads/users/' . $uniqueFileName;
+        $user->save();
+        return response()->json(['message' => "UPLOADED"]);
+     }
 
-           $user->cover_photo = $image_path;
-           $user->save();
-
-           return response()->json(['message' => "UPLOADED"]);
-       }
-
-       return response()->json(['error' => 'No image uploaded'], 400);
+    return response()->json(['error' => 'No cover image uploaded'], 400);
+    
    }
 }

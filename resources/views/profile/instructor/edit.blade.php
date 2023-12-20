@@ -1075,7 +1075,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">New Password<sup class="text-danger">*</sup></label>
-                                                    <input type="password" name="password" placeholder="*********"
+                                                    <input type="password" name="password" placeholder="Enter Password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         id="password">
                                                     <span class="invalid-feedback">@error('password'){{ $message }}
@@ -1089,7 +1089,7 @@
                                                     <label for="">Confirm New Password<sup
                                                             class="text-danger">*</sup></label>
                                                     <input type="password" name="password_confirmation"
-                                                        placeholder="*********"
+                                                        placeholder="Enter Password"
                                                         class="form-control @error('password_confirmation') is-invalid @enderror"
                                                         id="password_confirmation">
                                                     <span class="invalid-feedback">@error('password_confirmation'){{
@@ -1231,6 +1231,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
+<script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
 {{-- form change js  --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
