@@ -131,8 +131,6 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/courses/create/{id}/share', [CourseCreateStepController::class, 'courseShare']);
 
 
-
-
         // Course bundle
         Route::get('instructor/bundle/courses', [CourseBundleController::class,'index']);
         Route::get('instructor/bundle/courses/{slug}/view',  [CourseBundleController::class,'view'])->name('course.bundle.view');
@@ -168,6 +166,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         // ModuleSetting controller
         Route::post('instructor/theme/setting/updateorinsert', [ModuleSettingController::class, 'store'])->name('module.setting.update');
         Route::get('instructor/theme/setting', [ModuleSettingController::class, 'index'])->name('module.setting');
+        Route::post('instructor/theme/setting/login-bg/{userId}', [ModuleSettingController::class, 'loginBg'])->name('module.setting.loginbg');
         Route::get('instructor/theme/setting/dns', [ModuleSettingController::class, 'dnsTheme'])->name('module.setting.dns');
         Route::get('instructor/theme/setting/{id}/edit', [ModuleSettingController::class, 'edit'])->name('module.setting.edit');
         Route::post('instructor/theme/setting/reset/{id}', [ModuleSettingController::class, 'reset'])->name('module.theme.reset');

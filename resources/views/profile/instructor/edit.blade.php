@@ -459,7 +459,7 @@
                                                                                     <a href="#" class="close-bttn">
                                                                                         <i class="fas fa-close"></i>
                                                                                     </a>
-                                                                                    <img src="{{asset('latest/assets/images/big-c-01.svg')}}"
+                                                                                    <img src="{{ asset('latest/assets/images/big-c-01.svg')}}"
                                                                                         alt="Cert" class="img-fluid">
                                                                                 </div>
                                                                                 {{-- full page preview --}}
@@ -472,8 +472,7 @@
                                                                                     data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style One</h6>
-                                                                                        <span>Selected
-                                                                                            Certificate</span>
+                                                                                        <span>Selected Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra

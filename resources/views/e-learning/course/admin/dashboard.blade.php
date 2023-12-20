@@ -112,9 +112,11 @@
                         <div class="col-lg-12">
                             <div class="d-flex align-items-center">
                                 <h5>Revenue</h5>
-                                <p class="common-para ms-3"> <b style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{ $earningParcentage >= 0 ?
-                                    '+' . $earningParcentage : $earningParcentage }}%</b>
-                                VS last {{$compear}}</p>
+                                <p class="common-para ms-3"> <b
+                                        style="color: {{ $earningParcentage >= 0 ? 'green' : 'red' }}">{{
+                                        $earningParcentage >= 0 ?
+                                        '+' . $earningParcentage : $earningParcentage }}%</b>
+                                    VS last {{$compear}}</p>
                             </div>
                         </div>
                     </div>
@@ -144,8 +146,9 @@
                             <div class="media">
                                 <img src="{{ asset($course->thumbnail) }}" alt="Avatar" class="img-fluid">
                                 <div class="media-body">
-                                    <h5><a href="{{ url('admin/courses/overview', $course->slug) }}">{{ substr($course->title, 0,
-                                            20) . '...' }}</a>
+                                    <h5>
+                                        <a href="{{ url('admin/courses/overview', $course->slug) }}">
+                                        {{ substr($course->title ? $course->title : 'Untitled Course', 0, 20) . '...' }}</a>
                                     </h5>
                                     <p> {{ $course->categories }} </p>
                                 </div>
@@ -169,21 +172,25 @@
                     <div class="d-flex py-0 pe-0">
                         <h4>Course Status</h4>
                         <div class="d-flex">
-                           @if (count($courses) > 5)
-                           <a href="{{ url('admin/courses') }}" class="me-0">View All</a>
-                           @endif 
-                           
+                            @if (count($courses) > 5)
+                            <a href="{{ url('admin/courses') }}" class="me-0">View All</a>
+                            @endif
+
                             <div class="dropdown course-status-filter">
                                 <button type="button" class="btn" id="dropdownBttn" data-bs-toggle="dropdown"
                                     aria-expanded="false">All <i class="fas fa-angle-down"></i></button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item filterItem" href="javascript:void(0)">All</a></li>
-                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="one">This Month</a></li>
-                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="three">Three Months</a></li>
-                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="six">Six Months</a></li>
-                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)" data-value="year">One Year</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)"
+                                            data-value="one">This Month</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)"
+                                            data-value="three">Three Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)"
+                                            data-value="six">Six Months</a></li>
+                                    <li><a class="dropdown-item filterItem" href="javascript:void(0)"
+                                            data-value="year">One Year</a></li>
                                 </ul>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     @if (count($courses) > 0)
@@ -203,7 +210,8 @@
                                         <img src="{{ asset($course->thumbnail) }}" alt="c-status" class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5><a href="{{ url('admin/courses/overview/'.$course->slug) }}" class="p-0 bg-transparent">{{ substr($course->title, 0, 35) }}</a></h5>
+                                        <h5><a href="{{ url('admin/courses/overview/'.$course->slug) }}"
+                                                class="p-0 bg-transparent">{{ substr($course->title ? $course->title : 'Untitled Course', 0, 35) }}</a></h5>
                                         <p> {{ $course->categories }}</p>
                                     </div>
                                 </div>
@@ -214,7 +222,8 @@
                                 </p>
                             </td>
                             <td>
-                                <p><i class="fas fa-star me-2" style="color: #F8AA00;"></i> {{ number_format($course->avg_rating, 1) }}</p>
+                                <p><i class="fas fa-star me-2" style="color: #F8AA00;"></i> {{
+                                    number_format($course->avg_rating, 1) }}</p>
                             </td>
                             <td>
                                 <p>€{{ $course->sum_amount ? $course->sum_amount : 0 }}</p>
@@ -225,8 +234,8 @@
                         </tr>
                         @endforeach
                     </table>
-                    @else 
-                        @include('partials/no-data')
+                    @else
+                    @include('partials/no-data')
                     @endif
                 </div>
             </div>
@@ -263,7 +272,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </main>
 @endsection
 

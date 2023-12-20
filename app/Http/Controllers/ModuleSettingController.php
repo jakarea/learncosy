@@ -111,7 +111,7 @@ class ModuleSettingController extends Controller
                 }
                 $favicon = $request->file('favicon');
                 $faviconImage = Image::make($favicon);
-                $uniqueFaviconName = $userNameSlug . '-' . uniqid() . '.webp';
+                $uniqueFaviconName = $userNameSlug . '-' . uniqid() . '.png';
                 $faviconImage->save(public_path('uploads/themes/') . $uniqueFaviconName);
                 $favicon_path = 'uploads/themes/' . $uniqueFaviconName;
                 $module_settings->favicon = $favicon_path;
@@ -192,6 +192,28 @@ class ModuleSettingController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+
+    public function loginBg($subdomain, $id)
+    {
+        if ($id) { 
+
+            $module_settings = InstructorModuleSetting::where('instructor_id',$id)->first(); 
+
+            if ($module_settings->lp_bg_image) {
+                $oldLoginBg = public_path($module_settings->lp_bg_image);
+                if (file_exists($oldLoginBg)) {
+                    unlink($oldLoginBg);
+                }
+            }
+            $module_settings->lp_bg_image = NULL;
+            $module_settings->save();
+
+            return response()->json(['message' => 'DONE']);
+        }
+
+        return response()->json(['message' => 'Error Failed']);
     }
 
     /**
