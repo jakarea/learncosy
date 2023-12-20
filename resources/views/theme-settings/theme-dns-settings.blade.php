@@ -209,8 +209,19 @@ Account Management
 
                                                             <label for="default">
                                                                 <div class="media">
-                                                                    <img src="{{ asset('latest/assets/images/login-01.png') }}"
+                                                                    {{-- full page preview --}}
+                                                                    <div class="full-page-preview">
+                                                                        <a href="#" class="close-bttn">
+                                                                            <i class="fas fa-close"></i>
+                                                                        </a>
+                                                                        <img src="{{ asset('latest/assets/images/login/01.png')}}" alt="Cert"  class="img-fluid me-0">
+                                                                    </div>
+                                                                    {{-- full page preview --}}
+                                                                    <a href="#" class="cert-bttn">
+                                                                        <img src="{{ asset('latest/assets/images/login-01.png') }}"
                                                                         alt="Color" class="img-fluid">
+                                                                    </a>
+
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Raouls Choice</h6>
@@ -234,8 +245,19 @@ Account Management
 
                                                             <label for="fullwidth">
                                                                 <div class="media">
-                                                                    <img src="{{ asset('latest/assets/images/login-02.png') }}"
+                                                                    {{-- full page preview --}}
+                                                                    <div class="full-page-preview">
+                                                                        <a href="#" class="close-bttn">
+                                                                            <i class="fas fa-close"></i>
+                                                                        </a>
+                                                                        <img src="{{ asset('latest/assets/images/login/02.png')}}" alt="Cert"  class="img-fluid me-0">
+                                                                    </div>
+                                                                    {{-- full page preview --}}
+                                                                    <a href="#" class="cert-bttn">
+                                                                        <img src="{{ asset('latest/assets/images/login-02.png') }}"
                                                                         alt="Color" class="img-fluid">
+                                                                    </a> 
+                                                                   
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Volledige Breedte Afbeelding</h6>
@@ -254,8 +276,20 @@ Account Management
                                                             </label>
                                                             <label for="leftsidebar">
                                                                 <div class="media">
-                                                                    <img src="{{ asset('latest/assets/images/login-03.png') }}"
+                                                                    {{-- full page preview --}}
+                                                                    <div class="full-page-preview">
+                                                                        <a href="#" class="close-bttn">
+                                                                            <i class="fas fa-close"></i>
+                                                                        </a>
+                                                                        <img src="{{ asset('latest/assets/images/login/03.png')}}" alt="Cert"  class="img-fluid me-0">
+                                                                    </div>
+                                                                    {{-- full page preview --}}
+                                                                    <a href="#" class="cert-bttn">
+                                                                        <img src="{{ asset('latest/assets/images/login-03.png') }}"
                                                                         alt="Color" class="img-fluid">
+                                                                    </a>
+
+                                                                    
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Zijbalk &amp; Achtergrond</h6>
@@ -273,8 +307,20 @@ Account Management
                                                             </label>
                                                             <label for="rightsidebar">
                                                                 <div class="media pb-0">
-                                                                    <img src="{{ asset('latest/assets/images/login-04.png') }}"
+
+                                                                    {{-- full page preview --}}
+                                                                    <div class="full-page-preview">
+                                                                        <a href="#" class="close-bttn">
+                                                                            <i class="fas fa-close"></i>
+                                                                        </a>
+                                                                        <img src="{{ asset('latest/assets/images/login/04.png')}}" alt="Cert"  class="img-fluid me-0">
+                                                                    </div>
+                                                                    {{-- full page preview --}}
+                                                                    <a href="#" class="cert-bttn">
+                                                                        <img src="{{ asset('latest/assets/images/login-04.png') }}"
                                                                         alt="Color" class="img-fluid">
+                                                                    </a>
+                                                                    
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Zijbalk & Achtergrond</h6>
@@ -332,13 +378,17 @@ Account Management
 
                                                             @if (isset($module_settings->lp_bg_image) ||
                                                             $module_settings->lp_bg_image != null)
-                                                            <label for="lp_bg_image" class="logo-upload-box">
-                                                                <img src="{{ asset($module_settings->lp_bg_image) }}"
-                                                                    alt="Uploaded" class="img-fluid rounded">
-
-                                                            </label>
+                                                            <div class="old-login-bg">
+                                                                <label for="lp_bg_image" class="logo-upload-box">
+                                                                    <img src="{{ asset($module_settings->lp_bg_image) }}"
+                                                                        alt="Uploaded" class="img-fluid rounded">
+                                                                </label>
+                                                                <div class="text-end my-2">
+                                                                    <button type="button" class="btn common-bttn" onclick="updateImage({{ auth()->user()->id }})"  style="padding: 4px 8px; font-size: 12px;">Remove</button>
+                                                                </div>
+                                                            </div>
                                                             @endif
-
+ 
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-12 col-xl-4">
@@ -481,14 +531,14 @@ Account Management
                                             <span></span>
                                             <p>Add domain</p>
                                         </div>
-                                        <div class="step-box active done">
+                                        <div class="step-box current">
                                             <span>
-                                                <img src="{{ asset('latest/assets/images/icons/small-ic.svg') }}"
-                                                    alt="small-ic" class="img-fluid">
+                                                {{-- <img src="{{ asset('latest/assets/images/icons/small-ic.svg') }}"
+                                                    alt="small-ic" class="img-fluid"> --}}
                                             </span>
                                             <p>Domain name</p>
                                         </div>
-                                        <div class="step-box current">
+                                        <div class="step-box ">
                                             <span></span>
                                             <p>Domain verification</p>
                                         </div>
@@ -530,213 +580,7 @@ Account Management
                                             </div>
                                         </form>
                                     </div>
-                                    {{-- add domain end --}}
-
-                                    {{-- verification domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="{{ route('dns.setting.verify' , config('app.subdomain')) }}" method="POST">
-                                            @csrf
-                                            <h2>How do you want to verify your domain?</h2>
-                                            <p>Before we can set up your domain, we need to verify that you are the
-                                                owner of learncosy.com.</p>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault2" value="A" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Add a TXT record to the domain's DNS record
-                                                </label>
-                                                <h6>Recommended if you can create new DNS record at your register or DNS
-                                                    hosting provider. </h6>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="MX" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault3">
-                                                    If you can't TXT record, add an MX record to the domain's DNS
-                                                    records
-                                                </label>
-                                                <h6>Recommended only if TXT records aren't supported by your domain host
-                                                    or register.</h6>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="verify_by" id="flexRadioDefault3" value="file" checked required>
-                                                <label class="form-check-label" for="flexRadioDefault3">
-                                                    Add a text file to the domain’s website
-                                                </label>
-                                                <h6>Recommended if you’ve already set up a website using this domain,
-                                                    for example, www.learncosy.com.</h6>
-                                            </div>
-
-
-                                            <div class="form-submit-bttns">
-                                                <button class="btn btn-cancel" type="reset">Back</button>
-                                                <button class="btn btn-submit" type="submit">Verify</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {{-- verification domain end --}}
-
-                                    {{-- connect your domain start --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="">
-                                            <h2>Connect your domain</h2>
-                                            <h3>Sign in to your DNS hosting provider and add this record to your
-                                                learncosy.com domain.</h3>
-                                            <p>Don't worry, adding this record won’t affect your existing email or other
-                                                services and it can be safely removed at the end of setup.</p>
-
-                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#nav-home" type="button" role="tab"
-                                                    aria-controls="nav-home" aria-selected="true">TXT
-                                                    Record</button>
-                                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#nav-profile" type="button" role="tab"
-                                                    aria-controls="nav-profile" aria-selected="false">MX
-                                                    Record</button>
-                                            </div>
-
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                                    aria-labelledby="nav-home-tab" tabindex="0">
-
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>TXT name</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if
-                                                                not
-                                                                supported by provider)</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>TXT value</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> MSem58456895</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>TTL</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> 3600 (or your
-                                                                provider default)</h6>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                                    aria-labelledby="nav-profile-tab" tabindex="0">
-
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>MXT name</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> lab01 (or skip if
-                                                                not
-                                                                supported by provider)</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>MXT value</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid">MSem58456895</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="media">
-                                                        <div class="media-body">
-                                                            <h5>MTL</h5>
-                                                            <h6><img src="{{ asset('latest/assets/images/icons/copy-1.svg') }}"
-                                                                    alt="copy-1" class="img-fuid"> 3600 (or your
-                                                                provider default)</h6>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-submit-bttns">
-                                                <button class="btn btn-cancel" type="reset">Back</button>
-                                                <button class="btn btn-submit" type="submit">Connect</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {{-- connect your domain end --}}
-
-                                    {{-- add dns record --}}
-                                    <div class="add-domain-box domain-verify-box d-none">
-                                        <form action="">
-                                            <h2>Add DNS records</h2>
-                                            <h3>To add these records for learncosy.com, go to your DNS hosting provider.
-                                            </h3>
-                                            <p>To start routing email through Learncosy, select Exchange and Exchange
-                                                online Protection. Next, sign in to your domain host and new DNS record
-                                                that match the record shown here. copy the values below and paste them
-                                                into the new record at your domain host, or download or print the DNS
-                                                record info to use as a reference. When you’re finished, select
-                                                Continue.</p>
-
-                                            <div class="d-flex">
-                                                <a href="#"><img
-                                                        src="{{ asset('latest/assets/images/icons/download-4.svg') }}"
-                                                        alt="download" class="img-fuid"> Download CSV file</a>
-                                                <a href="#"><img
-                                                        src="{{ asset('latest/assets/images/icons/download-4.svg') }}"
-                                                        alt="download" class="img-fuid"> Download Zone file</a>
-                                                <a href="#"><img
-                                                        src="{{ asset('latest/assets/images/icons/print.svg') }}"
-                                                        alt="download" class="img-fuid"> Print</a>
-                                            </div>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckChecked" checked>
-                                                <label class="form-check-label form-check-label-2"
-                                                    for="flexCheckChecked">
-                                                    Exchange and Exchange online protection
-                                                </label>
-                                            </div>
-
-
-                                            <p>Email, contacts, and scheduling are all provided by Exchange. Set up this
-                                                service to enable all the functionality of Outlook and other email
-                                                clients. Exchange service need 3 records to work right: and MX record
-                                                tells where to deliver email messages, a TXT to prevent someone from
-                                                spoofing your domain to send spam and a CNAME record for client-side
-                                                Auto discover, helping mail clients connect users to their respective
-                                                mailboxes.</p>
-
-                                            <div class="form-submit-bttns">
-                                                <button class="btn btn-cancel" type="reset">Back</button>
-                                                <button class="btn btn-submit" type="submit">Add DNS Record</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    {{-- add dns record --}}
-
-                                    {{-- domain setup finish --}}
-                                    <div class="add-domain-box finish-txt d-none">
-                                        <form action="">
-                                            <h2><img src="{{ asset('latest/assets/images/icons/gren-chehck.svg') }}"
-                                                    alt="gren-chehck" class="img-fluid"> Domain Setup is Complete</h2>
-                                            <p>learncosly.com is all set up and you can now view and manage it from your
-                                                domains list. <br>
-                                                You can now go to Active users to add new user and set up email
-                                                addresses or aliases for everyone who needs to use learncosy.com for
-                                                email.</p>
-
-                                            <h4>Next Steps</h4>
-
-                                            <div class="finish-bttns">
-                                                <a href="#">Go to Active users</a>
-                                                <a href="#">View all domains</a>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    {{-- domain setup finish --}}
+                                    {{-- add domain end --}} 
                                 </div>
                             </div>
                         </div>
@@ -781,6 +625,36 @@ Account Management
 
 {{-- page script @S --}}
 @section('script')
+{{-- login page preview --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".cert-bttn");
+    const closeButtons = document.querySelectorAll(".close-bttn");
+    const mainBody = document.querySelector(".full-page-preview");
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            const certBox = this.parentElement.querySelector(".full-page-preview");
+
+            if (certBox) {
+                certBox.classList.toggle('show');
+            }
+        });
+    });
+
+    closeButtons.forEach(function(bttn) {
+        bttn.addEventListener("click", function(e) {
+            e.preventDefault();
+            const certBox = this.parentElement;
+
+            if (certBox) {
+                certBox.classList.remove('show');
+            }
+        });
+    });
+});
+</script>
+
 {{-- logo image preview js --}}
 <script>
     const logoInput = document.getElementById('logo');
@@ -830,12 +704,14 @@ Account Management
         appCloseButton.style.display = 'none';
     });
 </script>
+ 
 
 {{-- lp bg image preview --}}
 <script>
     const lpBgImageInput = document.getElementById('lp_bg_image');
     const lpLogoPreview = document.getElementById('lp_logo-preview');
     const lpCloseButton = document.getElementById('close-button3');
+    const oldLoginBg = document.querySelector('.old-login-bg');
 
     lpBgImageInput.addEventListener('change', function () {
         const file = this.files[0];
@@ -844,6 +720,7 @@ Account Management
             reader.onload = function (e) {
                 lpLogoPreview.src = e.target.result;
                 lpCloseButton.style.display = 'block';
+                oldLoginBg.style.display = 'none';
             };
             reader.readAsDataURL(file);
         }
@@ -853,7 +730,40 @@ Account Management
         lpBgImageInput.value = '';
         lpLogoPreview.src = ''; // Clear the preview
         lpCloseButton.style.display = 'none';
+        oldLoginBg.style.display = 'block';
     });
+</script>
+
+
+{{-- set user cover photo js --}}
+<script>
+    // document.addEventListener('DOMContentLoaded', function () {
+
+        let currentURL = window.location.href;
+        const baseUrl = currentURL.split('/').slice(0, 3).join('/');
+
+        function updateImage(userId) { 
+        fetch(`${baseUrl}/instructor/theme/setting/login-bg/${userId}`, {  // Use the user ID in the URL
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message == 'DONE') {
+                oldLoginBg.style.display = 'none';
+            }
+            
+        })
+        .catch(error => {
+            oldLoginBg.style.display = 'block';
+            // Handle the error, e.g., show an error message
+            // console.error('Error:', error);
+        });
+    }
+
+// });
 </script>
 
 {{-- favicon image preview --}}
