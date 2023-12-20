@@ -107,7 +107,7 @@ class ModuleController extends Controller
         return redirect('instructor/modules')->with('success', 'Module Updated!');
     }
 
-    public function destroy($slug)
+    public function destroy($subdomain,$slug)
     { 
         // delete module 
         $module = Module::where('slug', $slug)->first(); 
@@ -116,12 +116,8 @@ class ModuleController extends Controller
         $lessons = Lesson::where('module_id', $module->id)->get();
         foreach ($lessons as $lesson) {
             //delete lesson thumbnail
-            $lessonOldThumbnail = public_path('/assets/images/lessons/'.$lesson->thumbnail);
-            if (file_exists($lessonOldThumbnail)) {
-                @unlink($lessonOldThumbnail);
-            }
-            //delete lesson file
-            $lessonOldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
+            
+            $lessonOldFile = public_path($lesson->lesson_file);
             if (file_exists($lessonOldFile)) {
                 @unlink($lessonOldFile);
             }

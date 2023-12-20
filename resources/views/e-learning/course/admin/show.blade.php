@@ -131,6 +131,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
+                        @if (count($module->lessons) > 0)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -146,43 +147,46 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                        <li>
-                                            <div class="d-flex align-items-center">
-                                                @can('instructor')
-                                                    <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
-                                                        <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
-                                                    </a> 
-                                                    @endcan
+                                            @if(!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
+                                            <li>
+                                                <div class="d-flex align-items-center">
+                                                    @can('instructor')
+                                                        <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
+                                                            <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
+                                                        </a> 
+                                                        @endcan
 
-                                                <a href="{{ $lesson->video_link }}"
-                                                    class="video_list_play d-inline-block"
-                                                    data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                    data-course-id="{{ $course->id }}"
-                                                    data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
-                                                    data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important"> 
+                                                    <a href="{{ $lesson->video_link }}"
+                                                        class="video_list_play d-inline-block"
+                                                        data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
+                                                        data-course-id="{{ $course->id }}"
+                                                        data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
+                                                        data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important"> 
 
-                                                    @if ($lesson->type == 'text')
-                                                    <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                    @elseif($lesson->type == 'audio')
-                                                    <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                    @elseif($lesson->type == 'video')
-                                                    <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                    @endif 
+                                                        @if ($lesson->type == 'text')
+                                                        <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
+                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                        @elseif($lesson->type == 'audio')
+                                                        <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                        @elseif($lesson->type == 'video')
+                                                        <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                        @endif 
+                                                        
+                                                        {{ $lesson->title }}
+                                                    </a>
                                                     
-                                                    {{ $lesson->title }}
-                                                </a>
-                                                
-                                            </div>
+                                                </div>
 
-                                        </li>
+                                            </li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        @endif 
                         @endforeach
                     </div>
                 </div>

@@ -264,24 +264,17 @@ class LessonController extends Controller
         return redirect('instructor/lessons')->with('success', 'Lesson Updated!');
     }
 
-    public function destroy($slug){
+    public function destroy($subdomain,$slug){
          
         $lesson = Lesson::where('slug', $slug)->first();
-         //delete lesson thumbnail
-         $lessonOldThumbnail = public_path('/assets/images/lessons/'.$lesson->thumbnail);
-         if (file_exists($lessonOldThumbnail)) {
-             @unlink($lessonOldThumbnail);
-         }
+ 
          //delete lesson file
-         $lessonOldFile = public_path('/assets/images/lessons/'.$lesson->lesson_file);
+         $lessonOldFile = public_path($lesson->lesson_file);
          if (file_exists($lessonOldFile)) {
              @unlink($lessonOldFile);
          }
         $lesson->delete();
 
-        return redirect()->back()->with('success', 'Lesson deleted!');
-
-
-        // return redirect('instructor/lessons')->with('success', 'Lesson deleted!');
+        return redirect()->back()->with('success', 'Lesson deleted Successfully!'); 
     }
 }
