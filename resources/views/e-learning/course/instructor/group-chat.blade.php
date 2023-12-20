@@ -229,9 +229,14 @@
                         <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
                             <div class="media">
                                 @isset( $currentGroup->avatar )
-                                    <img id="groupImagePreview" src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                                    <span id="groupImageView" class="user-name-avatar me-1 d-none"></span>
+                                    <img id="groupImagePreview" src="{{ asset($currentGroup->avatar) }}" alt="{!! strtoupper($currentGroup->name[0]) !!}" class="img-fluid">
                                 @else
-                                    <span class="user-name-avatar me-1">{!! strtoupper($currentGroup->name[0]) !!}</span>
+                                    <div>
+                                        <img id="groupImagePreview" src="" class="img-fluid d-none">
+                                        <span id="groupImageView" class="user-name-avatar me-1">{!! strtoupper($currentGroup->name[0]) !!}</span>
+                                    </div>
+
                                 @endisset
 
                                 <div class="media-body">
@@ -310,13 +315,18 @@
 <script>
     $(document).ready(function () {
         var fileInput = document.getElementById('uploadGroupAvatar');
-        console.log(fileInput);
+
         if (fileInput) {
             $(fileInput).on('change', function (event) {
                 var file = event.target.files[0];
                 if (file) {
                     var objectUrl = URL.createObjectURL(file);
+                    if (document.getElementById('groupImagePreview').classList.contains("d-none")) {
+                        document.getElementById('groupImagePreview').classList.remove('d-none');
+                        document.getElementById('groupImageView').classList.add('d-none');
+                    }
                     document.getElementById('groupImagePreview').src = objectUrl;
+
                 }
             });
         }
