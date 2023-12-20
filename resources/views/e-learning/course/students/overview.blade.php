@@ -61,12 +61,15 @@
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
                     @php
-                    $objectives = explode("[objective]", $course->objective);
+                        $objectives = explode("[objective]", $course->objective);
                     @endphp
-
                     <ul>
                         @foreach ($objectives as $object)
-                        <li><i class="fas fa-check"></i> {{$object}} </li>
+                            @if (trim($object) !== '')
+                                <li><i class="fas fa-check"></i> {{ $object }} </li>
+                            @else 
+                                <li>No Objective Found!</li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>

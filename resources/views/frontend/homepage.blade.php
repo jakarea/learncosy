@@ -23,13 +23,20 @@
             background: {{ modulesetting('secondary_color') }};
             border-color: {{ modulesetting('secondary_color') }}
         }
-
+       
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
         }
-
+        .navbar .d-flex a:first-child,
         .navbar .navbar-nav .nav-item .nav-link{
-            color:  {{ modulesetting('menu_color') }};
+            color:  {{ modulesetting('menu_color') }}!important;
+        }
+
+        .navbar .d-flex a:last-child{
+            color:  {{ modulesetting('primary_color') }}!important;
+        }
+        .navbar .d-flex a:last-child:hover{
+            color:  {{ modulesetting('menu_color') }}!important;
         }
     </style>
 @endsection

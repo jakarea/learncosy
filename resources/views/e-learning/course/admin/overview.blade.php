@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="banner-title">
-                        <h1>{{$course->title}}</h1>
+                        <h1>{{$course->title ? $course->title : 'Untitled Course'}}</h1>
                         <p>{{$course->sub_title}}</p>
 
                         @if($course->user)
@@ -64,12 +64,15 @@
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
                     @php
-                    $objectives = explode("[objective]", $course->objective);
+                        $objectives = explode("[objective]", $course->objective);
                     @endphp
-
                     <ul>
                         @foreach ($objectives as $object)
-                        <li><i class="fas fa-check"></i> {{$object}} </li>
+                            @if (trim($object) !== '')
+                                <li><i class="fas fa-check"></i> {{ $object }} </li>
+                            @else 
+                                <li>No Objective Found!</li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -296,7 +299,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <h5>Course Preview</h5>
-                                <h4>{{$course->title}}</h4>
+                                <h4>{{ $course->title ? $course->title : 'Untitled Course' }}</h4>
                             </div>
                             <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn">
                                 <i class="fas fa-close"></i>

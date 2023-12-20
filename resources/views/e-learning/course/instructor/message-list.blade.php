@@ -212,7 +212,7 @@ Messsages Page
                                     <div class="form-group">
                                         <input type="text"
                                             class="form-control chat-message-input-group chat-gruop-emoji"
-                                            id="chat-group-message-input" placeholder="Send a message" name="message">
+                                            id="chat-group-message-input" placeholder="Send a message" name="message"/>
                                     </div>
                                     <div class="file-attach-bttns">
                                         <label for="attached" class="message-attached">

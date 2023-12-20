@@ -4,8 +4,9 @@
             @isset( $currentGroup->avatar )
                 <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
             @else
-                <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                <span class="user-name-avatar me-1">{!! strtoupper($currentGroup->name[0]) !!}</span>
             @endisset
+
 
             <div class="media-body">
                 <h5 class="name">{{ $currentGroup->name }}</h5>
@@ -41,7 +42,7 @@
                         <li>
                             <a class="dropdown-item updateGroup" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                                 <img src="{{ asset('latest/assets/images/icons/messages/pencil.svg') }}"
-                                    alt="ic" class="img-fluid"> Rename Group
+                                    alt="ic" class="img-fluid"> Edit Group
                             </a>
                         </li>
                         <li>
@@ -228,10 +229,16 @@
                         <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
                             <div class="media">
                                 @isset( $currentGroup->avatar )
-                                    <img src="{{ asset($currentGroup->avatar) }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                                    <span id="groupImageView" class="user-name-avatar me-1 d-none"></span>
+                                    <img id="groupImagePreview" src="{{ asset($currentGroup->avatar) }}" alt="{!! strtoupper($currentGroup->name[0]) !!}" class="img-fluid">
                                 @else
-                                    <img src="{{ asset('latest/assets/images/icons/messages/no-image.jpg') }}" alt="{{ $currentGroup->name }}" class="img-fluid">
+                                    <div>
+                                        <img id="groupImagePreview" src="" class="img-fluid d-none">
+                                        <span id="groupImageView" class="user-name-avatar me-1">{!! strtoupper($currentGroup->name[0]) !!}</span>
+                                    </div>
+
                                 @endisset
+
                                 <div class="media-body">
                                     <h5 class="name"> {{ $currentGroup->name }} </h5>
                                     <ul class="peoples">
@@ -257,6 +264,11 @@
                                 <label for="">Group Name</label>
                                 <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}"/>
                                 <input type="hidden" class="form-control" name="groupId" value="{{ $currentGroup->id }}"/>
+                            </div>
+
+                            <div class="form-group mt-1">
+                                <label for="">Group Avater</label>
+                                <input id="uploadGroupAvatar" type="file" class="form-control" name="avatar" accept="image/*" />
                             </div>
                             {{-- form submit --}}
                             <div class="form-submit">
@@ -298,3 +310,25 @@
     </div>
 </div>
 {{-- delete group modal end --}}
+
+
+<script>
+    $(document).ready(function () {
+        var fileInput = document.getElementById('uploadGroupAvatar');
+
+        if (fileInput) {
+            $(fileInput).on('change', function (event) {
+                var file = event.target.files[0];
+                if (file) {
+                    var objectUrl = URL.createObjectURL(file);
+                    if (document.getElementById('groupImagePreview').classList.contains("d-none")) {
+                        document.getElementById('groupImagePreview').classList.remove('d-none');
+                        document.getElementById('groupImageView').classList.add('d-none');
+                    }
+                    document.getElementById('groupImagePreview').src = objectUrl;
+
+                }
+            });
+        }
+    });
+</script>
