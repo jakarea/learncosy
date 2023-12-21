@@ -2134,12 +2134,20 @@
   color: #D2DEEF;
 }
 
+.dark-mode .course-modules-boxx div i{
+  color: #D2DEEF !important;
+}
+
 .dark-mode .create-group-form .form-submit {
   background-color: #000!important;
 }
 .dark-mode .create-group-form .form-submit .btn-cancel {
   border: 1px solid #2D343E!important;
   background: #0D0D0D!important;
+}
+
+.dark-mode .enroll-course-list .list-wrap table tr td span.bg-danger{
+  background-color: #EF6E79!important;
 }
 
 .dark-mode .create-group-form .form-submit .btn-cancel:hover {

@@ -207,12 +207,36 @@
                                         </div>
                                     </li>
                                 @endforeach  
+                                <div class="collapse mb-3" id="collapseExample{{ $module->id }}">
+                                    @foreach ($module->lessons->slice(3, 10) as $lesson)
+                                    <li>
+                                        <span>{{ Str::limit($lesson->title, 30) }}</span>
+                                        <div>
+                                            @if ($lesson->completed == 1)
+                                                <img src="{{ asset('latest/assets/images/icons/chk.svg') }}" alt="icon"
+                                                    class="img-fluid ms-2">
+                                            @else
+                                                @if ($lesson->type == 'text')
+                                                    <i class="fa-regular fa-file-lines text-dark ms-2"></i>
+                                                @elseif($lesson->type == 'audio')
+                                                    <i class="fa-solid fa-headphones text-dark ms-2"></i>
+                                                @elseif($lesson->type == 'video')
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="icon"
+                                                class="img-fluid ms-2 light-ele">
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon-d.svg') }}" alt="icon"
+                                                class="img-fluid ms-2 dark-ele">
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </li>
+                                @endforeach       
+                                </div> 
                             </ul>
 
                             @if (count($module->lessons) > 3)
                                 <div class="text-center">
-                                    <a href="{{ url('students/home') }}">Show More <i class="fas fa-angle-down"></i></a>
-                                </div>
+                                    <a data-bs-toggle="collapse" href="#collapseExample{{ $module->id }}" role="button" aria-expanded="false" aria-controls="collapseExample{{ $module->id }}">Show More <i class="fas fa-angle-down"></i></a>
+                                </div>  
                             @endif
 
                         </div>

@@ -153,8 +153,10 @@ My Profile Details
                                 <td>{{ $value->created_at }}</td>
                                 <td>€ {{ $value->amount }}</td>
                                 <td>
-                                    @if ($value->status == 'completed')
-                                    <span>Success</span>
+                                    @if ($value->payment_status == 'Paid')
+                                    <span>Paid</span>
+                                    @elseif ($value->payment_status == 'completed')
+                                    <span>Completed</span>
                                     @else
                                     <span class="bg-danger">Failed</span>
                                     @endif
