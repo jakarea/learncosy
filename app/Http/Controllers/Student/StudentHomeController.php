@@ -140,6 +140,7 @@ class StudentHomeController extends Controller
     // dashboard
     public function enrolled(){
 
+        $queryParams = request()->except('page');
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -177,7 +178,7 @@ class StudentHomeController extends Controller
             $enrolments->orderBy('id', 'desc');
         }
 
-        $enrolments = $enrolments->paginate(12);
+        $enrolments = $enrolments->paginate(12)->appends($queryParams);
 
         return view('e-learning/course/students/enrolled',compact('enrolments','cartCount'));
     }
