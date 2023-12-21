@@ -33,6 +33,7 @@ class ResetPasswordController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     public function showResetForm(Request $request, $token = null){
+
         $email = $request->email;
         $subdomain = explode('.', request()->getHost())[0];
         if($subdomain == 'app'){
