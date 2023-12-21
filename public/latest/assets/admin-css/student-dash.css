@@ -915,7 +915,7 @@
   border: 1px solid var(--neutral-40, #E0E0E0);
   background: var(--neutral-10, #FFF);
   padding: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 2rem; 
 }
 .course-modules-boxx .media {
   align-items: center;

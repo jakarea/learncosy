@@ -53,13 +53,18 @@ class LoginController extends Controller
     public function showLoginForm()
     {
 
+          // set dark mode after user change domain
+          if(isset(request()->preferenceMode)){
+                session(['preferenceMode' => request()->preferenceMode]); 
+            }
+ 
         if(isset(request()->singnature)){
             $user = User::where('session_id', request()->singnature)->first();
             if($user){
                 Auth::login($user);
                 $user->session_id = null;
-                $user->save();
-                return redirect()->intended($user->user_role.'/dashboard');
+                $user->save(); 
+                return redirect($user->user_role.'/dashboard');
             }
         }
         

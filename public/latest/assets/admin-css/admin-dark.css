@@ -1282,8 +1282,13 @@
   background-color: #7289FF !important;
 }
 
+.dark-mode select option{
+  background-color: #000!important;
+  color: #fff!important;
+}
+
 .dark-mode .content-settings-form-wrap .form-control option {
-  color: #0E2C1C !important;
+  color: #fff !important;
 }
 
 .dark-mode .user-expperience-box,
@@ -1539,6 +1544,11 @@
   border-color: #2D343E !important;
   background: #0D0D0D !important;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+}
+
+.dark-mode .cart-right-wrap .text-end a{
+  background: #7289FF!important;
+  color: #0D0D0D!important;
 }
 
 .dark-mode .close-bttn i{
