@@ -35,7 +35,7 @@ class ExperienceController extends Controller
 
         $validatedData['user_id'] = Auth::id(); // Associate the authenticated user
         $id = $validatedData['id'];
-        unset($validatedData['id']); 
+        unset($validatedData['id']);
 
         if ($id) {
             // Update the existing record if id is provided
