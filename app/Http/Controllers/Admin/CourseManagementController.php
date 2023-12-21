@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Checkout;
-use App\Models\CourseReview;  
+use App\Models\CourseReview;
 use App\Models\BundleSelect;
 use App\Models\CourseActivity;
 use App\Models\Notification;
@@ -17,84 +17,93 @@ use App\Models\course_like;
 use App\Models\CourseLog;
 use App\Models\BundleCourse;
 use App\Models\Module;
-use Illuminate\Support\Str;  
+use Illuminate\Support\Str;
 use App\Mail\CourseUpdated;
 use Illuminate\Support\Facades\Mail;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF; 
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use File;
 use ZipArchive;
-use Auth; 
+use Auth;
 use DB;
 
 class CourseManagementController extends Controller
 {
     // course list
-    public function index(){  
+    public function index(){
+
+        $queryParams = request()->except('page');
 
         $title = isset($_GET['title']) ? $_GET['title'] : '';
-        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
         $courses = Course::with('user','reviews');
 
         if ($title) {
             $courses->where('title', 'like', '%' . trim($title) . '%');
-        } 
+
+
+            // $jsonTitle = json_decode($title);
+
+            // if ($jsonTitle !== null && json_last_error() === JSON_ERROR_NONE) {
+            //     $courses->whereJsonContains('categories', [$jsonTitle]);
+            // }
+        }
 
         if ($status) {
             if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
             }
 
-            if ($status == 'best_rated') { 
+            if ($status == 'best_rated') {
                 $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
                 ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
                 ->groupBy('courses.id')
                 ->orderBy('avg_star', 'desc');
             }
 
-            if ($status == 'most_purchased') { 
+            if ($status == 'most_purchased') {
 
                 $courses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
                 ->with('user')
                 ->with('reviews')
                 ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-                ->groupBy('courses.id');
-
+                ->groupBy('courses.id')
+                ->orderByDesc('sale_count');
             }
-            
+
             if ($status == 'newest') {
                 $courses->orderBy('id', 'desc');
             }
         }else{
-            $courses->orderBy('id', 'desc'); 
+            $courses->orderBy('id', 'desc');
         }
 
-        $courses = $courses->paginate(16);
- 
-        return view('e-learning/course/admin/list',compact('courses'));  
+        $courses = $courses->paginate(16)->appends($queryParams);
+
+        return view('e-learning/course/admin/list',compact('courses'));
     }
 
     // course show
     public function show($slug)
-    {    
-       
+    {
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
 
         //start group file
         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
         $group_files = [];
-       
+
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
                 $file_name = $lesson_file->file;
-                $file_arr = explode('.', $lesson_file->file);  
+                $file_arr = explode('.', $lesson_file->file);
                 $extention = $file_arr[1];
                 if (!in_array($extention, $group_files)) {
                     $group_files[] = $extention;
                 }
             }
         }
-        
+
         //end group file
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
@@ -115,11 +124,12 @@ class CourseManagementController extends Controller
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
-    } 
+    }
 
     // course overview
     public function overview($slug)
     {
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $promo_video_link = '';
         if($course->promo_video != ''){
@@ -131,23 +141,26 @@ class CourseManagementController extends Controller
             $ytcode=$ytendarray[0];
             $promo_video_link = $ytcode;
         }
- 
-        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get(); 
+
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
 
         $related_course = [];
         if ($course) {
-            if($course->categories){
-                $categoryArray = explode(',', $course->categories);
-                $query = Course::query();  
 
-                foreach ($categoryArray as $category) {
-                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                }
-                $related_course = $query->take(4)->get();
-            }
- 
+            $categoryArray = explode(',', $course->categories);
+
+            $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where(function ($query) use ($categoryArray) {
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                })
+                ->take(4)
+                ->get();
+
             $Urlsubdomain = $course->user->subdomain;
+
 
 
             return view('e-learning/course/admin/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber','Urlsubdomain'));
@@ -159,7 +172,7 @@ class CourseManagementController extends Controller
     public function destroy($id)
     {
          // update bundle course for this course
-         $selectedCourseValue = intval($id); 
+         $selectedCourseValue = intval($id);
 
         $bundleSelected = BundleCourse::where(function ($query) use ($selectedCourseValue) {
                 $query->where('selected_course', 'LIKE', $selectedCourseValue . ',%')
@@ -173,7 +186,7 @@ class CourseManagementController extends Controller
             $updatedSelectedCourse = str_replace($selectedCourseValue, '', $updatedSelectedCourse);
             $record->selected_course = $updatedSelectedCourse;
             $record->save();
-        } 
+        }
 
         // delete bundleselected for this course
         $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue])->first();
@@ -181,10 +194,10 @@ class CourseManagementController extends Controller
             $bundleSelection->delete();
         }
 
-        // update cart 
+        // update cart
         $cartSelects = Cart::where(['course_id'=> $selectedCourseValue])->first();
         if ($cartSelects) {
-            foreach ($cartSelects as $cartSelect) { 
+            foreach ($cartSelects as $cartSelect) {
                 $cartSelect->delete();
             }
         }
@@ -203,7 +216,7 @@ class CourseManagementController extends Controller
             }
             $certificate->delete();
         }
-        
+
         // checkout controller update
         $totalCheckout = Checkout::where(['course_id'=> $selectedCourseValue])->get();
         if ($totalCheckout) {
@@ -216,7 +229,7 @@ class CourseManagementController extends Controller
         // course activities
         $totalActivity = CourseActivity::where(['course_id'=> $selectedCourseValue])->get();
         if ($totalActivity) {
-            foreach ($totalActivity as $activity) { 
+            foreach ($totalActivity as $activity) {
                 $activity->delete();
             }
         }
@@ -224,7 +237,7 @@ class CourseManagementController extends Controller
         // course likes
         $course_likes = course_like::where(['course_id'=> $selectedCourseValue])->get();
         if ($course_likes) {
-            foreach ($course_likes as $course_liked) { 
+            foreach ($course_likes as $course_liked) {
                 $course_liked->delete();
             }
         }
@@ -232,7 +245,7 @@ class CourseManagementController extends Controller
         // course Log
         $course_logs = CourseLog::where(['course_id'=> $selectedCourseValue])->get();
         if ($course_logs) {
-            foreach ($course_logs as $course_log) { 
+            foreach ($course_logs as $course_log) {
                 $course_log->delete();
             }
         }
@@ -240,7 +253,7 @@ class CourseManagementController extends Controller
         // course review
         $course_reviews = CourseReview::where(['course_id'=> $selectedCourseValue])->get();
         if ($course_reviews) {
-            foreach ($course_reviews as $course_review) { 
+            foreach ($course_reviews as $course_review) {
                 $course_review->delete();
             }
         }
@@ -248,7 +261,7 @@ class CourseManagementController extends Controller
         // course users
         $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue])->get();
         if ($course_useres) {
-            foreach ($course_useres as $course_usere) { 
+            foreach ($course_useres as $course_usere) {
                 DB::table('course_user')
                 ->where('id', $course_usere->id)
                 ->delete();
@@ -259,12 +272,12 @@ class CourseManagementController extends Controller
         // delete notification for this course
         $course_notifications = Notification::where(['course_id'=> $selectedCourseValue])->get();
         if ($course_notifications) {
-            foreach ($course_notifications as $course_notification) { 
+            foreach ($course_notifications as $course_notification) {
                 $course_notification->delete();
             }
         }
 
-        // delete main course 
+        // delete main course
         $course = Course::where(['id'=> $selectedCourseValue])->first();
 
         if ($course) {
@@ -272,7 +285,7 @@ class CourseManagementController extends Controller
             $oldThumbnail = public_path($course->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            } 
+            }
             //delete certficate
             $oldCertificate = public_path($course->sample_certificates);
             if (file_exists($oldCertificate)) {
@@ -294,7 +307,7 @@ class CourseManagementController extends Controller
                     if (file_exists($lessonOldFile)) {
                         @unlink($lessonOldFile);
                     }
-                    
+
                     $lesson->delete();
                 }
                 $module->delete();
