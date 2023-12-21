@@ -30,7 +30,7 @@ class CourseCreateStepController extends Controller
     public function startSet(Request $request){
 
         $course = new Course();
-        $course->title = "Untitled Course";
+        // $course->title = "Untitled Course";
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
@@ -344,7 +344,7 @@ class CourseCreateStepController extends Controller
         }
 
         $request->validate([
-            'description' => 'string',
+            'description' => 'nullable|string',
             'audio' => 'mimes:mp3,wav|max:50000',
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
 

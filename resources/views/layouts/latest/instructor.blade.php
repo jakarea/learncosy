@@ -3,12 +3,12 @@
 
     <head>
         <meta charset="utf-8">
-        <title>LearnCosy | @yield('title')</title>
+        <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }} | @yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta content="Admin Template For Filter Developers" name="description" />
         <meta content="" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
+        <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
         <meta property="og:title" content="">
         <meta property="og:type" content="">
         <meta property="og:url" content="">
@@ -16,9 +16,14 @@
         <meta name="theme-color" content="#fafafa">
         <meta name="csrf-token" content=" {{ csrf_token() }} ">
 
-
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+    
+        @if (modulesetting('favicon')) 
+            <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+        @else
+            <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+        @endif
+
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
             integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -86,7 +91,7 @@
     </head>
 
     <body>
-        {{-- Main Root Wrapper @S --}}
+        {{-- Main Root Wrapper @S --}} 
 
         {{-- header start --}}
         {{-- @include('partials/latest/instructor/header') --}}

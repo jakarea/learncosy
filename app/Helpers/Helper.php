@@ -338,6 +338,8 @@ if (!function_exists('modulesetting')) {
                     return $setting->image ?? null;
                 } elseif ($key == 'lp_bg_image') {
                     return $setting->lp_bg_image ?? null;
+                } elseif ($key == 'favicon') {
+                    return $setting->favicon ?? null;
                 } else {
                     return $setting->value->$key ?? null;
                 }
