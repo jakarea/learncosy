@@ -307,9 +307,16 @@ $i = 0;
                                     <img src="{{ asset($relatedCourse->thumbnail) }}" alt="{{ $relatedCourse->title }}"
                                         class="img-fluid">
                                 </div>
-                                <div class="course-txt-box">
-                                    <a href="{{ url('students/courses', $relatedCourse->slug) }}">{{
-                                        $relatedCourse->title }}</a>
+                                <div class="course-txt-box"> 
+
+                                    @if (isEnrolled($relatedCourse->id))
+                                    <a href="{{ url('students/courses/my-courses/details/' . $relatedCourse->slug) }}">
+                                        {{ Str::limit($relatedCourse->title, 45) }}</a>
+                                    @else
+                                    <a href="{{ url('students/courses/overview/' . $relatedCourse->slug) }}">
+                                        {{ Str::limit($relatedCourse->title, 50) }}</a>
+                                    @endif
+
                                     <p>{{ $relatedCourse->user->name }}</p>
 
                                     @php
