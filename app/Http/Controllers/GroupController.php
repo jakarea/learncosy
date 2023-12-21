@@ -39,6 +39,7 @@ class GroupController extends Controller
         }
 
         $data = [
+            "groupId" => $group->id,
             "success" => "Group successfully created!!",
         ];
         return response()->json($data);

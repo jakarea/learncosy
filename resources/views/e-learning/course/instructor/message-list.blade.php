@@ -602,7 +602,11 @@ function fetchGroupData(receiver_id){
         cache: false,
         success: function (data) {
             $('#chat-message').html(data);
-            // $('#chat-message-input').emojioneArea();
+
+            setTimeout(function() {
+                $("#group_" + receiver_id).addClass("active");
+            }, 500);
+
             scrollToBottomFunc();
         },
         complete: function () {
@@ -1026,9 +1030,9 @@ function createGroup(formSelector) {
                 $(formSelector)[0].reset();
             }
             $(".load-suggested-people").empty();
-            $(".load-chat-user-for-group-user").empty();
+            $(".load-chat-user-for-group").empty();
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-            // $(".chat-person-list-box .collapse").removeClass("show");
+            fetchGroupData(data.groupId);
         },
         error: function (jqXHR, status, err) {
             toastr.error('Something went wrong!', 'Error');
@@ -1082,7 +1086,7 @@ $(document).ready(function() {
     const userList = document.querySelector('.person-tab-body.chat-user-load');
 
     toggleBttn.addEventListener('click', function (e) {
-        userList.classList.toggle('active');
+        // userList.classList.toggle('active');
         headerFilter.classList.toggle('active');
     });
 
