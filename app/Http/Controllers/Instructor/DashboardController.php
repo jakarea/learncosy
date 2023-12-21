@@ -549,6 +549,7 @@ class DashboardController extends Controller
 
         } else {
             $user = User::find($user_id);
+            $oldSubdomain = $user->subdomain;
             $user->subdomain = $request->subdomain;
             $user->save();
 
@@ -559,12 +560,14 @@ class DashboardController extends Controller
             $request = Request::capture();
             $host = $request->getHost();
             $sub_domain = explode('.', $host)[0];
+            
 
-            if ($sub_domain == 'app' && $user->user_role == 'instructor') {
+            if (($sub_domain == 'app' && $user->user_role == 'instructor') || ($sub_domain == $oldSubdomain && $user->user_role == 'instructor')) {
                 $sessionId = session()->getId();
                 $user->session_id = $sessionId;
                 $user->save();
-                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId);
+                
+                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode);
             }
 
             return redirect('instructor/profile/step-4/complete');
