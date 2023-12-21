@@ -111,7 +111,7 @@
                             @enderror
                             <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
                         </div>
-                        <div class="checbox-wrap">
+                        <div class="checbox-wrap remember-auth">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                     {{ old('remember') ? 'checked' : '' }}>
@@ -127,7 +127,7 @@
                             @endif
                         </div>
                         <div class="submit-button">
-                            <button class="btn btn-submit" type="submit">Next</button>
+                            <button class="btn btn-submit btn-2" type="submit">Next</button>
                         </div>
                     </form>
                 </div>

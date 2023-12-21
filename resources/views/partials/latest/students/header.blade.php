@@ -19,7 +19,7 @@
                 @php
                     $host = request()->getHost();
                     $subdomain = explode('.', $host)[0];
-                    $instructor = \App\Models\User::where('subdomain', $subdomain)->first();
+                    $instructor = \App\Models\User::where('subdomain', $subdomain)->where('user_role','instructor')->first();
                     $pageAccess = \App\Models\ManagePage::where('instructor_id', $instructor->id)->first();
                     $userPermissions = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
 

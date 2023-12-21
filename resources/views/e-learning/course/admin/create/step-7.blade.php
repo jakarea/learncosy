@@ -69,15 +69,14 @@ Course Create - Step 7
                         <h4>Select Price</h4>
                         <div class="form-group">
                             <input id="price" class="form-control" name="price" value="{{ $course->price ? $course->price : old('price')  }}" type="text" >
-                            <label for="price">Regular Price</label>
-                            <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
+                            <label for="price">Regular Price</label> 
+                            <span class="euro">€</span>
                             <span class="invalid-feedback d-block">@error('price'){{ $message }} @enderror</span>
                         </div>
                         <div class="form-group">
                             <input id="offer_price" class="form-control" name="offer_price" value="{{ $course->offer_price ? $course->offer_price : old('offer_price')  }}" type="text" >
                             <label for="offer_price">Sales Price</label>
-                            {{-- <span>€</span> --}}
-                            <img src="{{asset('latest/assets/images/icons/euro.svg')}}" alt="a" class="img-fluid euro">
+                            <span class="euro">€</span> 
                             <span class="invalid-feedback d-block">@error('offer_price'){{ $message }}
                                         @enderror</span>
                         </div>    

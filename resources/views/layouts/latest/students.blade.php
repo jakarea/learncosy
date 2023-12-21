@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy | @yield('title')</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }} | @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
@@ -16,7 +16,11 @@
     <meta name="theme-color" content="#fafafa">
 
     <!-- App favicon -->
+    @if (modulesetting('favicon'))
+    <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+    @else
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+    @endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -59,22 +63,36 @@
             font-weight: 600;
             line-height: 1.375rem;
         }
+
+        .header-area .navbar-nav .nav-item .submenu-box li a:hover,
+        .header-area .navbar-nav .nav-item .submenu-box,
+        .header-area{
+            background: {{ modulesetting('primary_color') }}
+        }
+
+        .header-area .navbar-nav .nav-item .nav-link,
+        .header-area .navbar-nav .nav-item .submenu-box li a{
+            color: {{ modulesetting('menu_color') }}
+        }
+
     </style>
 
     @yield('seo')
 </head>
 
 <body>
+ 
+
     {{-- Main Root Wrapper @S --}}
     <div class="main-page-wrapper">
 
         {{-- header start --}}
         @if (Auth::user()->user_role == 'instructor')
-            @include('partials/latest/instructor/header')
+        @include('partials/latest/instructor/header')
         @elseif(Auth::user()->user_role == 'admin')
-            @include('partials/latest/dashboard/header')
+        @include('partials/latest/dashboard/header')
         @else
-            @include('partials/latest/students/header')
+        @include('partials/latest/students/header')
         @endif
 
         {{-- header end --}}
@@ -98,7 +116,8 @@
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
 
-    <script src="https://cdn.tiny.cloud/1/24z531gtj4tkxagq9eshg386rnnrwmmo91drwhvc19g5szrb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/24z531gtj4tkxagq9eshg386rnnrwmmo91drwhvc19g5szrb/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 
     {{-- Emoji area --}}
@@ -157,4 +176,5 @@
 
     @yield('script')
 </body>
+
 </html>
