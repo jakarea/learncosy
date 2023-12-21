@@ -59,42 +59,49 @@
                         {{-- profile tab start --}}
                         <div class="tab-pane tab-con active-bg fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
-                            <form action="{{ route('instructor.profile.update', config('app.subdomain') ) }}" method="POST"
-                                class="profile-form create-form-box profile-frm" enctype="multipart/form-data">
+                            <form action="{{ route('instructor.profile.update', config('app.subdomain') ) }}"
+                                method="POST" class="profile-form create-form-box profile-frm"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box userEditeBtn position-relative">
+                                        <div class="profile-picture-box">
+                                            <div class=" userEditeBtn position-relative">
+                                                <a href="javascript:;" id="image-container" class="drop-container">
+                                                    <input type="file" name="avatar" value="" accept="image/*"
+                                                        id="avatar"
+                                                        class="item-img file center-block filepreviewprofile ">
 
-                                            <a href="javascript:;" id="image-container" class="drop-container">
-                                                <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile "> 
+                                                    <label for="avatar" class="img-upload">
+                                                        <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
+                                                            alt="Upload" class="img-fluid">
+                                                        <p>Update photo</p>
+                                                        <div class="ol">
+                                                            @if ($user->avatar)
+                                                            <img src="{{asset($user->avatar)}}" alt="Avatar"
+                                                                id="item-img-output" class="imgpreviewPrf img-fluid">
+                                                            @else
+                                                            <span class="avatar-box" style="color: #3D5CFF">{!!
+                                                                strtoupper($user->name[0]) !!}</span>
+                                                            @endif
+                                                        </div>
+                                                    </label>
+                                                </a>
+                                                <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
 
-                                                <label for="avatar" class="img-upload">
-                                                    <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
-                                                    <p>Update photo</p>
-                                                    <div class="ol">
-                                                        @if ($user->avatar)
-                                                            <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output"
-                                                            class="imgpreviewPrf img-fluid">
-                                                        @else
-                                                            <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
-                                                        @endif
-                                                    </div>
-                                                </label>
-                                            </a>
-                                            <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
+                                                <span class="invalid-feedback">@error('avatar'){{ $message
+                                                    }}@enderror</span>
 
-                                             <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
-
-                                            <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
-                                                Max size of 3.1 MB</h6>
-
+                                                <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
+                                                    Max size of 3.1 MB</h6>
+                                            </div>
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
+                                                <label class="form-check-label" for="recivingMessage">Receiving
                                                     Messages</label>
 
-                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
-                                                    value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ?
+                                                <input class="form-check-input" id="recivingMessage" type="checkbox"
+                                                    name="recivingMessage" value="1" {{ old('recivingMessage',
+                                                    $user->recivingMessage) == 1 ?
                                                 'checked' : '' }}>
 
                                             </div>
@@ -178,7 +185,8 @@
                                                         <textarea name="description" id="description"
                                                             class="form-control @error('description') is-invalid @enderror">{!! $user->description !!}</textarea>
 
-                                                        <label for="description" style="top: -1rem!important;">About</label>
+                                                        <label for="description"
+                                                            style="top: -1rem!important;">About</label>
                                                         <span class="invalid-feedback">@error('description'){{ $message
                                                             }} @enderror</span>
                                                     </div>
@@ -186,7 +194,8 @@
                                             </div>
                                         </div>
                                         <div class="form-submit-bttns mt-5">
-                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
+                                            <button type="button" onclick="history.go(-1)"
+                                                class="btn btn-cancel">Cancel</button>
                                             <button type="submit" class="btn btn-submit">Save Changes</button>
                                         </div>
                                     </div>
@@ -203,7 +212,8 @@
 
                                 <div class="col-12">
                                     <div class="add-experience-form" id="experience-form">
-                                        <form action="{{ route('instructor.profile.experience',['subdomain' => config('app.subdomain')]) }}"
+                                        <form
+                                            action="{{ route('instructor.profile.experience',['subdomain' => config('app.subdomain')]) }}"
                                             method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $editExp ? $editExp->id:''}}" />
@@ -296,8 +306,10 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-submit-bttns mt-5">
-                                                            <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
-                                                            <button type="submit" class="btn btn-submit" id="submitFrm">Add</button>
+                                                            <button type="button" onclick="history.go(-1)"
+                                                                class="btn btn-cancel">Cancel</button>
+                                                            <button type="submit" class="btn btn-submit"
+                                                                id="submitFrm">Add</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -343,7 +355,8 @@
                                 </div>
                                 {{-- <div class="col-12">
                                     <div class="form-submit-bttns my-4 mx-3">
-                                        <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
+                                        <button type="button" onclick="history.go(-1)"
+                                            class="btn btn-cancel">Cancel</button>
                                         <button type="submit" class="btn btn-submit">Save Changes</button>
                                     </div>
                                 </div> --}}
@@ -382,7 +395,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form">
-                                                            <form action="{{ route('certificate.update', config('app.subdomain')) }}"
+                                                            <form
+                                                                action="{{ route('certificate.update', config('app.subdomain')) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
@@ -472,7 +486,8 @@
                                                                                     data-value="1">
                                                                                     <div class="d-flex">
                                                                                         <h6>Certificate Style One</h6>
-                                                                                        <span>Selected Certificate</span>
+                                                                                        <span>Selected
+                                                                                            Certificate</span>
                                                                                     </div>
                                                                                     <p>Raouls Choice is een simple en
                                                                                         elegant thema zonder extra
@@ -628,7 +643,8 @@
                                                                 <div class="media-body">
                                                                     <div
                                                                         class="d-flex align-items-center justify-content-between">
-                                                                        <h5>{{ optional($certificate->course)->title }} </h5>
+                                                                        <h5>{{ optional($certificate->course)->title }}
+                                                                        </h5>
                                                                         <div>
                                                                             <a href="#"><img
                                                                                     src="{{ asset('latest/assets/images/icons/pen.svg') }}"
@@ -660,7 +676,9 @@
                                                                         <i class="fas fa-circle"></i> {{
                                                                         $certificate->updated_at->format('d F Y') }}
                                                                     </h6>
-                                                                    <p>{{ optional($certificate->course)->short_description }} </p>
+                                                                    <p>{{
+                                                                        optional($certificate->course)->short_description
+                                                                        }} </p>
                                                                 </div>
                                                             </div>
                                                             @endforeach
@@ -676,7 +694,8 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="create-certificate-form create-certificate-form-2">
-                                                            <form action="{{ route('certificate.generate', config('app.subdomain')) }}"
+                                                            <form
+                                                                action="{{ route('certificate.generate', config('app.subdomain')) }}"
                                                                 method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <div class="row">
@@ -1019,11 +1038,13 @@
                                                     high-quality tools for hosting, sharing, and streaming videos in
                                                     gorgeous HD with no ads.</p>
                                             </div>
-                                            <a href="#" class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#connectModal">
+                                            <a href="#"
+                                                class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}"
+                                                data-bs-toggle="modal" data-bs-target="#connectModal">
                                                 @if (isVimeoConnected()[1] == 'Connected')
-                                                    Connected
+                                                Connected
                                                 @else
-                                                    Connect
+                                                Connect
                                                 @endif
                                             </a>
                                         </div>
@@ -1039,11 +1060,13 @@
                                                     commerce solutions for internet businesses of all sizes. Accept
                                                     payments and scale faster.</p>
                                             </div>
-                                            <a href="#" class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : 'disconnected' }}" data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
+                                            <a href="#"
+                                                class="{{ isConnectedWithStripe()[1] == 'Connected' ? 'connected' : 'disconnected' }}"
+                                                data-bs-toggle="modal" data-bs-target="#StripeconnectModal">
                                                 @if (isConnectedWithStripe()[1] == 'Connected')
-                                                    Connected
+                                                Connected
                                                 @else
-                                                    Connect
+                                                Connect
                                                 @endif
                                             </a>
                                         </div>
@@ -1061,7 +1084,9 @@
                             {{-- password tab start --}}
                             <div class="row user-add-form-wrap user-add-form-wrap-2 mt-0">
                                 <div class="col-12">
-                                    <form action="{{ route('instructor.password.update', ['id' => $user->id, 'subdomain' => config('app.subdomain')]) }}" method="POST">
+                                    <form
+                                        action="{{ route('instructor.password.update', ['id' => $user->id, 'subdomain' => config('app.subdomain')]) }}"
+                                        method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -1100,7 +1125,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-submit-bttns">
-                                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
+                                                    <button type="button" onclick="history.go(-1)"
+                                                        class="btn btn-cancel">Cancel</button>
                                                     <button type="submit" class="btn btn-submit">Save Changes</button>
 
                                                 </div>
@@ -1133,7 +1159,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.vimeo.update', config('app.subdomain')) }}" method="POST">
+                            <form action="{{ route('instructor.vimeo.update', config('app.subdomain')) }}"
+                                method="POST">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group">
@@ -1180,7 +1207,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="connect-modal-wrap">
-                            <form action="{{ route('instructor.stripe.update', config('app.subdomain')) }}" method="post">
+                            <form action="{{ route('instructor.stripe.update', config('app.subdomain')) }}"
+                                method="post">
                                 @csrf
                                 <div class="stripe-settings-form-wrap">
                                     <div class="form-group mb-3">
@@ -1232,9 +1260,9 @@
 <script src="{{ asset('latest/assets/js/crop-image.js') }}"></script>
 <script src="{{ asset('latest/assets/js/password-toggle.js') }}"></script>
 
-{{-- form change js  --}}
+{{-- form change js --}}
 <script src="{{ asset('latest/assets/js/form-change.js') }}"></script>
- 
+
 {{-- add extra filed js --}}
 <script>
     const urlBttn = document.querySelector('#social_increment');

@@ -55,6 +55,7 @@ class ProfileManagementController extends Controller
 
     public function update(Request $request, $domain)
     {
+        // return $request->all();
         $userId = auth()->user()->id;
 
         $this->validate($request, [
