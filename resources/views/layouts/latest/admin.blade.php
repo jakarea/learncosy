@@ -38,16 +38,18 @@
     @yield('seo')
 </head>
 
-<body>
+<body class="{{ session('darkModePreference') == 'dark-mode' ? 'dark-mode' : '' }}">
 
     {{-- ========= Main Root Wrapper @S ========= --}}
     <div class="main-page-wrapper">
         {{-- header start --}}
         @include('partials/latest/dashboard/header')
+
         {{-- header end --}}
         @yield('content')
     </div>
     {{-- Main Root Wrapper @E --}}
+    
 
     {{-- dark mode button start --}}
     <input type="checkbox" id="darkModeBttn" class="d-none">
@@ -79,6 +81,20 @@
         function toggleMode() {
             htmlBody.classList.toggle('dark-mode');
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
+
+            let currentURLs = window.location.href;
+            const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
+
+                // Update the dark mode preference using session
+                fetch(`${baseUrls}/preference/mode/setting`, { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ preferenceMode: mode }),
+            });
+
             localStorage.setItem('dark-mode', mode);
 
             if (htmlBody.classList.contains('dark-mode')) {

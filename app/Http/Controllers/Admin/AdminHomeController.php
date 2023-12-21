@@ -44,7 +44,6 @@ class AdminHomeController extends Controller
         $user->session_id = null;
         $user->save();
 
-
         $categories = [];
         $students = [];
         $users = 0;

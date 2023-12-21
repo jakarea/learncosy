@@ -8,6 +8,7 @@ use App\Models\InstructorModuleSetting;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TypingController;
+use App\Http\Controllers\UserPreferenceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\HomepageController;
@@ -153,6 +154,10 @@ Route::middleware('auth')->prefix('messages')->controller(GroupController::class
     Route::post('/update-group', 'updateGroup')->name('messages.update.group');
     Route::post('/delete-group', 'deleteGroup')->name('messages.delete.group');
     Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');
+});
+
+Route::middleware('auth')->prefix('preference')->controller(UserPreferenceController::class)->group(function () {
+    Route::post('mode/setting', 'updateDarkModePreference')->name('preference.mode.setting');
 });
 
 // Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');

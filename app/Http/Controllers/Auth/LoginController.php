@@ -55,8 +55,8 @@ class LoginController extends Controller
 
           // set dark mode after user change domain
           if(isset(request()->preferenceMode)){
-                session(['preferenceMode' => request()->preferenceMode]); 
-            }
+            session(['preferenceMode' => request()->preferenceMode]); 
+        }
  
         if(isset(request()->singnature)){
             $user = User::where('session_id', request()->singnature)->first();
@@ -73,7 +73,6 @@ class LoginController extends Controller
             return view('auth/login');
         }
 
-        
         $instrcutor = User::where('subdomain', $subdomain)->where('user_role','instructor')->firstOrFail();
 
         // module settings
