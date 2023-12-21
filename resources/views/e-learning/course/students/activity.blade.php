@@ -32,19 +32,19 @@
                         <tr> 
                             <th>Course Name</th>
                             <th>Duration</th>  
-                            <th>Total Point</th>
-                            <th>Your Point</th>
+                            {{-- <th>Total Point</th>
+                            <th>Your Point</th> --}}
                             <th>Status</th>
                             <th>Progress</th>
                             <th>Progress</th>
                         </tr>   
                         @foreach ($courseActivities as $activityCourse) 
                         <tr> 
-                            <td>
+                            <td> 
                                 <div class="media">
                                     <img src="{{ asset($activityCourse->thumbnail) }}" alt="a" class="img-fluid">
                                     <div class="media-body"> 
-                                        <h5><a href="{{url('students/courses/'.$activityCourse->slug)}}">
+                                        <h5><a style="background: transparent!important" href="{{url('students/courses/'.$activityCourse->slug)}}">
                                             {{ Str::limit($activityCourse->title, $limit = 45, $end = '..') }}
                                         </a></h5>
                                         <h6>{{ $activityCourse->categories }}</h6>
@@ -69,12 +69,12 @@
                                 <p>{{ number_format($totalDurationMinutes /60, 2) }} h
                                 </p>
                             </td>   
-                            <td>
+                            {{-- <td>
                                 <p>0</p>
                             </td>  
                             <td>
                                 <p>0</p>
-                            </td>  
+                            </td>   --}}
                             @php 
                             $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $activityCourse->id); 
                             $showPercentage = null;
@@ -112,7 +112,7 @@
                                                     $completedLessons += $module->lessons->where('completed', 1)->count();
                                                 @endphp
                                             @endforeach
-                                            <div class="number" style="left: 37%">
+                                            <div class="number" style="left: 27%">
                                                 <h6>{{ $totalPorgressPercent }}<b style="font-size: 14px">%</b></h6>
                                             </div>
                                         </div>
