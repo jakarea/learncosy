@@ -13,8 +13,7 @@ Connect
 </style>
 @endsection
 
-@section('content')
-
+@section('content') 
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
@@ -186,3 +185,19 @@ Connect
     </div>
 </div>
 @endsection
+
+@section('script') 
+{{-- dark mode js --}}
+<script>
+    const htmlBodyTag = document.querySelector("body"); 
+    // Set localStorage with the value from the session
+    localStorage.setItem('dark-mode', '{{ session('preferenceMode') }}');
+    const storedModeNow = localStorage.getItem('dark-mode');
+    console.log(storedModeNow);
+
+    if (storedModeNow === 'dark-mode') {
+        htmlBodyTag.classList.add('dark-mode');
+    }
+ 
+</script>
+@endsection 

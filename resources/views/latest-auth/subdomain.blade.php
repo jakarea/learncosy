@@ -13,7 +13,6 @@ Verify Email
 @endsection
 
 @section('content')
-
 <!-- pricing plan page start -->
 <section class="auth-part-secs custom-margin-top">
     <div class="container">
@@ -74,6 +73,8 @@ Verify Email
                         <div class="form-group">
                             <label for="subdomain">Subdomain URL</label>
                         </div>
+                        <input type="hidden" name="preferenceMode" id="preferenceMode" value="">
+
                         <div class="input-group">
                             @if (Auth::user()->subdomain)
                             <input type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
@@ -122,8 +123,6 @@ Verify Email
                         </div>
                     </form>
 
-
-
                     @if ($errors->any())
                     <div class="alert alert-danger mt-3">
                         <ul class="mb-0">
@@ -143,6 +142,18 @@ Verify Email
 @endsection
 
 @section('script')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let bodyy = document.querySelector('body');
+    let preferenceMode = document.querySelector('#preferenceMode');
+
+    if (bodyy.classList.contains("dark-mode")) { 
+        preferenceMode.value = "dark-mode";
+    }
+
+});
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () { 
         let suggestedLinks = document.querySelectorAll('.suggestedName');
