@@ -22,7 +22,12 @@ class ProfileManagementController extends Controller
 
     // profile show
     public function show()
-    {
+    { 
+        // dark mode preference session forgot
+        if (session()->has('preferenceMode')) { 
+            session()->forget('preferenceMode');
+        }
+
         $id = Auth::user()->id;
         $user = User::find($id);
         $courses = Course::where('user_id', $id)->get();
@@ -31,9 +36,9 @@ class ProfileManagementController extends Controller
     }
 
     // profile edit
-    public function edit(Request $request, $domain)
+    public function edit(Request $request, $domain, $experience_id = '')
     {
-        $experience_id = $request->query('id');
+        // $experience_id = $request->query('id');
         $userId = Auth()->user()->id;
         $user = User::find($userId);
         $editExp = '';
@@ -47,9 +52,22 @@ class ProfileManagementController extends Controller
         return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
+    public function deleteExperience($domain, $experience_id)
+    {
+        if($experience_id){
+            $experiences = Experience::where(['id' => $experience_id, 'user_id' => Auth::user()->id])->firstOrFail();
+            $experiences->delete();
+        }
+        return back()->with(["success" => "Experience deleted successfully!"]);
+    }
+
+
+
+
 
     public function update(Request $request, $domain)
     {
+        // return $request->all();
         $userId = auth()->user()->id;
 
         $this->validate($request, [
@@ -91,15 +109,15 @@ class ProfileManagementController extends Controller
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }
-            } 
+            }
             list($type, $data) = explode(';', $base64Image);
             list(, $data) = explode(',', $data);
-            $decodedImage = base64_decode($data); 
-            $slugg = Str::slug($request->name); 
+            $decodedImage = base64_decode($data);
+            $slugg = Str::slug($request->name);
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
             $path = 'public/uploads/users/' . $uniqueFileName;
             $path2 = 'storage/uploads/users/' . $uniqueFileName;
-            Storage::put($path, $decodedImage); 
+            Storage::put($path, $decodedImage);
             $user->avatar = $path2;
          }
 
@@ -148,21 +166,21 @@ class ProfileManagementController extends Controller
         $userId = $request->userId;
         $base64ImageCover = $request->cover_photo;
         $user = User::where('id', $userId)->first();
-        
+
         if ($user->cover_photo) {
             $oldFile = public_path($user->cover_photo);
             if (file_exists($oldFile)) {
                 unlink($oldFile);
             }
-        } 
+        }
         list($type, $data) = explode(';', $base64ImageCover);
         list(, $data) = explode(',', $data);
-        $decodedImage = base64_decode($data); 
-        $slugg = Str::slug($request->name); 
+        $decodedImage = base64_decode($data);
+        $slugg = Str::slug($request->name);
         $uniqueFileName = $slugg . '-' . uniqid() . '.png';
         $path = 'public/uploads/users/' . $uniqueFileName;
         $path2 = 'storage/uploads/users/' . $uniqueFileName;
-        Storage::put($path, $decodedImage); 
+        Storage::put($path, $decodedImage);
         $user->cover_photo = $path2;
 
         $user->save();
@@ -170,6 +188,6 @@ class ProfileManagementController extends Controller
      }
 
     return response()->json(['error' => 'No cover image uploaded'], 400);
-    
+
    }
 }

@@ -83,9 +83,17 @@ My Profile Details
                             <div class="d-flex align-items-center justify-content-between">
                                 <h5>{{ $experience->profession }}</h5>
                                 <div>
-                                    <a href="{{ url('instructor/profile/edit?id=' . $experience->id) }}"><img
+                                    <a href="{{ route('instructor.edit.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                        <img
                                             src=" {{ asset('latest/assets/images/icons/pen.svg') }}" alt="img"
-                                            class="img-fluid"></a>
+                                            class="img-fluid">
+                                    </a>
+
+                                    <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                        <img
+                                            src=" {{ asset('latest/assets/images/icons/minus.svg') }}" alt="img"
+                                            class="img-fluid">
+                                    </a>
                                 </div>
                             </div>
 
@@ -123,25 +131,27 @@ My Profile Details
                     </div>
                     @endif
                     @if ($user->short_bio)
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
-                        <div class="media-body">
-                            <h6>Website</h6>
-                            <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
+                            <div class="media-body">
+                                <h6>Website</h6>
+                                <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                            </div>
                         </div>
-                    </div>
                     @endif
                     @php
+
                     $social_links = explode(",", $user->social_links);
                     use Illuminate\Support\Str;
                     @endphp
 
-                    @foreach ($social_links as $social_link)
+                    @foreach ( $social_links as $social_link)
                     @php
                     $url = $social_link;
                     $host = parse_url($url, PHP_URL_HOST);
                     $domain = Str::after($host, 'www.');
                     $domain = Str::before($domain, '.');
+
                     @endphp
 
                     <div class="media">
@@ -188,22 +198,22 @@ My Profile Details
 <script src="{{ asset('latest/assets/js/banner-crop.js') }}"></script>
 {{-- set user cover photo js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () { 
-    const coverImgOutput = document.getElementById('item-img-output'); 
+    document.addEventListener('DOMContentLoaded', function () {
+    const coverImgOutput = document.getElementById('item-img-output');
     const uploadBtn = document.getElementById('uploadBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
     // Handle upload button click
     const coverImgBase64 = document.getElementById('coverImgBase64');
-    uploadBtn.addEventListener('click', function () { 
+    uploadBtn.addEventListener('click', function () {
         let fileBase64 = coverImgBase64.value;
-        uploadFile(fileBase64);  
+        uploadFile(fileBase64);
     });
 
     // Handle cancel button click
     cancelBtn.addEventListener('click', function () {
         cancelUpload();
-    }); 
+    });
 
     // Function to handle file upload
     function uploadFile(fileBase64) {
@@ -212,46 +222,46 @@ My Profile Details
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
         if (fileBase64) {
-            const userId = "{{ $user->id }}"; 
+            const userId = "{{ $user->id }}";
             const requestData = {
                 cover_photo: fileBase64,
                 userId: userId,
             };
             cancelBtn.classList.add('d-none');
             uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> Uploading`;
- 
+
             fetch(`${baseUrl}/instructor/profile/cover/upload`, {
-                    method: 'POST', 
+                    method: 'POST',
                     body: JSON.stringify(requestData),
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
                 })
                 .then(response => response.json())
-                .then(data => { 
+                .then(data => {
                     if (data.message === 'UPLOADED') {
                         uploadBtn.innerHTML = `Save`;
                         uploadBtn.classList.add('d-none');
                         cancelBtn.classList.add('d-none');
                     }
                 })
-                .catch(error => { 
+                .catch(error => {
                     uploadBtn.innerHTML = `Failed`;
                 });
         }
     }
 
     // Function to handle cancel button click
-        function cancelUpload() { 
-            const userCoverPhoto = "{{ $user->cover_photo ?? null }}"; 
+        function cancelUpload() {
+            const userCoverPhoto = "{{ $user->cover_photo ?? null }}";
             coverImgOutput.src = userCoverPhoto
                 ? "{{ asset('') }}" + userCoverPhoto
                 : "{{ asset('latest/assets/images/cover.svg') }}";
             coverImgBase64.value = '';
             uploadBtn.classList.add('d-none');
             cancelBtn.classList.add('d-none');
-        } 
+        }
     });
 </script>
 @endsection

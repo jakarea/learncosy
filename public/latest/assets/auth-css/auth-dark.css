@@ -22,6 +22,11 @@
     color: #fff !important;
 }
 
+
+.dark-mode .go-to-stripe a{
+    color: #fff!important;
+}
+
 .dark-mode .form-control {
     border: 1px solid #1A1A1A !important;
     background: #0D0D0D !important;
