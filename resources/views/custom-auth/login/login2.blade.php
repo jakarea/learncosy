@@ -75,14 +75,14 @@
                         </div>
                     </div>
                     <h1>Sign in</h1>
-                    <div class="buttons-group">
+                    {{-- <div class="buttons-group">
                         <a href="{{ route('social.login', ["social" => "google", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
                                 class="img-fluid"> Sign in with Google</a>
                         <a href="{{ route('social.login', ["social" => "facebook", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/facebook.svg') }}" alt="facebook"
                                 class="img-fluid"></a>
                         <a href="javascript:;"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="apple"
                                 class="img-fluid"></a>
-                    </div>
+                    </div> --}}
 
                     <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                         @csrf

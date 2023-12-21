@@ -117,7 +117,7 @@
                             </div>
                         </form>
 
-                        <h6 class="or">or</h6>
+                        {{-- <h6 class="or">or</h6>
 
                         <div class="buttons-group">
                             <a href="{{ route('social.login', ["social" => "google", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"
@@ -126,7 +126,7 @@
                                     alt="facebook" class="img-fluid"></a>
                             <a href="javascript:;"><img src="{{ asset('latest/assets/images/apple.svg') }}" alt="apple"
                                         class="img-fluid"></a>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
