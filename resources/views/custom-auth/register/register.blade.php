@@ -91,7 +91,7 @@
 
                             <div class="d-flex">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="aggred" checked>
+                                    <input class="form-check-input" type="checkbox" value="" id="aggred" required>
                                     <label class="form-check-label" for="aggred">
                                         By creating an account means you agree to the <a href="#"> Terms of
                                             Service</a>, and
