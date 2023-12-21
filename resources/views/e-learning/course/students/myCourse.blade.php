@@ -128,10 +128,9 @@
                                 <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
                                             class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
 
-                                @if ($course->hascertificate)
                                 <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid">
-                                    Certificate of Completion</p>
-                                @endif 
+                                                Certificate of Completion</p>
+                               
                             </div>
                             <div class="col-lg-6">
                                 @if ($course->language)
