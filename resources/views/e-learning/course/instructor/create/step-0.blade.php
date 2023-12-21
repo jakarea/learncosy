@@ -57,6 +57,10 @@ Course Create - Step 1
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="content-step-wrap">
+                    <div class="text-center mb-2">
+                        <span class="invalid-feedback">@error('module_name'){{ $message }} @enderror</span>
+                        <span class="invalid-feedback">@error('lesson_name'){{ $message }} @enderror</span>
+                    </div>
                     <form action="{{ route('course.create.start', ['subdomain' => config('app.subdomain') ]) }}" method="POST" id="myForm">
                         @csrf
                         {{-- course content add box start --}}

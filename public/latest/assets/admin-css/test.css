@@ -850,7 +850,9 @@ span.user-name-avatar {
   display: grid;
   grid-template-columns: 50% 50%;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1.5rem; 
+  z-index: 999!important;
+  background-color: #fff;
 }
 .create-group-form .form-submit .btn-cancel {
   border-radius: 0.375rem;

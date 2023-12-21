@@ -2134,9 +2134,12 @@
   color: #D2DEEF;
 }
 
+.dark-mode .create-group-form .form-submit {
+  background-color: #000!important;
+}
 .dark-mode .create-group-form .form-submit .btn-cancel {
-  border: 1px solid #2D343E;
-  background: #0D0D0D;
+  border: 1px solid #2D343E!important;
+  background: #0D0D0D!important;
 }
 
 .dark-mode .create-group-form .form-submit .btn-cancel:hover {
