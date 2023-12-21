@@ -137,7 +137,7 @@ Course Create - Final Step
                 {{-- step next bttns --}}
                 <div class="back-next-bttns">
                     <a href="{{ url('instructor/courses/create/'.$course->id.'/visibility')}}">Back</a>
-                    <a href="{{ url('instructor/courses')}}">Finish</a>
+                    <a href="{{ url('instructor/courses/create/'.$course->id.'/finish')}}">Finish</a>
                 </div>
                 {{-- step next bttns --}}
             </div>

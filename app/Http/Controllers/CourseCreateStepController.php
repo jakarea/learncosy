@@ -24,16 +24,28 @@ class CourseCreateStepController extends Controller
     use SlugTrait;
 
     public function start(){
+
+        if (session()->has('course_id')) { 
+            return redirect('instructor/courses/create/'.session('course_id'));
+        }
         return view('e-learning/course/instructor/create/step-0');
     }
 
     public function startSet(Request $request){
 
-        $course = new Course();
-        // $course->title = "Untitled Course";
+        $request->validate([
+            'module_name' => 'required|string'
+        ],
+        [
+            'module_name' => 'Module Name is Required',
+        ]);
+
+        $course = new Course(); 
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
+
+        session()->put('course_id', $course->id);
 
         if($request->input('module_name')){
             $module = new Module();
@@ -43,7 +55,7 @@ class CourseCreateStepController extends Controller
             $module->slug = Str::slug($request->input('module_name'));
             $module->save();
         }
-        return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started Successfuly');
+        return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started!');
     }
 
     public function step1($subdomain, $id){
@@ -151,9 +163,6 @@ class CourseCreateStepController extends Controller
     }
 
 
-
-
-
     public function step3c(Request $request, $subdomain, $id)
     {
 
@@ -194,13 +203,14 @@ class CourseCreateStepController extends Controller
     }
 
     public function step3cd(Request $request,$subdomain, $id){
+ 
 
         if(!$id){
             return redirect('instructor/courses');
         }
 
         $request->validate([
-            'module_name' => 'required'
+            'module_name' => 'required|string'
         ],
         [
             'module_name' => 'Module Name is Required',
@@ -758,6 +768,20 @@ class CourseCreateStepController extends Controller
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-11',compact('course'));
+    }
+
+    public function finish($subdomain,$id)
+    {
+        if(!$id){
+            return redirect('instructor/courses');
+        }
+
+        if (session()->has('course_id')) { 
+            session()->forget('course_id');
+        }
+
+        return redirect('instructor/courses')->with('success','Course Creation Completed!');
+
     }
 
 
