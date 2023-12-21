@@ -129,6 +129,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::post('instructor/courses/create/{id}/visibility', [CourseCreateStepController::class, 'visibilitySet'])->name('course.create.setvisibility');
 
         Route::get('instructor/courses/create/{id}/share', [CourseCreateStepController::class, 'courseShare']);
+        Route::get('instructor/courses/create/{id}/finish', [CourseCreateStepController::class, 'finish']);
 
 
         // Course bundle

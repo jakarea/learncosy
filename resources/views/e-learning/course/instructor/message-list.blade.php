@@ -200,11 +200,11 @@ Messsages Page
 
                         <form method="POST" class="send-actions w-100 d-none" id="groupChatMessage" autocomplete="off">
                             <div class="dock-bottom">
-                                <div id="file-preview" class="file-preview">
-                                    <img src="" alt="" class="preview-image img-fluid" id="preview-image">
+                                <div id="group-file-preview" class="file-preview">
+                                    <img src="" alt="" class="preview-image img-fluid" id="group-preview-image">
                                     <div class="preview-actions">
-                                        <span id="file-type-icon"></span>
-                                        <span class="close-icon" id="close-icon" onclick="removeFile()">✖</span>
+                                        <span id="group-file-type-icon"></span>
+                                        <span class="close-icon" id="group-close-icon" onclick="removeGroupFile()">✖</span>
                                     </div>
                                 </div>
 
@@ -215,11 +215,11 @@ Messsages Page
                                             id="chat-group-message-input" placeholder="Send a message" name="message"/>
                                     </div>
                                     <div class="file-attach-bttns">
-                                        <label for="attached" class="message-attached me-2">
+                                        <label for="group-attached" class="message-attached me-2">
                                             <i class="fa-solid fa-paperclip"></i>
                                         </label>
-                                        <input type="file" name="file" class="d-none" id="attached"
-                                            onchange="displayFileName()">
+                                        <input type="file" name="file" class="d-none" id="group-attached"
+                                            onchange="displayGroupFileName()">
                                         <button class="btn btn-submit" type="submit">
                                             Send
                                         </button>
@@ -1130,6 +1130,27 @@ $(document).ready(function() {
 
 {{-- show upload image preview --}}
 <script>
+    function displayGroupFileName() {
+        var input = document.getElementById('group-attached');
+        var fileName = input.files[0].name;
+
+        var fileNameElement = document.getElementById('chat-group-message-input');
+        fileNameElement.placeholder = fileName;
+
+        var filePreview = document.getElementById('group-file-preview');
+        filePreview.style.display = 'flex';
+
+        document.getElementById('group-close-icon').style.display = 'inline-block';
+
+        var fileTypeIcon = document.getElementById('group-file-type-icon');
+        if (fileName.endsWith('.pdf')) {
+            fileTypeIcon.innerHTML = '<img src="pdf-icon.png" alt="PDF">';
+        } else {
+            var previewImage = document.getElementById('group-preview-image');
+            previewImage.src = URL.createObjectURL(input.files[0]);
+        }
+    }
+
     function displayFileName() {
         var input = document.getElementById('attached');
         var fileName = input.files[0].name;
@@ -1151,17 +1172,29 @@ $(document).ready(function() {
         }
     }
 
-function removeFile() {
-    var input = document.getElementById('attached');
-    input.value = '';
-    var filePreview = document.getElementById('file-preview');
-    filePreview.style.display = 'none';
+    function removeGroupFile() {
+        var input = document.getElementById('group-attached');
+        input.value = '';
+        var filePreview = document.getElementById('group-file-preview');
+        filePreview.style.display = 'none';
 
-    var fileNameElement = document.getElementById('chat-message-input');
-    fileNameElement.placeholder = 'Send a message';
+        var fileNameElement = document.getElementById('chat-group-message-input');
+        fileNameElement.placeholder = 'Send a message';
 
-    document.getElementById('close-icon').style.display = 'none';
-}
+        document.getElementById('group-close-icon').style.display = 'none';
+    }
+
+    function removeFile() {
+        var input = document.getElementById('attached');
+        input.value = '';
+        var filePreview = document.getElementById('file-preview');
+        filePreview.style.display = 'none';
+
+        var fileNameElement = document.getElementById('chat-message-input');
+        fileNameElement.placeholder = 'Send a message';
+
+        document.getElementById('close-icon').style.display = 'none';
+    }
 
 </script>
 

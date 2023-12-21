@@ -55,19 +55,19 @@ class LoginController extends Controller
 
           // set dark mode after user change domain
           if(isset(request()->preferenceMode)){
-            session(['preferenceMode' => request()->preferenceMode]); 
+            session(['preferenceMode' => request()->preferenceMode]);
         }
- 
+
         if(isset(request()->singnature)){
             $user = User::where('session_id', request()->singnature)->first();
             if($user){
                 Auth::login($user);
                 $user->session_id = null;
-                $user->save(); 
+                $user->save();
                 return redirect($user->user_role.'/dashboard');
             }
         }
-        
+
         $subdomain = explode('.', request()->getHost())[0];
         if ($subdomain == 'app') {
             return view('auth/login');
@@ -104,7 +104,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        
+
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 

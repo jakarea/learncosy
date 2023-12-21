@@ -53,6 +53,9 @@ Course Create - Initial Step
                 {{-- course step --}}
             </div>
         </div>
+
+        <!-- Blade view file --> 
+
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
                 <div class="content-step-wrap">
