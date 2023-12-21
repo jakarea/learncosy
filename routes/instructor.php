@@ -212,6 +212,11 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/profile/myprofile', [ProfileManagementController::class ,'show'])->name('instructor.profile');
         Route::post('instructor/profile/cover/upload', [ProfileManagementController::class ,'coverUpload']);
         Route::get('instructor/profile/account-settings', [ProfileManagementController::class ,'edit'])->name('account.settings');
+
+
+        Route::get('instructor/edit/profile/{id}', [ProfileManagementController::class, 'edit'])->name('instructor.edit.profile');
+
+
         Route::post('instructor/profile/update', [ProfileManagementController::class ,'update'])->name('instructor.profile.update');
         Route::get('instructor/profile/change-password', [ProfileManagementController::class ,'passwordUpdate']);
         Route::post('instructor/profile/change-password', [ProfileManagementController::class ,'postChangePassword'])->name('instructor.password.update');
@@ -223,7 +228,6 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         // experience route
         Route::post('instructor/profile/experience/add', [ExperienceController::class, 'store'])->name('instructor.profile.experience');
-
 
         // settings page routes
         Route::get('instructor/settings/stripe', [SettingsController::class, 'stripeIndex'])->name('instructor.stripe');
