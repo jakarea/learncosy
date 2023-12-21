@@ -256,8 +256,8 @@ Account Management
                                                                     <a href="#" class="cert-bttn">
                                                                         <img src="{{ asset('latest/assets/images/login-02.png') }}"
                                                                         alt="Color" class="img-fluid">
-                                                                    </a> 
-                                                                   
+                                                                    </a>
+
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Volledige Breedte Afbeelding</h6>
@@ -289,7 +289,7 @@ Account Management
                                                                         alt="Color" class="img-fluid">
                                                                     </a>
 
-                                                                    
+
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Zijbalk &amp; Achtergrond</h6>
@@ -320,7 +320,7 @@ Account Management
                                                                         <img src="{{ asset('latest/assets/images/login-04.png') }}"
                                                                         alt="Color" class="img-fluid">
                                                                     </a>
-                                                                    
+
                                                                     <div class="media-body">
                                                                         <div class="d-flex">
                                                                             <h6>Zijbalk & Achtergrond</h6>
@@ -350,16 +350,6 @@ Account Management
                                                                         and drop</p>
                                                                 </label>
 
-                                                                <div>
-                                                                    <input type="file" name="lp_bg_image" id="lp_bg_image" accept="image/*"
-                                                                        class="d-none @error('lp_bg_image') is-invalid @enderror">
-                                                                    <span class="invalid-feedback">
-                                                                        @error('lp_bg_image')
-                                                                        {{ $message }}
-                                                                        @enderror
-                                                                    </span>
-                                                                </div>
-
                                                                 <div class="media-body">
                                                                     <div class="d-flex">
                                                                         <h6>Upload Login Page Background Image</h6>
@@ -375,6 +365,15 @@ Account Management
                                                                 <button class="btn" type="button" id="close-button3"><i
                                                                         class="fas fa-close"></i></button>
                                                             </label>
+                                                            <div>
+                                                                <input type="file" name="lp_bg_image" id="lp_bg_image" accept="image/*"
+                                                                    class="d-none @error('lp_bg_image') is-invalid @enderror">
+                                                                <span class="invalid-feedback">
+                                                                    @error('lp_bg_image')
+                                                                    {{ $message }}
+                                                                    @enderror
+                                                                </span>
+                                                            </div>
 
                                                             @if (isset($module_settings->lp_bg_image) ||
                                                             $module_settings->lp_bg_image != null)
@@ -388,7 +387,7 @@ Account Management
                                                                 </div>
                                                             </div>
                                                             @endif
- 
+
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 col-12 col-xl-4">
@@ -580,7 +579,7 @@ Account Management
                                             </div>
                                         </form>
                                     </div>
-                                    {{-- add domain end --}} 
+                                    {{-- add domain end --}}
                                 </div>
                             </div>
                         </div>
@@ -704,7 +703,7 @@ Account Management
         appCloseButton.style.display = 'none';
     });
 </script>
- 
+
 
 {{-- lp bg image preview --}}
 <script>
@@ -742,7 +741,7 @@ Account Management
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
-        function updateImage(userId) { 
+        function updateImage(userId) {
         fetch(`${baseUrl}/instructor/theme/setting/login-bg/${userId}`, {  // Use the user ID in the URL
             method: 'POST',
             headers: {
@@ -754,7 +753,7 @@ Account Management
             if (data.message == 'DONE') {
                 oldLoginBg.style.display = 'none';
             }
-            
+
         })
         .catch(error => {
             oldLoginBg.style.display = 'block';
