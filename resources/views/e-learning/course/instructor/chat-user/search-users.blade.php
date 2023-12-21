@@ -6,7 +6,7 @@
                 @if($user)
                     <div class="avatar">
                         @isset( $user->avatar )
-                            <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-fluid">
+                            <img src="{{ asset($user->avatar) }}" alt="A" class="img-fluid">
                         @else
                             <span class="user-name-avatar">{!! strtoupper($user->name[0]) !!}</span>
                         @endisset

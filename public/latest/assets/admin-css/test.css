@@ -1296,3 +1296,18 @@ span.user-name-avatar {
     max-height: 58vh;
   }
 }
+
+.emojionearea.emojionearea-inline {
+  height: 3.5rem !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--neutral-30, #E5ECF6) !important;
+  background: var(--neutral-white, #FFF) !important;
+  padding: 0.625rem 0.875rem !important;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+  color: var(--neutral-60, #66768E) !important;
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  position: relative !important;
+}

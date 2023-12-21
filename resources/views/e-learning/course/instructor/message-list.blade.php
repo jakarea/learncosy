@@ -215,7 +215,7 @@ Messsages Page
                                             id="chat-group-message-input" placeholder="Send a message" name="message"/>
                                     </div>
                                     <div class="file-attach-bttns">
-                                        <label for="attached" class="message-attached">
+                                        <label for="attached" class="message-attached me-2">
                                             <i class="fa-solid fa-paperclip"></i>
                                         </label>
                                         <input type="file" name="file" class="d-none" id="attached"
