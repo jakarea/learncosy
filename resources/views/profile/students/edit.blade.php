@@ -40,36 +40,38 @@
                                 @csrf
                                 <div class="row custom-padding">
                                     <div class="col-xl-3 col-lg-4">
-                                        <div class="profile-picture-box userEditeBtn position-relative">
+                                        <div class="profile-picture-box ">
 
-                                            <a href="javascript:;" id="image-container" class="drop-container">
-                                                <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile "> 
-
-                                                <label for="avatar" class="img-upload">
-                                                    <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
-                                                    <p>Update photo</p>
-                                                    <div class="ol">
-                                                        @if ($user->avatar)
-                                                            <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output"
-                                                            class="imgpreviewPrf img-fluid">
-                                                        @else
-                                                            <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
-                                                        @endif
-                                                    </div>
-                                                </label>
-                                            </a>
-                                            <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
-
-                                             <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
-
-                                            <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
-                                                Max size of 3.1 MB</h6>
+                                            <div class="userEditeBtn position-relative">
+                                                <a href="javascript:;" id="image-container" class="drop-container">
+                                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile "> 
+    
+                                                    <label for="avatar" class="img-upload">
+                                                        <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}" alt="Upload" class="img-fluid">
+                                                        <p>Update photo</p>
+                                                        <div class="ol">
+                                                            @if ($user->avatar)
+                                                                <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output"
+                                                                class="imgpreviewPrf img-fluid">
+                                                            @else
+                                                                <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
+                                                            @endif
+                                                        </div>
+                                                    </label>
+                                                </a>
+                                                <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
+    
+                                                 <span class="invalid-feedback">@error('avatar'){{ $message }}@enderror</span>
+    
+                                                <h6>Allowed *.jpeg, *.jpg, *.png, *.gif <br>
+                                                    Max size of 3.1 MB</h6>
+                                            </div>
 
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">Receiving
+                                                <label class="form-check-label" for="recivingMessage">Receiving
                                                     Messages</label>
 
-                                                <input class="form-check-input" type="checkbox" name="recivingMessage"
+                                                <input class="form-check-input" id="recivingMessage" type="checkbox" name="recivingMessage"
                                                     value="1" {{ old('recivingMessage', $user->recivingMessage) == 1 ?
                                                 'checked' : '' }}>
 

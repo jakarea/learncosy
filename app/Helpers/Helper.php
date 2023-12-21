@@ -323,11 +323,7 @@ if (!function_exists('modulesetting')) {
             $instructor = User::where('subdomain', $sub_domain)->where('user_role','instructor')->first();
 
             if (!$instructor) {
-                if (auth()->user()->user_role == 'instructor') {
-                    return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')]);
-                }elseif(auth()->user()->user_role == 'student'){
-                    return redirect('students/dashboard');
-                }
+                return redirect($sub_domain . '/dashboard');
             }
 
             $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $instructor->id)->first();
