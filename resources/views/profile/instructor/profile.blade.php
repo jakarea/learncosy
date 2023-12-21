@@ -90,7 +90,9 @@ My Profile Details
                                     </a>
 
                                     <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
-                                        delete
+                                        <img
+                                            src=" {{ asset('latest/assets/images/icons/minus.svg') }}" alt="img"
+                                            class="img-fluid">
                                     </a>
                                 </div>
                             </div>

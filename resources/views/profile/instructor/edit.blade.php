@@ -331,13 +331,17 @@
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <h5>{{ $experience->profession }}</h5>
                                                     <div>
-                                                        <a href="#"><img
-                                                                src="{{ asset('latest/assets/images/icons/plus.svg') }}"
-                                                                alt="img" class="img-fluid"></a>
-                                                        <a
-                                                            href="{{ url('instructor/profile/edit?id='.$experience->id )}}"><img
-                                                                src=" {{ asset('latest/assets/images/icons/pen.svg')   }}"
-                                                                alt="img" class="img-fluid"></a>
+                                                        <a href="{{ route('instructor.edit.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                                            <img
+                                                                src=" {{ asset('latest/assets/images/icons/pen.svg') }}" alt="img"
+                                                                class="img-fluid">
+                                                        </a>
+                    
+                                                        <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                                            <img
+                                                                src=" {{ asset('latest/assets/images/icons/minus.svg') }}" alt="img"
+                                                                class="img-fluid">
+                                                        </a>
                                                     </div>
                                                 </div>
 
@@ -352,14 +356,7 @@
                                     @else
                                     @include('partials/no-data')
                                     @endif
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="form-submit-bttns my-4 mx-3">
-                                        <button type="button" onclick="history.go(-1)"
-                                            class="btn btn-cancel">Cancel</button>
-                                        <button type="submit" class="btn btn-submit">Save Changes</button>
-                                    </div>
-                                </div> --}}
+                                </div> 
                             </div>
                         </div>
                         {{-- experience tab end --}}

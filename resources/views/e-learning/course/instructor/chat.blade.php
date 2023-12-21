@@ -69,7 +69,7 @@
 
 
                 @isset($message->groupUserName->avatar)
-                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="{{ $message->groupUserName->name }}"
+                    <img src="{{ asset($message->groupUserName->avatar) }}" alt="A"
                         class="img-fluid">
                 @else
                     <span class="user-name-avatar">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
@@ -145,7 +145,7 @@
         </a>
         <div class="avatar">
             @isset($friend->avatar)
-                <img src="{{ asset($friend->avatar) }}" alt="{{ $friend->name }}" class="img-fluid rounded-circle">
+                <img src="{{ asset($friend->avatar) }}" alt="A" class="img-fluid rounded-circle">
             @else
                 <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
             @endisset
