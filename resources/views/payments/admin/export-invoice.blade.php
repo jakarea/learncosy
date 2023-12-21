@@ -132,7 +132,7 @@
     <table border="0" cellspacing="0" cellpadding="0" style="width: 70%; margin: 0 auto;">
         <tr>
             <th class="border-0" style="text-align: left;">
-                <a href="#"> 
+                <a href="#">
 
                     <img src="{{ public_path('latest/assets/images/black-logo.png') }}" alt="Logo" class="img-fluid" style="width: 7rem">
                 </a>
@@ -151,9 +151,9 @@
                 <address>
                     <strong>Payment By: </strong> <br>
                     Name: {{ isset($payment->instructor->name) ? $payment->instructor->name : "Instructor has been removed"; }} <br />
-                    Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
+                    Subscription Date: {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
                     Start Date : {{ date(' d M, Y',strtotime($payment->start_at)) }} <br>
-                    End Date : {{ date(' d M, Y',strtotime($payment->end_at)) }} <br> 
+                    End Date : {{ date(' d M, Y',strtotime($payment->end_at)) }} <br>
                     Payment Status : {{ ucfirst( $payment->payment_status) }}
 
                 </address>
@@ -193,11 +193,11 @@
                             <td class="bl-0">
                                 € @if (isset($payment->subscriptionPackage))
                                     {{ $payment->subscriptionPackage->regular_price - $payment->subscriptionPackage->sales_price }}
-                                @else 
+                                @else
                                     0
                                 @endif
                             </td>
-                        </tr> 
+                        </tr>
                         <tr class="" style="text-align: right;">
                             <td colspan="2" class="br-0">
                                 <strong>Grand Total:</strong>
