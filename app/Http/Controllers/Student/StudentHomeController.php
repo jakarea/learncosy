@@ -319,8 +319,6 @@ class StudentHomeController extends Controller
         ->limit(3)
         ->get();
 
-    //    return $relatedCourses = Checkout::with('course.reviews')->where('checkouts.user_id', Auth::user()->id);
-
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
