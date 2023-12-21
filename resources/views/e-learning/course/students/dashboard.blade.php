@@ -316,7 +316,11 @@ Student Dashboard
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script')
+@section('script') 
+<script>  
+        const modess = document.querySelector("body").classList.contains('dark-mode') ? 'dark-mode' : '';
+        modeCall(modess); 
+</script>   
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

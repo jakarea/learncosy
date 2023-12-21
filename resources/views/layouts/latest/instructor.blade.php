@@ -140,22 +140,26 @@
             const htmlBody = document.querySelector("body");
             const modeBttn = document.getElementById("darkModeBttn");
 
+            function modeCall(mode){
+            let currentURLs = window.location.href;
+            const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
+
+            // Update the dark mode preference using session
+            fetch(`${baseUrls}/preference/mode/setting`, { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ preferenceMode: mode }),
+            });
+        }
+
             function toggleMode() {
                 htmlBody.classList.toggle('dark-mode');
                 const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
 
-                let currentURLs = window.location.href;
-                const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
-
-                 // Update the dark mode preference using session
-                 fetch(`${baseUrls}/preference/mode/setting`, { 
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ preferenceMode: mode }),
-                });
+                modeCall(mode);
 
                 localStorage.setItem('dark-mode', mode);
 
