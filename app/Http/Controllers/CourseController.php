@@ -28,6 +28,8 @@ class CourseController extends Controller
     // course list
     public function index(){
 
+        $queryParams = request()->except('page');
+
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -51,22 +53,10 @@ class CourseController extends Controller
             }
 
             if ($status == 'most_purchased') {
-                // $courses = Course::leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-                // ->select('courses.*')
-                // ->groupBy('courses.id')
-                // ->where('courses.user_id', Auth::user()->id)
-                // ->orderBy(\DB::raw('COUNT(checkouts.course_id)'), 'desc');
-
-                $courses = Course::select('courses.id', 'courses.price', 'courses.offer_price', 'courses.user_id', 'courses.title', 'courses.categories', 'courses.thumbnail', 'courses.slug', DB::raw('COUNT( DISTINCT checkouts.id) as sale_count'))
-                ->with('user')
-                ->with('reviews')
-                ->where('courses.user_id', Auth::user()->id)
-                ->leftJoin('checkouts', 'courses.id', '=', 'checkouts.course_id')
-                ->groupBy('courses.id');
-
-                // return $courses->get();
-
-
+                $courses = Course::with(['user','reviews'])
+                ->withCount('checkouts as sale_count')
+                ->where('user_id', auth()->id())
+                ->orderByDesc('sale_count');
             }
 
             if ($status == 'newest') {
@@ -76,7 +66,7 @@ class CourseController extends Controller
             $courses->orderBy('id', 'desc');
         }
 
-        $courses = $courses->paginate(12);
+        $courses = $courses->paginate(12)->appends($queryParams);
 
         return view('e-learning/course/instructor/list',compact('courses'));
     }
