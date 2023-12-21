@@ -155,7 +155,6 @@ Route::middleware('auth')->prefix('messages')->controller(GroupController::class
     Route::get('/load/suggested/people', 'loadSuggestedPeople')->name('messages.suggested.people');
 });
 
-
 // Route::get('/generate-pdf/{id}',[GeneratepdfController::class, 'generatePdf'])->name('generate-pdf');
 
 Route::get('/logout', function () {
@@ -175,9 +174,9 @@ Route::fallback(function () {
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
 Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
-// custom login for student and instructor 
+// custom login for student and instructor
 Route::get('/login', function () {
-  
+
     // match user sessionId
     if(isset(request()->singnature)){
         $user = User::where('session_id', request()->singnature)->first();
