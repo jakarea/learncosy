@@ -29,7 +29,7 @@
                     </div>
                     <div>
                         <h6>Subscription Date</h6>
-                        <h5>{{ date(' d M, Y',strtotime($payment->start_date)) }}</h5>
+                        <h5>{{ date(' d M, Y',strtotime($payment->created_at)) }}</h5>
                     </div>
                     <div>
                         <h6>Payment Date</h6>

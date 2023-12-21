@@ -2134,6 +2134,10 @@
   color: #D2DEEF;
 }
 
+.dark-mode .download-inv-box .ms-3.d-inline-flex.align-items-center img{
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(248deg) brightness(107%) contrast(107%);
+}
+
 .dark-mode .course-modules-boxx div i{
   color: #D2DEEF !important;
 }

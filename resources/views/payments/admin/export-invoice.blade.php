@@ -151,7 +151,7 @@
                 <address>
                     <strong>Payment By: </strong> <br>
                     Name: {{ isset($payment->instructor->name) ? $payment->instructor->name : "Instructor has been removed"; }} <br />
-                    Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
+                    Subscription Date: {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
                     Start Date : {{ date(' d M, Y',strtotime($payment->start_at)) }} <br>
                     End Date : {{ date(' d M, Y',strtotime($payment->end_at)) }} <br> 
                     Payment Status : {{ ucfirst( $payment->payment_status) }}
