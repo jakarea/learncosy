@@ -47,6 +47,18 @@ class ProfileManagementController extends Controller
         return view('profile/instructor/edit',compact('user','experiences','editExp','courses','certificates'));
     }
 
+    public function deleteExperience($domain, $experience_id)
+    {
+        if($experience_id){
+            $experiences = Experience::where(['id' => $experience_id, 'user_id' => Auth::user()->id])->firstOrFail();
+            $experiences->delete();
+        }
+        return back()->with(["success" => "Experience deleted successfully!"]);
+    }
+
+
+
+
 
     public function update(Request $request, $domain)
     {

@@ -214,7 +214,9 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('instructor/profile/account-settings', [ProfileManagementController::class ,'edit'])->name('account.settings');
 
 
-        Route::get('instructor/edit/profile/{id}', [ProfileManagementController::class, 'edit'])->name('instructor.edit.profile');
+        Route::get('instructor/edit/experience/{id}', [ProfileManagementController::class, 'edit'])->name('instructor.edit.experience');
+
+        Route::get('instructor/delete/experience/{id}', [ProfileManagementController::class, 'deleteExperience'])->name('instructor.delete.experience');
 
 
         Route::post('instructor/profile/update', [ProfileManagementController::class ,'update'])->name('instructor.profile.update');

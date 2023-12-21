@@ -83,10 +83,14 @@ My Profile Details
                             <div class="d-flex align-items-center justify-content-between">
                                 <h5>{{ $experience->profession }}</h5>
                                 <div>
-                                    <a href="{{ route('instructor.edit.profile', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                    <a href="{{ route('instructor.edit.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
                                         <img
                                             src=" {{ asset('latest/assets/images/icons/pen.svg') }}" alt="img"
                                             class="img-fluid">
+                                    </a>
+
+                                    <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                        delete
                                     </a>
                                 </div>
                             </div>
@@ -125,25 +129,27 @@ My Profile Details
                     </div>
                     @endif
                     @if ($user->short_bio)
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
-                        <div class="media-body">
-                            <h6>Website</h6>
-                            <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                        <div class="media">
+                            <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
+                            <div class="media-body">
+                                <h6>Website</h6>
+                                <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                            </div>
                         </div>
-                    </div>
                     @endif
                     @php
+
                     $social_links = explode(",", $user->social_links);
                     use Illuminate\Support\Str;
                     @endphp
 
-                    @foreach ($social_links as $social_link)
+                    @foreach ( $social_links as $social_link)
                     @php
                     $url = $social_link;
                     $host = parse_url($url, PHP_URL_HOST);
                     $domain = Str::after($host, 'www.');
                     $domain = Str::before($domain, '.');
+
                     @endphp
 
                     <div class="media">
