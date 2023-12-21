@@ -69,12 +69,12 @@ Bundle Course Update
                             <div class="course-single-item">
                                 <div class="course-thumb-box bundle-course-thumb">
                                     <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
-                                    {{-- <div class="remove-bundle">
+                                    <div class="remove-bundle">
                                         <button type="button" class="btn btn-remove"
                                             data-course-id="{{ $course->id }}">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
-                                    </div> --}}
+                                    </div>
                                 </div>
                                 <div class="course-txt-box">
                                     <a href="{{ url('admin/courses/' . $course->slug) }}">{{

@@ -21,7 +21,6 @@ use Illuminate\Http\Request;
 use App\Models\CourseActivity;
 use RecursiveIteratorIterator;
 use App\Models\Notification;
-// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Barryvdh\DomPDF\Facade\Pdf;
 use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
@@ -204,14 +203,13 @@ class StudentHomeController extends Controller
     public function catalog(Request $request){
         $host = $request->getHost();
         $subdomain = explode('.', $host)[0];
+        $instructor = User::where('subdomain', $subdomain)->where('user_role','instructor')->first();
 
-        $instructor = User::where('subdomain', $subdomain)->first();
-
-        if ( $instructor) {
-            $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews');
-        }else{
-            $courses = Course::with('user','reviews')->where('status','published');
+        if (!$instructor) {
+            return redirect('students/dashboard')->with('error','No Instructor Found!');
         }
+
+        $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews');
 
         $bundleCourse = BundleCourse::orderBy('id','desc')->get();
         $mainCategories = $courses->pluck('categories');
@@ -277,7 +275,7 @@ class StudentHomeController extends Controller
             }
         }
         $categories = array_unique($unique_array);
-        $courses = $courses->where('status','published')->paginate(12);
+        $courses = $courses->paginate(12);
 
         $cartCourses = Cart::where('user_id', auth()->id())->get();
 
@@ -297,6 +295,7 @@ class StudentHomeController extends Controller
     public function show($domain,$slug)
     {
 
+        // return 234;
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         //start group file
         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
@@ -319,6 +318,9 @@ class StudentHomeController extends Controller
         ->inRandomOrder()
         ->limit(3)
         ->get();
+
+    //    return $relatedCourses = Checkout::with('course.reviews')->where('checkouts.user_id', Auth::user()->id);
+
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
@@ -587,7 +589,7 @@ class StudentHomeController extends Controller
 
     public function storeCourseLog(Request $request){
 
-        return "hi";
+        // return "hi";
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');

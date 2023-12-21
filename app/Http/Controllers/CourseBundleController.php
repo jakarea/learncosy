@@ -316,7 +316,7 @@ class CourseBundleController extends Controller
 
      }
 
-     public function removeSelectNew($courseId){
+     public function removeSelectNew($subdomain,$courseId){
 
         $courseIdToRemove = $courseId;
         $bundleSelected = session()->has('bundleSelected') ? session('bundleSelected') : [];
@@ -330,7 +330,7 @@ class CourseBundleController extends Controller
 
      }
 
-     public function removeSelect($domain, $course_id)
+     public function removeSelect($subdomain, $course_id)
      {
         $selectedBundle = BundleSelect::where('course_id',$course_id)->firstOrFail();
         $selectedBundle->delete();

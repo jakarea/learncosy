@@ -2810,3 +2810,15 @@ span.stripe-bg i {
   border: 0;
   background-color: transparent;
  }
+
+.content-settings-form-wrap .form-group{
+  position: relative;
+}
+
+.content-settings-form-wrap .form-group .euro{
+  position: absolute;
+  right: 14px;
+  top: 16px;
+  font-size: 19px;
+  color: #2F3A4C!important;
+}

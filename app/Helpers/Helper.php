@@ -320,14 +320,17 @@ if (!function_exists('modulesetting')) {
         $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
         if ($sub_domain) {
-            $user = User::where('subdomain', $sub_domain)->first();
+            $instructor = User::where('subdomain', $sub_domain)->where('user_role','instructor')->first();
 
-            if (!$user) {
-                // Redirect the user to set up their subdomain
-                return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')]);
+            if (!$instructor) {
+                if (auth()->user()->user_role == 'instructor') {
+                    return redirect()->route('instructor.dashboard.index',['subdomain' => config('app.subdomain')]);
+                }elseif(auth()->user()->user_role == 'student'){
+                    return redirect('students/dashboard');
+                }
             }
 
-            $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $user->id)->first();
+            $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $instructor->id)->first();
 
             if ($setting) {
                 $setting->value = json_decode($setting->value);

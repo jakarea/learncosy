@@ -100,12 +100,15 @@
                 <div class="what-you-learn-box">
                     <h3>What You'll Learn</h3>
                     @php
-                    $objectives = explode("[objective]", $course->objective);
+                        $objectives = explode("[objective]", $course->objective);
                     @endphp
-
                     <ul>
                         @foreach ($objectives as $object)
-                        <li><i class="fas fa-check"></i> {{$object}} </li>
+                            @if (trim($object) !== '')
+                                <li><i class="fas fa-check"></i> {{ $object }} </li>
+                            @else 
+                                <li>No Objective Found!</li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -208,7 +211,7 @@
                     <h3 class="mb-0">Similar Course</h3>
                 </div>
                 <div class="row">
-
+                    @if (count($related_course) > 0) 
                     @foreach ($related_course as $course)
                     @php
                     $review_sum = 0;
@@ -249,6 +252,11 @@
                     </div>
                     {{-- course single box end --}}
                     @endforeach
+                    @else
+                    <div class="text-center">
+                        <p>No similer course found for this course!</p>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
