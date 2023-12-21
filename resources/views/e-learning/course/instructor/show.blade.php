@@ -91,6 +91,7 @@ $i = 0;
                     </div>
 
                     {{-- course review --}}
+                    @if ($course->allow_review) 
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
 
@@ -119,6 +120,7 @@ $i = 0;
                         </div>
                         @endif
                     </div>
+                    @endif
                     {{-- course review --}}
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.latest.students')
 @section('title')
-{{ $course->title ? $course->title : 'Course Details' }} 
+{{ $course->title ? $course->title : 'Course Details' }}
 @endsection
 
 {{-- style section @S --}}
@@ -8,9 +8,10 @@
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('latest/assets/admin-css/student-dash.css') }}" rel="stylesheet" type="text/css" />
 
-<style>#firstLesson .vp-sidedock {
-    display: none !important;
-}
+<style>
+    #firstLesson .vp-sidedock {
+        display: none !important;
+    }
 </style>
 @endsection
 {{-- style section @E --}}
@@ -99,7 +100,8 @@ $i = 0;
 
                     <div class="files">
                         @foreach($group_files as $fileExtension)
-                        <a href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
+                        <a
+                            href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
                             {{strtoupper($fileExtension)}}<img
                                 src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title=""
                                 class="img-fluid">
@@ -110,14 +112,15 @@ $i = 0;
                         @endphp
 
                         @if ($progress > 90)
-                        <a href="{{ route('students.download.courses-certificate', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}">Certificate
+                        <a
+                            href="{{ route('students.download.courses-certificate', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}">Certificate
                             Download <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
                                 title="120MB" class="img-fluid"></a>
                         @endif
                     </div>
                     @endif
                 </div>
-@if($course->allow_review)
+                @if($course->allow_review)
                 {{-- course review --}}
                 <div class="course-review-wrap">
                     <h3>{{ count($course_reviews) }} Reviews</h3>
@@ -131,8 +134,9 @@ $i = 0;
                         <span class="avtar">{!! strtoupper($course->user->name[0]) !!}</span>
                         @endif
                         <div class="media-body">
-                            <form action="{{ route('students.review.courses', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form
+                                action="{{ route('students.review.courses', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
+                                method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <input type="text" name="comment" id="review" placeholder="Write a review">
@@ -192,7 +196,7 @@ $i = 0;
                     @endif
                 </div>
                 {{-- course review --}}
-            @endif
+                @endif
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
                 {{-- course outline --}}
@@ -205,7 +209,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
-                        @if (count($module->lessons) > 0) 
+                        @if (count($module->lessons) > 0)
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -213,9 +217,11 @@ $i = 0;
                                     aria-controls="collapseOne">
                                     <div class="media align-items-center">
 
-                                        <i class="fas fa-check-circle me-2 {{ $module->isComplete() ? 'text-primary' : '' }}"></i>
+                                        <i
+                                            class="fas fa-check-circle me-2 {{ $module->isComplete() ? 'text-primary' : '' }}"></i>
                                         <div class="media-body">
-                                            <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
+                                            <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ?
+                                                $loop->iteration : ""}}</p>
                                         </div>
                                     </div>
                                 </button>
@@ -225,50 +231,56 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                            @if(!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
-                                            <li>
-                                                @if(!isEnrolled($course->id))
-                                                <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
-                                                    class="video_list_play d-inline-block">
-                                                    <i class="fas fa-lock"></i>
-                                                    {{ $lesson->title }} 2
-                                                </a>
-                                                @else
-                                                <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
-                                                    data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                    data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
-                                                    data-audio-url="{{ $lesson->audio }}"
-                                                    data-lesson-type="{{ $lesson->type }}">
+                                        @if(!empty($lesson->text) || !empty($lesson->audio) ||
+                                        !empty($lesson->video_link))
+                                        <li>
+                                            @if(!isEnrolled($course->id))
+                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
+                                                class="video_list_play d-inline-block">
+                                                <i class="fas fa-lock"></i>
+                                                {{ $lesson->title }} 2
+                                            </a>
+                                            @else
+                                            <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
+                                                data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
+                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
+                                                data-audio-url="{{ $lesson->audio }}"
+                                                data-lesson-type="{{ $lesson->type }}">
 
-                                                    <span class="mt-2 ms-1" style="cursor:pointer;">
-                                                        @if (isLessonCompleted($lesson->id))
-                                                        <i class="fas fa-check-circle text-primary"></i>
-                                                        @else
-                                                        <i class="fas fa-check-circle is_complete_lesson"
-                                                            data-course="{{ $course->id }}" data-module="{{ $module->id }}"
-                                                            data-lesson="{{ $lesson->id }}"
-                                                            data-duration="{{ $lesson->duration }}"
-                                                            data-user="{{ Auth::user()->id }}"></i>
-                                                        @endif
-                                                    </span>
-
-                                                    @if ($lesson->type == 'text') 
-                                                            <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
-                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                            {{ $lesson->title }} 
-                                                    @elseif($lesson->type == 'audio') 
-                                                            <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
-                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                            {{ $lesson->title }} 
-                                                    @elseif($lesson->type == 'video') 
-                                                            <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
-                                                            <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                            {{ $lesson->title }} 
+                                                <span class="mt-2 ms-1" style="cursor:pointer;">
+                                                    @if (isLessonCompleted($lesson->id))
+                                                    <i class="fas fa-check-circle text-primary"></i>
+                                                    @else
+                                                    <i class="fas fa-check-circle is_complete_lesson"
+                                                        data-course="{{ $course->id }}" data-module="{{ $module->id }}"
+                                                        data-lesson="{{ $lesson->id }}"
+                                                        data-duration="{{ $lesson->duration }}"
+                                                        data-user="{{ Auth::user()->id }}"></i>
                                                     @endif
-                                                </a>
+                                                </span>
+
+                                                @if ($lesson->type == 'text')
+                                                <i class="fa-regular fa-file-lines actv-hide"
+                                                    style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i"
+                                                    class="img-fluid actv-show" style="width: 1rem;">
+                                                {{ $lesson->title }}
+                                                @elseif($lesson->type == 'audio')
+                                                <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i"
+                                                    class="img-fluid actv-show" style="width: 1rem;">
+                                                {{ $lesson->title }}
+                                                @elseif($lesson->type == 'video')
+                                                <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}"
+                                                    alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i"
+                                                    class="img-fluid actv-show" style="width: 1rem;">
+                                                {{ $lesson->title }}
                                                 @endif
-                                            </li>
+                                            </a>
                                             @endif
+                                        </li>
+                                        @endif
                                         @endforeach
                                     </ul>
                                 </div>
@@ -285,7 +297,9 @@ $i = 0;
                     class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
                 @endif
                 @if (!isEnrolled($course->id))
-                <form action="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}" method="GET">
+                <form
+                    action="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
+                    method="GET">
                     <input type="hidden" name="course_id" value="{{ $course->id }}">
                     <input type="hidden" name="price" value="{{ $course->price }}">
                     <input type="hidden" name="instructor_id" value="{{ $course->instructor_id }}">
@@ -307,7 +321,7 @@ $i = 0;
                                     <img src="{{ asset($relatedCourse->thumbnail) }}" alt="{{ $relatedCourse->title }}"
                                         class="img-fluid">
                                 </div>
-                                <div class="course-txt-box"> 
+                                <div class="course-txt-box">
 
                                     @if (isEnrolled($relatedCourse->id))
                                     <a href="{{ url('students/courses/my-courses/details/' . $relatedCourse->slug) }}">
@@ -541,7 +555,7 @@ $i = 0;
 
 {{-- linke bttn --}}
 <script>
-        let currentURL = window.location.href;
+    let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const likeBttn = document.getElementById('likeBttn');
 
