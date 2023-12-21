@@ -55,7 +55,7 @@ class ModuleSettingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         // Store the InstructorModuleSetting in the database and check if image or logo has been uploaded
         $module_settings = InstructorModuleSetting::updateOrCreate(
             ['instructor_id' => auth()->user()->id],
@@ -103,6 +103,12 @@ class ModuleSettingController extends Controller
 
             // favicon
             if ($request->hasFile('favicon')) {
+                $validImageTypes = ['jpeg', 'png', 'gif', 'bmp', 'webp','svg'];
+
+                $this->validate($request, [
+                    'favicon' => 'file|mimes:' . implode(',', $validImageTypes),
+                ]);
+
                 if ($module_settings->favicon) {
                     $oldFavicon = public_path($module_settings->favicon);
                     if (file_exists($oldFavicon)) {
@@ -120,6 +126,12 @@ class ModuleSettingController extends Controller
 
             // apple_icon
             if ($request->hasFile('apple_icon')) {
+                $validImageTypes = ['jpeg', 'png', 'gif', 'bmp', 'webp','svg'];
+
+                $this->validate($request, [
+                    'apple_icon' => 'file|mimes:' . implode(',', $validImageTypes),
+                ]);
+
                 if ($module_settings->apple_icon) {
                     $oldAppleIcon = public_path($module_settings->apple_icon);
                     if (file_exists($oldAppleIcon)) {
@@ -136,6 +148,12 @@ class ModuleSettingController extends Controller
 
             // login bg image
             if ($request->hasFile('lp_bg_image')) {
+                $validImageTypes = ['jpeg', 'png', 'gif', 'bmp', 'webp','svg'];
+
+                $this->validate($request, [
+                    'lp_bg_image' => 'file|mimes:' . implode(',', $validImageTypes),
+                ]);
+
                 if ($module_settings->lp_bg_image) {
                     $oldLoginBg = public_path($module_settings->lp_bg_image);
                     if (file_exists($oldLoginBg)) {
@@ -197,9 +215,9 @@ class ModuleSettingController extends Controller
 
     public function loginBg($subdomain, $id)
     {
-        if ($id) { 
+        if ($id) {
 
-            $module_settings = InstructorModuleSetting::where('instructor_id',$id)->first(); 
+            $module_settings = InstructorModuleSetting::where('instructor_id',$id)->first();
 
             if ($module_settings->lp_bg_image) {
                 $oldLoginBg = public_path($module_settings->lp_bg_image);

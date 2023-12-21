@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Models\InstructorModuleSetting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use App\models\User;
-use App\Models\InstructorModuleSetting;
-use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -32,6 +33,7 @@ class ResetPasswordController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
     public function showResetForm(Request $request, $token = null){
+
         $email = $request->email;
         $subdomain = explode('.', request()->getHost())[0];
         if($subdomain == 'app'){
