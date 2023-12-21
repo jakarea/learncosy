@@ -22,7 +22,12 @@ class ProfileManagementController extends Controller
 
     // profile show
     public function show()
-    {
+    { 
+        // dark mode preference session forgot
+        if (session()->has('preferenceMode')) { 
+            session()->forget('preferenceMode');
+        }
+
         $id = Auth::user()->id;
         $user = User::find($id);
         $courses = Course::where('user_id', $id)->get();

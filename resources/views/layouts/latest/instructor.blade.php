@@ -75,10 +75,7 @@
             .header-area .navbar-nav .nav-item .submenu-box li a{
                 color: {{ modulesetting('menu_color') }}
             }
-
-            /* .header-area .d-flex a.bttn{
-                background: {{ modulesetting('menu_color') }}
-            } */
+ 
         </style>
 
         @yield('style')
@@ -86,9 +83,10 @@
         <!-- all css end -->
 
         @yield('seo')
+
     </head>
 
-    <body>
+    <body class="{{ session('darkModePreference') == 'dark-mode' ? 'dark-mode' : '' }}">
         {{-- Main Root Wrapper @S --}} 
 
         {{-- header start --}}
@@ -137,6 +135,7 @@
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
         {{-- dark mode js --}}
+        
         <script>
             const htmlBody = document.querySelector("body");
             const modeBttn = document.getElementById("darkModeBttn");
@@ -144,6 +143,20 @@
             function toggleMode() {
                 htmlBody.classList.toggle('dark-mode');
                 const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
+
+                let currentURLs = window.location.href;
+                const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
+
+                 // Update the dark mode preference using session
+                 fetch(`${baseUrls}/preference/mode/setting`, { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ preferenceMode: mode }),
+                });
+
                 localStorage.setItem('dark-mode', mode);
 
                 if (htmlBody.classList.contains('dark-mode')) {
@@ -172,7 +185,6 @@
         </script>
 
         <script>
-
             // Module resorting
             $(function() {
                 $("#moduleResorting").sortable({
@@ -228,10 +240,10 @@
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(response) {
-                        console.log("Module lession reorder updated successfully");
+                        // console.log("Module lession reorder updated successfully");
                     },
                     error: function(xhr, status, error) {
-                        console.error("Error updating module order:", error);
+                        // console.error("Error updating module order:", error);
                     }
                 });
             }
