@@ -8,8 +8,8 @@ class UserPreferenceController extends Controller
 {
     public function updateDarkModePreference(Request $request)
     {
-        
-        $preferenceMode = $request->input('preferenceMode'); 
+        $preferenceMode = $request->input('preferenceMode');  
+
         if ($preferenceMode == 'dark-mode') {
             session()->put([
                 'darkModePreference' => $preferenceMode
