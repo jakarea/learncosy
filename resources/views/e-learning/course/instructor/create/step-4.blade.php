@@ -18,7 +18,7 @@ Course Create - Step 4
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle"></span>
-                        <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
+                        <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -33,18 +33,7 @@ Course Create - Step 4
                 <div class="highlighted-area-upload">
                     <img src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="a" class="img-fluid">
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
-                </div> 
-                
-                 {{-- <div class="course-content-box course-page-edit-box audio-preview mt-2" id="frontAudio">
-                    <div class="title">
-                        <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="" class="img-fluid"> 
-                            <div class="media-body">
-                                <h5></h5> 
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                </div>  
 
                 <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="frontAudio">
                     <h4>Uploading Audio:</h4>
@@ -79,7 +68,7 @@ Course Create - Step 4
                             </div>
                         </div>
                         <div>
-                            <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
+                            <a href="{{ url('admin/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -96,19 +85,23 @@ Course Create - Step 4
                         @csrf
                         <input type="file" class="d-none" id="audio" name="audio">
                         <div class="form-group">
-                            <textarea class="form-control" id="description" name="description">
+                            <textarea class="form-control" id="description" name="short_description">
                                 @if ($lesson->short_description)
                                 {!! $lesson->short_description !!}
                                 @endif
                             </textarea>
+                            <span class="invalid-feedback">@error('short_description'){{ $message }}
+                                @enderror</span>
                         </div>
                         <div class="form-group form-upload">
                             <label for="file-input" class="txt">Upload New File</label>
-                            <input type="file" id="file-input" class="d-none" name="lesson_file[]" multiple>
+                            <input type="file" id="file-input" class="d-none" name="lesson_file">
+                            <span class="invalid-feedback">@error('lesson_file'){{ $message }}
+                                @enderror</span>
                             <label for="file-input" id="upload-box">
                                 <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
                             </label>
-                            <span>*.doc, *.pdf, *.xls file (max 25 mb)</span>
+                            <span>*.doc, *.pdf, *.xls file (max 5 mb)</span>
                         </div>
 
                         {{-- course page file box start --}}
@@ -124,12 +117,12 @@ Course Create - Step 4
                                 <div class="media">
                                     <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem"> 
                                     <div class="media-body">
-                                        <h5>{{ $lesson->lesson_file }} </h5> 
+                                        <h5> {{ basename($lesson->lesson_file) }}</h5> 
                                         <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
+                                    <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/file/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -159,41 +152,39 @@ Course Create - Step 4
     const fileList = document.getElementById('file-list'); 
 
     fileInput.addEventListener('change', function () {
-        const files = Array.from(fileInput.files);
-         
+        const file = fileInput.files[0];
 
-        files.forEach(file => {
-            if (!isValidFile(file)) {
-                alert('Invalid file format or size: ' + file.name);
-                return;
-            }
+        if (!isValidFile(file)) {
+            alert('Invalid file format or size: ' + file.name);
+            return;
+        }
 
-            const listItem = document.createElement('div');
-            listItem.classList.add('course-content-box', 'course-page-edit-box');
+        const listItem = document.createElement('div');
+        listItem.classList.add('course-content-box', 'course-page-edit-box');
 
-            listItem.innerHTML = `
-                <div class="title">
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File" class="img-fluid">
-                        <div class="media-body">
-                            <h5>${file.name}</h5>
-                            <p>Uploaded: ${new Date().toLocaleString()}</p>
-                        </div>
+        listItem.innerHTML = `
+            <div class="title">
+                <div class="media">
+                    <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File" class="img-fluid">
+                    <div class="media-body">
+                        <h5>${file.name}</h5>
+                        <p>Uploaded: ${new Date().toLocaleString()}</p>
                     </div>
                 </div>
-                <div class="dropdown">
-                    <span>${formatBytes(file.size)}</span>
-                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
-                    </ul>
-                </div>
-            `;
+            </div>
+            <div class="dropdown">
+                <span>${formatBytes(file.size)}</span>
+                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
+                </ul>
+            </div>
+        `;
 
-            fileList.appendChild(listItem);
-        });
+        fileList.innerHTML = ''; // Clear existing files
+        fileList.appendChild(listItem);
 
         dbAudio.classList.add('d-none');
     });
@@ -201,14 +192,8 @@ Course Create - Step 4
     // Add an event listener for the "Remove file" button
     fileList.addEventListener('click', function (event) {
         if (event.target.classList.contains('remove-file-button')) {
-            const listItem = event.target.closest('.course-content-box');
-            const fileName = listItem.querySelector('h5').textContent;
-            
-            // Remove the file from the list
-            listItem.remove();
-            
-            // Remove the file from the input path
-            removeFileFromInput(fileInput, fileName);
+            fileList.innerHTML = ''; // Clear the file list
+            fileInput.value = ''; // Clear the file input
         }
     });
 
@@ -227,16 +212,6 @@ Course Create - Step 4
         }
 
         return true;
-    }
-
-    function removeFileFromInput(fileInput, fileName) {
-        const files = Array.from(fileInput.files);
-        const index = files.findIndex(file => file.name === fileName);
-
-        if (index !== -1) {
-            files.splice(index, 1);
-            fileInput.files = new FileList({ items: files });
-        }
     }
 
     function formatBytes(bytes) {

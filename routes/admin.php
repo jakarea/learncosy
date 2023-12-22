@@ -82,9 +82,13 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
 
             Route::get('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudio');
             Route::post('{id}/audio/{module_id}/content/{lesson_id}', 'stepLessonAudioSet')->name('admin.course.lesson.audio.create');
+            Route::get('{id}/audio/{module_id}/content/{lesson_id}/remove', 'stepLessonAudioRemove');
+
+            Route::get('file/remove/{lesson_id}', 'stepLessonFileRemove');
 
             Route::get('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideo');
             Route::post('{id}/video/{module_id}/content/{lesson_id}', 'stepLessonVideoSet');
+            Route::get('{id}/video/{module_id}/content/{lesson_id}/remove', 'stepLessonVideoRemove');
 
             Route::get('{id}/lesson/{module_id}/institute/{lesson_id}', 'stepLessonInstitue');
 
