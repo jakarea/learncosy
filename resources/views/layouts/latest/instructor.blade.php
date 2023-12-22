@@ -17,7 +17,7 @@
         <meta name="csrf-token" content=" {{ csrf_token() }} ">
 
         <!-- App favicon -->
-        @if (modulesetting('favicon')) 
+        @if (modulesetting('favicon'))
             <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
         @else
             <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
@@ -80,7 +80,7 @@
             .header-area .navbar-nav .nav-item .submenu-box li a{
                 color: {{ modulesetting('menu_color') }}
             }
- 
+
         </style>
 
         @yield('style')
@@ -92,7 +92,7 @@
     </head>
 
     <body class="{{ session('darkModePreference') == 'dark-mode' ? 'dark-mode' : '' }}">
-        {{-- Main Root Wrapper @S --}} 
+        {{-- Main Root Wrapper @S --}}
 
         {{-- header start --}}
         {{-- @include('partials/latest/instructor/header') --}}
@@ -140,7 +140,7 @@
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
         {{-- dark mode js --}}
-        
+
         <script>
             const htmlBody = document.querySelector("body");
             const modeBttn = document.getElementById("darkModeBttn");
@@ -150,7 +150,7 @@
             const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
 
             // Update the dark mode preference using session
-            fetch(`${baseUrls}/preference/mode/setting`, { 
+            fetch(`${baseUrls}/preference/mode/setting`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -193,72 +193,6 @@
             }
         </script>
 
-        <script>
-            // Module resorting
-            $(function() {
-                $("#moduleResorting").sortable({
-                    update: function(event, ui) {
-                        var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
-                        moduleOrder = moduleOrder.filter(function(item) {
-                            return item !== '';
-                        });
-                        updateModuleOrder( moduleOrder );
-                    }
-                });
-            });
-
-
-            // Lession resorting
-            $(function() {
-                $(".lessonResorting").sortable({
-                    update: function(event, ui) {
-                        var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
-                        moduleLessonOrder = moduleLessonOrder.filter(function(item) {
-                            return item !== '';
-                        });
-
-                        updateModuleLessionOrder( moduleLessonOrder );
-                    }
-                });
-            });
-
-
-            function updateModuleOrder(moduleOrder) {
-                $.ajax({
-                    url: "/instructor/module/sortable",
-                    type: "POST",
-                    data: {
-                        moduleOrder: moduleOrder,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        console.log("Module reorder updated successfully");
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error updating module order:", error);
-                    }
-                });
-            }
-
-            function updateModuleLessionOrder(moduleLessonOrder){
-                $.ajax({
-                    url: "/instructor/module/lesson/sortable",
-                    type: "POST",
-                    data: {
-                        lessonOrder: moduleLessonOrder,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        // console.log("Module lession reorder updated successfully");
-                    },
-                    error: function(xhr, status, error) {
-                        // console.error("Error updating module order:", error);
-                    }
-                });
-            }
-
-
-        </script>
 
         @yield('script')
 

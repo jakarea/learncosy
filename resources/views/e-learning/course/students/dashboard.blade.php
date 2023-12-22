@@ -194,7 +194,7 @@ Student Dashboard
                                 class="img-fluid me-3 thumab">
                             @endif
                             <div class="media-body">
-                                <h5>{{ optional($likeCourse->course)->title }}</h5>
+                                <h5><a href="{{ url('students/courses/overview/' . $likeCourse->course->slug) }}">{{ optional($likeCourse->course)->title }}</a></h5>
                                 <p class="user"><i class="fa-solid fa-user"></i> {{ optional($likeCourse->course->user)->name }}
 
                                     &nbsp; - &nbsp;{{ optional($likeCourse->course)->platform }}</p>
@@ -266,6 +266,7 @@ Student Dashboard
                             <th class="text-end">Action</th>
                         </tr>
                         @foreach ($enrolments->slice(0, 4) as $enrolment)
+
                         @if ($enrolment->course)
                         <tr>
                             <td>
@@ -275,7 +276,7 @@ Student Dashboard
                                             class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5>{{$enrolment->course->title}}</h5>
+                                        <h5><a class="bg-transparent" href="{{ url('students/courses/overview/' . $enrolment->course->slug) }}">{{$enrolment->course->title}}</a></h5>
                                         <p>{{ $enrolment->course->platform }} </p>
                                     </div>
                                 </div>
@@ -316,11 +317,11 @@ Student Dashboard
 {{-- page content @E --}}
 
 {{-- page script @S --}}
-@section('script') 
-<script>  
+@section('script')
+<script>
         const modess = document.querySelector("body").classList.contains('dark-mode') ? 'dark-mode' : '';
-        modeCall(modess); 
-</script>   
+        modeCall(modess);
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

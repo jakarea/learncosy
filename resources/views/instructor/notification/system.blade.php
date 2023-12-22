@@ -122,14 +122,14 @@ $layoutName = "layouts.latest.admin";
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body"> 
-                                        @php 
+                                    <div class="media-body">
+                                        @php
                                             $course = App\Models\Course::find($yestarday->course_id);
-                                        @endphp 
+                                        @endphp
                                         <h5>
                                             @if ($course)
                                                 <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$yestarday['title']}}</a>
-                                            @else 
+                                            @else
                                                 {{$yestarday['title']}}
                                             @endif
                                         </h5>
@@ -168,14 +168,14 @@ $layoutName = "layouts.latest.admin";
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body"> 
-                                        @php 
+                                    <div class="media-body">
+                                        @php
                                             $course = App\Models\Course::find($sevenDay->course_id);
-                                        @endphp 
+                                        @endphp
                                         <h5>
                                             @if ($course)
                                                 <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$sevenDay['title']}}</a>
-                                            @else 
+                                            @else
                                                 {{$sevenDay['title']}}
                                             @endif
                                         </h5>
@@ -213,14 +213,14 @@ $layoutName = "layouts.latest.admin";
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body"> 
-                                        @php 
+                                    <div class="media-body">
+                                        @php
                                             $course = App\Models\Course::find($thirtyDay->course_id);
-                                        @endphp 
+                                        @endphp
                                         <h5>
                                             @if ($course)
                                                 <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$thirtyDay['title']}}</a>
-                                            @else 
+                                            @else
                                                 {{$thirtyDay['title']}}
                                             @endif
                                         </h5>
@@ -242,7 +242,7 @@ $layoutName = "layouts.latest.admin";
                         </div>
 
                         <div class="single" data-value="365">
-                            {{-- day --}} 
+                            {{-- day --}}
                             <h5 class="mt-5">Last 1 year</h5>
                             {{-- day --}}
 
@@ -260,14 +260,14 @@ $layoutName = "layouts.latest.admin";
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
-                                    <div class="media-body"> 
-                                        @php 
+                                    <div class="media-body">
+                                        @php
                                             $course = App\Models\Course::find($lastOneYear->course_id);
-                                        @endphp 
+                                        @endphp
                                         <h5>
                                             @if ($course)
                                                 <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$lastOneYear['title']}}</a>
-                                            @else 
+                                            @else
                                                 {{$lastOneYear['title']}}
                                             @endif
                                         </h5>
@@ -313,7 +313,7 @@ $layoutName = "layouts.latest.admin";
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let inputField = document.getElementById("inputField");
-        let dropbtn = document.getElementById("dropdownBttn");  
+        let dropbtn = document.getElementById("dropdownBttn");
         let dropdownItems = document.querySelectorAll(".filterItem");
         let itemWrapperItems = document.querySelectorAll(".show-notification-item .single");
         let status;
@@ -336,34 +336,34 @@ $layoutName = "layouts.latest.admin";
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'none';
                     document.querySelector(".single[data-value='7']").style.display = 'none';
-                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'none';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "7"){
-                    dropbtn.innerText = 'Last 7 days'; 
+                    dropbtn.innerText = 'Last 7 days';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
-                    document.querySelector(".single[data-value='30']").style.display = 'none'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'none';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "30"){
-                    dropbtn.innerText = 'Last 30 days'; 
+                    dropbtn.innerText = 'Last 30 days';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
-                    document.querySelector(".single[data-value='30']").style.display = 'block'; 
+                    document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'none';
                 }
                 if(status == "365"){
-                    dropbtn.innerText = 'Last 1 year'; 
+                    dropbtn.innerText = 'Last 1 year';
                     document.querySelector(".single[data-value='1']").style.display = 'block';
                     document.querySelector(".single[data-value='2']").style.display = 'block';
                     document.querySelector(".single[data-value='7']").style.display = 'block';
                     document.querySelector(".single[data-value='30']").style.display = 'block';
                     document.querySelector(".single[data-value='365']").style.display = 'block';
                 }
- 
+
 
             });
         });

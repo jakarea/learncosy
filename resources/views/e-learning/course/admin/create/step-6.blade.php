@@ -462,6 +462,74 @@
 {{-- page content @E --}}
 
 @section('script')
+
+    <script>
+
+        // Module resorting
+        $(function() {
+            $("#moduleResort").sortable({
+                update: function(event, ui) {
+                    var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
+                    moduleOrder = moduleOrder.filter(function(item) {
+                        return item !== '';
+                    });
+                    updateModuleOrder( moduleOrder );
+                }
+            });
+        });
+
+
+        // Lession resorting
+        $(function() {
+            $(".lessonResort").sortable({
+                update: function(event, ui) {
+                    var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
+                    moduleLessonOrder = moduleLessonOrder.filter(function(item) {
+                        return item !== '';
+                    });
+                    updateModuleLessionOrder( moduleLessonOrder );
+                }
+            });
+        });
+
+
+        function updateModuleOrder(moduleOrder) {
+            $.ajax({
+                url: "/admin/courses/create/module/sortable",
+                type: "POST",
+                data: {
+                    moduleOrder: moduleOrder,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log("Module reorder updated successfully");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating module order:", error);
+                }
+            });
+        }
+
+        function updateModuleLessionOrder(moduleLessonOrder){
+            $.ajax({
+                url: "/admin/courses/create/lesson/sortable",
+                type: "POST",
+                data: {
+                    lessonOrder: moduleLessonOrder,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log("Module lession reorder updated successfully");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating module order:", error);
+                }
+            });
+        }
+
+
+    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const buttons = document.querySelectorAll(".accrodin-bttn");

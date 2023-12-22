@@ -54,7 +54,7 @@ Course Create - Initial Step
             </div>
         </div>
 
-        <!-- Blade view file --> 
+        <!-- Blade view file -->
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-9 col-xl-8">
@@ -415,6 +415,80 @@ Course Create - Initial Step
 {{-- page content @E --}}
 
 @section('script')
+
+
+
+<script>
+    // Module resorting
+    $(function() {
+        $("#moduleResorting").sortable({
+            update: function(event, ui) {
+                var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
+                moduleOrder = moduleOrder.filter(function(item) {
+                    return item !== '';
+                });
+                updateModuleOrder( moduleOrder );
+            }
+        });
+    });
+
+
+    // Lession resorting
+    $(function() {
+        $(".lessonResorting").sortable({
+            update: function(event, ui) {
+                var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
+                moduleLessonOrder = moduleLessonOrder.filter(function(item) {
+                    return item !== '';
+                });
+
+                updateModuleLessionOrder( moduleLessonOrder );
+            }
+        });
+    });
+
+
+    function updateModuleOrder(moduleOrder) {
+        $.ajax({
+            url: "/instructor/module/sortable",
+            type: "POST",
+            data: {
+                moduleOrder: moduleOrder,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                console.log("Module reorder updated successfully");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating module order:", error);
+            }
+        });
+    }
+
+    function updateModuleLessionOrder(moduleLessonOrder){
+        $.ajax({
+            url: "/instructor/module/lesson/sortable",
+            type: "POST",
+            data: {
+                lessonOrder: moduleLessonOrder,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                // console.log("Module lession reorder updated successfully");
+            },
+            error: function(xhr, status, error) {
+                // console.error("Error updating module order:", error);
+            }
+        });
+    }
+
+
+</script>
+
+
+
+
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

@@ -27,6 +27,7 @@ class CartController extends Controller
 
         return view('e-learning/course/students/cart',compact('cart'));
     }
+
     public function add($domain, $course)
     {
         $course = Course::findOrFail( $course );
@@ -50,6 +51,32 @@ class CartController extends Controller
         $cart->user_identifier = $userIdentifier;
         $cart->save();
         return redirect()->route('students.catalog.courses', config('app.subdomain') )->with('success', 'Course added to cart.');
+    }
+
+
+    public function buyCourse($domain, $course)
+    {
+        $course = Course::findOrFail( $course );
+        $userIdentifier = $_COOKIE['userIdentifier'];
+        $instructor_id = $course->user_id;
+        $instructor = User::where('id', $instructor_id)->firstOrFail();
+
+        $user = auth()->user();
+        $cart = Cart::firstOrNew([
+            'user_id' => $user ? $user->id : NULL,
+            'course_id' => $course->id,
+        ]);
+
+        // if ($cart->exists) {
+        //     return redirect()->route('students.catalog.courses', config('app.subdomain') )->with('error', 'Course already added to the cart');
+        // }
+
+        $cart->price = $course->price;
+        $cart->quantity = 1;
+        $cart->instructor_id = $instructor->id;
+        $cart->user_identifier = $userIdentifier;
+        $cart->save();
+        return redirect()->route('cart.index', config('app.subdomain') );
     }
 
 
