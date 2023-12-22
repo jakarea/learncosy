@@ -179,9 +179,17 @@
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
-                                    <img src="{{ asset($message->user ? $message->user->avatar : '') }}" alt="Avatar"
-                                        class="img-fluid">
-                                    <i class="fas fa-circle"></i>
+                                    @isset( $message->groupUserName->avatar )
+                                        <img src="{{ asset($message->groupUserName->avatar) }}" alt="{!! strtoupper($message->groupUserName->name[0]) !!}" class="img-fluid">
+                                    @else
+                                        <span class="user-name-avatar me-1">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
+                                    @endisset
+
+                                    @if(Cache::has('user-is-online-' . $message->groupUserName->id))
+                                        <i class="fas fa-circle"></i>
+                                    @else
+                                        <i class="fa-regular fa-circle"></i>
+                                    @endif
                                 </div>
                                 <div class="media-body">
                                     <h5>{{ $message->user ? $message->user->name : '' }}

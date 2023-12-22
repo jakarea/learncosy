@@ -822,9 +822,8 @@ $(document).ready(function () {
     };
 
 
+
     // Close typing indicator
-
-
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function (data) {
         if (my_id == data.from) {
@@ -850,25 +849,37 @@ $(document).ready(function () {
     });
 
 
-    var channelGroup = pusher.subscribe(my_id);
-    channelGroup.bind('App\\Events\\Notify', function (data) {
-        if (my_id == data.from) {
-            // $('#group_' + data.to).click();
-        } else if (my_id == data.to) {
+    $(document).ready(function () {
+        var channelGroup = pusher.subscribe(my_id);
+        channelGroup.bind('App\\Events\\Notify', function (data) {
+
             receiver_id = data.from;
-            if (receiver_id == data.from) {
-                $('#group_' + data.from).click();
-            } else {
-                var pending = parseInt($('#group_' + data.from).find('.pending').html());
-                if (pending) {
-                    $('#group_' + data.from).find('.pending').html(pending + 1);
+
+            console.log(my_id +"="+ data.from)
+
+
+            console.log(my_id +"="+ data.to)
+
+
+            if (my_id == data.from) {
+
+                // $('#group_' + data.from).click();
+
+            } else if (my_id == data.to) {
+
+                if (receiver_id == data.from) {
+                    $('#group_' + data.from).click();
                 } else {
-                    $('#group_' + data.from).append('<span class="pending">1</span>');
+                    var pending = parseInt($('#group_' + data.from).find('.pending').html());
+                    if (pending) {
+                        $('#group_' + data.from).find('.pending').html(pending + 1);
+                    } else {
+                        $('#group_' + data.from).append('<span class="pending">1</span>');
+                    }
                 }
             }
-        }
+        });
     });
-
 });
 
 
@@ -986,7 +997,7 @@ function sendGroupMessage() {
     formData.append("receiver_id", receiver_id);
     formData.append("message", messageText);
     $('#chat-group-message-input').data("emojioneArea").setText("");
-
+    removeGroupFile();
     if (receiver_id !== '') {
         $.ajax({
             type: "post",

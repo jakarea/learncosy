@@ -137,15 +137,15 @@ class CourseController extends Controller
 
         $related_course = [];
         if ($course) {
-            if($course->categories){
-                $categoryArray = explode(',', $course->categories);
-                $query = Course::query();
-
-                foreach ($categoryArray as $category) {
-                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                }
-                $related_course = $query->take(4)->get();
-            }
+            $categoryArray = explode(',', $course->categories);
+            $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where(function ($query) use ($categoryArray) {
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                })
+                ->take(4)
+                ->get();
 
 
             return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));

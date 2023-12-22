@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\BundleCourse;
-use Illuminate\Support\Str; 
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Auth;
@@ -16,8 +16,9 @@ class BundleCourseManagementController extends Controller
 {
     // course bundle list
     public function index()
-     {   
+     {
 
+        $queryParams = request()->except('page');
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -41,17 +42,13 @@ class BundleCourseManagementController extends Controller
             } elseif ($status == 'most_purchased') {
 
                 $bundleCourses = DB::table('bundle_courses')
-    ->select('bundle_courses.*')
-    ->selectRaw('COALESCE(SUM(checkouts.course_count), 0) as total_sale_count')
-    ->leftJoin('checkouts', function ($join) {
-        $join->on('checkouts.course_id', '=', DB::raw('bundle_courses.selected_course'));
-    })
-    ->groupBy('bundle_courses.id')
-    ->orderBy('total_sale_count', 'desc')
-    ->get();
-
-
-
+                    ->select('bundle_courses.*')
+                    ->selectRaw('COALESCE(SUM(checkouts.id), 0) as total_sale_count')
+                    ->leftJoin('checkouts', function ($join) {
+                        $join->on('checkouts.course_id', '=', 'bundle_courses.selected_course');
+                    })
+                    ->groupBy('bundle_courses.id')
+                    ->orderBy('total_sale_count', 'desc');
 
             } elseif ($status == 'newest') {
                 $bundleCourses->orderBy('id', 'desc');
@@ -60,23 +57,23 @@ class BundleCourseManagementController extends Controller
             $bundleCourses->orderBy('id', 'desc');
         }
 
-        $bundleCourses = $bundleCourses->paginate(12);
+        $bundleCourses = $bundleCourses->paginate(12)->appends($queryParams);
 
-        return view('bundle/admin/list', compact('bundleCourses')); 
+        return view('bundle/admin/list', compact('bundleCourses'));
      }
 
      public function view($bundleSlug)
      {
         if (!$bundleSlug) {
-            return redirect('admin/bundle/courses')->with('warning','No Bundle Found!'); 
-        }  
+            return redirect('admin/bundle/courses')->with('warning','No Bundle Found!');
+        }
 
         $updatingCourse = BundleCourse::where('slug', $bundleSlug)->first();
         $courseIds = explode(',', $updatingCourse->selected_course);
         $bundleSelected = Course::whereIn('id', $courseIds)->get();
         $selectedCourses = count($bundleSelected);
 
-        return view('bundle/admin/view',compact('updatingCourse','bundleSelected','selectedCourses')); 
+        return view('bundle/admin/view',compact('updatingCourse','bundleSelected','selectedCourses'));
      }
 
     //  bundle edit
@@ -99,56 +96,56 @@ class BundleCourseManagementController extends Controller
             if ($status == 'oldest') {
                 $courses->orderBy('id', 'asc');
             }
-            
+
             if ($status == 'newest') {
                 $courses->orderBy('id', 'desc');
             }
         }else{
-            $courses->orderBy('id', 'desc'); 
+            $courses->orderBy('id', 'desc');
         }
 
-       $courses = $courses->paginate(12); 
- 
+       $courses = $courses->paginate(12);
+
         $courseIds = explode(',', $bundleCourse->selected_course);
- 
+
         $adminBundleSelected = Course::whereIn('id', $courseIds)
         ->with('reviews')
         ->get();
 
         session()->put('adminBundleSelected', $adminBundleSelected);
- 
+
         if (!$adminBundleSelected->isEmpty()) {
-            return view('bundle/admin/edit1',compact('courses','bundleCourse')); 
+            return view('bundle/admin/edit1',compact('courses','bundleCourse'));
         } else {
             return redirect('admin/bundle/courses')->with('error','No Bundle Found!');
         }
-        
+
      }
 
      public function update1($courseId)
      {
 
         $adminBundleSelected = session()->has('adminBundleSelected') ? session('adminBundleSelected') : [];
- 
+
         $newBundleSelected = Course::where('id', $courseId)
             ->with('reviews')
             ->firstOrFail();
-    
+
         $adminBundleSelected[] = $newBundleSelected;
-    
+
         session()->put('adminBundleSelected', $adminBundleSelected);
- 
-        return response()->json(['message' => 'DONE']); 
+
+        return response()->json(['message' => 'DONE']);
      }
 
      public function edit2($bundleSlug)
-     { 
+     {
 
       $bundleCourse = BundleCourse::where('slug', $bundleSlug)
         ->firstOrFail();
 
         if ($bundleCourse) {
-            return view('bundle/admin/edit2',compact('bundleCourse')); 
+            return view('bundle/admin/edit2',compact('bundleCourse'));
         } else {
             return redirect('admin/bundle/courses')->with('error','No Bundle Found!');
         }
@@ -157,10 +154,10 @@ class BundleCourseManagementController extends Controller
 
      public function update2(Request $request, $courseId)
      {
- 
+
         $this->validate($request, [
             'title' => 'required|string',
-            'sub_title' => 'string', 
+            'sub_title' => 'string',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000',
         ],
         [
@@ -168,16 +165,16 @@ class BundleCourseManagementController extends Controller
         ]);
 
         $bundleCourse = BundleCourse::where('id', $courseId)->firstOrFail();
-        $bundleCourse->title = $request->title;  
+        $bundleCourse->title = $request->title;
         $bundleCourse->slug = Str::slug($request->title);
-        $bundleCourse->sub_title = $request->sub_title;  
-        $bundleCourse->selected_course = $request->selected_course;  
-        $bundleCourse->regular_price = $request->regular_price;  
-        $bundleCourse->sales_price = $request->sales_price;  
-        $bundleCourse->description = $request->description;   
-        $bundleCourse->save(); 
+        $bundleCourse->sub_title = $request->sub_title;
+        $bundleCourse->selected_course = $request->selected_course;
+        $bundleCourse->regular_price = $request->regular_price;
+        $bundleCourse->sales_price = $request->sales_price;
+        $bundleCourse->description = $request->description;
+        $bundleCourse->save();
 
-        if ($request->hasFile('thumbnail')) { 
+        if ($request->hasFile('thumbnail')) {
             if ($bundleCourse->thumbnail) {
                $oldFile = public_path($bundleCourse->thumbnail);
                if (file_exists($oldFile)) {
@@ -191,47 +188,47 @@ class BundleCourseManagementController extends Controller
             $image_path = 'uploads/bundle-courses/' . $uniqueFileName;
            $bundleCourse->thumbnail = $image_path;
        }
-       
-        $bundleCourse->save(); 
+
+        $bundleCourse->save();
 
         if ($bundleCourse->save()) {
             Session::forget('adminBundleSelected');
         }
 
         return redirect('admin/bundle/courses')->with('success', 'Bundle has been updated successfully!');
-        
+
      }
 
      public function removeSelectNew($courseId){
- 
+
         $courseIdToRemove = $courseId;
         $adminBundleSelected = session()->has('adminBundleSelected') ? session('adminBundleSelected') : [];
         $updatedBundleSelected = collect($adminBundleSelected)->filter(function ($item) use ($courseIdToRemove) {
             return $item->id != $courseIdToRemove;
         })->values()->all();
-     
+
         session(['adminBundleSelected' => $updatedBundleSelected]);
- 
-        return response()->json(['message' => 'DONE']); 
+
+        return response()->json(['message' => 'DONE']);
 
      }
 
      public function removeSelect($course_id)
-     {  
+     {
         $selectedBundle = BundleSelect::where('course_id',$course_id)->firstOrFail();
         $selectedBundle->delete();
         return response()->json(['message' => 'DONE']);
      }
 
     public function delete($bundleId)
-     {   
+     {
          $bundleCourse = BundleCourse::where('id', $bundleId)->first();
-         
-        if ($bundleCourse) { 
+
+        if ($bundleCourse) {
             $oldThumbnail = public_path($bundleCourse->thumbnail);
             if (file_exists($oldThumbnail)) {
                 @unlink($oldThumbnail);
-            } 
+            }
             $bundleCourse->delete();
             return redirect('admin/bundle/courses')->with('success', 'Bundle Course deleted successfully!');
         } else {
