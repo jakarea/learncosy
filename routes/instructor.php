@@ -103,9 +103,12 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         Route::get('instructor/courses/create/{id}/audio/{module_id}/content/{lesson_id}', [CourseCreateStepController::class, 'stepLessonAudio']);
         Route::post('instructor/courses/create/{id}/audio/{module_id}/content/{lesson_id}', [CourseCreateStepController::class, 'stepLessonAudioSet'])->name('course.lesson.audio.create');
+        Route::get('instructor/courses/create/{id}/audio/{module_id}/content/{lesson_id}/remove', [CourseCreateStepController::class, 'stepLessonAudioRemove']);
+        Route::get('instructor/courses/create/{id}/audio/{module_id}/content/{lesson_id}/remove/file', [CourseCreateStepController::class, 'stepLessonFileRemove']);
 
         Route::get('instructor/courses/create/{id}/video/{module_id}/content/{lesson_id}', [CourseCreateStepController::class, 'stepLessonVideo']);
         Route::post('instructor/courses/create/{id}/video/{module_id}/content/{lesson_id}', [CourseCreateStepController::class, 'stepLessonVideoSet']);
+        Route::get('instructor/courses/create/{id}/video/{module_id}/content/{lesson_id}/remove', [CourseCreateStepController::class, 'stepLessonVideoRemove']);
 
         Route::get('instructor/courses/create/{id}/lesson/{module_id}/institute/{lesson_id}', [CourseCreateStepController::class, 'stepLessonInstitue']);
 

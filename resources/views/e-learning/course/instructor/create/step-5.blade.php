@@ -37,7 +37,7 @@ Course Create - Video Upload
                         <div class="lesson-edit-form-wrap mt-4">
                             <div class="highlighted-area-upload dragBox">
                                 <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
-                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" required />
+                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
                                 <p class="file-name"><label for="uploadFile">Click here</label> to set the Lesson video</p>
                             </div>
                             <input type="hidden" name="duration" id="duration" />
@@ -58,7 +58,16 @@ Course Create - Video Upload
                         </div>
                         <div class="form-group mt-4">
                             <label for="file-input" class="txt mb-2" style="font-weight: 600">A Short description for this video</label> 
-                            <textarea class="form-control" id="description" name="description" placeholder="Type here" col></textarea> 
+                            <textarea class="form-control" id="description" name="short_description" placeholder="Type here">
+                                {!! $lesson->short_description !!}
+                            </textarea> 
+
+                            <span class="invalid-feedback text-danger">
+                                @error('short_description')
+                                {{ $message }}
+                                @enderror
+                            </span>
+
                         </div>
  
                         @if ($lesson->video_link)
@@ -72,10 +81,13 @@ Course Create - Video Upload
                                         class="img-fluid">
                                     <div class="media-body">
                                         <h5>{{ $lesson->slug .'.mp4' }} </h5>
-                                        <p>Uploaded at: {{ $lesson->created_at }}</p>
+                                        <p>Uploaded at: {{ $lesson->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
                             </div>
+                            <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </div> 
                         @endif
 
@@ -143,110 +155,94 @@ function drop() {
 
 $(document).ready(function() {
     $('#uploadForm').submit(function(e) {
+       
+        var fileInput = document.getElementById('uploadFile');
 
-        e.preventDefault();
-        uploadProgress.classList.remove('d-none');
-        warnm.classList.remove('d-none');
-        h33.classList.remove('d-none');
-        var formData = new FormData(this);
-        var urlParams = new URLSearchParams(window.location.search);
-        var url = window.location.href;
-        // document.querySelector('#fileErrorMessage').innerHTML = '';
-        // document.querySelector('#fileErrorMessage').innerHTML = '';
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            cache: false,
-            contentType: false,
-            processData: false,
-            // xhr: function() {
-            //     var xhr = new window.XMLHttpRequest();
-            //     // Upload progress
-            //     xhr.upload.addEventListener('progress', function(evt) {
-            //         if (evt.lengthComputable) {
-            //             var percentComplete = (evt.loaded / evt.total) * 100;
-            //             $('.progress-bar').css('width', percentComplete + '%');
-            //             $('.upload-progress h3').text(percentComplete + '%');
-            //         }
-            //     }, false);
-            //     return xhr;
-            // },
-            beforeSend: function() {
+        if (fileInput && fileInput.files.length > 0) {
+            // Only proceed if there are files selected
+            e.preventDefault();
 
-                // set button state to loading and disable with spinner
-                $('.btn-submit').attr('disabled', true).html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
-                );
+            uploadProgress.classList.remove('d-none');
+            warnm.classList.remove('d-none');
+            h33.classList.remove('d-none');
 
-                var fileInput = document.getElementById('uploadFile');
-                const selectedFile = fileInput.files[0];
+            var formData = new FormData(this);
+            var urlParams = new URLSearchParams(window.location.search);
+            var url = window.location.href;
 
-                // Get the size of the selected file in bytes
-                const fileSizeBytes = selectedFile.size;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    // set button state to loading and disable with spinner
+                    $('.btn-submit').attr('disabled', true).html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
+                    );
 
-                // Convert the size to a more human-readable format (e.g., KB, MB, GB)
-                const fileSizeKB = fileSizeBytes / 1024; // 1 KB = 1024 bytes
-                const fileSizeMB = fileSizeKB / 1024; // 1 MB = 1024 KB
+                    var selectedFile = fileInput.files[0];
+                    const fileSizeBytes = selectedFile.size;
+                    const fileSizeKB = fileSizeBytes / 1024;
+                    const fileSizeMB = fileSizeKB / 1024;
 
-                var fixedMax = Math.floor(Math.random() * 12) + 83
-                var currentPercentage = 0;
-                var progressPercentage = Math.floor(70 / fileSizeMB);
-                var randomFraction = 1;
-                var randomNumberInRange = 1;
-                // upload-progress p tag add style as warning
-                let progressId; // Declare the interval ID variable
+                    var fixedMax = Math.floor(Math.random() * 12) + 83;
+                    var currentPercentage = 0;
+                    var progressPercentage = Math.floor(70 / fileSizeMB);
+                    var randomFraction = 1;
+                    var randomNumberInRange = 1;
+                    let progressId;
 
-                function updateProgress() {
-                    randomFraction = Math.random();
-                    randomNumberInRange = Math.floor(1 + (randomFraction * (4 - 1)));
-                    currentPercentage += Math.ceil(progressPercentage?progressPercentage : 1);
-                    $('.progress-bar').css('width', currentPercentage + '%');
-                    $('.upload-progress h3').text(currentPercentage + '%');
-                    // Check the condition you want
-                    if (currentPercentage >= fixedMax) {
-                        clearInterval(progressId); // Stop the interval when the condition is met
+                    function updateProgress() {
+                        randomFraction = Math.random();
+                        randomNumberInRange = Math.floor(1 + (randomFraction * (4 - 1)));
+                        currentPercentage += Math.ceil(progressPercentage ? progressPercentage : 1);
+                        $('.progress-bar').css('width', currentPercentage + '%');
+                        $('.upload-progress h3').text(currentPercentage + '%');
+
+                        if (currentPercentage >= fixedMax) {
+                            clearInterval(progressId);
+                        }
                     }
-                }
 
-                // Start the interval and store its ID
-                progressId = setInterval(updateProgress, randomNumberInRange * 500);
+                    progressId = setInterval(updateProgress, randomNumberInRange * 500);
+                },
+                success: function(response) {
+                    $('.btn-submit').attr('disabled', false).text('Upload');
+                    var uri = response.uri;
+                    var price = response.price;
 
-            },
-            success: function(response) {
-                $('.btn-submit').attr('disabled', false).text('Upload');
-                var uri = response.uri;
-                var price = response.price;
-                //checkProgress(uri);
-                //uploadProgress.classList.add('d-none');
-                $('.progress-bar').css('width', '100%');
-                $('.upload-progress h3').text('Completed');
-                progressBAR = document.querySelector('.progress-bar');
-                progressBAR.classList.remove('bg-warning');
-                progressBAR.classList.add('bg-success');
-                $('.upload-progress p').css('display', 'none');
-                window.location.href = baseUrl + '/instructor/courses/create/' + course_id + '/lesson/' + module_id + '/institute/' + lesson_id;
-                
-            },
-            // handle all types of errors
-            error: function(xhr) {
-                progressBAR.classList.remove('bg-danger');
-                uploadProgress.classList.add('d-none');
-                warnm.classList.add('d-none');
-                var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
-                // console.log(errors.video_link)
-                 
-                if(errors.video_link){
-                    document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];
+                    // Handle success, update UI, etc.
+
+                    window.location.href = baseUrl + '/instructor/courses/create/' + course_id + '/lesson/' + module_id + '/institute/' + lesson_id;
+                },
+                error: function(xhr) {
+                    progressBAR.classList.remove('bg-danger');
+                    uploadProgress.classList.add('d-none');
+                    warnm.classList.add('d-none');
+                    var errors = xhr.responseJSON.errors || xhr.responseJSON.message;
+
+                    if (errors.video_link) {
+                        document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];
+                    }
+                    
+                    // Handle errors, update UI, etc.
+
+                    $('.upload-progress').css('display', 'none');
+                    $('.btn-submit').attr('disabled', false).html(
+                        'Next'
+                    );
                 }
-                $('.upload-progress').css('display', 'none');
-                $('.btn-submit').attr('disabled', false).html(
-                    'Next'
-                );
-            }
-        });
+            });
+        } else {
+            // No files selected, handle this case or do nothing
+            console.log('No file selected');
+        }
     });
 });
+
 </script>
 @endsection

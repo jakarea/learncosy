@@ -338,6 +338,7 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonAudio($subdomain,$id,$module_id,$lesson_id){
 
+        // return $lesson_id;
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
@@ -345,6 +346,30 @@ class CourseCreateStepController extends Controller
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-4',compact('lesson'));
+    }
+
+    public function stepLessonAudioRemove($subdomain,$id,$module_id,$lesson_id){
+
+        // return $lesson_id;
+        if(!$id || !$module_id || !$lesson_id){
+            return redirect('instructor/courses');
+        }
+
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+
+        if ($lesson->audio) {
+            $previousAudioPath = public_path($lesson->audio);
+            if (file_exists($previousAudioPath)) {
+                unlink($previousAudioPath);
+            }
+
+            $lesson->audio = NULL;
+            $lesson->save();
+            return redirect()->back()->with('success','Lesson Audio Successfully Deleted!');
+        }
+
+        return redirect()->back()->with('warning','No Audio Found!');
+ 
     }
 
     public function stepLessonAudioSet(Request $request,$subdomain, $id, $module_id, $lesson_id){
@@ -367,7 +392,7 @@ class CourseCreateStepController extends Controller
         if ($request->hasFile('audio')) {
             // Check if a previous audio file exists and delete it
             if ($lesson->audio) {
-                $previousAudioPath = public_path('uploads/audio') . '/' . $lesson->audio;
+                $previousAudioPath = public_path($lesson->audio);
                 if (file_exists($previousAudioPath)) {
                     unlink($previousAudioPath);
                 }
@@ -414,64 +439,84 @@ class CourseCreateStepController extends Controller
     public function stepLessonVideoSet(Request $request, $subdomain,$id,$module_id,$lesson_id)
     {
 
-        $request->validate([
-            'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
-            // 'lesson_file' => 'mimes:pdf,doc,docx|max:50000',
-        ],
-        [
-            'video_link.required' => 'Video file is required!',
-            'video_link.max' => 'Max file size is 1 GB!',
-        ]);
-
+        // return $request->all();
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
-        $lesson->short_description = $request->input('description');
-
-        $uploadedFilenames = [];
-
-        if ($request->hasFile('lesson_file')) {
-            foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/lessons/files'), $filename);
-                $uploadedFilenames[] = $filename;
-            }
-
-            $lesson->lesson_file = implode(",", $uploadedFilenames);
-        }
-
-        $lesson->save();
-
-        $file = $request->file('video_link');
-        $videoName = $file->getClientOriginalName();
-
-        [$vimeoData, $status, $accountName] = isVimeoConnected();
-
-        if ($status === 'Connected') {
-            $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
-
-            $uri = $vimeo->upload($file->getPathname(), [
-                'name' => $lesson->title,
-                'approach' => 'tus',
-                'size' => $file->getSize(),
+        if ($lesson->video_link) {
+            $request->validate([
+                'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000', 
+                'short_description' => 'required|string', 
+            ],
+            [ 
+                'video_link.max' => 'Max file size is 1 GB!',
             ]);
 
-            if ($uri) {
-                $lesson = Lesson::find($lesson_id);
-                $lesson->video_link = $uri;
-                $lesson->duration = $request->duration;
-                $lesson->short_description = $request->description;
-                $lesson->save();
-                flash()->addSuccess('Video upload success!');
-            }
-            $course = Course::find($id);
-            $price = $course->price ?? 0;
-            return response()->json(['uri' => $uri, 'price' => $price]);
+        }else{
+            $request->validate([
+                'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
+                'short_description' => 'nullable|string', 
+            ],
+            [
+                'video_link.required' => 'Video file is required!',
+                'video_link.max' => 'Max file size is 1 GB!',
+            ]);
+        }       
 
-        } elseif ($status === 'Invalid Credentials') {
-            return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
-        } else {
-            return response()->json(['error' => 'Vimeo account is not connected.']);
+        
+        $lesson->short_description = $request->input('short_description');
+        $lesson->save();
+
+        if ($request->hasFile('video_link')) {
+
+            $file = $request->file('video_link');
+            $videoName = $file->getClientOriginalName();
+
+            [$vimeoData, $status, $accountName] = isVimeoConnected();
+
+            if ($status === 'Connected') {
+                $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
+
+                $uri = $vimeo->upload($file->getPathname(), [
+                    'name' => $lesson->title,
+                    'approach' => 'tus',
+                    'size' => $file->getSize(),
+                ]);
+
+                if ($uri) {
+                    $lesson = Lesson::find($lesson_id);
+                    $lesson->video_link = $uri;
+                    $lesson->duration = $request->duration;
+                    $lesson->short_description = $request->description;
+                    $lesson->save();
+                    // flash()->addSuccess('Video upload success!');
+                }
+                $course = Course::find($id);
+                $price = $course->price ?? 0;
+                return response()->json(['uri' => $uri, 'price' => $price]);
+
+            } elseif ($status === 'Invalid Credentials') {
+                return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
+            } else {
+                return response()->json(['error' => 'Vimeo account is not connected.']);
+            }
         }
+ 
+        return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Updated Successfuly');
+    }
+
+    public function stepLessonVideoRemove($subdomain,$id,$module_id,$lesson_id)
+    {
+        // return $lesson_id;
+
+        $lesson = Lesson::where('id', $lesson_id)->where('module_id',$module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+
+        if ($lesson) {
+            $lesson->video_link = NULL;
+            $lesson->save();
+            return redirect()->back()->with('success','Video Deleted Successfuly!');
+        }
+
+        return redirect()->back()->with('error','Failed to deleted the video !');
     }
 
     public function courseObjects($subdomain, $id){
