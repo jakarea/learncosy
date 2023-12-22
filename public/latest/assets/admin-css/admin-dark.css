@@ -2172,14 +2172,21 @@
   border-color: #1E222A;
 }
 
+.welcome-back-box .progress{
+  background-color: #313151!important;
+}
+
+.dark-mode .course-box-overflown::-webkit-scrollbar-track ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-track ,
 .dark-mode .custom-scrl::-webkit-scrollbar-track {
   background: #2D343E; 
 }
+.dark-mode .course-box-overflown::-webkit-scrollbar-thumb ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb ,
 .dark-mode .custom-scrl::-webkit-scrollbar-thumb {
   background: #7289FF; 
 }
+.dark-mode .course-box-overflown::-webkit-scrollbar-thumb:hover ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb:hover ,
 .dark-mode .custom-scrl::-webkit-scrollbar-thumb:hover {
   background: #7289FF;

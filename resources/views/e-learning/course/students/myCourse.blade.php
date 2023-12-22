@@ -54,7 +54,7 @@
                                 . {{ $totalReviews }} Reviews</h4>
 
                             <a href="{{ url('students/courses/' . $course->slug) }}" class="common-bttn"
-                                style="border-radius: 6.25rem; margin-top: 2rem">Start Course</a>
+                                style="border-radius: 6.25rem; margin-top: 2rem"><img src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a" class="img-fluid me-1"> Start Course</a>
 
                         </div>
                     </div>
