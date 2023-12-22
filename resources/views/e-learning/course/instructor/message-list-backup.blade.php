@@ -336,7 +336,7 @@
                         {{-- group room header end --}}
 
                         {{-- view profile box start --}}
-                        <div class="view-profile-box" id="profileBox">
+                        <div class="view-profile-box custom-scrl" id="profileBox">
                             <div class="profile-box">
                                 <a href="#" id="closeProfile">
                                     <i class="fas fa-close"></i>

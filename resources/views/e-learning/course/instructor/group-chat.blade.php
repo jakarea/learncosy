@@ -181,18 +181,16 @@
     </div>
 </form> --}}
 
-
-
 {{-- add people to group modal start --}}
 <div class="custom-modal-box">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="create-group-form">
+                <div class="create-group-form no-padding">
                     <form action="{{ route('messages.group.add.people') }}" method="POST" id="addPeopleToGroup">
                         @csrf
                         <div class="form-group mt-0">
-                            <label for="" style="font-size: 1.25rem">Add People</label>
+                            <label for="" style="font-size: 1.25rem" class="mb-2">Add People</label>
                             <input type="text" placeholder="Name" class="form-control search-people-specific-group t"/>
                             <input class="addUserId" type="hidden" name="user_id">
                             <input name="groupId" type="hidden" value="{{ $currentGroup->id }}">
@@ -224,19 +222,18 @@
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="create-group-form">
+                    <div class="create-group-form no-padding">
                         <h4>Rename Group</h4>
-                        <div class="chat-room-head group-room-header pt-0 ps-0" style="box-shadow: none">
-                            <div class="media">
+                        <div class="chat-room-head group-room-header p-0 bg-transparent" style="position: inherit; box-shadow: none;">
+                            <div class="media p-0" style="padding: 0!important">
                                 @isset( $currentGroup->avatar )
-                                    <span id="groupImageView" class="user-name-avatar me-1 d-none"></span>
-                                    <img id="groupImagePreview" src="{{ asset($currentGroup->avatar) }}" alt="{!! strtoupper($currentGroup->name[0]) !!}" class="img-fluid">
+                                    <span id="groupImageView" class="user-name-avatar me-2 d-none"></span>
+                                    <img id="groupImagePreview" src="{{ asset($currentGroup->avatar) }}" alt="{!! strtoupper($currentGroup->name[0]) !!}" class="img-fluid big-avt">
                                 @else
                                     <div>
-                                        <img id="groupImagePreview" src="" class="img-fluid d-none">
-                                        <span id="groupImageView" class="user-name-avatar me-1">{!! strtoupper($currentGroup->name[0]) !!}</span>
+                                        <img id="groupImagePreview" src="" class="img-fluid d-none big-avt">
+                                        <span id="groupImageView" class="user-name-avatar me-2 big-avt">{!! strtoupper($currentGroup->name[0]) !!}</span>
                                     </div>
-
                                 @endisset
 
                                 <div class="media-body">
@@ -258,7 +255,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{ route('messages.update.group') }}" method="POST" id="updateGroup">
+                        <form action="{{ route('messages.update.group') }}" method="POST" id="updateGroup" class="mt-2">
                             @csrf
                             <div class="form-group mt-0">
                                 <label for="">Group Name</label>
@@ -290,7 +287,7 @@
     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="create-group-form text-center">
+                <div class="create-group-form text-center no-padding">
                     <img src="{{ asset('latest/assets/images/icons/messages/err.svg') }}" alt="a" class="img-fluid">
                     <h4 class="border-0 pb-0 mt-4">Delete This Group</h4>
                     <p>Are you sure you want to delete this group?</p>

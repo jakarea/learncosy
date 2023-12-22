@@ -2143,7 +2143,7 @@
 }
 
 .dark-mode .create-group-form .form-submit {
-  background-color: #000!important;
+  background-color: #0D0D0D!important;
 }
 .dark-mode .create-group-form .form-submit .btn-cancel {
   border: 1px solid #2D343E!important;
@@ -2170,6 +2170,19 @@
 
 .dark-mode .create-group-form h4 {
   border-color: #1E222A;
+}
+
+.dark-mode .user-list-boxxs::-webkit-scrollbar-track ,
+.dark-mode .custom-scrl::-webkit-scrollbar-track {
+  background: #2D343E; 
+}
+.dark-mode .user-list-boxxs::-webkit-scrollbar-thumb ,
+.dark-mode .custom-scrl::-webkit-scrollbar-thumb {
+  background: #7289FF; 
+}
+.dark-mode .user-list-boxxs::-webkit-scrollbar-thumb:hover ,
+.dark-mode .custom-scrl::-webkit-scrollbar-thumb:hover {
+  background: #7289FF;
 }
 
 .dark-mode .view-profile-box {
@@ -2241,6 +2254,20 @@
 .dark-mode .course-outline-wrap::-webkit-scrollbar-thumb:hover {
   background: #2F3A4C;
 }
+
+
+.dark-mode .chat-room-head.group-room-header .dropdown .dropdown-menu{
+  background-color: #000!important;
+}
+
+.dark-mode .chat-room-head.group-room-header .dropdown .dropdown-menu .dropdown-item{
+  background-color: transparent!important;
+}
+
+.dark-mode .group-room-header .dropdown .dropdown-menu.show .active.dropdown-item img{
+  filter: none!important;
+}
+
 
 .dark-mode .user-details-box h1,
 .dark-mode .user-details-box h2,

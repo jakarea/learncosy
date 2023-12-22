@@ -5,7 +5,7 @@
 
 {{-- page style @S --}}
 @section('style')
-    <link rel="stylesheet" href="{{ asset('dashboard-assets/css/messages.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard-assets/css/message.css') }}">
 @endsection
 {{-- page style @S --}}
 
