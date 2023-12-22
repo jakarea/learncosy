@@ -1011,6 +1011,7 @@ function sendGroupMessage() {
 
 // Create Group
 function createGroup(formSelector) {
+    document.querySelector('.position-box-body').classList.remove('d-none');
     var formData = new FormData($(formSelector)[0]);
     $.ajax({
         type: "post",

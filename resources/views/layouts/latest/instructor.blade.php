@@ -71,6 +71,11 @@
                 background: {{ modulesetting('primary_color') }}
             }
 
+            .header-area .navbar-nav .nav-item .submenu-box li a.active{
+                background: {{ modulesetting('menu_color') }};
+                color: {{ modulesetting('primary_color') }}
+            }
+
             .header-area .navbar-nav .nav-item .nav-link,
             .header-area .navbar-nav .nav-item .submenu-box li a{
                 color: {{ modulesetting('menu_color') }}
