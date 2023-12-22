@@ -259,7 +259,7 @@
                             @csrf
                             <div class="form-group mt-0">
                                 <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ old('name') }}"/>
+                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ $currentGroup->name ? $currentGroup->name : old('name') }}"/>
                                 <input type="hidden" class="form-control" name="groupId" value="{{ $currentGroup->id }}"/>
                             </div>
 
