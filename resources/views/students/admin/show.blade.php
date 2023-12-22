@@ -150,14 +150,14 @@
                                 <td>{{ strftime('%a %b %Y', strtotime($value->created_at)) }}</td>
                                 <td>€ {{$value->amount}}</td>
                                 <td>
-                                    @if($value->status == 'completed')
+                                    @if($value->payment_status == 'completed' || $value->payment_status == 'Paid')
                                         <span>Success</span>
                                     @else
                                         <span class="bg-danger">Failed</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('admin/courses/'. optional($value->course)->slug)}}" class="view-course-bttn">View Course</a>
+                                    <a href="{{ url('admin/courses/overview/'. optional($value->course)->slug)}}" class="view-course-bttn">View Course</a>
                                 </td>
                             </tr> 
                             @endforeach 
