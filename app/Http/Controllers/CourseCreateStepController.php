@@ -290,7 +290,8 @@ class CourseCreateStepController extends Controller
         return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
     }
 
-    public function stepLessonContent(Request $request, $subdomain,$lesson_id){
+    public function stepLessonContent(Request $request, $subdomain,$lesson_id)
+    {
 
         if(!$lesson_id){
             return redirect('instructor/courses');
@@ -303,21 +304,19 @@ class CourseCreateStepController extends Controller
             'lesson_file.*' => 'mimes:pdf,doc,docx|max:250240',
         ]);
 
-        $uploadedFilenames = [];
-
         if ($request->hasFile('lesson_file')) {
-            $uploadedFilenames = [];
-
-            foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/lessons/files'), $filename);
-                $uploadedFilenames[] = $filename;
+            if ($lesson->lesson_file) {
+               $previousLessonPath = public_path($lesson->lesson_file);
+                if (file_exists($previousLessonPath)) {
+                    unlink($previousLessonPath);
+                }
             }
 
-            $lesson->lesson_file = implode(",", $uploadedFilenames);
+            $file = $request->file('lesson_file');
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
-
-
         $lesson->save();
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
@@ -344,7 +343,6 @@ class CourseCreateStepController extends Controller
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-
         return view('e-learning/course/instructor/create/step-4',compact('lesson'));
     }
 
@@ -372,21 +370,53 @@ class CourseCreateStepController extends Controller
  
     }
 
+    public function stepLessonFileRemove($subdomain,$id,$module_id,$lesson_id)
+    {
+        // return $lesson_id;
+        if(!$id || !$module_id || !$lesson_id){
+            return redirect('instructor/courses');
+        }
+
+        $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+
+        if ($lesson->lesson_file) {
+            $previousLessonPath = public_path($lesson->lesson_file);
+            if (file_exists($previousLessonPath)) {
+                unlink($previousLessonPath);
+            } 
+            $lesson->lesson_file = NULL;
+            $lesson->save();
+            return redirect()->back()->with('success','Lesson File Successfully Deleted!');
+        }
+
+        return redirect()->back()->with('warning','No File Found!');
+
+    }
+
     public function stepLessonAudioSet(Request $request,$subdomain, $id, $module_id, $lesson_id){
 
         if (!$id) {
             return redirect('instructor/courses');
         }
 
-        $request->validate([
-            'description' => 'nullable|string',
-            'audio' => 'mimes:mp3,wav|max:50000',
-            'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
-
-        ]);
-
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        $lesson->short_description = $request->input('description');
+
+        if ($lesson->audio) {
+            $request->validate([
+                'description' => 'nullable|string',
+                'audio' => 'nullable|mimes:mp3,wav|max:50000',
+                'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
+    
+            ]);
+        }else{
+            $request->validate([
+                'description' => 'nullable|string',
+                'audio' => 'required|mimes:mp3,wav|max:50000',
+                'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
+            ]);
+        }
+        
+        $lesson->short_description = $request->input('short_description');
 
         // Handle audio file upload
         if ($request->hasFile('audio')) {
@@ -404,20 +434,20 @@ class CourseCreateStepController extends Controller
             $lesson->audio = 'uploads/audio/'.$audioName;
         }
 
-        $uploadedFilenames = [];
-
         if ($request->hasFile('lesson_file')) {
-            foreach ($request->file('lesson_file') as $file) {
-                $filename = uniqid() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/lessons/files'), $filename);
-                $uploadedFilenames[] = $filename;
+            if ($lesson->lesson_file) {
+               $previousLessonPath = public_path($lesson->lesson_file);
+                if (file_exists($previousLessonPath)) {
+                    unlink($previousLessonPath);
+                }
             }
 
-            $lesson->lesson_file = implode(",", $uploadedFilenames);
+            $file = $request->file('lesson_file');
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
-
         $lesson->save();
-
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
@@ -445,7 +475,7 @@ class CourseCreateStepController extends Controller
         if ($lesson->video_link) {
             $request->validate([
                 'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000', 
-                'short_description' => 'required|string', 
+                'short_description' => 'nullable|string', 
             ],
             [ 
                 'video_link.max' => 'Max file size is 1 GB!',
