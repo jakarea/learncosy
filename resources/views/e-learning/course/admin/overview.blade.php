@@ -51,7 +51,9 @@
                             . {{ count($course_reviews) }} Reviews</h4>
 
                             <a href="{{ url('admin/courses/'.$course->slug.'/show') }}" class="common-bttn"
-                                style="border-radius: 6.25rem; margin-top: 2rem">Go to Course</a>
+                                style="border-radius: 6.25rem; margin-top: 2rem">
+                                <img src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a" class="img-fluid me-1">
+                                 Go to Course</a>
 
                     </div>
                 </div>

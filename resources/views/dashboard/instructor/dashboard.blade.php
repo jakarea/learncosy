@@ -146,10 +146,10 @@
                         <div class="media-body">
 
                             @if ($recentUpdate->message == 'enrolled')
-                            <h5>{{ $user->name }} - Enrolled to {{ Str::limit($course->title, $limit = 60, $end = '...')
+                            <h5><span>{{ $user->name }}</span> - Enrolled to {{ Str::limit($course->title, $limit = 60, $end = '...')
                                 }}</h5>
                             @elseif($recentUpdate->message == 'review')
-                            <h5>{{ $user->name }} - Post a review to {{ Str::limit($course->title, $limit = 60, $end =
+                            <h5><span>{{ $user->name }}</span> - Post a review to {{ Str::limit($course->title, $limit = 60, $end =
                                 '...') }}</h5>
                             @endif
                             <p>{{ Auth::user()->name }}</p>

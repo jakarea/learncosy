@@ -1160,6 +1160,8 @@
 .liked-courses .media img.thumab {
   width: 9.3125rem;
   border-radius: 0.5rem;
+  height: 6rem;
+  object-fit: cover;
 }
 .liked-courses .media p.user {
   color: var(--neutral-color-neutral-60, #66768E);

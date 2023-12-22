@@ -161,7 +161,7 @@
                                 <td>{{$value->created_at}}</td>
                                 <td>€ {{$value->amount}}</td>
                                 <td>
-                                    @if($value->status == 'completed')
+                                    @if($value->payment_status == 'completed' || $value->payment_status == 'Paid')
                                         <span>Success</span>
                                     @else
                                         <span class="bg-danger">Failed</span>
