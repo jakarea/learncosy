@@ -23,7 +23,7 @@
             background: {{ modulesetting('secondary_color') }};
             border-color: {{ modulesetting('secondary_color') }}
         }
-       
+
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
         }
@@ -115,17 +115,23 @@
                                     $categoriesg = isset($_GET['categories']) ? $_GET['categories'] : '';
                                 @endphp
                                 <select name="categories" id="categories" class="form-control">
-                                    <option value="">Select Below</option>
+                                    <option selected value="">Select Below</option>
                                     @foreach ($instructors->courses as $course)
-                                        @foreach (explode(',', $course->categories) as $categ)
+                                    @php
+                                    $cats = explode(',', $course->categories);
+                                    $cats = array_filter($cats, 'strlen');
+
+                                    @endphp
+                                        @foreach ($cats as $categ)
                                             <option value="{{ $categ }}"
-                                                {{ $categoriesg == $categ ? 'selected' : '' }}>{{ $categ }}
+                                                {{ $categoriesg == !empty($categ) ? 'selected' : '' }}>{{ $categ }}
                                             </option>
                                         @endforeach
                                     @endforeach
                                 </select>
                                 <i class="fas fa-angle-down"></i>
                             </div>
+                            <?php /*
                             <div class="form-group">
                                 <label for="subscription_status">Subscription</label>
                                 @php
@@ -144,6 +150,7 @@
                                 </select>
                                 <i class="fas fa-angle-down"></i>
                             </div>
+                            */?>
                             <div class="form-group me-0">
                                 <label for="price">Price</label>
                                 <input type="number" placeholder="Enter your budget" name="price" id="price"
@@ -175,8 +182,13 @@
                                     <div class="col-lg-9 col-md-8">
                                         <div class="media">
                                             <div class="course-thumbnail">
-                                                <img src="{{ asset($course->thumbnail) }}" alt="Course thumbnaik"
-                                                    class="img-fluid">
+
+                                                @isset( $course->thumbnail )
+                                                    <img src="{{ asset( $course->thumbnail ) }}" alt="{{ $course->name }}" class="img-fluid">
+                                                @else
+                                                    <span class="user-name-thumbnail">{!! strtoupper($course->name[0]) !!}</span>
+                                                @endisset
+
                                             </div>
                                             <div class="media-body">
                                                 <h4>{{ $course->title }}</h4>
