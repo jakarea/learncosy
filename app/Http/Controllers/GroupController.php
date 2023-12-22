@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\GroupParticipant;
-use File;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -28,6 +29,8 @@ class GroupController extends Controller
         if ($group && isset($request->user_id) && !empty($request->user_id)) {
             $group_id = $group->id;
             $userIds = explode(',', $request->user_id);
+
+            $userIds[] = Auth::id();
 
             collect($userIds)->each(function ($userId) use ($group_id) {
                 GroupParticipant::create([
@@ -101,11 +104,11 @@ class GroupController extends Controller
     {
         if ($request->ajax()) {
 
-            // dd( $request->all() );
-
             if (isset($request->user_id) && !empty($request->user_id)) {
                 $group_id = $request->groupId;
                 $userIds = explode(',', $request->user_id);
+
+                $userIds[] = Auth::id();
 
                 collect($userIds)->each(function ($userId) use ($group_id) {
                     GroupParticipant::updateOrCreate([

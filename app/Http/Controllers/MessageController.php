@@ -318,6 +318,7 @@ class MessageController extends Controller
                 $data = ['from' => $request->receiver_id, 'to' => $member->user_id];
 
                 $notify = '' . $member->user_id . '';
+
                 $pusher->trigger($notify, 'App\\Events\\Notify', $data);
 
             }
