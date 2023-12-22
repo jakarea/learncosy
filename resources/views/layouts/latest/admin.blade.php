@@ -49,7 +49,7 @@
         @yield('content')
     </div>
     {{-- Main Root Wrapper @E --}}
-    
+
 
     {{-- dark mode button start --}}
     <input type="checkbox" id="darkModeBttn" class="d-none">
@@ -83,7 +83,7 @@
             const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
 
             // Update the dark mode preference using session
-            fetch(`${baseUrls}/preference/mode/setting`, { 
+            fetch(`${baseUrls}/preference/mode/setting`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,72 +127,6 @@
     </script>
 
 
-<script>
-
-    // Module resorting
-    $(function() {
-        $("#moduleResort").sortable({
-            update: function(event, ui) {
-                var moduleOrder = $(this).sortable("toArray", { attribute: "data-module-id" });
-                moduleOrder = moduleOrder.filter(function(item) {
-                    return item !== '';
-                });
-                updateModuleOrder( moduleOrder );
-            }
-        });
-    });
-
-
-    // Lession resorting
-    $(function() {
-        $(".lessonResort").sortable({
-            update: function(event, ui) {
-                var moduleLessonOrder = $(this).sortable("toArray", { attribute: "data-module-lession-id" });
-                moduleLessonOrder = moduleLessonOrder.filter(function(item) {
-                    return item !== '';
-                });
-                updateModuleLessionOrder( moduleLessonOrder );
-            }
-        });
-    });
-
-
-    function updateModuleOrder(moduleOrder) {
-        $.ajax({
-            url: "/admin/courses/create/module/sortable",
-            type: "POST",
-            data: {
-                moduleOrder: moduleOrder,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                console.log("Module reorder updated successfully");
-            },
-            error: function(xhr, status, error) {
-                console.error("Error updating module order:", error);
-            }
-        });
-    }
-
-    function updateModuleLessionOrder(moduleLessonOrder){
-        $.ajax({
-            url: "/admin/courses/create/lesson/sortable",
-            type: "POST",
-            data: {
-                lessonOrder: moduleLessonOrder,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                console.log("Module lession reorder updated successfully");
-            },
-            error: function(xhr, status, error) {
-                console.error("Error updating module order:", error);
-            }
-        });
-    }
-
-
-</script>
 
     @yield('script')
 </body>

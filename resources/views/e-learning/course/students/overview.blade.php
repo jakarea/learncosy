@@ -67,7 +67,7 @@
                         @foreach ($objectives as $object)
                             @if (trim($object) !== '')
                                 <li><i class="fas fa-check"></i> {{ $object }} </li>
-                            @else 
+                            @else
                                 <li>No Objective Found!</li>
                             @endif
                         @endforeach
@@ -252,32 +252,33 @@
                         </div>
 
                         @if ( !isEnrolled($course->id) )
-                        <form action="{{route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])}}" method="GET">
-                            <input type="hidden" name="course_id" value="{{$course->id}}">
-                            <input type="hidden" name="price" value="{{$course->price}}">
-                            <input type="hidden" name="instructor_id" value="{{$course->instructor_id}}">
-                            <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
-                        </form>
+                            {{-- <form action="{{route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])}}" method="GET"> --}}
 
-                        <form action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
-                            @csrf
-                            @if ($cartCourses->pluck('course_id')->contains($course->id))
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button type="button" class="btn add-cart-bttn bg-secondary text-white border-0" disabled>
-                                    Already in cart</button>
-                                <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
-                                    <i class="fa-regular fa-heart"></i>
-                                </button>
-                            </div>
-                            @else
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
-                                <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
-                                    <i class="fa-regular fa-heart"></i>
-                                </button>
-                            </div>
-                            @endif
-                        </form>
+                            <form action="{{route('buy.course', ['id' => $course->id, 'subdomain' => config('app.subdomain') ])}}" method="POST">
+                                @csrf
+
+                                <button type="submit" class="btn enrol-bttn">Buy Course Now</button>
+                            </form>
+
+                            <form action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain') ]) }}" method="POST">
+                                @csrf
+                                @if ($cartCourses->pluck('course_id')->contains($course->id))
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="button" class="btn add-cart-bttn bg-secondary text-white border-0" disabled>
+                                        Already in cart</button>
+                                    <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                </div>
+                                @else
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
+                                    <button type="button" class="btn btn-heart {{ $liked }}" id="likeBttn">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                </div>
+                                @endif
+                            </form>
                         @endif
                     </div>
                     <div class="course-desc-txt">
