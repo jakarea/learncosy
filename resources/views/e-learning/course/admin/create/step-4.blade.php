@@ -42,34 +42,43 @@ Course Create - Step 4
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
                 </div> 
                 
-                 <div class="course-content-box course-page-edit-box audio-preview">
-                    <div class="title">
+                <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="frontAudio">
+                    <h4>Uploading Audio:</h4>
+                    <div class="title d-flex w-100 justify-content-between">
                         <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="" class="img-fluid"> 
+                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem"> 
                             <div class="media-body">
-                                <h5 id="file-name"></h5>
-                                <span class="cursor-pointer" id="remove-audio">
-                                    <i class="fas fa-close"></i>    
-                                </span> 
+                                <h5 id="file-name"></h5> 
+                                <p>Size:  <span id="file-size"></span> MB</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                {{-- uploaded audio preview --}}
-
-                @if ($lesson->audio) 
-                <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-0">
-                    <h4>Uploaded Audio:</h4>
-                    <div class="title">
-                        <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid"> 
-                            <div class="media-body">
-                                <h5>{{ $lesson->audio }} </h5> 
-                            </div>
+                        <div>
+                            <a href="javascript:void(0)" class="text-danger cursor-pointer" id="remove-audio">
+                                <i class="fas fa-close"></i>
+                            </a>
                         </div>
                     </div>
                 </div> 
+                {{-- uploaded audio preview --}}
 
+                @if ($lesson->audio) 
+                <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="dbAudio">
+                    <h4>Current Audio:</h4>
+                    <div class="title d-flex w-100 justify-content-between">
+                        <div class="media">
+                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem"> 
+                            <div class="media-body">
+                                <h5>{{ basename($lesson->audio) }} </h5> 
+                                <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="{{ url('admin/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div> 
                 @endif 
 
                 <div class="lesson-edit-form-wrap mt-4">
@@ -81,20 +90,23 @@ Course Create - Step 4
                         @csrf
                         <input type="file" class="d-none" id="audio" name="audio">
                         <div class="form-group">
-                            <textarea class="form-control" id="description" name="description">
+                            <textarea class="form-control" id="description" name="short_description">
                                 @if ($lesson->short_description)
                                 {!! $lesson->short_description !!}
                                 @endif
                             </textarea>
+                            <span class="invalid-feedback">@error('short_description'){{ $message }}
+                                @enderror</span>
                         </div>
                         <div class="form-group form-upload">
-                            <label for="file-input" class="txt">Upload Files</label>
-                            <input type="file" id="file-input" class="opacity-0" name="lesson_file[]" multiple>
+                            <label for="file-input" class="txt">Upload New File</label>
+                            <input type="file" id="file-input" class="d-none" name="lesson_file">
+                            <span class="invalid-feedback">@error('lesson_file'){{ $message }}
+                                @enderror</span>
                             <label for="file-input" id="upload-box">
-                                <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar"
-                                    class="img-fluid"> Upload
+                                <img src="{{asset('latest/assets/images/icons/upload.svg')}}" alt="Bar" class="img-fluid"> Upload
                             </label>
-                            <span>*.doc, *.pdf, *.xls file (max 25 mb)</span>
+                            <span>*.doc, *.pdf, *.xls file (max 5 mb)</span>
                         </div>
 
                         {{-- course page file box start --}}
@@ -102,31 +114,25 @@ Course Create - Step 4
                             <!-- Uploaded files will be displayed here -->
                         </div>
 
-                        @php
-                        $lessonFileString = $lesson->lesson_file;
-                        $uploadedFilenames = explode(',', $lessonFileString);
-                        @endphp
-                        @if ($lesson->lesson_file)
-                        <div class="form-group form-upload">
-                            <label for="file-input" class="txt">Uploaded Files</label>
-                        </div>
-                        @foreach ($uploadedFilenames as $filename)
-                        <div class="course-content-box course-page-edit-box">
-                            <div class="title">
+                        @if ($lesson->lesson_file) 
+                        <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start">
+                            <h4>Current Lesson File:</h4>
+                            <div class="title d-flex w-100 justify-content-between">
                                 <div class="media">
-                                    <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File"
-                                        class="img-fluid">
+                                    <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem"> 
                                     <div class="media-body">
-                                        <h5>{{ $filename }} </h5>
-                                        <p>{{ $lesson->created_at }}</p>
+                                        <h5> {{ basename($lesson->lesson_file) }}</h5> 
+                                        <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
+                                <div>
+                                    <a href="{{ url('admin/courses/create/file/remove/'.$lesson->id) }}" class="text-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        @endforeach
-                        @endif
-
-                        
+                        </div> 
+                    @endif 
                         {{-- course page file box end --}}
 
                 </div>
@@ -146,59 +152,53 @@ Course Create - Step 4
 
 @section('script')
 <script src="{{asset('latest/assets/js/tinymce.js')}}" type="text/javascript"></script>
-
 <script>
     const fileInput = document.getElementById('file-input');
-    const fileList = document.getElementById('file-list');
+    const fileList = document.getElementById('file-list'); 
 
     fileInput.addEventListener('change', function () {
-        const files = Array.from(fileInput.files);
+        const file = fileInput.files[0];
 
-        files.forEach(file => {
-            if (!isValidFile(file)) {
-                alert('Invalid file format or size: ' + file.name);
-                return;
-            }
+        if (!isValidFile(file)) {
+            alert('Invalid file format or size: ' + file.name);
+            return;
+        }
 
-            const listItem = document.createElement('div');
-            listItem.classList.add('course-content-box', 'course-page-edit-box');
+        const listItem = document.createElement('div');
+        listItem.classList.add('course-content-box', 'course-page-edit-box');
 
-            listItem.innerHTML = `
-                <div class="title">
-                    <div class="media">
-                        <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File" class="img-fluid">
-                        <div class="media-body">
-                            <h5>${file.name}</h5>
-                            <p>Uploaded: ${new Date().toLocaleString()}</p>
-                        </div>
+        listItem.innerHTML = `
+            <div class="title">
+                <div class="media">
+                    <img src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="File" class="img-fluid">
+                    <div class="media-body">
+                        <h5>${file.name}</h5>
+                        <p>Uploaded: ${new Date().toLocaleString()}</p>
                     </div>
                 </div>
-                <div class="dropdown">
-                    <span>${formatBytes(file.size)}</span>
-                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
-                    </ul>
-                </div>
-            `;
+            </div>
+            <div class="dropdown">
+                <span>${formatBytes(file.size)}</span>
+                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
+                </ul>
+            </div>
+        `;
 
-            fileList.appendChild(listItem);
-        });
+        fileList.innerHTML = ''; // Clear existing files
+        fileList.appendChild(listItem);
+
+        dbAudio.classList.add('d-none');
     });
 
     // Add an event listener for the "Remove file" button
     fileList.addEventListener('click', function (event) {
         if (event.target.classList.contains('remove-file-button')) {
-            const listItem = event.target.closest('.course-content-box');
-            const fileName = listItem.querySelector('h5').textContent;
-            
-            // Remove the file from the list
-            listItem.remove();
-            
-            // Remove the file from the input path
-            removeFileFromInput(fileInput, fileName);
+            fileList.innerHTML = ''; // Clear the file list
+            fileInput.value = ''; // Clear the file input
         }
     });
 
@@ -219,16 +219,6 @@ Course Create - Step 4
         return true;
     }
 
-    function removeFileFromInput(fileInput, fileName) {
-        const files = Array.from(fileInput.files);
-        const index = files.findIndex(file => file.name === fileName);
-
-        if (index !== -1) {
-            files.splice(index, 1);
-            fileInput.files = new FileList({ items: files });
-        }
-    }
-
     function formatBytes(bytes) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -240,21 +230,27 @@ Course Create - Step 4
 
 <script> 
    // Replace with the appropriate event that triggers this function
-
+   $('#frontAudio').css('display', 'none'); 
     $('#audio-thumbnail').css('display', 'none');
 
     $('#audio').change(function () {
         var audioInput = $(this)[0];
         var audioPreview = $('#audio-preview');
         var fileNameSpan = $('#file-name');
+        var fileSizeSpan = $('#file-size');
         var removeAudioIcon = $('#remove-audio');
+
+        $('#dbAudio').css('display', 'none');
 
         if (audioInput.files.length > 0) {
             // Display the selected file name
             fileNameSpan.text(audioInput.files[0].name);
+            var fileSizeMb = (audioInput.files[0].size / (1024 * 1024)).toFixed(2);
+            fileSizeSpan.text(fileSizeMb);            
 
             // Hide the placeholder image by setting display: none
-            $('#audio-thumbnail').css('display', 'block');
+            $('#audio-thumbnail').css('display', 'block'); 
+            $('#frontAudio').css('display', 'block'); 
 
             // Show the remove audio icon
             removeAudioIcon.css('display', 'inline-block');
@@ -262,7 +258,9 @@ Course Create - Step 4
             // No file selected, reset to the placeholder image
             fileNameSpan.text('');
             $('#audio-thumbnail').css('display', 'none');
+            $('#frontAudio').css('display', 'none'); 
             removeAudioIcon.hide();
+            $('#dbAudio').css('display', 'block'); 
         }
     });
 
@@ -277,6 +275,8 @@ Course Create - Step 4
 
         // Reset the display property of the placeholder image
         $('#audio-thumbnail').css('display', 'none');
+        $('#dbAudio').css('display', 'block'); 
+        $('#frontAudio').css('display', 'none'); 
     });
 
 </script>

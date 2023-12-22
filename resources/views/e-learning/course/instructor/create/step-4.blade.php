@@ -18,7 +18,7 @@ Course Create - Step 4
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle"></span>
-                        <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
+                        <p><a href="{{ url('admin/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
                     <div class="step-box">
                         <span class="circle"></span>
@@ -33,18 +33,7 @@ Course Create - Step 4
                 <div class="highlighted-area-upload">
                     <img src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="a" class="img-fluid">
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
-                </div> 
-                
-                 {{-- <div class="course-content-box course-page-edit-box audio-preview mt-2" id="frontAudio">
-                    <div class="title">
-                        <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="" class="img-fluid"> 
-                            <div class="media-body">
-                                <h5></h5> 
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                </div>  
 
                 <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="frontAudio">
                     <h4>Uploading Audio:</h4>
@@ -79,7 +68,7 @@ Course Create - Step 4
                             </div>
                         </div>
                         <div>
-                            <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
+                            <a href="{{ url('admin/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>

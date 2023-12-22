@@ -403,14 +403,14 @@ class CourseCreateStepController extends Controller
 
         if ($lesson->audio) {
             $request->validate([
-                'description' => 'nullable|string',
+                'short_description' => 'nullable|string',
                 'audio' => 'nullable|mimes:mp3,wav|max:50000',
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
     
             ]);
         }else{
             $request->validate([
-                'description' => 'nullable|string',
+                'short_description' => 'nullable|string',
                 'audio' => 'required|mimes:mp3,wav|max:50000',
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
             ]);
