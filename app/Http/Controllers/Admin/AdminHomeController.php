@@ -30,10 +30,7 @@ class AdminHomeController extends Controller
         $this->previousMonthEnd = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
     }
 
-
-    // public function showForm(){
-    //     return view('auth.admin-login');
-    // }
+ 
 
     // dashboard
     public function dashboard(Request $request)

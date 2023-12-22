@@ -56,7 +56,7 @@ class CourseController extends Controller
                 $courses = Course::with(['user','reviews'])
                 ->withCount('checkouts as sale_count')
                 ->where('user_id', auth()->id())
-                ->orderByDesc('sale_count');
+                ->orderByDesc('sale_count','desc');
             }
 
             if ($status == 'newest') {

@@ -72,27 +72,11 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
-                    
-                    
-                    {{-- <div class="download-files-box">
-                        <h4>Download Files </h4>
-                        <div id="dataTextContainer" class="mb-3"> 
-                        </div>
-                        @if(!empty($group_files))
-                        <div class="files">
-                            @foreach($group_files as $fileExtension)
-                                <a href="javascript:void(0)">
-                                    {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
-                                </a>
-                            @endforeach
-                        </div>
-                        @endif
-                    </div> --}}
                    
                     {{-- course review --}}
+                    @if ($course->allow_review) 
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
-
                         @if (count($course_reviews) > 0)
                         @foreach ($course_reviews as $course_review)
                         <div class="media">
@@ -119,7 +103,7 @@ $i = 0;
                         @endif
                     </div>
                     {{-- course review --}}
-
+                    @endif
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-md-12 col-12">
@@ -206,7 +190,7 @@ $i = 0;
                                         class="img-fluid">
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('admin/courses', $relatedCourse->slug) }}">{{
+                                    <a href="{{ url('admin/courses/'.$relatedCourse->slug.'/show') }}">{{
                                         $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
 

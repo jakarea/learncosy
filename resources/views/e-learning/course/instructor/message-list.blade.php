@@ -151,7 +151,6 @@ Messsages Page
                     {{-- chat body right side start --}}
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
-
                         <div class="main-chat-room">
                             <div id="chat-message" class="main-chat-inner-room">
                                 <div class="blank-chat-page">
@@ -188,15 +187,13 @@ Messsages Page
                                         </label>
                                         <input type="file" name="file" class="d-none" id="attached"
                                             onchange="displayFileName()">
-                                        <button class="btn btn-submit" type="submit">
+                                        <button class="btn btn-submit" onclick="removeFile()" type="submit">
                                             Send
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </form>
-
 
                         <form method="POST" class="send-actions w-100 d-none" id="groupChatMessage" autocomplete="off">
                             <div class="dock-bottom">
@@ -1181,6 +1178,7 @@ $(document).ready(function() {
             var previewImage = document.getElementById('preview-image');
             previewImage.src = URL.createObjectURL(input.files[0]);
         }
+        removeGroupFile();
     }
 
     function removeGroupFile() {
@@ -1196,6 +1194,7 @@ $(document).ready(function() {
     }
 
     function removeFile() {
+        // alert('stop');
         var input = document.getElementById('attached');
         input.value = '';
         var filePreview = document.getElementById('file-preview');
