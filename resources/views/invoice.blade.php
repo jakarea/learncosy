@@ -150,7 +150,7 @@
                 <address>
                     <strong>Payment By: </strong> <br>
                     Name: {{ $payment->user->name}} <br />
-                    Subscription Date: {{ date(' d M, Y',strtotime($payment->start_date)) }} <br>
+                    Subscription Date: {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
                     Payment Date : {{ date(' d M, Y',strtotime($payment->created_at)) }} <br>
                     Payment Type : {{ $payment->payment_method }} <br>
                     Payment Status : {{ ucfirst( $payment->payment_status) }}

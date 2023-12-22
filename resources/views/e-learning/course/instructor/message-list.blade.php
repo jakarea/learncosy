@@ -5,10 +5,8 @@ Messsages Page
 
 {{-- page style @S --}}
 @section('style')
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-{{--
-<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css"> --}}
-<link href="{{ asset('latest/assets/admin-css/test.css') }}" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+<link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css">
 <style>
     .message-list-page-wrap {
         font-family: 'Poppins', sans-serif !important;
@@ -71,18 +69,18 @@ Messsages Page
                             @endif
                         </div>
                         <div class="collapse" id="collapseExample">
-                            <div class="create-group-form">
+                            <div class="create-group-form pt-0">
                                 <h4>Create Group</h4>
 
                                 @include('e-learning.course.instructor.group-admin.admin-info')
 
                                 <form method="post" class="createGroup" action="{{ route('messages.group') }}">
-                                    <div class="form-group">
+                                    <div class="form-group mt-2">
                                         <label for="">Group Name</label>
                                         <input type="text" placeholder="Group Name" class="form-control" name="name"
                                             value="{{ old('name') }}">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mt-2">
                                         <label for="">Add People</label>
                                         <input type="text" placeholder="Name"
                                             class="form-control search-group-chat-user">
@@ -136,9 +134,9 @@ Messsages Page
                         {{-- chat filter --}}
 
                         {{-- leftbar person list start --}}
-                        <div class="person-tab-body">
+                        <div class="person-tab-body position-box-body"> 
                             {{-- single person start --}}
-                            <div class="chat-user-load" id="chat-user-load">
+                            <div class="chat-user-load user-list-boxxs" id="chat-user-load">
                                 @include('e-learning.course.instructor.message-group.group-list')
                                 @include('e-learning.course.instructor.chat-user.search-users')
                             </div>
@@ -152,7 +150,7 @@ Messsages Page
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
                         <div class="main-chat-room">
-                            <div id="chat-message" class="main-chat-inner-room">
+                            <div id="chat-message" class="main-chat-inner-room tt" style="overflow-y: hidden">
                                 <div class="blank-chat-page">
                                     <i class="fa-regular fa-circle-user"></i>
                                     <h3>Select a person or group to start a chat</h3>
@@ -239,7 +237,7 @@ Messsages Page
     <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="create-group-form">
+                <div class="create-group-form no-padding">
                     <h4>Create Group</h4>
                     @include('e-learning.course.instructor.group-admin.admin-info')
                     <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
@@ -1080,11 +1078,12 @@ $(document).ready(function() {
 
     const toggleBttn = document.querySelector('.create-toggle');
     const headerFilter = document.querySelector('.header-filter');
+    const positionBody = document.querySelector('.position-box-body');
     const userList = document.querySelector('.person-tab-body.chat-user-load');
 
-    toggleBttn.addEventListener('click', function (e) {
-        // userList.classList.toggle('active');
+    toggleBttn.addEventListener('click', function (e) { 
         headerFilter.classList.toggle('active');
+        positionBody.classList.toggle('d-none');
     });
 
 

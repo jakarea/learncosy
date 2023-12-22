@@ -35,9 +35,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- person list @e -->
-                        <!-- chat-main-body box @s
-        -->
+                        
                             <div class="chat-main-body-box">
                                 <div class="chat-room-head">
                                     <div class="media">

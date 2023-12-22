@@ -27,7 +27,7 @@
                 @endphp
                 <p>{{ $username }}</p>
             </div>
-            <a href="javascript:;" class="view-bttn own-profile">View Profiles</a>
+            <a href="javascript:;" class="view-bttn own-profile">View Profile</a>
         </div>
     </div>
 @endisset
@@ -66,8 +66,7 @@
     <div class="message-item {{ $message->sender_id == Auth::id() ? 'sender-item' : '' }}">
         <div class="media main-media">
             <div class="avatar">
-
-
+                
                 @isset($message->groupUserName->avatar)
                     <img src="{{ asset($message->groupUserName->avatar) }}" alt="A"
                         class="img-fluid">
@@ -138,7 +137,7 @@
 
 
 {{-- view profile box start --}}
-<div class="view-profile-box" id="profileBox">
+<div class="view-profile-box custom-scrl" id="profileBox">
     <div class="profile-box">
         <a href="javascript:;" id="closeProfile">
             <i class="fas fa-close"></i>
