@@ -224,7 +224,8 @@ h6 {
   padding: 0.8rem 1rem;
   border-radius: 0.6rem;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: 1.25rem;
 }
 .course-filter-wrap .course-filter-box .form-group {
   margin-right: 1rem;
@@ -254,6 +255,8 @@ h6 {
   color: #8C8FAE;
 }
 .course-filter-wrap .course-filter-box .filter-bttn {
+  display: grid;
+  grid-template-columns: 50% 50%;
   margin-top: 2rem;
 }
 .course-filter-wrap .course-filter-box .filter-bttn .btn-reset {
