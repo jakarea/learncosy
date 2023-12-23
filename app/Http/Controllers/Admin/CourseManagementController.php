@@ -39,14 +39,12 @@ class CourseManagementController extends Controller
         $courses = Course::with('user','reviews');
 
         if ($title) {
-            $courses->where('title', 'like', '%' . trim($title) . '%');
-
-
-            // $jsonTitle = json_decode($title);
-
-            // if ($jsonTitle !== null && json_last_error() === JSON_ERROR_NONE) {
-            //     $courses->whereJsonContains('categories', [$jsonTitle]);
-            // }
+            $courses->where(function ($query) use ($title) {
+                $categories = explode(',', trim($title));
+                foreach ($categories as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+            });
         }
 
         if ($status) {

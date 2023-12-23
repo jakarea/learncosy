@@ -36,7 +36,12 @@ class CourseController extends Controller
         $courses = Course::where('user_id', Auth::user()->id);
 
         if ($title) {
-            $courses->where('title', 'like', '%' . trim($title) . '%');
+            $courses->where(function ($query) use ($title) {
+                $categories = explode(',', trim($title));
+                foreach ($categories as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+            });
         }
 
         if ($status) {
