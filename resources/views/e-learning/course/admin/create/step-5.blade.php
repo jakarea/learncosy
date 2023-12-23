@@ -37,7 +37,7 @@ Course Create - Video Upload
                         <div class="lesson-edit-form-wrap mt-4">
                             <div class="highlighted-area-upload dragBox">
                                 <img src="{{asset('latest/assets/images/icons/big-video.svg')}}" alt="a" class="img-fluid">
-                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" required />
+                                <input type="file" onChange="dragNdrop(event)" name="video_link" ondragover="drag()" ondrop="drop()" id="uploadFile" />
                                 <p class="file-name"><label for="uploadFile">Click here</label> to set the Lesson video</p>
                             </div>
                             <input type="hidden" name="duration" id="duration" />

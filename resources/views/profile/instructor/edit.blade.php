@@ -1036,9 +1036,9 @@
                                                     gorgeous HD with no ads.</p>
                                             </div>
                                             <a href="#"
-                                                class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}"
+                                                class="{{ isVimeoConnected(auth()->user()->id)[1] == 'Connected' ? 'connected' : 'disconnected' }}"
                                                 data-bs-toggle="modal" data-bs-target="#connectModal">
-                                                @if (isVimeoConnected()[1] == 'Connected')
+                                                @if (isVimeoConnected(auth()->user()->id)[1] == 'Connected')
                                                 Connected
                                                 @else
                                                 Connect
@@ -1164,21 +1164,21 @@
                                         <label for="client_id">CLIENT ID
                                         </label>
                                         <input type="text" class="form-control" placeholder="Enter Client ID"
-                                            name="client_id" value="{{ isVimeoConnected()[0]->client_id ?? '' }}">
+                                            name="client_id" value="{{ isVimeoConnected(auth()->user()->id)[0]->client_id ?? '' }}">
                                         <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="client_secret">CLIENT SECRET</label>
                                         <input type="text" class="form-control" placeholder="Enter Client Secret"
                                             name="client_secret"
-                                            value="{{ isVimeoConnected()[0]->client_secret ?? '' }}">
+                                            value="{{ isVimeoConnected(auth()->user()->id)[0]->client_secret ?? '' }}">
                                         <span class="text-danger">@error('client_secret') {{ $message }}
                                             @enderror</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="access_key">CLIENT ACCESS KEY</label>
                                         <input type="text" class="form-control" placeholder="Enter Access Key"
-                                            name="access_key" value="{{ isVimeoConnected()[0]->access_key ?? '' }}">
+                                            name="access_key" value="{{ isVimeoConnected(auth()->user()->id)[0]->access_key ?? '' }}">
                                         <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-submit  mt-3">

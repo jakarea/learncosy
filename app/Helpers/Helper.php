@@ -142,21 +142,19 @@ if (!function_exists('getFirstLesson')) {
  * Helper function to check vimeo data is connected or not
  */
 if (!function_exists('isVimeoConnected')) {
-    function isVimeoConnected()
+    function isVimeoConnected($insId)
     {
-        $user = auth()->user();
+        $userId = $insId;
         $vimeoData = null;
         $status = '';
 
-        if ($user) {
-            $vimeoData = \App\Models\VimeoData::where('user_id', $user->id)->first();
+        if ($userId) {
+            $vimeoData = \App\Models\VimeoData::where('user_id', $userId)->first();
 
-            if (!$vimeoData) {
-                // Vimeo data not found, show alert or redirect
+            if (!$vimeoData) { 
                 $status = 'Not Connected';
                 return [$vimeoData, $status];
-            } else {
-                // Check vimeo data is connected or not to Vimeo API in real-time
+            } else { 
                 $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
 
                 try {
@@ -166,8 +164,7 @@ if (!function_exists('isVimeoConnected')) {
                 } catch (\Vimeo\Exceptions\VimeoUploadException $e) {
                     $status = 'Invalid Credentials';
                     return [$vimeoData, $status];
-                } catch (\Exception $e) {
-                    // Handle any other exceptions or errors that occurred during the request
+                } catch (\Exception $e) { 
                     $status = 'Connection Failed';
                     return [$vimeoData, $status];
                 }
