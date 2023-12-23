@@ -76,16 +76,18 @@
                                                         <img src="{{asset('latest/assets/images/icons/camera-plus-w.svg')}}"
                                                             alt="Upload" class="img-fluid">
                                                         <p>Update photo</p>
+
                                                         <div class="ol">
                                                             @if ($user->avatar)
-                                                            <img src="{{asset($user->avatar)}}" alt="Avatar"
-                                                                id="item-img-output" class="imgpreviewPrf img-fluid">
+                                                            <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output" class="imgpreviewPrf img-fluid">
                                                             @else
-                                                            <span class="avatar-box" style="color: #3D5CFF">{!!
+                                                            <img src="" alt="" id="item-img-output" class="imgpreviewPrf img-fluid position-absolute" style="left: 0; z-index: 9;">
+                                                            <span class="avatar-box position-absolute" style="color: #3D5CFF;left: 0;">{!!
                                                                 strtoupper($user->name[0]) !!}</span>
                                                             @endif
 
                                                         </div>
+
                                                     </label>
                                                 </a>
                                                 <input type="hidden" name="base64_avatar" id="base64_avatar" value="">
@@ -97,8 +99,7 @@
                                                     Max size of 3.1 MB</h6>
                                             </div>
                                             <div class="form-check form-switch ps-0">
-                                                <label class="form-check-label" for="recivingMessage">Receiving
-                                                    Messages</label>
+                                                <label class="form-check-label" for="recivingMessage">Receiving Messages</label>
 
                                                 <input class="form-check-input" id="recivingMessage" type="checkbox"
                                                     name="recivingMessage" value="1" {{ old('recivingMessage',
@@ -332,16 +333,17 @@
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <h5>{{ $experience->profession }}</h5>
                                                     <div>
-                                                        <a href="{{ route('instructor.edit.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
-                                                            <img
-                                                                src=" {{ asset('latest/assets/images/icons/pen.svg') }}" alt="img"
-                                                                class="img-fluid">
+                                                        <a
+                                                            href="{{ route('instructor.edit.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                                            <img src=" {{ asset('latest/assets/images/icons/pen.svg') }}"
+                                                                alt="img" class="img-fluid">
                                                         </a>
 
-                                                        <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
-                                                            <img
-                                                                src=" {{ asset('latest/assets/images/icons/minus.svg') }}" alt="img"
-                                                                class="img-fluid">
+
+                                                        <a
+                                                            href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
+                                                            <img src=" {{ asset('latest/assets/images/icons/minus.svg') }}"
+                                                                alt="img" class="img-fluid">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -1037,9 +1039,9 @@
                                                     gorgeous HD with no ads.</p>
                                             </div>
                                             <a href="#"
-                                                class="{{ isVimeoConnected()[1] == 'Connected' ? 'connected' : 'disconnected' }}"
+                                                class="{{ isVimeoConnected(auth()->user()->id)[1] == 'Connected' ? 'connected' : 'disconnected' }}"
                                                 data-bs-toggle="modal" data-bs-target="#connectModal">
-                                                @if (isVimeoConnected()[1] == 'Connected')
+                                                @if (isVimeoConnected(auth()->user()->id)[1] == 'Connected')
                                                 Connected
                                                 @else
                                                 Connect
@@ -1165,21 +1167,23 @@
                                         <label for="client_id">CLIENT ID
                                         </label>
                                         <input type="text" class="form-control" placeholder="Enter Client ID"
-                                            name="client_id" value="{{ isVimeoConnected()[0]->client_id ?? '' }}">
+                                            name="client_id"
+                                            value="{{ isVimeoConnected(auth()->user()->id)[0]->client_id ?? '' }}">
                                         <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="client_secret">CLIENT SECRET</label>
                                         <input type="text" class="form-control" placeholder="Enter Client Secret"
                                             name="client_secret"
-                                            value="{{ isVimeoConnected()[0]->client_secret ?? '' }}">
+                                            value="{{ isVimeoConnected(auth()->user()->id)[0]->client_secret ?? '' }}">
                                         <span class="text-danger">@error('client_secret') {{ $message }}
                                             @enderror</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="access_key">CLIENT ACCESS KEY</label>
                                         <input type="text" class="form-control" placeholder="Enter Access Key"
-                                            name="access_key" value="{{ isVimeoConnected()[0]->access_key ?? '' }}">
+                                            name="access_key"
+                                            value="{{ isVimeoConnected(auth()->user()->id)[0]->access_key ?? '' }}">
                                         <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-submit  mt-3">

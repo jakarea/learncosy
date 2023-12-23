@@ -501,7 +501,7 @@ class CourseCreateStepController extends Controller
             $file = $request->file('video_link');
             $videoName = $file->getClientOriginalName();
 
-            [$vimeoData, $status, $accountName] = isVimeoConnected();
+            [$vimeoData, $status, $accountName] = isVimeoConnected($lesson->instructor_id);
 
             if ($status === 'Connected') {
                 $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
@@ -518,7 +518,7 @@ class CourseCreateStepController extends Controller
                     $lesson->duration = $request->duration;
                     $lesson->short_description = $request->description;
                     $lesson->save();
-                    // flash()->addSuccess('Video upload success!');
+                    flash()->addSuccess('Video upload success!');
                 }
                 $course = Course::find($id);
                 $price = $course->price ?? 0;
