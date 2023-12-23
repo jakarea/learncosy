@@ -51,10 +51,11 @@
                                                         <p>Update photo</p>
                                                         <div class="ol">
                                                             @if ($user->avatar)
-                                                                <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output"
-                                                                class="imgpreviewPrf img-fluid">
+                                                            <img src="{{asset($user->avatar)}}" alt="Avatar" id="item-img-output" class="imgpreviewPrf img-fluid">
                                                             @else
-                                                                <span class="avatar-box" style="color: #3D5CFF">{!! strtoupper($user->name[0]) !!}</span>
+                                                            <img src="" alt="" id="item-img-output" class="imgpreviewPrf img-fluid position-absolute" style="left: 0; z-index: 9;">
+                                                            <span class="avatar-box position-absolute" style="color: #3D5CFF;left: 0;">{!!
+                                                                strtoupper($user->name[0]) !!}</span>
                                                             @endif
                                                         </div>
                                                     </label>
