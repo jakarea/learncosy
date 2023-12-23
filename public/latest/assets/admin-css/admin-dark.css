@@ -11,6 +11,9 @@
   color: #D2DEEF !important;
 }
 
+.dark-mode .object-list-wrap .item i{
+    color: #fff !important;
+}
 .dark-mode p {
   color: #A6B1C4;
 }
@@ -2187,12 +2190,12 @@
 .dark-mode .course-box-overflown::-webkit-scrollbar-track ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-track ,
 .dark-mode .custom-scrl::-webkit-scrollbar-track {
-  background: #2D343E; 
+  background: #2D343E;
 }
 .dark-mode .course-box-overflown::-webkit-scrollbar-thumb ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb ,
 .dark-mode .custom-scrl::-webkit-scrollbar-thumb {
-  background: #7289FF; 
+  background: #7289FF;
 }
 .dark-mode .course-box-overflown::-webkit-scrollbar-thumb:hover ,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb:hover ,

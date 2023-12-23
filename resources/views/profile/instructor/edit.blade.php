@@ -85,6 +85,7 @@
                                                             <span class="avatar-box position-absolute" style="color: #3D5CFF;left: 0;">{!!
                                                                 strtoupper($user->name[0]) !!}</span>
                                                             @endif
+
                                                         </div>
 
                                                     </label>
@@ -337,6 +338,7 @@
                                                             <img src=" {{ asset('latest/assets/images/icons/pen.svg') }}"
                                                                 alt="img" class="img-fluid">
                                                         </a>
+
 
                                                         <a
                                                             href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">

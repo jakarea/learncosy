@@ -27,7 +27,11 @@
 
                         @if($course->user)
                         <div class="media">
-                            <img src="{{asset($course->user->avatar)}}" alt="Place" class="img-fluid">
+                            @if ($course->user->avatar)
+                                <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                            @else
+                                <span class="user-name-avatar me-1">{!! strtoupper($course->user->name[0]) !!}</span>
+                            @endif
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
                                 <h6 class="text-capitalize">{{ $course->user->user_role }}</h6>
@@ -71,7 +75,7 @@
                         @foreach ($objectives as $object)
                             @if (trim($object) !== '')
                                 <li><i class="fas fa-check"></i> {{ $object }} </li>
-                            @else 
+                            @else
                                 <li>No Objective Found!</li>
                             @endif
                         @endforeach
@@ -151,7 +155,12 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                @if ($course->user->avatar)
+                                <img src="{{ asset( $course_review->user->avatar) }}" alt="Place" class="img-fluid">
+                                @else
+                                    <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
+                                @endif
+
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
                                     <h6>{{$course_review->created_at}}</h6>
