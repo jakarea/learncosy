@@ -91,14 +91,20 @@ $i = 0;
                     </div>
 
                     {{-- course review --}}
-                    @if ($course->allow_review) 
+                    @if ($course->allow_review)
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
 
                         @if (count($course_reviews) > 0)
                         @foreach ($course_reviews as $course_review)
                         <div class="media">
-                            <img src="{{ asset( $course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+
+                            @if ($course_review->user->avatar)
+                                <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                            @else
+                                <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
+                            @endif
+
                             <div class="media-body">
                                 <h5>{{ $course_review->user->name }}</h5>
                                 <ul>
@@ -207,8 +213,12 @@ $i = 0;
                             {{-- item --}}
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
-                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="{{ $relatedCourse->title }}"
-                                        class="img-fluid">
+                                    @if ($relatedCourse->thumbnail)
+                                        <img src="{{ asset( $relatedCourse->thumbnail) }}" alt="Place" class="img-fluid">
+                                    @else
+                                        <span class="avtar">{!! strtoupper($thumbnail->user->name[0]) !!}</span>
+                                    @endif
+
                                 </div>
                                 <div class="course-txt-box">
                                     <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{ $relatedCourse->title }}</a>

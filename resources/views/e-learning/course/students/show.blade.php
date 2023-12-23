@@ -175,7 +175,12 @@ $i = 0;
                     @if (count($course_reviews) > 0)
                     @foreach ($course_reviews as $course_review)
                     <div class="media">
-                        <img src="{{ asset( $course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                        @if ($course_review->user->avatar)
+                            <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                        @else
+                            <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
+                        @endif
+
                         <div class="media-body">
                             <h5>{{ $course_review->user->name }}</h5>
                             <ul>

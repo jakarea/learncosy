@@ -84,6 +84,7 @@
                                                             <span class="avatar-box" style="color: #3D5CFF">{!!
                                                                 strtoupper($user->name[0]) !!}</span>
                                                             @endif
+
                                                         </div>
                                                     </label>
                                                 </a>
@@ -336,7 +337,7 @@
                                                                 src=" {{ asset('latest/assets/images/icons/pen.svg') }}" alt="img"
                                                                 class="img-fluid">
                                                         </a>
-                    
+
                                                         <a href="{{ route('instructor.delete.experience', ['id' => $experience->id, 'subdomain' => config('app.subdomain') ]) }}?tab=experience">
                                                             <img
                                                                 src=" {{ asset('latest/assets/images/icons/minus.svg') }}" alt="img"
@@ -356,7 +357,7 @@
                                     @else
                                     @include('partials/no-data')
                                     @endif
-                                </div> 
+                                </div>
                             </div>
                         </div>
                         {{-- experience tab end --}}

@@ -67,9 +67,9 @@ class CartController extends Controller
             'course_id' => $course->id,
         ]);
 
-        // if ($cart->exists) {
-        //     return redirect()->route('students.catalog.courses', config('app.subdomain') )->with('error', 'Course already added to the cart');
-        // }
+        if ($cart->exists) {
+            return redirect()->route('cart.index', config('app.subdomain') );
+        }
 
         $cart->price = $course->price;
         $cart->quantity = 1;
