@@ -125,7 +125,7 @@ View Bundle
                                 <div class="form-group">
                                     <label for="description">Bundle Description</label>
                                     <textarea class="form-control border-0 p-0"
-                                        disabled>{{ $updatingCourse->description }}</textarea>
+                                        disabled>{!! $updatingCourse->description !!}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="thumbnail">Thumbnail</label>
