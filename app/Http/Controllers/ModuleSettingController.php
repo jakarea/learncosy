@@ -240,7 +240,7 @@ class ModuleSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function reset($id)
+    public function reset($subdomain,$id)
     {
 
         $item = InstructorModuleSetting::findOrFail($id);
