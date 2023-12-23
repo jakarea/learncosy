@@ -136,7 +136,7 @@ class LessonController extends Controller
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
         
-        [$vimeoData, $status, $accountName] = isVimeoConnected();
+        [$vimeoData, $status, $accountName] = isVimeoConnected(Auth::user()->id);
             
         if ($status === 'Connected') {
             $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
@@ -154,6 +154,7 @@ class LessonController extends Controller
             }
     
             return response()->json(['uri' => $uri]);
+
         } elseif ($status === 'Invalid Credentials') {
             return response()->json(['error' => 'Invalid Vimeo credentials. Please check your account settings.']);
         } else {
