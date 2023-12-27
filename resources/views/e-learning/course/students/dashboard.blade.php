@@ -276,7 +276,7 @@ Student Dashboard
                                             class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5><a class="bg-transparent" href="{{ url('students/courses/overview/' . $enrolment->course->slug) }}">{{$enrolment->course->title}}</a></h5>
+                                        <h5><a class="bg-transparent" href="{{ url('students/courses/my-courses/details/' . $enrolment->course->slug) }}">{{$enrolment->course->title}}</a></h5>
                                         <p>{{ $enrolment->course->platform }} </p>
                                     </div>
                                 </div>
