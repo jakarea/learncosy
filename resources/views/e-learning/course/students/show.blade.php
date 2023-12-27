@@ -100,8 +100,7 @@ $i = 0;
 
                     <div class="files">
                         @foreach($group_files as $fileExtension)
-                        <a
-                            href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
+                        <a href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
                             {{strtoupper($fileExtension)}}<img
                                 src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title=""
                                 class="img-fluid">
@@ -290,23 +289,7 @@ $i = 0;
                         @endforeach
                     </div>
                 </div>
-                {{-- course outline --}}
-
-                @if (isEnrolled($course->id) && $course->user->recivingMessage)
-                <a href="{{ url('course/messages/send/' . $course->id) }}"
-                    class="common-bttn d-block w-100 text-center mt-4">Get Support</a>
-                @endif
-                @if (!isEnrolled($course->id))
-                <form
-                    action="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
-                    method="GET">
-                    <input type="hidden" name="course_id" value="{{ $course->id }}">
-                    <input type="hidden" name="price" value="{{ $course->price }}">
-                    <input type="hidden" name="instructor_id" value="{{ $course->instructor_id }}">
-                    <button type="submit" class="btn common-bttn px-3 w-100 text-center mt-4">Enroll Now <i
-                            class="fas fa-angle-right ms-2"></i></button>
-                </form>
-                @endif
+                {{-- course outline --}} 
 
                 {{-- related course --}}
                 <div class="related-course-box">
@@ -412,7 +395,6 @@ $i = 0;
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
-            // play video on load
             player.on('ended', function() {
                 player.setCurrentTime(0);
                 player.play();

@@ -89,10 +89,9 @@ class CourseController extends Controller
                     $group_files[] = $extention;
                 }
             }
-        }
+        } 
 
-        //end group file
-
+        // return $group_files;
 
         $relatedCourses = Course::where('id', '!=', $id)
             ->where('user_id', Auth::user()->id)
@@ -108,7 +107,7 @@ class CourseController extends Controller
 
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons'));
+            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
@@ -195,6 +194,7 @@ class CourseController extends Controller
 
 
     public function fileDownload($subdomain,$course_id,$file_extension){
+
         $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
         foreach($lesson_files as $lesson_file){
             if(!empty($lesson_file->file)){
@@ -202,7 +202,7 @@ class CourseController extends Controller
                 $file_arr = explode('.', $file_name);
                 $extension = $file_arr['1'];
                 if($file_extension == $extension){
-                    $files[] = public_path('uploads/lessons/'.$file_name);
+                    $files[] = public_path($file_name);
                }
             }
         }
