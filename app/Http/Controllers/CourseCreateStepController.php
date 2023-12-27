@@ -317,6 +317,7 @@ class CourseCreateStepController extends Controller
             $file->move(public_path('uploads/lessons/files'), $filename); 
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
+        $lesson->status = 'published';
         $lesson->save();
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
@@ -362,6 +363,7 @@ class CourseCreateStepController extends Controller
             }
 
             $lesson->audio = NULL;
+            $lesson->status = 'pending';
             $lesson->save();
             return redirect()->back()->with('success','Lesson Audio Successfully Deleted!');
         }
@@ -447,6 +449,8 @@ class CourseCreateStepController extends Controller
             $file->move(public_path('uploads/lessons/files'), $filename); 
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
+
+        $lesson->status = 'published';
         $lesson->save();
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
@@ -494,6 +498,7 @@ class CourseCreateStepController extends Controller
 
         
         $lesson->short_description = $request->input('short_description');
+        $lesson->status = 'published';
         $lesson->save();
 
         if ($request->hasFile('video_link')) {
@@ -542,6 +547,7 @@ class CourseCreateStepController extends Controller
 
         if ($lesson) {
             $lesson->video_link = NULL;
+            $lesson->status = 'pending';
             $lesson->save();
             return redirect()->back()->with('success','Video Deleted Successfuly!');
         }
@@ -550,9 +556,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function courseObjects($subdomain, $id){
-
-        // return $id;
-
+ 
         if(!$id){
             return redirect('instructor/courses');
         }
