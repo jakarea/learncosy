@@ -81,8 +81,14 @@ $layoutName = "layouts.latest.admin";
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                            <a
-                                                href="{{ url('students/courses/overview/'.$course->slug) }}">{{$today['title']}}</a>
+
+                                            @if (isEnrolled($course->id))
+                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    {{$today['title']}}</a>
+                                            @else
+                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    {{$today['title']}}</a>
+                                            @endif 
                                             @else
                                             {{$today['title']}}
                                             @endif
