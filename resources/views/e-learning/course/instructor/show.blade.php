@@ -77,12 +77,12 @@ $i = 0;
                     <div class="download-files-box">
                         <h4>Download Files </h4>
                         <div id="dataTextContainer" class="mb-3">
-                        </div>
-                        @if(!empty($group_files))
+                        </div> 
 
+                        @if(!empty($group_files))
                         <div class="files">
                             @foreach($group_files as $fileExtension)
-                                <a href="{{ route('instructor.file.download', [$course->id,$fileExtension]) }}">
+                                <a href="{{ route('instructor.file.download', [$course->id,$fileExtension, 'subdomain' => config('app.subdomain')]) }}">
                                     {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
                                 </a>
                             @endforeach
