@@ -113,17 +113,20 @@ class CourseController extends Controller
         // last playing video
         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
         $currentLessonVideo = NULL;
+        $currentLesson = NULL;
 
         if ($courseLog) {
             $lesson = Lesson::find($courseLog->lesson_id);
             if ($lesson) {
+                $currentLesson = $lesson;
                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
+ 
 
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files','currentLessonVideo'));
+            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files','currentLessonVideo','currentLesson'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
