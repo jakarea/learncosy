@@ -83,6 +83,13 @@ $i = 0;
                     </div>
                 </div>
                 {{-- course title --}}
+
+                <div class="content-txt-box mb-3" id="hideShow">
+                    <div class="course-desc-txt">
+                        <div id="dataTextContainer" class="my-3"></div>
+                    </div>
+                </div>
+
                 <hr>
                 <div class="content-txt-box">
                     <h3>About Course</h3>
@@ -93,11 +100,8 @@ $i = 0;
 
                 <div class="download-files-box">
                     <h4>Download Files </h4>
-                    <div id="dataTextContainer" class="mb-3">
-                    </div>
+                     
                     @if(!empty($group_files))
-
-
                     <div class="files">
                         @foreach($group_files as $fileExtension)
                         <a href="{{ route('file.download', ['course_id' => $course->id, 'extension' => $fileExtension, 'subdomain' => config('app.subdomain') ]) }}">
@@ -237,7 +241,7 @@ $i = 0;
                                         @foreach ($module->lessons as $lesson)
                                         @if(!empty($lesson->text) || !empty($lesson->audio) ||
                                         !empty($lesson->video_link))
-                                        <li>
+                                        <li> 
                                             @if(!isEnrolled($course->id))
                                             <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ]) }}"
                                                 class="video_list_play d-inline-block">
@@ -396,17 +400,18 @@ $i = 0;
                 id: '{{ 305108069 }}',
                 // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
                 autoplay: true,
-                loop: true,
+                // loop: true,
                 width: 500,
-            };
+            }; 
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
-            player.on('ended', function() {
-                player.setCurrentTime(0);
-                player.play();
+            player.on('ended', function() {  
+                $('.is_complete_lesson').click();
+                $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault();
+ 
 
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
@@ -419,7 +424,8 @@ $i = 0;
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
                     audioPlayer.pause();
-
+                    document.querySelector('#hideShow').classList.add('d-none');
+                    
                     @if (isEnrolled($course->id))
                     var videoId = $(this).data('video-id');
                     var courseId = $(this).data('course-id');
@@ -437,6 +443,7 @@ $i = 0;
 
                 }else if(type == 'audio'){
                     player.pause();
+                    document.querySelector('#hideShow').classList.add('d-none');
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');
@@ -451,6 +458,7 @@ $i = 0;
                 }else if(type == 'text'){
                     player.pause();
                     audioPlayer.pause();
+                    document.querySelector('#hideShow').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
@@ -470,7 +478,7 @@ $i = 0;
 
                     })
                     .catch(error => {
-                        console.error(error);
+                        // console.error(error);
                     });
 
 
@@ -497,6 +505,8 @@ $i = 0;
             // is_complete_lesson on click check course is purchased or not and then check lesson video is completed or not after send to ajax
             $('.is_complete_lesson').click(function(e) {
                 e.preventDefault();
+ 
+
                 @if (isEnrolled($course->id))
                     var lessonId = $(this).data('lesson');
                     var courseId = $(this).data('course');

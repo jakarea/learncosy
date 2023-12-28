@@ -88,6 +88,7 @@
             <div class="col-12 col-sm-6 col-xl-4 col-xxl-3">
                 <div class="total-client-box">
                     @php
+                    
                     $totalCombinedCourses = $activeCourses + $draftCourses;
 
                     if ($totalCombinedCourses > 0) {

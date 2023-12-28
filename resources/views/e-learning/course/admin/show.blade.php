@@ -65,6 +65,13 @@ $i = 0;
                         </a> --}}
                     </div>
                     {{-- course title --}}
+
+                    <div class="content-txt-box mb-3" id="hideShow">
+                        <div class="course-desc-txt">
+                            <div id="dataTextContainer" class="my-3"></div>
+                        </div>
+                    </div>
+
                     <hr>
                     <div class="content-txt-box">
                         <h3>About Course</h3>
@@ -251,13 +258,13 @@ $i = 0;
             var options = {
                 id: '{{ 305108069 }}', 
                 autoplay: true,
-                loop: true,
+                // loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {
-                player.setCurrentTime(0); 
-                player.play();
+                $('.is_complete_lesson').click();
+                $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
 
@@ -270,7 +277,7 @@ $i = 0;
                 let type = this.getAttribute('data-lesson-type');
 
                 if(type == 'video'){
-
+                    document.querySelector('#hideShow').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
@@ -283,6 +290,7 @@ $i = 0;
                     player.loadVideo(videoUrl); 
 
                 }else if(type == 'audio'){
+                    document.querySelector('#hideShow').classList.add('d-none');
                     player.pause();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
@@ -298,10 +306,28 @@ $i = 0;
                 }else if(type == 'text'){
                     player.pause(); 
                     audioPlayer.pause();
+                    document.querySelector('#hideShow').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
 
+                    let lessonId =  this.getAttribute('data-lesson-id')
+
+                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                         document.getElementById('dataTextContainer').innerHTML = data.text;
+
+                    })
+                    .catch(error => {
+                        // console.error(error);
+                    });
 
                 } 
                 

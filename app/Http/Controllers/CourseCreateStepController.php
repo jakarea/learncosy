@@ -64,15 +64,18 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
+        }
+
         $course = Course::where('id', $id)->where('instructor_id',Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-1',compact('course'));
     }
 
     public function step1c(Request $request, $subdomain, $id)
-    {
-
-        // return $request->all();
+    { 
 
         if(!$id){
             return redirect('instructor/courses');
@@ -122,6 +125,11 @@ class CourseCreateStepController extends Controller
     public function step3($subdomain,$id){
         if(!$id){
             return redirect('instructor/courses');
+        }
+
+         // session set
+         if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
         }
 
         $modules = Module::with('lessons')->where('course_id', $id)->where('instructor_id', Auth::user()->id)->orderBy('reorder', "ASC")->get();
@@ -179,8 +187,6 @@ class CourseCreateStepController extends Controller
         ]
         );
 
-
-
         $lesson = new Lesson();
         $lesson->course_id = $id;
         $lesson->instructor_id = Auth::user()->id;
@@ -188,7 +194,7 @@ class CourseCreateStepController extends Controller
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
-
+        $lesson->status = "pending";
         $lesson->save();
 
         if ($lesson->type == 'audio') {
@@ -303,6 +309,11 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+         // session set
+         if (!session()->has('course_id')) { 
+            session(['course_id' => $course_id]);
+        }
+
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
@@ -348,6 +359,11 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
+        }
+
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
@@ -355,10 +371,14 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonAudio($subdomain,$id,$module_id,$lesson_id){
-
-        // return $lesson_id;
+ 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
+        }
+
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
@@ -366,8 +386,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonAudioRemove($subdomain,$id,$module_id,$lesson_id){
-
-        // return $lesson_id;
+ 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
@@ -391,8 +410,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonFileRemove($subdomain,$id,$module_id,$lesson_id)
-    {
-        // return $lesson_id;
+    { 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
@@ -476,10 +494,14 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonVideo($subdomain,$id,$module_id,$lesson_id)
-    {
-        // return 2345;
+    { 
         if(!$id){
             return redirect('instructor/courses');
+        }
+
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
@@ -490,10 +512,8 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideoSet(Request $request, $subdomain,$id,$module_id,$lesson_id)
     {
-
         ini_set('memory_limit', '1024M');
 
-        // return $request->all();
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         if ($lesson->video_link) {
@@ -570,8 +590,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonVideoRemove($subdomain,$id,$module_id,$lesson_id)
-    {
-        // return $lesson_id;
+    { 
 
         $lesson = Lesson::where('id', $lesson_id)->where('module_id',$module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
@@ -589,6 +608,11 @@ class CourseCreateStepController extends Controller
 
         if(!$id){
             return redirect('instructor/courses');
+        }
+
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
         }
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
@@ -646,7 +670,6 @@ class CourseCreateStepController extends Controller
 
     public function deleteObjective(Request $request, $subdomain,$id,$index)
     {
-        // return  $index;
 
         $course = Course::findOrFail($id);
         $existingObjectives = explode('[objective]', $course->objective);
@@ -676,6 +699,11 @@ class CourseCreateStepController extends Controller
 
         if(!$id){
             return redirect('instructor/courses');
+        }
+
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
         }
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
@@ -709,14 +737,18 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
+        }
+
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-8',compact('course'));
     }
 
     public function courseDesignSet(Request $request,$subdomain, $id){
-
-        // return $request->all();
+ 
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -761,7 +793,15 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-       $certificates = Certificate::where('instructor_id', Auth::user()->id)->where('course_id', '!=', $id)->with('course')->get();
+        // session set
+        if (!session()->has('course_id')) { 
+            session(['course_id' => $id]);
+        }
+
+        $certificates = Certificate::where('instructor_id', Auth::user()->id)->with('course')->get();
+
+      // $certificates = Certificate::where('instructor_id', Auth::user()->id)->where('course_id', '!=', $id)->with('course')->get();
+
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-9',compact('course','certificates'));
@@ -806,6 +846,11 @@ class CourseCreateStepController extends Controller
     public function visibility(string $subdomain, $id){
         if(!$id){
             return redirect('instructor/courses');
+        }
+
+        // forot session
+        if (session()->has('course_id')) {
+            session()->forget('course_id');
         }
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
@@ -880,6 +925,11 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        // forot session
+        if (session()->has('course_id')) {
+            session()->forget('course_id');
+        }
+
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         return view('e-learning/course/instructor/create/step-11',compact('course'));
@@ -891,6 +941,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+        // forot session
         if (session()->has('course_id')) {
             session()->forget('course_id');
         }
@@ -902,21 +953,15 @@ class CourseCreateStepController extends Controller
 
     public function getProgress(Request $request)
     {
-        $uri = $request->input('uri');
-
-        // $vimeo = new VimeoSDK(config('vimeo.access_token'));
-
+        $uri = $request->input('uri'); 
         $vimeo = Vimeo::connection();
-
         $video = $vimeo->request($uri);
-
 
         if (isset($response['body']['upload']['upload_status']) && $response['body']['upload']['upload_status'] === 'in_progress') {
             $progress = $response['body']['upload']['upload_progress'] * 100;
         } else {
             $progress = 100;
         }
-
 
         return response()->json(['progress' => $progress]);
 
