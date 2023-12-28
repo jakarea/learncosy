@@ -122,9 +122,9 @@ class StudentHomeController extends Controller
         $total_hr = floor($sum_of_duration / 3600);
         $total_min = floor(($sum_of_duration % 3600) / 60);
         // Enrolled
-        $total_enrolled = DB::table('course_user')
+         $total_enrolled = DB::table('checkouts')
                     ->where('user_id', auth()->user()->id)
-                    ->selectRaw('COUNT(id) as enrolled')
+                    ->selectRaw('COUNT(DISTINCT course_id) as enrolled')
                     ->first();
         $enrolled = $total_enrolled->enrolled;
 
@@ -335,16 +335,18 @@ class StudentHomeController extends Controller
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
          $currentLessonVideo = NULL;
+         $currentLesson = NULL;
 
          if ($courseLog) {
              $lesson = Lesson::find($courseLog->lesson_id);
              if ($lesson) {
+                $currentLesson = $lesson;
                 $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
              }
          }
 
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','currentLessonVideo'));
+            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','currentLessonVideo','currentLesson'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
