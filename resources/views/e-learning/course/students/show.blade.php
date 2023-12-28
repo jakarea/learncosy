@@ -410,7 +410,7 @@ $i = 0;
 
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {  
-                $('.is_complete_lesson').click();
+                $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
