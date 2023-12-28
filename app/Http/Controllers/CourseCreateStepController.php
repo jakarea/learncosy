@@ -512,7 +512,8 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideoSet(Request $request, $subdomain,$id,$module_id,$lesson_id)
     {
- 
+        ini_set('memory_limit', '1024M');
+
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
         if ($lesson->video_link) {
@@ -545,6 +546,16 @@ class CourseCreateStepController extends Controller
             $file = $request->file('video_link');
             $videoName = $file->getClientOriginalName();
 
+
+            $filePath = $request->file('video_link')->getPathname();
+
+            $getID3 = new \getID3;
+
+
+            $videoFile = $getID3->analyze($filePath);
+
+            $videoDuration = $videoFile['playtime_seconds'];
+
             [$vimeoData, $status, $accountName] = isVimeoConnected($lesson->instructor_id);
 
             if ($status === 'Connected') {
@@ -559,7 +570,7 @@ class CourseCreateStepController extends Controller
                 if ($uri) {
                     $lesson = Lesson::find($lesson_id);
                     $lesson->video_link = $uri;
-                    $lesson->duration = $request->duration;
+                    $lesson->duration = $videoDuration;
                     $lesson->short_description = $request->description;
                     $lesson->save();
                     flash()->addSuccess('Video upload success!');
@@ -788,6 +799,9 @@ class CourseCreateStepController extends Controller
         }
 
         $certificates = Certificate::where('instructor_id', Auth::user()->id)->with('course')->get();
+
+      // $certificates = Certificate::where('instructor_id', Auth::user()->id)->where('course_id', '!=', $id)->with('course')->get();
+
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         return view('e-learning/course/instructor/create/step-9',compact('course','certificates'));
