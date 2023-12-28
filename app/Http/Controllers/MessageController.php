@@ -267,6 +267,8 @@ class MessageController extends Controller
     {
         if ($request->ajax()) {
 
+            // dd( $request->all() );
+
             $request->validate([
                 'message' => 'required_without:file',
                 'file' => 'required_without:message|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,zip,mp3, mp4,dat|max:1024',

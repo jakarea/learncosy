@@ -5,7 +5,7 @@ Messsages Page
 
 {{-- page style @S --}}
 @section('style')
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="{{ asset('latest/assets/admin-css/message.css') }}" rel="stylesheet" type="text/css">
 <style>
     .message-list-page-wrap {
@@ -134,7 +134,7 @@ Messsages Page
                         {{-- chat filter --}}
 
                         {{-- leftbar person list start --}}
-                        <div class="person-tab-body position-box-body"> 
+                        <div class="person-tab-body position-box-body">
                             {{-- single person start --}}
                             <div class="chat-user-load user-list-boxxs" id="chat-user-load">
                                 @include('e-learning.course.instructor.message-group.group-list')
@@ -185,7 +185,8 @@ Messsages Page
                                         </label>
                                         <input type="file" name="file" class="d-none" id="attached"
                                             onchange="displayFileName()">
-                                        <button class="btn btn-submit" onclick="removeFile()" type="submit">
+                                        {{-- <button class="btn btn-submit" onclick="removeFile()" type="submit"> --}}
+                                            <button class="btn btn-submit" type="submit">
                                             Send
                                         </button>
                                     </div>
@@ -1093,7 +1094,7 @@ $(document).ready(function() {
     const positionBody = document.querySelector('.position-box-body');
     const userList = document.querySelector('.person-tab-body.chat-user-load');
 
-    toggleBttn.addEventListener('click', function (e) { 
+    toggleBttn.addEventListener('click', function (e) {
         headerFilter.classList.toggle('active');
         positionBody.classList.toggle('d-none');
     });

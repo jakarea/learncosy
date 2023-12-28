@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "hazaveh/verify-domain": "^1.0",
         "intervention/image": "^2.7",
+        "james-heinrich/getid3": "^1.9",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.10",
