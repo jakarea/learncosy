@@ -46,7 +46,7 @@
                                 class="img-fluid me-3 thumab">
                             @endif
                             <div class="media-body">
-                                <h5>{{ Str::limit($myCourses->title, $limit = 38, $end = '..') }}</h5>
+                                <h5><a href="{{ url('instructor/courses/overview/'.$myCourses->slug) }}">{{ Str::limit($myCourses->title, $limit = 38, $end = '..') }}</a></h5>
 
                                 <p class="user">{{ $myCourses->platform }}</p>
                                 <p class="lessons">

@@ -150,7 +150,7 @@ Messsages Page
                     <div class="chat-main-body-box">
                         {{-- chat body list start --}}
                         <div class="main-chat-room">
-                            <div id="chat-message" class="main-chat-inner-room tt" style="overflow-y: hidden">
+                            <div id="chat-message" class="main-chat-inner-room">
                                 <div class="blank-chat-page">
                                     <i class="fa-regular fa-circle-user"></i>
                                     <h3>Select a person or group to start a chat</h3>

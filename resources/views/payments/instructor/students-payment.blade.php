@@ -97,7 +97,7 @@
         </div>
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="package-list-header" style="grid-template-columns: 100%">
+                <div class="package-list-header" style="grid-template-columns: 100%; border-radius: 10px 10px 0 0">
                     <h5>Payment Information:</h5>
                 </div>
             </div>

@@ -30,8 +30,8 @@
                         <tr>
                             <th>Course Title</th>
                             <th>Duration</th>
-                            <th>Total Point</th>
-                            <th>Your Point</th>
+                            {{-- <th>Total Point</th>
+                            <th>Your Point</th> --}}
                             <th>Status</th>
                             <th>Progress</th>
                             <th>Actions</th>
@@ -67,12 +67,12 @@
                                 <p>{{ number_format($totalDurationMinutes /60, 2) }} h
                                 </p>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <p>1000</p>
                             </td>
                             <td>
                                 <p>600</p>
-                            </td>
+                            </td> --}}
                             @php
                             $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $certificateCourse->id);  
                             $showPercentage = null; 
@@ -109,7 +109,7 @@
                                                     $completedLessons += $module->lessons->where('completed', 1)->count();
                                                 @endphp
                                             @endforeach
-                                            <div class="number" style="left: 34%">
+                                            <div class="number" style="left: 28%">
                                                 <h6>{{ $totalPorgressPercent }}<b style="font-size: 14px">%</b></h6>
                                             </div>
                                         </div>
@@ -125,10 +125,10 @@
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 @else
-                                <a href="#">
+                                <a href="#" style="opacity: 0.3">
                                     <img src="{{asset('latest/assets/images/icons/download-2.svg')}}" alt="a" class="img-fluid">
                                 </a>
-                                <a href="#">
+                                <a href="#" style="opacity: 0.3">
                                     <img src="{{asset('latest/assets/images/icons/eye.svg')}}" alt="a" class="img-fluid">
                                 </a>
                                 @endif 
