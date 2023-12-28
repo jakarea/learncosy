@@ -59,11 +59,15 @@ Course Create - Step 3
                         <hr>
                         <div class="element-txt">
                             <h6>Element of</h6>
-                            <p>Here you can choose whether the page is part of a module of whether it falls under the training as a separate item.</p>
+                            <p>Module where this lesson will be added.</p>
                         </div>
+                        @php 
+                            $module = \App\Models\Module::find($lesson->module_id);
+                        @endphp 
+
                         <div class="form-group">
-                            <input id="cls" class="form-control" type="text" value="{{ $course->title }}">
-                            <label for="cls">Course Name</label>
+                            <input id="cls" class="form-control" type="text" value="{{ $module->title }}">
+                            <label for="cls">Class</label>
                         </div>
                     </div>
                     {{-- step next bttns --}}

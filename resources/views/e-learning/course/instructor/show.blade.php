@@ -66,6 +66,12 @@ $i = 0;
                         </a> --}}
                     </div>
                     {{-- course title --}}
+                    <div class="content-txt-box mb-3" id="hideShow">
+                        <div class="course-desc-txt">
+                            <div id="dataTextContainer" class="my-3"></div>
+                        </div>
+                    </div>
+
                     <hr>
                     <div class="content-txt-box">
                         <h3>About Course</h3>
@@ -76,15 +82,17 @@ $i = 0;
 
                     <div class="download-files-box">
                         <h4>Download Files </h4>
-                        <div id="dataTextContainer" class="mb-3">
-                        </div> 
+
 
                         @if(!empty($group_files))
                         <div class="files">
                             @foreach($group_files as $fileExtension)
-                                <a href="{{ route('instructor.file.download', [$course->id,$fileExtension, 'subdomain' => config('app.subdomain')]) }}">
-                                    {{strtoupper($fileExtension)}}<img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title="" class="img-fluid">
-                                </a>
+                            <a
+                                href="{{ route('instructor.file.download', [$course->id,$fileExtension, 'subdomain' => config('app.subdomain')]) }}">
+                                {{strtoupper($fileExtension)}}<img
+                                    src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock" title=""
+                                    class="img-fluid">
+                            </a>
                             @endforeach
                         </div>
                         @endif
@@ -100,9 +108,9 @@ $i = 0;
                         <div class="media">
 
                             @if ($course_review->user->avatar)
-                                <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                            <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
                             @else
-                                <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
+                            <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
                             @endif
 
                             <div class="media-body">
@@ -145,7 +153,8 @@ $i = 0;
                                     data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ? $loop->iteration : ""}}</p>
+                                        <p class="module-title">{{ $module->title }} {{ $module->checkNumber() ?
+                                            $loop->iteration : ""}}</p>
                                     </div>
                                 </button>
                             </div>
@@ -157,27 +166,37 @@ $i = 0;
                                         <li>
                                             <div class="d-flex align-items-center">
                                                 @can('instructor')
-                                                    <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
-                                                        <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
-                                                    </a>
-                                                    @endcan
+                                                <a
+                                                    href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
+                                                    <i class="fa-regular fa-pen-to-square me-2"
+                                                        style="color: #A6B1C4"></i>
+                                                </a>
+                                                @endcan
 
                                                 <a href="{{ $lesson->video_link }}"
                                                     class="video_list_play d-inline-block"
                                                     data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                     data-course-id="{{ $course->id }}"
-                                                    data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
-                                                    data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important">
+                                                    data-modules-id="{{ $module->id }}"
+                                                    data-audio-url="{{ $lesson->audio }}"
+                                                    data-lesson-type="{{ $lesson->type }}"
+                                                    style="font-size: 0.8rem!important">
 
                                                     @if ($lesson->type == 'text')
-                                                    <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    <i class="fa-regular fa-file-lines actv-hide"
+                                                        style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
                                                     @elseif($lesson->type == 'audio')
-                                                    <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    <i class="fa-solid fa-headphones actv-hide"
+                                                        style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
                                                     @elseif($lesson->type == 'video')
-                                                    <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
-                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}"
+                                                        alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
                                                     @endif
 
                                                     {{ $lesson->title }}
@@ -189,15 +208,16 @@ $i = 0;
                                         @endforeach
                                     </ul>
                                     {{-- <div class="text-center add-lesson-bttn">
-                                        <a href="{{ url('instructor/lessons/create') }}"
-                                            class="add_lesson_bttn">Add Lesson</a>
+                                        <a href="{{ url('instructor/lessons/create') }}" class="add_lesson_bttn">Add
+                                            Lesson</a>
                                     </div> --}}
                                 </div>
                             </div>
                         </div>
                         @endforeach
                         <div class="text-center add-lesson-bttn mt-2">
-                            <a href="{{ url('instructor/courses/create/'.$course->id) }}" class="add_lesson_bttn">Add More</a>
+                            <a href="{{ url('instructor/courses/create/'.$course->id) }}" class="add_lesson_bttn">Add
+                                More</a>
                         </div>
                     </div>
                 </div>
@@ -214,14 +234,15 @@ $i = 0;
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     @if ($relatedCourse->thumbnail)
-                                        <img src="{{ asset( $relatedCourse->thumbnail) }}" alt="Place" class="img-fluid">
+                                    <img src="{{ asset( $relatedCourse->thumbnail) }}" alt="Place" class="img-fluid">
                                     @else
-                                        <span class="avtar">{!! strtoupper($thumbnail->user->name[0]) !!}</span>
+                                    <span class="avtar">{!! strtoupper($thumbnail->user->name[0]) !!}</span>
                                     @endif
 
                                 </div>
                                 <div class="course-txt-box">
-                                    <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{ $relatedCourse->title }}</a>
+                                    <a href="{{ url('instructor/courses', $relatedCourse->id) }}">{{
+                                        $relatedCourse->title }}</a>
                                     <p>{{ $relatedCourse->user->name }}</p>
 
                                     @php
@@ -244,7 +265,8 @@ $i = 0;
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
                                     @if ($relatedCourse->offer_price)
-                                    <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
+                                    <h5>€ {{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span>
+                                    </h5>
                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
                                     <h5>Free</h5>
                                     @else
@@ -274,6 +296,8 @@ $i = 0;
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
+     document.querySelector('#hideShow').classList.add('d-none');
+
     $(document).ready(function() {
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
@@ -281,13 +305,13 @@ $i = 0;
             var options = {
                 id: '{{ 305108069 }}',
                 autoplay: true,
-                loop: true,
+                // loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {
-                player.setCurrentTime(0);
-                player.play();
+                $('.is_complete_lesson').click();
+                $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
 
@@ -300,7 +324,7 @@ $i = 0;
                 let type = this.getAttribute('data-lesson-type');
 
                 if(type == 'video'){
-
+                    document.querySelector('#hideShow').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
@@ -313,6 +337,7 @@ $i = 0;
                     player.loadVideo(videoUrl);
 
                 }else if(type == 'audio'){
+                    document.querySelector('#hideShow').classList.add('d-none');
                     player.pause();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
@@ -328,10 +353,28 @@ $i = 0;
                 }else if(type == 'text'){
                     player.pause();
                     audioPlayer.pause();
+                    document.querySelector('#hideShow').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
                     document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
 
+                    let lessonId =  this.getAttribute('data-lesson-id')
+
+                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                         document.getElementById('dataTextContainer').innerHTML = data.text;
+
+                    })
+                    .catch(error => {
+                        // console.error(error);
+                    });
 
                 }
 

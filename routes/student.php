@@ -31,7 +31,7 @@ Route::post('students/notification-details/destroy/{id}', [NotificationControlle
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
 
-Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'verified', 'role:student'])->group(function () {
+Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->group(function () {
 
     Route::get('students/dashboard', [StudentHomeController::class, 'dashboard'])->name('students.dashboard')->middleware('page.access');
     Route::get('students/dashboard/enrolled', [StudentHomeController::class,'enrolled'])->name('students.dashboard.enrolled');

@@ -4,7 +4,8 @@
   background-color: #fff;
   display: grid;
   grid-template-columns: 31.5% 68.5%;
-  min-height: 75vh;
+  /* min-height: 75vh; */
+  height: 82vh;
 }
 .message-list-page-wrap .messages-box .chat-person-list-box {
   border-right: 1px solid var(--neutral-40, #C5CCD8);
@@ -1358,6 +1359,10 @@ span.user-name-avatar {
 .person-box-list.person-tab-body.load-chat-user-for-group::-webkit-scrollbar,
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar {
   width: 8px;
+}
+
+.message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar {
+  width: 4px!important;
 }
 .person-box-list.person-tab-body.load-chat-user-for-group::-webkit-scrollbar-track ,
 .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar-track {

@@ -160,26 +160,26 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
                                     <div class="row mt-2">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault1" value="1" {{ $student->recivingMessage == 1
+                                                    id="enblee" value="1" {{ $student->recivingMessage == 1
                                                 ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                <label class="form-check-label" for="enblee">
                                                     Enable
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault2" value="0" {{ $student->recivingMessage == 0
+                                                    id="disblee" value="0" {{ $student->recivingMessage == 0
                                                 ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                <label class="form-check-label" for="disblee">
                                                     Disable
                                                 </label>
                                             </div>
@@ -187,6 +187,32 @@
                                     </div>
                                     <span class="invalid-feedback">@error('recivingMessage'){{ $message }}
                                         @enderror</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="recivingMessage">Status: </label>
+                                    <div class="row mt-2">
+                                        <div class="col-md-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status"
+                                                    id="enale" value="active" {{ $student->status == 'active' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="enale">
+                                                    Active
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status"
+                                                    id="dale" value="inactive" {{ $student->status == 'inactive' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="dale">
+                                                    Inactive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="invalid-feedback">@error('recivingMessage'){{ $message }}@enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-12">

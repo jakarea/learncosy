@@ -183,8 +183,7 @@ class DashboardController extends Controller
           $earningByMonth = $this->getEarningByMonth($enrolments);
           $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
-
-        //$courses = Course::where('user_id', Auth::user()->id)->get();
+ 
         foreach ($enrolments as $enrolment) {
                 $students[$enrolment->user_id] = $enrolment->created_at;
             }
@@ -517,8 +516,7 @@ class DashboardController extends Controller
     }
 
     public function subdomain()
-    {
-        // return 234;
+    { 
         return view('latest-auth.subdomain');
     }
 
@@ -567,10 +565,10 @@ class DashboardController extends Controller
                 $user->session_id = $sessionId;
                 $user->save();
                 
-                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode);
+                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode)->with('success','Subdomain set Successfully!');
             }
 
-            return redirect('instructor/profile/step-4/complete');
+            return redirect('instructor/profile/step-4/complete')->with('success','Subdomain set Successfully!');
         }
 
     }
@@ -583,9 +581,7 @@ class DashboardController extends Controller
             $permission = json_decode($managePage->pagePermissions);
        }else{
             $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
-       }
-
-        //    return $permission;
+       } 
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }

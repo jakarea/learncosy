@@ -293,8 +293,14 @@
 }
 
 .dark-mode .package-list-header {
-  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  border-bottom: 1px solid #1A1A1A!important;
   background: #0D0D0D !important;
+}
+
+.dark-mode .header-area .d-flex .btn.avatar span.avatar-user{
+  background-color: #7289FF;
+  color: #000A39;
+  border-color: #0D0D0D;
 }
 
 .dark-mode .subscription-package-form {
@@ -1622,7 +1628,7 @@
 }
 
 .dark-mode .no-data-found {
-  border: 1px solid var(--others-dark-stroke, #1A1A1A) !important;
+  /* border: 1px solid var(--others-dark-stroke, #1A1A1A) !important; */
   background: #0D0D0D !important;
   color: #fff !important;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
@@ -1667,11 +1673,26 @@
   color: #fff;
 }
 
+
+
+.dark-mode .person-suggest-box-list .media:hover, 
+.dark-mode .person-tab-body .media:hover{
+  background-color: #000A39!important;
+}
+
 .dark-mode .add-object .btn-add,
 .dark-mode .submit-bttns-box .btn-submit,
 .dark-mode .submit-bttns-box .btn-cancel {
   border: 1px solid var(--others-dark-stroke, #66768E);
   background: #0D0D0D;
+}
+
+.dark-mode .submit-bttns-box .btn-submit{
+  border-color: #7289FF!important;
+}
+
+.dark-mode .submit-bttns-box .btn-cancel{
+  color: #667085!important;
 }
 
 .dark-mode .yearly-analitics {
@@ -1942,8 +1963,14 @@
   filter: invert(47%) sepia(75%) saturate(481%) hue-rotate(194deg) brightness(103%) contrast(101%) !important;
 }
 
+
 .dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a i {
-  color: #7289FF !important;
+  color: #A6B1C4 !important;
+}
+
+.dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a i.text-primary,
+.dark-mode .course-outline-wrap .accordion .accordion-item .lesson-wrap a.active i{
+  color: #7289FF!important;
 }
 
 .dark-mode .app-modals .custom-modal-content {
@@ -2206,7 +2233,7 @@
   background-color: #313151 !important;
 }
 
-.btn.btn-filter i {
+.dark-mode .btn.btn-filter i {
   color: #fff !important;
 }
 
@@ -2214,18 +2241,21 @@
   background-color: #000A39 !important;
 }
 
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar-track,
 .dark-mode .course-box-overflown::-webkit-scrollbar-track,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-track,
 .dark-mode .custom-scrl::-webkit-scrollbar-track {
   background: #2D343E;
 }
 
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar-thumb,
 .dark-mode .course-box-overflown::-webkit-scrollbar-thumb,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb,
 .dark-mode .custom-scrl::-webkit-scrollbar-thumb {
   background: #7289FF;
 }
 
+.dark-mode .message-list-page-wrap .messages-box .chat-main-body-box .main-chat-inner-room::-webkit-scrollbar-thumb:hover,
 .dark-mode .course-box-overflown::-webkit-scrollbar-thumb:hover,
 .dark-mode .user-list-boxxs::-webkit-scrollbar-thumb:hover,
 .dark-mode .custom-scrl::-webkit-scrollbar-thumb:hover {

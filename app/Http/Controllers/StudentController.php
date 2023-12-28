@@ -30,12 +30,12 @@ class StudentController extends Controller
      {
 
         $course = Course::where('user_id', auth()->user()->id)->get();
-        // return  $course;
         $checkout = Checkout::whereIn('course_id', $course->pluck('id'))->get();
 
         $name = isset($_GET['name']) ? $_GET['name'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-        $users = User::whereIn('id', $checkout->pluck('user_id'));
+        // $users = User::whereIn('id', $checkout->pluck('user_id'));
+        $users = User::where('subdomain',auth()->user()->subdomain)->where('user_role','student');
 
         if ($name) {
             $users->where('name', 'like', '%' . trim($name) . '%');
@@ -182,7 +182,7 @@ class StudentController extends Controller
          $user->phone = $request->phone;
          $user->description = $request->description;
          $user->recivingMessage = $request->recivingMessage;
-
+         $user->status = $request->status;
 
          if ($request->email) {
              $user->email =  $request->email;
