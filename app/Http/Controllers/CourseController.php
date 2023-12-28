@@ -110,9 +110,20 @@ class CourseController extends Controller
             return count($module->lessons);
         });
 
+        // last playing video
+        $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
+        $currentLessonVideo = NULL;
+
+        if ($courseLog) {
+            $lesson = Lesson::find($courseLog->lesson_id);
+            if ($lesson) {
+               $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
+            }
+        }
+
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files'));
+            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files','currentLessonVideo'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
@@ -156,6 +167,52 @@ class CourseController extends Controller
         } else {
             return redirect('instructor/dashboard')->with('error', 'Course not found!');
         }
+    }
+
+    public function storeCourseLog(Request $request){
+ 
+        $courseId = (int)$request->input('courseId');
+        $lessonId = (int)$request->input('lessonId');
+        $moduleId = (int)$request->input('moduleId');
+        $userId = auth()->user()->id;
+
+        $existingCourse = Course::find($courseId);
+        $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
+
+        if(!$courseLog){
+            $courseLogInfo = new CourseLog([
+                'course_id' => $courseId,
+                'instructor_id' => $userId,
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId,
+            ]);
+            $courseLogInfo->save();
+            return response()->json([
+                'message' => 'course log save successfully',
+                'course_id' => $courseId,
+                'instructor_id' => $userId,
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId,
+            ]);
+        }else{
+            $courseLog->course_id = $courseId;
+            $courseLog->instructor_id = $userId;
+            $courseLog->module_id = $moduleId;
+            $courseLog->lesson_id = $lessonId;
+            $courseLog->user_id = $userId;
+            
+            $courseLog->update();
+            return response()->json([
+                'message' => 'course log updated',
+                'course_id' => $courseId,
+                'module_id' => $moduleId,
+                'lesson_id' => $lessonId,
+                'user_id'   => $userId,
+            ]);
+        }
+
     }
 
 

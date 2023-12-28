@@ -36,7 +36,7 @@
                                         <h5>{{ $course->user->name }}</h5>
                                         <h6 class="text-capitalize">{{ $course->user->user_role }}</h6>
                                     </div>
-                                </div>
+                                </div> 
                             @endif
 
                             {{-- course lesson duration calculation --}}

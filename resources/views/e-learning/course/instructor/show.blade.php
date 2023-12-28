@@ -302,15 +302,35 @@ $i = 0;
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
+            var firstLessonId = $('#firstLesson').data('first-lesson-id');
+            var firstCourseId = $('#firstLesson').data('first-course-id');
+            var firstModuleId = $('#firstLesson').data('first-modules-id');
+            var data = {
+                courseId: firstCourseId,
+                lessonId: firstLessonId,
+                moduleId: firstModuleId
+            };
+            $.ajax({
+                url: '{{ route('instructor.log.courses', config('app.subdomain')) }}',
+                method: 'GET',
+                data: data,
+                success: function(response) {
+                    // console.log('response', response)
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors, if any
+                }
+            });
+
             var options = {
-                id: '{{ 305108069 }}',
+                id: {{ $currentLessonVideo ?? 305108069 }},
                 autoplay: true,
                 // loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {
-                $('.is_complete_lesson').click();
+                // $('.is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
