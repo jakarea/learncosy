@@ -33,7 +33,8 @@
         }
 
         .navbar .d-flex a:last-child{
-            color:  {{ modulesetting('primary_color') }}!important;
+            color:  {{ modulesetting('secondary_color') }}!important;
+            /* background: {{ modulesetting('menu_color') }}!important; */
         }
         .navbar .d-flex a:last-child:hover{
             color:  {{ modulesetting('menu_color') }}!important;
@@ -57,11 +58,9 @@
                         </p>
                         <div class="hero-bttn">
                             @if (Auth::check())
-                                <a href="{{ route('instructor.dashboard.index', config('app.subdomain') ) }}"
-                                    style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                                <a href="{{ route('instructor.dashboard.index', config('app.subdomain') ) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @else
-                                <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}"
-                                    style="background: {{ modulesetting('secondary_color') }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
+                                <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @endif
                         </div>
                         @php
@@ -302,54 +301,21 @@
             </div>
             <div class="row">
                 @foreach ($bundle_courses as $bundle_course)
-                    <div class="col-lg-4 col-md-6">
-                        <div class="bundle-course-box">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="bundle-course-box" style="height: 100%">
                             <div class="thumbnail">
-                                <img src="{{ asset('assets/images/courses/' . $bundle_course->thumbnail) }}"
-                                    alt="a" class="img-fluid">
+                                <img src="{{ asset($bundle_course->thumbnail) }}" alt="a" class="img-fluid">
                             </div>
                             <div class="txt">
-                                <h4>bundle Course title will be here!</h4>
+                                <h4>{{ $bundle_course->title }}</h4>
                                 <div class="categories">
-                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: </span>
-                                    @if ($bundle_course->subscription_status == 'one_time')
-                                        <span class="badge text-bg-success">One Time</span>
-                                    @elseif($bundle_course->subscription_status == 'monthly')
-                                        <span class="badge text-bg-info">Monthly</span>
-                                    @elseif($bundle_course->subscription_status == 'anully')
-                                        <span class="badge text-bg-primary">Anully</span>
-                                    @elseif($bundle_course->subscription_status == 'free')
-                                        <span class="badge text-bg-danger">Free</span>
-                                    @endif
-
+                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: {{ $bundle_course->sub_title }} </span> 
                                 </div>
                                 <p>{{ $bundle_course->short_description }}</p>
                             </div>
                             <div class="bttns">
-                                <h6>€ {{ $bundle_course->price }}/ <span>included {{ count($bundle_course->courses) }}
-                                        courses</span></h6>
-
-                                        {{-- <form action="{{ route('cart.added.bundle', $bundle_course) }}" method="POST">
-                                            @csrf --}}
-                                            {{-- @if ($cartCourses->pluck('course_id')->contains($course->id)) --}}
-                                                {{-- <button type="button" class="btn add-to-cart-button bg-secondary"
-                                                    disabled>Already Added to Cart</button> --}}
-                                            {{-- @else --}}
-                                                {{-- <button style="background: {{ modulesetting('secondary_color') }}" type="submit" class="btn add-to-cart-button">Buy now</button> --}}
-                                            {{-- @endif --}}
-                                        {{-- </form> --}}
-                                @if (Auth::check())
-                                    @can('student')
-                                        <a href="{{ route('students.dashboard', config('app.subdomain')) }}"
-                                            style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
-                                    @else
-                                        <a href="{{ route('instructor.dashboard.index' , config('app.subdomain')) }}"
-                                            style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
-                                    @endcan
-                                @else
-                                    <a href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}"
-                                        style="background: {{ modulesetting('secondary_color') }}">Buy now</a>
-                                @endif
+                                <h6>€ {{ $bundle_course->sales_price ? $bundle_course->sales_price : $bundle_course->regular_price }} /</h6> 
+                                 <h6><span>included {{ count($bundle_course->courses) }} courses</span></h6>
                             </div>
                         </div>
                     </div>
@@ -389,7 +355,7 @@
                 <div class="col-12">
                     <div class="feedback-slider">
                         @foreach ($courses_review as $review)
-                            <div class="student-feeback-box">
+                            <div class="student-feeback-box mb-3">
                                 <div class="media">
                                     <img src="{{ asset($review->user->avatar) }}" alt="a" class="img-fluid">
                                     <div class="media-body">

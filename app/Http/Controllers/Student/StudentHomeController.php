@@ -299,7 +299,7 @@ class StudentHomeController extends Controller
         // return 234;
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         //start group file
-        $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
+         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
         $group_files = [];
 
         foreach($lesson_files as $lesson_file){
@@ -312,6 +312,8 @@ class StudentHomeController extends Controller
                 }
             }
         }
+
+        // return $group_files;
 
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
@@ -342,25 +344,23 @@ class StudentHomeController extends Controller
     public function fileDownload($domain,$course_id,$file_extension){
 
           $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
-        foreach($lesson_files as $lesson_file){
-            if(!empty($lesson_file->file)){
-                $file_name = $lesson_file->file;
-                $file_arr = explode('.', $file_name);
-                $extension = $file_arr['1'];
-                if($file_extension == $extension){
-                    $files[] = public_path('storage/uploads/lessons/'.$file_name);
-               }
-
-
-            }
-        }
-
+            foreach($lesson_files as $lesson_file){
+                if(!empty($lesson_file->file)){
+                    $file_name = $lesson_file->file;
+                    $file_arr = explode('.', $file_name);
+                    $extension = $file_arr['1'];
+                    if($file_extension == $extension){
+                        $files[] = public_path($file_name);
+                }
+                }
+            } 
         $zip = new ZipArchive;
         $zipFileName = $file_extension.'_'.time().'.zip';
         $is_have_file = '';
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             foreach ($files as $file) {
-                if(file_exists($file)){
+               
+                if(file_exists($file)){ 
                     $zip->addFile($file, basename($file));
                 }else{
                    $is_have_file = 'There are no files in your storage!!!!';
@@ -368,8 +368,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-                return redirect('students/courses')->with('error', $is_have_file);
-              //return $is_have_file;
+                return redirect('students/courses')->with('error', $is_have_file); 
             }
             $zip->close();
 
