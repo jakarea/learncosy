@@ -25,7 +25,7 @@ class CourseCreateStepController extends Controller
 
     public function start(){
 
-        if (session()->has('course_id')) { 
+        if (session()->has('course_id')) {
             return redirect('instructor/courses/create/'.session('course_id'));
         }
         return view('e-learning/course/instructor/create/step-0');
@@ -40,7 +40,7 @@ class CourseCreateStepController extends Controller
             'module_name' => 'Module Name is Required',
         ]);
 
-        $course = new Course(); 
+        $course = new Course();
         $course->user_id = Auth::user()->id;
         $course->instructor_id = Auth::user()->id;
         $course->save();
@@ -179,6 +179,8 @@ class CourseCreateStepController extends Controller
         ]
         );
 
+
+
         $lesson = new Lesson();
         $lesson->course_id = $id;
         $lesson->instructor_id = Auth::user()->id;
@@ -186,6 +188,7 @@ class CourseCreateStepController extends Controller
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
+
         $lesson->save();
 
         if ($lesson->type == 'audio') {
@@ -203,7 +206,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function step3cd(Request $request,$subdomain, $id){
- 
+
 
         if(!$id){
             return redirect('instructor/courses');
@@ -274,6 +277,21 @@ class CourseCreateStepController extends Controller
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
+
+        if( $request->input('lesson_type') == 'audio' ){
+            $lesson->text = NULL;
+            $lesson->video_link = NULL;
+            $lesson->status = 'pending';
+        }else if( $request->input('lesson_type') == 'video_link'){
+            $lesson->audio = NULL;
+            $lesson->text = NULL;
+            $lesson->status = 'pending';
+        }else if($request->input('lesson_type') == 'text'){
+            $lesson->audio = NULL;
+            $lesson->video_link = NULL;
+            $lesson->status = 'pending';
+        }
+
         $lesson->save();
 
         return redirect()->back()->with('success', 'Lesson Updated successfully');
@@ -314,7 +332,7 @@ class CourseCreateStepController extends Controller
 
             $file = $request->file('lesson_file');
             $filename = uniqid() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $file->move(public_path('uploads/lessons/files'), $filename);
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
         $lesson->status = 'published';
@@ -369,7 +387,7 @@ class CourseCreateStepController extends Controller
         }
 
         return redirect()->back()->with('warning','No Audio Found!');
- 
+
     }
 
     public function stepLessonFileRemove($subdomain,$id,$module_id,$lesson_id)
@@ -385,7 +403,7 @@ class CourseCreateStepController extends Controller
             $previousLessonPath = public_path($lesson->lesson_file);
             if (file_exists($previousLessonPath)) {
                 unlink($previousLessonPath);
-            } 
+            }
             $lesson->lesson_file = NULL;
             $lesson->save();
             return redirect()->back()->with('success','Lesson File Successfully Deleted!');
@@ -408,7 +426,7 @@ class CourseCreateStepController extends Controller
                 'short_description' => 'nullable|string',
                 'audio' => 'nullable|mimes:mp3,wav|max:50000',
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
-    
+
             ]);
         }else{
             $request->validate([
@@ -417,7 +435,7 @@ class CourseCreateStepController extends Controller
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
             ]);
         }
-        
+
         $lesson->short_description = $request->input('short_description');
 
         // Handle audio file upload
@@ -446,7 +464,7 @@ class CourseCreateStepController extends Controller
 
             $file = $request->file('lesson_file');
             $filename = uniqid() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $file->move(public_path('uploads/lessons/files'), $filename);
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
 
@@ -478,25 +496,25 @@ class CourseCreateStepController extends Controller
 
         if ($lesson->video_link) {
             $request->validate([
-                'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000', 
-                'short_description' => 'nullable|string', 
+                'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000',
+                'short_description' => 'nullable|string',
             ],
-            [ 
+            [
                 'video_link.max' => 'Max file size is 1 GB!',
             ]);
 
         }else{
             $request->validate([
-                'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
-                'short_description' => 'nullable|string', 
+                'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
+                'short_description' => 'nullable|string',
             ],
             [
                 'video_link.required' => 'Video file is required!',
                 'video_link.max' => 'Max file size is 1 GB!',
             ]);
-        }       
+        }
 
-        
+
         $lesson->short_description = $request->input('short_description');
         $lesson->status = 'published';
         $lesson->save();
@@ -535,7 +553,7 @@ class CourseCreateStepController extends Controller
                 return response()->json(['error' => 'Vimeo account is not connected.']);
             }
         }
- 
+
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Updated Successfuly');
     }
 
@@ -556,7 +574,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function courseObjects($subdomain, $id){
- 
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -816,6 +834,12 @@ class CourseCreateStepController extends Controller
             return redirect()->back()->with('error','This course does not have lesson to Publish!');
         }
 
+        $pendingLessons = $course->lessons()->where('status', 'pending')->count();
+
+        if ($pendingLessons > 0) {
+            return back()->withError('This course doesn\'t have lesson to Publish!');
+        }
+
         $course->status = $request->input('status');
         $course->allow_review = $request->input('allow_review') ?? 0;
         $course->save();
@@ -855,7 +879,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        if (session()->has('course_id')) { 
+        if (session()->has('course_id')) {
             session()->forget('course_id');
         }
 

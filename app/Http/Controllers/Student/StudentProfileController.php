@@ -14,7 +14,7 @@ use App\Mail\ProfileUpdated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image; 
+use Intervention\Image\Facades\Image;
 
 class StudentProfileController extends Controller
 {
@@ -37,7 +37,7 @@ class StudentProfileController extends Controller
     }
 
     public function update(Request $request)
-    { 
+    {
         $userId = Auth()->user()->id;
 
         $this->validate($request, [
@@ -61,7 +61,7 @@ class StudentProfileController extends Controller
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
         $user->description = $request->description;
-        $user->recivingMessage = $request->recivingMessage;
+        $user->recivingMessage = $request->recivingMessage ? true : false;
         $user->email = $user->email;
         if ($request->password) {
             $user->password = Hash::make($request->password);
@@ -76,15 +76,15 @@ class StudentProfileController extends Controller
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }
-            } 
+            }
             list($type, $data) = explode(';', $base64Image);
             list(, $data) = explode(',', $data);
-            $decodedImage = base64_decode($data); 
-            $slugg = Str::slug($request->name); 
+            $decodedImage = base64_decode($data);
+            $slugg = Str::slug($request->name);
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
             $path = 'public/uploads/users/' . $uniqueFileName;
             $path2 = 'storage/uploads/users/' . $uniqueFileName;
-            Storage::put($path, $decodedImage); 
+            Storage::put($path, $decodedImage);
             $user->avatar = $path2;
          }
 
@@ -126,33 +126,33 @@ class StudentProfileController extends Controller
 
     public function coverUpload(Request $request)
     {
- 
+
         if ($request->cover_photo != NULL) {
 
             $userId = $request->userId;
             $base64ImageCover = $request->cover_photo;
             $user = User::where('id', $userId)->first();
-            
+
             if ($user->cover_photo) {
                 $oldFile = public_path($user->cover_photo);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }
-            } 
+            }
             list($type, $data) = explode(';', $base64ImageCover);
             list(, $data) = explode(',', $data);
-            $decodedImage = base64_decode($data); 
-            $slugg = Str::slug($request->name); 
+            $decodedImage = base64_decode($data);
+            $slugg = Str::slug($request->name);
             $uniqueFileName = $slugg . '-' . uniqid() . '.png';
             $path = 'public/uploads/users/' . $uniqueFileName;
             $path2 = 'storage/uploads/users/' . $uniqueFileName;
-            Storage::put($path, $decodedImage); 
+            Storage::put($path, $decodedImage);
             $user->cover_photo = $path2;
 
             $user->save();
             return response()->json(['message' => "UPLOADED"]);
          }
-    
+
         return response()->json(['error' => 'No cover image uploaded'], 400);
     }
 }
