@@ -296,7 +296,6 @@ class StudentHomeController extends Controller
     public function show($domain,$slug)
     {
 
-        // return 234;
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         //start group file
          $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
@@ -312,8 +311,7 @@ class StudentHomeController extends Controller
                 }
             }
         }
-
-        // return $group_files;
+ 
 
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
@@ -334,8 +332,19 @@ class StudentHomeController extends Controller
             return count($module->lessons);
         });
 
+        // last playing video
+         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
+         $currentLessonVideo = NULL;
+
+         if ($courseLog) {
+             $lesson = Lesson::find($courseLog->lesson_id);
+             if ($lesson) {
+                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
+             }
+         }
+
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses'));
+            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','currentLessonVideo'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -586,17 +595,20 @@ class StudentHomeController extends Controller
     }
 
     public function storeCourseLog(Request $request){
-
-        // return "hi";
+ 
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
         $userId = Auth()->user()->id;
 
+
+        $existingCourse = Course::find($courseId);
         $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
+
         if(!$courseLog){
             $courseLogInfo = new CourseLog([
                 'course_id' => $courseId,
+                'instructor_id' => $existingCourse->user_id,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
@@ -605,12 +617,14 @@ class StudentHomeController extends Controller
             return response()->json([
                 'message' => 'course log save successfully',
                 'course_id' => $courseId,
+                'instructor_id' => $existingCourse->user_id,
                 'module_id' => $moduleId,
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
             ]);
         }else{
             $courseLog->course_id = $courseId;
+            $courseLog->instructor_id = $existingCourse->user_id;
             $courseLog->module_id = $moduleId;
             $courseLog->lesson_id = $lessonId;
             $courseLog->update();

@@ -255,15 +255,36 @@ $i = 0;
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
+            var firstLessonId = $('#firstLesson').data('first-lesson-id');
+            var firstCourseId = $('#firstLesson').data('first-course-id');
+            var firstModuleId = $('#firstLesson').data('first-modules-id');
+            var data = {
+                courseId: firstCourseId,
+                lessonId: firstLessonId,
+                moduleId: firstModuleId
+            };
+            $.ajax({
+                url: '{{ route('admin.log.courses') }}',
+                method: 'GET',
+                data: data,
+                success: function(response) {
+                    // console.log('response', response)
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors, if any
+                }
+            });
+
+
             var options = {
-                id: '{{ 305108069 }}', 
+                id: {{ $currentLessonVideo ?? 305108069 }},
                 autoplay: true,
                 // loop: true,
                 width: 500,
             };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {
-                $('.is_complete_lesson').click();
+                // $('.is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 
@@ -280,7 +301,7 @@ $i = 0;
                     document.querySelector('#hideShow').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
-                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    // document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
                     audioPlayer.pause();
 
@@ -300,7 +321,7 @@ $i = 0;
                     audioSource.src = laravelURL; 
                     audioPlayer.load(); 
                     audioPlayer.play(); 
-                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
+                    // document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
 
                 }else if(type == 'text'){
@@ -309,7 +330,7 @@ $i = 0;
                     document.querySelector('#hideShow').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
+                    // document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download all course materials';
 
                     let lessonId =  this.getAttribute('data-lesson-id')
 

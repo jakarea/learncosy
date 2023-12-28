@@ -175,10 +175,16 @@ $i = 0;
                         </div>
                     </div>
 
+                    {{ count($course_reviews)}}
+
                     @if (count($course_reviews) > 0)
+
                     @foreach ($course_reviews as $course_review)
                     <div class="media">
-                        @if ($course_review->user->avatar)
+
+                        {{ $course_review->user->avatar }}
+                        
+                        @if ($course_review->user && $course_review->user->avatar)
                             <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
                         @else
                             <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
@@ -397,12 +403,13 @@ $i = 0;
             });
 
             var options = {
-                id: '{{ 305108069 }}',
+                id: {{ $currentLessonVideo ?? 305108069 }},
                 // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
                 autoplay: true,
                 // loop: true,
                 width: 500,
             }; 
+
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
             player.on('ended', function() {  
                 $('.is_complete_lesson').click();
@@ -411,11 +418,8 @@ $i = 0;
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault();
- 
-
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
-
                 let type = this.getAttribute('data-lesson-type');
 
                 if(type == 'video'){
@@ -433,7 +437,6 @@ $i = 0;
                     var moduleId = $(this).data('modules-id');
                     var videoUrl = $(this).attr('href');
 
-                        // console.log({videoUrl})
                         videoUrl = videoUrl.replace('/videos/', '');
                         player.loadVideo(videoUrl);
 
@@ -480,7 +483,6 @@ $i = 0;
                     .catch(error => {
                         // console.error(error);
                     });
-
 
                 }
 

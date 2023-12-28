@@ -61,6 +61,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             // Route::get('/file-download/{course_id}/{extension}', 'filePreview')->name('admin.file.download');
             Route::get('/{slug}/show', 'show')->name('admin.course.show');
             Route::get('/overview/{slug}', 'overview')->name('admin.course.overview');
+            Route::get('courses-log', 'storeCourseLog')->name('admin.log.courses');
             Route::delete('/{slug}/destroy', 'destroy')->name('admin.course.destroy');
         });
 
