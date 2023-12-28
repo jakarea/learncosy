@@ -236,7 +236,8 @@ $i = 0;
                                     </div>
                                 </button>
                             </div>
-                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse {{ $currentLesson->module_id == $module->id  ? 'show' : ''}}"
+                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse 
+                                {{ $currentLesson && $currentLesson->module_id == $module->id  ? 'show' : ''}}"
                                 aria-labelledby="heading_{{ $module->id }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
