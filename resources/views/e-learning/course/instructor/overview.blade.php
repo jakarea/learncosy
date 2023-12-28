@@ -30,7 +30,7 @@
                             @if ($course->user->avatar)
                                 <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
                             @else
-                                <span class="user-name-avatar me-1">{!! strtoupper($course->user->name[0]) !!}</span>
+                                <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
                             @endif
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>

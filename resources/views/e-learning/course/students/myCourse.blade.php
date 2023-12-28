@@ -27,8 +27,11 @@
 
                             @if ($course->user)
                                 <div class="media">
-                                    <img src="{{ asset( $course->user->avatar) }}" alt="Place"
-                                        class="img-fluid">
+                                    @if ($course->user && $course->user->avatar)
+                                        <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                                    @else  
+                                    <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
+                                    @endif
                                     <div class="media-body">
                                         <h5>{{ $course->user->name }}</h5>
                                         <h6>{{ $course->user->user_role }}</h6>

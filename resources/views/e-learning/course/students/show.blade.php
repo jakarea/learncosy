@@ -174,18 +174,14 @@ $i = 0;
                             </form>
                         </div>
                     </div>
-
-                    {{ count($course_reviews)}}
+ 
 
                     @if (count($course_reviews) > 0)
 
                     @foreach ($course_reviews as $course_review)
-                    <div class="media">
-
-                        {{ $course_review->user->avatar }}
-                        
+                    <div class="media"> 
                         @if ($course_review->user && $course_review->user->avatar)
-                            <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
+                            <img src="{{ asset( $course_review->user->avatar) }}" alt="Place" class="img-fluid">
                         @else
                             <span class="user-name-avatar me-1">{!! strtoupper($course_review->user->name[0]) !!}</span>
                         @endif
