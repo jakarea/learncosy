@@ -13,6 +13,19 @@ Subscribe Package
 <section class="pricing-plan-sec">
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                <div class="back-bttn w-100 mt-0 justify-content-end"> 
+                    @php 
+                        $subscribe = \App\Models\Subscription::where('instructor_id', auth()->user()->id)->first();
+                    @endphp 
+
+                    @if($subscribe)
+                        <a href="/instructor/profile/step-3/complete">Next</a>
+                    @endif
+                  </div> 
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12">
                 {{-- verify step start --}}
                 <div class="verify-step-wrap">

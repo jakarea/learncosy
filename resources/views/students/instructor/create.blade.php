@@ -147,10 +147,11 @@
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
                                 <div id="imageContainer" class="drop-container"> 
-                                    <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
+                                    <img src="" id="item-img-output"
                                         class="imgpreviewPrf img-fluid" alt="">
                                 </div>
                             </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="recivingMessage">Receiving Messages: </label>
@@ -158,8 +159,8 @@
                                         <div class="col-md-2">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault1" value="1" checked>
-                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    id="enable" value="1" checked>
+                                                <label class="form-check-label" for="enable">
                                                     Enable
                                                 </label>
                                             </div>
@@ -167,8 +168,8 @@
                                         <div class="col-md-2">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="recivingMessage"
-                                                    id="flexRadioDefault2" value="0">
-                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    id="disable" value="0">
+                                                <label class="form-check-label" for="disable">
                                                     Disable
                                                 </label>
                                             </div>

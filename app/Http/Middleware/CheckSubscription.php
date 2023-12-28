@@ -39,9 +39,11 @@ class CheckSubscription
             }elseif (!$user->subdomain) {
                 return redirect('instructor/profile/step-3/complete')->with('error', 'Please set your subdomain to access this feature.');
             }elseif (!$user->vimeo_data && !$user->stripe_secret_key && !$user->stripe_public_key) {
-                return redirect('instructor/profile/step-4/complete')->with('error', 'Please complete your profile to access this feature.');
+                // return redirect('instructor/profile/step-4/complete')->with('error', 'Please complete your profile to access this feature.');
+                return redirect('instructor/profile/step-4/complete');
             }elseif (!$modules) {
-                return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
+                // return redirect('instructor/profile/step-5/complete')->with('error', 'Please complete your profile to access this feature.');
+                return redirect('instructor/profile/step-5/complete');
             }else{
                 return $next($request);
             }
