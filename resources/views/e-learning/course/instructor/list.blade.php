@@ -85,7 +85,7 @@ All Courses
                                                 href="{{ url('instructor/courses/' . $course->id) }}">View</a>
                                         </li>
                                         <li><a class="dropdown-item"
-                                                href="{{ url('instructor/courses/create/' . $course->id) }}">Edit</a>
+                                                href="{{ url('instructor/courses/create/' . $course->id) }}?tab=active">Edit</a>
                                         </li>
                                         <li>
                                             <form method="post" class="d-inline"
@@ -147,8 +147,8 @@ All Courses
                                 Sold {{ $course->sale_count }} Times
                                 @endif
                             </span>
-                        </div> 
-                        @endif 
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

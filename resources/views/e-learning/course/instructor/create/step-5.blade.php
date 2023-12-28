@@ -17,7 +17,7 @@ Course Create - Video Upload
                 {{-- course step --}}
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
-                        <span class="circle"> 
+                        <span class="circle">
                         </span>
                         <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
                     </div>
@@ -30,7 +30,7 @@ Course Create - Video Upload
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7"> 
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <form id="uploadForm" action="" method="POST" class="create-form-box custom-select"
                     enctype="multipart/form-data">
                     @csrf
@@ -44,23 +44,45 @@ Course Create - Video Upload
                             <div id="preview" class="mt-2"></div>
                             <div class="upload-progress mt-4">
                                 <div class="progress d-none">
-                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" 
+                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0"
                                     aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                             </div>
                             <h3 class="h33 d-none">0%</h3>
                             <p class="warnm d-none">Please, while uploading the video. don't close the window or dont't
-                                change the URL *</p> 
+                                change the URL *</p>
                             <span class="invalid-feedback text-danger" id="videoErrorMessage">
                                 @error('video_link')
                                 {{ $message }}
                                 @enderror
                             </span>
                         </div>
+
+                        @if ($lesson->video_link)
+                            <div class="form-group form-upload mb-0">
+                                <label for="file-input" class="txt mb-0">Current Video</label>
+                            </div>
+                            <div class="course-content-box course-page-edit-box">
+                                <div class="title">
+                                    <div class="media">
+                                        <img src="{{ asset('latest/assets/images/icons/video.svg') }}" alt="File"
+                                            class="img-fluid">
+                                        <div class="media-body">
+                                            <h5>{{ $lesson->slug .'.mp4' }} </h5>
+                                            <p>Uploaded at: {{ $lesson->updated_at->diffForHumans() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        @endif
+
                         <div class="form-group mt-4">
-                            <label for="file-input" class="txt mb-2" style="font-weight: 600">A Short description for this video</label> 
+                            <label for="file-input" class="txt mb-2" style="font-weight: 600">A Short description for this video</label>
                             <textarea class="form-control" id="description" name="short_description" placeholder="Type here">
                                 {!! $lesson->short_description !!}
-                            </textarea> 
+                            </textarea>
 
                             <span class="invalid-feedback text-danger">
                                 @error('short_description')
@@ -69,32 +91,13 @@ Course Create - Video Upload
                             </span>
 
                         </div>
- 
-                        @if ($lesson->video_link)
-                        <div class="form-group form-upload mb-0">
-                            <label for="file-input" class="txt mb-0">Current Video</label> 
-                        </div> 
-                        <div class="course-content-box course-page-edit-box">
-                            <div class="title">
-                                <div class="media">
-                                    <img src="{{ asset('latest/assets/images/icons/video.svg') }}" alt="File"
-                                        class="img-fluid">
-                                    <div class="media-body">
-                                        <h5>{{ $lesson->slug .'.mp4' }} </h5>
-                                        <p>Uploaded at: {{ $lesson->updated_at->diffForHumans() }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/video/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </div> 
-                        @endif
+
+
 
                     </div>
                     {{-- step next bttns --}}
                     <div class="back-next-bttns">
-                        <a href="{{ url('instructor/courses/create/'.$lesson->course_id) }}">Back</a>
+                        <a href="{{ url('instructor/courses/create/'.$lesson->course_id) }}?tab=active">Back</a>
                         <button class="btn btn-primary btn-submit" type="submit">Next</button>
                     </div>
                     {{-- step next bttns --}}
@@ -106,7 +109,7 @@ Course Create - Video Upload
 {{-- page content @E --}}
 
 @section('script')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {{-- file upload preview --}}
 <script>
@@ -115,7 +118,7 @@ Course Create - Video Upload
     var currentURL = window.location.href
     var urlObject = new URL(currentURL);
     var pathname = urlObject.pathname;
-    var pathnameParts = pathname.split('/'); 
+    var pathnameParts = pathname.split('/');
     var course_id = pathnameParts[4];
     var module_id = pathnameParts[6];
     var lesson_id = pathnameParts[8];
@@ -155,7 +158,7 @@ function drop() {
 
 $(document).ready(function() {
     $('#uploadForm').submit(function(e) {
-       
+
         var fileInput = document.getElementById('uploadFile');
 
         if (fileInput && fileInput.files.length > 0) {
@@ -228,7 +231,7 @@ $(document).ready(function() {
                     if (errors.video_link) {
                         document.querySelector('#videoErrorMessage').innerHTML = errors.video_link[0];
                     }
-                    
+
                     // Handle errors, update UI, etc.
 
                     $('.upload-progress').css('display', 'none');
