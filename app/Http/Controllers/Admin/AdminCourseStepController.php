@@ -268,6 +268,7 @@ class AdminCourseStepController extends Controller
             $file->move(public_path('uploads/lessons/files'), $filename); 
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
+        $lesson->status = 'published';
         $lesson->save();
 
         return redirect('admin/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
@@ -379,6 +380,7 @@ class AdminCourseStepController extends Controller
             $file->move(public_path('uploads/lessons/files'), $filename); 
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
+        $lesson->status = 'published';
         $lesson->save();
 
         return redirect('admin/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
@@ -401,6 +403,7 @@ class AdminCourseStepController extends Controller
             }
 
             $lesson->audio = NULL;
+            $lesson->status = 'pending';
             $lesson->save();
             return redirect()->back()->with('success','Lesson Audio Successfully Deleted!');
         }
@@ -452,6 +455,7 @@ class AdminCourseStepController extends Controller
 
        
         $lesson->short_description = $request->input('short_description');
+        $lesson->status = 'published';
         $lesson->save(); 
 
         $file = $request->file('video_link');
@@ -495,6 +499,7 @@ class AdminCourseStepController extends Controller
 
         if ($lesson) {
             $lesson->video_link = NULL;
+            $lesson->status = 'pending';
             $lesson->save();
             return redirect()->back()->with('success','Video Deleted Successfuly!');
         }

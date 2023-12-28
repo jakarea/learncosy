@@ -400,9 +400,8 @@ if (!function_exists('StudentActitviesProgress')) {
     {
         $progress = 0;
         // Get the total number of lessons in the course
-        $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->count();
-        // dd($totalLessons );
-        // exit();
+        $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->where('status','published')->count();
+         
         // Get the total number of completed lessons by the student for the specific course
         $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
             ->where('user_id', $user_id)
