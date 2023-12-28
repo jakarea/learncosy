@@ -1011,7 +1011,7 @@ function sendGroupMessage() {
 
                 $('#groupChatMessage')[0].reset();
                 // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                $("#chat-message").append(data);
+                // $("#chat-message").append(data);
                 scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {

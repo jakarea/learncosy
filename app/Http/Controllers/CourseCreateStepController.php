@@ -65,7 +65,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -75,7 +75,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function step1c(Request $request, $subdomain, $id)
-    { 
+    {
 
         if(!$id){
             return redirect('instructor/courses');
@@ -128,7 +128,7 @@ class CourseCreateStepController extends Controller
         }
 
          // session set
-         if (!session()->has('course_id')) { 
+         if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -310,7 +310,7 @@ class CourseCreateStepController extends Controller
         }
 
          // session set
-         if (!session()->has('course_id')) { 
+         if (!session()->has('course_id')) {
             session(['course_id' => $course_id]);
         }
 
@@ -360,7 +360,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -371,13 +371,13 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonAudio($subdomain,$id,$module_id,$lesson_id){
- 
+
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -386,7 +386,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonAudioRemove($subdomain,$id,$module_id,$lesson_id){
- 
+
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
@@ -410,7 +410,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonFileRemove($subdomain,$id,$module_id,$lesson_id)
-    { 
+    {
         if(!$id || !$module_id || !$lesson_id){
             return redirect('instructor/courses');
         }
@@ -494,13 +494,13 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonVideo($subdomain,$id,$module_id,$lesson_id)
-    { 
+    {
         if(!$id){
             return redirect('instructor/courses');
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -551,10 +551,9 @@ class CourseCreateStepController extends Controller
 
             $getID3 = new \getID3;
 
-
             $videoFile = $getID3->analyze($filePath);
 
-            $videoDuration = $videoFile['playtime_seconds'];
+            $videoDuration = round( $videoFile['playtime_seconds']);
 
             [$vimeoData, $status, $accountName] = isVimeoConnected($lesson->instructor_id);
 
@@ -590,7 +589,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function stepLessonVideoRemove($subdomain,$id,$module_id,$lesson_id)
-    { 
+    {
 
         $lesson = Lesson::where('id', $lesson_id)->where('module_id',$module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
@@ -611,7 +610,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -702,7 +701,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -738,7 +737,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -748,7 +747,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function courseDesignSet(Request $request,$subdomain, $id){
- 
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -794,7 +793,7 @@ class CourseCreateStepController extends Controller
         }
 
         // session set
-        if (!session()->has('course_id')) { 
+        if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
@@ -953,7 +952,7 @@ class CourseCreateStepController extends Controller
 
     public function getProgress(Request $request)
     {
-        $uri = $request->input('uri'); 
+        $uri = $request->input('uri');
         $vimeo = Vimeo::connection();
         $video = $vimeo->request($uri);
 
