@@ -36,10 +36,10 @@ Route::get('/clear-cache', function () {
 });
 
 
-// Route::get('/store', function () {
-//     Artisan::call('storage:link');
-//     return redirect('/');
-// });
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return redirect('/');
+});
 
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
