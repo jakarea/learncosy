@@ -179,6 +179,8 @@ class CourseCreateStepController extends Controller
         ]
         );
 
+
+
         $lesson = new Lesson();
         $lesson->course_id = $id;
         $lesson->instructor_id = Auth::user()->id;
@@ -186,6 +188,7 @@ class CourseCreateStepController extends Controller
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
+
         $lesson->save();
 
         if ($lesson->type == 'audio') {
@@ -274,6 +277,21 @@ class CourseCreateStepController extends Controller
         $lesson->title = $request->input('lesson_name');
         $lesson->slug = Str::slug($request->input('lesson_name'));
         $lesson->type = $request->input('lesson_type');
+
+        if( $request->input('lesson_type') == 'audio' ){
+            $lesson->text = NULL;
+            $lesson->video_link = NULL;
+            $lesson->status = 'pending';
+        }else if( $request->input('lesson_type') == 'video_link'){
+            $lesson->audio = NULL;
+            $lesson->text = NULL;
+            $lesson->status = 'pending';
+        }else if($request->input('lesson_type') == 'text'){
+            $lesson->audio = NULL;
+            $lesson->video_link = NULL;
+            $lesson->status = 'pending';
+        }
+
         $lesson->save();
 
         return redirect()->back()->with('success', 'Lesson Updated successfully');
