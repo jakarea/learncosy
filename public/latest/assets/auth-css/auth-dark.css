@@ -187,3 +187,8 @@
     background-color: transparent!important;
     border-color: #D2DEEF!important;
 }
+
+.dark-mode .pricing-box .bttn a.current-plan-bttn{
+    background-color: #EF6E79!important;
+    color: #0d0d0d!important;
+  }

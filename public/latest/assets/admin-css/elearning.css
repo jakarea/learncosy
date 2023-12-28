@@ -1102,7 +1102,8 @@ span.finsihLesson {
   color: #294CFF;
 }
 .content-settings-form-wrap .content-type .d-flex a.active img {
-  filter: invert(19%) sepia(99%) saturate(2803%) hue-rotate(231deg) brightness(104%) contrast(107%);
+  /* filter: invert(19%) sepia(99%) saturate(2803%) hue-rotate(231deg) brightness(104%) contrast(107%); */
+  filter: invert(48%) sepia(63%) saturate(1170%) hue-rotate(207deg) brightness(100%) contrast(103%);
 }
 .content-settings-form-wrap .element-txt h6 {
   color: var(--gray-900, #101828);

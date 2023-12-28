@@ -139,8 +139,8 @@ My Profile Details
                             </div>
                         </div>
                     @endif
-                    @php
 
+                    @php
                     $social_links = explode(",", $user->social_links);
                     use Illuminate\Support\Str;
                     @endphp
@@ -151,9 +151,9 @@ My Profile Details
                     $host = parse_url($url, PHP_URL_HOST);
                     $domain = Str::after($host, 'www.');
                     $domain = Str::before($domain, '.');
-
                     @endphp
 
+                    @if ($url)
                     <div class="media">
                         @if ($domain == 'linkedin')
                         <img src="{{ asset('latest/assets/images/icons/linkedin.svg') }}" alt="linkedin"
@@ -176,6 +176,7 @@ My Profile Details
                             <a href="{{ $social_link ? $social_link : '#' }}">{{ $social_link ? $social_link : '' }}</a>
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
             </div>
