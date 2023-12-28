@@ -253,7 +253,7 @@ $i = 0;
                                             </a>
                                             @else
                                             <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block 
-                                                {{ $currentLesson->id == $lesson->id  ? 'active' : ''}}"
+                                                {{ $currentLesson && $currentLesson->id == $lesson->id  ? 'active' : ''}}"
                                                 data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                 data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}"
                                                 data-audio-url="{{ $lesson->audio }}"
