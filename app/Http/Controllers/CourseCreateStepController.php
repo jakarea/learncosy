@@ -213,7 +213,6 @@ class CourseCreateStepController extends Controller
 
     public function step3cd(Request $request,$subdomain, $id){
 
-
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -230,6 +229,7 @@ class CourseCreateStepController extends Controller
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
+        $module->status = 'published';
         $module->save();
 
         return redirect()->back()->with('success', 'Module Created successfully');
