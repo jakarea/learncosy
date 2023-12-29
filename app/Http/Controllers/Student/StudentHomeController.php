@@ -312,7 +312,6 @@ class StudentHomeController extends Controller
             }
         }
  
-
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -328,9 +327,14 @@ class StudentHomeController extends Controller
         }
 
         $totalModules = count($course->modules);
+
         $totalLessons = $course->modules->sum(function ($module) {
-            return count($module->lessons);
+            return $module->lessons->filter(function ($lesson) { 
+                return $lesson->status == 'published';
+            })->count();
         });
+
+        // return $course->id;
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();

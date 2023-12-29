@@ -66,7 +66,6 @@ $i = 0;
                     {{-- audio player --}}
                     @endif
 
-
                     {{-- course title --}}
                     <div class="media course-title">
                         <div class="media-body">
