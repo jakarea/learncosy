@@ -326,7 +326,10 @@ class StudentHomeController extends Controller
             $liked = 'active';
         }
 
-        $totalModules = count($course->modules);
+        // $totalModules = count($course->modules);
+
+        $totalModules = $course->modules->where('status', 'published')->count();
+              
 
         $totalLessons = $course->modules->sum(function ($module) {
             return $module->lessons->filter(function ($lesson) { 
