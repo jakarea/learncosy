@@ -248,7 +248,6 @@
                                                     @foreach ($module->lessons as $lesson)
                                                         {{-- @if (!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link)) --}}
                                                         @if ($lesson->status == 'published')
-
                                                             <li>
                                                                 @if (!isEnrolled($course->id))
                                                                     <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"

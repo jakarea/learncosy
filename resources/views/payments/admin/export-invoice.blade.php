@@ -133,7 +133,6 @@
         <tr>
             <th class="border-0" style="text-align: left;">
                 <a href="#"> 
-
                     <img src="{{ public_path('latest/assets/images/black-logo.png') }}" alt="Logo" class="img-fluid" style="width: 7rem">
                 </a>
             </th>
@@ -182,20 +181,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="br-0">{{ isset($payment->subscriptionPackage->name) ? $payment->subscriptionPackage->name : "Package has been removed"; }}</td>
-                            <td class="bl-0 br-0">{{ isset($payment->subscriptionPackage->type) ? $payment->subscriptionPackage->type : "Package has been removed"; }}  </td>
-                            <td class="bl-0 " style="text-align: right;">€{{ isset($payment->subscriptionPackage->type) ? $payment->subscriptionPackage->type : $payment->amount }}  </td>
+                            <td class="br-0">{{ isset($package->name) ? $package->name : "Package has been removed"; }}</td>
+                            <td class="bl-0 br-0">{{ isset($package->type) ? $package->type : "Package has been removed"; }}  </td>
+                            <td class="bl-0 " style="text-align: right;">€{{ $package->regular_price }}  </td>
                         </tr>
                         <tr class="" style="text-align: right;">
                             <td colspan="2" class="br-0">
                                 <strong>Discount:</strong>
                             </td>
                             <td class="bl-0">
-                                € @if (isset($payment->subscriptionPackage))
-                                    {{ $payment->subscriptionPackage->regular_price - $payment->subscriptionPackage->sales_price }}
-                                @else 
-                                    0
-                                @endif
+                                € {{ $package->regular_price - $package->sales_price }}
                             </td>
                         </tr> 
                         <tr class="" style="text-align: right;">
@@ -203,7 +198,7 @@
                                 <strong>Grand Total:</strong>
                             </td>
                             <td class="bl-0">
-                                €{{ $payment->amount }}
+                                € {{ $package->sales_price }}
                             </td>
                         </tr>
                     </tbody>

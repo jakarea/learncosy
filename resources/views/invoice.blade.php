@@ -133,7 +133,7 @@
         <tr>
             <th class="border-0" style="text-align: left;">
                 <a href="#">
-                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Learncosy" class="img-fluid">
+                    <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Learncosy" class="img-fluid" style="max-width: 7rem;">
                 </a>
             </th>
             <th class=" border-0" style="text-align: right;">

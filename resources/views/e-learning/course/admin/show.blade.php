@@ -133,7 +133,8 @@ $i = 0;
                                     </div>
                                 </button>
                             </div>
-                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
+                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse 
+                                {{ $currentLesson && $currentLesson->module_id == $module->id ? 'show' : '' }}"
                                 aria-labelledby="heading_{{ $module->id }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
@@ -148,7 +149,7 @@ $i = 0;
                                                         @endcan
 
                                                     <a href="{{ $lesson->video_link }}"
-                                                        class="video_list_play d-inline-block"
+                                                        class="video_list_play d-inline-block {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
                                                         data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                         data-course-id="{{ $course->id }}"
                                                         data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"

@@ -120,19 +120,22 @@ class CourseManagementController extends Controller
             })->count();
         }); 
 
+       
         // last playing video
         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
         $currentLessonVideo = NULL;
+        $currentLesson = NULL;
 
         if ($courseLog) {
             $lesson = Lesson::find($courseLog->lesson_id);
             if ($lesson) {
+               $currentLesson = $lesson;
                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
 
         if ($course) {
-            return view('e-learning/course/admin/show', compact('course','course_reviews','relatedCourses','group_files','totalModules','totalLessons','currentLessonVideo'));
+            return view('e-learning/course/admin/show', compact('course','course_reviews','relatedCourses','group_files','totalModules','totalLessons','currentLessonVideo','currentLesson'));
         } else {
             return redirect('admin/courses')->with('error', 'Course not found!');
         }
