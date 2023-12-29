@@ -36,7 +36,7 @@
                                         <h5>{{ $course->user->name }}</h5>
                                         <h6 class="text-capitalize">{{ $course->user->user_role }}</h6>
                                     </div>
-                                </div> 
+                                </div>
                             @endif
 
                             {{-- course lesson duration calculation --}}
@@ -115,6 +115,9 @@
                                                     $totalDuration += $lesson->duration;
                                                 }
                                             }
+
+                                            $totalDuration = round( $totalDuration / 60 );
+
                                         @endphp
 
                                         <p class="common-para mb-4">{{ $totalDuration }} Min .

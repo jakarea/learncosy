@@ -88,7 +88,7 @@ $layoutName = "layouts.latest.admin";
                                             @else
                                                 <a href="{{ url('students/courses/overview/' . $course->slug) }}">
                                                     {{$today['title']}}</a>
-                                            @endif 
+                                            @endif
                                             @else
                                             {{$today['title']}}
                                             @endif
