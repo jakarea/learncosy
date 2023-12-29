@@ -22,34 +22,39 @@ use Intervention\Image\Facades\Image;
 class AdminPaymentController extends Controller
 {
     public function adminPayment()
-    { 
+    {
 
-        $status = isset($_GET['status']) ? $_GET['status'] : ''; 
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
         $enrolments = Subscription::with('instructor');
 
         if ($status) {
             if ($status == 'asc') {
                 $enrolments->orderBy('id', 'asc');
             }
-            
+
             if ($status == 'desc') {
                 $enrolments->orderBy('id', 'desc');
             }
         }else{
-            $enrolments->orderBy('id', 'desc'); 
+            $enrolments->orderBy('id', 'desc');
         }
 
-        $enrolments = $enrolments->paginate(12); 
- 
+        $enrolments = $enrolments->paginate(12);
+
 
         $today = Carbon::today();
+
+
+
+        $totalEarningsUntilToday = Subscription::whereDate('created_at', '<=', now())
+                        ->sum('amount');
 
         // last one year
         $oneYearAgo = Carbon::parse($today)->subYear();
         $lastOneyear = $enrolments
             ->where('start_at', '>=', $oneYearAgo)
             ->where('start_at', '<', $today)
-            ->sum('amount'); 
+            ->sum('amount');
 
         // last 2 years
         $oneTwoYearAgo = Carbon::parse($today)->subYears(2);
@@ -57,12 +62,12 @@ class AdminPaymentController extends Controller
             ->where('start_at', '>=', $oneTwoYearAgo)
             ->where('start_at', '<', Carbon::parse($today)->subYears(1))
             ->sum('amount');
-       
+
         // todays earning
         $earningsToday = $enrolments
             ->where('start_at', '>=', $today)
             ->where('start_at', '<', $today->copy()->addDay())
-            ->sum('amount'); 
+            ->sum('amount');
 
         // yesterday earnings
         $yesterday = Carbon::parse($today)->subDay();
@@ -76,12 +81,19 @@ class AdminPaymentController extends Controller
         $enrollesToday = Checkout::
             where('start_date', '>=', $today)
             ->where('start_date', '<', $today->copy()->addDay())
-            ->count(); 
+            ->count();
+
+
+        $numberOfEnrollments = Checkout::where('payment_status', 'completed')->count();
+
+        $percentageEnrollments = ($totalEnrollments > 0)
+                            ? number_format((Checkout::where('payment_status', 'completed')->count() / $totalEnrollments) * 100, 2)
+                            : 0;
 
         // today enrollments
         $todaysEnrolments = Subscription::whereDate('created_at', Carbon::today())->orderBy('id', 'desc')->get();
 
-        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments','earningsYesterday','lastOneyear','earningsLastTwoYears','earningsToday','totalEnrollments','enrollesToday'));
+        return view('payments/admin/grid-admin-payment', compact('enrolments','todaysEnrolments','earningsYesterday','lastOneyear','earningsLastTwoYears','earningsToday','totalEnrollments','enrollesToday','percentageEnrollments','totalEarningsUntilToday'));
     }
 
     public function details($stripe_plan)
@@ -138,6 +150,6 @@ class AdminPaymentController extends Controller
             return redirect()->back()->with('warning', 'User mail address not set.Mail not sent!!!');
         }
     }
-    
- 
+
+
 }
