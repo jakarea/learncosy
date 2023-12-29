@@ -97,13 +97,12 @@
                     @foreach ($payments->slice(0, 5) as $payment)
                     <div class="payment-box">
                         <h5>
-                            @if ($payment->user)
+                            @if ($payment->user && $payment->user->avatar)
                             <img src="{{ asset($payment->user->avatar) }}" alt="Avatar" class="img-fluid">
-                            @else
-                            <img src="{{ asset('latest/assets/images/removed-user.png') }}" alt="Avatar"
-                                class="img-fluid">
+                            @else 
+                                <span class="user-name-avatar me-2" style="width: 2.2rem; height: 2.2rem;">{!! strtoupper(optional($payment->user)->name[0]) !!}</span>
                             @endif
-                            {{ $payment->user->name }}
+                            {{ optional($payment->user)->name }}
                         </h5>
 
                         <p>
@@ -142,7 +141,14 @@
                     @endphp
                     @if ($course && $user)
                     <div class="media">
-                        <img src="{{ asset($user->avatar) }}" alt="icon" class="img-fluid me-3 user">
+
+                        @if ($user->avatar)
+                            <img src="{{ asset($user->avatar) }}" alt="icon" class="img-fluid me-3 user">
+                        @else 
+                            <span class="user-name-avatar me-3 big-avt" style="width: 3.75rem; height: 3.75rem;">{!! strtoupper($user->name[0]) !!}</span>
+                        @endif
+
+                        
                         <div class="media-body">
 
                             @if ($recentUpdate->message == 'enrolled')

@@ -147,6 +147,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
+                        @if (count($module->lessons) > 0 || $module->status == 'published')
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -163,6 +164,7 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
+                                        @if ($lesson->status == 'published')
                                         <li>
                                             <div class="d-flex align-items-center">
                                                 @can('instructor')
@@ -205,6 +207,7 @@ $i = 0;
                                             </div>
 
                                         </li>
+                                        @endif
                                         @endforeach
                                     </ul>
                                     {{-- <div class="text-center add-lesson-bttn">
@@ -214,6 +217,7 @@ $i = 0;
                                 </div>
                             </div>
                         </div>
+                        @endif
                         @endforeach
                         <div class="text-center add-lesson-bttn mt-2">
                             <a href="{{ url('instructor/courses/create/'.$course->id) }}" class="add_lesson_bttn">Add

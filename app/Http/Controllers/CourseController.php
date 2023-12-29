@@ -96,8 +96,6 @@ class CourseController extends Controller
             }
         } 
 
-        // return $group_files;
-
         $relatedCourses = Course::where('id', '!=', $id)
             ->where('user_id', Auth::user()->id)
             ->inRandomOrder()
@@ -105,10 +103,13 @@ class CourseController extends Controller
             ->get();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
-        $totalModules = count($course->modules);
+        $totalModules = $course->modules->where('status', 'published')->count();
+
         $totalLessons = $course->modules->sum(function ($module) {
-            return count($module->lessons);
-        });
+            return $module->lessons->filter(function ($lesson) { 
+                return $lesson->status == 'published';
+            })->count();
+        }); 
 
         // last playing video
         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
@@ -122,8 +123,6 @@ class CourseController extends Controller
                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
- 
-
 
         if ($course) {
             return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files','currentLessonVideo','currentLesson'));

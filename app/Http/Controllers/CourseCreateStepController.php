@@ -53,6 +53,7 @@ class CourseCreateStepController extends Controller
             $module->instructor_id = Auth::user()->id;
             $module->title = $request->input('module_name');
             $module->slug = Str::slug($request->input('module_name'));
+            $module->status = 'draft';
             $module->save();
         }
         return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started!');
@@ -249,12 +250,12 @@ class CourseCreateStepController extends Controller
         ]);
 
         $module_id = $request->input('module_id');
-
         $module = Module::where('id', $module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $module->course_id = $id;
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
+        $module->status = 'published';
         $module->save();
 
         return redirect()->back()->with('success', 'Module Updated successfully');
