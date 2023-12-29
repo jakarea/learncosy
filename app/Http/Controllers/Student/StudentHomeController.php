@@ -324,9 +324,7 @@ class StudentHomeController extends Controller
         $liked = '';
         if ($course_like ) {
             $liked = 'active';
-        }
-
-        // $totalModules = count($course->modules);
+        } 
 
         $totalModules = $course->modules->where('status', 'published')->count();
 
@@ -334,9 +332,7 @@ class StudentHomeController extends Controller
             return $module->lessons->filter(function ($lesson) {
                 return $lesson->status == 'published';
             })->count();
-        });
-
-        // return $course->id;
+        }); 
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();

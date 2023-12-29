@@ -53,6 +53,7 @@ class CourseCreateStepController extends Controller
             $module->instructor_id = Auth::user()->id;
             $module->title = $request->input('module_name');
             $module->slug = Str::slug($request->input('module_name'));
+            $module->status = 'draft';
             $module->save();
         }
         return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started!');
@@ -229,7 +230,7 @@ class CourseCreateStepController extends Controller
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
-        $module->status = 'published';
+        $module->status = 'draft';
         $module->save();
 
         return redirect()->back()->with('success', 'Module Created successfully');
@@ -249,12 +250,12 @@ class CourseCreateStepController extends Controller
         ]);
 
         $module_id = $request->input('module_id');
-
         $module = Module::where('id', $module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $module->course_id = $id;
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
+        $module->status = 'published';
         $module->save();
 
         return redirect()->back()->with('success', 'Module Updated successfully');
@@ -315,7 +316,6 @@ class CourseCreateStepController extends Controller
         }
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-
         return view('e-learning/course/instructor/create/step-4-text',compact('lesson'));
     }
 
@@ -348,6 +348,12 @@ class CourseCreateStepController extends Controller
         }
         $lesson->status = 'published';
         $lesson->save();
+
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
@@ -489,6 +495,12 @@ class CourseCreateStepController extends Controller
         $lesson->status = 'published';
         $lesson->save();
 
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
+
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
     }
@@ -540,6 +552,12 @@ class CourseCreateStepController extends Controller
         $lesson->short_description = $request->input('short_description');
         $lesson->status = 'published';
         $lesson->save();
+
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
 
         if ($request->hasFile('video_link')) {
 

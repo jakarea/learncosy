@@ -122,7 +122,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
-                        @if (count($module->lessons) > 0)
+                        @if (count($module->lessons) > 0 || $module->status == 'published')
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -138,7 +138,7 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                            @if(!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
+                                        @if ($lesson->status == 'published')
                                             <li>
                                                 <div class="d-flex align-items-center">
                                                     @can('instructor')
