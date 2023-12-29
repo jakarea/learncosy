@@ -94,7 +94,7 @@ class CourseController extends Controller
                     $group_files[] = $extention;
                 }
             }
-        } 
+        }
 
         // return $group_files;
 
@@ -105,9 +105,12 @@ class CourseController extends Controller
             ->get();
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
-        $totalModules = count($course->modules);
+        $totalModules = $course->modules->where('status', 'published')->count();
+
         $totalLessons = $course->modules->sum(function ($module) {
-            return count($module->lessons);
+            return $module->lessons->filter(function ($lesson) {
+                return $lesson->status == 'published';
+            })->count();
         });
 
         // last playing video
@@ -122,7 +125,7 @@ class CourseController extends Controller
                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
- 
+
 
 
         if ($course) {
@@ -173,7 +176,7 @@ class CourseController extends Controller
     }
 
     public function storeCourseLog(Request $request){
- 
+
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
@@ -205,7 +208,7 @@ class CourseController extends Controller
             $courseLog->module_id = $moduleId;
             $courseLog->lesson_id = $lessonId;
             $courseLog->user_id = $userId;
-            
+
             $courseLog->update();
             return response()->json([
                 'message' => 'course log updated',

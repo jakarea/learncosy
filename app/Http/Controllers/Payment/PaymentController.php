@@ -69,7 +69,7 @@ class PaymentController extends Controller
                     'payment_status' => $charge->paid? 'completed' : '',
                     'payment_id' => $charge->id,
                     'status' => $charge->status,
-                    'amount' => $charge->amount_captured,
+                    'amount' => $charge->amount_captured / 100,
                     'start_date' =>  $start_date = now()->toDateTimeString()
                 ]);
 

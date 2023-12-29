@@ -341,7 +341,7 @@ $totalPrice += $item->courses->offer_price;
                     Stripe.createToken(cardData, function(status, response) {
                         if (response.error) {
 
-                            console.log( response.error)
+                            // console.log( response.error)
 
                             if (response.error.param === "number") {
                                 displayErrorMessage('card_number_error', response.error.message);
