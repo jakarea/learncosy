@@ -182,7 +182,7 @@ class CourseManagementController extends Controller
     }
 
     public function storeCourseLog(Request $request){
- 
+
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
@@ -214,7 +214,7 @@ class CourseManagementController extends Controller
             $courseLog->module_id = $moduleId;
             $courseLog->lesson_id = $lessonId;
             $courseLog->user_id = $userId;
-            
+
             $courseLog->update();
             return response()->json([
                 'message' => 'course log updated',

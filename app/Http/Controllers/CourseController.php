@@ -94,7 +94,7 @@ class CourseController extends Controller
                     $group_files[] = $extention;
                 }
             }
-        } 
+        }
 
         $relatedCourses = Course::where('id', '!=', $id)
             ->where('user_id', Auth::user()->id)
@@ -172,7 +172,7 @@ class CourseController extends Controller
     }
 
     public function storeCourseLog(Request $request){
- 
+
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
@@ -204,7 +204,7 @@ class CourseController extends Controller
             $courseLog->module_id = $moduleId;
             $courseLog->lesson_id = $lessonId;
             $courseLog->user_id = $userId;
-            
+
             $courseLog->update();
             return response()->json([
                 'message' => 'course log updated',

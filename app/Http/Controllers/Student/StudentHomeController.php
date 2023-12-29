@@ -311,7 +311,7 @@ class StudentHomeController extends Controller
                 }
             }
         }
- 
+
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -329,7 +329,7 @@ class StudentHomeController extends Controller
         $totalModules = $course->modules->where('status', 'published')->count();
 
         $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->filter(function ($lesson) { 
+            return $module->lessons->filter(function ($lesson) {
                 return $lesson->status == 'published';
             })->count();
         }); 
