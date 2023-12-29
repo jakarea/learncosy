@@ -329,7 +329,6 @@ class StudentHomeController extends Controller
         // $totalModules = count($course->modules);
 
         $totalModules = $course->modules->where('status', 'published')->count();
-              
 
         $totalLessons = $course->modules->sum(function ($module) {
             return $module->lessons->filter(function ($lesson) { 

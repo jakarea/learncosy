@@ -221,7 +221,7 @@
                         </div>
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
-                                @if (count($module->lessons) > 0)
+                                @if (count($module->lessons) > 0 || $module->status == 'published')
                                     <div class="accordion-item">
                                         <div class="accordion-header" id="heading_{{ $module->id }}">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
