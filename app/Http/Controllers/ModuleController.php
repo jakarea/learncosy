@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Support\Str;
-use App\Models\Module; 
+use App\Models\Module;
 use Illuminate\Http\Request;
 use DataTables;
 use Auth;
@@ -14,10 +14,10 @@ class ModuleController extends Controller
 {
     // module list
     public function index()
-    {    
+    {
         $title = isset($_GET['title']) ? $_GET['title'] : '';
         $status = isset($_GET['status']) ? $_GET['status'] : '';
-        $modules = Module::where('user_id',auth::user()->id)->orderby('id', 'desc');
+        $modules = Module::where('user_id', auth::user()->id)->orderby('id', 'desc');
         if ($title) {
             $modules->where('title', 'like', '%' . trim($title) . '%');
         }
@@ -26,77 +26,75 @@ class ModuleController extends Controller
         }
         $modules = $modules->paginate(12);
 
-        return view('e-learning/module/instructor/grid',compact('modules')); 
+        return view('e-learning/module/instructor/grid', compact('modules'));
     }
 
     // module create
     public function create()
-    {  
+    {
         $userId = Auth::user()->id;
         $courses = Course::where('user_id', $userId)->get();
-        return view('e-learning/module/instructor/create',compact('courses')); 
+        return view('e-learning/module/instructor/create', compact('courses'));
     }
 
     public function store(Request $request)
-    {  
+    {
         // return $request->all();
 
         $request->validate([
             'course_id' => 'required',
-            'title' => 'required', 
-            'number_of_lesson' => 'required', 
-            'duration' => 'required', 
+            'title' => 'required',
+            'number_of_lesson' => 'required',
+            'duration' => 'required',
         ]);
 
         $userId = Auth::user()->id;
 
         //save module
         $module = new Module([
-            'user_id' => $userId, 
-            'course_id' => $request->course_id, 
-            'title' => $request->title, 
-            'slug' => Str::slug($request->title), 
-            'number_of_lesson' => $request->number_of_lesson, 
-            'number_of_attachment' => $request->number_of_attachment, 
-            'number_of_video' => $request->number_of_video, 
-            'duration' => $request->duration, 
+            'user_id' => $userId,
+            'course_id' => $request->course_id,
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'number_of_lesson' => $request->number_of_lesson,
+            'number_of_attachment' => $request->number_of_attachment,
+            'number_of_video' => $request->number_of_video,
+            'duration' => $request->duration,
             'status' => $request->status,
-        ]);  
+        ]);
 
         $module->save();
         return redirect('instructor/courses')->with('success', 'Module saved!');
-
     }
 
     // module edit
     public function edit($slug)
-    {  
+    {
         $courses = Course::orderBy('id', 'desc')->get();
         $module = Module::where('slug', $slug)->first();
         if ($module) {
-            return view('e-learning/module/instructor/edit', compact('module','courses'));
+            return view('e-learning/module/instructor/edit', compact('module', 'courses'));
         } else {
             return redirect('instructor/modules')->with('error', 'Module not found!');
-        } 
-
-    } 
+        }
+    }
 
     // module update
     public function update(Request $request, $slug)
-    {   
-          // return $request->all();
+    {
+        // return $request->all();
 
-          $request->validate([
+        $request->validate([
             'course_id' => 'required',
             'title' => 'required',
-            'number_of_lesson' => 'required', 
-            'duration' => 'required', 
+            'number_of_lesson' => 'required',
+            'duration' => 'required',
         ]);
 
         $module = Module::where('slug', $slug)->first();
-        $module->course_id = $request->course_id; 
-        $module->title = $request->title; 
-        $module->slug = Str::slug($request->title); 
+        $module->course_id = $request->course_id;
+        $module->title = $request->title;
+        $module->slug = Str::slug($request->title);
         $module->number_of_lesson = $request->number_of_lesson;
         $module->number_of_attachment = $request->number_of_attachment;
         $module->number_of_video = $request->number_of_video;
@@ -107,25 +105,54 @@ class ModuleController extends Controller
         return redirect('instructor/modules')->with('success', 'Module Updated!');
     }
 
-    public function destroy($subdomain,$slug)
-    { 
-        // delete module 
-        $module = Module::where('slug', $slug)->first(); 
+    // public function destroy($subdomain,$slug)
+    // {
+    //     // delete module
+    //     $module = Module::where('slug', $slug)->first();
 
-        //delete lessons
-        $lessons = Lesson::where('module_id', $module->id)->get();
-        foreach ($lessons as $lesson) {
-            //delete lesson thumbnail
-            
-            $lessonOldFile = public_path($lesson->lesson_file);
-            if (file_exists($lessonOldFile)) {
-                @unlink($lessonOldFile);
-            }
-            
-            $lesson->delete();
+    //     //delete lessons
+    //     $lessons = Lesson::where('module_id', $module->id)->get();
+    //     foreach ($lessons as $lesson) {
+    //         //delete lesson thumbnail
+
+    //         $lessonOldFile = public_path($lesson->lesson_file);
+    //         if (file_exists($lessonOldFile)) {
+    //             @unlink($lessonOldFile);
+    //         }
+
+    //         $lesson->delete();
+    //     }
+    //     $module->delete();
+
+    //     return redirect()->back()->with('success', 'Module Successfuly deleted!');
+    // }
+
+    public function destroy($subdomain, $slug)
+    {
+        $module = Module::where('slug', $slug)->first();
+
+        if (!$module) {
+            return redirect()->back()->with('error', 'Module not found.');
         }
+
+        Lesson::where('module_id', $module->id)->each(function ($lesson) {
+            // Delete course activities associated with the lesson
+
+            $lesson->courseActivities->each->delete();
+
+            // delete course log
+            $lesson->courseLogs->each->delete();
+
+            // Delete lesson thumbnail
+            $lessonOldFile = public_path($lesson->lesson_file);
+            file_exists($lessonOldFile) && @unlink($lessonOldFile);
+
+            // Delete the lesson
+            $lesson->delete();
+        });
+
         $module->delete();
 
-        return redirect()->back()->with('success', 'Module Successfuly deleted!');
+        return redirect()->back()->with('success', 'Module successfully deleted!');
     }
 }

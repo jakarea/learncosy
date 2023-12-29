@@ -23,4 +23,14 @@ class Lesson extends Model
         'status',
         'type',
     ];
+
+    public function courseActivities()
+    {
+        return $this->hasMany(CourseActivity::class);
+    }
+
+    public function courseLogs()
+    {
+        return $this->hasMany(CourseLog::class);
+    }
 }

@@ -311,7 +311,7 @@ class StudentHomeController extends Controller
                 }
             }
         }
- 
+
 
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
@@ -329,7 +329,7 @@ class StudentHomeController extends Controller
 
         $totalModules = count($course->modules);
         $totalLessons = $course->modules->sum(function ($module) {
-            return count($module->lessons);
+            return $module->lessons->where('status', 'published')->count();
         });
 
         // last playing video
@@ -364,14 +364,14 @@ class StudentHomeController extends Controller
                         $files[] = public_path($file_name);
                 }
                 }
-            } 
+            }
         $zip = new ZipArchive;
         $zipFileName = $file_extension.'_'.time().'.zip';
         $is_have_file = '';
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             foreach ($files as $file) {
-               
-                if(file_exists($file)){ 
+
+                if(file_exists($file)){
                     $zip->addFile($file, basename($file));
                 }else{
                    $is_have_file = 'There are no files in your storage!!!!';
@@ -379,7 +379,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-                return redirect('students/courses')->with('error', $is_have_file); 
+                return redirect('students/courses')->with('error', $is_have_file);
             }
             $zip->close();
 
@@ -597,7 +597,7 @@ class StudentHomeController extends Controller
     }
 
     public function storeCourseLog(Request $request){
- 
+
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
