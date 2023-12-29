@@ -190,12 +190,9 @@ Student Profile Edit Page
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
                                 <div id="imageContainer" class="drop-container"> 
-                                    @if ($instructor->avatar)
-                                    <img src="{{asset($instructor->avatar)}}" alt="No Image" class="img-fluid d-block imgpreviewPrf "
+                                    @if ($student->avatar)
+                                    <img src="{{asset($student->avatar)}}" alt="No Image" class="img-fluid d-block imgpreviewPrf "
                                         id="item-img-output">
-                                    @else
-                                    <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
-                                        class="imgpreviewPrf img-fluid" alt="">
                                     @endif
                                 </div>
                             </div>

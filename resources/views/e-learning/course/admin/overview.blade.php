@@ -26,7 +26,6 @@
 
                         @if($course->user)
                         <div class="media">
-
                             @if ($course->user && $course->user->avatar)
                                 <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
                             @else  

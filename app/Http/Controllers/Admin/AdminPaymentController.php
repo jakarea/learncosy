@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subscription;
+use App\Models\SubscriptionPackage;
 use App\Models\Checkout;
 use App\Models\User;
 use Carbon\Carbon;
@@ -41,11 +42,7 @@ class AdminPaymentController extends Controller
 
         $enrolments = $enrolments->paginate(12);
 
-
         $today = Carbon::today();
-
-
-
         $totalEarningsUntilToday = Subscription::whereDate('created_at', '<=', now())
                         ->sum('amount');
 
@@ -108,9 +105,12 @@ class AdminPaymentController extends Controller
         $stripe_plan = Crypt::decrypt($stripe_plan);
 
          $payment = Subscription::where('stripe_plan',$stripe_plan)->with('instructor','subscriptionPakage')->first();
+         $package = SubscriptionPackage::find($payment->subscription_packages_id);
          $data = array(
-            'payment' => $payment
+            'payment' => $payment,
+            'package' => $package
         );
+
         $pdf = Pdf::loadView('payments/admin/export-invoice',$data);
         return $pdf->download('invoice-'.$stripe_plan.'.pdf');
     }
@@ -119,8 +119,10 @@ class AdminPaymentController extends Controller
         $stripe_plan = Crypt::decrypt($stripe_plan);
 
          $payment = Subscription::where('stripe_plan',$stripe_plan)->with('instructor','subscriptionPakage')->first();
+         $package = SubscriptionPackage::find($payment->subscription_packages_id);
          $data = array(
-            'payment' => $payment
+            'payment' => $payment,
+            'package' => $package
         );
         $pdf = Pdf::loadView('payments/admin/export-invoice',$data);
         return $pdf->download('invoice-'.$stripe_plan.'.pdf');
@@ -130,10 +132,12 @@ class AdminPaymentController extends Controller
 
         $stripe_plan = Crypt::decrypt($stripe_plan);
         $payment = Subscription::where('stripe_plan',$stripe_plan)->with('instructor','subscriptionPakage')->first();
+        $package = SubscriptionPackage::find($payment->subscription_packages_id);
         $data = array(
             'payment' => $payment,
             'mail' => $payment->instructor->email,
             'stripe_plan' => 'invoice-'.$stripe_plan.'.pdf',
+            'package' => $package
         );
         $pdf = Pdf::loadView('payments/admin/export-invoice',$data);
         if($data['mail'] != '')

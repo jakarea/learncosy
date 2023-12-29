@@ -250,3 +250,18 @@
         </div>
     </main>
 @endsection
+
+@section('script')
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.text-center a').forEach(function(element) {
+        element.addEventListener('click', function() {
+            var ariaExpandedValue = element.getAttribute('aria-expanded');
+            element.innerHTML = (ariaExpandedValue === 'false') ? 'Show More <i class="fas fa-angle-down"></i>' : 'Show Less <i class="fas fa-angle-up"></i>';
+        });
+    });
+});
+</script>
+
+@endsection 

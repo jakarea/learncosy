@@ -119,7 +119,7 @@ class CourseController extends Controller
         if ($courseLog) {
             $lesson = Lesson::find($courseLog->lesson_id);
             if ($lesson) {
-                $currentLesson = $lesson;
+               $currentLesson = $lesson;
                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
