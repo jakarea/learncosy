@@ -33,9 +33,9 @@ class Module extends Model
     public function isComplete()
     {
         $courseActivityCount = $this->courseActivities()->count();
-        $lessonCount = $this->lessons()->count();
-
-        return $courseActivityCount == $lessonCount;
+        $publishedLessonCount = $this->lessons()->where('status', 'published')->count();
+        
+        return $courseActivityCount == $publishedLessonCount;        
     }
 
     public function checkNumber() {

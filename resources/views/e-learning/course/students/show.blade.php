@@ -221,7 +221,7 @@
                         </div>
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
-                                @if (count($module->lessons) > 0)
+                                @if (count($module->lessons) > 0 || $module->status == 'published')
                                     <div class="accordion-item">
                                         <div class="accordion-header" id="heading_{{ $module->id }}">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -240,13 +240,15 @@
                                         </div>
                                         <div id="collapse_{{ $module->id }}"
                                             class="accordion-collapse collapse
-                                {{ $currentLesson && $currentLesson->module_id == $module->id ? 'show' : '' }}"
+                                            {{ $currentLesson && $currentLesson->module_id == $module->id ? 'show' : '' }}"
                                             aria-labelledby="heading_{{ $module->id }}"
                                             data-bs-parent="#accordionExample">
                                             <div class="accordion-body p-0">
                                                 <ul class="lesson-wrap">
                                                     @foreach ($module->lessons as $lesson)
-                                                        @if (!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
+                                                        {{-- @if (!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link)) --}}
+                                                        @if ($lesson->status == 'published')
+
                                                             <li>
                                                                 @if (!isEnrolled($course->id))
                                                                     <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
@@ -257,7 +259,7 @@
                                                                 @else
                                                                     <a href="{{ $lesson->video_link }}"
                                                                         class="video_list_play d-inline-block
-                                                {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
+                                                                {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
                                                                         data-video-id="{{ $lesson->id }}"
                                                                         data-lesson-id="{{ $lesson->id }}"
                                                                         data-course-id="{{ $course->id }}"
@@ -426,8 +428,8 @@
             };
 
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
-            player.on('ended', function() {
-                $('.is_complete_lesson').click();
+            player.on('ended', function() {  
+                $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             });
 

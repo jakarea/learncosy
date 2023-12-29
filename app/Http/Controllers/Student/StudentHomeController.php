@@ -311,8 +311,7 @@ class StudentHomeController extends Controller
                 }
             }
         }
-
-
+ 
         //end group file
         $relatedCourses = Course::where('id', '!=', $course->id)
         ->where('user_id', $course->user_id)
@@ -327,10 +326,17 @@ class StudentHomeController extends Controller
             $liked = 'active';
         }
 
-        $totalModules = count($course->modules);
+        // $totalModules = count($course->modules);
+
+        $totalModules = $course->modules->where('status', 'published')->count();
+
         $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->where('status', 'published')->count();
+            return $module->lessons->filter(function ($lesson) { 
+                return $lesson->status == 'published';
+            })->count();
         });
+
+        // return $course->id;
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
