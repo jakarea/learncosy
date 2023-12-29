@@ -590,7 +590,7 @@ class CourseCreateStepController extends Controller
                     $lesson->duration = $videoDuration;
                     $lesson->short_description = $request->description;
                     $lesson->save();
-                    flash()->addSuccess('Video upload success!');
+                    flash()->addSuccess('Video upload successful! Visibility may take some time.');
                 }
                 $course = Course::find($id);
                 $price = $course->price ?? 0;

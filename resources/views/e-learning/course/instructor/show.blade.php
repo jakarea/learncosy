@@ -164,7 +164,7 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                        @if ($lesson->status == 'published')
+                                        @if ($lesson->status == 'published' && now()->diffInMinutes($lesson->updated_at) > 10)
                                         <li>
                                             <div class="d-flex align-items-center">
                                                 @can('instructor')
