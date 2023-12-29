@@ -172,6 +172,7 @@ class AdminCourseStepController extends Controller
         $module->instructor_id = $course->instructor_id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
+        $module->status = "draft";
         $module->save();
 
         return redirect()->back()->with('success', 'Module Created successfully');
@@ -196,6 +197,7 @@ class AdminCourseStepController extends Controller
         $module->course_id = $id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
+        $module->status = "published";
         $module->save();
 
         return redirect()->back()->with('success', 'Module Updated successfully');
@@ -271,6 +273,12 @@ class AdminCourseStepController extends Controller
         $lesson->status = 'published';
         $lesson->save();
 
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
+
         return redirect('admin/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
     }
@@ -301,10 +309,7 @@ class AdminCourseStepController extends Controller
     }
 
     public function stepLessonFileRemove($lesson_id)
-    {
-        // return 2345678;
-
-        // return $lesson_id;
+    { 
         if(!$lesson_id){
             return redirect('admin/courses');
         }
@@ -383,13 +388,18 @@ class AdminCourseStepController extends Controller
         $lesson->status = 'published';
         $lesson->save();
 
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
+
         return redirect('admin/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
     }
 
     public function stepLessonAudioRemove($id,$module_id,$lesson_id){
-
-        // return $lesson_id;
+ 
         if(!$id || !$module_id || !$lesson_id){
             return redirect('admin/courses');
         }
@@ -457,6 +467,12 @@ class AdminCourseStepController extends Controller
         $lesson->short_description = $request->input('short_description');
         $lesson->status = 'published';
         $lesson->save(); 
+
+        if ($lesson) {
+            $module = Module::find($lesson->module_id);
+            $module->status = 'published';
+            $module->save();
+        }
 
         $file = $request->file('video_link');
         $videoName = $file->getClientOriginalName();
