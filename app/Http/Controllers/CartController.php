@@ -56,6 +56,11 @@ class CartController extends Controller
 
     public function buyCourse($domain, $course)
     {
+
+        if (!auth()->check()) {
+            return redirect()->route('login', config('app.subdomain'));
+        }
+
         $course = Course::findOrFail( $course );
         $userIdentifier = $_COOKIE['userIdentifier'];
         $instructor_id = $course->user_id;
