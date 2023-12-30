@@ -76,6 +76,7 @@ class CartController extends Controller
         $cart->instructor_id = $instructor->id;
         $cart->user_identifier = $userIdentifier;
         $cart->save();
+
         return redirect()->route('cart.index', config('app.subdomain') );
     }
 
