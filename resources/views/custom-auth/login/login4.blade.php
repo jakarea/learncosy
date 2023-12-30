@@ -49,13 +49,13 @@
             <div class="row justify-content-end">
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
-                        <div class="login-heading">
+                        {{-- <div class="login-heading">
                             <h6>Welcome to <span>Learn Cosy</span></h6>
                             <div>
                                 <p>No Account ?</p>
                                 <a href="{{url('/register')}}">Sign up</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <h1>Sign in</h1>
 
                         <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}" class="login-from">

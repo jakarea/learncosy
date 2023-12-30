@@ -54,7 +54,7 @@
             @else
                 <div class="d-flex" >
                     <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Login</a>
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister', ['subdomain' => config('app.subdomain')]) }}">Register</a>
+                    {{-- <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister', ['subdomain' => config('app.subdomain')]) }}">Register</a> --}}
                 </div>
             @endif
         </div>

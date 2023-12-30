@@ -67,13 +67,13 @@
             </div>
             <div class="col-md-6">
                 <div class="login-box-wrap">
-                    <div class="login-heading">
+                    {{-- <div class="login-heading">
                         <h6>Welcome to <span>Learn Cosy</span></h6>
                         <div>
                             <p>No Account ?</p>
                             <a href="{{ url('/register') }}">Sign up</a>
                         </div>
-                    </div>
+                    </div> --}}
                     <h1>Sign in</h1>
                     {{-- <div class="buttons-group">
                         <a href="{{ route('social.login', ["social" => "google", "subdomain" => config('app.subdomain')]) }}"><img src="{{ asset('latest/assets/images/google.svg') }}" alt="google"

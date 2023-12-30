@@ -56,6 +56,7 @@
                         </h1>
                         <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }}
                         </p>
+                        <?php /*
                         <div class="hero-bttn">
                             @if (Auth::check())
                                 <a href="{{ route('instructor.dashboard.index', config('app.subdomain') ) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
@@ -63,6 +64,7 @@
                                 <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @endif
                         </div>
+                        */?>
                         @php
                             $request = app('request');
                             $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
@@ -72,12 +74,16 @@
                             $countStudent = \App\Models\Checkout::where('instructor_id', $user->id)->count();
                         @endphp
 
+                        <?php
+                        /*
                         @if ($countStudent)
                             <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ $countStudent }} Students
                                 are joined!</h6>
                         @else
                             <h6 style="color: {{ modulesetting('secondary_color') }}">Join Now!</h6>
                         @endif
+                        */
+                        ?>
                     </div>
                 </div>
                 <div class="col-lg-6">
