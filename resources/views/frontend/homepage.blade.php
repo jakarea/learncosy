@@ -190,7 +190,7 @@
 
                                             </div>
                                             <div class="media-body">
-                                                <a href="{{ url('courses/overview-courses/' . $course->slug) }}"><h4>{{ $course->title }}</h4></a>
+                                                <a class="text-decoration-none" href="{{ url('courses/overview-courses/' . $course->slug) }}"><h4>{{ $course->title }}</h4></a>
 
                                                 @php $courseCategories = explode(",",$course->categories) @endphp
 
