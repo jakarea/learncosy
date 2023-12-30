@@ -28,9 +28,9 @@
                         <div class="media">
                             @if ($course->user && $course->user->avatar)
                                 <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
-                            @else  
+                            @else
                                 <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
-                            @endif 
+                            @endif
 
                             <div class="media-body">
                                 <h5>{{ $course->user->name }}</h5>
@@ -77,7 +77,7 @@
                         @foreach ($objectives as $object)
                             @if (trim($object) !== '')
                                 <li><i class="fas fa-check"></i> {{ $object }} </li>
-                            @else 
+                            @else
                                 <li>No Objective Found!</li>
                             @endif
                         @endforeach
@@ -365,10 +365,10 @@
                     <img src="{{asset('latest/assets/images/icons/fb.svg')}}" alt="FB" class="img-fluid">
                     <span>Facebook</span>
                 </a>
-                <a href="#">
+                {{-- <a href="#">
                     <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
                     <span>Telegram</span>
-                </a>
+                </a> --}}
                 <a href="https:https://www.linkedin.com/shareArticle?url={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}" target="_blank">
                     <img src="{{asset('latest/assets/images/icons/linkedin-ic.svg')}}" alt="FB"
                         class="img-fluid">
@@ -382,15 +382,15 @@
             </div>
             <h6>As a message</h6>
             <div class="d-flex">
-                <a href="https://www.messenger.com/share.php?text={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
+                <a target="_blank" href="https://www.messenger.com/share.php?text={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
                     <img src="{{asset('latest/assets/images/icons/messenger.svg')}}" alt="FB" class="img-fluid">
                     <span>Messenger</span>
                 </a>
-                <a href="https://api.whatsapp.com/send?text={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
+                <a target="_blank" href="https://api.whatsapp.com/send?text={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
                     <img src="{{asset('latest/assets/images/icons/wapp.svg')}}" alt="FB" class="img-fluid">
                     <span>Whatsapp</span>
                 </a>
-                <a href="https://telegram.me/share/url?url={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
+                <a target="_blank" href="https://telegram.me/share/url?url={{ $Urlsubdomain ? "https://{$Urlsubdomain}." . env('APP_DOMAIN','learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
                     <img src="{{asset('latest/assets/images/icons/teleg.svg')}}" alt="FB" class="img-fluid">
                     <span>Telegram</span>
                 </a>
