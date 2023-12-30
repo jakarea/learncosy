@@ -221,7 +221,7 @@
                         </div>
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
-                                @if (count($module->lessons) > 0 || $module->status == 'published')
+                                @if ($module->status == 'published' && count($module->lessons) > 0)
                                     <div class="accordion-item">
                                         <div class="accordion-header" id="heading_{{ $module->id }}">
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -398,6 +398,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
+        document.querySelector('#hideShow').classList.add('d-none');
+        
         $(document).ready(function() {
             var firstLessonId = $('#firstLesson').data('first-lesson-id');
             var firstCourseId = $('#firstLesson').data('first-course-id');
