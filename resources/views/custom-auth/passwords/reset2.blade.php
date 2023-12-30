@@ -15,8 +15,12 @@
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -39,7 +43,7 @@
                     @else
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
-                    @endif 
+                    @endif
                 </a>
             </div>
         </div>
@@ -57,17 +61,17 @@
                             world. Unlock a world of knowledge and growth with us today!</p>
                     </div>
                     <div class="login-promo-image">
-                        @if (modulesetting('lp_bg_image')) 
+                        @if (modulesetting('lp_bg_image'))
                         <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
                         title="Login BG" class="login2-logo rounded" style="max-width: 25rem">
-                        @else 
+                        @else
                             <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
                                 title="Leancosy white logo" class="login2-logo" />
-                        @endif 
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="login-box-wrap"> 
+                    <div class="login-box-wrap">
                         <div class="login-heading">
 
                             {{-- session alert --}}
@@ -79,7 +83,7 @@
                                 <p>No Account ?</p>
                                 <a href="{{ url('/auth-register') }}">Sign up</a>
                             </div>
-                        </div> 
+                        </div>
 
                         <h1>Passwod Update</h1>
 

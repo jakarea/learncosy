@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Password Reset Page</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
+
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
@@ -16,7 +17,11 @@
     <meta name="theme-color" content="#fafafa">
 
     <!-- App favicon -->
+    @if (modulesetting('favicon'))
+    <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -38,7 +43,7 @@
                     <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
                 @else
                 <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
-                @endif 
+                @endif
                 </a>
             </div>
         </div>
@@ -46,7 +51,7 @@
 
     <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{ asset(modulesetting('lp_bg_image') ? modulesetting('lp_bg_image') : 'latest/assets/images/login-left.svg') }});">
         <div class="container">
-            <div class="row justify-content-end"> 
+            <div class="row justify-content-end">
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
                         <div class="login-heading">
@@ -59,7 +64,7 @@
                                 <a href="{{url('/auth-register')}}">Sign up</a>
                             </div>
                         </div>
-                        <h1>Password Reset</h1> 
+                        <h1>Password Reset</h1>
 
                         <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
@@ -71,11 +76,11 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                            </div> 
+                            </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
                             </div>
-                        </form> 
+                        </form>
 
                     </div>
                 </div>

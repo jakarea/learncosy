@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Learncosy Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">

@@ -3,27 +3,31 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Password Reset Page
-    </title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
- 
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+
     <link href="{{ asset('latest/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{url('latest/assets/auth-css/custom-login.css')}}" rel="stylesheet" type="text/css" /> 
+    <link href="{{url('latest/assets/auth-css/custom-login.css')}}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -59,7 +63,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div> 
+                                </div>
 
                                 <div class="submit-button">
                                     <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
