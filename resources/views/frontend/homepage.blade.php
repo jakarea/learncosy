@@ -19,10 +19,10 @@
             color: {{ modulesetting('primary_color') }};
         }
 
-        .course-item-box .course-actions .bttns a:first-child:hover {
+        /* .course-item-box .course-actions .bttns a:first-child:hover {
             background: {{ modulesetting('secondary_color') }};
             border-color: {{ modulesetting('secondary_color') }}
-        }
+        } */
 
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
