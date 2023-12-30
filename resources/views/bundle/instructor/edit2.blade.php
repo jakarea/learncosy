@@ -130,7 +130,7 @@ Bundle Course Update
                                 <div class="bundle-create-inputs">
                                     <div class="form-group form-error">
                                         <label for="title">Bundle Title</label>
-                                        <input type="text" placeholder="Enter title" name="title"
+                                        <input autocomplete="off" type="text" placeholder="Enter title" name="title"
                                             class="form-control @error('title') is-invalid @enderror"
                                             value="{{ $bundleCourse->title }}" id="title">
                                         <span class="invalid-feedback">@error('title'){{ $message }} @enderror</span>
@@ -154,7 +154,7 @@ Bundle Course Update
 
                                     <div class="form-group form-error">
                                         <label for="sub_title">Bundle Subtitle</label>
-                                        <input type="text" placeholder="Enter subtitle" name="sub_title"
+                                        <input autocomplete="off" type="text" placeholder="Enter subtitle" name="sub_title"
                                             class="form-control @error('sub_title') is-invalid @enderror"
                                             value="{{ $bundleCourse->sub_title }}" id="sub_title">
                                         <span class="invalid-feedback">@error('sub_title'){{ $message }}
@@ -192,7 +192,7 @@ Bundle Course Update
                                     <div class="input-group">
                                         <label for="regular_price">Regular Price</label>
                                         <span class="input-group-text" id="regular_price">€</span>
-                                        <input type="text" placeholder="0" name="regular_price"
+                                        <input autocomplete="off" type="text" placeholder="0" name="regular_price"
                                             class="form-control @error('regular_price') is-invalid @enderror"
                                             value="{{ $bundleCourse->regular_price }}" id="regular_price"
                                             aria-label="regular_price" aria-describedby="regular_price">
@@ -200,7 +200,7 @@ Bundle Course Update
                                     <div class="input-group">
                                         <label for="sales_price">Sales Price</label>
                                         <span class="input-group-text" id="sales_price">€</span>
-                                        <input type="text" placeholder="0" name="sales_price"
+                                        <input autocomplete="off" type="text" placeholder="0" name="sales_price"
                                             class="form-control @error('sales_price') is-invalid @enderror"
                                             value="{{ $bundleCourse->sales_price }}" id="sales_price" aria-label="sales_price"
                                             aria-describedby="sales_price">

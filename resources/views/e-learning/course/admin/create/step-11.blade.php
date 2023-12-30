@@ -126,7 +126,7 @@ Course Update - Final Step
                     </div>
 
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="{{ $Urlsubdomain ? "//{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}" class="form-control" id="linkToCopy">
+                        <input autocomplete="off" type="text" placeholder="Link" value="{{ $Urlsubdomain ? "//{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}" class="form-control" id="linkToCopy">
                         <a href="#" id="copyButton">Copy</a>
                     </div>
                 </div>

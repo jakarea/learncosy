@@ -38,7 +38,7 @@
                                 <div class="form-group form-error">
                                     <label for="name">Name <sup class="text-danger">*</sup>
                                     </label>
-                                    <input type="text" placeholder="Enter your Name" name="name"
+                                    <input autocomplete="off" type="text" placeholder="Enter your Name" name="name"
                                         class="form-control @error('name') is-invalid @enderror"
                                         value="{{ $user->name }}" id="name">
 
@@ -50,7 +50,7 @@
                                 <div class="form-group form-error">
                                     <label for="phone">Phone <sup class="text-danger">*</sup>
                                     </label>
-                                    <input type="text" placeholder="Enter Phone Number" name="phone"
+                                    <input autocomplete="off" type="text" placeholder="Enter Phone Number" name="phone"
                                         class="form-control @error('phone') is-invalid @enderror"
                                         value="{{ $user->phone }}" id="phone">
 
@@ -62,7 +62,7 @@
                                 <div class="form-group form-error">
                                     <label for="email">Email <sup class="text-danger">*</sup>
                                     </label>
-                                    <input type="email" placeholder="Enter email" name="email"
+                                    <input autocomplete="off"  type="email" placeholder="Enter email" name="email"
                                         class="form-control @error('email') is-invalid @enderror"
                                         value="{{ $user->email }}" id="email">
 
@@ -80,7 +80,7 @@
                                 <div class="form-group form-error">
                                     <label for="company_name">Company name </label>
 
-                                    <input type="text" name="company_name" id="company_name"
+                                    <input autocomplete="off" type="text" name="company_name" id="company_name"
                                         value="{{  $user->company_name }}"
                                         class="form-control @error('company_name') is-invalid @enderror"
                                         placeholder="Company Name">
@@ -93,7 +93,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="text" name="website" id="website" value="{{  $user->short_bio }}"
+                                    <input autocomplete="off" type="text" name="website" id="website" value="{{  $user->short_bio }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Website">
 

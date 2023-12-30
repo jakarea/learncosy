@@ -28,7 +28,7 @@ Bundle Course Update Select
                     <div class="user-search-box-wrap bundle-select-grid d-grid" style="grid-auto-columns: 60% 40%;">
                         <div class="form-group me-lg-3">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search Course" class="form-control" name="title"
+                            <input autocomplete="off" type="text" placeholder="Search Course" class="form-control" name="title"
                                 value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
                         <div class="filter-dropdown-box">

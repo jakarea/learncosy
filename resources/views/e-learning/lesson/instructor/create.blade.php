@@ -74,7 +74,7 @@ $module_id = isset($_GET['module']) ? $_GET['module'] : '';
                                 <div class="form-group form-error">
                                     <label for="title">Title <sup class="text-danger">*</sup>
                                     </label>
-                                    <input type="text" placeholder="Enter Lesson Title" name="title"
+                                    <input autocomplete="off" type="text" placeholder="Enter Lesson Title" name="title"
                                         class="form-control @error('title') is-invalid @enderror"
                                         value="{{ old('title')}}" id="title">
                                     <span class="invalid-feedback">@error('title'){{ $message }}

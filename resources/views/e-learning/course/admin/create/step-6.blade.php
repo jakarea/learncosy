@@ -125,7 +125,7 @@
                                                                             <input type="hidden" name="module_id"
                                                                                 value="{{ $module->id }}">
                                                                             <div class="form-group form-error">
-                                                                                <input type="text"
+                                                                                <input autocomplete="off" type="text"
                                                                                     placeholder="Enter Module Name"
                                                                                     name="module_name"
                                                                                     class="form-control @error('module_name') is-invalid @enderror"
@@ -248,7 +248,7 @@
                                                                                     <input type="hidden" name="lesson_id"
                                                                                         value="{{ $lesson->id }}">
                                                                                     <div class="form-group form-error">
-                                                                                        <input type="text"
+                                                                                        <input autocomplete="off" type="text"
                                                                                             placeholder="Enter Lesson Name"
                                                                                             name="lesson_name"
                                                                                             value="{{ $lesson->title }}"
@@ -344,7 +344,7 @@
                                                                     <input type="hidden" name="module_id"
                                                                         value="{{ $module->id }}">
                                                                     <div class="form-group form-error">
-                                                                        <input type="text" placeholder="Enter Lesson Name"
+                                                                        <input autocomplete="off" type="text" placeholder="Enter Lesson Name"
                                                                             name="lesson_name"
                                                                             class="form-control @error('lesson_name') is-invalid @enderror">
                                                                     </div>
@@ -437,7 +437,7 @@
                                 method="post">
                                 @csrf
                                 <div class="form-group form-error">
-                                    <input type="text" placeholder="Enter Module Name" name="module_name"
+                                    <input autocomplete="off" type="text" placeholder="Enter Module Name" name="module_name"
                                         class="form-control @error('module_name') is-invalid @enderror">
                                 </div>
                                 <div class="form-check form-switch">

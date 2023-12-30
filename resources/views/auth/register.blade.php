@@ -39,7 +39,7 @@ Register Page
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="company_name">Company Name (Optional)</label>
-                                    <input type="text" placeholder="Company Name" class="form-control" value="{{ old('company_name') }}"  id="company_name" name="company_name">
+                                    <input autocomplete="off" type="text" placeholder="Company Name" class="form-control" value="{{ old('company_name') }}"  id="company_name" name="company_name">
 
                                     @error('company_name')
                                     <span class="invalid-feedback" role="alert">
@@ -52,7 +52,7 @@ Register Page
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="email">{{ __('Email Address') }}</label>
-                                    <input type="email" placeholder="Enter Email"
+                                    <input autocomplete="off" type="email" placeholder="Enter Email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" autocomplete="email" autofocus>
 

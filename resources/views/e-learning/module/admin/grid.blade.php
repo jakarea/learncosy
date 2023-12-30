@@ -20,7 +20,7 @@
                         <h5>Module List</h5>
                         <div class="form-group">
                             <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search Module" class="form-control" name="title"
+                            <input autocomplete="off" type="text" placeholder="Search Module" class="form-control" name="title"
                                     value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                         </div>
                         <input type="hidden" name="status" id="inputField"> 

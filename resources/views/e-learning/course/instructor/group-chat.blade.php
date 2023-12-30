@@ -165,7 +165,7 @@
 
         <div class="message-send-box">
             <div class="form-group">
-                <input type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
+                <input autocomplete="off" type="text" class="form-control" id="chat-message-input" placeholder="Send a message"
                     name="message">
             </div>
             <div class="file-attach-bttns">
@@ -191,7 +191,7 @@
                         @csrf
                         <div class="form-group mt-0">
                             <label for="" style="font-size: 1.25rem" class="mb-2">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control search-people-specific-group t"/>
+                            <input autocomplete="off" type="text" placeholder="Name" class="form-control search-people-specific-group t"/>
                             <input class="addUserId" type="hidden" name="user_id">
                             <input name="groupId" type="hidden" value="{{ $currentGroup->id }}">
                             <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
@@ -259,7 +259,7 @@
                             @csrf
                             <div class="form-group mt-0">
                                 <label for="">Group Name</label>
-                                <input type="text" placeholder="Group Name" class="form-control" name="name" value="{{ $currentGroup->name ? $currentGroup->name : old('name') }}"/>
+                                <input autocomplete="off" type="text" placeholder="Group Name" class="form-control" name="name" value="{{ $currentGroup->name ? $currentGroup->name : old('name') }}"/>
                                 <input type="hidden" class="form-control" name="groupId" value="{{ $currentGroup->id }}"/>
                             </div>
 

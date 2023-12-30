@@ -19,10 +19,10 @@
             color: {{ modulesetting('primary_color') }};
         }
 
-        .course-item-box .course-actions .bttns a:first-child:hover {
+        /* .course-item-box .course-actions .bttns a:first-child:hover {
             background: {{ modulesetting('secondary_color') }};
             border-color: {{ modulesetting('secondary_color') }}
-        }
+        } */
 
         .browse-all a {
             color: {{ modulesetting('secondary_color') }};
@@ -111,7 +111,7 @@
                         <div class="course-filter-box">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" placeholder="Search with title" name="title" id="title"
+                                <input autocomplete="off" type="text" placeholder="Search with title" name="title" id="title"
                                     class="form-control">
                             </div>
                             <div class="form-group">

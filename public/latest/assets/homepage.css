@@ -360,7 +360,7 @@ h6 {
 }
 .course-item-box .course-actions .review h5 i {
   font-size: 1.8rem;
-  color: #4c60ff;
+  color: #4c60ff!important;
 }
 .course-item-box .course-actions .review p {
   font-size: 0.9rem;
@@ -370,27 +370,8 @@ h6 {
 }
 .course-item-box .course-actions .bttns {
   text-align: center;
-}
-.course-item-box .course-actions .bttns a:first-child {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #4c60ff;
-  line-height: 140%;
-  background: transparent;
-  display: inline-block;
-  padding: 0.85rem 1.5rem;
-  border: 1px solid #4c60ff;
-  border-radius: 0.4rem;
-  padding: 0.6rem 2rem;
-  display: block;
-  transition: all linear 0.2s;
-  margin-bottom: 1rem;
-}
-.course-item-box .course-actions .bttns a:first-child:hover {
-  background: linear-gradient(132deg, #4c60ff 20%, #2b91fe);
-  color: #ffffff;
-}
-.course-item-box .course-actions .bttns a:last-child {
+} 
+.course-item-box .course-actions .bttns a {
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;
@@ -404,7 +385,7 @@ h6 {
   transition: all linear 0.2s;
   display: block;
 }
-.course-item-box .course-actions .bttns a:last-child:hover {
+.course-item-box .course-actions .bttns a:hover {
   opacity: 0.7;
 }
 
@@ -1262,11 +1243,11 @@ h6 {
     min-width: 50%;
     margin-left: 0.5rem;
   }
-  .course-item-box .course-actions .bttns a:last-child,
+  /* .course-item-box .course-actions .bttns a:last-child,
   .course-item-box .course-actions .bttns a:first-child {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-  }
+  } */
   .get-start-box h5 {
     font-size: 1.7rem;
   }

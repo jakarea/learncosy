@@ -127,7 +127,7 @@ Course Create - Final Step
 
 
                     <div class="copy-link">
-                        <input type="text" placeholder="Link" value="{{ url('courses/overview-courses', $course->slug)}}"
+                        <input autocomplete="off" type="text" placeholder="Link" value="{{ url('courses/overview-courses', $course->slug)}}"
                             class="form-control" id="linkToCopy">
                         <a href="#" id="copyButton">Copy</a>
                     </div>

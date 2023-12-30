@@ -107,19 +107,19 @@ Connect
                                                     class="badge badge-success @if(isVimeoConnected(auth()->user()->id)[1] == 'Connected') bg-success @else bg-danger @endif">{{
                                                     isVimeoConnected(auth()->user()->id)[1] }}</small></sup>
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Client ID"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Client ID"
                                             name="client_id" value="{{ isVimeoConnected(auth()->user()->id)[0]->client_id ?? '' }}">
                                         <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-group mt-4">
                                         <label for="client_secret">CLIENT SECRET</label>
-                                        <input type="text" class="form-control" placeholder="Enter Client Secret"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Client Secret"
                                             name="client_secret" value="{{ isVimeoConnected(auth()->user()->id)[0]->client_secret ?? '' }}">
                                         <span class="text-danger">@error('client_secret') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-group mt-4">
                                         <label for="access_key">CLIENT ACCESS KEY</label>
-                                        <input type="text" class="form-control" placeholder="Enter Access Key"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Access Key"
                                             name="access_key" value="{{ isVimeoConnected(auth()->user()->id)[0]->access_key ?? '' }}">
                                         <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
                                     </div>
@@ -157,12 +157,12 @@ Connect
                                                     class="badge badge-success @if(isConnectedWithStripe()[1] == 'Connected') bg-success @else bg-danger @endif">{{
                                                     isConnectedWithStripe()[1] }}</small></sup>
                                         </label>
-                                        <input type="text" class="form-control" name="stripe_public_key"
+                                        <input autocomplete="off" type="text" class="form-control" name="stripe_public_key"
                                             placeholder="Enter Secret Key" value="{{ Auth::user()->stripe_public_key }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="stripe_secret_key">STRIPE SECRET KEY</label>
-                                        <input type="text" class="form-control" name="stripe_secret_key"
+                                        <input autocomplete="off" type="text" class="form-control" name="stripe_secret_key"
                                             placeholder="Enter Secret Key" value="{{ Auth::user()->stripe_secret_key }}">
                                     </div>
                                     <div class="form-submit">

@@ -367,7 +367,7 @@ if ($module_settings) {
                                             engines.</p>
 
                                         <h6>Meta Title</h6>
-                                        <input type="text" class="form-control" name="meta_title" id="meta_title"
+                                        <input autocomplete="off" type="text" class="form-control" name="meta_title" id="meta_title"
                                             value="{{ old('meta_title', $module_settings->value->meta_title ?? '') }}"
                                             class="form-control @error('meta_title') is-invalid @enderror">
                                         <span class="invalid-feedback">

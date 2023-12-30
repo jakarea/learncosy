@@ -46,7 +46,7 @@ Login Page
                                 @csrf
                                 <div class="mb-3">
                                     <label for="emailAddress" class="form-label">Email Address</label>
-                                    <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
+                                    <input autocomplete="off"  type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email"  id="emailAddress" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

@@ -86,12 +86,12 @@ Message Page
                                 <form method="post" class="createGroup" action="{{ route('messages.group') }}">
                                     <div class="form-group mt-2">
                                         <label for="">Group Name</label>
-                                        <input type="text" placeholder="Group Name" class="form-control" name="name"
+                                        <input autocomplete="off" type="text" placeholder="Group Name" class="form-control" name="name"
                                             value="{{ old('name') }}">
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="">Add People</label>
-                                        <input type="text" placeholder="Name"
+                                        <input autocomplete="off" type="text" placeholder="Name"
                                             class="form-control search-group-chat-user">
                                         <input class="addUserId" type="hidden" name="user_id">
                                         <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a"
@@ -125,7 +125,7 @@ Message Page
                             <div class="search">
                                 <img src="{{ asset('latest/assets/images/icons/search-m.svg') }}" alt="ic"
                                     class="img-fluid">
-                                <input type="text" placeholder="Search" class="form-control search-chat-user">
+                                <input autocomplete="off" type="text" placeholder="Search" class="form-control search-chat-user">
                             </div>
                             <div class="chat-filter">
                                 <div class="dropdown">
@@ -184,7 +184,7 @@ Message Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text"
+                                        <input autocomplete="off" type="text"
                                             class="form-control chat-message-input-single chat-emoji-input"
                                             id="chat-message-input" placeholder="Send a message" name="message">
                                     </div>
@@ -215,7 +215,7 @@ Message Page
 
                                 <div class="message-send-box">
                                     <div class="form-group">
-                                        <input type="text"
+                                        <input autocomplete="off" type="text"
                                             class="form-control chat-message-input-group chat-gruop-emoji"
                                             id="chat-group-message-input" placeholder="Send a message" name="message"/>
                                     </div>
@@ -253,12 +253,12 @@ Message Page
                     <form method="post" class="createGroupModal" action="{{ route('messages.group') }}">
                         <div class="form-group">
                             <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control" name="name"
+                            <input autocomplete="off" type="text" placeholder="Group Name" class="form-control" name="name"
                                 value="{{ old('name') }}">
                         </div>
                         <div class="form-group">
                             <label for="">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control search-group-chat-user">
+                            <input autocomplete="off" type="text" placeholder="Name" class="form-control search-group-chat-user">
                             <input class="addUserId" type="hidden" name="user_id">
                             <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="a" class="img-fluid">
                         </div>

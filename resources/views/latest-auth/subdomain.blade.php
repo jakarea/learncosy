@@ -77,12 +77,12 @@ Verify Email
 
                         <div class="input-group">
                             @if (Auth::user()->subdomain)
-                            <input type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
+                            <input autocomplete="off" type="text" class="form-control @error('subdomain') is-invalid @enderror bg-light"
                                 placeholder="write your subdomain" id="subdomain" name="subdomain"
                                 aria-describedby="subdomain" value="{{ old('subdomain') ?? Auth::user()->subdomain }}"
                                 autocomplete="subdomain" autofocus>
                             @else
-                            <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
+                            <input autocomplete="off" type="text" class="form-control @error('subdomain') is-invalid @enderror"
                                 placeholder="write your subdomain" id="subdomain" name="subdomain"
                                 aria-describedby="subdomain" value="{{ old('subdomain') }}" autocomplete="subdomain"
                                 autofocus>
