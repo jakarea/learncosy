@@ -206,3 +206,9 @@
 .dark-mode .current-plan{
     background-color: #7289FF!important;
   }
+
+  .dark-mode .dark-mode-bttn {
+    background-color: #0D0D0D !important;
+    border: 2px solid #1A1A1A !important;
+    box-shadow: 0px 12px 16px 4px rgba(37, 45, 52, 0.1), 0px 0px 2px 0px rgba(37, 45, 52, 0.2) !important;
+  }
