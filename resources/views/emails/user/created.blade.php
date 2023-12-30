@@ -102,7 +102,7 @@
                     <tr>
                         <th>
                             <a href="https://app.learncosy.com">
-                                <img src="https://app.learncosy.com/assets/images/learncosy-logo.png" alt="learncosy"> 
+                                <img src="https://app.learncosy.com/latest/assets/images/logo-d.svg" alt="learncosy"> 
                             </a>
                         </th>
                         <th>
