@@ -116,7 +116,7 @@
     <script src="{{ asset('latest/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('latest/assets/js/custom.js') }}"></script>
 
-    <script src="https://cdn.tiny.cloud/1/24z531gtj4tkxagq9eshg386rnnrwmmo91drwhvc19g5szrb/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/xnxfw36p4faa48mwvqgt43r9fxo820zcwi3a3924muf65m27/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script src="{{ asset('latest/assets/js/tinymce.js') }}"></script>
 

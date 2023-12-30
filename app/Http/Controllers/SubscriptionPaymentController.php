@@ -45,9 +45,14 @@ class SubscriptionPaymentController extends Controller
     public function payment(Request $request){
 
         $package = SubscriptionPackage::findorfail($request->packageId);
+        $current_package = Subscription::where('status','active')->where('instructor_id',auth()->user()->id)->first();
 
-        $type = $package->type;
-        // if type is monthly, then add 30 days to current date else add 365 days
+        if ($current_package) {
+            $current_package->status = 'cancel';
+            $current_package->save();
+        }
+
+        $type = $package->type; 
         if ($type == 'monthly') {
             $ends_at = date('Y-m-d H:i:s', strtotime('+30 days'));
         } else {
@@ -78,6 +83,7 @@ class SubscriptionPaymentController extends Controller
                     'name' => $package->name,
                     'amount' => $total,
                     'stripe_plan' => $charge->id,
+                    'status' => 'active',
                     'quantity' => 1,
                     'start_at' => date('Y-m-d H:i:s'),
                     'end_at' => $ends_at,

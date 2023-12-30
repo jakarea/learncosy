@@ -65,10 +65,8 @@
                                     <select name="type" id="type"
                                         class="form-control @error('type') is-invalid @enderror">
                                         <option value="">Select</option>
-                                        <option value="monthly" {{ old('type') == 'monthly' ? 'selected' : '' }}>
-                                            Monthly</option>
-                                        <option value="yearly" {{ old('type') == 'yearly' ? 'selected' : '' }}>
-                                            Yearly</option>
+                                        <option value="monthly"> Monthly</option>
+                                        <option value="yearly">  Yearly</option>
                                     </select>
                                     <i class="fas fa-angle-down"></i>
                                 </div>

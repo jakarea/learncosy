@@ -182,3 +182,12 @@ body.dark-mode .dark-mode-bttn label:last-child i{
 .login-header .logo img {
   max-width: 10rem!important; 
 }
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover, 
+.form-control:-webkit-autofill:focus, 
+.form-control:-webkit-autofill:active{
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: #000!important;
+    transition: background-color 5000s ease-in-out 0s!important; 
+}

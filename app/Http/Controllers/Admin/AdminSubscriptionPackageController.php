@@ -50,17 +50,17 @@ class AdminSubscriptionPackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
-        // validate request
+    { 
         $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-            // 'feature_list' => 'required',
-        ]);
-        // return $request;
-        // create subscription package and store feature_list as json array
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'status' => 'required|string'
+        ]);  
+
+        if (SubscriptionPackage::where('name', $request->name)->exists()) {
+            return redirect()->back()->with('warning','Package name is Already exist');
+        }
+
         $subscription_package = SubscriptionPackage::create([
             'name' => $request->name,
             'slug' => Str::slug($request->input('name')),
@@ -70,6 +70,7 @@ class AdminSubscriptionPackageController extends Controller
             'status' => $request->status,
             'features' => implode(',',$request->feature_list),
         ]);
+ 
 
         // return back with success message
         return redirect()->route('admin.subscription')->with('success', 'Subscription Package created successfully');
