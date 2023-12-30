@@ -72,9 +72,13 @@
                             <div class="form-submit">
                                 <button class="btn btn-submit" type="submit">Login</button>
                             </div>
-                            <div class="optional-txt">
-                                <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
-                            </div>
+                            <?php
+                                /*
+                                <div class="optional-txt">
+                                    <p>Dont't have an account? <a href="{{ url('/register') }}">Register</a></p>
+                                </div>
+                                */
+                            ?>
                         </form>
                     </div>
                     <!-- login form end -->

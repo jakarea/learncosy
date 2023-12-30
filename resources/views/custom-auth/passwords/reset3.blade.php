@@ -17,7 +17,11 @@
     <meta name="theme-color" content="#fafafa">
 
     <!-- App favicon -->
+    @if (modulesetting('favicon'))
+    <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -55,7 +59,7 @@
                                 {{-- session alert --}}
                          @include('custom-auth/session-alert')
                          {{-- session alert --}}
-                         
+
                                 <h1>Update Password</h1>
                                 <p>Welcome back! Please enter your email address.</p>
                                 <div class="form-group">

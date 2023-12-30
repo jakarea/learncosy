@@ -3,20 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Login Page</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -49,13 +53,13 @@
             <div class="row justify-content-end">
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
-                        <div class="login-heading">
+                        {{-- <div class="login-heading">
                             <h6>Welcome to <span>Learn Cosy</span></h6>
                             <div>
                                 <p>No Account ?</p>
                                 <a href="{{url('/register')}}">Sign up</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <h1>Sign in</h1>
 
                         <form method="POST" action="{{ route('login',['subdomain' => config('app.subdomain')] ) }}" class="login-from">

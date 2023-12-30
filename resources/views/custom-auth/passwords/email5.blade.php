@@ -15,8 +15,12 @@
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -40,7 +44,7 @@
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo"
                         class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
-                    @endif 
+                    @endif
                 </a>
                 <a href="{{ url('/auth-register') }}" class="signup-bttn">
                     SIGN UP
@@ -51,10 +55,10 @@
 
     <section class="login-page-wrapper login-four-page-wrap">
         <div class="bg-olg">
-            @if (modulesetting('lp_bg_image')) 
+            @if (modulesetting('lp_bg_image'))
                 <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
             title="Login BG" class="" style="max-height: 100vh; object-fit:cover">
-            @else 
+            @else
             <img src="{{ asset('latest/assets/images/learncosy-bg.svg') }}" alt="" class="img-fluid light-ele">
             <img src="{{ asset('latest/assets/images/learncosy-bg-2.svg') }}" alt="" class="img-fluid dark-ele">
             @endif
@@ -81,11 +85,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>  
+                            </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
                             </div>
-                        </form> 
+                        </form>
 
                     </div>
                 </div>

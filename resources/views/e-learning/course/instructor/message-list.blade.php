@@ -1,15 +1,15 @@
-@php 
+@php
     $path = "instructor";
     $path = auth()->user()->user_role;
     if (auth()->user()->user_role == 'student') {
         $path = "students";
     }
-@endphp 
+@endphp
 
 @extends('layouts.latest.' . $path)
- 
+
 @section('title')
-Message Page 
+Message Page
 @endsection
 
 {{-- page style @S --}}
@@ -955,10 +955,21 @@ function sendMessage(event) {
         $('#preview-image').attr('src', '');
     }
 
+    var imageElement = initalImage
+    ? `<a href="${initalImage}" data-lightbox="image-1" data-title="dsfdsf">
+        <img src="${initalImage}" class="img-fluid initailImage">
+      </a>`
+    : '';
+
+    var avatarElement = avatarContent
+    ? `<img src="${avatarContent}" class="img-fluid">`
+    : `<span class="user-name-avatar">${alterAvatar}</span>`;
+
+
     var myLastMessage = `<div class="message-item sender-item">
             <div class="media main-media">
                 <div class="avatar">
-                    <img src="${avatarContent}" class="img-fluid" alt="${alterAvatar}">
+                    ${avatarElement}
                     <i class="fas fa-circle"></i>
                 </div>
                 <div class="media-body">

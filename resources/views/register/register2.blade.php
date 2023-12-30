@@ -3,20 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Register Page</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -78,11 +82,11 @@
 
                         <form method="POST" action="{{ route('login') }}" class="login-from">
                             @csrf
- 
+
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Name') }}</label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Enter your Name" autocomplete="name" autofocus>
-                
+
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -92,7 +96,7 @@
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
                                     <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-                
+
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -109,16 +113,16 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror 
+                                @enderror
                                 <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
 
                             </div>
                             <div class="form-group mt-3">
                                 <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                
+
                                     <input id="password-confirm" type="password" placeholder="********" class="form-control" name="password_confirmation" autocomplete="new-password">
 
-                            </div> 
+                            </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">Register</button>
                             </div>
@@ -146,7 +150,7 @@
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
-    
+
           if (field.type === "password") {
             field.type = "text";
             clickk.classList.add('fa-eye-slash');
@@ -156,7 +160,7 @@
             clickk.classList.remove('fa-eye-slash');
             clickk.classList.add('fa-eye');
           }
-    
+
         }
     </script>
 
@@ -185,7 +189,7 @@
 
 
 </script>
-    
+
 </body>
 
 
