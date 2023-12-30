@@ -1,6 +1,7 @@
-@extends('layouts.latest.instructor')
+@extends('layouts.latest.' . auth()->user()->user_role)
+ 
 @section('title')
-Messsages Page
+Message Page 
 @endsection
 
 {{-- page style @S --}}

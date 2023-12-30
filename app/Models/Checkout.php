@@ -80,6 +80,11 @@ class Checkout extends Model
         return Checkout::where('instructor_id', Auth::user()->id)->select('id','instructor_id','course_id','user_id')->get()->unique('user_id');
     }
 
+    // public function subscriptionPackage()
+    // {
+    //     return $this->hasOne(SubscriptionPackage::class,'instructor_id','id');
+    // }
+
     // get student payment by course user id is equal to auth user id and course id is equal to course id
     
 }

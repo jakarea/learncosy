@@ -6,7 +6,7 @@
       <tr>
         <th style="text-align: left;">
           <a href="https://app.learncosy.com"> 
-            <img src="{{ asset('latest/assets/images/black-logo.png') }}" alt="Learncosy" class="img-fluid" width="140px">
+            <img src="{{ asset('latest/assets/images/black-logo.png') }}" alt="Learncosy" class="img-fluid" style="max-width: 7rem;">
         </a>
         </th>
         <th style="text-align: right; font-weight: 400;">{{ date('d M Y') }}</th>

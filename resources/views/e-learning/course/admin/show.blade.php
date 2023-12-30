@@ -122,7 +122,7 @@ $i = 0;
                     </div>
                     <div class="accordion" id="accordionExample">
                         @foreach ($course->modules as $module)
-                        @if (count($module->lessons) > 0)
+                        @if (count($module->lessons) > 0 || $module->status == 'published')
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -133,12 +133,13 @@ $i = 0;
                                     </div>
                                 </button>
                             </div>
-                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
+                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse 
+                                {{ $currentLesson && $currentLesson->module_id == $module->id ? 'show' : '' }}"
                                 aria-labelledby="heading_{{ $module->id }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                            @if(!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link))
+                                        @if ($lesson->status == 'published' && now()->diffInMinutes($lesson->updated_at) > 10)
                                             <li>
                                                 <div class="d-flex align-items-center">
                                                     @can('instructor')
@@ -148,7 +149,7 @@ $i = 0;
                                                         @endcan
 
                                                     <a href="{{ $lesson->video_link }}"
-                                                        class="video_list_play d-inline-block"
+                                                        class="video_list_play d-inline-block {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
                                                         data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
                                                         data-course-id="{{ $course->id }}"
                                                         data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"

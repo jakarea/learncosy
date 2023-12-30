@@ -180,11 +180,13 @@
                         <div class="messages-item">
                             <div class="media">
                                 <div class="avatar">
-                                    @isset( $message->groupUserName->avatar )
+
+                                    @if ($message->groupUserName && $message->groupUserName->avatar)
                                         <img src="{{ asset($message->groupUserName->avatar) }}" alt="{!! strtoupper($message->groupUserName->name[0]) !!}" class="img-fluid">
-                                    @else
-                                        <span class="user-name-avatar me-1">{!! strtoupper($message->groupUserName->name[0]) !!}</span>
-                                    @endisset
+                                    @else 
+                                        <span class="user-name-avatar me-2">{!! strtoupper(optional($message->groupUserName)->name[0]) !!}</span>
+                                    @endif  
+
 
                                     @if(Cache::has('user-is-online-' . $message->groupUserName->id))
                                         <i class="fas fa-circle"></i>
@@ -193,7 +195,7 @@
                                     @endif
                                 </div>
                                 <div class="media-body">
-                                    <h5>{{ $message->user ? $message->user->name : '' }}
+                                    <h5>{{ $message->user ? $message->user->name : 'User not found!' }}
                                         <span>{{ $message->created_at->diffForHumans() }}</span>
                                     </h5>
                                     <p>{{ $message->message }}</p>

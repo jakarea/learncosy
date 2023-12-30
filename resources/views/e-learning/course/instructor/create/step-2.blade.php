@@ -62,8 +62,6 @@ Course Create - Step 2
 {{-- page content @E --}}
 
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
-<script src="https://cdn.tiny.cloud/1/qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc/tinymce/4/tinymce.min.js" type="text/javascript"></script>
 <script src="{{asset('latest/assets/js/tinymce.js')}}" type="text/javascript"></script>
 
 <script>
