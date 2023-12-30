@@ -51,6 +51,18 @@ class HomepageController extends Controller
         $course_reviews = CourseReview::where('course_id', $course->id)->get();
         $courseEnrolledNumber = Checkout::where('course_id', $course->id)->count();
 
+
+
+        $userIdentifier = isset($_COOKIE['userIdentifier']) ? $_COOKIE['userIdentifier'] : null;
+
+        $cartCourses = Cart::where(function ($query) use ($userIdentifier) {
+            if (auth()->id()) {
+                $query->where('user_id', auth()->id());
+            } else {
+                $query->Where('user_identifier', $userIdentifier);
+            }
+        })->get();
+
         $related_course = [];
         if ($course) {
             if ($course->categories) {
@@ -64,7 +76,7 @@ class HomepageController extends Controller
             }
 
 
-            return view('frontend.course-details', compact('course', 'promo_video_link', 'course_reviews', 'related_course', 'courseEnrolledNumber'));
+            return view('frontend.course-details', compact('course', 'promo_video_link', 'course_reviews', 'related_course', 'courseEnrolledNumber','cartCourses'));
         } else {
             return redirect('/')->with('error', 'Course not found!');
         }

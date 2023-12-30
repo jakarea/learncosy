@@ -84,10 +84,16 @@ Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->g
 Route::domain('{subdomain}.' . $domain)->group(function () {
     Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
         Route::get('students/cart', [CartController::class, 'index'])->name('cart.index');
-        Route::post('students/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
+
+        // Route::post('students/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
         Route::post('students/cart/add/{course}', [CartController::class, 'add'])->name('cart.add');
         Route::post('students/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     });
+
+
+
+    Route::post('students/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
+
 
     Route::post('students/cart/added/{course}', [CartController::class, 'addToCartSkippLogin'])->name('cart.added');
     Route::post('students/cart/bundle/{bundlecourse}', [CartController::class, 'addToCartBundlekippLogin'])->name('cart.added.bundle');

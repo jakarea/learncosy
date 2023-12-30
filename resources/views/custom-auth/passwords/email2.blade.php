@@ -3,20 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Forgot Password Page</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+   <!-- App favicon -->
+   @if (modulesetting('favicon'))
+   <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
+   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -39,7 +43,7 @@
                     @else
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele" style="max-width: 100px!important;">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele" style="max-width: 100px!important;">
-                    @endif 
+                    @endif
                 </a>
             </div>
         </div>
@@ -57,13 +61,13 @@
                             world. Unlock a world of knowledge and growth with us today!</p>
                     </div>
                     <div class="login-promo-image">
-                        @if (modulesetting('lp_bg_image')) 
+                        @if (modulesetting('lp_bg_image'))
                         <img src="{{ asset(modulesetting('lp_bg_image')) }}" alt="Login BG"
                         title="Login BG" class="login2-logo rounded" style="max-width: 25rem">
-                        @else 
+                        @else
                             <img src="{{ asset('latest/assets/images/login2-image.png') }}" alt="Leancosy white logo"
                                 title="Leancosy white logo" class="login2-logo" />
-                        @endif 
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -77,8 +81,8 @@
                                 <p>No Account ?</p>
                                 <a href="{{ url('/auth-register') }}">Sign up</a>
                             </div>
-                        </div> 
-                        <h1>Password Reset</h1> 
+                        </div>
+                        <h1>Password Reset</h1>
 
                         <form method="POST" action="{{ route('password.email',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf
@@ -93,7 +97,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>  
+                            </div>
                             <div class="submit-button">
                                 <button class="btn btn-submit" type="submit">{{ __('Send Password Reset Link') }}</button>
                             </div>

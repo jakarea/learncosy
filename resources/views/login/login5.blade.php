@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LearnCosy Authintication | Login Page</title>
+    <title>{{ modulesetting('meta_title') ? modulesetting('meta_title') : 'Learncosy' }}  | @yield('title')</title>
+    <meta name="description" content="{{ modulesetting('meta_desc') ? modulesetting('meta_desc') : '' }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Admin Template For Filter Developers" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="">
     <meta property="og:title" content="">
     <meta property="og:type" content="">
     <meta property="og:url" content="">
@@ -16,7 +16,11 @@
     <meta name="theme-color" content="#fafafa">
 
     <!-- App favicon -->
+    @if (modulesetting('favicon'))
+    <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -76,13 +80,13 @@
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror 
+                                    @enderror
                                     <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
                             </div>
                             <div class="checbox-wrap">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                
+
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember me for 30 days') }}
                                     </label>
@@ -135,7 +139,7 @@
         function changeType() {
           var field = document.getElementById("password-field");
           var clickk = document.getElementById("eye-click");
-    
+
           if (field.type === "password") {
             field.type = "text";
             clickk.classList.add('fa-eye-slash');
@@ -145,7 +149,7 @@
             clickk.classList.remove('fa-eye-slash');
             clickk.classList.add('fa-eye');
           }
-    
+
         }
     </script>
 

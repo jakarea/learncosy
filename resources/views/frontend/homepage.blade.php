@@ -56,6 +56,7 @@
                         </h1>
                         <p> {{ modulesetting('banner_text') ?? 'Are you ready to embark on an exciting journey of discovery and lifelong learning? Look no further! KnowledgeQuest is here to empower you with the knowledge and skills you need to excel in today\'s ever-evolving world.' }}
                         </p>
+                        <?php /*
                         <div class="hero-bttn">
                             @if (Auth::check())
                                 <a href="{{ route('instructor.dashboard.index', config('app.subdomain') ) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
@@ -63,6 +64,7 @@
                                 <a href="{{ route('tregister',['subdomain' => config('app.subdomain')]) }}">{{ modulesetting('button_text') ?? 'Get Started' }}</a>
                             @endif
                         </div>
+                        */?>
                         @php
                             $request = app('request');
                             $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
@@ -72,12 +74,16 @@
                             $countStudent = \App\Models\Checkout::where('instructor_id', $user->id)->count();
                         @endphp
 
+                        <?php
+                        /*
                         @if ($countStudent)
                             <h6 style="color: {{ modulesetting('secondary_color') }}">Already {{ $countStudent }} Students
                                 are joined!</h6>
                         @else
                             <h6 style="color: {{ modulesetting('secondary_color') }}">Join Now!</h6>
                         @endif
+                        */
+                        ?>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -190,7 +196,7 @@
 
                                             </div>
                                             <div class="media-body">
-                                                <h4>{{ $course->title }}</h4>
+                                                <a class="text-decoration-none" href="{{ url('courses/overview-courses/' . $course->slug) }}"><h4>{{ $course->title }}</h4></a>
 
                                                 @php $courseCategories = explode(",",$course->categories) @endphp
 
@@ -309,12 +315,12 @@
                             <div class="txt">
                                 <h4>{{ $bundle_course->title }}</h4>
                                 <div class="categories">
-                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: {{ $bundle_course->sub_title }} </span> 
+                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: {{ $bundle_course->sub_title }} </span>
                                 </div>
                                 <p>{{ $bundle_course->short_description }}</p>
                             </div>
                             <div class="bttns">
-                                <h6>€ {{ $bundle_course->sales_price ? $bundle_course->sales_price : $bundle_course->regular_price }} /</h6> 
+                                <h6>€ {{ $bundle_course->sales_price ? $bundle_course->sales_price : $bundle_course->regular_price }} /</h6>
                                  <h6><span>included {{ count($bundle_course->courses) }} courses</span></h6>
                             </div>
                         </div>

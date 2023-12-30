@@ -16,7 +16,11 @@
     <meta name="theme-color" content="#fafafa">
 
     <!-- App favicon -->
+    @if (modulesetting('favicon'))
+    <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
+@else
     <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
+@endif
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
@@ -38,7 +42,7 @@
                     <img src="{{ asset(modulesetting('logo')) }}" alt="Logo" class="img-fluid" style="max-width: 10rem">
                     @else
                     <img src="{{ asset('latest/assets/images/logo.svg') }}" alt="logo" title="learncosy logo">
-                    @endif 
+                    @endif
                 </a>
             </div>
         </div>
@@ -46,7 +50,7 @@
 
     <section class="login-page-wrapper login-four-page-wrap login-four-page-wrap-dark" style="background-image: url({{ asset(modulesetting('lp_bg_image') ? modulesetting('lp_bg_image') : 'latest/assets/images/login-left.svg') }});">
         <div class="container">
-            <div class="row justify-content-end"> 
+            <div class="row justify-content-end">
                 <div class="col-lg-6 col-md-8">
                     <div class="login-box-wrap">
                         <div class="login-heading">
@@ -59,7 +63,7 @@
                                 <a href="{{url('/auth-register')}}">Sign up</a>
                             </div>
                         </div>
-                        <h1>Password Update</h1> 
+                        <h1>Password Update</h1>
 
                         <form method="POST" action="{{ route('password.update',['subdomain' => config('app.subdomain')] ) }}" class="login-from">
                             @csrf

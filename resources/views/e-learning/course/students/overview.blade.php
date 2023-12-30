@@ -289,12 +289,25 @@
                                     action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
                                     method="POST">
                                     @csrf
-
+                                    @if ($cartCourses->pluck('course_id')->contains($course->id))
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button type="button"
+                                                class="btn add-cart-bttn bg-secondary text-white border-0" disabled>
+                                                Already in cart</button>
+                                            <button type="button" class="btn btn-heart {{ $liked }}"
+                                                id="likeBttn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
+                                        </div>
+                                    @else
                                         <div class="d-flex justify-content-between align-items-center">
                                             <button type="submit" class="btn add-cart-bttn">Add to Cart</button>
-
+                                            <button type="button" class="btn btn-heart {{ $liked }}"
+                                                id="likeBttn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
                                         </div>
-
+                                    @endif
                                 </form>
                             @endif
                         </div>

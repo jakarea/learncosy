@@ -129,10 +129,20 @@ class LoginController extends Controller
                         return redirect()->intended('/instructor/dashboard');
                     }
                 } elseif ($user->user_role == 'student') {
+
+                    // $redirectUrl = $request->session()->pull('redirect_url');
+
+                    // if ($redirectUrl) {
+                    //     return redirect()->intended($redirectUrl);
+                    // }
+
                     $sessionId = session()->getId();
                     $user->session_id = $sessionId;
                     $user->save();
-                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+                    // return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+
+                    $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
+                    return redirect()->to($defaultUrl);
                 }
             } else {
                 return redirect()->back()->with('error', 'Invalid Credentials');
