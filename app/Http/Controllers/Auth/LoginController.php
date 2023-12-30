@@ -129,6 +129,13 @@ class LoginController extends Controller
                         return redirect()->intended('/instructor/dashboard');
                     }
                 } elseif ($user->user_role == 'student') {
+
+                    // $redirectUrl = $request->session()->pull('redirect_url');
+
+                    // if ($redirectUrl) {
+                    //     return redirect()->intended($redirectUrl);
+                    // }
+
                     $sessionId = session()->getId();
                     $user->session_id = $sessionId;
                     $user->save();

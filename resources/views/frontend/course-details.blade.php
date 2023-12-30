@@ -103,8 +103,7 @@
 
 
 
-                            @if (!isEnrolled($course->id))
-                                {{-- <form action="{{route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])}}" method="GET"> --}}
+                            {{-- @if (!isEnrolled($course->id))
 
                                 @auth
                                     <form
@@ -134,7 +133,7 @@
                                             style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
                                     </form>
                                 @endauth
-                            @endif
+                            @endif --}}
 
 
                         </div>

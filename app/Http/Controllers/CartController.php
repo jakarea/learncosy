@@ -58,6 +58,8 @@ class CartController extends Controller
     {
 
         if (!auth()->check()) {
+            $redirectUrl = route('buy.course', ['id' => $course, 'subdomain' => config('app.subdomain')]);
+            session()->put('redirect_url', $redirectUrl);
             return redirect()->route('login', config('app.subdomain'));
         }
 

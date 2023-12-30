@@ -190,7 +190,7 @@
 
                                             </div>
                                             <div class="media-body">
-                                                <h4>{{ $course->title }}</h4>
+                                                <a href="{{ url('courses/overview-courses/' . $course->slug) }}"><h4>{{ $course->title }}</h4></a>
 
                                                 @php $courseCategories = explode(",",$course->categories) @endphp
 
@@ -309,12 +309,12 @@
                             <div class="txt">
                                 <h4>{{ $bundle_course->title }}</h4>
                                 <div class="categories">
-                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: {{ $bundle_course->sub_title }} </span> 
+                                    <span class="text-secondary" style="font-size: .8rem">Subscription Status: {{ $bundle_course->sub_title }} </span>
                                 </div>
                                 <p>{{ $bundle_course->short_description }}</p>
                             </div>
                             <div class="bttns">
-                                <h6>€ {{ $bundle_course->sales_price ? $bundle_course->sales_price : $bundle_course->regular_price }} /</h6> 
+                                <h6>€ {{ $bundle_course->sales_price ? $bundle_course->sales_price : $bundle_course->regular_price }} /</h6>
                                  <h6><span>included {{ count($bundle_course->courses) }} courses</span></h6>
                             </div>
                         </div>
