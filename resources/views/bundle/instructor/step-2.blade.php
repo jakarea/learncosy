@@ -160,7 +160,7 @@ Bundle Course create
                                     <div class="form-group">
                                         <label for="thumbnail">Thumbnail Preview</label>
                                         <label for="thumbnail" class="image-area">
-                                            <img src="" alt="No Image Uploaded" class="img-fluid rounded" id="thumbnailImage">
+                                            <img src="" class="img-fluid rounded" id="thumbnailImage">
                                             <button class="btn" type="button" id="close-button"><i class="fas fa-close"></i></button>
                                         </label>
                                     </div>

@@ -93,12 +93,44 @@
                             {{-- course lesson duration calculation --}}
 
                             @php
-                                $totalDurationMinutes = round( $totalDurationMinutes / 60);
+                                $totalDurationMinutes = round($totalDurationMinutes / 60);
                             @endphp
 
                             <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
                                 Course
                                 . {{ count($course_reviews) }} Reviews</h4>
+
+
+
+
+                            @if (!isEnrolled($course->id))
+                                {{-- <form action="{{route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain') ])}}" method="GET"> --}}
+
+                                @auth
+                                    <form
+                                        action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
+                                        method="POST">
+                                        @csrf
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button type="submit" class="common-bttn"
+                                                style="border-radius: 6.25rem; margin-top: 2rem">Add to Cart</button>
+
+                                        </div>
+
+                                    </form>
+                                @else
+                                    <form
+                                        action="{{ route('buy.course', ['id' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
+                                        method="POST">
+                                        @csrf
+
+                                        <button type="submit" class="common-bttn"
+                                            style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
+                                    </form>
+                                @endauth
+                            @endif
+
 
                         </div>
                     </div>
@@ -150,7 +182,7 @@
                                                 }
                                             }
 
-                                            $totalDuration = round( $totalDuration / 60);
+                                            $totalDuration = round($totalDuration / 60);
 
                                         @endphp
 
