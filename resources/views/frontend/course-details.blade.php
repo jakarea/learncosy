@@ -102,38 +102,49 @@
 
 
 
-
-                            {{-- @if (!isEnrolled($course->id))
-
-                                @auth
-                                    <form
-                                        action="{{ route('cart.add', ['course' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @if ($cartCourses->pluck('course_id')->contains($course->id))
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <button type="button"
-                                                    class="btn add-cart-bttn bg-secondary text-white border-0" disabled>
-                                                    Already in cart</button>
-                                            </div>
-                                        @else
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <button type="submit" class="common-bttn"
-                                                style="border-radius: 6.25rem; margin-top: 2rem">Add to Cart</button>
-                                            </div>
-                                        @endif
-                                    </form>
+                            @if (auth()->check())
+                                @php
+                                    $role = auth()->user()->user_role;
+                                @endphp
+                                @if ($role == 'admin' || $role == 'instructor')
+                                    <a href="{{ url($role . '/courses/' . $course->id) }}" class="common-bttn"
+                                        style="border-radius: 6.25rem; margin-top: 2rem"><img
+                                            src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a"
+                                            class="img-fluid me-1"> Go to Course</a>
                                 @else
-                                    <form
-                                        action="{{ route('buy.course', ['id' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
-                                        method="POST">
-                                        @csrf
+                                    @if (isEnrolled($course->id))
+                                        <a href="{{ url('students/courses/' . $course->slug) }}" class="common-bttn"
+                                            style="border-radius: 6.25rem; margin-top: 2rem"><img
+                                                src="{{ asset('latest/assets/images/icons/play-circle.svg') }}"
+                                                alt="a" class="img-fluid me-1"> Go to Course</a>
+                                    @elseif($cartCourses->pluck('course_id')->contains($course->id))
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button type="button" class="common-bttn"
+                                                style="border-radius: 6.25rem; margin-top: 2rem" disabled>
+                                                Already in cart</button>
+                                        </div>
+                                    @else
+                                        <form
+                                            action="{{ route('buy.course', ['id' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
+                                            method="POST">
+                                            @csrf
 
-                                        <button type="submit" class="common-bttn"
-                                            style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
-                                    </form>
-                                @endauth
-                            @endif --}}
+                                            <button type="submit" class="common-bttn"
+                                                style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
+                                        </form>
+                                    @endif
+                                @endif
+                            @else
+                                <form
+                                    action="{{ route('buy.course', ['id' => $course->id, 'subdomain' => config('app.subdomain')]) }}"
+                                    method="POST">
+                                    @csrf
+
+                                    <button type="submit" class="common-bttn"
+                                        style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
+                                </form>
+                            @endif
+
 
 
                         </div>
@@ -500,6 +511,7 @@
                         <h6>Or copy link</h6>
                         <span id="notify" style="color: green; font-size: 14px;"></span>
                     </div>
+
                     <div class="copy-link">
                         <input autocomplete="off" type="text" placeholder="Link"
                             value="{{ url('courses/overview-courses', $course->slug) }}" class="form-control"
