@@ -115,12 +115,12 @@ class CourseManagementController extends Controller
         $totalModules = $course->modules->where('status', 'published')->count();
 
         $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->filter(function ($lesson) { 
+            return $module->lessons->filter(function ($lesson) {
                 return $lesson->status == 'published';
             })->count();
-        }); 
+        });
 
-       
+
         // last playing video
         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
         $currentLessonVideo = NULL;
