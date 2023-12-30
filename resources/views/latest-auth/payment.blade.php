@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                            <input autocomplete="off" type="text" class="form-control" id="first_name" name="first_name"
                                                 placeholder="" value="{{ Auth::check() ? explode(' ', Auth::user()->name)[0] : '' }}">
                                             <label for="first_name">First Name</label>
 
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                            <input autocomplete="off" type="text" class="form-control" id="last_name" name="last_name"
                                                 placeholder="" value="{{ Auth::check() ? (isset(explode(' ', Auth::user()->name)[1]) ? explode(' ', Auth::user()->name)[1] : '') : '' }}">
                                             <label for="last_name">Last Name</label>
 
@@ -61,14 +61,14 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="{{ Auth::check() ? Auth::user()->phone : '' }}">
+                                            <input autocomplete="off" type="text" class="form-control" id="phone" name="phone" placeholder="" value="{{ Auth::check() ? Auth::user()->phone : '' }}">
                                             <label for="phone">+31 Phone</label>
 
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
+                                            <input autocomplete="off"  type="email" class="form-control" id="email" name="email" placeholder="" value="{{ Auth::check() ? Auth::user()->email : '' }}">
                                         <label for="email">Email</label>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control card-name" id="card_name" name="card_name"
+                                            <input autocomplete="off" type="text" class="form-control card-name" id="card_name" name="card_name"
                                                 placeholder="">
                                             <label for="card_name">Name On Card </label>
                                             <span class="error-message" id="card_name_error"></span>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control card-number" id="card_number" name="card_number"
+                                            <input autocomplete="off" type="text" class="form-control card-number" id="card_number" name="card_number"
                                                 placeholder="" maxlength="16">
                                             <label for="card_number">Card Number </label>
                                             <span class="error-message" id="card_number_error"></span>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control card-cvc" id="card_cvv" name="card_cvv"
+                                            <input autocomplete="off" type="text" class="form-control card-cvc" id="card_cvv" name="card_cvv"
                                                 placeholder="" maxlength="3">
                                             <label for="card_cvv">CVV </label>
                                             <span class="error-message" id="card_cvv_error"></span>

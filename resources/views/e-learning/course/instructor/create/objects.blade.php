@@ -70,7 +70,7 @@ Course Create - Add Objective
                             @foreach (explode('[objective]', $course->objective) as $index => $objective)
                             <div class="item">
                                 <i class="fas fa-check"></i>
-                                <input type="text" value="{{ $objective }}" class="form-control" disabled>
+                                <input autocomplete="off" type="text" value="{{ $objective }}" class="form-control" disabled>
                                 <div class="actions">
                                     <a href="#" class="me-2 edit-item" data-index="{{ $index }}">
                                         <img src="{{ asset('latest/assets/images/icons/pen-m.svg') }}" alt="Edit"
@@ -224,7 +224,7 @@ Course Create - Add Objective
                                     newItem.className = 'item';
                                     newItem.innerHTML = `
                                         <i class="fas fa-check"></i>
-                                        <input type="text" value="${objectiveTextArea.value}" class="form-control" disabled>
+                                        <input autocomplete="off" type="text" value="${objectiveTextArea.value}" class="form-control" disabled>
                                         <div class="actions">
                                             <span class="badge text-bg-success">New</span>
                                         </div>

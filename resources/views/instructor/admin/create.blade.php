@@ -35,7 +35,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group form-error">
                                     <label for="name" >Name <sup class="text-danger">*</sup></label>
-                                        <input type="text" placeholder="Enter Name" name="name"
+                                        <input autocomplete="off" type="text" placeholder="Enter Name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
                                             value="{{ old('name') }}" id="name">
                                      
@@ -50,7 +50,7 @@
                                         
                                     </div> 
                                         
-                                        <input type="text" placeholder="Enter Subdomain" name="subdomain"
+                                        <input autocomplete="off" type="text" placeholder="Enter Subdomain" name="subdomain"
                                             class="form-control @error('subdomain') is-invalid @enderror"
                                             value="{{ old('subdomain') }}" id="subdomain"> 
                                     <span class="invalid-feedback">@error('subdomain'){{ $message }}
@@ -62,7 +62,7 @@
                                     <label for="phone">Phone <sup class="text-danger">*</sup>
                                     </label>
                                         
-                                        <input type="text" placeholder="Enter Phone Number" name="phone"
+                                        <input autocomplete="off" type="text" placeholder="Enter Phone Number" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone') }}" id="phone">
                                 
@@ -75,7 +75,7 @@
                                     <label for="email">Email <sup class="text-danger">*</sup>
                                     </label>
                                         
-                                        <input type="email" placeholder="Enter email" name="email"
+                                        <input autocomplete="off" type="email" placeholder="Enter email" name="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             value="{{ old('email') }}" id="email">
                                      
@@ -94,7 +94,7 @@
                                     <label for="company_name">Company Name 
                                     </label>
                                         
-                                        <input type="text" placeholder="Company Name" name="company_name"
+                                        <input autocomplete="off" type="text" placeholder="Company Name" name="company_name"
                                             class="form-control @error('company_name') is-invalid @enderror"
                                             value="{{ old('company_name') }}" id="company_name">
                                      
@@ -107,7 +107,7 @@
                                     <label for="website">Website 
                                     </label>
                                         
-                                        <input type="text" placeholder="Enter Web Address" name="website"
+                                        <input autocomplete="off" type="text" placeholder="Enter Web Address" name="website"
                                             class="form-control @error('website') is-invalid @enderror"
                                             value="{{ old('website') }}" id="website">
                                      
@@ -200,7 +200,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="password">Password </label>
-                                    <input type="password" name="password" placeholder="Enter Password"
+                                    <input autocomplete="off"  type="password" name="password" placeholder="Enter Password"
                                         class="form-control @error('password') is-invalid @enderror" id="password">
                                     <span class="invalid-feedback">@error('password'){{ $message }} @enderror</span>
                                     <div class="pass-icon">

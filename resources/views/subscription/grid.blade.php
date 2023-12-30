@@ -21,7 +21,7 @@
                             <h5>Package List</h5>
                             <div class="form-group">
                                 <i class="fas fa-search"></i>
-                                <input type="text" placeholder="Search Package" class="form-control" name="name"
+                                <input autocomplete="off" type="text" placeholder="Search Package" class="form-control" name="name"
                                     value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                             </div>
                             <input type="hidden" name="status" id="inputField">

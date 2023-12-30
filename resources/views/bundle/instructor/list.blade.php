@@ -21,7 +21,7 @@
                                 <div class="user-search-box-wrap">
                                     <div class="form-group">
                                         <i class="fas fa-search"></i>
-                                        <input type="text" placeholder="Search Course" class="form-control"
+                                        <input autocomplete="off" type="text" placeholder="Search Course" class="form-control"
                                             name="title" value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
                                     </div>
                                     <input type="hidden" name="status" id="inputField">

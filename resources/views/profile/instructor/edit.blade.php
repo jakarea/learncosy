@@ -114,7 +114,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group mt-0">
-                                                        <input type="text" class="form-control" id="name" name="name"
+                                                        <input autocomplete="off" type="text" class="form-control" id="name" name="name"
                                                             value="{{ $user->name }}" required>
                                                         <label for="name">Name</label>
                                                         <span class="invalid-feedback">@error('name'){{ $message }}
@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="email" name="email"
+                                                        <input autocomplete="off" type="text" class="form-control" id="email" name="email"
                                                             value="{{ $user->email }}" required>
                                                         <label for="email">Email</label>
                                                         <span class="invalid-feedback">@error('email'){{ $message }}
@@ -132,7 +132,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="phone" name="phone"
+                                                        <input autocomplete="off" type="text" class="form-control" id="phone" name="phone"
                                                             value="{{ $user->phone }}" required>
                                                         <label for="phone">Phone Number</label>
                                                         <span class="invalid-feedback">@error('phone'){{ $message }}
@@ -141,7 +141,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="company_name2"
+                                                        <input autocomplete="off" type="text" class="form-control" id="company_name2"
                                                             name="company_name" value="{{ $user->company_name }}"
                                                             required>
                                                         <label for="company_name2">Company Name</label>
@@ -152,7 +152,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="website"
+                                                        <input autocomplete="off" type="text" class="form-control" id="website"
                                                             name="website" value="{{ $user->short_bio }}" required>
                                                         <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('website'){{ $message }}
@@ -223,7 +223,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="profession"
+                                                            <input autocomplete="off" type="text" class="form-control" id="profession"
                                                                 value="{{ $editExp ? $editExp->profession: old('profession') }}"
                                                                 placeholder="Add skill (e.g ui/ux design)"
                                                                 name="profession">
@@ -235,7 +235,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="company_name"
+                                                            <input autocomplete="off" type="text" class="form-control" id="company_name"
                                                                 name="company_name"
                                                                 value="{{ $editExp ? $editExp->company_name: old('company_name') }}"
                                                                 placeholder="Add company (e.g learn cosy)">
@@ -247,7 +247,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="job_type"
+                                                            <input autocomplete="off" type="text" class="form-control" id="job_type"
                                                                 value="{{ $editExp ? $editExp->job_type: old('job_type') }}"
                                                                 name="job_type"
                                                                 placeholder="Add job type (e.g full time/ part time)">
@@ -259,7 +259,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" id="experience"
+                                                            <input autocomplete="off" type="text" class="form-control" id="experience"
                                                                 value="{{ $editExp ? $editExp->experience: old('experience') }}"
                                                                 name="experience"
                                                                 placeholder="Add service time (e.g 5 years)">
@@ -703,7 +703,7 @@
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>Student Name </h6>
                                                                             <div class="form-group form-error">
-                                                                                <input type="text" name="c_first_name"
+                                                                                <input autocomplete="off" type="text" name="c_first_name"
                                                                                     class="form-control @error('c_first_name') is-invalid @enderror">
                                                                                 <label for="">First Name</label>
 
@@ -719,7 +719,7 @@
                                                                         <div class="certificate-name border-0 pe-0">
                                                                             <h6>&nbsp;</h6>
                                                                             <div class="form-group form-error">
-                                                                                <input type="text" name="c_last_name"
+                                                                                <input autocomplete="off" type="text" name="c_last_name"
                                                                                     class="form-control @error('c_last_name') is-invalid @enderror">
                                                                                 <label for="">Last Name</label>
 
@@ -1092,14 +1092,14 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Email</label>
-                                                    <input type="text" placeholder="Email" class="form-control"
+                                                    <input autocomplete="off" type="text" placeholder="Email" class="form-control"
                                                         value="{{ $user->email}}" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">New Password<sup class="text-danger">*</sup></label>
-                                                    <input type="password" name="password" placeholder="Enter Password"
+                                                    <input autocomplete="off"  type="password" name="password" placeholder="Enter Password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         id="password">
                                                     <span class="invalid-feedback">@error('password'){{ $message }}
@@ -1112,7 +1112,7 @@
                                                 <div class="form-group">
                                                     <label for="">Confirm New Password<sup
                                                             class="text-danger">*</sup></label>
-                                                    <input type="password" name="password_confirmation"
+                                                    <input autocomplete="off"  type="password" name="password_confirmation"
                                                         placeholder="Enter Password"
                                                         class="form-control @error('password_confirmation') is-invalid @enderror"
                                                         id="password_confirmation">
@@ -1166,14 +1166,14 @@
                                     <div class="form-group">
                                         <label for="client_id">CLIENT ID
                                         </label>
-                                        <input type="text" class="form-control" placeholder="Enter Client ID"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Client ID"
                                             name="client_id"
                                             value="{{ isVimeoConnected(auth()->user()->id)[0]->client_id ?? '' }}">
                                         <span class="text-danger">@error('client_id') {{ $message }} @enderror</span>
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="client_secret">CLIENT SECRET</label>
-                                        <input type="text" class="form-control" placeholder="Enter Client Secret"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Client Secret"
                                             name="client_secret"
                                             value="{{ isVimeoConnected(auth()->user()->id)[0]->client_secret ?? '' }}">
                                         <span class="text-danger">@error('client_secret') {{ $message }}
@@ -1181,7 +1181,7 @@
                                     </div>
                                     <div class="form-group mt-3">
                                         <label for="access_key">CLIENT ACCESS KEY</label>
-                                        <input type="text" class="form-control" placeholder="Enter Access Key"
+                                        <input autocomplete="off" type="text" class="form-control" placeholder="Enter Access Key"
                                             name="access_key"
                                             value="{{ isVimeoConnected(auth()->user()->id)[0]->access_key ?? '' }}">
                                         <span class="text-danger">@error('access_key') {{ $message }} @enderror</span>
@@ -1217,13 +1217,13 @@
                                         <label for="stripe_public_key">STRIPE KEY
 
                                         </label>
-                                        <input type="text" class="form-control" name="stripe_public_key"
+                                        <input autocomplete="off" type="text" class="form-control" name="stripe_public_key"
                                             placeholder="Enter Secret Key"
                                             value="{{ Auth::user()->stripe_public_key }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="stripe_secret_key">STRIPE SECRET KEY</label>
-                                        <input type="text" class="form-control" name="stripe_secret_key"
+                                        <input autocomplete="off" type="text" class="form-control" name="stripe_secret_key"
                                             placeholder="Enter Secret Key"
                                             value="{{ Auth::user()->stripe_secret_key }}">
                                     </div>

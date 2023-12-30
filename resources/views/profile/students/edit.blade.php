@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="form-group mt-0">
-                                                        <input type="text" class="form-control" id="name" name="name"
+                                                        <input autocomplete="off" type="text" class="form-control" id="name" name="name"
                                                             value="{{ $user->name }}" required>
                                                         <label for="name">Name</label>
                                                         <span class="invalid-feedback">@error('name'){{ $message }}
@@ -93,7 +93,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="email" name="email"
+                                                        <input autocomplete="off" type="text" class="form-control" id="email" name="email"
                                                             value="{{ $user->email }}" required>
                                                         <label for="email">Email</label>
                                                         <span class="invalid-feedback">@error('email'){{ $message }}
@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="phone" name="phone"
+                                                        <input autocomplete="off" type="text" class="form-control" id="phone" name="phone"
                                                             value="{{ $user->phone }}" required>
                                                         <label for="phone">Phone Number</label>
                                                         <span class="invalid-feedback">@error('phone'){{ $message }}
@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="company_name"
+                                                        <input autocomplete="off" type="text" class="form-control" id="company_name"
                                                             name="company_name" value="{{ $user->company_name }}" required>
                                                         <label for="company_name">Company Name</label>
                                                         <span class="invalid-feedback">@error('company_name'){{ $message }}
@@ -120,7 +120,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="website"
+                                                        <input autocomplete="off" type="text" class="form-control" id="website"
                                                             name="website" value="{{ $user->short_bio }}" required>
                                                         <label for="website">Website</label>
                                                         <span class="invalid-feedback">@error('website'){{ $message }}
@@ -179,14 +179,14 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Email</label>
-                                                    <input type="text" placeholder="Email" class="form-control"
+                                                    <input autocomplete="off" type="text" placeholder="Email" class="form-control"
                                                         value="{{ $user->email}}" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">New Password<sup class="text-danger">*</sup></label>
-                                                    <input type="password" name="password" placeholder="Enter Password"
+                                                    <input autocomplete="off"  type="password" name="password" placeholder="Enter Password"
                                                         class="form-control @error('password') is-invalid @enderror"
                                                         id="password">
                                                     <span class="invalid-feedback">@error('password'){{ $message }}
@@ -197,7 +197,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="">Confirm New Password<sup class="text-danger">*</sup></label>
-                                                    <input type="password" name="password_confirmation" placeholder="Enter Password"
+                                                    <input autocomplete="off"  type="password" name="password_confirmation" placeholder="Enter Password"
                                                         class="form-control @error('password_confirmation') is-invalid @enderror"
                                                         id="password_confirmation">
                                                     <span class="invalid-feedback">@error('password_confirmation'){{ $message }}

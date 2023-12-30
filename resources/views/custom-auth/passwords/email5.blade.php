@@ -77,9 +77,9 @@
                             @csrf
                             <div class="form-group">
                                 <label>Enter your email address</label>
-                                <input type="email" placeholder="Email Address"
+                                <input autocomplete="off"  type="email" placeholder="Email Address"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    autocomplete="email" id="emailAddress" autofocus>
+                                     id="emailAddress" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

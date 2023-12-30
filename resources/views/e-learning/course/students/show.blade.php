@@ -143,7 +143,7 @@
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="text" name="comment" id="review"
+                                            <input autocomplete="off" type="text" name="comment" id="review"
                                                 placeholder="Write a review">
                                         </div>
                                         <div class="form-rev">

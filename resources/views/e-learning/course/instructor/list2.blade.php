@@ -23,7 +23,7 @@
                 <div class="user-search-box-wrap">
                     <div class="form-group">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search course" class="form-control">
+                        <input autocomplete="off" type="text" placeholder="Search course" class="form-control">
                     </div>
                     <div class="form-filter">
                         <select class="form-control">

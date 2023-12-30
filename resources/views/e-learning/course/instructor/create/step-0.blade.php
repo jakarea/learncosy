@@ -94,7 +94,7 @@ Course Create - Step 1
                         <form action="{{ route('course.create.start', ['subdomain' => config('app.subdomain') ]) }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <input type="text" placeholder="Enter Module Name" name="module_name"
+                                <input autocomplete="off" type="text" placeholder="Enter Module Name" name="module_name"
                                     class="form-control">
                             </div>
                             <div class="form-check form-switch">

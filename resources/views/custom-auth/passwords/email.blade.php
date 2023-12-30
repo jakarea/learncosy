@@ -22,9 +22,9 @@
                             @csrf
                             <div class="form-group">
                                 <label for="email">{{ __('Email') }}</label>
-                                <input type="email" placeholder="Enter Email"
+                                <input  autocomplete="off"  type="email" placeholder="Enter Email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    autocomplete="email" autofocus>
+                                     >
                                 @error('email')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>

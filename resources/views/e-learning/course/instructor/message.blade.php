@@ -52,7 +52,7 @@
                                     @csrf
                                     <div class="message-send-box">
                                         <div class="form-group">
-                                            <input type="text" class="form-control"
+                                            <input autocomplete="off" type="text" class="form-control"
                                                 placeholder="Send a message to {{ $reciver_info->user->name }}" name="message">
                                             <span class="invalid-feedback">
                                                 @error('message')

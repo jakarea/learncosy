@@ -49,11 +49,11 @@
                                 <form action="post" id="create_group">
                                     <div class="form-group">
                                         <label for="">Group Name</label>
-                                        <input type="text" name="name" placeholder="Group Name" class="form-control">
+                                        <input autocomplete="off" type="text" name="name" placeholder="Group Name" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="">Add People</label>
-                                        <input type="text" placeholder="Name" class="form-control">
+                                        <input autocomplete="off" type="text" placeholder="Name" class="form-control">
                                         <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="a"
                                             class="img-fluid">
                                     </div>
@@ -170,7 +170,7 @@
                             <div class="search">
                                 <img src="{{asset('latest/assets/images/icons/search-m.svg')}}" alt="ic"
                                     class="img-fluid">
-                                <input type="text" placeholder="Search" class="form-control">
+                                <input autocomplete="off" type="text" placeholder="Search" class="form-control">
                             </div>
                             <div class="chat-filter">
                                 <div class="dropdown">
@@ -612,7 +612,7 @@
                         <form method="POST" action="" class="send-actions">
                             <div class="message-send-box">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Send a message" name="message">
+                                    <input autocomplete="off" type="text" class="form-control" placeholder="Send a message" name="message">
                                 </div>
                                 <div class="file-attach-bttns">
                                     <button type="button" class="btn btn-emoji">
@@ -650,7 +650,7 @@
                     <form action="">
                         <div class="form-group mt-0">
                             <label for="" style="font-size: 1.25rem">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control">
+                            <input autocomplete="off" type="text" placeholder="Name" class="form-control">
                             <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="a"
                                 class="img-fluid">
                         </div>
@@ -819,11 +819,11 @@
                     <form action="">
                         <div class="form-group">
                             <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control">
+                            <input autocomplete="off" type="text" placeholder="Group Name" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="">Add People</label>
-                            <input type="text" placeholder="Name" class="form-control">
+                            <input autocomplete="off" type="text" placeholder="Name" class="form-control">
                             <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="a"
                                 class="img-fluid">
                         </div>
@@ -977,7 +977,7 @@
                     <form action="">
                         <div class="form-group mt-0">
                             <label for="">Group Name</label>
-                            <input type="text" placeholder="Group Name" class="form-control">
+                            <input autocomplete="off" type="text" placeholder="Group Name" class="form-control">
                         </div>
 
                         {{-- form submit --}}

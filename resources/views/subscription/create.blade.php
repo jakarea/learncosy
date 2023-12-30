@@ -30,7 +30,7 @@
                             <div class="col-md-12">
                                 <div class="form-group form-error">
                                     <label for="name">Name </label>
-                                    <input type="text" placeholder="Enter name" name="name"
+                                    <input autocomplete="off" type="text" placeholder="Enter name" name="name"
                                         class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name') }}" id="name">
                                     <span class="invalid-feedback">@error('name'){{ $message }}
@@ -41,7 +41,7 @@
                                 <div class="form-group form-error">
                                     <label for="regular_price">Regular Price 
                                     </label>
-                                    <input type="text" placeholder="€ Enter Amount" name="regular_price"
+                                    <input autocomplete="off" type="text" placeholder="€ Enter Amount" name="regular_price"
                                         class="form-control @error('regular_price') is-invalid @enderror"
                                         value="{{ old('regular_price') }}" id="regular_price">
                                     <span class="invalid-feedback">@error('regular_price'){{ $message }}
@@ -51,7 +51,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-error">
                                     <label for="sales_price">Sales Price </label>
-                                    <input type="text" placeholder="€ Enter Amount" name="sales_price"
+                                    <input autocomplete="off" type="text" placeholder="€ Enter Amount" name="sales_price"
                                         class="form-control @error('sales_price') is-invalid @enderror"
                                         value="{{ old('sales_price') }}" id="sales_price">
                                     <span class="invalid-feedback">@error('sales_price'){{ $message }}
@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     <label for="feature_list" class="mb-1">Feature Available </label>
 
-                                    <input type="text" placeholder="Add Feature" name="feature_list[]"
+                                    <input autocomplete="off" type="text" placeholder="Add Feature" name="feature_list[]"
                                         class="form-control @error('feature_list') is-invalid @enderror"
                                         id="feature_list" multiple value="">
 

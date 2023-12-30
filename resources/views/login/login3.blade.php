@@ -57,7 +57,7 @@
                                 <p>Welcome back! Please enter your details.</p>
                                 <div class="form-group">
                                     <label for="email" class="form-label">Email </label>
-                                    <input type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email" autocomplete="email" id="emailAddress" autofocus>
+                                    <input autocomplete="off"  type="email" placeholder="Email Address" class="form-control @error('email') is-invalid @enderror" name="email"  id="emailAddress" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

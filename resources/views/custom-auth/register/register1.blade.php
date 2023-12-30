@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                        <input type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                                        <input autocomplete="off"  type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" >
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">

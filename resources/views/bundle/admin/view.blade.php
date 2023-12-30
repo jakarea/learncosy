@@ -95,13 +95,13 @@ View Bundle
                             <div class="bundle-create-inputs">
                                 <div class="form-group">
                                     <label for="title">Bundle Title</label>
-                                    <input type="text" class="form-control border-0 p-0"
+                                    <input autocomplete="off" type="text" class="form-control border-0 p-0"
                                         value="{{ $updatingCourse->title }}" disabled>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="sub_title">Bundle Subtitle</label>
-                                    <input type="text" class="form-control border-0 p-0"
+                                    <input autocomplete="off" type="text" class="form-control border-0 p-0"
                                         value="{{ $updatingCourse->sub_title }}" disabled>
                                 </div>
                                 <div class="row">
@@ -109,7 +109,7 @@ View Bundle
                                         <div class="input-group">
                                             <label for="regular_price">Regular Price</label>
                                             <span class="input-group-text border-0" id="regular_price">€</span>
-                                            <input type="text" class="form-control border-0 p-0"
+                                            <input autocomplete="off" type="text" class="form-control border-0 p-0"
                                                 value="{{ $updatingCourse->regular_price }}" disabled>
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@ View Bundle
                                         <div class="input-group">
                                             <label for="sales_price">Sales Price</label>
                                             <span class="input-group-text border-0" id="sales_price">€</span>
-                                            <input type="text" class="form-control border-0 p-0"
+                                            <input autocomplete="off" type="text" class="form-control border-0 p-0"
                                                 value="{{ $updatingCourse->sales_price }}" disabled>
                                         </div>
                                     </div>

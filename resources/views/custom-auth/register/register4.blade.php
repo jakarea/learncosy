@@ -76,9 +76,9 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                <input type="email" placeholder="Enter Email"
+                                <input autocomplete="off"  type="email" placeholder="Enter Email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" autocomplete="email" autofocus>
+                                    value="{{ old('email') }}"  autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
