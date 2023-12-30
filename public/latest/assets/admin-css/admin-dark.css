@@ -292,8 +292,10 @@
   color: #fff !important;
 }
 
+
+
 .dark-mode .package-list-header {
-  border-bottom: 1px solid #1A1A1A!important;
+  border-color: #1A1A1A!important;
   background: #0D0D0D !important;
 }
 
@@ -1100,9 +1102,9 @@
 
 .dark-mode .back-next-bttns .btn-primary,
 .dark-mode .back-next-bttns a:last-child {
-  background-color: #5672FF !important;
-  border-color: #5672FF !important;
-  color: #344054 !important;
+  background-color: #7289FF !important;
+  border-color: #7289FF !important;
+  color: #0D0D0D !important;
 }
 
 .dark-mode .back-next-bttns .btn-secondary,
@@ -1295,6 +1297,7 @@
 .dark-mode .share-on-social-wrap .copy-link a,
 .dark-mode .content-settings-form-wrap .btn-primary {
   background-color: #7289FF !important;
+  color: #0d0d0d!important;
 }
 
 .dark-mode select option {
@@ -2532,4 +2535,21 @@ body.dark-mode .dark-mode-bttn label:last-child {
 
 body.dark-mode .dark-mode-bttn label:last-child i {
   color: #fff;
+}
+
+.dark-mode .form-control:-webkit-autofill,
+.dark-mode .form-control:-webkit-autofill:hover, 
+.dark-mode .form-control:-webkit-autofill:focus, 
+.dark-mode .form-control:-webkit-autofill:active{
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: #ffffff!important;
+    transition: background-color 5000s ease-in-out 0s!important; 
+}
+
+.dark-mode .current-plan{
+  background-color: #7289FF!important;
+}
+
+.dark-mode .content-settings-form-wrap hr{
+  background-color: #1E222A!important;
 }

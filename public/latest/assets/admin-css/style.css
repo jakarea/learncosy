@@ -334,8 +334,21 @@ span.user-name-avatar{
   background-color: #294CFF !important;
 }
 
+input:visited{
+  background-color: #000!important;
+}
+
 @media (min-width: 320px) and (max-width: 574px) {
   .filter-dropdown-box {
     margin-bottom: 1rem;
   }
+}
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover, 
+.form-control:-webkit-autofill:focus, 
+.form-control:-webkit-autofill:active{
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: #000!important;
+    transition: background-color 5000s ease-in-out 0s!important; 
 }

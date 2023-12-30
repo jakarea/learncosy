@@ -1,4 +1,12 @@
-@extends('layouts.latest.' . auth()->user()->user_role)
+@php 
+    $path = "instructor";
+    $path = auth()->user()->user_role;
+    if (auth()->user()->user_role == 'student') {
+        $path = "students";
+    }
+@endphp 
+
+@extends('layouts.latest.' . $path)
  
 @section('title')
 Message Page 

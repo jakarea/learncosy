@@ -37,8 +37,8 @@ class ProfileManagementController extends Controller
 
     // profile edit
     public function edit(Request $request, $domain, $experience_id = '')
-    {
-        // $experience_id = $request->query('id');
+    { 
+        
         $userId = Auth()->user()->id;
         $user = User::find($userId);
         $editExp = '';

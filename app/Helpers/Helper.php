@@ -57,7 +57,7 @@ if (!function_exists('isSubscribed')) {
         $user = auth()->user();
 
         if ($user) {
-            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->where('subscription_packages_id',$package_id)->first();
+            $subscription = \App\Models\Subscription::where('instructor_id', $user->id)->where('subscription_packages_id',$package_id)->where('status','active')->first();
 
             if ($subscription && (($subscription->end_at && now() > $subscription->end_at) || $subscription->status == 'cancel')) {
                 return false;

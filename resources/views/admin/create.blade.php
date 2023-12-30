@@ -75,12 +75,13 @@
                                     <hr>
                                     <h5>Other Information </h5>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-lg-12">
                                 <div class="form-group form-error">
                                     <label for="company_name">Company name </label>
 
-                                    <input type="text" name="company_name" id="company_name" value="{{ old('company_name') }}"
+                                    <input type="text" name="company_name" id="company_name"
+                                        value="{{ old('company_name') }}"
                                         class="form-control @error('company_name') is-invalid @enderror"
                                         placeholder="Company Name">
 
@@ -104,7 +105,8 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="url" placeholder="e.g. https://www.sociallink.com" name="social_links[]"
+                                    <input type="url" placeholder="e.g. https://www.sociallink.com"
+                                        name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">
 
@@ -130,10 +132,12 @@
                                     <label for="avatar">Avatar</label>
                                 </div>
                                 <a href="javascript:;" id="image-container" class="drop-container">
-                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar" class="item-img file center-block filepreviewprofile ">
+                                    <input type="file" name="avatar" value="" accept="image/*" id="avatar"
+                                        class="item-img file center-block filepreviewprofile ">
                                     <label for="avatar" class="upload-box">
                                         <span>
-                                            <img src="{{ asset('latest/assets/images/icons/camera-plus.svg') }}" alt="Upload" class="img-fluid">
+                                            <img src="{{ asset('latest/assets/images/icons/camera-plus.svg') }}"
+                                                alt="Upload" class="img-fluid">
                                             <p>Upload photo</p>
                                         </span>
                                     </label>
@@ -145,9 +149,9 @@
                                 <div class="form-group mb-2">
                                     <label for="avatar">Uploaded Image</label>
                                 </div>
-                                <div id="imageContainer" class="drop-container"> 
+                                <div id="imageContainer" class="drop-container">
                                     <img src="https://image.flaticon.com/icons/svg/145/145867.svg" id="item-img-output"
-                                    class="imgpreviewPrf img-fluid" alt="">
+                                        class="imgpreviewPrf img-fluid" alt="">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -172,8 +176,9 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </div> 
-                                    <span class="invalid-feedback">@error('recivingMessage') {{ $message }} @enderror</span>
+                                    </div>
+                                    <span class="invalid-feedback">@error('recivingMessage') {{ $message }}
+                                        @enderror</span>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -186,12 +191,13 @@
                                         <i class="fa-regular fa-eye" onclick="changeType()" id="eye-click"></i>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-submit-bttns">
-                                    <button type="button" onclick="history.go(-1)" class="btn btn-cancel">Cancel</button>
+                                    <button type="button" onclick="history.go(-1)"
+                                        class="btn btn-cancel">Cancel</button>
                                     <button type="submit" class="btn btn-submit">Submit</button>
                                 </div>
                             </div>

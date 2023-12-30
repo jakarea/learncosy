@@ -17,6 +17,7 @@ class CreateCoursesTable extends Migration
             $table->text('title');
             $table->tinyInteger('auto_complete')->default(1);
             $table->integer('user_id')->nullable();
+            $table->integer('instructor_id')->nullable();
             $table->text('slug')->nullable();
             $table->string('promo_video', 191)->nullable();
             $table->decimal('price', 10, 2)->nullable();

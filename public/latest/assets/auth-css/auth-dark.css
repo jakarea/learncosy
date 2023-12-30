@@ -192,3 +192,17 @@
     background-color: #EF6E79!important;
     color: #0d0d0d!important;
   }
+
+  .dark-mode .form-control:-webkit-autofill,
+.dark-mode .form-control:-webkit-autofill:hover, 
+.dark-mode .form-control:-webkit-autofill:focus, 
+.dark-mode .form-control:-webkit-autofill:active{
+    -webkit-background-clip: text!important;
+    -webkit-text-fill-color: #ffffff!important;
+    transition: background-color 5000s ease-in-out 0s!important; 
+    border-color: #0D0D0D !important; 
+}
+
+.dark-mode .current-plan{
+    background-color: #7289FF!important;
+  }

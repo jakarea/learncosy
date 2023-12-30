@@ -18,6 +18,7 @@ class SubscriptionPackage extends Model
         'sales_price',
         'features',
         'status',
+        'type',
         'created_by'
     ];
 
