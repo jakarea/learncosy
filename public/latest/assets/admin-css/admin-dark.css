@@ -2001,8 +2001,12 @@
   background-color: #000 !important;
 }
 
-.bootstrap-tagsinput input {
+.dark-mode .bootstrap-tagsinput input {
   color: #fff;
+}
+
+.dark-mode #close-button{
+  background-color: #ED5763!important;
 }
 
 .dark-mode .app-modals .custom-modal-content .form-group .form-control {
@@ -2552,4 +2556,9 @@ body.dark-mode .dark-mode-bttn label:last-child i {
 
 .dark-mode .content-settings-form-wrap hr{
   background-color: #1E222A!important;
+}
+
+.dark-mode .visibility-form-wrap .form-group .form-control option{
+  background-color: #0d0d0d!important;
+  color: #fff!important;
 }

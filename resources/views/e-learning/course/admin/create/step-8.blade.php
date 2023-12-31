@@ -5,6 +5,38 @@ Course Update - Design Step
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
+
+<style>
+.image-area {
+        position: relative;
+    }
+
+    #close-button {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 6px;
+        background: #fe251b;
+        display: none;
+    }
+
+    #close-button i {
+        color: #fff;
+    }
+
+    .drag-drop-areaa {
+        border: 2px dashed #666;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .drag-drop-areaa.highlight {
+        background-color: #f0f0f0;
+    }
+</style>
+
 @endsection
 {{-- page style @S --}}
 
@@ -91,25 +123,27 @@ Course Update - Design Step
                         <span class="invalid-feedback d-block">@error('promo_video'){{ $message }}
                             @enderror</span>
                     </div>
-                    <div class="top-image-upload-box mt-2">
-                        <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon"
-                                class="img-fluid"> Thumbnail</h4>
+                    <div class="top-image-upload-box mt-2 drag-drop-areaa" id="dragDropArea">
+                        <h4><img src="{{ asset('latest/assets/images/icons/gallery-icon.svg') }}" alt="gallery-icon" class="img-fluid"> Thumbnail</h4>
                         <input type="file" class="d-none" id="thumbnail" name="thumbnail">
                         <label for="thumbnail" class="file-up-box">
-                            <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon"
-                                class="img-fluid light-ele">
-                            <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon"
-                                class="img-fluid dark-ele">
-                            <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or GIF
-                                (max. 800x300px)</p>
+                            <img src="{{ asset('latest/assets/images/icons/upload-icon.svg') }}" alt="gallery-icon" class="img-fluid light-ele">
+                            <img src="{{ asset('latest/assets/images/icons/upload-5.svg') }}" alt="gallery-icon" class="img-fluid dark-ele">
+                            <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG, or GIF (max. 800x300px)</p>
                         </label>
                     </div>
-
-                    <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="" class="img-fluid rounded">
-                        @if ($course->thumbnail)
-                        <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid rounded">
+                    
+                    {{-- Previous image upload component --}}
+                    <div class="top-image-upload-box mt-2"> 
+                        @if ($course->thumbnail) 
+                            <div class="old-thumb">
+                                <img src="{{ asset($course->thumbnail) }}" alt="" class="img-fluid rounded d-block w-100"> 
+                            </div>
                         @endif
+                        <label class="image-area">
+                            <img src="" alt="" class="img-fluid rounded d-block w-100" id="thumbnailImage">
+                            <button class="btn" type="button" id="close-button"><i class="fas fa-close"></i></button>
+                        </label>
                     </div>
 
                     <div class="content-settings-form-wrap mt-0">
@@ -147,22 +181,67 @@ Course Update - Design Step
 {{-- page content @E --}}
 
 @section('script')
+
+{{-- thumbnail image preview --}}
 <script>
-    document.getElementById('thumbnail').addEventListener('change', function (e) {
-    const file = e.target.files[0];
+    const dragDropArea = document.getElementById('dragDropArea');
+    const lpBgImageInput = document.getElementById('thumbnail');
+    const lpLogoPreview = document.getElementById('thumbnailImage');
+    const lpCloseButton = document.getElementById('close-button');
+    const oldThumb = document.querySelector('.old-thumb');
 
-    if (file) {
-        const reader = new FileReader();
+    lpCloseButton.style.display = 'none';
 
-        reader.onload = function (event) {
-            const previewImage = document.getElementById('previewImage');
-            previewImage.src = event.target.result;
-        };
+    lpBgImageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        handleFiles([file]);
+    });
 
-        // Read the file as a data URL
-        reader.readAsDataURL(file);
+    dragDropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.add('highlight');
+    });
+
+    dragDropArea.addEventListener('dragleave', function () {
+        dragDropArea.classList.remove('highlight');
+    });
+
+    dragDropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.remove('highlight');
+
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        if (!files || files.length === 0) {
+            return;
+        }
+
+        const file = files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                lpLogoPreview.src = e.target.result;
+                lpCloseButton.style.display = 'block';
+                oldThumb.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+
+            // Set the file to the input element
+            lpBgImageInput.files = files;
+        }
     }
-});
 
+    lpCloseButton.addEventListener('click', function () {
+        lpBgImageInput.value = '';
+        lpLogoPreview.src = '';
+        lpCloseButton.style.display = 'none';
+        oldThumb.style.display = 'block';
+    });
 </script>
+
 @endsection
