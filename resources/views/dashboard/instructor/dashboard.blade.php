@@ -33,11 +33,20 @@
                         @if (count($courses) > 0)
                         @foreach ($courses->slice(0, 5) as $myCourses)
                         @php
-                        $totalLessons = 0;
-                        foreach ($myCourses->modules as $module) {
-                        $totalLessons = count($module->lessons);
-                        }
+                            $totalPublishedModules = 0;
+                            $totalPublishedLessons = 0;
                         @endphp
+
+                        @foreach ($myCourses->modules as $module)
+                            @if ($module->status === 'published')
+                                @php
+                                    $totalPublishedModules++;
+                                    $totalPublishedLessons += $module->lessons->where('status', 'published')->count();
+                                @endphp
+                            @endif
+                        @endforeach 
+
+
                         <div class="media">
                             @if ($myCourses->thumbnail)
                             <img src="{{ asset($myCourses->thumbnail) }}" alt="Thumbnail" class="img-fluid me-3 thumab">
@@ -52,9 +61,9 @@
                                 <p class="lessons">
                                     <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a"
                                         class="img-fluid">
-                                    {{ count($myCourses->modules) }} Modules &nbsp;&nbsp;
+                                    {{ $totalPublishedModules }} Modules &nbsp;&nbsp;
                                     <img src="{{ asset('latest/assets/images/icons/modules.svg') }}" alt="a"
-                                        class="img-fluid"> {{ $totalLessons }} Lessons
+                                        class="img-fluid"> {{ $totalPublishedLessons }} Lessons
                                 </p>
                             </div>
                             <div class="dropdown">

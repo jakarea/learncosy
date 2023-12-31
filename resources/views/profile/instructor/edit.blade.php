@@ -168,7 +168,7 @@
                                                     @foreach ($socialLinks as $key => $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
-                                                            <input type="url" class="form-control"
+                                                            <input autocomplete="off" type="url" class="form-control"
                                                                 id="social_links_{{ $key }}" name="social_links[]"
                                                                 value="{{ $socialLink }}">
 

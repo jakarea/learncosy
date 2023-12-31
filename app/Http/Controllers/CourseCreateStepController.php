@@ -53,6 +53,7 @@ class CourseCreateStepController extends Controller
             $module->instructor_id = Auth::user()->id;
             $module->title = $request->input('module_name');
             $module->slug = Str::slug($request->input('module_name'));
+            $module->status = "draft";
             $module->save();
         }
         return redirect('instructor/courses/create/'.$course->id)->with('success', 'Course Creation Started!');
@@ -229,7 +230,7 @@ class CourseCreateStepController extends Controller
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
         $module->slug = Str::slug($request->input('module_name'));
-        $module->status = 'published';
+        $module->status = 'draft';
         $module->save();
 
         return redirect()->back()->with('success', 'Module Created successfully');
@@ -488,6 +489,13 @@ class CourseCreateStepController extends Controller
 
         $lesson->status = 'published';
         $lesson->save();
+
+        $module = Module::find($lesson->module_id);
+
+        if ($module) {
+            $module->status = "published";
+            $module->save();
+        }
 
         return redirect('instructor/courses/create/'.$lesson->course_id.'/lesson/'.$lesson->module_id.'/institute/'.$lesson->id)->with('success', 'Lesson Content Added successfully');
 
@@ -847,7 +855,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        // forot session
+        // forgot session
         if (session()->has('course_id')) {
             session()->forget('course_id');
         }
@@ -869,31 +877,21 @@ class CourseCreateStepController extends Controller
             'status' => 'required',
         ]);
 
-        $hasLessonsWithContent = 1;
+        if ($request->status == 'published') {
+            $pendingModules = $course->modules()->where('status', 'draft')->count();
 
-        if ($request->input('status') == 'published') {
-            $hasLessonsWithContent = collect($course['modules'])
-            ->flatMap(function ($module) {
-                return $module['lessons'];
-            })
-            ->where(function ($lesson) {
-                return $lesson['video_link'] !== null || $lesson['audio'] !== null || $lesson['text'] !== null;
-            })
-            ->count() > 0;
-        }
+            if ($pendingModules > 0) {
+                return back()->withError('This course has pending modules!');
+            }
 
-        if ($request->input('status') == 'published' && $course->title == 'Untitled Course') {
-            $hasLessonsWithContent = 0;
-        }
+            foreach ($course->modules as $module) {
+                $pendingLessons = $module->lessons()->where('status', 'pending')->count();
 
-        if ($hasLessonsWithContent <= 0) {
-            return redirect()->back()->with('error','This course does not have lesson to Publish!');
-        }
+                if ($pendingLessons > 0) {
+                    return back()->withError("Module {$module->title} has pending lessons!");
+                }
+            } 
 
-        $pendingLessons = $course->lessons()->where('status', 'pending')->count();
-
-        if ($pendingLessons > 0) {
-            return back()->withError('This course doesn\'t have lesson to Publish!');
         }
 
         $course->status = $request->input('status');

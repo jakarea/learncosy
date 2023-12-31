@@ -92,7 +92,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website
                                     </label>
-                                        <input type="url" name="website" id="website"
+                                        <input autocomplete="off" type="url" name="website" id="website"
                                             class="form-control @error('website') is-invalid @enderror"
                                             placeholder="Enter web address" value="{{ $student->short_bio }}">
 
