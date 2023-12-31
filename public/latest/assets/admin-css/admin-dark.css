@@ -2001,7 +2001,7 @@
   background-color: #000 !important;
 }
 
-.bootstrap-tagsinput input {
+.dark-mode .bootstrap-tagsinput input {
   color: #fff;
 }
 
