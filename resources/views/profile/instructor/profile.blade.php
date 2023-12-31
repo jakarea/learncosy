@@ -132,10 +132,15 @@ My Profile Details
                     @endif
                     @if ($user->short_bio)
                         <div class="media">
-                            <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="email" class="img-fluid">
+                            <img src="{{ asset('latest/assets/images/icons/globe.svg') }}" alt="website" class="img-fluid">
                             <div class="media-body">
                                 <h6>Website</h6>
-                                <a href="#">{{ $user->short_bio ? $user->short_bio : '--' }}</a>
+                                @php
+                                    $website = $user->short_bio;
+                                    $urlPrefix = 'https://www.';
+                                    $formattedWebsite = \Illuminate\Support\Str::startsWith($website, $urlPrefix) ? $website : $urlPrefix . $website;
+                                @endphp
+                                <a href="{{ $formattedWebsite }}" target="_blank">{{ $formattedWebsite }}</a>
                             </div>
                         </div>
                     @endif

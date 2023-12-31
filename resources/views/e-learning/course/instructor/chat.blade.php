@@ -146,7 +146,7 @@
             @isset($friend->avatar)
                 <img src="{{ asset($friend->avatar) }}" alt="A" class="img-fluid rounded-circle">
             @else
-                <span class="user-name-avatar">{!! strtoupper($friend->name[0]) !!}</span>
+                <span class="user-name-avatar" style="width: 6rem; height: 6rem; font-size: 2rem;">{!! strtoupper($friend->name[0]) !!}</span>
             @endisset
 
             @if (Cache::has('user-is-online-' . $friend->id))
@@ -230,7 +230,7 @@
 
     <div class="media">
         <div class="media-body">
-            <h6>{{ $friend->email ?? "" }}</h6>
+            <h6>Email</h6>
             <a href="javascript:;">{{ $friend->email ?? "" }}</a>
         </div>
     </div>

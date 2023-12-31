@@ -5,6 +5,38 @@ Course Create - Certificate
 {{-- page style @S --}}
 @section('style')
 <link href="{{ asset('latest/assets/admin-css/elearning.css') }}" rel="stylesheet" type="text/css" />
+
+<style>
+    .image-area {
+        position: relative;
+    }
+
+    #close-button {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 6px;
+        background: #fe251b;
+        display: none;
+    }
+
+    #close-button i {
+        color: #fff;
+    }
+
+    .drag-drop-areaa {
+        border: 2px dashed #666;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .drag-drop-areaa.highlight {
+        background-color: #f0f0f0;
+    }
+</style>
+
 @endsection
 {{-- page style @S --}}
 
@@ -15,56 +47,72 @@ Course Create - Certificate
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
-               <div class="course-create-step-wrap">
-                <div class="step-box active">
-                    <span class="circle">
-                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
-                            class="img-fluid">
-                    </span>
-                    <p><a href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a></p>
+                <div class="course-create-step-wrap">
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                                class="img-fluid">
+                        </span>
+                        <p><a
+                                href="{{ url('instructor/courses/create', optional(request())->route('id')) }}">Contents</a>
+                        </p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                                class="img-fluid">
+                        </span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a>
+                        </p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                                class="img-fluid">
+                        </span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a>
+                        </p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                                class="img-fluid">
+                        </span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/price' }}">Price</a>
+                        </p>
+                    </div>
+                    <div class="step-box active">
+                        <span class="circle">
+                            <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
+                                class="img-fluid">
+                        </span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/design' }}">Design</a>
+                        </p>
+                    </div>
+                    <div class="step-box current">
+                        <span class="circle"></span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a>
+                        </p>
+                    </div>
+                    <div class="step-box">
+                        <span class="circle"></span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a>
+                        </p>
+                    </div>
+                    <div class="step-box">
+                        <span class="circle"></span>
+                        <p><a
+                                href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a>
+                        </p>
+                    </div>
                 </div>
-                <div class="step-box active">
-                    <span class="circle">
-                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
-                            class="img-fluid">
-                    </span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/facts' }}">Facts</a></p>
-                </div>
-                <div class="step-box active">
-                    <span class="circle">
-                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
-                            class="img-fluid">
-                    </span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/objects' }}">Objects</a></p>
-                </div>
-                <div class="step-box active">
-                    <span class="circle">
-                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
-                            class="img-fluid">
-                    </span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/price' }}">Price</a></p>
-                </div>
-                <div class="step-box active">
-                    <span class="circle">
-                        <img src="{{ asset('latest/assets/images/icons/check-mark.svg') }}" alt="icon"
-                            class="img-fluid">
-                    </span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/design' }}">Design</a></p>
-                </div>
-                <div class="step-box current">
-                    <span class="circle"></span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/certificate' }}">Certificate</a></p>
-                </div>
-                <div class="step-box">
-                    <span class="circle"></span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/visibility' }}">Visibility</a></p>
-                </div>
-                <div class="step-box">
-                    <span class="circle"></span>
-                    <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
-                </div>
-            </div>
-            {{-- course step --}}
+                {{-- course step --}}
             </div>
         </div>
 
@@ -72,7 +120,7 @@ Course Create - Certificate
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="top-image-upload-box">
+                    <div class="top-image-upload-box drag-drop-areaa" id="dragDropArea">
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -84,23 +132,31 @@ Course Create - Certificate
                         @endif
                         <h4><img src="{{asset('latest/assets/images/icons/gallery-icon.svg')}}" alt="gallery-icon"
                                 class="img-fluid">Preview</h4>
-                        <input type="file" class="d-none" id="certificate" name="sample_certificates">
-                        <label for="certificate" class="file-up-box">
+                        <input type="file" class="d-none" id="thumbnail" name="sample_certificates">
+                        <label for="thumbnail" class="file-up-box">
                             <img src="{{asset('latest/assets/images/icons/upload-icon.svg')}}" alt="gallery-icon"
                                 class="img-fluid light-ele">
                             <img src="{{asset('latest/assets/images/icons/upload-5.svg')}}" alt="gallery-icon"
                                 class="img-fluid dark-ele">
-                            <p><label for="certificate">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or
+                            <p><label for="thumbnail">Click to upload</label> or drag and drop <br> SVG, PNG, JPG or
                                 GIF (max. 800x300px)</p>
                         </label>
                         <span class="invalid-feedback">@error('sample_certificates'){{ $message }} @enderror</span>
-                    </div>
+                    </div> 
+
+                    {{-- Previous image upload component --}}
                     <div class="top-image-upload-box mt-2">
-                        <img id="previewImage" src="" alt="" class="img-fluid rounded d-block w-100">
                         @if ($course->sample_certificates)
-                        <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded d-block w-100">
+                        <div class="old-thumb">
+                            <img src="{{ asset($course->sample_certificates) }}" alt="" class="img-fluid rounded d-block w-100">
+                        </div>
                         @endif
+                        <label class="image-area">
+                            <img src="" alt="" class="img-fluid rounded d-block w-100" id="thumbnailImage">
+                            <button class="btn" type="button" id="close-button"><i class="fas fa-close"></i></button>
+                        </label>
                     </div>
+
                     <div class="content-settings-form-wrap mt-0">
                         <h4>Certificate</h4>
                         <hr>
@@ -109,7 +165,8 @@ Course Create - Certificate
                             <select class="form-control" name="certificateStyle">
                                 <option value="">Select Below</option>
                                 @foreach ($certificates as $certificate)
-                                    <option value="{{ $certificate->id }}" {{ $certificate->course_id ==  $course->id ? 'selected' : ''}}>{{ $certificate->course->title }}</option>
+                                <option value="{{ $certificate->id }}" {{ $certificate->course_id == $course->id ?
+                                    'selected' : ''}}>{{ $certificate->course->title }}</option>
                                 @endforeach
 
                             </select>
@@ -121,8 +178,8 @@ Course Create - Certificate
                             <div class="media-body">
                                 <p>Or Create a new Certificate</p>
                             </div>
-                            <a href="{{ route('account.settings', ['tab' => 'certificate', 'subdomain' => config('app.subdomain') ]) }}" class="btn btn-primary"
-                                target="_blank">Create</a>
+                            <a href="{{ route('account.settings', ['tab' => 'certificate', 'subdomain' => config('app.subdomain') ]) }}"
+                                class="btn btn-primary" target="_blank">Create</a>
                         </div>
                         <hr class="mb-0">
                     </div>
@@ -141,23 +198,67 @@ Course Create - Certificate
 {{-- page content @E --}}
 
 @section('script')
+
+{{-- thumbnail image preview --}}
 <script>
-    // Function to handle file input change
-document.getElementById('certificate').addEventListener('change', function (e) {
-    const file = e.target.files[0];
+    const dragDropArea = document.getElementById('dragDropArea');
+    const lpBgImageInput = document.getElementById('thumbnail');
+    const lpLogoPreview = document.getElementById('thumbnailImage');
+    const lpCloseButton = document.getElementById('close-button');
+    const oldThumb = document.querySelector('.old-thumb');
 
-    if (file) {
-        const reader = new FileReader();
+    lpCloseButton.style.display = 'none';
 
-        reader.onload = function (event) {
-            const previewImage = document.getElementById('previewImage');
-            previewImage.src = event.target.result;
-        };
+    lpBgImageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        handleFiles([file]);
+    });
 
-        // Read the file as a data URL
-        reader.readAsDataURL(file);
+    dragDropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.add('highlight');
+    });
+
+    dragDropArea.addEventListener('dragleave', function () {
+        dragDropArea.classList.remove('highlight');
+    });
+
+    dragDropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.remove('highlight');
+
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        if (!files || files.length === 0) {
+            return;
+        }
+
+        const file = files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                lpLogoPreview.src = e.target.result;
+                lpCloseButton.style.display = 'block';
+                oldThumb.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+
+            // Set the file to the input element
+            lpBgImageInput.files = files;
+        }
     }
-});
 
+    lpCloseButton.addEventListener('click', function () {
+        lpBgImageInput.value = '';
+        lpLogoPreview.src = '';
+        lpCloseButton.style.display = 'none';
+        oldThumb.style.display = 'block';
+    });
 </script>
+
 @endsection

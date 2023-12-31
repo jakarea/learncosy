@@ -118,7 +118,7 @@ Course Update - Design Step
                     @csrf
                     <div class="top-image-upload-box">
                         <h4>Promo Video URL <sup class="text-danger" style="font-size: 0.8rem">(youtube)</sup> </h4>
-                        <input type="url" class="mt-2 form-control" name="promo_video" placeholder="Only youtube video"
+                        <input autocomplete="off" type="url" class="mt-2 form-control" name="promo_video" placeholder="Only youtube video"
                             value="{{ $course->promo_video ? $course->promo_video : old('promo_video')  }}">
                         <span class="invalid-feedback d-block">@error('promo_video'){{ $message }}
                             @enderror</span>

@@ -157,7 +157,12 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                @if ($course_review->user && $course_review->user->avatar)
+                                    <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                @else 
+                                    <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
+                                @endif
+                               
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
                                     <h6>{{$course_review->created_at}}</h6>

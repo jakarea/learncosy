@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="url" placeholder="e.g. https://www.sociallink.com"
+                                    <input autocomplete="off" type="url" placeholder="e.g. https://www.sociallink.com"
                                         name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">

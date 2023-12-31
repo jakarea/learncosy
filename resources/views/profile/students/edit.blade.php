@@ -135,7 +135,7 @@
                                                     @foreach ($socialLinks as $socialLink)
                                                     <div class="social-extra-field">
                                                         <div class="form-group">
-                                                            <input type="url" class="form-control" id="social_links"
+                                                            <input autocomplete="off" type="url" class="form-control" id="social_links"
                                                                 name="social_links[]" value="{{ $socialLink }}" >
 
                                                             <span class="invalid-feedback">@error('social_links'){{ $message }}  @enderror</span>

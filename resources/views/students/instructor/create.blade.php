@@ -90,7 +90,7 @@
                                 <div class="form-group form-error">
                                     <label for="website">Website </label>
 
-                                    <input type="url" name="website" id="website" value="{{ old('website') }}"
+                                    <input autocomplete="off" type="url" name="website" id="website" value="{{ old('website') }}"
                                         class="form-control @error('website') is-invalid @enderror"
                                         placeholder="Enter Web address">
 
@@ -102,7 +102,7 @@
                                 <div class="form-group">
                                     <label for="features" class="mb-1">Social Media </label>
 
-                                    <input type="url" placeholder="Enter Social Link" name="social_links[]"
+                                    <input autocomplete="off" type="url" placeholder="Enter Social Link" name="social_links[]"
                                         class="form-control w-100 @error('social_links') is-invalid @enderror"
                                         id="features" multiple value="">
 

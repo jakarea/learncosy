@@ -77,8 +77,14 @@
             </div>
             <div class="col-lg-3">
                 <div class="paid-student-name">
-                    <div class="avatar">
-                        <img src="{{asset($payment->user->avatar)}}" alt="a" class="img-fluid">
+                    <div class="avatar text-center">
+                        @if($payment->user)
+                            @if ($payment->user->avatar)
+                                <img src="{{ asset($payment->user->avatar) }}" alt="User" class="img-fluid">
+                            @else
+                                <span class="avatar-big-box">{!! strtoupper($payment->user->name[0]) !!}</span>
+                            @endif 
+                        @endif 
                     </div>
                     <div class="txt">
                         <h5><a href="{{url('instructor/students/profile/'.$payment->user->id)}}">{{ $payment->user->name}}</a></h5>
