@@ -33,19 +33,19 @@ Account Management
                     <div class="header">
                         <ul class="nav nav-pills main-navigator" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active tab-link" id="pills-home-tab" data-bs-toggle="pill"
+                                <button class="nav-link {{ $tab == 'dns' ? '' : 'active' }} tab-link" id="pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                                     aria-selected="true" data-param="home">Theme Setting</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link tab-link" id="pills-experience-tab" data-bs-toggle="pill"
+                                <button class="nav-link tab-link {{ $tab == 'dns' ? 'active' : '' }}" id="pills-experience-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-experience" type="button" role="tab"
                                     aria-controls="pills-experience" aria-selected="false" data-param="dns">DNS</button>
                             </li>
                         </ul>
                     </div>
                     <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane active-bg fade show active tab-con" id="pills-home" role="tabpanel"
+                        <div class="tab-pane active-bg fade tab-con {{ $tab == 'dns' ? '' : 'show active' }}" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab" tabindex="0">
                             <div class="row justify-content-center">
                                 <div class="col-lg-10 col-xl-9">
@@ -472,7 +472,7 @@ Account Management
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade tab-con" id="pills-experience" role="tabpanel"
+                        <div class="tab-pane fade tab-con {{ $tab == 'dns' ? 'show active' : '' }}" id="pills-experience" role="tabpanel"
                             aria-labelledby="pills-experience-tab" tabindex="0">
                             <div class="dns-settings-box-wrapper">
                                 <div class="dns-left-sidebar">
