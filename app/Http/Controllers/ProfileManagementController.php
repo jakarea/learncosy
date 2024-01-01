@@ -22,9 +22,9 @@ class ProfileManagementController extends Controller
 
     // profile show
     public function show()
-    { 
+    {
         // dark mode preference session forgot
-        if (session()->has('preferenceMode')) { 
+        if (session()->has('preferenceMode')) {
             session()->forget('preferenceMode');
         }
 
@@ -37,8 +37,8 @@ class ProfileManagementController extends Controller
 
     // profile edit
     public function edit(Request $request, $domain, $experience_id = '')
-    { 
-        
+    {
+
         $userId = Auth()->user()->id;
         $user = User::find($userId);
         $editExp = '';
@@ -94,7 +94,7 @@ class ProfileManagementController extends Controller
         $user->social_links = implode(",",$request->social_links);
         $user->phone = $request->phone;
         $user->description = $request->description;
-        $user->recivingMessage = $request->recivingMessage;
+        $user->recivingMessage = $request->recivingMessage ? true : false;
         $user->email = $user->email;
         if ($request->password) {
             $user->password = Hash::make($request->password);

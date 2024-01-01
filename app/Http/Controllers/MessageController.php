@@ -44,7 +44,7 @@ class MessageController extends Controller
             // ->where('users.subdomain', '=', config('app.subdomain') )
             // ->where('users.id', '!=', Auth::id())
             ->where([
-                ['users.recivingMessage', true],
+                // ['users.recivingMessage', true],
                 ['users.subdomain', config('app.subdomain')],
                 ['users.id', '!=', Auth::id()],
             ])
@@ -134,7 +134,7 @@ class MessageController extends Controller
             ])
 
             ->where([
-                ['users.recivingMessage', true],
+                // ['users.recivingMessage', true],
                 ['users.subdomain', config('app.subdomain')],
                 ['users.id', '!=', Auth::id()],
             ])
@@ -189,6 +189,12 @@ class MessageController extends Controller
             $sender_Id = Auth::id();
             $receiver_id = $request->receiver_id;
             $message = $request->message;
+
+            $receiverUser = User::findOrFail($receiver_id);
+
+            if( $receiverUser->recivingMessage == false){
+                return response()->json(["error" => "The message cannot be sent as Mr. $receiverUser->name has currently deactivated message reception!!"]);
+            }
 
             $data = new Chat();
             $data->sender_id = $sender_Id;
@@ -351,7 +357,7 @@ class MessageController extends Controller
                     },
                 ])
                 ->where([
-                    ['users.recivingMessage', true],
+                    // ['users.recivingMessage', true],
                     ['users.subdomain', config('app.subdomain')],
                     ['users.id', '!=', Auth::id()],
                 ])
@@ -433,6 +439,18 @@ class MessageController extends Controller
             abort(404);
         }
         return response()->download($path, $fileName);
+    }
+
+
+    public function getUserDetails(Request $request){
+        $receiverUser = User::findOrFail($request->receiver_id);
+
+        $data = [
+            'recivingMessage' => $receiverUser->recivingMessage,
+            'message' => "The message cannot be sent as Mr. $receiverUser->name has currently deactivated message reception!!"
+        ];
+
+        return response()->json($data);
     }
 
 
