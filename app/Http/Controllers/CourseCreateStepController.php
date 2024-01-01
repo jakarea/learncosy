@@ -434,6 +434,7 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonAudioSet(Request $request,$subdomain, $id, $module_id, $lesson_id){
 
+        // return $request->dd();
         if (!$id) {
             return redirect('instructor/courses');
         }
@@ -890,7 +891,7 @@ class CourseCreateStepController extends Controller
                 if ($pendingLessons > 0) {
                     return back()->withError("Module {$module->title} has pending lessons!");
                 }
-            } 
+            }
 
         }
 

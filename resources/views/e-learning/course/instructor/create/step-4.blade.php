@@ -14,7 +14,7 @@ Course Create - Step 4
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-4 col-xl-3">
-                {{-- course step --}} 
+                {{-- course step --}}
                 <div class="course-create-step-wrap page-create-step">
                     <div class="step-box current">
                         <span class="circle"></span>
@@ -33,15 +33,15 @@ Course Create - Step 4
                 <div class="highlighted-area-upload">
                     <img src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="a" class="img-fluid">
                     <p><label for="audio">Click here</label> to set the highlighted audio</p>
-                </div>  
+                </div>
 
                 <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="frontAudio">
                     <h4>Uploading Audio:</h4>
                     <div class="title d-flex w-100 justify-content-between">
                         <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem"> 
+                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem">
                             <div class="media-body">
-                                <h5 id="file-name"></h5> 
+                                <h5 id="file-name"></h5>
                                 <p>Size:  <span id="file-size"></span> MB</p>
                             </div>
                         </div>
@@ -51,19 +51,19 @@ Course Create - Step 4
                             </a>
                         </div>
                     </div>
-                </div> 
+                </div>
 
                 {{-- uploaded audio preview --}}
- 
 
-                @if ($lesson->audio) 
+
+                @if ($lesson->audio)
                 <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start" id="dbAudio">
                     <h4>Current Audio:</h4>
                     <div class="title d-flex w-100 justify-content-between">
                         <div class="media">
-                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem"> 
+                            <img id="audio-thumbnail" src="{{asset('latest/assets/images/icons/big-audio.svg')}}" alt="Audio" class="img-fluid" style="width: 2rem">
                             <div class="media-body">
-                                <h5>{{ basename($lesson->audio) }} </h5> 
+                                <h5>{{ basename($lesson->audio) }} </h5>
                                 <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
                             </div>
                         </div>
@@ -73,13 +73,14 @@ Course Create - Step 4
                             </a>
                         </div>
                     </div>
-                </div> 
-                @endif 
+                </div>
+                @endif
 
                 <div class="lesson-edit-form-wrap mt-4">
                     <h4>{{$lesson->title}}</h4>
 
                     <form
+                        id="uploadAudio"
                         action="{{ route('course.lesson.audio.create',['id' => $lesson->course_id, 'module_id' => $lesson->module_id, 'lesson_id' => $lesson->id, 'subdomain' => config('app.subdomain')]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
@@ -109,15 +110,15 @@ Course Create - Step 4
                             <!-- Uploaded files will be displayed here -->
                         </div>
 
-                         
-                        @if ($lesson->lesson_file) 
+
+                        @if ($lesson->lesson_file)
                         <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start">
                             <h4>Current Lesson File:</h4>
                             <div class="title d-flex w-100 justify-content-between">
                                 <div class="media">
-                                    <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem"> 
+                                    <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem">
                                     <div class="media-body">
-                                        <h5> {{ basename($lesson->lesson_file) }}</h5> 
+                                        <h5> {{ basename($lesson->lesson_file) }}</h5>
                                         <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
@@ -127,8 +128,8 @@ Course Create - Step 4
                                     </a>
                                 </div>
                             </div>
-                        </div> 
-                    @endif 
+                        </div>
+                    @endif
                 </div>
 
                 {{-- step next bttns --}}
@@ -149,7 +150,7 @@ Course Create - Step 4
 
 <script>
     const fileInput = document.getElementById('file-input');
-    const fileList = document.getElementById('file-list'); 
+    const fileList = document.getElementById('file-list');
 
     fileInput.addEventListener('change', function () {
         const file = fileInput.files[0];
@@ -178,7 +179,7 @@ Course Create - Step 4
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
+                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li>
                 </ul>
             </div>
         `;
@@ -223,9 +224,9 @@ Course Create - Step 4
     }
 </script>
 
-<script> 
+<script>
    // Replace with the appropriate event that triggers this function
-   $('#frontAudio').css('display', 'none'); 
+   $('#frontAudio').css('display', 'none');
     $('#audio-thumbnail').css('display', 'none');
 
     $('#audio').change(function () {
@@ -241,11 +242,11 @@ Course Create - Step 4
             // Display the selected file name
             fileNameSpan.text(audioInput.files[0].name);
             var fileSizeMb = (audioInput.files[0].size / (1024 * 1024)).toFixed(2);
-            fileSizeSpan.text(fileSizeMb);            
+            fileSizeSpan.text(fileSizeMb);
 
             // Hide the placeholder image by setting display: none
-            $('#audio-thumbnail').css('display', 'block'); 
-            $('#frontAudio').css('display', 'block'); 
+            $('#audio-thumbnail').css('display', 'block');
+            $('#frontAudio').css('display', 'block');
 
             // Show the remove audio icon
             removeAudioIcon.css('display', 'inline-block');
@@ -253,9 +254,9 @@ Course Create - Step 4
             // No file selected, reset to the placeholder image
             fileNameSpan.text('');
             $('#audio-thumbnail').css('display', 'none');
-            $('#frontAudio').css('display', 'none'); 
+            $('#frontAudio').css('display', 'none');
             removeAudioIcon.hide();
-            $('#dbAudio').css('display', 'block'); 
+            $('#dbAudio').css('display', 'block');
         }
     });
 
@@ -270,9 +271,46 @@ Course Create - Step 4
 
         // Reset the display property of the placeholder image
         $('#audio-thumbnail').css('display', 'none');
-        $('#dbAudio').css('display', 'block'); 
-        $('#frontAudio').css('display', 'none'); 
+        $('#dbAudio').css('display', 'block');
+        $('#frontAudio').css('display', 'none');
     });
 
 </script>
+
+
+<script>
+    var baseUrl = "{{ url('/') }}";
+    var courseId = "{{ $lesson->course_id }}";
+    var moduleId = "{{ $lesson->module_id }}";
+    var lessonId = "{{ $lesson->id }}";
+    $(document).ready(function () {
+        $('#uploadAudio').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $('.btn-submit').attr('disabled', true).html(
+                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...'
+                    );
+                },
+
+                success: function (data) {
+                    $('.btn-submit').attr('disabled', false).text('Upload');
+                    window.location.href = baseUrl + '/instructor/courses/create/' + courseId + '/lesson/' + moduleId + '/institute/' + lessonId;
+                },
+
+                error: function (xhr, status, error) {
+                    console.error('Error during upload', error);
+                }
+
+            });
+        });
+    });
+</script>
+
 @endsection
