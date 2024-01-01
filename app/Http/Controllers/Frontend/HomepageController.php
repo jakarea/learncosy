@@ -51,8 +51,6 @@ class HomepageController extends Controller
         $course_reviews = CourseReview::where('course_id', $course->id)->get();
         $courseEnrolledNumber = Checkout::where('course_id', $course->id)->count();
 
-
-
         $userIdentifier = isset($_COOKIE['userIdentifier']) ? $_COOKIE['userIdentifier'] : null;
 
         $cartCourses = Cart::where(function ($query) use ($userIdentifier) {
@@ -65,14 +63,19 @@ class HomepageController extends Controller
 
         $related_course = [];
         if ($course) {
-            if ($course->categories) {
+            if($course->categories){ 
                 $categoryArray = explode(',', $course->categories);
-                $query = Course::query();
 
-                foreach ($categoryArray as $category) {
-                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                }
-                $related_course = $query->take(4)->get();
+                $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where('status','published')
+                ->where('id', '!=', $course->id)
+                ->where(function ($query) use ($categoryArray) {
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                })
+                ->take(4)
+                ->get();
             }
 
 

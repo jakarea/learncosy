@@ -193,14 +193,17 @@ $i = 0;
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
                     <div class="row">
-                        @if (count($relatedCourses))
+                        @if (count($relatedCourses) > 0)
                         @foreach ($relatedCourses as $relatedCourse)
                         <div class="col-md-6 col-12 col-lg-12 col-xl-12 mt-15">
                             {{-- item --}}
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
-                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="{{ $relatedCourse->title }}"
-                                        class="img-fluid">
+                                    @if ($relatedCourse->thumbnail)
+                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid"> 
+                                    @else 
+                                        <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}" alt="Course Thumbnail" class="img-fluid">
+                                    @endif
                                 </div>
                                 <div class="course-txt-box">
                                     <a href="{{ url('admin/courses/'.$relatedCourse->slug.'/show') }}">{{

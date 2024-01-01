@@ -2585,3 +2585,8 @@ body.dark-mode .dark-mode-bttn label:last-child i {
 .dark-mode .course-single-item .course-txt-box ul li i.not-rev{
   color: rgba(166, 177, 196, 0.48)!important;
 }
+
+.dark-mode .form-submit-bttns.mt-4 .btn-primary{
+  background-color: #7A8FFA!important;
+  color: #0D0D0D!important;
+}

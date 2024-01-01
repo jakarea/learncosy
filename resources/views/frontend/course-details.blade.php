@@ -66,15 +66,17 @@
                             @if ($course->user)
                                 <div class="media">
 
-                                    @isset($course->user->avatar)
-                                        <img src="{{ asset($course->user->avatar) }}" alt="Place" class="img-fluid">
-                                    @else
-                                        <span class="user-name-avatar me-1">{!! strtoupper($course->user->name[0]) !!}</span>
-                                    @endisset
+                                    @if ($course->user)
+                                        @if ($course->user->avatar)
+                                            <img src="{{ asset($course->user->avatar) }}" alt="Place" class="img-fluid">
+                                        @else 
+                                            <span class="user-name-avatar me-1">{!! strtoupper($course->user->name[0]) !!}</span>
+                                        @endif
+                                    @endif 
 
                                     <div class="media-body">
-                                        <h5>{{ $course->user->name }}</h5>
-                                        <h6 class="text-capitalize">{{ $course->user->user_role }}</h6>
+                                        <h5>{{ optional($course->user)->name }}</h5>
+                                        <h6 class="text-capitalize">{{ optional($course->user)->user_role }}</h6>
                                     </div>
                                 </div>
                             @endif
@@ -93,10 +95,19 @@
                             {{-- course lesson duration calculation --}}
 
                             @php
+                            $publishedModulesCount = 0;
+                            foreach ($course->modules as $module) {
+                            if ($module->status === 'published') {
+                            $publishedModulesCount++;
+                            }
+                            }
+                            @endphp
+
+                            @php
                                 $totalDurationMinutes = round($totalDurationMinutes / 60);
                             @endphp
 
-                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ $publishedModulesCount }} Moduls in
                                 Course
                                 . {{ count($course_reviews) }} Reviews</h4>
 
@@ -144,9 +155,6 @@
                                         style="border-radius: 6.25rem; margin-top: 2rem">Buy Course Now</button>
                                 </form>
                             @endif
-
-
-
                         </div>
                     </div>
                 </div>
@@ -177,6 +185,7 @@
                     <div class="course-outline-wrap course-content">
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
+                                @if ($module->status == 'published')
                                 <div class="accordion-item">
                                     <div class="accordion-header" id="heading_{{ $module->id }}">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -209,6 +218,7 @@
                                         <div class="accordion-body p-0">
                                             <ul class="lesson-wrap">
                                                 @foreach ($module->lessons as $lesson)
+                                                    @if ($lesson->status == 'published')
                                                     <li>
                                                         @if (!isEnrolled($course->id))
                                                             <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
@@ -232,11 +242,13 @@
                                                             </a>
                                                         @endif
                                                     </li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -278,60 +290,55 @@
                             </div>
                         @endif
                     </div>
+                    @if (count($related_course) > 0) 
                     <div class="common-header">
                         <h3 class="mb-0">Similar Course</h3>
                     </div>
                     <div class="row">
-                        @if (count($related_course) > 0)
-                            @foreach ($related_course as $course)
-                                @php
-                                    $review_sum = 0;
-                                    $review_avg = 0;
-                                    $total = 0;
-                                    foreach ($course->reviews as $review) {
-                                        $total++;
-                                        $review_sum += $review->star;
-                                    }
-                                    if ($total) {
-                                        $review_avg = $review_sum / $total;
-                                    }
-                                @endphp
-                                {{-- course single box start --}}
+                        @foreach ($related_course as $course)
+                            @php
+                                $review_sum = 0;
+                                $review_avg = 0;
+                                $total = 0;
+                                foreach ($course->reviews as $review) {
+                                    $total++;
+                                    $review_sum += $review->star;
+                                }
+                                if ($total) {
+                                    $review_avg = $review_sum / $total;
+                                }
+                            @endphp
+                            {{-- course single box start --}}
+                            <div class="col-lg-5 col-sm-6 mb-4">
+                                <div class="course-single-item">
+                                    <div class="course-thumb-box">
+                                        <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
+                                            class="img-fluid">
+                                    </div>
 
-                                <div class="col-lg-5 col-sm-6">
-                                    <div class="course-single-item">
-                                        <div class="course-thumb-box">
-                                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
-                                                class="img-fluid">
-                                        </div>
-
-                                        <div class="course-txt-box">
-                                            <a
-                                                href="{{ url('courses/overview-courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                                            <p>{{ $course->user->subdomain }}</p>
-                                            <ul>
-                                                <li><span>{{ $review_avg }}</span></li>
-                                                @for ($i = 0; $i < $review_avg; $i++)
-                                                    <li><i class="fas fa-star"></i></li>
-                                                @endfor
-                                                <li><span>({{ $total }})</span></li>
-                                            </ul>
-                                            @if ($course->offer_price)
-                                                <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                                            @else
-                                                <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
-                                            @endif
-                                        </div>
+                                    <div class="course-txt-box">
+                                        <a
+                                            href="{{ url('courses/overview-courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                        <p>{{ $course->user->subdomain }}</p>
+                                        <ul>
+                                            <li><span>{{ $review_avg }}</span></li>
+                                            @for ($i = 0; $i < $review_avg; $i++)
+                                                <li><i class="fas fa-star"></i></li>
+                                            @endfor
+                                            <li><span>({{ $total }})</span></li>
+                                        </ul>
+                                        @if ($course->offer_price)
+                                            <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                        @else
+                                            <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
+                                        @endif
                                     </div>
                                 </div>
-                                {{-- course single box end --}}
-                            @endforeach
-                        @else
-                            <div class="text-center">
-                                <p>No similer course found for this course!</p>
                             </div>
-                        @endif
+                            {{-- course single box end --}}
+                        @endforeach 
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                     <div class="course-overview-right-part">

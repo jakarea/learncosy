@@ -192,6 +192,7 @@
                             </div>
                         @endif
                     </div>
+                    @if (count($related_course) > 0)
                     <div class="common-header">
                         <h3 class="mb-0">Similar Course</h3>
                     </div>
@@ -209,52 +210,51 @@
                                     $review_avg = $review_sum / $total;
                                 }
                             @endphp
-                            {{-- course single box start --}}
-                            @if ($r_course->id != $course->id)
-                                <div class="col-lg-5 col-sm-6 mb-4">
-                                    <div class="course-single-item">
-                                        <div>
-                                            <div class="course-thumb-box">
-                                                <img src="{{ asset($r_course->thumbnail) }}" alt="{{ $r_course->slug }}"
-                                                    class="img-fluid">
-                                            </div>
-                                            <div class="course-txt-box">
-                                                @if (isEnrolled($r_course->id))
-                                                    <a
-                                                        href="{{ url('students/courses/my-courses/details/' . $r_course->slug) }}">
-                                                        {{ Str::limit($r_course->title, 45) }}</a>
-                                                @else
-                                                    <a href="{{ url('students/courses/overview/' . $r_course->slug) }}">
-                                                        {{ Str::limit($r_course->title, 50) }}</a>
-                                                @endif
-
-                                                <p>{{ Str::limit($r_course->short_description, $limit = 46, $end = '...') }}
-                                                </p>
-                                                <ul>
-                                                    <li><span>{{ $review_avg }}</span></li>
-                                                    @for ($i = 0; $i < $review_avg; $i++)
-                                                        <li><i class="fas fa-star"></i></li>
-                                                    @endfor
-                                                    <li><span>({{ $total }})</span></li>
-                                                </ul>
-                                            </div>
+                            {{-- course single box start --}} 
+                            <div class="col-lg-5 col-sm-6 mb-4">
+                                <div class="course-single-item">
+                                    <div>
+                                        <div class="course-thumb-box">
+                                            <img src="{{ asset($r_course->thumbnail) }}" alt="{{ $r_course->slug }}"
+                                                class="img-fluid">
                                         </div>
                                         <div class="course-txt-box">
-                                            @if ($r_course->offer_price)
-                                                <h5>€ {{ $r_course->offer_price }} <span>€ {{ $r_course->price }}</span>
-                                                </h5>
-                                            @elseif(!$r_course->offer_price && !$r_course->price)
-                                                <h5>Free</h5>
+                                            @if (isEnrolled($r_course->id))
+                                                <a
+                                                    href="{{ url('students/courses/my-courses/details/' . $r_course->slug) }}">
+                                                    {{ Str::limit($r_course->title, 45) }}</a>
                                             @else
-                                                <h5>€ {{ $r_course->price }}</h5>
+                                                <a href="{{ url('students/courses/overview/' . $r_course->slug) }}">
+                                                    {{ Str::limit($r_course->title, 50) }}</a>
                                             @endif
+
+                                            <p>{{ Str::limit($r_course->short_description, $limit = 46, $end = '...') }}
+                                            </p>
+                                            <ul>
+                                                <li><span>{{ $review_avg }}</span></li>
+                                                @for ($i = 0; $i < $review_avg; $i++)
+                                                    <li><i class="fas fa-star"></i></li>
+                                                @endfor
+                                                <li><span>({{ $total }})</span></li>
+                                            </ul>
                                         </div>
                                     </div>
+                                    <div class="course-txt-box">
+                                        @if ($r_course->offer_price)
+                                            <h5>€ {{ $r_course->offer_price }} <span>€ {{ $r_course->price }}</span>
+                                            </h5>
+                                        @elseif(!$r_course->offer_price && !$r_course->price)
+                                            <h5>Free</h5>
+                                        @else
+                                            <h5>€ {{ $r_course->price }}</h5>
+                                        @endif
+                                    </div>
                                 </div>
-                                {{-- course single box end --}}
-                            @endif
+                            </div>
+                            {{-- course single box end --}} 
                         @endforeach
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
                     <div class="course-overview-right-part">
