@@ -277,10 +277,10 @@
 @endsection
 
 @section('script')
-<script>  
+<script>
         const modess = document.querySelector("body").classList.contains('dark-mode') ? 'dark-mode' : '';
-        modeCall(modess); 
-</script>  
+        modeCall(modess);
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -292,7 +292,7 @@
         let dropbtn = document.getElementById("dropdownBttn");
         let form = document.getElementById("myForm");
         let queryString = window.location.search;
-        let urlParams = new URLSearchParams(queryString); 
+        let urlParams = new URLSearchParams(queryString);
         let status = urlParams.get('status');
         let dropdownItems = document.querySelectorAll(".filterItem");
 
@@ -373,7 +373,7 @@
             $(".filter-option").click(function(e) {
                 e.preventDefault();
                 var duration = $(this).data("duration");
- 
+
                 var currentUrl = window.location.href;
                 var updatedUrl = updateQueryStringParameter(currentUrl, 'duration', duration);
                 history.pushState({
