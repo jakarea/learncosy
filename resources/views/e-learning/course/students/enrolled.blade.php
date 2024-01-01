@@ -91,21 +91,29 @@
                                         </p>
                                         <ul>
                                             <li><span>{{ $review_avg }}</span></li>
-                                            @for ($i = 0; $i < $review_avg; $i++)
-                                                <li><i class="fas fa-star"></i></li>
+                                            
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $review_avg)
+                                                    <li><i class="fas fa-star"></i></li>
+                                                @else
+                                                    <li><i class="fas fa-star not-rev"></i></li>
+                                                @endif
                                             @endfor
+                                            
                                             <li><span>({{ $total }})</span></li>
                                         </ul>
+                                        
+                                        
                                     </div>
                                 </div>
-                                <div class="course-txt-box">
+                                <div class="course-txt-box pt-0">
                                     <div class="course-progress-bar">
                                         <div class="progress" role="progressbar" aria-label="Basic example"
                                             aria-valuenow="{{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}"
                                             aria-valuemin="0" aria-valuemax="100">
                                             @if (StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) == 100)
-                                                <div class="progress-bar"
-                                                    style="width: {{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}%; background: #32BCA3;">
+                                                <div class="progress-bar course-gren-bg"
+                                                    style="width: {{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}%;">
                                                 </div>
                                             @else
                                                 <div class="progress-bar"
@@ -116,8 +124,8 @@
                                         </div>
                                         <div class="d-flex">
                                             @if (StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) == 100)
-                                                <h6 style="color: #32BCA3">Completed</h6>
-                                                <h6 style="color: #32BCA3">
+                                                <h6 class="course-gren-colr">Completed</h6>
+                                                <h6 class="course-gren-colr">
                                                     {{ StudentActitviesProgress(auth()->user()->id, $enrolment->course->id) }}
                                                     %</h6>
                                             @else

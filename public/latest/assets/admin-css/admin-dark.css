@@ -2562,3 +2562,26 @@ body.dark-mode .dark-mode-bttn label:last-child i {
   background-color: #0d0d0d!important;
   color: #fff!important;
 }
+
+.dark-mode .course-rev-box ul li i{
+  color: #FFD07A!important;
+}
+
+.dark-mode .show-notification-item .delete-item .btn img{ 
+  filter: invert(99%) sepia(73%) saturate(599%) hue-rotate(191deg) brightness(113%) contrast(89%)!important;
+}
+
+.dark-mode .student-courses-lists-pages .course-progress-bar .progress .progress-bar.course-gren-bg{
+  background-color: #3CCBB1!important;
+}
+.dark-mode .student-courses-lists-pages .course-progress-bar .d-flex h6.course-gren-colr{
+  color: #3CCBB1!important;
+}
+
+.dark-mode .course-single-item .course-txt-box ul li i{
+  color: #FFC21A!important;
+}
+
+.dark-mode .course-single-item .course-txt-box ul li i.not-rev{
+  color: rgba(166, 177, 196, 0.48)!important;
+}

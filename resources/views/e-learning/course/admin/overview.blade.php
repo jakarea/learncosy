@@ -157,15 +157,18 @@
                     <div class="col-lg-6">
                         <div class="course-rev-box">
                             <div class="media">
-                                @if ($course_review->user && $course_review->user->avatar)
-                                    <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                                @else 
-                                    <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
+                                @if ($course_review->user)
+                                    @if ($course_review->user->avatar)
+                                        <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                                    @else 
+                                        <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
+                                    @endif
                                 @endif
-                               
+                                
                                 <div class="media-body">
                                     <h5>{{$course_review->user->name}}</h5>
-                                    <h6>{{$course_review->created_at}}</h6>
+                                    <h6>{{ \Carbon\Carbon::parse($course_review->created_at)->format('D, M d Y') }}
+                                    </h6>
                                 </div>
                             </div>
                             <p>{{$course_review->comment}}</p>

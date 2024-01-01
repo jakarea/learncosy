@@ -9,7 +9,7 @@ $layoutName = "layouts.latest.admin";
 @endphp
 
 @extends($layoutName)
-@section('title') Instructor Notifications @endsection
+@section('title') Student Notifications @endsection
 
 {{-- style section @S --}}
 @section('style')
@@ -52,14 +52,13 @@ $layoutName = "layouts.latest.admin";
                 <div class="notification-box-wrapper">
                     @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays)
                     == 0 && count($lastOneYears) == 0 )
-                    @include('partials/no-data')
+                   <p class="text-center">There aren't any notifications in your inbox</p>
                     @else
                     <div class="show-notification-item">
 
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
-
                             {{-- day --}}
 
                             {{-- notify item start --}}
@@ -81,7 +80,6 @@ $layoutName = "layouts.latest.admin";
                                         @endphp
                                         <h5>
                                             @if ($course)
-
                                             @if (isEnrolled($course->id))
                                                 <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
                                                     {{$today['title']}}</a>
@@ -93,7 +91,7 @@ $layoutName = "layouts.latest.admin";
                                             {{$today['title']}}
                                             @endif
                                         </h5>
-                                        <p>{{$today['type']}}</p>
+                                        <p>{{$today['type']}} - <span>{{ $today->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
                                 <div class="delete-item">
@@ -130,16 +128,22 @@ $layoutName = "layouts.latest.admin";
                                     </div>
                                     <div class="media-body">
                                         @php
-                                            $course = App\Models\Course::find($yestarday->course_id);
+                                        $course = App\Models\Course::find($yestarday->course_id);
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$yestarday['title']}}</a>
+                                            @if (isEnrolled($course->id))
+                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    {{$yestarday['title']}}</a>
                                             @else
-                                                {{$yestarday['title']}}
+                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    {{$yestarday['title']}}</a>
+                                            @endif
+                                            @else
+                                            {{$yestarday['title']}}
                                             @endif
                                         </h5>
-                                        <p>{{$yestarday['type']}}</p>
+                                        <p>{{$yestarday['type']}} - <span>{{ $yestarday->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
 
@@ -176,16 +180,22 @@ $layoutName = "layouts.latest.admin";
                                     </div>
                                     <div class="media-body">
                                         @php
-                                            $course = App\Models\Course::find($sevenDay->course_id);
+                                        $course = App\Models\Course::find($sevenDay->course_id);
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$sevenDay['title']}}</a>
+                                            @if (isEnrolled($course->id))
+                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    {{$sevenDay['title']}}</a>
                                             @else
-                                                {{$sevenDay['title']}}
+                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    {{$sevenDay['title']}}</a>
+                                            @endif
+                                            @else
+                                            {{$sevenDay['title']}}
                                             @endif
                                         </h5>
-                                        <p>{{$sevenDay['type']}}</p>
+                                        <p>{{$sevenDay['type']}} - <span>{{ $sevenDay->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
 
@@ -221,16 +231,22 @@ $layoutName = "layouts.latest.admin";
                                     </div>
                                     <div class="media-body">
                                         @php
-                                            $course = App\Models\Course::find($thirtyDay->course_id);
+                                        $course = App\Models\Course::find($thirtyDay->course_id);
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$thirtyDay['title']}}</a>
+                                            @if (isEnrolled($course->id))
+                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    {{$thirtyDay['title']}}</a>
                                             @else
-                                                {{$thirtyDay['title']}}
+                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    {{$thirtyDay['title']}}</a>
+                                            @endif
+                                            @else
+                                            {{$thirtyDay['title']}}
                                             @endif
                                         </h5>
-                                        <p>{{$thirtyDay['type']}}</p>
+                                        <p>{{$thirtyDay['type']}} - <span>{{ $thirtyDay->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
 
@@ -268,16 +284,22 @@ $layoutName = "layouts.latest.admin";
                                     </div>
                                     <div class="media-body">
                                         @php
-                                            $course = App\Models\Course::find($lastOneYear->course_id);
+                                        $course = App\Models\Course::find($lastOneYear->course_id);
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                                <a href="{{ url('students/courses/overview/'.$course->slug) }}">{{$lastOneYear['title']}}</a>
+                                            @if (isEnrolled($course->id))
+                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    {{$lastOneYear['title']}}</a>
                                             @else
-                                                {{$lastOneYear['title']}}
+                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    {{$lastOneYear['title']}}</a>
+                                            @endif
+                                            @else
+                                            {{$lastOneYear['title']}}
                                             @endif
                                         </h5>
-                                        <p>{{$lastOneYear['type']}}</p>
+                                        <p>{{$lastOneYear['type']}} - <span>{{ $lastOneYear->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
 
