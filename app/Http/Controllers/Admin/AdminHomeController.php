@@ -377,30 +377,21 @@ class AdminHomeController extends Controller
         // return $monthlySums;
 
 
-
-
-
-        // config(['app.timezone' => 'UTC']);
-
-        // Use Laravel's Carbon instance to get the current month
         $currentMonthNumber = Carbon::now()->month;
-
-        // Initialize an array for monthly sums
-        $monthlySums = array_fill(0, 12, 0);
+        $monthlySums = array_fill(0, $currentMonthNumber, 0);
 
         // Iterate through the data array
         foreach ($data as $item) {
-            $createdAt = Carbon::parse($item['created_at'], 'UTC');
+            $createdAt = Carbon::parse($item['created_at']);
             $month = intval($createdAt->format('m'));
 
-            // Ensure the month value is within the valid range (1 to 12)
-            if ($month >= 1 && $month <= 12) {
+            // Ensure the month value is within the valid range (1 to $currentMonthNumber)
+            if ($month >= 1 && $month <= $currentMonthNumber) {
                 $monthlySums[$month - 1] += $item['amount'];
             }
         }
 
         return $monthlySums;
-
     }
 
     private function getTotalEarningViaSubscription($duration)
