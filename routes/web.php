@@ -140,6 +140,8 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/chat/download/{filename}', 'downloadChatFile')->name('messages.file.download');
     Route::get('/delete/single-chat-history', 'deleteSingleChatHistory')->name('messages.delete.singlechat');
     Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
+
+    Route::get('/user/details', 'getUserDetails')->name('messages.user.details');
 });
 
 Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
