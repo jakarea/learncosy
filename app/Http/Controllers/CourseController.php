@@ -96,11 +96,21 @@ class CourseController extends Controller
             }
         }
 
-        $relatedCourses = Course::where('id', '!=', $id)
-            ->where('user_id', Auth::user()->id)
-            ->inRandomOrder()
-            ->limit(3)
+        if($course->categories){ 
+            $categoryArray = explode(',', $course->categories);
+
+            $relatedCourses = Course::where('instructor_id', $course->instructor_id)
+            ->where('status','published')
+            ->where('id', '!=', $course->id)
+            ->where(function ($query) use ($categoryArray) {
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+            })
+            ->take(3)
             ->get();
+        }
+
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
         $totalModules = $course->modules->where('status', 'published')->count();
@@ -154,8 +164,13 @@ class CourseController extends Controller
 
         $related_course = [];
         if ($course) {
-            $categoryArray = explode(',', $course->categories);
-            $related_course = Course::where('instructor_id', $course->instructor_id)
+            
+            if($course->categories){ 
+                $categoryArray = explode(',', $course->categories);
+
+                $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where('status','published')
+                ->where('id', '!=', $course->id)
                 ->where(function ($query) use ($categoryArray) {
                     foreach ($categoryArray as $category) {
                         $query->orWhere('categories', 'like', '%' . trim($category) . '%');
@@ -163,7 +178,7 @@ class CourseController extends Controller
                 })
                 ->take(4)
                 ->get();
-
+            }
 
             return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
         } else {

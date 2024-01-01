@@ -313,11 +313,19 @@ class StudentHomeController extends Controller
         }
 
         //end group file
-        $relatedCourses = Course::where('id', '!=', $course->id)
-        ->where('user_id', $course->user_id)
-        ->inRandomOrder()
-        ->limit(3)
-        ->get();
+        if ($course && $course->categories) {
+            $categoryArray = explode(',', $course->categories);
+            $relatedCourses = Course::where('instructor_id', $course->instructor_id)
+            ->where('status','published')
+            ->where('id', '!=', $course->id)
+            ->where(function ($query) use ($categoryArray) {
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+            })
+            ->take(3)
+            ->get();
+        } 
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
@@ -556,18 +564,21 @@ class StudentHomeController extends Controller
 
         $related_course = [];
         if ($course) {
-            if($course->categories){
+            if($course->categories){ 
                 $categoryArray = explode(',', $course->categories);
-                $query = Course::query(); // Replace YourModel with your actual model class
 
-                foreach ($categoryArray as $category) {
-                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                }
-                $related_course = $query->take(4)->get();
+                $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where('status','published')
+                ->where('id', '!=', $course->id)
+                ->where(function ($query) use ($categoryArray) {
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                })
+                ->take(4)
+                ->get();
             }
-
-
-
+            
             return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');

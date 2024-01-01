@@ -352,3 +352,14 @@ input:visited{
     -webkit-text-fill-color: #000!important;
     transition: background-color 5000s ease-in-out 0s!important; 
 }
+
+.student-courses-lists-pages .course-progress-bar .progress .progress-bar.course-gren-bg{
+  background-color: #32BCA3;
+}
+.student-courses-lists-pages .course-progress-bar .d-flex h6.course-gren-colr{
+  color: #32BCA3;
+}
+
+.course-single-item .course-txt-box ul li i.not-rev{
+  color: rgba(166, 177, 196, 0.48)!important;
+}

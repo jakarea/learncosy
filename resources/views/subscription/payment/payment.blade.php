@@ -61,7 +61,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <input autocomplete="off" type="text" class="form-control" id="phone" name="phone" placeholder="" value="{{ Auth::check() ? Auth::user()->phone : '' }}">
-                                            <label for="phone">+31 Phone</label>
+                                            <label for="phone">Phone</label>
 
                                         </div>
                                     </div>

@@ -71,6 +71,13 @@ Bundle Course Select
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xxl-3 mt-15">
                 <div class="course-single-item">
                     <div class="course-thumb-box">
+                        @if ($course->status == 'pending')
+                            <span class="badge text-bg-danger">Pending</span>
+                            @elseif ($course->status == 'draft')
+                            <span class="badge text-bg-warning">Draft</span>
+                            @elseif ($course->status == 'published')
+                            <span class="badge text-bg-primary">Publish</span>
+                            @endif
                         <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                     </div>
                     <div class="course-txt-box">

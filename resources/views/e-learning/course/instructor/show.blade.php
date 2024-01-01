@@ -121,7 +121,7 @@ $i = 0;
                                         @endfor
                                 </ul>
                                 <p>{{ $course_review->comment }}</p>
-                                <small>{{ $course_review->created_at->diffForHumans() }}</small>
+                                {{-- <small>{{ $course_review->created_at->diffForHumans() }}</small> --}}
 
                             </div>
                         </div>
@@ -232,16 +232,16 @@ $i = 0;
                 <div class="related-course-box">
                     <h3>Related Courses</h3>
                     <div class="row">
-                        @if (count($relatedCourses))
+                        @if (count($relatedCourses) > 0)
                         @foreach ($relatedCourses as $relatedCourse)
                         <div class="col-md-6 col-12 col-lg-12 col-xl-12  mb-3">
                             {{-- item --}}
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     @if ($relatedCourse->thumbnail)
-                                    <img src="{{ asset( $relatedCourse->thumbnail) }}" alt="Place" class="img-fluid">
-                                    @else
-                                    <span class="avtar">{!! strtoupper($thumbnail->user->name[0]) !!}</span>
+                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid"> 
+                                    @else 
+                                        <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}" alt="Course Thumbnail" class="img-fluid">
                                     @endif
 
                                 </div>

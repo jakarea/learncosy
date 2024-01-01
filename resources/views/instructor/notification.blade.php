@@ -41,19 +41,17 @@
                 <hr class="line">
                 <div class="notification-box-wrapper">
                     @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 )
-                    @include('partials/no-data')
+                    <p class="text-center">There aren't any notifications in your inbox</p>
                     @else
                     <div class="show-notification-item">
 
                         <div class="single" data-value="1">
                             {{-- day --}}
                             <h5>Today</h5>
-
                             {{-- day --}}
 
                             {{-- notify item start --}}
                             @foreach($todays as $today)
-
                             @php
                                 $course = App\Models\Course::find($today->course_id);
                                 $user = App\Models\User::find($today->user_id);
@@ -74,15 +72,15 @@
 
                                         @if ($course && $user)
                                             @if ($today->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
+                                            <h5>{{ $user->name }} - Enrolled to <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @elseif($today->message == 'review')
-                                                <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
+                                                <h5>{{ $user->name }} - Post a review to  <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @endif
                                         @else
                                             <h5>{{$today['message']}}</h5>
                                         @endif
 
-                                        <p>{{ $today->message }}</p>
+                                        <p>{{ $today->message }} - <span>{{ $today->created_at->diffForHumans() }}</span></p>
 
                                     </div>
                                 </div>
@@ -129,15 +127,15 @@
 
                                         @if ($course && $user)
                                             @if ($yestarday->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
+                                            <h5>{{ $user->name }} - Enrolled to <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @elseif($yestarday->message == 'review')
-                                                <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
+                                                <h5>{{ $user->name }} - Post a review to  <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @endif
                                         @else
                                             <h5>{{$yestarday['message']}}</h5>
                                         @endif
 
-                                        <p>{{ $yestarday->message }}</p>
+                                        <p>{{ $yestarday->message }} - <span>{{ $yestarday->created_at->diffForHumans() }}</span></p>
 
                                     </div>
                                 </div>
@@ -184,15 +182,15 @@
 
                                         @if ($course && $user)
                                             @if ($sevenDay->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
+                                            <h5>{{ $user->name }} - Enrolled to <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @elseif($sevenDay->message == 'review')
-                                                <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
+                                                <h5>{{ $user->name }} - Post a review to  <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @endif
                                         @else
                                             <h5>{{$sevenDay['message']}}</h5>
                                         @endif
 
-                                        <p>{{ $sevenDay->message }}</p>
+                                        <p>{{ $sevenDay->message }} - <span>{{ $sevenDay->created_at->diffForHumans() }}</span></p>
 
                                     </div>
                                 </div>
@@ -238,15 +236,15 @@
 
                                         @if ($course && $user)
                                             @if ($thirtyDay->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
+                                            <h5>{{ $user->name }} - Enrolled to <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @elseif($thirtyDay->message == 'review')
-                                                <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
+                                                <h5>{{ $user->name }} - Post a review to  <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @endif
                                         @else
                                             <h5>{{$thirtyDay['message']}}</h5>
                                         @endif
 
-                                        <p>{{ $thirtyDay->message }}</p>
+                                        <p>{{ $thirtyDay->message }} - <span>{{ $thirtyDay->created_at->diffForHumans() }}</span></p>
 
                                     </div>
                                 </div>
@@ -294,15 +292,15 @@
 
                                         @if ($course && $user)
                                             @if ($lastOneYear->message == 'enrolled')
-                                            <h5>{{ $user->name }} - Enrolled to {{ $course->title }}</h5>
+                                            <h5>{{ $user->name }} - Enrolled to <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @elseif($lastOneYear->message == 'review')
-                                                <h5>{{ $user->name }} - Post a review to  {{ $course->title }}</h5>
+                                                <h5>{{ $user->name }} - Post a review to  <a href="{{ url('instructor/courses/overview/'.$course->slug) }}">{{ $course->title }}</a></h5>
                                             @endif
                                         @else
                                             <h5>{{$lastOneYear['message']}}</h5>
                                         @endif
 
-                                        <p>{{ $lastOneYear->message }}</p>
+                                        <p>{{ $lastOneYear->message }} - <span>{{ $lastOneYear->created_at->diffForHumans() }}</span></p>
 
                                     </div>
                                 </div>

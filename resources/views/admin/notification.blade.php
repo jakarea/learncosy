@@ -14,11 +14,11 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="user-title-box">
-                    <h1>Notification </h1>
+                    <h1>Notification</h1>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3">
-                <div class="filter-dropdown-box">
+                <div class="filter-dropdown-box mb-3">
                     <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                             id="dropdownBttn">
@@ -41,7 +41,7 @@
                 <hr class="line">
                 <div class="notification-box-wrapper">
                     @if (count($todays) == 0 && count($yestardays) == 0 && count($sevenDays) == 0 && count($thirtyDays) == 0 && count($lastOneYears) == 0 ) 
-                    @include('partials/no-data')
+                    <p class="text-center">There aren't any notifications in your inbox</p>
                     @else 
                     <div class="show-notification-item">
                         
@@ -70,13 +70,13 @@
                                         @endphp
                                         <h5>
                                             @if ($course)
-                                            <a
-                                                href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$today['title']}}</a>
+                                                <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$today['title']}}</a>
                                             @else
-                                            {{$today['title']}}
+                                                {{$today['title']}}
                                             @endif
-                                        </h5>
-                                        <p>{{$today['type']}}</p>
+                                        </h5> 
+                                        
+                                        <p>{{$today['type']}} - <span>{{ $today->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
                                 
@@ -105,9 +105,18 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
+                                    @php
+                                        $course = App\Models\Course::find($yestarday->course_id);
+                                    @endphp
                                     <div class="media-body">
-                                        <h5>{{$yestarday['type']}}</h5>
-                                        <p>{{$yestarday['message']}}</p>
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$yestarday['title']}}</a>
+                                            @else
+                                                {{$yestarday['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$yestarday['type']}} - <span>{{ $yestarday->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
  
@@ -135,9 +144,18 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
+                                    @php
+                                        $course = App\Models\Course::find($sevenDay->course_id);
+                                    @endphp
                                     <div class="media-body">
-                                        <h5>{{$sevenDay['type']}}</h5>
-                                        <p>{{$sevenDay['message']}}</p>
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$sevenDay['title']}}</a>
+                                            @else
+                                                {{$sevenDay['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$sevenDay['type']}} - <span>{{ $sevenDay->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
  
@@ -164,9 +182,18 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
+                                    @php
+                                        $course = App\Models\Course::find($thirtyDay->course_id);
+                                    @endphp
                                     <div class="media-body">
-                                        <h5>{{$thirtyDay['type']}}</h5>
-                                        <p>{{$thirtyDay['message']}}</p>
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$thirtyDay['title']}}</a>
+                                            @else
+                                                {{$thirtyDay['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$thirtyDay['type']}} - <span>{{ $thirtyDay->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
  
@@ -195,9 +222,18 @@
                                         @endif
                                         <i class="fas fa-heart"></i>
                                     </div>
+                                    @php
+                                        $course = App\Models\Course::find($lastOneYear->course_id);
+                                    @endphp
                                     <div class="media-body">
-                                        <h5>{{$lastOneYear['type']}}</h5>
-                                        <p>{{$lastOneYear['message']}}</p>
+                                        <h5>
+                                            @if ($course)
+                                                <a href="{{ url('admin/courses/overview/'.$course->slug) }}">{{$lastOneYear['title']}}</a>
+                                            @else
+                                                {{$lastOneYear['title']}}
+                                            @endif
+                                        </h5>
+                                        <p>{{$lastOneYear['type']}} - <span>{{ $lastOneYear->created_at->diffForHumans() }}</span></p>
                                     </div>
                                 </div>
 

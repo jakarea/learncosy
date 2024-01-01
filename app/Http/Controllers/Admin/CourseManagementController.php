@@ -106,11 +106,19 @@ class CourseManagementController extends Controller
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 
-        $relatedCourses = Course::where('id', '!=', $course->id)
-            ->where('user_id', $course->user_id)
-            ->inRandomOrder()
-            ->limit(3)
-        ->get();
+        if ($course && $course->categories) {
+            $categoryArray = explode(',', $course->categories);
+            $relatedCourses = Course::where('instructor_id', $course->instructor_id)
+            ->where('status','published')
+            ->where('id', '!=', $course->id)
+            ->where(function ($query) use ($categoryArray) {
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                }
+            })
+            ->take(3)
+            ->get();
+        } 
 
         $totalModules = $course->modules->where('status', 'published')->count();
 
@@ -163,9 +171,11 @@ class CourseManagementController extends Controller
         $related_course = [];
         if ($course) {
 
-            $categoryArray = explode(',', $course->categories);
-
-            $related_course = Course::where('instructor_id', $course->instructor_id)
+            if ($course->categories) {
+                $categoryArray = explode(',', $course->categories);
+                $related_course = Course::where('instructor_id', $course->instructor_id)
+                ->where('status','published')
+                ->where('id', '!=', $course->id)
                 ->where(function ($query) use ($categoryArray) {
                     foreach ($categoryArray as $category) {
                         $query->orWhere('categories', 'like', '%' . trim($category) . '%');
@@ -173,10 +183,9 @@ class CourseManagementController extends Controller
                 })
                 ->take(4)
                 ->get();
+            }
 
             $Urlsubdomain = $course->user->subdomain;
-
-
 
             return view('e-learning/course/admin/overview', compact('course','promo_video_link','course_reviews','related_course','courseEnrolledNumber','Urlsubdomain'));
         } else {
