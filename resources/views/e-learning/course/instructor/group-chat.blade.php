@@ -13,14 +13,16 @@
                 <ul class="peoples">
                     @if( $currentGroup->participants )
                         @foreach ($currentGroup->participants as $participant)
-                            <li>
-                                @isset( $participant->user->avatar )
-                                    <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
-                                @else
-                                    <span class="user-name-avatar">{!! strtoupper($participant->user->name[0]) !!}</span>
-                                @endisset
+                            @if($participant->user->recivingMessage == 1)
+                                <li>
+                                    @isset( $participant->user->avatar )
+                                        <img src="{{ asset( $participant->user->avatar ) }}" alt="{{ $participant->user->name }}" class="img-fluid">
+                                    @else
+                                        <span class="user-name-avatar">{!! strtoupper($participant->user->name[0]) !!}</span>
+                                    @endisset
 
-                            </li>
+                                </li>
+                            @endif
                         @endforeach
                     @endif
                 </ul>
