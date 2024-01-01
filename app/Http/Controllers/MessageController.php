@@ -385,7 +385,7 @@ class MessageController extends Controller
                 return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
             } elseif($layoutDesing == "layout2") {
                 return view('e-learning.course.instructor.chat-user.search-users', $data);
-            }else{
+            }else if($layoutDesing == "layout3"){
                 return view('e-learning.course.instructor.message-group.group-list', $data);
             }
         }

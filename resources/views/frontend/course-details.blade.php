@@ -69,10 +69,10 @@
                                     @if ($course->user)
                                         @if ($course->user->avatar)
                                             <img src="{{ asset($course->user->avatar) }}" alt="Place" class="img-fluid">
-                                        @else 
+                                        @else
                                             <span class="user-name-avatar me-1">{!! strtoupper($course->user->name[0]) !!}</span>
                                         @endif
-                                    @endif 
+                                    @endif
 
                                     <div class="media-body">
                                         <h5>{{ optional($course->user)->name }}</h5>
@@ -95,19 +95,24 @@
                             {{-- course lesson duration calculation --}}
 
                             @php
-                            $publishedModulesCount = 0;
-                            foreach ($course->modules as $module) {
-                            if ($module->status === 'published') {
-                            $publishedModulesCount++;
-                            }
-                            }
+                                $publishedModulesCount = 0;
+                                foreach ($course->modules as $module) {
+                                    if ($module->status === 'published') {
+                                        $publishedModulesCount++;
+                                    }
+                                }
                             @endphp
 
                             @php
-                                $totalDurationMinutes = round($totalDurationMinutes / 60);
+                                $hours = floor($totalDurationMinutes / 3600);
+                                $minutes = floor(($totalDurationMinutes % 3600) / 60);
                             @endphp
 
-                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ $publishedModulesCount }} Moduls in
+                            <h4>@if ($hours > 0)
+                                {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                            @endif
+
+                            {{ $minutes }} Minutes to Complete . {{ $publishedModulesCount }} Moduls in
                                 Course
                                 . {{ count($course_reviews) }} Reviews</h4>
 
@@ -186,68 +191,75 @@
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
                                 @if ($module->status == 'published')
-                                <div class="accordion-item">
-                                    <div class="accordion-header" id="heading_{{ $module->id }}">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            <div class="d-flex">
-                                                <p>{{ $module->title }}</p>
-                                                <i class="fas fa-angle-down"></i>
-                                            </div>
-                                        </button>
-                                        {{-- lessons total minutes --}}
-                                        @php
-                                            $totalDuration = 0;
+                                    <div class="accordion-item">
+                                        <div class="accordion-header" id="heading_{{ $module->id }}">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                <div class="d-flex">
+                                                    <p>{{ $module->title }}</p>
+                                                    <i class="fas fa-angle-down"></i>
+                                                </div>
+                                            </button>
+                                            {{-- lessons total minutes --}}
+                                            @php
+                                                $totalDuration = 0;
 
-                                            foreach ($module->lessons as $lesson) {
-                                                if (isset($lesson->duration) && is_numeric($lesson->duration)) {
-                                                    $totalDuration += $lesson->duration;
+                                                foreach ($module->lessons as $lesson) {
+                                                    if (isset($lesson->duration) && is_numeric($lesson->duration)) {
+                                                        $totalDuration += $lesson->duration;
+                                                    }
                                                 }
-                                            }
 
-                                            $totalDuration = round($totalDuration / 60);
+                                                $hours = floor($totalDuration / 3600);
+                                                $minutes = floor(($totalDuration % 3600) / 60);
 
-                                        @endphp
+                                            @endphp
 
-                                        <p class="common-para mb-4">{{ $totalDuration }} Min . 0 Curriculum</p>
-                                        {{-- lessons total minutes --}}
-                                    </div>
-                                    <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
-                                        aria-labelledby="heading_{{ $module->id }}" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body p-0">
-                                            <ul class="lesson-wrap">
-                                                @foreach ($module->lessons as $lesson)
-                                                    @if ($lesson->status == 'published')
-                                                    <li>
-                                                        @if (!isEnrolled($course->id))
-                                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
-                                                                class="video_list_play d-flex">
-                                                                <div>
-                                                                    <img src="{{ asset('latest/assets/images/icons/lok.svg') }}"
-                                                                        alt="a" class="img-fluid me-2">
-                                                                    {{ $lesson->title }}
-                                                                </div>
-                                                                <p class="common-para"> {{ $lesson->duration }}</p>
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ $lesson->video_link }}"
-                                                                class="video_list_play d-inline-block"
-                                                                data-video-id="{{ $lesson->id }}"
-                                                                data-lesson-id="{{ $lesson->id }}"
-                                                                data-course-id="{{ $course->id }}"
-                                                                data-modules-id="{{ $module->id }}">
-                                                                <i class="fas fa-play-circle"></i>
-                                                                {{ $lesson->title }}
-                                                            </a>
+                                            <p class="common-para mb-4">@if ($hours > 0)
+                                                {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                            @endif
+
+                                            {{ $minutes }} Min . {{ $module->lessons->where('status','published')->count() }} Lessons</p>
+                                            {{-- lessons total minutes --}}
+                                        </div>
+                                        <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
+                                            aria-labelledby="heading_{{ $module->id }}"
+                                            data-bs-parent="#accordionExample">
+                                            <div class="accordion-body p-0">
+                                                <ul class="lesson-wrap">
+                                                    @foreach ($module->lessons as $lesson)
+                                                        @if ($lesson->status == 'published')
+                                                            <li>
+                                                                @if (!isEnrolled($course->id))
+                                                                    <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
+                                                                        class="video_list_play d-flex">
+                                                                        <div>
+                                                                            <img src="{{ asset('latest/assets/images/icons/lok.svg') }}"
+                                                                                alt="a" class="img-fluid me-2">
+                                                                            {{ $lesson->title }}
+                                                                        </div>
+                                                                        <p class="common-para"> {{ $lesson->duration }}
+                                                                        </p>
+                                                                    </a>
+                                                                @else
+                                                                    <a href="{{ $lesson->video_link }}"
+                                                                        class="video_list_play d-inline-block"
+                                                                        data-video-id="{{ $lesson->id }}"
+                                                                        data-lesson-id="{{ $lesson->id }}"
+                                                                        data-course-id="{{ $course->id }}"
+                                                                        data-modules-id="{{ $module->id }}">
+                                                                        <i class="fas fa-play-circle"></i>
+                                                                        {{ $lesson->title }}
+                                                                    </a>
+                                                                @endif
+                                                            </li>
                                                         @endif
-                                                    </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endif
                             @endforeach
                         </div>
@@ -265,14 +277,16 @@
                                         <div class="media">
                                             @if ($course_review->user)
                                                 @if ($course_review->user->avatar)
-                                                    <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                                                @else 
+                                                    <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar"
+                                                        class="img-fluid">
+                                                @else
                                                     <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
                                                 @endif
                                             @endif
                                             <div class="media-body">
                                                 <h5>{{ $course_review->user->name }}</h5>
-                                                <h6>{{ \Carbon\Carbon::parse($course_review->created_at)->format('D, M d Y') }}</h6>
+                                                <h6>{{ \Carbon\Carbon::parse($course_review->created_at)->format('D, M d Y') }}
+                                                </h6>
                                             </div>
                                         </div>
                                         <p>{{ $course_review->comment }}</p>
@@ -290,54 +304,54 @@
                             </div>
                         @endif
                     </div>
-                    @if (count($related_course) > 0) 
-                    <div class="common-header">
-                        <h3 class="mb-0">Similar Course</h3>
-                    </div>
-                    <div class="row">
-                        @foreach ($related_course as $course)
-                            @php
-                                $review_sum = 0;
-                                $review_avg = 0;
-                                $total = 0;
-                                foreach ($course->reviews as $review) {
-                                    $total++;
-                                    $review_sum += $review->star;
-                                }
-                                if ($total) {
-                                    $review_avg = $review_sum / $total;
-                                }
-                            @endphp
-                            {{-- course single box start --}}
-                            <div class="col-lg-5 col-sm-6 mb-4">
-                                <div class="course-single-item">
-                                    <div class="course-thumb-box">
-                                        <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
-                                            class="img-fluid">
-                                    </div>
+                    @if (count($related_course) > 0)
+                        <div class="common-header">
+                            <h3 class="mb-0">Similar Course</h3>
+                        </div>
+                        <div class="row">
+                            @foreach ($related_course as $course)
+                                @php
+                                    $review_sum = 0;
+                                    $review_avg = 0;
+                                    $total = 0;
+                                    foreach ($course->reviews as $review) {
+                                        $total++;
+                                        $review_sum += $review->star;
+                                    }
+                                    if ($total) {
+                                        $review_avg = $review_sum / $total;
+                                    }
+                                @endphp
+                                {{-- course single box start --}}
+                                <div class="col-lg-5 col-sm-6 mb-4">
+                                    <div class="course-single-item">
+                                        <div class="course-thumb-box">
+                                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
+                                                class="img-fluid">
+                                        </div>
 
-                                    <div class="course-txt-box">
-                                        <a
-                                            href="{{ url('courses/overview-courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                                        <p>{{ $course->user->subdomain }}</p>
-                                        <ul>
-                                            <li><span>{{ $review_avg }}</span></li>
-                                            @for ($i = 0; $i < $review_avg; $i++)
-                                                <li><i class="fas fa-star"></i></li>
-                                            @endfor
-                                            <li><span>({{ $total }})</span></li>
-                                        </ul>
-                                        @if ($course->offer_price)
-                                            <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
-                                        @else
-                                            <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
-                                        @endif
+                                        <div class="course-txt-box">
+                                            <a
+                                                href="{{ url('courses/overview-courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
+                                            <p>{{ $course->user->subdomain }}</p>
+                                            <ul>
+                                                <li><span>{{ $review_avg }}</span></li>
+                                                @for ($i = 0; $i < $review_avg; $i++)
+                                                    <li><i class="fas fa-star"></i></li>
+                                                @endfor
+                                                <li><span>({{ $total }})</span></li>
+                                            </ul>
+                                            @if ($course->offer_price)
+                                                <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                            @else
+                                                <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- course single box end --}}
-                        @endforeach 
-                    </div>
+                                {{-- course single box end --}}
+                            @endforeach
+                        </div>
                     @endif
                 </div>
                 <div class="col-lg-4 col-12 order-1 order-lg-2 col-md-6">
