@@ -30,7 +30,7 @@ class AdminHomeController extends Controller
         $this->previousMonthEnd = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d H:i:s');
     }
 
- 
+
 
     // dashboard
     public function dashboard(Request $request)
@@ -364,14 +364,39 @@ class AdminHomeController extends Controller
 
         $data = Subscription::join('subscription_packages', 'subscriptions.subscription_packages_id', '=', 'subscription_packages.id')->get();
 
-        $curentMonthNumber = date('n');
-        $monthlySums = array_fill(0, $curentMonthNumber, 0);
+        // $curentMonthNumber = date('n');
+        // $monthlySums = array_fill(0, $curentMonthNumber, 0);
+
+        // // Iterate through the data array
+        // foreach ($data as $item) {
+        //     $createdAt = Carbon::parse($item['created_at']);
+        //     $month = intval($createdAt->format('m'));
+        //     $monthlySums[$month - 1] += $item['amount'];
+        // }
+
+        // return $monthlySums;
+
+
+
+
+
+        // config(['app.timezone' => 'UTC']);
+
+        // Use Laravel's Carbon instance to get the current month
+        $currentMonthNumber = Carbon::now()->month;
+
+        // Initialize an array for monthly sums
+        $monthlySums = array_fill(0, 12, 0);
 
         // Iterate through the data array
         foreach ($data as $item) {
-            $createdAt = Carbon::parse($item['created_at']);
+            $createdAt = Carbon::parse($item['created_at'], 'UTC');
             $month = intval($createdAt->format('m'));
-            $monthlySums[$month - 1] += $item['amount'];
+
+            // Ensure the month value is within the valid range (1 to 12)
+            if ($month >= 1 && $month <= 12) {
+                $monthlySums[$month - 1] += $item['amount'];
+            }
         }
 
         return $monthlySums;
