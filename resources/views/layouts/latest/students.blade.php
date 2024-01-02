@@ -15,6 +15,7 @@
     <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
     @if (modulesetting('favicon'))
     <link rel="shortcut icon" href="{{ asset(modulesetting('favicon')) }}">
@@ -81,7 +82,7 @@
 </head>
 
 <body class="{{ session('darkModePreference') == 'dark-mode' ? 'dark-mode' : '' }}">
- 
+
 
     {{-- Main Root Wrapper @S --}}
     <div class="main-page-wrapper">
@@ -140,7 +141,7 @@
             const baseUrls = currentURLs.split('/').slice(0, 3).join('/');
 
             // Update the dark mode preference using session
-            fetch(`${baseUrls}/preference/mode/setting`, { 
+            fetch(`${baseUrls}/preference/mode/setting`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +157,7 @@
             const mode = htmlBody.classList.contains('dark-mode') ? 'dark-mode' : '';
 
             modeCall(mode);
-            
+
             localStorage.setItem('dark-mode', mode);
 
             if (htmlBody.classList.contains('dark-mode')) {

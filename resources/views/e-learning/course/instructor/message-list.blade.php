@@ -985,10 +985,19 @@ function sendMessage(event) {
             </div>
         </div>`;
 
-    getUserDetails(receiver_id).then(function (userDetails) {
 
+    getSenderUserDetails(my_id).then(function (userDetails) {
         if (userDetails.recivingMessage == "0" ) {
-            toastr.error('Error', userDetails.message, { positionClass: 'toast-bottom-right' });
+            toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
+            return;
+        }
+        messageInnner.append(myLastMessage);
+    });
+
+
+    getUserDetails(receiver_id).then(function (userDetails) {
+        if (userDetails.recivingMessage == "0" ) {
+            toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
             return;
         }
         messageInnner.append(myLastMessage);
@@ -1025,6 +1034,24 @@ function getUserDetails(receiver_id) {
         type: "get",
         url: "{{ route('messages.user.details') }}",
         data: { receiver_id: receiver_id },
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function (data) {
+            return data;
+        },
+        error: function (jqXHR, status, err) {
+            console.error("Error fetching user details:", status, err);
+        }
+    });
+}
+
+function getSenderUserDetails(my_id) {
+    return $.ajax({
+        type: "get",
+        url: "{{ route('messages.sender.user.details') }}",
+        data: { sender_id: my_id },
         dataType: "json",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
