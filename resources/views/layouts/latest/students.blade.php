@@ -48,7 +48,8 @@
     <link href="{{ asset('latest/assets/admin-css/responsive.css') }}" rel="stylesheet" type="text/css" />
     <!-- all css end -->
 
-
+    <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .user-name-avatar {
             display: inline-flex;

@@ -598,6 +598,7 @@ $(document).on('click', '.group', function () {
     var group_id = $(this).attr('id');
     receiver_id = group_id.split('_')[1];
     fetchGroupData(receiver_id);
+    scrollToBottomFunc();
 });
 
 function fetchGroupData(receiver_id){
