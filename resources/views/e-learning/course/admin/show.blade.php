@@ -18,7 +18,7 @@ $i = 0;
         <div class="row">
             <div class="col-xl-9 col-lg-8 col-md-12 col-12">
                 <div class="course-left">
-                    {{-- video player --}} 
+                    {{-- video player --}}
                     <div class="video-iframe-vox">
                         @if (getFirstLesson($course->id))
                         <div class="video-iframe-vox">
@@ -51,7 +51,7 @@ $i = 0;
                             </audio>
                         </div>
                     </div>
-                    {{-- audio player --}} 
+                    {{-- audio player --}}
 
                     {{-- course title --}}
                     <div class="media course-title">
@@ -79,20 +79,20 @@ $i = 0;
                             {!! $course->description !!}
                         </div>
                     </div>
-                   
+
                     {{-- course review --}}
-                    @if ($course->allow_review) 
+                    @if ($course->allow_review)
                     <div class="course-review-wrap">
                         <h3>{{ count($course_reviews) }} Reviews</h3>
                         @if (count($course_reviews) > 0)
                         @foreach ($course_reviews as $course_review)
                         <div class="media">
                             @if ($course_review->user && $course_review->user->avatar)
-                                <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                            @else 
-                                <span class="user-name-avatar me-3">{!! strtoupper($course_review->user->name[0]) !!}</span>
+                            <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
+                            @else
+                            <span class="user-name-avatar me-3">{!! strtoupper($course_review->user->name[0]) !!}</span>
                             @endif
-                            
+
                             <div class="media-body">
                                 <h5>{{ $course_review->user->name }}</h5>
                                 <ul>
@@ -134,7 +134,8 @@ $i = 0;
                                     data-bs-target="#collapse_{{ $module->id }}" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     <div class="d-flex">
-                                        <p class="module-title"><i class="fas fa-check-circle"></i> {{ $module->title }}</p>
+                                        <p class="module-title"><i class="fas fa-check-circle"></i> {{ $module->title }}
+                                        </p>
                                     </div>
                                 </button>
                             </div>
@@ -144,46 +145,55 @@ $i = 0;
                                 <div class="accordion-body p-0">
                                     <ul class="lesson-wrap">
                                         @foreach ($module->lessons as $lesson)
-                                        @if ($lesson->status == 'published' && now()->diffInMinutes($lesson->updated_at) > 10)
-                                            <li>
-                                                <div class="d-flex align-items-center">
-                                                    @can('instructor')
-                                                        <a href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
-                                                            <i class="fa-regular fa-pen-to-square me-2" style="color: #A6B1C4"></i>
-                                                        </a> 
-                                                        @endcan
+                                        @if ($lesson->status == 'published' && now()->diffInMinutes($lesson->updated_at)
+                                        > 10)
+                                        <li>
+                                            <div class="d-flex align-items-center">
+                                                @can('instructor')
+                                                <a
+                                                    href="{{ url('instructor/courses/create/'.$course->id.'/video/'.$lesson->module_id.'/content/'.$lesson->id) }}">
+                                                    <i class="fa-regular fa-pen-to-square me-2"
+                                                        style="color: #A6B1C4"></i>
+                                                </a>
+                                                @endcan
 
-                                                    <a href="{{ $lesson->video_link }}"
-                                                        class="video_list_play d-inline-block {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
-                                                        data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                        data-course-id="{{ $course->id }}"
-                                                        data-modules-id="{{ $module->id }}" data-audio-url="{{ $lesson->audio }}"
-                                                        data-lesson-type="{{ $lesson->type }}" style="font-size: 0.8rem!important"> 
+                                                <a href="{{ $lesson->video_link }}"
+                                                    class="video_list_play d-inline-block {{ $currentLesson && $currentLesson->id == $lesson->id ? 'active' : '' }}"
+                                                    data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
+                                                    data-course-id="{{ $course->id }}"
+                                                    data-modules-id="{{ $module->id }}"
+                                                    data-audio-url="{{ $lesson->audio }}"
+                                                    data-lesson-type="{{ $lesson->type }}"
+                                                    style="font-size: 0.8rem!important">
 
-                                                        @if ($lesson->type == 'text')
-                                                        <i class="fa-regular fa-file-lines actv-hide" style="color: #2F3A4C"></i>
-                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                        @elseif($lesson->type == 'audio')
-                                                        <i class="fa-solid fa-headphones actv-hide" style="color: #2F3A4C"></i>
-                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                        @elseif($lesson->type == 'video')
-                                                        <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}" alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
-                                                        <img src="{{ asset('latest/assets/images/icons/pause.svg') }}" alt="i" class="img-fluid actv-show" style="width: 1rem;">
-                                                        @endif 
-                                                        
-                                                        {{ $lesson->title }}
-                                                    </a>
-                                                    
-                                                </div>
+                                                    @if ($lesson->type == 'text')
+                                                    <i class="fa-regular fa-file-lines actv-hide"
+                                                        style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @elseif($lesson->type == 'audio')
+                                                    <i class="fa-solid fa-headphones actv-hide"
+                                                        style="color: #2F3A4C"></i>
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @elseif($lesson->type == 'video')
+                                                    <img src="{{ asset('latest/assets/images/icons/play-icon.svg') }}"
+                                                        alt="i" class="img-fluid actv-hide" style="width: 0.8rem;">
+                                                    <img src="{{ asset('latest/assets/images/icons/pause.svg') }}"
+                                                        alt="i" class="img-fluid actv-show" style="width: 1rem;">
+                                                    @endif
 
-                                            </li>
-                                            @endif
+                                                    {{ $lesson->title }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                        @endif
                                         @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        @endif 
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -200,9 +210,11 @@ $i = 0;
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     @if ($relatedCourse->thumbnail)
-                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid"> 
-                                    @else 
-                                        <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}" alt="Course Thumbnail" class="img-fluid">
+                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail"
+                                        class="img-fluid">
+                                    @else
+                                    <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}"
+                                        alt="Course Thumbnail" class="img-fluid">
                                     @endif
                                 </div>
                                 <div class="course-txt-box">
@@ -230,7 +242,8 @@ $i = 0;
                                             <li><span>({{ $total }})</span></li>
                                     </ul>
                                     @if ($relatedCourse->offer_price)
-                                    <h5>€{{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span></h5>
+                                    <h5>€{{ $relatedCourse->offer_price }} <span>€ {{ $relatedCourse->price }}</span>
+                                    </h5>
                                     @elseif(!$relatedCourse->offer_price && !$relatedCourse->price)
                                     <h5>Free</h5>
                                     @else
@@ -251,13 +264,11 @@ $i = 0;
         </div>
     </div>
 </main>
-<!-- course details page @E -->
+{{-- course details page @E --}}
 @endsection
 
-
 {{-- script section @S --}}
-@section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+@section('script') 
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
     $(document).ready(function() {

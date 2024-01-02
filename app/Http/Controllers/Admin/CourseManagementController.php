@@ -84,7 +84,7 @@ class CourseManagementController extends Controller
     // course show
     public function show($slug)
     {
-
+ 
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
 
         //start group file
@@ -101,8 +101,6 @@ class CourseManagementController extends Controller
                 }
             }
         }
-
-        //end group file
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 

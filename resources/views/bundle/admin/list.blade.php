@@ -67,7 +67,7 @@ Bundle Course List
                 <div class="course-single-item">
                     <div>
                         <div class="course-thumb-box">
-                            <div class="header-action">
+                            {{-- <div class="header-action">
                                 <div class="dropdown">
                                     <button class="btn btn-ellipse" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
@@ -77,10 +77,10 @@ Bundle Course List
                                         <li><a class="dropdown-item"
                                                 href="{{url('admin/bundle/courses/'.$course->slug.'/view')}}">View</a>
                                         </li>
-                                        {{-- <li><a class="dropdown-item"
+                                        <li><a class="dropdown-item"
                                                 href="{{url('admin/bundle/courses/'.$course->slug.'/edit')}}">Edit</a>
-                                        </li> --}}
-                                        {{-- <li>
+                                        </li>
+                                        <li>
                                             <form method="POST" class="d-inline"
                                                 action="{{ route('admin.course.bundle.destroy', $course->id) }}">
                                                 @csrf
@@ -88,10 +88,10 @@ Bundle Course List
                                                 <button type="submit" class="dropdown-item btn text-danger">Delete
                                                 </button>
                                             </form>
-                                        </li> --}}
+                                        </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> --}}
                             <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil" class="img-fluid">
                         </div>
                         <div class="course-txt-box">
