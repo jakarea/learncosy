@@ -403,30 +403,75 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         $(document).ready(function() {
-             
-            // video
-            let initialVideoUrl = '{{ $lastVdo }}'.replace('/videos/', '');
-            var options = {
-                id: initialVideoUrl || '{{ $defaultVideoId }}',
-                autoplay: true,
-                width: 500,
-            };
-            var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
 
-            // audio
-            let initialAudioUrl = '{{ $lastAudio }}';
-            var laravelURL = baseUrl + '/' + initialAudioUrl;
-            let audioPlayer = document.getElementById('audioPlayer');
-            let audioSource = audioPlayer.querySelector('source');
-            audioSource.src = laravelURL;
-            audioPlayer.load();
-            audioPlayer.play(); 
+            // inital load vimeo player
+            var options = {
+                    id: '{{ $defaultVideoId }}',
+                    autoplay: true,
+                    width: 500,
+                };
+            var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
+             
+            // play all url
+            let playUrl;
+            playUrl = "{{ $playUrl }}";
+
+            // initial audio 
+            var audioPlayer = document.getElementById('audioPlayer');
+            var audioSource = audioPlayer.querySelector('source');
+            let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
+
+            if (crntLesson == 'video') {
+                    
+                    if (playUrl !== null) {
+                    audioPlayer.pause();
+                    $('.video-iframe-vox').show();
+                    $('.audio-iframe-box').hide();
+                    $('#textHideShow').hide(); 
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+
+                    let lastVideoUrl = playUrl.replace('/videos/', '');
+                    player.loadVideo(lastVideoUrl);
+                }
+            }else if(crntLesson == 'audio'){
+
+                if (playUrl !== null) {
+                    player.pause();
+                    $('.video-iframe-vox').hide();
+                    $('.audio-iframe-box').show();
+                    $('#textHideShow').hide(); 
+                    document.querySelector('.audio-iframe-box').classList.remove('d-none');
+
+                    audioSource.src = baseUrl + '/' + playUrl;
+                    audioPlayer.load();
+                    audioPlayer.play();  
+                }
+            }else if(crntLesson == 'text'){
+
+                if (playUrl !== null) {
+                    player.pause();
+                    audioPlayer.pause();
+
+                    $('.video-iframe-vox').hide();
+                    $('.audio-iframe-box').hide();
+                    $('#textHideShow').show(); 
+                    $('#dataTextContainer').html(playUrl);
+                    document.querySelector('.audio-iframe-box').classList.add('d-none');
+
+                }
+            }
 
             // play next video after end of the current video
             player.on('ended', function() {  
                 $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
             }); 
+
+            // play next lesson after end audio
+            audioPlayer.onended = function() {
+                $('a.video_list_play.active .is_complete_lesson').click();
+                $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
+            }; 
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault(); 
@@ -462,12 +507,10 @@
                     $('#textHideShow').hide();
                     $('.video-iframe-vox').hide();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
- 
-                    audioPlayer = document.getElementById('audioPlayer');
-                    audioSource = audioPlayer.querySelector('source');
+
                     audioSource.src = baseUrl + '/' + this.getAttribute('data-audio-url');
                     audioPlayer.load();
-                    audioPlayer.play(); 
+                    audioPlayer.play();  
                     
 
                 } else if (type == 'text') {
@@ -503,8 +546,6 @@
                             }else{
                                 $('#dataTextContainer').html('No description availabe for this lesson');
                             }
-
-                            
                         }
                     },
                     error: function(xhr, status, error) {

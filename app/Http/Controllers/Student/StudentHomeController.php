@@ -350,28 +350,28 @@ class StudentHomeController extends Controller
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
          $defaultVideoId = '305108069';
          $currentLesson = NULL;
+        $playUrl = NULL;
 
-
-         $lastVdo = NULL;
-         $lastAudio = NULL;
-         $lasttext = NULL;
+        //  $lastVdo = NULL;
+        //  $lastAudio = NULL;
+        //  $lasttext = NULL;
 
          if ($courseLog) {
              $currentLesson = Lesson::find($courseLog->lesson_id);
 
             if ($currentLesson && $currentLesson->type == 'video') {
-                 $lastVdo = $currentLesson->video_link;
+                 $playUrl = $currentLesson->video_link;
             }elseif($currentLesson && $currentLesson->type == 'audio'){
-                $lastAudio = $currentLesson->audio;
+                $playUrl = $currentLesson->audio;
             }elseif($currentLesson && $currentLesson->type == 'text'){
-                $lasttext = $currentLesson->text;
+                $playUrl = $currentLesson->text;
             }
          }
 
         //  return $lasttext;
 
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','lastVdo','lastAudio','lasttext'));
+            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','playUrl','playUrl','playUrl'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
