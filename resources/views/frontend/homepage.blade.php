@@ -182,7 +182,8 @@
                     <div class="course-list-wrap">
                         @foreach ($instructors->courses as $course)
                             {{-- course item @s --}}
-                            <div class="course-item-box">
+                            @if($course->status == 'published')
+                                <div class="course-item-box">
                                 <div class="row">
                                     <div class="col-lg-9 col-md-8">
                                         <div class="media">
@@ -249,6 +250,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             {{-- course item @e --}}
                         @endforeach
                     </div>
