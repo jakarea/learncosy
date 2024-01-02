@@ -25,7 +25,7 @@ class DNSSettingController extends Controller
 
         $request->session()->put('getDomain', $cleanedDomain);
 
-        return view('theme-settings/verify-dns-settings', compact('module_settings'));
+        return view('theme-settings/verify-dns-settings', compact('module_settings'))->with('tab', 'dns');
     }
 
 
@@ -65,7 +65,7 @@ class DNSSettingController extends Controller
         $domain = request()->session()->get('getDomain');
         $existingDomain = DNSSetting::where([ 'instructor_id' => auth()->user()->id, 'domain' => $domain])->first();
 
-        return view('theme-settings/connect-dns-setting', compact('module_settings','existingDomain'));
+        return view('theme-settings/connect-dns-setting', compact('module_settings','existingDomain'))->with('tab', 'dns');
     }
 
     public function connectDNSStore(){

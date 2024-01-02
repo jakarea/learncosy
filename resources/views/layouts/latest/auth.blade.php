@@ -15,6 +15,7 @@
   <meta property="og:image" content="">
   <meta name="theme-color" content="#fafafa">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{ asset('latest/assets/images/favicon.png') }}">
 

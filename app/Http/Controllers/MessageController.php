@@ -190,7 +190,12 @@ class MessageController extends Controller
             $receiver_id = $request->receiver_id;
             $message = $request->message;
 
-            $receiverUser = User::findOrFail($receiver_id);
+            $senderUser = User::where(['id' => $sender_Id])->first();
+            $receiverUser = User::where(['id' => $receiver_id])->first();
+
+            if( $senderUser->recivingMessage == false){
+                return response()->json(["warning" => "Mr. $senderUser->name You cannot send any messages. You are currently inactive!!"]);
+            }
 
             if( $receiverUser->recivingMessage == false){
                 return response()->json(["error" => "The message cannot be sent as Mr. $receiverUser->name has currently deactivated message reception!!"]);
@@ -385,7 +390,7 @@ class MessageController extends Controller
                 return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);
             } elseif($layoutDesing == "layout2") {
                 return view('e-learning.course.instructor.chat-user.search-users', $data);
-            }else{
+            }else if($layoutDesing == "layout3"){
                 return view('e-learning.course.instructor.message-group.group-list', $data);
             }
         }
@@ -453,6 +458,16 @@ class MessageController extends Controller
         return response()->json($data);
     }
 
+    public function getSenderUserDetails(Request $request){
+        $sernderUser = User::findOrFail($request->sender_id);
+
+        $data = [
+            'recivingMessage' => $sernderUser->recivingMessage,
+            'message' => "Mr. $sernderUser->name You cannot send any messages. You are currently inactive!!"
+        ];
+
+        return response()->json($data);
+    }
 
 
 }

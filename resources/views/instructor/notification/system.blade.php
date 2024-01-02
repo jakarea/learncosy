@@ -56,265 +56,275 @@ $layoutName = "layouts.latest.admin";
                     @else
                     <div class="show-notification-item">
 
-                        <div class="single" data-value="1">
-                            {{-- day --}}
-                            <h5>Today</h5>
-                            {{-- day --}}
+                        @if ( count( $todays) > 0)
+                            <div class="single" data-value="1">
+                                {{-- day --}}
+                                <h5>Today</h5>
+                                {{-- day --}}
 
-                            {{-- notify item start --}}
-                            @foreach($todays as $today)
-                            <div class="notify-item-box">
-                                <div class="media">
-                                    <div class="icon">
-                                        @if ($today['thumbnail'])
-                                        <img src="{{asset($today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
-                                            class="img-fluid">
-                                        @endif
-                                        <i class="fas fa-heart"></i>
+                                {{-- notify item start --}}
+                                @foreach($todays as $today)
+                                <div class="notify-item-box">
+                                    <div class="media">
+                                        <div class="icon">
+                                            @if ($today['thumbnail'])
+                                            <img src="{{asset($today['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
+                                            @else
+                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                                class="img-fluid">
+                                            @endif
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            @php
+                                            $course = App\Models\Course::find($today->course_id);
+                                            @endphp
+                                            <h5>
+                                                @if ($course)
+                                                @if (isEnrolled($course->id))
+                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                        {{$today['title']}}</a>
+                                                @else
+                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                        {{$today['title']}}</a>
+                                                @endif
+                                                @else
+                                                {{$today['title']}}
+                                                @endif
+                                            </h5>
+                                            <p>{{$today['type']}} - <span>{{ $today->created_at->diffForHumans() }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        @php
-                                        $course = App\Models\Course::find($today->course_id);
-                                        @endphp
-                                        <h5>
-                                            @if ($course)
-                                            @if (isEnrolled($course->id))
-                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
-                                                    {{$today['title']}}</a>
-                                            @else
-                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
-                                                    {{$today['title']}}</a>
-                                            @endif
-                                            @else
-                                            {{$today['title']}}
-                                            @endif
-                                        </h5>
-                                        <p>{{$today['type']}} - <span>{{ $today->created_at->diffForHumans() }}</span></p>
+                                    <div class="delete-item">
+                                        <form action="{{ route('notification.destroy',$today['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn"><img
+                                                    src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                    class="img-fluid"></button>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$today['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                @endforeach
+                                {{-- notify item end --}}
                             </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div>
+                        @endif
 
-                        <div class="single" data-value="2">
-                            {{-- day --}}
-                            <h5 class="mt-5">Yesterday</h5>
+                        @if ( count( $yestardays) > 0)
+                            <div class="single" data-value="2">
+                                {{-- day --}}
+                                <h5 class="mt-5">Yesterday</h5>
 
-                            {{-- day --}}
+                                {{-- day --}}
 
-                            {{-- notify item start --}}
-                            @foreach($yestardays as $yestarday)
-                            <div class="notify-item-box">
-                                <div class="media">
-                                    <div class="icon">
-                                        @if ($yestarday['thumbnail'])
-                                        <img src="{{asset($yestarday['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
-                                            class="img-fluid">
-                                        @endif
-                                        <i class="fas fa-heart"></i>
+                                {{-- notify item start --}}
+                                @foreach($yestardays as $yestarday)
+                                <div class="notify-item-box">
+                                    <div class="media">
+                                        <div class="icon">
+                                            @if ($yestarday['thumbnail'])
+                                            <img src="{{asset($yestarday['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
+                                            @else
+                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                                class="img-fluid">
+                                            @endif
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            @php
+                                            $course = App\Models\Course::find($yestarday->course_id);
+                                            @endphp
+                                            <h5>
+                                                @if ($course)
+                                                @if (isEnrolled($course->id))
+                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                        {{$yestarday['title']}}</a>
+                                                @else
+                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                        {{$yestarday['title']}}</a>
+                                                @endif
+                                                @else
+                                                {{$yestarday['title']}}
+                                                @endif
+                                            </h5>
+                                            <p>{{$yestarday['type']}} - <span>{{ $yestarday->created_at->diffForHumans() }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        @php
-                                        $course = App\Models\Course::find($yestarday->course_id);
-                                        @endphp
-                                        <h5>
-                                            @if ($course)
-                                            @if (isEnrolled($course->id))
-                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
-                                                    {{$yestarday['title']}}</a>
-                                            @else
-                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
-                                                    {{$yestarday['title']}}</a>
-                                            @endif
-                                            @else
-                                            {{$yestarday['title']}}
-                                            @endif
-                                        </h5>
-                                        <p>{{$yestarday['type']}} - <span>{{ $yestarday->created_at->diffForHumans() }}</span></p>
+
+                                    <div class="delete-item">
+                                        <form action="{{ route('notification.destroy',$yestarday['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn"><img
+                                                    src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                    class="img-fluid"></button>
+                                        </form>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$yestarday['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                @endforeach
+                                {{-- notify item end --}}
                             </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div>
+                        @endif
 
-                        <div class="single" data-value="7">
-                            {{-- day --}}
-                            <h5 class="mt-5">Last 7 Days</h5>
-                            {{-- day --}}
+                        @if ( count( $sevenDays) > 0)
+                            <div class="single" data-value="7">
+                                {{-- day --}}
+                                <h5 class="mt-5">Last 7 Days</h5>
+                                {{-- day --}}
 
-                            {{-- notify item start --}}
-                            @foreach($sevenDays as $sevenDay)
-                            <div class="notify-item-box">
-                                <div class="media">
-                                    <div class="icon">
-                                        @if ($sevenDay['thumbnail'])
-                                        <img src="{{asset($sevenDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
-                                            class="img-fluid">
-                                        @endif
-                                        <i class="fas fa-heart"></i>
+                                {{-- notify item start --}}
+                                @foreach($sevenDays as $sevenDay)
+                                <div class="notify-item-box">
+                                    <div class="media">
+                                        <div class="icon">
+                                            @if ($sevenDay['thumbnail'])
+                                            <img src="{{asset($sevenDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
+                                            @else
+                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                                class="img-fluid">
+                                            @endif
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            @php
+                                            $course = App\Models\Course::find($sevenDay->course_id);
+                                            @endphp
+                                            <h5>
+                                                @if ($course)
+                                                @if (isEnrolled($course->id))
+                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                        {{$sevenDay['title']}}</a>
+                                                @else
+                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                        {{$sevenDay['title']}}</a>
+                                                @endif
+                                                @else
+                                                {{$sevenDay['title']}}
+                                                @endif
+                                            </h5>
+                                            <p>{{$sevenDay['type']}} - <span>{{ $sevenDay->created_at->diffForHumans() }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        @php
-                                        $course = App\Models\Course::find($sevenDay->course_id);
-                                        @endphp
-                                        <h5>
-                                            @if ($course)
-                                            @if (isEnrolled($course->id))
-                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
-                                                    {{$sevenDay['title']}}</a>
-                                            @else
-                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
-                                                    {{$sevenDay['title']}}</a>
-                                            @endif
-                                            @else
-                                            {{$sevenDay['title']}}
-                                            @endif
-                                        </h5>
-                                        <p>{{$sevenDay['type']}} - <span>{{ $sevenDay->created_at->diffForHumans() }}</span></p>
+
+                                    <div class="delete-item">
+                                        <form action="{{ route('notification.destroy',$sevenDay['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn"><img
+                                                    src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                    class="img-fluid"></button>
+                                        </form>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$sevenDay['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                @endforeach
+                                {{-- notify item end --}}
                             </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div>
+                        @endif
 
-                        <div class="single" data-value="30">
-                            {{-- day --}}
-                            <h5 class="mt-5">Last 30 Days</h5>
+                        @if ( count( $thirtyDays) > 0)
+                            <div class="single" data-value="30">
+                                {{-- day --}}
+                                <h5 class="mt-5">Last 30 Days</h5>
 
-                            {{-- notify item start --}}
-                            @foreach($thirtyDays as $thirtyDay)
-                            <div class="notify-item-box">
-                                <div class="media">
-                                    <div class="icon">
-                                        @if ($thirtyDay['thumbnail'])
-                                        <img src="{{asset($thirtyDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
-                                        @else
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
-                                            class="img-fluid">
-                                        @endif
-                                        <i class="fas fa-heart"></i>
+                                {{-- notify item start --}}
+                                @foreach($thirtyDays as $thirtyDay)
+                                <div class="notify-item-box">
+                                    <div class="media">
+                                        <div class="icon">
+                                            @if ($thirtyDay['thumbnail'])
+                                            <img src="{{asset($thirtyDay['thumbnail'])}}" alt="Thumbnail" class="img-fluid">
+                                            @else
+                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                                class="img-fluid">
+                                            @endif
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            @php
+                                            $course = App\Models\Course::find($thirtyDay->course_id);
+                                            @endphp
+                                            <h5>
+                                                @if ($course)
+                                                @if (isEnrolled($course->id))
+                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                        {{$thirtyDay['title']}}</a>
+                                                @else
+                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                        {{$thirtyDay['title']}}</a>
+                                                @endif
+                                                @else
+                                                {{$thirtyDay['title']}}
+                                                @endif
+                                            </h5>
+                                            <p>{{$thirtyDay['type']}} - <span>{{ $thirtyDay->created_at->diffForHumans() }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        @php
-                                        $course = App\Models\Course::find($thirtyDay->course_id);
-                                        @endphp
-                                        <h5>
-                                            @if ($course)
-                                            @if (isEnrolled($course->id))
-                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
-                                                    {{$thirtyDay['title']}}</a>
-                                            @else
-                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
-                                                    {{$thirtyDay['title']}}</a>
-                                            @endif
-                                            @else
-                                            {{$thirtyDay['title']}}
-                                            @endif
-                                        </h5>
-                                        <p>{{$thirtyDay['type']}} - <span>{{ $thirtyDay->created_at->diffForHumans() }}</span></p>
+
+                                    <div class="delete-item">
+                                        <form action="{{ route('notification.destroy',$thirtyDay['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn"><img
+                                                    src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                    class="img-fluid"></button>
+                                        </form>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$thirtyDay['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                @endforeach
+                                {{-- notify item end --}}
                             </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div>
+                        @endif
 
-                        <div class="single" data-value="365">
-                            {{-- day --}}
-                            <h5 class="mt-5">Last 1 year</h5>
-                            {{-- day --}}
+                        @if ( count( $lastOneYears) > 0)
+                            <div class="single" data-value="365">
+                                {{-- day --}}
+                                <h5 class="mt-5">Last 1 year</h5>
+                                {{-- day --}}
 
-                            {{-- notify item start --}}
-                            @foreach($lastOneYears as $lastOneYear)
-                            <div class="notify-item-box">
-                                <div class="media">
-                                    <div class="icon">
-                                        @if ($lastOneYear['thumbnail'])
-                                        <img src="{{asset($lastOneYear['thumbnail'])}}" alt="Thumbnail"
-                                            class="img-fluid">
-                                        @else
-                                        <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
-                                            class="img-fluid">
-                                        @endif
-                                        <i class="fas fa-heart"></i>
+                                {{-- notify item start --}}
+                                @foreach($lastOneYears as $lastOneYear)
+                                <div class="notify-item-box">
+                                    <div class="media">
+                                        <div class="icon">
+                                            @if ($lastOneYear['thumbnail'])
+                                            <img src="{{asset($lastOneYear['thumbnail'])}}" alt="Thumbnail"
+                                                class="img-fluid">
+                                            @else
+                                            <img src="{{asset('latest/assets/images/icons/gallery.svg')}}" alt="icon"
+                                                class="img-fluid">
+                                            @endif
+                                            <i class="fas fa-heart"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            @php
+                                            $course = App\Models\Course::find($lastOneYear->course_id);
+                                            @endphp
+                                            <h5>
+                                                @if ($course)
+                                                @if (isEnrolled($course->id))
+                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                        {{$lastOneYear['title']}}</a>
+                                                @else
+                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                        {{$lastOneYear['title']}}</a>
+                                                @endif
+                                                @else
+                                                {{$lastOneYear['title']}}
+                                                @endif
+                                            </h5>
+                                            <p>{{$lastOneYear['type']}} - <span>{{ $lastOneYear->created_at->diffForHumans() }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        @php
-                                        $course = App\Models\Course::find($lastOneYear->course_id);
-                                        @endphp
-                                        <h5>
-                                            @if ($course)
-                                            @if (isEnrolled($course->id))
-                                                <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
-                                                    {{$lastOneYear['title']}}</a>
-                                            @else
-                                                <a href="{{ url('students/courses/overview/' . $course->slug) }}">
-                                                    {{$lastOneYear['title']}}</a>
-                                            @endif
-                                            @else
-                                            {{$lastOneYear['title']}}
-                                            @endif
-                                        </h5>
-                                        <p>{{$lastOneYear['type']}} - <span>{{ $lastOneYear->created_at->diffForHumans() }}</span></p>
+
+                                    <div class="delete-item">
+                                        <form action="{{ route('notification.destroy',$lastOneYear['id']) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn"><img
+                                                    src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
+                                                    class="img-fluid"></button>
+                                        </form>
                                     </div>
                                 </div>
-
-                                <div class="delete-item">
-                                    <form action="{{ route('notification.destroy',$lastOneYear['id']) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn"><img
-                                                src="{{asset('latest/assets/images/icons/trash-bin.svg')}}" alt="Delete"
-                                                class="img-fluid"></button>
-                                    </form>
-                                </div>
+                                @endforeach
+                                {{-- notify item end --}}
                             </div>
-                            @endforeach
-                            {{-- notify item end --}}
-                        </div>
+                        @endif
 
                     </div>
                     @endif

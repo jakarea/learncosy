@@ -50,9 +50,19 @@
                                     @endphp
                                 @endforeach
                             @endforeach
+
+                            @php
+                                $hours = floor($totalDurationMinutes / 3600);
+                                $minutes = floor(($totalDurationMinutes % 3600) / 60);
+                            @endphp
                             {{-- course lesson duration calculation --}}
 
-                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+                            <h4>
+                                @if ($hours > 0)
+                                    {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                @endif
+
+                                {{ $minutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
                                 Course
                                 . {{ count($course_reviews) }} Reviews</h4>
 
@@ -112,10 +122,17 @@
                                                     $totalDuration += $lesson->duration;
                                                 }
                                             }
+
+                                            $hours = floor($totalDuration / 3600);
+                                            $minutes = floor(($totalDuration % 3600) / 60);
                                         @endphp
 
-                                        <p class="common-para mb-4">{{ $totalDuration }} Min .
-                                            {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                                        <p class="common-para mb-4">
+                                            @if ($hours > 0)
+                                                {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                            @endif
+                                            {{ $minutes }} Min .
+                                            {{ $module->lessons->where('status','published')->count() }} Lessons</p>
                                         {{-- lessons total minutes --}}
                                     </div>
                                     <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
@@ -168,7 +185,7 @@
                                             @if ($course_review->user)
                                                 @if ($course_review->user->avatar)
                                                     <img src="{{ asset($course_review->user->avatar) }}" alt="Avatar" class="img-fluid">
-                                                @else 
+                                                @else
                                                     <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
                                                 @endif
                                             @endif
@@ -210,7 +227,7 @@
                                     $review_avg = $review_sum / $total;
                                 }
                             @endphp
-                            {{-- course single box start --}} 
+                            {{-- course single box start --}}
                             <div class="col-lg-5 col-sm-6 mb-4">
                                 <div class="course-single-item">
                                     <div>
@@ -251,7 +268,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- course single box end --}} 
+                            {{-- course single box end --}}
                         @endforeach
                     </div>
                     @endif

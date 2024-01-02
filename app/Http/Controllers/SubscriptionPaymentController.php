@@ -29,10 +29,10 @@ class SubscriptionPaymentController extends Controller
         if ($insPackage && $insPackage->status == 'cancel') {
             $activePackageId = null;
         }
-        
+
         if ($insPackage && $insPackage->status != 'cancel' && $insPackage->subscription_packages_id) {
             $activePackageId = $insPackage->subscription_packages_id;
-        } 
+        }
 
         return view('subscription/instructor/list',compact('packages','activePackageId'));
     }
@@ -44,15 +44,20 @@ class SubscriptionPaymentController extends Controller
 
     public function payment(Request $request){
 
-        $package = SubscriptionPackage::findorfail($request->packageId);
+        // dd( $request->all() );
+        $package = SubscriptionPackage::findOrfail($request->packageId);
         $current_package = Subscription::where('status','active')->where('instructor_id',auth()->user()->id)->first();
+        $subscription = Subscription::where(['subscription_packages_id' => $request->packageId, 'instructor_id' => auth()->user()->id])->first();
+        if($subscription ){
+            return redirect('instructor/profile/step-3/complete')->with('success', 'Alrady You have purchase the package!!');
+        }
 
         if ($current_package) {
             $current_package->status = 'cancel';
             $current_package->save();
         }
 
-        $type = $package->type; 
+        $type = $package->type;
         if ($type == 'monthly') {
             $ends_at = date('Y-m-d H:i:s', strtotime('+30 days'));
         } else {

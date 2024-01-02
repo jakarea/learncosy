@@ -142,6 +142,7 @@ Route::middleware('auth')->prefix('messages')->controller(MessageController::cla
     Route::get('/delete/group-chat-history', 'deleteGroupChatHistory')->name('messages.delete.groupchat');
 
     Route::get('/user/details', 'getUserDetails')->name('messages.user.details');
+    Route::get('/user/sender/details', 'getSenderUserDetails')->name('messages.sender.user.details');
 });
 
 Route::middleware('auth')->prefix('messages')->controller(TypingController::class)->group(function () {
