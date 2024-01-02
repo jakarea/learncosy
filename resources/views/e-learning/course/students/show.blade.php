@@ -419,8 +419,17 @@
             // initial audio 
             var audioPlayer = document.getElementById('audioPlayer');
             var audioSource = audioPlayer.querySelector('source');
-            let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
 
+            player.pause();
+            audioPlayer.pause();
+
+            $('.video-iframe-vox').hide();
+            $('.audio-iframe-box').hide();
+            $('#textHideShow').show(); 
+            $('#dataTextContainer').html(playUrl);
+            document.querySelector('.audio-iframe-box').classList.add('d-none');
+
+            let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
             if (crntLesson == 'video') {
                     
                     if (playUrl !== null) {
