@@ -70,11 +70,13 @@ Message Page
 
                             {{-- create group box start --}}
                             @if( $adminInfo->user_role !== 'student')
-                            <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
-                                    class="img-fluid"> Create Group
-                            </a>
+                                <a class="btn btn-primary create-toggle" data-bs-toggle="collapse" href="#collapseExample"
+                                    role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('latest/assets/images/icons/m-user.svg') }}" alt="ic"
+                                        class="img-fluid"> Create Group
+                                </a>
+                            @else
+                            <div class="create-toggle"></div>
                             @endif
                         </div>
                         <div class="collapse" id="collapseExample">
@@ -649,7 +651,7 @@ $(document).ready(function () {
     });
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = false;
+    Pusher.logToConsole = true;
 
     // Set pusher key
     var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
@@ -985,14 +987,25 @@ function sendMessage(event) {
             </div>
         </div>`;
 
-    getUserDetails(receiver_id).then(function (userDetails) {
 
-        if (userDetails.recivingMessage == "0" ) {
-            toastr.error('Error', userDetails.message, { positionClass: 'toast-bottom-right' });
-            return;
-        }
-        messageInnner.append(myLastMessage);
-    });
+        getSenderUserDetails(my_id).then(function (userDetails) {
+            if (userDetails.recivingMessage === "0") {
+                toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
+            } else {
+                // Append the message only when there is no error
+                messageInner.append(myLastMessage);
+            }
+        });
+
+        getUserDetails(receiver_id).then(function (userDetails) {
+            if (userDetails.recivingMessage === "0") {
+                toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
+            } else {
+                // Append the message only when there is no error
+                messageInner.append(myLastMessage);
+            }
+        });
+
 
     removeFile();
 
@@ -1009,7 +1022,13 @@ function sendMessage(event) {
             },
             success: function (data) {
                 $('#chatMessage')[0].reset();
-                scrollToBottomFunc();
+
+                var chatMessageElement = $('.main-chat-room')[0];
+
+                if (chatMessageElement.scrollHeight === 300) {
+                    console.log("Scroll Height:", chatMessageElement.scrollHeight);
+                    scrollToBottomFunc();
+                }
 
             },
             error: function (jqXHR, status, err) {
@@ -1025,6 +1044,24 @@ function getUserDetails(receiver_id) {
         type: "get",
         url: "{{ route('messages.user.details') }}",
         data: { receiver_id: receiver_id },
+        dataType: "json",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function (data) {
+            return data;
+        },
+        error: function (jqXHR, status, err) {
+            console.error("Error fetching user details:", status, err);
+        }
+    });
+}
+
+function getSenderUserDetails(my_id) {
+    return $.ajax({
+        type: "get",
+        url: "{{ route('messages.sender.user.details') }}",
+        data: { sender_id: my_id },
         dataType: "json",
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -1056,9 +1093,13 @@ function sendGroupMessage() {
             success: function (data) {
 
                 $('#groupChatMessage')[0].reset();
-                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                // $("#chat-message").append(data);
-                scrollToBottomFunc();
+
+                var chatMessageElement = $('.main-chat-room')[0];
+
+                if (chatMessageElement.scrollHeight === 300) {
+                    scrollToBottomFunc();
+                }
+
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
