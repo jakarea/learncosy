@@ -92,13 +92,13 @@
 
                     <hr>
                     <div class="content-txt-box">
-                        <h3>About Course</h3>
+                        <h3 id="aboutCourse">About Course</h3>
                         <div class="course-desc-txt" id="lessonShortDesc">
                             {!! $course->description !!}
                         </div>
                     </div>
 
-                    <div class="download-files-box">
+                    {{-- <div class="download-files-box">
                         <h4>Download Files </h4>
 
                         @if (!empty($group_files))
@@ -123,7 +123,7 @@
                                 @endif
                             </div>
                         @endif
-                    </div>
+                    </div> --}}
                     @if ($course->allow_review)
                         {{-- course review --}}
                         <div class="course-review-wrap">
@@ -403,7 +403,7 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         $(document).ready(function() {
-
+            
             // inital load vimeo player
             var options = {
                     id: '{{ $defaultVideoId }}',
@@ -425,8 +425,7 @@
 
             $('.video-iframe-vox').hide();
             $('.audio-iframe-box').hide();
-            $('#textHideShow').show(); 
-            $('#dataTextContainer').html(playUrl);
+            $('#textHideShow').hide();  
             document.querySelector('.audio-iframe-box').classList.add('d-none');
 
             let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
@@ -484,6 +483,8 @@
 
             $('a.video_list_play').click(function(e) {
                 e.preventDefault(); 
+
+                $('#aboutCourse').html('Lesson Content');
 
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
@@ -543,17 +544,18 @@
                     data: data,
                     success: function(response) {
                         let currentLessons = response.currentPlayingLesson;
+                        
                         if (currentLessons) {  
                             if (currentLessons.short_description) {
                                 $('#lessonShortDesc').html(currentLessons.short_description);
                             }else{
-                                $('#lessonShortDesc').html('No short description availabe for this lesson');
+                                $('#lessonShortDesc').html('No content!');
                             }
 
                             if (currentLessons.type == 'text') {
                                 $('#dataTextContainer').html(currentLessons.text);
                             }else{
-                                $('#dataTextContainer').html('No description availabe for this lesson');
+                                $('#dataTextContainer').html('No content');
                             }
                         }
                     },

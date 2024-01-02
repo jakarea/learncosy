@@ -348,13 +348,10 @@ class StudentHomeController extends Controller
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
-         $defaultVideoId = '305108069';
+         $defaultVideoId = '899148078';
          $currentLesson = NULL;
         $playUrl = NULL;
-
-        //  $lastVdo = NULL;
-        //  $lastAudio = NULL;
-        //  $lasttext = NULL;
+ 
 
          if ($courseLog) {
              $currentLesson = Lesson::find($courseLog->lesson_id);
@@ -367,8 +364,7 @@ class StudentHomeController extends Controller
                 $playUrl = $currentLesson->text;
             }
          }
-
-        //  return $lasttext;
+ 
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','playUrl','playUrl','playUrl'));
