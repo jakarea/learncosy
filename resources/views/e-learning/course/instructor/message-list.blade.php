@@ -562,6 +562,7 @@ $(document).on('submit', '#deleteGroup', function () {
 
 $(document).on('click', '.user', function () {
 
+    scrollToBottomFunc();
     $('.user').removeClass('active');
     $('.group').removeClass('active');
     $(this).addClass('active');
@@ -1127,8 +1128,8 @@ function createGroup(formSelector) {
 
 // make a function to scroll down auto
 function scrollToBottomFunc() {
-    $('.main-chat-room').animate({
-        scrollTop: $('.main-chat-room').get(0).scrollHeight
+    $('.main-chat-inner-room').animate({
+        scrollTop: $('.main-chat-inner-room').get(0).scrollHeight
     }, 50);
 }
 
