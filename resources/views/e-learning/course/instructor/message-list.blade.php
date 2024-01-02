@@ -1018,7 +1018,13 @@ function sendMessage(event) {
             },
             success: function (data) {
                 $('#chatMessage')[0].reset();
-                scrollToBottomFunc();
+
+                var chatMessageElement = $('.main-chat-room')[0];
+
+                if (chatMessageElement.scrollHeight === 300) {
+                    console.log("Scroll Height:", chatMessageElement.scrollHeight);
+                    scrollToBottomFunc();
+                }
 
             },
             error: function (jqXHR, status, err) {
@@ -1084,18 +1090,11 @@ function sendGroupMessage() {
 
                 $('#groupChatMessage')[0].reset();
 
-                var chatMessageElement = $('.chat-message')[0];
-
-                console.log( chatMessageElement);
+                var chatMessageElement = $('.main-chat-room')[0];
 
                 if (chatMessageElement.scrollHeight === 300) {
                     scrollToBottomFunc();
                 }
-
-
-
-
-
 
             },
             error: function (jqXHR, status, err) {
