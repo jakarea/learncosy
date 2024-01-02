@@ -294,11 +294,15 @@ class StudentHomeController extends Controller
 
     // course show
     public function show($domain,$slug)
-    {
+    { 
+        $course = Course::where('slug', $slug)->with('modules.lessons','user')->where('status','published')->first();
+        if (!$course) {
+            return redirect()->back()->with('error','No course found!');
+        }
 
-        $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
-        //start group file
-         $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
+        $lesson_files = Lesson::where('course_id',$course->id)
+        ->where('status','published')
+        ->select('lesson_file as file')->get();
         $group_files = [];
 
         foreach($lesson_files as $lesson_file){
@@ -344,19 +348,30 @@ class StudentHomeController extends Controller
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
-         $currentLessonVideo = NULL;
+         $defaultVideoId = '305108069';
          $currentLesson = NULL;
 
+
+         $lastVdo = NULL;
+         $lastAudio = NULL;
+         $lasttext = NULL;
+
          if ($courseLog) {
-             $lesson = Lesson::find($courseLog->lesson_id);
-             if ($lesson) {
-                $currentLesson = $lesson;
-                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
-             }
+             $currentLesson = Lesson::find($courseLog->lesson_id);
+
+            if ($currentLesson && $currentLesson->type == 'video') {
+                 $lastVdo = $currentLesson->video_link;
+            }elseif($currentLesson && $currentLesson->type == 'audio'){
+                $lastAudio = $currentLesson->audio;
+            }elseif($currentLesson && $currentLesson->type == 'text'){
+                $lasttext = $currentLesson->text;
+            }
          }
 
+        //  return $lasttext;
+
         if ($course) {
-            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','currentLessonVideo','currentLesson'));
+            return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','lastVdo','lastAudio','lasttext'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }
@@ -614,11 +629,11 @@ class StudentHomeController extends Controller
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
         $moduleId = (int)$request->input('moduleId');
-        $userId = Auth()->user()->id;
-
+        $userId = auth()->user()->id;
 
         $existingCourse = Course::find($courseId);
         $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
+        $currentPlayingLesson = Lesson::find($lessonId);
 
         if(!$courseLog){
             $courseLogInfo = new CourseLog([
@@ -628,29 +643,16 @@ class StudentHomeController extends Controller
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
             ]);
-            $courseLogInfo->save();
-            return response()->json([
-                'message' => 'course log save successfully',
-                'course_id' => $courseId,
-                'instructor_id' => $existingCourse->user_id,
-                'module_id' => $moduleId,
-                'lesson_id' => $lessonId,
-                'user_id'   => $userId,
-            ]);
+            $courseLogInfo->save(); 
         }else{
             $courseLog->course_id = $courseId;
             $courseLog->instructor_id = $existingCourse->user_id;
             $courseLog->module_id = $moduleId;
             $courseLog->lesson_id = $lessonId;
             $courseLog->update();
-            return response()->json([
-                'message' => 'course log updated',
-                'course_id' => $courseId,
-                'module_id' => $moduleId,
-                'lesson_id' => $lessonId,
-                'user_id'   => $userId,
-            ]);
         }
+
+        return response()->json(['currentPlayingLesson' => $currentPlayingLesson]);
 
     }
 

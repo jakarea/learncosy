@@ -84,7 +84,7 @@
                     </div>
                     {{-- course title --}}
 
-                    <div class="content-txt-box mb-3" id="hideShow">
+                    <div class="content-txt-box mb-3" id="textHideShow">
                         <div class="course-desc-txt">
                             <div id="dataTextContainer" class="my-3"></div>
                         </div>
@@ -93,7 +93,7 @@
                     <hr>
                     <div class="content-txt-box">
                         <h3>About Course</h3>
-                        <div class="course-desc-txt">
+                        <div class="course-desc-txt" id="lessonShortDesc">
                             {!! $course->description !!}
                         </div>
                     </div>
@@ -387,70 +387,61 @@
                         </div>
                     </div>
                     {{-- related course --}}
+                    
                 </div>
             </div>
         </div>
     </main>
     <!-- course details page @E -->
+
+    
 @endsection
 
 
 {{-- script section @S --}}
 @section('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
-        document.querySelector('#hideShow').classList.add('d-none');
-        
         $(document).ready(function() {
-            var firstLessonId = $('#firstLesson').data('first-lesson-id');
-            var firstCourseId = $('#firstLesson').data('first-course-id');
-            var firstModuleId = $('#firstLesson').data('first-modules-id');
-            var data = {
-                courseId: firstCourseId,
-                lessonId: firstLessonId,
-                moduleId: firstModuleId
-            };
-            $.ajax({
-                url: '{{ route('students.log.courses', config('app.subdomain')) }}',
-                method: 'GET',
-                data: data,
-                success: function(response) {
-                    // console.log('response', response)
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors, if any
-                }
-            });
-
+             
+            // video
+            let initialVideoUrl = '{{ $lastVdo }}'.replace('/videos/', '');
             var options = {
-                id: {{ $currentLessonVideo ?? 305108069 }},
-                // access_token: '{{ '64ac29221733a4e2943345bf6c079948' }}',
+                id: initialVideoUrl || '{{ $defaultVideoId }}',
                 autoplay: true,
-                // loop: true,
                 width: 500,
             };
-
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
+
+            // audio
+            let initialAudioUrl = '{{ $lastAudio }}';
+            var laravelURL = baseUrl + '/' + initialAudioUrl;
+            let audioPlayer = document.getElementById('audioPlayer');
+            let audioSource = audioPlayer.querySelector('source');
+            audioSource.src = laravelURL;
+            audioPlayer.load();
+            audioPlayer.play(); 
+
+            // play next video after end of the current video
             player.on('ended', function() {  
                 $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
-            });
+            }); 
 
             $('a.video_list_play').click(function(e) {
-                e.preventDefault();
+                e.preventDefault(); 
+
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
+
+                // initlay play lessons
                 let type = this.getAttribute('data-lesson-type');
 
-                if (type == 'video') {
-                    document.querySelector('.video-iframe-vox').classList.remove('d-none');
-                    document.querySelector('.audio-iframe-box').classList.add('d-none');
-                    document.querySelector('.download-files-box').querySelector('h4').innerText =
-                        'Download Files';
-                    document.getElementById('dataTextContainer').innerHTML = '';
+                if (type == 'video') { 
+                    $('.video-iframe-vox').show();
+                    $('.audio-iframe-box').hide();
+                    $('#textHideShow').hide(); 
                     audioPlayer.pause();
-                    document.querySelector('#hideShow').classList.add('d-none');
 
                     @if (isEnrolled($course->id))
                         var videoId = $(this).data('video-id');
@@ -467,70 +458,65 @@
 
                 } else if (type == 'audio') {
                     player.pause();
-                    document.querySelector('#hideShow').classList.add('d-none');
+                    $('.audio-iframe-box').show();
+                    $('#textHideShow').hide();
+                    $('.video-iframe-vox').hide();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
-                    document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    var laravelURL = baseUrl + '/' + this.getAttribute('data-audio-url');
-                    let audioPlayer = document.getElementById('audioPlayer');
-                    let audioSource = audioPlayer.querySelector('source');
-                    audioSource.src = laravelURL;
+ 
+                    audioPlayer = document.getElementById('audioPlayer');
+                    audioSource = audioPlayer.querySelector('source');
+                    audioSource.src = baseUrl + '/' + this.getAttribute('data-audio-url');
                     audioPlayer.load();
-                    audioPlayer.play();
-                    document.querySelector('.download-files-box').querySelector('h4').innerText =
-                        'Download Files';
-                    document.getElementById('dataTextContainer').innerHTML = '';
+                    audioPlayer.play(); 
+                    
 
                 } else if (type == 'text') {
                     player.pause();
                     audioPlayer.pause();
-                    document.querySelector('#hideShow').classList.remove('d-none');
-                    document.querySelector('.audio-iframe-box').classList.add('d-none');
-                    document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    document.querySelector('.download-files-box').querySelector('h4').innerText =
-                        'Download all course materials';
 
-                    let lessonId = this.getAttribute('data-lesson-id')
-
-                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
-                            method: 'GET',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            document.getElementById('dataTextContainer').innerHTML = data.text;
-
-                        })
-                        .catch(error => {
-                            // console.error(error);
-                        });
-
+                    $('#textHideShow').show();
+                    $('.audio-iframe-box').hide();
+                    $('.video-iframe-vox').hide();  
                 }
 
+                // send request per lesson click
                 var data = {
-                    courseId: courseId,
-                    lessonId: lessonId,
-                    moduleId: moduleId
+                    courseId: $(this).data('course-id'),
+                    lessonId: $(this).data('lesson-id'),
+                    moduleId: $(this).data('modules-id')
                 };
                 $.ajax({
                     url: '{{ route('students.log.courses', config('app.subdomain')) }}',
                     method: 'GET',
                     data: data,
                     success: function(response) {
-                        // console.log('response', response)
+                        let currentLessons = response.currentPlayingLesson;
+                        if (currentLessons) {  
+                            if (currentLessons.short_description) {
+                                $('#lessonShortDesc').html(currentLessons.short_description);
+                            }else{
+                                $('#lessonShortDesc').html('No short description availabe for this lesson');
+                            }
+
+                            if (currentLessons.type == 'text') {
+                                $('#dataTextContainer').html(currentLessons.text);
+                            }else{
+                                $('#dataTextContainer').html('No description availabe for this lesson');
+                            }
+
+                            
+                        }
                     },
                     error: function(xhr, status, error) {
                         // Handle errors, if any
                     }
                 });
+                
             });
 
             // is_complete_lesson on click check course is purchased or not and then check lesson video is completed or not after send to ajax
             $('.is_complete_lesson').click(function(e) {
                 e.preventDefault();
-
 
                 @if (isEnrolled($course->id))
                     var lessonId = $(this).data('lesson');
@@ -543,9 +529,8 @@
                         moduleId: moduleId,
                         duration: duration
                     };
-                    // console.log(data);
 
-                    var $element = $(this); // Store reference to $(this) in a variable
+                    var $element = $(this);
 
                     $.ajax({
                         url: '{{ route('students.complete.lesson', config('app.subdomain')) }}',
@@ -575,8 +560,29 @@
         });
     </script>
 
-    {{-- linke bttn --}}
+    {{-- vimeo player ready --}}
     <script>
+        var iframe = document.getElementById('firstLesson');
+        iframe.onload = function() {
+            // Wait for the Vimeo player to be ready
+            var playerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            // Add custom CSS to hide the .vp-sidedock element
+            var customCSS = `
+            .vp-sidedock {
+                display: none !important;
+            }
+        `;
+
+            // Create a style element and append it to the player's document
+            var style = playerDoc.createElement('style');
+            style.type = 'text/css';
+            style.appendChild(playerDoc.createTextNode(customCSS));
+            playerDoc.head.appendChild(style);
+        };
+    </script>
+     {{-- linke bttn --}}
+     <script>
         let currentURL = window.location.href;
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
         const likeBttn = document.getElementById('likeBttn');
@@ -603,33 +609,11 @@
                     }
                 })
                 .catch(error => {
-                    console.error(error);
+                    // console.error(error);
+                    likeBttn.classList.remove('active');
                 });
 
         });
-    </script>
-
-
-    <script>
-        var iframe = document.getElementById('firstLesson');
-
-        iframe.onload = function() {
-            // Wait for the Vimeo player to be ready
-            var playerDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-            // Add custom CSS to hide the .vp-sidedock element
-            var customCSS = `
-            .vp-sidedock {
-                display: none !important;
-            }
-        `;
-
-            // Create a style element and append it to the player's document
-            var style = playerDoc.createElement('style');
-            style.type = 'text/css';
-            style.appendChild(playerDoc.createTextNode(customCSS));
-            playerDoc.head.appendChild(style);
-        };
     </script>
 @endsection
 {{-- script section @E --}}

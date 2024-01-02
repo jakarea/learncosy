@@ -65,7 +65,6 @@ View Bundle
                                     <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
                                     @elseif(!$course->offer_price && !$course->price)
                                     <h5>Free</h5>
-
                                     @else
                                     <h5>€ {{ $course->price }}</h5>
                                     @endif
@@ -119,7 +118,7 @@ View Bundle
                                 <div class="form-group">
                                     <label for="description">Bundle Description</label>
                                     <textarea class="form-control border-0 p-0"
-                                        disabled>{{ $updatingCourse->description }}</textarea>
+                                        disabled>{!! $updatingCourse->description !!}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="thumbnail">Thumbnail</label>
