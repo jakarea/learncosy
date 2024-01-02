@@ -429,8 +429,12 @@
             document.querySelector('.audio-iframe-box').classList.add('d-none');
 
             let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
+            let crntLessonShort = "{{ $currentLesson ? $currentLesson->short_description : '' }}";
             if (crntLesson == 'video') {
-                    
+                $('#aboutCourse').html('Lesson Content');
+
+                $('#lessonShortDesc').html(crntLessonShort);
+
                     if (playUrl !== null) {
                     audioPlayer.pause();
                     $('.video-iframe-vox').show();
@@ -442,6 +446,9 @@
                     player.loadVideo(lastVideoUrl);
                 }
             }else if(crntLesson == 'audio'){
+                $('#aboutCourse').html('Lesson Content');
+
+                $('#lessonShortDesc').html(crntLessonShort);
 
                 if (playUrl !== null) {
                     player.pause();
@@ -455,6 +462,8 @@
                     audioPlayer.play();  
                 }
             }else if(crntLesson == 'text'){
+                $('#aboutCourse').html('Lesson Content');
+                $('#lessonShortDesc').html(crntLessonShort);
 
                 if (playUrl !== null) {
                     player.pause();

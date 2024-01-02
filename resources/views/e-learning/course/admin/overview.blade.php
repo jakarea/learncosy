@@ -43,11 +43,11 @@
                             @php
                                 $totalDurationMinutes = 0;
                             @endphp
-                            @foreach ($course->modules as $module)
-                                @foreach ($module->lessons as $lesson)
-                                    @php
-                                        $totalDurationMinutes += $lesson->duration;
-                                    @endphp
+                            @foreach ($course->modules->where('status', 'published') as $module)
+                                @foreach ($module->lessons->where('status', 'published') as $lesson)
+                                @php
+                                $totalDurationMinutes += $lesson->duration;
+                                @endphp
                                 @endforeach
                             @endforeach
 
@@ -61,9 +61,14 @@
                                 {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                             @endif
 
-                            {{ $minutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+                            {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
+                            'published')->count(); }} Moduls in
                                 Course
-                                . {{ count($course_reviews) }} Reviews</h4>
+                                
+                                @if ($course->allow_review)
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                @endif
+                            </h4>
 
                             <a href="{{ url('admin/courses/' . $course->slug . '/show') }}" class="common-bttn"
                                 style="border-radius: 6.25rem; margin-top: 2rem">
@@ -101,6 +106,7 @@
                     <div class="course-outline-wrap course-content">
                         <div class="accordion" id="accordionExample">
                             @foreach ($course->modules as $module)
+                                @if ($module->status == 'published')
                                 <div class="accordion-item">
                                     <div class="accordion-header" id="heading_{{ $module->id }}">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -113,23 +119,23 @@
                                         </button>
                                         {{-- lessons total minutes --}}
                                         @php
-                                            $totalDuration = 0;
+                                            $totalDuration3 = 0;
 
-                                            foreach ($module->lessons as $lesson) {
+                                            foreach ($module->lessons->where('status','published') as $lesson) {
                                                 if (isset($lesson->duration) && is_numeric($lesson->duration)) {
-                                                    $totalDuration += $lesson->duration;
+                                                    $totalDuration3 += $lesson->duration;
                                                 }
                                             }
 
-                                            $hours = floor($totalDuration / 3600);
-                                            $minutes = floor(($totalDuration % 3600) / 60);
+                                            $hours3 = floor($totalDuration3 / 3600);
+                                            $minutes3 = floor(($totalDuration3 % 3600) / 60);
                                         @endphp
 
-                                        <p class="common-para mb-4">@if ($hours > 0)
-                                            {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                        <p class="common-para mb-4">@if ($hours3 > 0)
+                                            {{ $hours3 }} {{ $hours3 > 1 ? 'Hours' : 'Hour' }}
                                         @endif
 
-                                        {{ $minutes }} Min .
+                                        {{ $minutes3 }} Min .
                                             {{ $module->lessons->where('status','published')->count() }} Lessons</p>
                                         {{-- lessons total minutes --}}
                                     </div>
@@ -138,38 +144,51 @@
                                         <div class="accordion-body p-0">
                                             <ul class="lesson-wrap">
                                                 @foreach ($module->lessons as $lesson)
-                                                    <li>
-                                                        @if (!isEnrolled($course->id))
-                                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
-                                                                class="video_list_play d-flex">
-                                                                <div>
-                                                                    <img src="{{ asset('latest/assets/images/icons/lok.svg') }}"
-                                                                        alt="a" class="img-fluid me-2">
-                                                                    {{ $lesson->title }}
-                                                                </div>
-                                                                <p class="common-para"> {{ $lesson->duration }}</p>
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ $lesson->video_link }}"
-                                                                class="video_list_play d-inline-block"
-                                                                data-video-id="{{ $lesson->id }}"
-                                                                data-lesson-id="{{ $lesson->id }}"
-                                                                data-course-id="{{ $course->id }}"
-                                                                data-modules-id="{{ $module->id }}">
-                                                                <i class="fas fa-play-circle"></i>
+                                                    @if ($lesson->status == 'published')
+                                                    @php
+                                                    $totalDuration2 = 0;
+
+                                                    if (isset($lesson->duration) && is_numeric($lesson->duration) && $lesson->status
+                                                    == 'published') {
+                                                    $totalDuration2 += $lesson->duration;
+                                                    }
+
+                                                    $hours2 = floor($totalDuration2 / 3600);
+                                                    $minutes2 = floor(($totalDuration2 % 3600) / 60);
+                                                    @endphp
+
+                                                    <li> 
+                                                        <a href="javascript:void(0)"
+                                                            class="video_list_play d-flex">
+                                                            <div>
+                                                                <img src="{{ asset('latest/assets/images/icons/lok.svg') }}"
+                                                                    alt="a" class="img-fluid me-2">
                                                                 {{ $lesson->title }}
-                                                            </a>
-                                                        @endif
+                                                            </div>
+                                                            <p class="common-para">
+                                                                @if ($lesson->type != 'text')
+                                                                @if ($hours2 > 0)
+                                                                {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
+                                                                @endif
+                                                                {{ $minutes2 }} Min
+                                                                @else
+                                                                <i class="fa-regular fa-file-lines"></i>
+                                                                @endif
+                                                            </p>
+                                                        </a> 
                                                     </li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
                     {{-- course outline --}}
+                    @if ($course->allow_review)
                     <div class="common-header">
                         <h3 class="mb-0">Student Review's</h3>
                         <span>Total {{ count($course_reviews) }} Reviews</span>
@@ -210,6 +229,7 @@
                             </div>
                         @endif
                     </div>
+                    @endif 
 
                     @if (count($related_course) > 0)
                         <div class="common-header">
@@ -310,8 +330,17 @@
                                 {{ $courseEnrolledNumber }} Enrolled</p>
                             <p><img src="{{ asset('latest/assets/images/icons/alerm.svg') }}" alt="users"
                                     class="img-fluid">
-                                {{ $totalDurationMinutes }} Minutes to Completed</p>
+                                    @if ($hours > 0)
+                                    {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                    @endif
+        
+                                    {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
+                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
+
+                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p>
 
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
@@ -415,14 +444,8 @@
                             <img src="{{ asset('latest/assets/images/icons/fb.svg') }}" alt="FB"
                                 class="img-fluid">
                             <span>Facebook</span>
-                        </a>
-                        {{-- <a href="#">
-                        <img src="{{asset('latest/assets/images/icons/tg.svg')}}" alt="TG" class="img-fluid">
-                        <span>Telegram</span>
-                    </a> --}}
-                        <a href="https:https://www.linkedin.com/shareArticle?url={{ $Urlsubdomain
-                            ? "
-                                                https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
+                        </a> 
+                        <a href="https:https://www.linkedin.com/shareArticle?url={{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
                             : '' }}/courses/overview-courses/{{ $course->slug }}"
                             target="_blank">
                             <img src="{{ asset('latest/assets/images/icons/linkedin-ic.svg') }}" alt="FB"
@@ -438,28 +461,20 @@
                     <h6>As a message</h6>
                     <div class="d-flex">
                         <a target="_blank"
-                            href="https://www.messenger.com/share.php?text={{ $Urlsubdomain
-                                ? "
-                                                    https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
-                                : '' }}/courses/overview-courses/{{ $course->slug }}">
+                            href="https://www.messenger.com/share.php?text={{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
                             <img src="{{ asset('latest/assets/images/icons/messenger.svg') }}" alt="FB"
                                 class="img-fluid">
                             <span>Messenger</span>
                         </a>
                         <a target="_blank"
-                            href="https://api.whatsapp.com/send?text={{ $Urlsubdomain
-                                ? "
-                                                    https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
+                            href="https://api.whatsapp.com/send?text={{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
                                 : '' }}/courses/overview-courses/{{ $course->slug }}">
                             <img src="{{ asset('latest/assets/images/icons/wapp.svg') }}" alt="FB"
                                 class="img-fluid">
                             <span>Whatsapp</span>
                         </a>
                         <a target="_blank"
-                            href="https://telegram.me/share/url?url={{ $Urlsubdomain
-                                ? "
-                                                    https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
-                                : '' }}/courses/overview-courses/{{ $course->slug }}">
+                            href="https://telegram.me/share/url?url={{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}">
                             <img src="{{ asset('latest/assets/images/icons/teleg.svg') }}" alt="FB"
                                 class="img-fluid">
                             <span>Telegram</span>
@@ -472,10 +487,7 @@
 
                     <div class="copy-link">
                         <input autocomplete="off" type="text" placeholder="Link"
-                            value="{{ $Urlsubdomain
-                                ? "
-                                                    https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
-                                : '' }}/courses/overview-courses/{{ $course->slug }}"
+                            value="{{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com') : '' }}/courses/overview-courses/{{ $course->slug }}"
                             class="form-control" id="linkToCopy">
                         <a href="#" id="copyButton" class="ms-1 px-0">Copy</a>
                     </div>

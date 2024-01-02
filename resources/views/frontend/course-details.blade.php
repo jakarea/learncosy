@@ -85,23 +85,14 @@
                             @php
                                 $totalDurationMinutes = 0;
                             @endphp
-                            @foreach ($course->modules as $module)
-                                @foreach ($module->lessons as $lesson)
-                                    @php
-                                        $totalDurationMinutes += $lesson->duration;
-                                    @endphp
+                            @foreach ($course->modules->where('status', 'published') as $module)
+                                @foreach ($module->lessons->where('status', 'published') as $lesson)
+                                @php
+                                $totalDurationMinutes += $lesson->duration;
+                                @endphp
                                 @endforeach
                             @endforeach
                             {{-- course lesson duration calculation --}}
-
-                            @php
-                                $publishedModulesCount = 0;
-                                foreach ($course->modules as $module) {
-                                    if ($module->status === 'published') {
-                                        $publishedModulesCount++;
-                                    }
-                                }
-                            @endphp
 
                             @php
                                 $hours = floor($totalDurationMinutes / 3600);
@@ -112,11 +103,14 @@
                                 {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                             @endif
 
-                            {{ $minutes }} Minutes to Complete . {{ $publishedModulesCount }} Moduls in
+                            {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }}  to Complete . {{ $course->modules->where('status',
+                            'published')->count(); }} Moduls in
                                 Course
-                                . {{ count($course_reviews) }} Reviews</h4>
-
-
+                                
+                                @if ($course->allow_review)
+                                . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                @endif
+                            </h4>
 
                             @if (auth()->check())
                                 @php
@@ -203,24 +197,24 @@
                                             </button>
                                             {{-- lessons total minutes --}}
                                             @php
-                                                $totalDuration = 0;
+                                            $totalDuration3 = 0;
 
-                                                foreach ($module->lessons as $lesson) {
-                                                    if (isset($lesson->duration) && is_numeric($lesson->duration)) {
-                                                        $totalDuration += $lesson->duration;
-                                                    }
+                                            foreach ($module->lessons->where('status','published') as $lesson) {
+                                                if (isset($lesson->duration) && is_numeric($lesson->duration)) {
+                                                    $totalDuration3 += $lesson->duration;
                                                 }
+                                            }
 
-                                                $hours = floor($totalDuration / 3600);
-                                                $minutes = floor(($totalDuration % 3600) / 60);
+                                            $hours3 = floor($totalDuration3 / 3600);
+                                            $minutes3 = floor(($totalDuration3 % 3600) / 60);
+                                        @endphp
 
-                                            @endphp
-
-                                            <p class="common-para mb-4">@if ($hours > 0)
-                                                {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                            <p class="common-para mb-4">@if ($hours3 > 0)
+                                                {{ $hours3 }} {{ $hours3 > 1 ? 'Hours' : 'Hour' }}
                                             @endif
 
-                                            {{ $minutes }} Min . {{ $module->lessons->where('status','published')->count() }} Lessons</p>
+                                            {{ $minutes3 }} Min .
+                                                {{ $module->lessons->where('status','published')->count() }} Lessons</p>
                                             {{-- lessons total minutes --}}
                                         </div>
                                         <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse "
@@ -230,27 +224,38 @@
                                                 <ul class="lesson-wrap">
                                                     @foreach ($module->lessons as $lesson)
                                                         @if ($lesson->status == 'published')
+
+                                                        @php
+                                                    $totalDuration2 = 0;
+
+                                                    if (isset($lesson->duration) && is_numeric($lesson->duration) && $lesson->status
+                                                    == 'published') {
+                                                    $totalDuration2 += $lesson->duration;
+                                                    }
+
+                                                    $hours2 = floor($totalDuration2 / 3600);
+                                                    $minutes2 = floor(($totalDuration2 % 3600) / 60);
+                                                    @endphp
+
                                                             <li>
                                                                 @if (!isEnrolled($course->id))
-                                                                    <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
+                                                                    <a href="javascript:void(0)"
                                                                         class="video_list_play d-flex">
                                                                         <div>
                                                                             <img src="{{ asset('latest/assets/images/icons/lok.svg') }}"
                                                                                 alt="a" class="img-fluid me-2">
                                                                             {{ $lesson->title }}
                                                                         </div>
-                                                                        <p class="common-para"> {{ $lesson->duration }}
+                                                                        <p class="common-para">
+                                                                            @if ($lesson->type != 'text')
+                                                                            @if ($hours2 > 0)
+                                                                            {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
+                                                                            @endif
+                                                                            {{ $minutes2 }} Min
+                                                                            @else
+                                                                            <i class="fa-regular fa-file-lines"></i>
+                                                                            @endif
                                                                         </p>
-                                                                    </a>
-                                                                @else
-                                                                    <a href="{{ $lesson->video_link }}"
-                                                                        class="video_list_play d-inline-block"
-                                                                        data-video-id="{{ $lesson->id }}"
-                                                                        data-lesson-id="{{ $lesson->id }}"
-                                                                        data-course-id="{{ $course->id }}"
-                                                                        data-modules-id="{{ $module->id }}">
-                                                                        <i class="fas fa-play-circle"></i>
-                                                                        {{ $lesson->title }}
                                                                     </a>
                                                                 @endif
                                                             </li>
@@ -264,6 +269,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @if ($course->allow_review)
                     {{-- course outline --}}
                     <div class="common-header">
                         <h3 class="mb-0">Student Review's</h3>
@@ -304,6 +310,8 @@
                             </div>
                         @endif
                     </div>
+                    @endif 
+
                     @if (count($related_course) > 0)
                         <div class="common-header">
                             <h3 class="mb-0">Similar Course</h3>
@@ -392,8 +400,20 @@
 
                             <p><img src="{{ asset('latest/assets/images/icons/users.svg') }}" alt="users"
                                     class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
+
                             <p><img src="{{ asset('latest/assets/images/icons/alerm.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
+                                    class="img-fluid">
+                                    @if ($hours > 0)
+                                    {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                    @endif
+        
+                                    {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
+
+                            {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
+
+                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p> --}}
 
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>

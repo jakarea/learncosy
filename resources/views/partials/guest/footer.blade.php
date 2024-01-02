@@ -38,7 +38,7 @@
             </div>
             <div class="col-12">
                 <div class="ftr-copy">
-                    <p>All Right Reserved &copy; Learcosy 2023</p>
+                    <p>All Right Reserved &copy; Learcosy {{ date('Y') }}</p>
                 </div>
             </div>
         </div>

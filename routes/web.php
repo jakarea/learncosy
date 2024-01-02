@@ -45,6 +45,11 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
     return view('auth.verified');
 });
 
+// custom 404 page view
+Route::get('/error-design', function () {
+    return view('errors.404');
+});
+
 
 // custom auth screen route
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
