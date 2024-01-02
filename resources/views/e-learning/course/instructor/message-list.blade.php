@@ -988,24 +988,24 @@ function sendMessage(event) {
         </div>`;
 
 
+        var messageAppended = true;
         getSenderUserDetails(my_id).then(function (userDetails) {
             if (userDetails.recivingMessage === "0") {
+                messageAppended = false;
                 toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
-            } else {
-                // Append the message only when there is no error
-                messageInner.append(myLastMessage);
             }
         });
 
         getUserDetails(receiver_id).then(function (userDetails) {
             if (userDetails.recivingMessage === "0") {
+                messageAppended = false;
                 toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
-            } else {
-                // Append the message only when there is no error
-                messageInner.append(myLastMessage);
             }
         });
 
+        if( messageAppended){
+            messageInnner.append(myLastMessage);
+        }
 
     removeFile();
 
@@ -1022,14 +1022,7 @@ function sendMessage(event) {
             },
             success: function (data) {
                 $('#chatMessage')[0].reset();
-
-                var chatMessageElement = $('.main-chat-room')[0];
-
-                if (chatMessageElement.scrollHeight === 300) {
-                    console.log("Scroll Height:", chatMessageElement.scrollHeight);
-                    scrollToBottomFunc();
-                }
-
+                scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
@@ -1091,15 +1084,8 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-
                 $('#groupChatMessage')[0].reset();
-
-                var chatMessageElement = $('.main-chat-room')[0];
-
-                if (chatMessageElement.scrollHeight === 300) {
-                    scrollToBottomFunc();
-                }
-
+                scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
