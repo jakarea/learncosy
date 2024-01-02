@@ -1083,9 +1083,20 @@ function sendGroupMessage() {
             success: function (data) {
 
                 $('#groupChatMessage')[0].reset();
-                // $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
-                // $("#chat-message").append(data);
-                scrollToBottomFunc();
+
+                var chatMessageElement = $('.chat-message')[0];
+
+                console.log( chatMessageElement);
+
+                if (chatMessageElement.scrollHeight === 300) {
+                    scrollToBottomFunc();
+                }
+
+
+
+
+
+
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
