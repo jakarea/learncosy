@@ -346,11 +346,12 @@ class MessageController extends Controller
     public function searchChatUser(Request $request)
     {
         if ($request->ajax()) {
+
             // dd( $request->all());
             $searchTerm = $request->input('term');
-            $layoutDesing = $request->input('layout');
 
-            $data['users'] = User::select(
+            $layoutDesing = $request->input('layout');
+            $query = User::select(
                     'users.id',
                     'users.name',
                     'users.avatar',
@@ -365,26 +366,38 @@ class MessageController extends Controller
                     // ['users.recivingMessage', true],
                     ['users.subdomain', config('app.subdomain')],
                     ['users.id', '!=', Auth::id()],
-                ])
-                ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
-                ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
-                ->get();
+                ]);
+
+
+                if ( !empty( $searchTerm )) {
+                    $query->where('users.name', 'LIKE', '%' . $searchTerm . '%');
+                }
+
+                // ->where('users.name', 'LIKE', '%' . $searchTerm . '%')
+                // ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+                // ->get();
+
+                $data['users'] = $query
+                                ->groupBy('users.id', 'users.name', 'users.avatar', 'users.email')
+                                ->orderBy('id','DESC')
+                                ->get();
+
 
             // dd( $data['users']->toArray() );
 
             $user = auth()->user();
 
-            $data['groups'] = Group::where(function ($query) use ($user) {
+            $groupQuery = Group::where(function ($query) use ($user) {
                 $query->whereHas('participants', function ($subQuery) use ($user) {
                     $subQuery->where('user_id', $user->id);
                 })->orWhere('admin_id', $user->id);
-            })
+            });
 
+            if ($searchTerm !== null) {
+                $groupQuery->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
 
-            // dd( $data['groups']->get()->toArray());
-
-            ->where('name', 'LIKE', '%' . $searchTerm . '%')
-            ->get();
+            $data['groups'] = $groupQuery->get();
 
             if ($layoutDesing == "layout1") {
                 return view('e-learning.course.instructor.chat-user.search-users-for-group', $data);

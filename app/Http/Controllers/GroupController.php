@@ -18,6 +18,10 @@ class GroupController extends Controller
             'name' => 'required| min:3'
         ]);
 
+        $group = Group::where(['name' => $request->name ])->first();
+        if( $group ){
+            return response()->json(['error' => 'Group already exists!!']);
+        }
         $characters = md5(time());
         $code = substr($characters, 0, 7);
         $group = Group::create([

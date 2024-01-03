@@ -301,23 +301,25 @@ $createTime = now()->format('D H:i a');
     // Search single chat user
 
 $(document).on("input",".search-group-chat-user", function (e) {
-    searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
+    searchUser(this.value, ".load-chat-user-for-group", "layout1");
 });
 
 // Search people for specific group on modal
 $(document).on("input", ".search-people-specific-group", function (e) {
-    searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
+    searchUser(this.value, ".fetch-people-for-specificgroup", "layout1");
 });
 
 // Search group chat user
-$(document).on("input",".search-chat-user", function (e) {
-    searchUser($.trim(this.value), ".chat-user-load", "layout2");
+$(document).on("keyup",".search-chat-user", function (e) {
+    var searchTerm = (this.value || "").trim();
+    searchUser(searchTerm, ".chat-user-load", "layout2");
 });
 
 
 // Search group
-$(document).on("input",".search-chat-user", function (e) {
-    searchUser($.trim(this.value), ".chat-user-load", "layout3");
+$(document).on("keyup",".search-chat-user", function (e) {
+    var searchTerm = (this.value || "").trim();
+    searchUser(searchTerm, ".chat-user-load", "layout3");
 });
 
 
@@ -333,26 +335,23 @@ $(document).ready(function () {
 // Search User
 function searchUser(searchTerm, resultContainer, layout) {
 
-    searchTerm = $.trim(searchTerm);
-    if (searchTerm !== "") {
-        $.ajax({
-            url: "{{ route('messages.search') }}",
-            type: 'GET',
-            data: {
-                term: searchTerm,
-                layout: layout
-            },
-            beforeSend: function () {
-                $("#mySpinner").removeClass('d-none');
-            },
-            success: function (data) {
-                $(resultContainer).html(data);
-                $("#mySpinner").addClass('d-none');
-            }
-        });
-    } else {
-        $(".load-chat-user-for-group").empty();
-    }
+    $.ajax({
+        url: "{{ route('messages.search') }}",
+        type: 'GET',
+        data: {
+            term: searchTerm,
+            layout: layout
+        },
+        beforeSend: function () {
+            $("#mySpinner").removeClass('d-none');
+            $(".load-chat-user-for-group").empty();
+        },
+        success: function (data) {
+            $(resultContainer).html(data);
+            $("#mySpinner").addClass('d-none');
+        }
+    });
+
 }
 
 // Load suggested user
@@ -369,7 +368,6 @@ function loadSuggestedPeople(userId, container, input) {
         url: "{{ route('messages.suggested.people') }}",
         data: { userId: userId },
         success: function (data) {
-            console.log( data )
             if ($.inArray(userId, existsUsers) === -1) {
                 existsUsers.push(userId);
                 $(container).append(data);
@@ -548,9 +546,7 @@ $(document).on('submit', '#deleteGroup', function () {
             $('#exampleModal3').modal('hide');
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
             $("#chat-message").load(location.href + " #chat-message>*", "");
-
-
-
+            $("#groupChatMessage").addClass('d-none')
             toastr.success(data.success, 'Success');
         },
         error: function (jqXHR, status, err) {
@@ -562,6 +558,7 @@ $(document).on('submit', '#deleteGroup', function () {
 
 $(document).on('click', '.user', function () {
 
+    scrollToBottomFunc();
     $('.user').removeClass('active');
     $('.group').removeClass('active');
     $(this).addClass('active');
@@ -597,6 +594,7 @@ $(document).on('click', '.group', function () {
     var group_id = $(this).attr('id');
     receiver_id = group_id.split('_')[1];
     fetchGroupData(receiver_id);
+    scrollToBottomFunc();
 });
 
 function fetchGroupData(receiver_id){
@@ -988,24 +986,27 @@ function sendMessage(event) {
         </div>`;
 
 
-        getSenderUserDetails(my_id).then(function (userDetails) {
-            if (userDetails.recivingMessage === "0") {
-                toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
-            } else {
-                // Append the message only when there is no error
-                messageInner.append(myLastMessage);
-            }
-        });
+    if (messageText.trim() !== '' || imageElement.trim() !== '') {
 
-        getUserDetails(receiver_id).then(function (userDetails) {
-            if (userDetails.recivingMessage === "0") {
-                toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
-            } else {
-                // Append the message only when there is no error
-                messageInner.append(myLastMessage);
-            }
-        });
+            var messageAppended = true;
+            getSenderUserDetails(my_id).then(function (userDetails) {
+                if (userDetails.recivingMessage === "0") {
+                    messageAppended = false;
+                    toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
+                }
+            });
 
+            getUserDetails(receiver_id).then(function (userDetails) {
+                if (userDetails.recivingMessage === "0") {
+                    messageAppended = false;
+                    toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
+                }
+            });
+
+            if( messageAppended){
+                messageInnner.append(myLastMessage);
+            }
+    }
 
     removeFile();
 
@@ -1022,14 +1023,7 @@ function sendMessage(event) {
             },
             success: function (data) {
                 $('#chatMessage')[0].reset();
-
-                var chatMessageElement = $('.main-chat-room')[0];
-
-                if (chatMessageElement.scrollHeight === 300) {
-                    console.log("Scroll Height:", chatMessageElement.scrollHeight);
-                    scrollToBottomFunc();
-                }
-
+                scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
@@ -1091,15 +1085,8 @@ function sendGroupMessage() {
             contentType: false,
             cache: false,
             success: function (data) {
-
                 $('#groupChatMessage')[0].reset();
-
-                var chatMessageElement = $('.main-chat-room')[0];
-
-                if (chatMessageElement.scrollHeight === 300) {
-                    scrollToBottomFunc();
-                }
-
+                scrollToBottomFunc();
             },
             error: function (jqXHR, status, err) {
                 // Handle error if needed
@@ -1120,14 +1107,24 @@ function createGroup(formSelector) {
         contentType: false,
         cache: false,
         success: function (data) {
-            toastr.success(data.success, 'Success');
-            if (data.success) {
-                $(formSelector)[0].reset();
+            if (data.error) {
+                toastr.error(data.error, 'Error');
+                return;
             }
+            if (data.success) {
+                toastr.success(data.success, 'Success');
+                $(formSelector)[0].reset();
+                existsUsers = [];
+                $(".addUserId").val('');
+            }
+
             $(".load-suggested-people").empty();
             $(".load-chat-user-for-group").empty();
+            $('#exampleModal4').modal('hide');
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
             fetchGroupData(data.groupId);
+
+            console.log( existsUsers )
         },
         error: function (jqXHR, status, err) {
             toastr.error('Something went wrong!', 'Error');
@@ -1141,8 +1138,8 @@ function createGroup(formSelector) {
 
 // make a function to scroll down auto
 function scrollToBottomFunc() {
-    $('.main-chat-room').animate({
-        scrollTop: $('.main-chat-room').get(0).scrollHeight
+    $('.main-chat-inner-room').animate({
+        scrollTop: $('.main-chat-inner-room').get(0).scrollHeight
     }, 50);
 }
 
