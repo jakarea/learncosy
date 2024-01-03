@@ -173,7 +173,7 @@
                                                                         @if ($hours2 > 0)
                                                                         {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
                                                                         @endif
-                                                                        {{ $minutes2 }} Min
+                                                                        {{ $minutes2 < 1 ? 1 : $minutes2 }} Min
                                                                         @else
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif

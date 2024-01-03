@@ -251,7 +251,7 @@
                                                                             @if ($hours2 > 0)
                                                                             {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
                                                                             @endif
-                                                                            {{ $minutes2 }} Min
+                                                                            {{ $minutes2 < 1 ? 1 : $minutes2 }} Min
                                                                             @else
                                                                             <i class="fa-regular fa-file-lines"></i>
                                                                             @endif
@@ -411,8 +411,6 @@
 
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
-
-                             
 
                             {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
