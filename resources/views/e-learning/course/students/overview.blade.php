@@ -161,7 +161,7 @@
 
                                         <li>
                                             @if (!isEnrolled($course->id))
-                                            <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
+                                            <a href="javascript:void(0)"
                                                 class="video_list_play d-flex">
                                                 <div>
                                                     <img src="{{ asset('latest/assets/images/icons/lok.svg') }}" alt="a"
@@ -178,14 +178,7 @@
                                                     <i class="fa-regular fa-file-lines"></i>
                                                     @endif
                                                 </p>
-                                            </a>
-                                            @else
-                                            <a href="{{ $lesson->video_link }}" class="video_list_play d-inline-block"
-                                                data-video-id="{{ $lesson->id }}" data-lesson-id="{{ $lesson->id }}"
-                                                data-course-id="{{ $course->id }}" data-modules-id="{{ $module->id }}">
-                                                <i class="fas fa-play-circle"></i>
-                                                {{ $lesson->title }}
-                                            </a>
+                                            </a> 
                                             @endif
                                         </li>
                                         @endif
@@ -377,13 +370,10 @@
                             {{ $minutes }}  {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
+                                class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
 
-                        <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p>
-
-                        <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                        {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
                         @if ($course->language)
                         <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
                                 class="img-fluid">

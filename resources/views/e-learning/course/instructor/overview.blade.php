@@ -339,14 +339,11 @@
         
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
+                                <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                        class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
 
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p>
-
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                            {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
                             @if ($course->language)
                                 <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
                                         class="img-fluid">
