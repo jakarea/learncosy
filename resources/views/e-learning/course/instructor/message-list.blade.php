@@ -301,23 +301,25 @@ $createTime = now()->format('D H:i a');
     // Search single chat user
 
 $(document).on("input",".search-group-chat-user", function (e) {
-    searchUser($.trim(this.value), ".load-chat-user-for-group", "layout1");
+    searchUser(this.value, ".load-chat-user-for-group", "layout1");
 });
 
 // Search people for specific group on modal
 $(document).on("input", ".search-people-specific-group", function (e) {
-    searchUser($.trim(this.value), ".fetch-people-for-specificgroup", "layout1");
+    searchUser(this.value, ".fetch-people-for-specificgroup", "layout1");
 });
 
 // Search group chat user
-$(document).on("input",".search-chat-user", function (e) {
-    searchUser($.trim(this.value), ".chat-user-load", "layout2");
+$(document).on("keyup",".search-chat-user", function (e) {
+    var searchTerm = (this.value || "").trim();
+    searchUser(searchTerm, ".chat-user-load", "layout2");
 });
 
 
 // Search group
-$(document).on("input",".search-chat-user", function (e) {
-    searchUser($.trim(this.value), ".chat-user-load", "layout3");
+$(document).on("keyup",".search-chat-user", function (e) {
+    var searchTerm = (this.value || "").trim();
+    searchUser(searchTerm, ".chat-user-load", "layout3");
 });
 
 
@@ -333,26 +335,23 @@ $(document).ready(function () {
 // Search User
 function searchUser(searchTerm, resultContainer, layout) {
 
-    searchTerm = $.trim(searchTerm);
-    if (searchTerm !== "") {
-        $.ajax({
-            url: "{{ route('messages.search') }}",
-            type: 'GET',
-            data: {
-                term: searchTerm,
-                layout: layout
-            },
-            beforeSend: function () {
-                $("#mySpinner").removeClass('d-none');
-            },
-            success: function (data) {
-                $(resultContainer).html(data);
-                $("#mySpinner").addClass('d-none');
-            }
-        });
-    } else {
-        $(".load-chat-user-for-group").empty();
-    }
+    $.ajax({
+        url: "{{ route('messages.search') }}",
+        type: 'GET',
+        data: {
+            term: searchTerm,
+            layout: layout
+        },
+        beforeSend: function () {
+            $("#mySpinner").removeClass('d-none');
+            $(".load-chat-user-for-group").empty();
+        },
+        success: function (data) {
+            $(resultContainer).html(data);
+            $("#mySpinner").addClass('d-none');
+        }
+    });
+
 }
 
 // Load suggested user
