@@ -369,7 +369,6 @@ function loadSuggestedPeople(userId, container, input) {
         url: "{{ route('messages.suggested.people') }}",
         data: { userId: userId },
         success: function (data) {
-            console.log( data )
             if ($.inArray(userId, existsUsers) === -1) {
                 existsUsers.push(userId);
                 $(container).append(data);
@@ -548,9 +547,7 @@ $(document).on('submit', '#deleteGroup', function () {
             $('#exampleModal3').modal('hide');
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
             $("#chat-message").load(location.href + " #chat-message>*", "");
-
-
-
+            $("#groupChatMessage").addClass('d-none')
             toastr.success(data.success, 'Success');
         },
         error: function (jqXHR, status, err) {
@@ -990,24 +987,27 @@ function sendMessage(event) {
         </div>`;
 
 
-        var messageAppended = true;
-        getSenderUserDetails(my_id).then(function (userDetails) {
-            if (userDetails.recivingMessage === "0") {
-                messageAppended = false;
-                toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
-            }
-        });
+    if (messageText.trim() !== '' || imageElement.trim() !== '') {
 
-        getUserDetails(receiver_id).then(function (userDetails) {
-            if (userDetails.recivingMessage === "0") {
-                messageAppended = false;
-                toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
-            }
-        });
+            var messageAppended = true;
+            getSenderUserDetails(my_id).then(function (userDetails) {
+                if (userDetails.recivingMessage === "0") {
+                    messageAppended = false;
+                    toastr.warning(userDetails.message, { positionClass: 'toast-bottom-right' });
+                }
+            });
 
-        if( messageAppended){
-            messageInnner.append(myLastMessage);
-        }
+            getUserDetails(receiver_id).then(function (userDetails) {
+                if (userDetails.recivingMessage === "0") {
+                    messageAppended = false;
+                    toastr.error(userDetails.message, { positionClass: 'toast-bottom-right' });
+                }
+            });
+
+            if( messageAppended){
+                messageInnner.append(myLastMessage);
+            }
+    }
 
     removeFile();
 
@@ -1108,14 +1108,24 @@ function createGroup(formSelector) {
         contentType: false,
         cache: false,
         success: function (data) {
-            toastr.success(data.success, 'Success');
-            if (data.success) {
-                $(formSelector)[0].reset();
+            if (data.error) {
+                toastr.error(data.error, 'Error');
+                return;
             }
+            if (data.success) {
+                toastr.success(data.success, 'Success');
+                $(formSelector)[0].reset();
+                existsUsers = [];
+                $(".addUserId").val('');
+            }
+
             $(".load-suggested-people").empty();
             $(".load-chat-user-for-group").empty();
+            $('#exampleModal4').modal('hide');
             $("#chat-user-load").load(location.href + " #chat-user-load>*", "");
             fetchGroupData(data.groupId);
+
+            console.log( existsUsers )
         },
         error: function (jqXHR, status, err) {
             toastr.error('Something went wrong!', 'Error');
