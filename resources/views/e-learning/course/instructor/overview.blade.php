@@ -159,8 +159,7 @@
                                                     $minutes2 = floor(($totalDuration2 % 3600) / 60);
                                                     @endphp
 
-                                                        <li>
-                                                            @if (!isEnrolled($course->id))
+                                                        <li> 
                                                                 <a href="javascript:void(0)"
                                                                     class="video_list_play d-flex">
                                                                     <div>
@@ -173,13 +172,12 @@
                                                                         @if ($hours2 > 0)
                                                                         {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
                                                                         @endif
-                                                                        {{ $minutes2 }} Min
+                                                                        {{ $minutes2 < 1 ? 1 : $minutes2 }} Min
                                                                         @else
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
-                                                                </a> 
-                                                            @endif
+                                                                </a>  
                                                         </li>
                                                         @endif
                                                     @endforeach
