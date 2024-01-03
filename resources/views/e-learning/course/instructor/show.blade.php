@@ -297,8 +297,7 @@ $i = 0;
 
 
 {{-- script section @S --}}
-@section('script')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+@section('script') 
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
      document.querySelector('#hideShow').classList.add('d-none');

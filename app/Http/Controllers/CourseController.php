@@ -78,7 +78,7 @@ class CourseController extends Controller
 
     // course show
     public function show($domain, $id)
-    {
+    { 
         $course = Course::where('id', $id)->with('modules.lessons','user')->first();
 
         //start group file
