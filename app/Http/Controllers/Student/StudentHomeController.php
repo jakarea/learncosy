@@ -294,7 +294,7 @@ class StudentHomeController extends Controller
 
     // course show
     public function show($domain,$slug)
-    { 
+    {
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->where('status','published')->first();
         if (!$course) {
             return redirect()->back()->with('error','No course found!');
@@ -329,29 +329,36 @@ class StudentHomeController extends Controller
             })
             ->take(3)
             ->get();
-        } 
+        }
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $course_like = course_like::where('course_id', $course->id)->where('user_id', Auth::user()->id)->first();
         $liked = '';
         if ($course_like ) {
             $liked = 'active';
-        } 
+        }
 
         $totalModules = $course->modules->where('status', 'published')->count();
 
-        $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->filter(function ($lesson) {
-                return $lesson->status == 'published';
-            })->count();
-        }); 
+        // $totalLessons = $course->modules->sum(function ($module) {
+        //     return $module->lessons->filter(function ($lesson) {
+        //         return $lesson->status == 'published';
+        //     })->count();
+        // });
+
+        $totalLessons = $course->modules->filter(function ($module) {
+            return $module->status === 'published';
+        })->map(function ($module) {
+            return $module->lessons()->where('status', 'published')->count();
+        })->sum();
+
 
         // last playing video
          $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
          $defaultVideoId = '899148078';
          $currentLesson = NULL;
         $playUrl = NULL;
- 
+
 
          if ($courseLog) {
              $currentLesson = Lesson::find($courseLog->lesson_id);
@@ -364,7 +371,7 @@ class StudentHomeController extends Controller
                 $playUrl = $currentLesson->text;
             }
          }
- 
+
 
         if ($course) {
             return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','playUrl','playUrl','playUrl'));
@@ -575,7 +582,7 @@ class StudentHomeController extends Controller
 
         $related_course = [];
         if ($course) {
-            if($course->categories){ 
+            if($course->categories){
                 $categoryArray = explode(',', $course->categories);
 
                 $related_course = Course::where('instructor_id', $course->instructor_id)
@@ -589,7 +596,7 @@ class StudentHomeController extends Controller
                 ->take(4)
                 ->get();
             }
-            
+
             return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
@@ -598,6 +605,7 @@ class StudentHomeController extends Controller
 
       // my course details
     public function courseDetails($domain, $slug){
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
 
@@ -640,7 +648,7 @@ class StudentHomeController extends Controller
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
             ]);
-            $courseLogInfo->save(); 
+            $courseLogInfo->save();
         }else{
             $courseLog->course_id = $courseId;
             $courseLog->instructor_id = $existingCourse->user_id;

@@ -14,7 +14,7 @@
 {{-- page content @S --}}
 @section('content')
     <main class="student-courses-lists-pages">
-        <div class="container-fluid"> 
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <form action="" method="GET" id="myForm">
@@ -64,7 +64,7 @@
                 @if (count($enrolments) > 0)
                     @foreach ($enrolments as $enrolment)
                         {{-- course single box start --}}
-                        @if ($enrolment->course) 
+                        @if ($enrolment->course)
                         @php
                             $review_sum = 0;
                             $review_avg = 0;
@@ -91,7 +91,7 @@
                                         </p>
                                         <ul>
                                             <li><span>{{ $review_avg }}</span></li>
-                                            
+
                                             @for ($i = 1; $i <= 5; $i++)
                                                 @if ($i <= $review_avg)
                                                     <li><i class="fas fa-star"></i></li>
@@ -99,11 +99,11 @@
                                                     <li><i class="fas fa-star not-rev"></i></li>
                                                 @endif
                                             @endfor
-                                            
+
                                             <li><span>({{ $total }})</span></li>
                                         </ul>
-                                        
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="course-txt-box pt-0">
