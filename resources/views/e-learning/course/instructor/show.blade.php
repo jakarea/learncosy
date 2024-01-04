@@ -239,8 +239,8 @@ $i = 0;
                             <div class="course-single-item">
                                 <div class="course-thumb-box">
                                     @if ($relatedCourse->thumbnail)
-                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid"> 
-                                    @else 
+                                    <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid">
+                                    @else
                                         <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}" alt="Course Thumbnail" class="img-fluid">
                                     @endif
 
@@ -297,7 +297,7 @@ $i = 0;
 
 
 {{-- script section @S --}}
-@section('script') 
+@section('script')
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
      document.querySelector('#hideShow').classList.add('d-none');

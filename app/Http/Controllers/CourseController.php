@@ -78,7 +78,7 @@ class CourseController extends Controller
 
     // course show
     public function show($domain, $id)
-    { 
+    {
         $course = Course::where('id', $id)->with('modules.lessons','user')->first();
 
         //start group file
@@ -96,7 +96,7 @@ class CourseController extends Controller
             }
         }
 
-        if($course->categories){ 
+        if($course->categories){
             $categoryArray = explode(',', $course->categories);
 
             $relatedCourses = Course::where('instructor_id', $course->instructor_id)
@@ -115,11 +115,18 @@ class CourseController extends Controller
 
         $totalModules = $course->modules->where('status', 'published')->count();
 
-        $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->filter(function ($lesson) {
-                return $lesson->status == 'published';
-            })->count();
-        });
+        // $totalLessons = $course->modules->sum(function ($module) {
+        //     return $module->lessons->filter(function ($lesson) {
+        //         return $lesson->status == 'published';
+        //     })->count();
+        // });
+
+        $totalLessons = $course->modules->filter(function ($module) {
+            return $module->status === 'published';
+        })->map(function ($module) {
+            return $module->lessons()->where('status', 'published')->count();
+        })->sum();
+
 
         // last playing video
         $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
@@ -164,8 +171,8 @@ class CourseController extends Controller
 
         $related_course = [];
         if ($course) {
-            
-            if($course->categories){ 
+
+            if($course->categories){
                 $categoryArray = explode(',', $course->categories);
 
                 $related_course = Course::where('instructor_id', $course->instructor_id)

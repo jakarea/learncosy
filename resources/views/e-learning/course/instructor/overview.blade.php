@@ -64,9 +64,9 @@
                             {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
                             'published')->count(); }} Moduls in
                                 Course
-                                
+
                                 @if ($course->allow_review)
-                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }}
                                 @endif
                             </h4>
 
@@ -178,7 +178,7 @@
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
-                                                                </a> 
+                                                                </a>
                                                             @endif
                                                         </li>
                                                         @endif
@@ -336,7 +336,7 @@
                                     @if ($hours > 0)
                                     {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                                     @endif
-        
+
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
@@ -345,8 +345,8 @@
                             <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p>
 
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                            {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
                             @if ($course->language)
                                 <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
                                         class="img-fluid">
