@@ -609,6 +609,7 @@ class StudentHomeController extends Controller
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
         $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
         $totalReviews = CourseReview::where('course_id', $course->id)->with('user')->count();
         $completes = CourseActivity::where(['course_id'=> $course->id,'user_id'=> Auth::user()->id, "is_completed" => 1])->pluck('lesson_id')->toArray();
         foreach ($course->modules as $module) {
@@ -621,7 +622,7 @@ class StudentHomeController extends Controller
 
 
         if ($course) {
-            return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber'));
+            return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber','course_reviews'));
         } else {
             return redirect('students/dashboard')->with('error', 'Course not found!');
         }

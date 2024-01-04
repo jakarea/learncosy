@@ -41,20 +41,34 @@
 
                             {{-- course lesson duration calculation --}}
                             @php
-                            $totalDurationMinutes = 0;
+                                $totalDurationMinutes = 0;
                             @endphp
-                            @foreach($course->modules as $module)
-                            @foreach($module->lessons as $lesson)
+                            @foreach ($course->modules->where('status', 'published') as $module)
+                                @foreach ($module->lessons->where('status', 'published') as $lesson)
+                                @php
+                                $totalDurationMinutes += $lesson->duration;
+                                @endphp
+                                @endforeach
+                            @endforeach
+
                             @php
-                            $totalDurationMinutes += $lesson->duration;
+                                $hours = floor($totalDurationMinutes / 3600);
+                                $minutes = floor(($totalDurationMinutes % 3600) / 60);
                             @endphp
-                            @endforeach
-                            @endforeach
                             {{-- course lesson duration calculation --}}
 
-                            <h4>{{ $totalDurationMinutes }} Minutes to Complete . {{ count($course->modules) }} Moduls in
+                            <h4>@if ($hours > 0)
+                                {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                            @endif
+
+                            {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
+                            'published')->count(); }} Moduls in
                                 Course
-                                . {{ $totalReviews }} Reviews</h4>
+                                
+                                @if ($course->allow_review)
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                @endif
+                            </h4>
 
                             <a href="{{ url('students/courses/' . $course->slug) }}" class="common-bttn"
                                 style="border-radius: 6.25rem; margin-top: 2rem"><img src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a" class="img-fluid me-1"> Start Course</a>
@@ -129,9 +143,17 @@
                             <div class="col-lg-6">
                                 <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
                                     class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
-
-                                <p><img src="{{asset('latest/assets/images/icons/alerm.svg')}}" alt="users"
-                                        class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
+                                
+                                    <p><img src="{{ asset('latest/assets/images/icons/alerm.svg') }}" alt="users"
+                                        class="img-fluid">
+                                        @if ($hours > 0)
+                                        {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
+                                        @endif
+            
+                                        {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
+    
+                                        <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                            class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
 
                                 {{-- <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
                                             class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
