@@ -160,7 +160,6 @@
                                                     @endphp
 
                                                         <li>
-                                                            @if (!isEnrolled($course->id))
                                                                 <a href="javascript:void(0)"
                                                                     class="video_list_play d-flex">
                                                                     <div>
@@ -173,13 +172,17 @@
                                                                         @if ($hours2 > 0)
                                                                         {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
                                                                         @endif
-                                                                        {{ $minutes2 }} Min
+                                                                        {{ $minutes2 < 1 ? 1 : $minutes2 }} Min
                                                                         @else
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
+<<<<<<< HEAD
                                                                 </a>
                                                             @endif
+=======
+                                                                </a>
+>>>>>>> 3c0b3885484874f2b2aa5abfed4a46d0d2cb9077
                                                         </li>
                                                         @endif
                                                     @endforeach
@@ -339,11 +342,8 @@
 
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
-
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p>
+                                <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                        class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
 
                             {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                     class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}

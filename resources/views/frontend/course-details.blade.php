@@ -237,8 +237,7 @@
                                                     $minutes2 = floor(($totalDuration2 % 3600) / 60);
                                                     @endphp
 
-                                                            <li>
-                                                                @if (!isEnrolled($course->id))
+                                                            <li> 
                                                                     <a href="javascript:void(0)"
                                                                         class="video_list_play d-flex">
                                                                         <div>
@@ -251,13 +250,12 @@
                                                                             @if ($hours2 > 0)
                                                                             {{ $hours2 }} {{ $hours2 > 1 ? 'Hours' : 'Hour' }}
                                                                             @endif
-                                                                            {{ $minutes2 }} Min
+                                                                            {{ $minutes2 < 1 ? 1 : $minutes2 }} Min
                                                                             @else
                                                                             <i class="fa-regular fa-file-lines"></i>
                                                                             @endif
                                                                         </p>
-                                                                    </a>
-                                                                @endif
+                                                                    </a> 
                                                             </li>
                                                         @endif
                                                     @endforeach
@@ -317,12 +315,12 @@
                             <h3 class="mb-0">Similar Course</h3>
                         </div>
                         <div class="row">
-                            @foreach ($related_course as $course)
+                            @foreach ($related_course as $r_course)
                                 @php
                                     $review_sum = 0;
                                     $review_avg = 0;
                                     $total = 0;
-                                    foreach ($course->reviews as $review) {
+                                    foreach ($r_course->reviews as $review) {
                                         $total++;
                                         $review_sum += $review->star;
                                     }
@@ -334,14 +332,14 @@
                                 <div class="col-lg-5 col-sm-6 mb-4">
                                     <div class="course-single-item">
                                         <div class="course-thumb-box">
-                                            <img src="{{ asset($course->thumbnail) }}" alt="Course Thumbanil"
+                                            <img src="{{ asset($r_course->thumbnail) }}" alt="Course Thumbanil"
                                                 class="img-fluid">
                                         </div>
 
                                         <div class="course-txt-box">
                                             <a
-                                                href="{{ url('courses/overview-courses/' . $course->slug) }}">{{ Str::limit($course->title, $limit = 40, $end = '..') }}</a>
-                                            <p>{{ $course->user->subdomain }}</p>
+                                                href="{{ url('courses/overview-courses/' . $r_course->slug) }}">{{ Str::limit($r_course->title, $limit = 40, $end = '..') }}</a>
+                                            <p>{{ $r_course->user->subdomain }}</p>
                                             <ul>
                                                 <li><span>{{ $review_avg }}</span></li>
                                                 @for ($i = 0; $i < $review_avg; $i++)
@@ -349,10 +347,10 @@
                                                 @endfor
                                                 <li><span>({{ $total }})</span></li>
                                             </ul>
-                                            @if ($course->offer_price)
-                                                <h5>€ {{ $course->offer_price }} <span>€ {{ $course->price }}</span></h5>
+                                            @if ($r_course->offer_price)
+                                                <h5>€ {{ $r_course->offer_price }} <span>€ {{ $r_course->price }}</span></h5>
                                             @else
-                                                <h5> {{ $course->price > 0 ? '€ ' . $course->price : 'Free' }} </h5>
+                                                <h5> {{ $r_course->price > 0 ? '€ ' . $r_course->price : 'Free' }} </h5>
                                             @endif
                                         </div>
                                     </div>
@@ -409,14 +407,11 @@
 
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
+                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
+                                    class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
+
                             {{-- <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
-
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons</p> --}}
-
-                            <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
-                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                                    class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
                             @if ($course->language)
                                 <p><img src="{{ asset('latest/assets/images/icons/english.svg') }}" alt="users"
                                         class="img-fluid">
