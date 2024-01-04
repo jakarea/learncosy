@@ -182,7 +182,7 @@
                 <div class="col-12">
                     <div class="all-modules-box">
                         <h3>Modules ({{ count($course->modules->where('status','published')) }})</h3>
-                    </div>
+                    </div> 
                 </div>
                 @foreach ($course->modules->where('status','published') as $module)
                     @php
