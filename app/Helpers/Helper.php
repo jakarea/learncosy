@@ -151,10 +151,10 @@ if (!function_exists('isVimeoConnected')) {
         if ($userId) {
             $vimeoData = \App\Models\VimeoData::where('user_id', $userId)->first();
 
-            if (!$vimeoData) { 
+            if (!$vimeoData) {
                 $status = 'Not Connected';
                 return [$vimeoData, $status];
-            } else { 
+            } else {
                 $vimeo = new \Vimeo\Vimeo($vimeoData->client_id, $vimeoData->client_secret, $vimeoData->access_key);
 
                 try {
@@ -164,7 +164,7 @@ if (!function_exists('isVimeoConnected')) {
                 } catch (\Vimeo\Exceptions\VimeoUploadException $e) {
                     $status = 'Invalid Credentials';
                     return [$vimeoData, $status];
-                } catch (\Exception $e) { 
+                } catch (\Exception $e) {
                     $status = 'Connection Failed';
                     return [$vimeoData, $status];
                 }
@@ -399,9 +399,21 @@ if (!function_exists('StudentActitviesProgress')) {
     function StudentActitviesProgress($user_id, $course_id)
     {
         $progress = 0;
+        // $modules = \App\Models\Module::where('course_id', $course_id)->where('status','published')->pluck("id")->toArray();
+
+        $course = \App\Models\Course::where('id', $course_id)->first();
+
+        $totalLessons = $course->modules->filter(function ($module) {
+            return $module->status === 'published';
+        })->map(function ($module) {
+            return $module->lessons()->where('status', 'published')->count();
+        })->sum();
+
+
+
         // Get the total number of lessons in the course
-        $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->where('status','published')->count();
-         
+        // $totalLessons = \App\Models\Lesson::where('course_id', $course_id)->where('status','published')->count();
+
         // Get the total number of completed lessons by the student for the specific course
         $totalCompleteLessons = \App\Models\CourseActivity::where('course_id', $course_id)
             ->where('user_id', $user_id)

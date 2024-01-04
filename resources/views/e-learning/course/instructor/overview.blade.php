@@ -64,9 +64,9 @@
                             {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
                             'published')->count(); }} Moduls in
                                 Course
-                                
+
                                 @if ($course->allow_review)
-                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }}
                                 @endif
                             </h4>
 
@@ -159,7 +159,7 @@
                                                     $minutes2 = floor(($totalDuration2 % 3600) / 60);
                                                     @endphp
 
-                                                        <li> 
+                                                        <li>
                                                                 <a href="javascript:void(0)"
                                                                     class="video_list_play d-flex">
                                                                     <div>
@@ -177,7 +177,12 @@
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
-                                                                </a>  
+<<<<<<< HEAD
+                                                                </a>
+                                                            @endif
+=======
+                                                                </a>
+>>>>>>> 3c0b3885484874f2b2aa5abfed4a46d0d2cb9077
                                                         </li>
                                                         @endif
                                                     @endforeach
@@ -334,7 +339,7 @@
                                     @if ($hours > 0)
                                     {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                                     @endif
-        
+
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
                                 <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"

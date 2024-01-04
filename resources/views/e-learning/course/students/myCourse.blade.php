@@ -29,7 +29,7 @@
                                 <div class="media">
                                     @if ($course->user && $course->user->avatar)
                                         <img src="{{ asset( $course->user->avatar) }}" alt="Place" class="img-fluid">
-                                    @else  
+                                    @else
                                     <span class="user-name-avatar me-3">{!! strtoupper($course->user->name[0]) !!}</span>
                                     @endif
                                     <div class="media-body">
@@ -63,39 +63,44 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="overall-progress">
-                            <h6>Overall Progress</h6>  
+                            <h6>Overall Progress</h6>
                             <div class="circle-prog-big">
                                 <div class="cards">
                                     <div class="percent">
-                                        @php 
-                                        $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $course->id); 
+
+                                        @php
+                                        $totalLessons = 0;
+                                        $completedLessons = 0;
+                                    @endphp
+                                    @foreach ($course->modules->where('status','published') as $module)
+                                        @php
+                                            $totalLessons += count($module->lessons);
+                                            $completedLessons += $module->lessons->where('completed', 1)->count();
+                                        @endphp
+                                    @endforeach
+
+                                        @php
+                                        $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $course->id);
                                         $showPercentage = null;
-                                        
+
                                         if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){
                                             $showPercentage = $totalPorgressPercent - 2;
                                         }
-                                        @endphp 
-
+                                        @endphp
+                                        @php
+                                            $percentage = ($completedLessons / $totalLessons) * 100;
+                                        @endphp
                                         <svg>
                                             <circle cx="73" cy="73" r="65"></circle>
                                             <circle cx="73" cy="73" r="65"
-                                                style="--percent: {{ $showPercentage ? $showPercentage : $totalPorgressPercent }}"> 
-                                            </circle> 
+                                                style="--percent: {{ $percentage }}">
+                                            </circle>
                                         </svg>
 
-                                        @php
-                                            $totalLessons = 0;
-                                            $completedLessons = 0;
-                                        @endphp
-                                        @foreach ($course->modules as $module)
-                                            @php
-                                                $totalLessons += count($module->lessons);
-                                                $completedLessons += $module->lessons->where('completed', 1)->count();
-                                            @endphp
-                                        @endforeach
+
 
                                         <div class="number">
-                                            <h5>{{ $totalPorgressPercent }}<span>%</span>
+                                            <h5>{{ $percentage }}<span>%</span>
                                             </h5>
                                             <p>{{ $completedLessons }}/{{ $totalLessons }}</p>
                                         </div>
@@ -124,16 +129,16 @@
                             <div class="col-lg-6">
                                 <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
                                     class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
-                                
+
                                 <p><img src="{{asset('latest/assets/images/icons/alerm.svg')}}" alt="users"
                                         class="img-fluid"> {{ $totalDurationMinutes }} Minutes to Completed</p>
 
-                                <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
-                                            class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p>
+                                {{-- <p><img src="{{asset('latest/assets/images/icons/carriculam.svg')}}" alt="users"
+                                            class="img-fluid"> {{ $course->curriculum ? $course->curriculum : 0 }} Curriculum</p> --}}
 
                                 <p><img src="{{asset('latest/assets/images/icons/trophy.svg')}}" alt="users" class="img-fluid">
                                                 Certificate of Completion</p>
-                               
+
                             </div>
                             <div class="col-lg-6">
                                 @if ($course->language)
@@ -154,10 +159,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="all-modules-box">
-                        <h3>Modules ({{ count($course->modules) }})</h3>
+                        <h3>Modules ({{ count($course->modules->where('status','published')) }})</h3>
                     </div>
                 </div>
-                @foreach ($course->modules as $module)
+                @foreach ($course->modules->where('status','published') as $module)
                     @php
                         $totalLessons = count($module->lessons);
                         $completedLessons = $module->lessons->where('completed', 1)->count();
@@ -209,7 +214,7 @@
                                             @endif
                                         </div>
                                     </li>
-                                @endforeach  
+                                @endforeach
                                 <div class="collapse mb-3" id="collapseExample{{ $module->id }}">
                                     @foreach ($module->lessons->slice(3, 10) as $lesson)
                                     <li>
@@ -232,14 +237,14 @@
                                             @endif
                                         </div>
                                     </li>
-                                @endforeach       
-                                </div> 
+                                @endforeach
+                                </div>
                             </ul>
 
                             @if (count($module->lessons) > 3)
                                 <div class="text-center">
                                     <a data-bs-toggle="collapse" href="#collapseExample{{ $module->id }}" role="button" aria-expanded="false" aria-controls="collapseExample{{ $module->id }}">Show More <i class="fas fa-angle-down"></i></a>
-                                </div>  
+                                </div>
                             @endif
 
                         </div>
@@ -264,4 +269,4 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-@endsection 
+@endsection
