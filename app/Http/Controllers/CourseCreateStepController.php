@@ -417,6 +417,7 @@ class CourseCreateStepController extends Controller
 
             $lesson->audio = NULL;
             $lesson->status = 'pending';
+            $lesson->duration = false;
             $lesson->save();
             return redirect()->back()->with('success','Lesson Audio Successfully Deleted!');
         }
@@ -495,7 +496,7 @@ class CourseCreateStepController extends Controller
             }
 
             $audio = $request->file('audio');
-            $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
+            $audioName = $lesson->slug . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
             $lesson->audio = 'uploads/audio/'.$audioName;
         }
@@ -514,7 +515,7 @@ class CourseCreateStepController extends Controller
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
 
-        $lesson->duration = $audioDuration;
+        $lesson->duration = $request->hasFile('audio') ? $audioDuration : $lesson->duration;
         $lesson->status = 'published';
         $lesson->save();
 
