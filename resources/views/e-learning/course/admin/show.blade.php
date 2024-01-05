@@ -126,7 +126,7 @@ $i = 0;
                         <h6>{{ $totalModules }} Modules . {{ $totalLessons }} Lessons</h6>
                     </div>
                     <div class="accordion" id="accordionExample">
-                        @foreach ($course->modules as $module)
+                        @foreach ($course->modules->where('status','published') as $module)
                         @if (count($module->lessons) > 0 || $module->status == 'published')
                         <div class="accordion-item">
                             <div class="accordion-header" id="heading_{{ $module->id }}">
