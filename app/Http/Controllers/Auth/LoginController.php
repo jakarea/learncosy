@@ -120,9 +120,15 @@ class LoginController extends Controller
                 $user->save();
                 Auth::login($user);
 
-                if ($user->user_role == 'admin') {
+                if ($user->user_role == 'admin' && !$request->is('//app.', $domain)) {
+                    $sessionId = session()->getId();
+                    $user->session_id = $sessionId;
+                    $user->save();
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+
+                } elseif($user->user_role == 'admin' && $request->is('//app.', $domain)){
                     return redirect()->route('admin.dashboard');
-                } elseif ($user->user_role == 'instructor') {
+                }elseif ($user->user_role == 'instructor') {
                     // for live domain $user->subdomain
                     if ($user->subdomain && !$request->is('//app.', $domain)) {
                         $sessionId = session()->getId();

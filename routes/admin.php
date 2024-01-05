@@ -45,7 +45,7 @@ Route::middleware('auth')->prefix('admin')->controller(AdminHomeController::clas
             Route::delete('/{id}/destroy', 'destroy')->name('instructor.destroy');
         });
         // all students manage routes for admin
-        Route::prefix('students')->controller(StudentManagementController::class)->group(function () {
+        Route::prefix('student')->controller(StudentManagementController::class)->group(function () {
             Route::get('/', 'index')->name('admin.allStudents');
             Route::get('/create', 'create');
             Route::post('/create', 'store')->name('admin.student.add');
