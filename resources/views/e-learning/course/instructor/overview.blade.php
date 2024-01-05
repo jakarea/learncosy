@@ -177,12 +177,8 @@
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
-<<<<<<< HEAD
                                                                 </a>
-                                                            @endif
-=======
-                                                                </a>
->>>>>>> 3c0b3885484874f2b2aa5abfed4a46d0d2cb9077
+
                                                         </li>
                                                         @endif
                                                     @endforeach
