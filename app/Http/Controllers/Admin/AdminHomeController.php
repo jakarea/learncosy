@@ -35,7 +35,7 @@ class AdminHomeController extends Controller
     // dashboard
     public function dashboard(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId == Auth::user()->id;
 
         $user = User::where('id', $userId)->first();
         $user->session_id = null;

@@ -207,7 +207,7 @@ class StudentHomeController extends Controller
         $instructor = User::where('subdomain', $subdomain)->where('user_role','instructor')->first();
 
         if (!$instructor) {
-            return redirect('student/dashboard')->with('error','No Instructor Found!');
+            return redirect('students/dashboard')->with('error','No Instructor Found!');
         }
 
         $courses = Course::where('user_id', $instructor->id)->where('status','published')->with('user','reviews');
@@ -376,7 +376,7 @@ class StudentHomeController extends Controller
         if ($course) {
             return view('e-learning/course/students/show', compact('course','group_files','course_reviews','liked','course_like','totalLessons','totalModules','relatedCourses','defaultVideoId','currentLesson','playUrl','playUrl','playUrl'));
         } else {
-            return redirect('student/dashboard')->with('error', 'Course not found!');
+            return redirect('students/dashboard')->with('error', 'Course not found!');
         }
     }
 
@@ -407,7 +407,7 @@ class StudentHomeController extends Controller
                 }
             }
             if(!empty($is_have_file)){
-                return redirect('student/courses')->with('error', $is_have_file);
+                return redirect('students/courses')->with('error', $is_have_file);
             }
             $zip->close();
 
@@ -599,7 +599,7 @@ class StudentHomeController extends Controller
 
             return view('e-learning/course/students/overview', compact('course','promo_video_link','course_reviews','related_course','cartCourses','liked','courseEnrolledNumber'));
         } else {
-            return redirect('student/dashboard')->with('error', 'Course not found!');
+            return redirect('students/dashboard')->with('error', 'Course not found!');
         }
     }
 
@@ -624,7 +624,7 @@ class StudentHomeController extends Controller
         if ($course) {
             return view('e-learning/course/students/myCourse',compact('course','totalReviews','courseEnrolledNumber','course_reviews'));
         } else {
-            return redirect('student/dashboard')->with('error', 'Course not found!');
+            return redirect('students/dashboard')->with('error', 'Course not found!');
         }
 
     }
