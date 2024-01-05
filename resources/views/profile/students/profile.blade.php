@@ -53,7 +53,7 @@ My Profile Details
                             <h3>{{ $user->name }}</h3>
                             <p class="text-capitalize">{{ $user->user_role }}</p>
                         </div>
-                        <a href="{{url('students/profile/edit')}}" class="edit-profile">Edit Profile</a>
+                        <a href="{{url('student/profile/edit')}}" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@ My Profile Details
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('students/courses/my-courses/details/'.$value->course->slug) }}">View
+                                    <a href="{{ url('student/courses/my-courses/details/'.$value->course->slug) }}">View
                                         Course</a>
                                 </td>
                             </tr>
@@ -192,22 +192,22 @@ My Profile Details
 <script src="{{ asset('latest/assets/js/banner-crop.js') }}"></script>
 {{-- set user cover photo js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () { 
-    const coverImgOutput = document.getElementById('item-img-output'); 
+    document.addEventListener('DOMContentLoaded', function () {
+    const coverImgOutput = document.getElementById('item-img-output');
     const uploadBtn = document.getElementById('uploadBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
     // Handle upload button click
     const coverImgBase64 = document.getElementById('coverImgBase64');
-    uploadBtn.addEventListener('click', function () { 
+    uploadBtn.addEventListener('click', function () {
         let fileBase64 = coverImgBase64.value;
-        uploadFile(fileBase64);  
+        uploadFile(fileBase64);
     });
 
     // Handle cancel button click
     cancelBtn.addEventListener('click', function () {
         cancelUpload();
-    }); 
+    });
 
     // Function to handle file upload
     function uploadFile(fileBase64) {
@@ -216,46 +216,46 @@ My Profile Details
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
         if (fileBase64) {
-            const userId = "{{ $user->id }}"; 
+            const userId = "{{ $user->id }}";
             const requestData = {
                 cover_photo: fileBase64,
                 userId: userId,
             };
             cancelBtn.classList.add('d-none');
             uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> Uploading`;
- 
-            fetch(`${baseUrl}/students/profile/cover/upload`, {
-                    method: 'POST', 
+
+            fetch(`${baseUrl}/student/profile/cover/upload`, {
+                    method: 'POST',
                     body: JSON.stringify(requestData),
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
                 })
                 .then(response => response.json())
-                .then(data => { 
+                .then(data => {
                     if (data.message === 'UPLOADED') {
                         uploadBtn.innerHTML = `Save`;
                         uploadBtn.classList.add('d-none');
                         cancelBtn.classList.add('d-none');
                     }
                 })
-                .catch(error => { 
+                .catch(error => {
                     uploadBtn.innerHTML = `Failed`;
                 });
         }
     }
 
     // Function to handle cancel button click
-        function cancelUpload() { 
-            const userCoverPhoto = "{{ $user->cover_photo ?? null }}"; 
+        function cancelUpload() {
+            const userCoverPhoto = "{{ $user->cover_photo ?? null }}";
             coverImgOutput.src = userCoverPhoto
                 ? "{{ asset('') }}" + userCoverPhoto
                 : "{{ asset('latest/assets/images/cover.svg') }}";
             coverImgBase64.value = '';
             uploadBtn.classList.add('d-none');
             cancelBtn.classList.add('d-none');
-        } 
+        }
     });
 </script>
 @endsection

@@ -7,7 +7,7 @@
                     <h5>Menu</h5>
 
                     <ul class="custom_nav">
-                        <li><a href="{{url('/students/dashboard')}}">Home</a></li>
+                        <li><a href="{{url('/student/dashboard')}}">Home</a></li>
                         <li><a href="#course_sec">Course</a></li>
                         <li><a href="#b_course_sec">Bundle Course</a></li>
                         <li><a href="#feedback_sec">Fededback</a></li>
@@ -31,8 +31,8 @@
                     <h5>Support</h5>
 
                     <ul>
-                        <li><a href="#">TOS</a></li> 
-                        <li><a href="#">Faq</a></li> 
+                        <li><a href="#">TOS</a></li>
+                        <li><a href="#">Faq</a></li>
                     </ul>
                 </div>
             </div>

@@ -47,12 +47,15 @@ class CourseCreateStepController extends Controller
 
         session()->put('course_id', $course->id);
 
+
+        $slug = $this->makeUniqueSlug($request->input('module_name'), 'Module');
+
         if($request->input('module_name')){
             $module = new Module();
             $module->course_id = $course->id;
             $module->instructor_id = Auth::user()->id;
             $module->title = $request->input('module_name');
-            $module->slug = Str::slug($request->input('module_name'));
+            $module->slug = $slug;
             $module->status = "draft";
             $module->save();
         }
@@ -88,10 +91,12 @@ class CourseCreateStepController extends Controller
 
         $title = $request->input('title');
         $auto_complete = $request->input('auto_complete');
-        $slug = $request->input('slug');
+        // $slug = $request->input('slug');
 
-        $slug = $slug ? Str::slug($slug) : Str::slug($title);
-        $originalSlug = $slug;
+        // $slug = $slug ? Str::slug($slug) : Str::slug($title);
+        // $originalSlug = $slug;
+
+        // $slug = $this->makeUniqueSlug($title,'Course');
         $counter = 2;
 
         $short_description = $request->input('short_description');
@@ -101,9 +106,10 @@ class CourseCreateStepController extends Controller
         $categories = $request->input('categories');
 
 
-        $slug = $this->makeUniqueSlug($title,'Course');
-
         $course = Course::findOrNew($id);
+
+        $slug = $this->makeUniqueSlug($request->input('title'), 'Course', $course->slug);
+
         $course->fill([
             'user_id' => Auth::user()->id,
             'title' => $title,
@@ -188,12 +194,14 @@ class CourseCreateStepController extends Controller
         ]
         );
 
+        $slug = $this->makeUniqueSlug($request->input('lesson_name'), 'Lesson');
+
         $lesson = new Lesson();
         $lesson->course_id = $id;
         $lesson->instructor_id = Auth::user()->id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
-        $lesson->slug = Str::slug($request->input('lesson_name'));
+        $lesson->slug = $slug;
         $lesson->type = $request->input('lesson_type');
         $lesson->status = "pending";
         $lesson->save();
@@ -225,11 +233,13 @@ class CourseCreateStepController extends Controller
             'module_name' => 'Module Name is Required',
         ]);
 
+        $slug = $this->makeUniqueSlug($request->input('module_name'), 'Module');
+
         $module = new Module();
         $module->course_id = $id;
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
-        $module->slug = Str::slug($request->input('module_name'));
+        $module->slug = $slug;
         $module->status = 'draft';
         $module->save();
 
@@ -252,10 +262,13 @@ class CourseCreateStepController extends Controller
         $module_id = $request->input('module_id');
 
         $module = Module::where('id', $module_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
+
+        $slug = $this->makeUniqueSlug($request->input('module_name'), 'Module', $module->slug);
+
         $module->course_id = $id;
         $module->instructor_id = Auth::user()->id;
         $module->title = $request->input('module_name');
-        $module->slug = Str::slug($request->input('module_name'));
+        $module->slug = $slug;
         $module->save();
 
         return redirect()->back()->with('success', 'Module Updated successfully');
@@ -278,11 +291,13 @@ class CourseCreateStepController extends Controller
         $lesson_id = $request->input('lesson_id');
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
 
+        $slug = $this->makeUniqueSlug($request->input('lesson_name'), 'Lesson', $lesson->slug);
+
         $lesson->course_id = $request->input('course_id');
         $lesson->instructor_id = Auth::user()->id;
         $lesson->module_id = $request->module_id;
         $lesson->title = $request->input('lesson_name');
-        $lesson->slug = Str::slug($request->input('lesson_name'));
+        $lesson->slug = $slug;
         $lesson->type = $request->input('lesson_type');
 
         if( $request->input('lesson_type') == 'audio' ){
@@ -434,6 +449,7 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonAudioSet(Request $request,$subdomain, $id, $module_id, $lesson_id){
 
+        // ini_set('memory_limit', '1024M');
         // return $request->dd();
         if (!$id) {
             return redirect('instructor/courses');
@@ -460,7 +476,17 @@ class CourseCreateStepController extends Controller
 
         // Handle audio file upload
         if ($request->hasFile('audio')) {
-            // Check if a previous audio file exists and delete it
+
+
+            $filePath = $request->file('audio')->getPathname();
+
+            $getID3 = new \getID3;
+
+            $audioFile = $getID3->analyze($filePath);
+
+            $audioDuration = round( $audioFile['playtime_seconds']);
+
+
             if ($lesson->audio) {
                 $previousAudioPath = public_path($lesson->audio);
                 if (file_exists($previousAudioPath)) {
@@ -488,6 +514,7 @@ class CourseCreateStepController extends Controller
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
 
+        $lesson->duration = $audioDuration;
         $lesson->status = 'published';
         $lesson->save();
 
@@ -521,6 +548,7 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideoSet(Request $request, $subdomain,$id,$module_id,$lesson_id)
     {
+
         ini_set('memory_limit', '1024M');
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();

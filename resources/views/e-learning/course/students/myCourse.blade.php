@@ -64,13 +64,13 @@
                             {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
                             'published')->count(); }} Moduls in
                                 Course
-                                
+
                                 @if ($course->allow_review)
-                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }}
                                 @endif
                             </h4>
 
-                            <a href="{{ url('students/courses/' . $course->slug) }}" class="common-bttn"
+                            <a href="{{ url('student/courses/' . $course->slug) }}" class="common-bttn"
                                 style="border-radius: 6.25rem; margin-top: 2rem"><img src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a" class="img-fluid me-1"> Start Course</a>
 
                         </div>
@@ -143,15 +143,15 @@
                             <div class="col-lg-6">
                                 <p><img src="{{asset('latest/assets/images/icons/users.svg')}}" alt="users"
                                     class="img-fluid"> {{ $courseEnrolledNumber }} Enrolled</p>
-                                
+
                                     <p><img src="{{ asset('latest/assets/images/icons/alerm.svg') }}" alt="users"
                                         class="img-fluid">
                                         @if ($hours > 0)
                                         {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                                         @endif
-            
+
                                         {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
-    
+
                                         <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
                                             class="img-fluid">{{ $course->modules->where('status', 'published')->sum(function($module) { return $module->lessons->where('status', 'published')->count(); }) }} Lessons in {{ $course->modules->where('status', 'published')->count(); }} Modules</p>
 
@@ -182,7 +182,7 @@
                 <div class="col-12">
                     <div class="all-modules-box">
                         <h3>Modules ({{ count($course->modules->where('status','published')) }})</h3>
-                    </div> 
+                    </div>
                 </div>
                 @foreach ($course->modules->where('status','published') as $module)
                     @php

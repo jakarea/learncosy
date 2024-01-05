@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-xl-2 col-md-5">
                                 <div class="user-add-box text-end text-xl-end mb-lg-3 mb-xl-0">
-                                    <a href="{{ url('students/courses-activies/list') }}">Course Activity</a>
+                                    <a href="{{ url('student/courses-activies/list') }}">Course Activity</a>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                             alt="{{ $enrolment->course->slug }}" class="img-fluid">
                                     </div>
                                     <div class="course-txt-box">
-                                        <a href="{{ url('students/courses/' . $enrolment->course->slug) }}">
+                                        <a href="{{ url('student/courses/' . $enrolment->course->slug) }}">
                                             {{ Str::limit($enrolment->course->title, 45) }}</a>
                                         <p>{{ Str::limit($enrolment->course->short_description, $limit = 26, $end = '...') }}
                                         </p>

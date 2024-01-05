@@ -44,7 +44,7 @@
                                                 <img src="{{ asset($certificateCourse->thumbnail) }}" alt="a"
                                                     class="img-fluid">
                                                 <div class="media-body">
-                                                    <h5><a href="{{ url('students/courses/' . $certificateCourse->slug) }}">
+                                                    <h5><a href="{{ url('student/courses/' . $certificateCourse->slug) }}">
                                                             {{ Str::limit($certificateCourse->title, $limit = 45, $end = '..') }}
                                                         </a></h5>
                                                     <h6>{{ $certificateCourse->categories }}</h6>
@@ -123,11 +123,11 @@
                                         <td>
                                             @if ($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
                                                 <a
-                                                    href="{{ url('students/certificate-download/' . $certificateCourse->slug) }}">
+                                                    href="{{ url('student/certificate-download/' . $certificateCourse->slug) }}">
                                                     <img src="{{ asset('latest/assets/images/icons/download-2.svg') }}"
                                                         alt="a" class="img-fluid">
                                                 </a>
-                                                <a href="{{ url('students/certificate-view/' . $certificateCourse->slug) }}"
+                                                <a href="{{ url('student/certificate-view/' . $certificateCourse->slug) }}"
                                                     target="_blank">
                                                     <img src="{{ asset('latest/assets/images/icons/eye.svg') }}"
                                                         alt="a" class="img-fluid">

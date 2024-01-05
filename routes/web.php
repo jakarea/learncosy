@@ -112,7 +112,7 @@ Route::get('/home', function (Request $request) {
 
     // students rediretion
     if ($role == 'student') {
-        return redirect('/students/dashboard');
+        return redirect('/student/dashboard');
     }
 
     Auth::logout();
@@ -123,7 +123,7 @@ Route::get('/home', function (Request $request) {
 
 // auth route
 Auth::routes(['verify' => true]);
-Route::get('students/lessons/{id}', function ($id) {
+Route::get('student/lessons/{id}', function ($id) {
 
     $lesson = App\Models\Lesson::findorfail($id);
     return response()->json($lesson);
@@ -185,7 +185,8 @@ Route::get('/logout', function () {
  * if page not found then redirect to 404 page
  */
 Route::fallback(function () {
-    return redirect()->route('login',['subdomain' => config('app.subdomain')]);
+    // return redirect()->route('login',['subdomain' => config('app.subdomain')]);
+    return response()->view('errors.404', [], 404);
 });
 
 

@@ -64,9 +64,9 @@
                             {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
                             'published')->count(); }} Moduls in
                                 Course
-                                
+
                                 @if ($course->allow_review)
-                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                                   . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }}
                                 @endif
                             </h4>
 
@@ -157,7 +157,7 @@
                                                     $minutes2 = floor(($totalDuration2 % 3600) / 60);
                                                     @endphp
 
-                                                    <li> 
+                                                    <li>
                                                         <a href="javascript:void(0)"
                                                             class="video_list_play d-flex">
                                                             <div>
@@ -175,7 +175,7 @@
                                                                 <i class="fa-regular fa-file-lines"></i>
                                                                 @endif
                                                             </p>
-                                                        </a> 
+                                                        </a>
                                                     </li>
                                                     @endif
                                                 @endforeach
@@ -229,7 +229,7 @@
                             </div>
                         @endif
                     </div>
-                    @endif 
+                    @endif
 
                     @if (count($related_course) > 0)
                         <div class="common-header">
@@ -333,7 +333,7 @@
                                     @if ($hours > 0)
                                     {{ $hours }} {{ $hours > 1 ? 'Hours' : 'Hour' }}
                                     @endif
-        
+
                                     {{ $minutes }} {{ $hours > 1 ? 'Minute' : 'Minutes' }} to Completed</p>
 
                                     <p><img src="{{ asset('latest/assets/images/icons/carriculam.svg') }}" alt="users"
@@ -441,7 +441,7 @@
                             <img src="{{ asset('latest/assets/images/icons/fb.svg') }}" alt="FB"
                                 class="img-fluid">
                             <span>Facebook</span>
-                        </a> 
+                        </a>
                         <a href="https:https://www.linkedin.com/shareArticle?url={{ $Urlsubdomain ? " https://{$Urlsubdomain}." . env('APP_DOMAIN', 'learncosy.com')
                             : '' }}/courses/overview-courses/{{ $course->slug }}"
                             target="_blank">
@@ -508,7 +508,7 @@
             const course_id = {{ $course->id }};
             const ins_id = {{ $course->user_id }};
 
-            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+            fetch(`${baseUrl}/student/course-like/${course_id}/${ins_id}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

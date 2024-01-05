@@ -382,7 +382,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/students/cart/remove/" + itemId,
+                    url: "/student/cart/remove/" + itemId,
                     data: {
                         _token: "{{ csrf_token() }}"
                     },

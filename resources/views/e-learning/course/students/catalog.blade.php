@@ -95,10 +95,10 @@
                                     </div>
                                     <div class="course-txt-box">
                                         @if (isEnrolled($course->id))
-                                            <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                            <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                 {{ Str::limit($course->title, 45) }}</a>
                                         @else
-                                            <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                            <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                 {{ Str::limit($course->title, 50) }}</a>
                                         @endif
 
@@ -148,7 +148,7 @@
                                             @endif
                                         </form>
                                     @else
-                                        <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">Go to
+                                        <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">Go to
                                             Course</a>
                                     @endif
                                 </div>

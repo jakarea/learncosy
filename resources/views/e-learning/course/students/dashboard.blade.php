@@ -130,7 +130,7 @@ Student Dashboard
                 <div class="top-performing-course fixed-height">
                     <div class="d-flex justify-content-between w-100">
                         <h5>My Profile</h5>
-                        <a href="{{ url('students/profile/myprofile') }}">View Profile</a>
+                        <a href="{{ url('student/profile/myprofile') }}">View Profile</a>
                     </div>
                     <div class="profile-widget-wrapper">
                         <div class="profile-widget-inner">
@@ -194,7 +194,7 @@ Student Dashboard
                                 class="img-fluid me-3 thumab">
                             @endif
                             <div class="media-body">
-                                <h5><a href="{{ url('students/courses/overview/' . $likeCourse->course->slug) }}">{{ optional($likeCourse->course)->title }}</a></h5>
+                                <h5><a href="{{ url('student/courses/overview/' . $likeCourse->course->slug) }}">{{ optional($likeCourse->course)->title }}</a></h5>
                                 <p class="user"><i class="fa-solid fa-user"></i> {{ optional($likeCourse->course->user)->name }}
 
                                     &nbsp; - &nbsp;{{ optional($likeCourse->course)->platform }}</p>
@@ -216,7 +216,7 @@ Student Dashboard
                                             <button type="submit" class="btn p-0 dropdown-item">Unlike</button>
                                         </form>
                                     </li>
-                                    <li><a class="dropdown-item" href="{{ url('students/courses/'.$likeCourse->course->slug) }}">Play</a></li>
+                                    <li><a class="dropdown-item" href="{{ url('student/courses/'.$likeCourse->course->slug) }}">Play</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -251,7 +251,7 @@ Student Dashboard
                         <h4>Course Status</h4>
                         @if (count($enrolments) > 3)
                         <div>
-                            <a href="{{ url('students/dashboard/enrolled') }}" class="me-0">View All</a>
+                            <a href="{{ url('student/dashboard/enrolled') }}" class="me-0">View All</a>
                         </div>
                         @endif
 
@@ -276,7 +276,7 @@ Student Dashboard
                                             class="img-fluid">
                                     </div>
                                     <div class="media-body">
-                                        <h5><a class="bg-transparent" href="{{ url('students/courses/my-courses/details/' . $enrolment->course->slug) }}">{{$enrolment->course->title}}</a></h5>
+                                        <h5><a class="bg-transparent" href="{{ url('student/courses/my-courses/details/' . $enrolment->course->slug) }}">{{$enrolment->course->title}}</a></h5>
                                         <p>{{ $enrolment->course->platform }} </p>
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@ Student Dashboard
                                 <p>{{ $enrolment->created_at->format('d-F-Y') }}</p>
                             </td>
                             <td class="text-end">
-                                <a href="{{ url('students/courses/'.$enrolment->course->slug) }}">Play</a>
+                                <a href="{{ url('student/courses/'.$enrolment->course->slug) }}">Play</a>
                             </td>
                         </tr>
                         @endif

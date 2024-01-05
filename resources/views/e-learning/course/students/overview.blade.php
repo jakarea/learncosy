@@ -65,14 +65,14 @@
                             {{ $minutes }} {{ $minutes > 1 ? 'Minutes' : 'Minute' }} to Complete . {{ $course->modules->where('status',
                             'published')->count(); }} Moduls in
                             Course
-                             
+
                             @if ($course->allow_review)
-                            . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }} 
+                            . {{ count($course_reviews) }} {{ count($course_reviews) > 1 ? 'Reviews' : 'Review' }}
                                 @endif
                             </h4>
 
                         @if (isEnrolled($course->id))
-                        <a href="{{ url('students/courses/' . $course->slug) }}" class="common-bttn"
+                        <a href="{{ url('student/courses/' . $course->slug) }}" class="common-bttn"
                             style="border-radius: 6.25rem; margin-top: 2rem"><img
                                 src="{{ asset('latest/assets/images/icons/play-circle.svg') }}" alt="a"
                                 class="img-fluid me-1"> Start Course</a>
@@ -159,7 +159,7 @@
                                         $minutes2 = floor(($totalDuration2 % 3600) / 60);
                                         @endphp
 
-                                        <li> 
+                                        <li>
                                             <a href="javascript:void(0)"
                                                 class="video_list_play d-flex">
                                                 <div>
@@ -177,7 +177,7 @@
                                                     <i class="fa-regular fa-file-lines"></i>
                                                     @endif
                                                 </p>
-                                            </a>  
+                                            </a>
                                         </li>
                                         @endif
                                         @endforeach
@@ -257,10 +257,10 @@
                                 </div>
                                 <div class="course-txt-box">
                                     @if (isEnrolled($r_course->id))
-                                    <a href="{{ url('students/courses/my-courses/details/' . $r_course->slug) }}">
+                                    <a href="{{ url('student/courses/my-courses/details/' . $r_course->slug) }}">
                                         {{ Str::limit($r_course->title, 45) }}</a>
                                     @else
-                                    <a href="{{ url('students/courses/overview/' . $r_course->slug) }}">
+                                    <a href="{{ url('student/courses/overview/' . $r_course->slug) }}">
                                         {{ Str::limit($r_course->title, 50) }}</a>
                                     @endif
 
@@ -477,7 +477,7 @@
             });
             const ins_id = {{ $course->user_id }};
 
-            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+            fetch(`${baseUrl}/student/course-like/${course_id}/${ins_id}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

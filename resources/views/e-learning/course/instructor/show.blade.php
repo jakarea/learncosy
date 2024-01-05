@@ -384,7 +384,7 @@ $i = 0;
 
                     let lessonId =  this.getAttribute('data-lesson-id')
 
-                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
+                    fetch(`${baseUrl}/student/lessons/${lessonId}`, {
                         method: 'GET',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',

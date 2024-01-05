@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl header-area">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{url('students/dashboard')}}">
+        <a class="navbar-brand" href="{{url('student/dashboard')}}">
             @if ( modulesetting('logo') )
             <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
@@ -31,24 +31,24 @@
                 {{-- check permission --}}
                 @if ($userPermissions->dashboard == 1)
                     <li class="nav-item">
-                        <a href="{{ url('students/dashboard') }}"
-                            class="{{ Request::is('students/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
+                        <a href="{{ url('student/dashboard') }}"
+                            class="{{ Request::is('student/dashboard')  ? ' active' : '' }} nav-link">Dashboard</a>
                     </li>
                 @endif
                 @if ($userPermissions->homePage == 1)
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/home*') || Request::is('students/courses')  ? ' active' : '' }} nav-link"
-                        href="{{ url('students/home') }}">Home</a>
+                    <a class="{{ Request::is('student/home*') || Request::is('student/courses')  ? ' active' : '' }} nav-link"
+                        href="{{ url('student/home') }}">Home</a>
                 </li>
                 @endif
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/dashboard/enrolled*')  ? ' active' : '' }} nav-link"
-                        href="{{ url('students/dashboard/enrolled') }}">My Courses</a>
+                    <a class="{{ Request::is('student/dashboard/enrolled*')  ? ' active' : '' }} nav-link"
+                        href="{{ url('student/dashboard/enrolled') }}">My Courses</a>
                 </li>
                 @if ($userPermissions->certificatePage == 1)
                 <li class="nav-item">
-                    <a class="{{ Request::is('students/courses-certificate*')  ? ' active' : '' }} nav-link"
-                        href="{{ url('students/courses-certificate') }}">Certificate</a>
+                    <a class="{{ Request::is('student/courses-certificate*')  ? ' active' : '' }} nav-link"
+                        href="{{ url('student/courses-certificate') }}">Certificate</a>
                 </li>
                 @endif
                 @if ($userPermissions->messagePage == 1)
@@ -60,10 +60,10 @@
             </ul>
             @endcan
             <div class="d-flex">
-                <a href="{{ url('students/home') }}" class="bttn">
+                <a href="{{ url('student/home') }}" class="bttn">
                     <img src="{{asset('latest/assets/images/icons/search.svg')}}" alt="S" class="img-fluid">
                 </a>
-                <a href="{{ route('cart.index', config('app.subdomain') ) }}" class="bttn {{ Request::is('students/cart*')  ? ' active' : '' }}">
+                <a href="{{ route('cart.index', config('app.subdomain') ) }}" class="bttn {{ Request::is('student/cart*')  ? ' active' : '' }}">
 
                     <img src="{{asset('latest/assets/images/icons/cart-icon.svg')}}" alt="Cart" class="img-fluid">
 
@@ -71,8 +71,8 @@
                     <span id="cart-count">{{ cartCount() }}</span>
                     @endif
                 </a>
-                <a href="{{ url('students/notification-details') }}"
-                    class="bttn {{ Request::is('students/notification-details*')  ? ' active' : '' }}">
+                <a href="{{ url('student/notification-details') }}"
+                    class="bttn {{ Request::is('student/notification-details*')  ? ' active' : '' }}">
                     <img src="{{asset('latest/assets/images/icons/notification.svg')}}" alt="S" class="img-fluid">
 
                     @if (unseenNotification() >= 1)
@@ -92,10 +92,10 @@
 
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item {{ Request::is('students/profile/myprofile*')  ? ' active' : '' }}"
-                                href="{{url('students/profile/myprofile')}}">Profile</a></li>
-                        <li><a class="dropdown-item {{ Request::is('students/profile/edit*')  ? ' active' : '' }}"
-                                href="{{ url('students/profile/edit') }}">Account Setting</a></li>
+                        <li><a class="dropdown-item {{ Request::is('student/profile/myprofile*')  ? ' active' : '' }}"
+                                href="{{url('student/profile/myprofile')}}">Profile</a></li>
+                        <li><a class="dropdown-item {{ Request::is('student/profile/edit*')  ? ' active' : '' }}"
+                                href="{{ url('student/profile/edit') }}">Account Setting</a></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">Logout

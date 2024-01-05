@@ -177,12 +177,8 @@
                                                                         <i class="fa-regular fa-file-lines"></i>
                                                                         @endif
                                                                     </p>
-<<<<<<< HEAD
                                                                 </a>
-                                                            @endif
-=======
-                                                                </a>
->>>>>>> 3c0b3885484874f2b2aa5abfed4a46d0d2cb9077
+
                                                         </li>
                                                         @endif
                                                     @endforeach
@@ -515,7 +511,7 @@
             const course_id = {{ $course->id }};
             const ins_id = {{ $course->user_id }};
 
-            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+            fetch(`${baseUrl}/student/course-like/${course_id}/${ins_id}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

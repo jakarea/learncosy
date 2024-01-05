@@ -101,7 +101,7 @@
                                         type="submit">Register</button>
                                 </div>
 
-                                <p class="register">Already have an account? <a href="{{url('/admin/login')}}">Login</a></p>
+                                <p class="register">Already have an account? <a href="{{url('/login')}}">Login</a></p>
                             </div>
                         </form>
                     </div>
