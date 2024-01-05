@@ -185,7 +185,8 @@ Route::get('/logout', function () {
  * if page not found then redirect to 404 page
  */
 Route::fallback(function () {
-    return redirect()->route('login',['subdomain' => config('app.subdomain')]);
+    // return redirect()->route('login',['subdomain' => config('app.subdomain')]);
+    return response()->view('errors.404', [], 404);
 });
 
 

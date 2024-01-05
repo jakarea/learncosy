@@ -36,7 +36,7 @@ class HomepageController extends Controller
 
     public function courseDetails($slug)
     {
-        $course = Course::where('slug', $slug)->with('modules.lessons')->first();
+        $course = Course::where('slug', $slug)->with('modules.lessons')->firstOrFail();
         $promo_video_link = '';
         if ($course->promo_video != '') {
             $ytarray = explode("/", $course->promo_video);
@@ -63,7 +63,7 @@ class HomepageController extends Controller
 
         $related_course = [];
         if ($course) {
-            if($course->categories){ 
+            if($course->categories){
                 $categoryArray = explode(',', $course->categories);
 
                 $related_course = Course::where('instructor_id', $course->instructor_id)

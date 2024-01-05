@@ -13,7 +13,9 @@
 @endsection
 
 
-@section('title') 404 - Eror Page @endsection
+
+
+@section('title') 500 - Eror Page @endsection
 
 
 {{-- page style @S --}}
@@ -26,9 +28,8 @@
                 <div class="col-12">
                     <div class="error-page-txt">
                         <img src="{{ asset('latest/assets/images/404.png') }}" alt="error" class="img-fluid">
-                        <h1>404 Not Found</h1>
-                        <p>The page you are looking for doesn't exist or has been moved.</p>
-
+                        <h1>500 internal server error</h1>
+                        <p>500 Internal Server Error. Sorry something went wrong.</p>
                         <a href="{{ url('/')}}">Back to the homepage <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>

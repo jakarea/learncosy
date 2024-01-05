@@ -110,6 +110,10 @@ class LoginController extends Controller
 
        $user = User::where('email', $request->email)->first();
 
+    //    if( $user->user_role == 'admin' ){
+    //         return redirect()->to('//appl.' . $domain . '/login' )->with('error','You are not admin!!');
+    //    }
+
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $user->session_id = null;

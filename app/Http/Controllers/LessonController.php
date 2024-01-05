@@ -271,7 +271,7 @@ class LessonController extends Controller
 
         if( $lesson ){
             $lesson->courseActivities()->delete();
-            $lesson->courseLogs->delete();
+            $lesson->courseLogs()->delete();
             //delete lesson file
             $lessonOldFile = public_path($lesson->lesson_file);
             if (file_exists($lessonOldFile)) {
