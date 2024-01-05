@@ -13,44 +13,44 @@
 @section('content')
 {{-- ==== course activity list page @S ==== --}}
 <main class="course-activity-list-page">
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="package-list-header" style="grid-template-columns: 50% 50%">
-                    <h5>Course Activity</h5>  
+                    <h5>Course Activity</h5>
                     <div class="text-end">
-                        <a href="{{url('students/dashboard/enrolled')}}" class="common-bttn me-4"><i class="fas fa-angle-left me-2"></i> My Courses</a>
+                        <a href="{{url('student/dashboard/enrolled')}}" class="common-bttn me-4"><i class="fas fa-angle-left me-2"></i> My Courses</a>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
-        @if (count($courseActivities) > 0 ) 
+        @if (count($courseActivities) > 0 )
         <div class="row">
             <div class="col-12">
                 <div class="subscription-table-wrap activity-table filter-image">
                     <table>
-                        <tr> 
+                        <tr>
                             <th>Course Name</th>
-                            <th>Duration</th>  
+                            <th>Duration</th>
                             {{-- <th>Total Point</th>
                             <th>Your Point</th> --}}
                             <th>Status</th>
                             <th>Progress</th>
                             <th>Progress</th>
-                        </tr>   
-                        @foreach ($courseActivities as $activityCourse) 
-                        <tr> 
-                            <td> 
+                        </tr>
+                        @foreach ($courseActivities as $activityCourse)
+                        <tr>
+                            <td>
                                 <div class="media">
                                     <img src="{{ asset($activityCourse->thumbnail) }}" alt="a" class="img-fluid">
-                                    <div class="media-body"> 
-                                        <h5><a style="background: transparent!important" href="{{url('students/courses/'.$activityCourse->slug)}}">
+                                    <div class="media-body">
+                                        <h5><a style="background: transparent!important" href="{{url('student/courses/'.$activityCourse->slug)}}">
                                             {{ Str::limit($activityCourse->title, $limit = 45, $end = '..') }}
                                         </a></h5>
                                         <h6>{{ $activityCourse->categories }}</h6>
                                     </div>
                                 </div>
-                            </td>  
+                            </td>
 
                             {{-- course lesson duration calculation --}}
                             @php
@@ -63,27 +63,27 @@
                             @endphp
                             @endforeach
                             @endforeach
-                            {{-- course lesson duration calculation --}} 
+                            {{-- course lesson duration calculation --}}
 
                             <td>
                                 <p>{{ number_format($totalDurationMinutes /60, 2) }} h
                                 </p>
-                            </td>   
+                            </td>
                             {{-- <td>
                                 <p>0</p>
-                            </td>  
+                            </td>
                             <td>
                                 <p>0</p>
                             </td>   --}}
-                            @php 
-                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $activityCourse->id); 
+                            @php
+                            $totalPorgressPercent = StudentActitviesProgress(auth()->user()->id, $activityCourse->id);
                             $showPercentage = null;
-                            
+
                             if($totalPorgressPercent > 95 && $totalPorgressPercent < 100){
                                 $showPercentage = $totalPorgressPercent - 2;
                             }
-                            @endphp 
-                            <td> 
+                            @endphp
+                            <td>
                                 @if($totalPorgressPercent > 99 && $totalPorgressPercent < 101)
                                     <span>Completed</span>
                                 @elseif($totalPorgressPercent < 1)
@@ -91,8 +91,8 @@
                                 @elseif($totalPorgressPercent > 0 && $totalPorgressPercent < 99)
                                     <span>Inprogress</span>
                                 @endif
-                            </td>  
-                            <td>  
+                            </td>
+                            <td>
 
                                 <div class="circle-prog">
                                     <div class="cards">
@@ -118,17 +118,17 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td> 
+                            </td>
                             <td>
-                                <a href="{{url('students/courses/'.$activityCourse->slug)}}" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
-                            </td>   
-                        </tr>  
+                                <a href="{{url('student/courses/'.$activityCourse->slug)}}" class="play-bttn">Play <img src="{{asset('latest/assets/images/icons/play.svg')}}" alt="a" class="img-fluid"></a>
+                            </td>
+                        </tr>
                         @endforeach
                     </table>
                 </div>
             </div>
         </div>
-        @else 
+        @else
         <div class="row">
             <div class="col-12">
                 @include('partials/no-data')

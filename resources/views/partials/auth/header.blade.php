@@ -19,7 +19,7 @@
                   <ul class="head-navbar justify-content-end">
                     @if (Route::has('login'))
                       <li class="link-item me-3 me-md-0">
-                          <a href="{{ url('/admin/login') }}" class="link-click">Login</a>
+                          <a href="{{ url('/login') }}" class="link-click">Login</a>
                       </li>
                       @endif
                       @if (Route::has('register'))

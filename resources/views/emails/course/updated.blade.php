@@ -17,18 +17,18 @@
         .main-table {
             max-width: 800px;
             width: 100%;
-            margin: 0 auto; 
+            margin: 0 auto;
             text-align: left;
-        } 
+        }
           .main-table tr .header-table {
             text-align: center;
             padding: 1rem;
             width: 100%;
-            background-color: #5a4b4b; 
+            background-color: #5a4b4b;
           }
           .main-table tr th h1{
             font-size: 2rem;
-            font-weight: 700; 
+            font-weight: 700;
             padding-left: 1rem;
             padding-right: 1rem;
             color: #fff
@@ -39,7 +39,7 @@
             margin-top: .3rem;
           }
           .main-table tr th img{
-            width: 8rem; 
+            width: 8rem;
             display: block;
           }
           .main-table tr th p{
@@ -62,7 +62,7 @@
             font-size: .9rem;
           }
 
-          .body-table h5 span{ 
+          .body-table h5 span{
             font-weight: 500;
             color: green;
           }
@@ -82,13 +82,13 @@
 
           @media (min-width: 320px) and (max-width: 767px) {
             .main-table tr th h1{
-                font-size: 1.2rem; 
+                font-size: 1.2rem;
             }
           }
 
           @media (min-width: 768px) and (max-width: 991px) {
             .main-table tr th h1{
-                font-size: 1.8rem; 
+                font-size: 1.8rem;
             }
           }
     </style>
@@ -102,12 +102,12 @@
                     <tr>
                         <th>
                             <a href="https://app.learncosy.com">
-                                <img src="https://app.learncosy.com/assets/images/learncosy-logo.png" alt="learncosy"> 
+                                <img src="https://app.learncosy.com/assets/images/learncosy-logo.png" alt="learncosy">
                             </a>
                         </th>
                         <th>
                             <h1>Course Content Updated!</h1>
-                        </th> 
+                        </th>
                     </tr>
                 </table>
             </th>
@@ -119,19 +119,19 @@
                         <td>
                             <h4><span>This course content is updated now:</span></h4>
                         </td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <td>
-                            <h3>Course Information:</h3> 
+                            <h3>Course Information:</h3>
                             <ul>
-                                <li><strong>Name:</strong> {{ $course->title }}</li> 
-                                <li><strong>Price:</strong> {{ $course->price }}</li>  
-                                <li><strong>Short Description:</strong> {{ $course->short_description }}</li>  
-                                <li><strong>Total Module:</strong> {{ $course->number_of_module }}</li>  
-                                <li><strong>Total Lesson:</strong> {{ $course->number_of_lesson }}</li>  
-                                <li><strong>Course Duration:</strong> {{ $course->duration }}</li>  
-                                <li><strong>Has Certificate:</strong> {{ $course->hascertificate }}</li>  
-                                <li><strong>Course URL:</strong> <a href="{{ url('/students/courses/'.$course->slug) }}">{{ url('/students/courses/'.$course->slug) }} </a></li>  
+                                <li><strong>Name:</strong> {{ $course->title }}</li>
+                                <li><strong>Price:</strong> {{ $course->price }}</li>
+                                <li><strong>Short Description:</strong> {{ $course->short_description }}</li>
+                                <li><strong>Total Module:</strong> {{ $course->number_of_module }}</li>
+                                <li><strong>Total Lesson:</strong> {{ $course->number_of_lesson }}</li>
+                                <li><strong>Course Duration:</strong> {{ $course->duration }}</li>
+                                <li><strong>Has Certificate:</strong> {{ $course->hascertificate }}</li>
+                                <li><strong>Course URL:</strong> <a href="{{ url('/student/courses/'.$course->slug) }}">{{ url('/student/courses/'.$course->slug) }} </a></li>
                             </ul>
                         </td>
                     </tr>
@@ -139,7 +139,7 @@
                         <td>
                             <p style="margin-top: 1rem">Thank you again for choosing Learncosy. We hope you having a great experience!</p>
                         </td>
-                    </tr> 
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -148,6 +148,6 @@
                 <p>This is an automated email, please do not reply.</p>
             </td>
         </tr>
-    </table> 
+    </table>
 </body>
 </html>

@@ -29,29 +29,29 @@ class ManagePageAccess
         $pageAccess = ManagePage::where('instructor_id',$instructor->id)->first();
 
         if ($pageAccess) {
- 
-            $permission = json_decode($pageAccess->pagePermissions);
-            $path = $request->path(); 
 
-            if ($path == 'students/dashboard') {
+            $permission = json_decode($pageAccess->pagePermissions);
+            $path = $request->path();
+
+            if ($path == 'student/dashboard') {
                 if ($permission->dashboard == 0) {
-                    return redirect('students/profile/myprofile')->with('error', 'You do not have permission to access Dashboard page!');
-                } 
+                    return redirect('student/profile/myprofile')->with('error', 'You do not have permission to access Dashboard page!');
+                }
             }
-            if ($path == 'students/home') {
+            if ($path == 'student/home') {
                 if ($permission->homePage == 0) {
-                    return redirect('students/profile/myprofile')->with('error', 'You do not have permission to access Home page!');
-                } 
+                    return redirect('student/profile/myprofile')->with('error', 'You do not have permission to access Home page!');
+                }
             }
             if ($path == 'course/messages/students') {
                 if ($permission->messagePage == 0) {
-                    return redirect('students/profile/myprofile')->with('error', 'You do not have permission to access Message page!');
-                } 
+                    return redirect('student/profile/myprofile')->with('error', 'You do not have permission to access Message page!');
+                }
             }
-            if ($path == 'students/courses-certificate') {
+            if ($path == 'student/courses-certificate') {
                 if ($permission->certificatePage == 0) {
-                    return redirect('students/profile/myprofile')->with('error', 'You do not have permission to access Certificate page!');
-                } 
+                    return redirect('student/profile/myprofile')->with('error', 'You do not have permission to access Certificate page!');
+                }
             }
 
         }

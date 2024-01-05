@@ -54,7 +54,7 @@
                             <h6>Create a <span>Account!</span></h6>
                             <div>
                                 <p>Have Account ?</p>
-                                <a href="{{url('/admin/login')}}">Sign in</a>
+                                <a href="{{url('/login')}}">Sign in</a>
                             </div>
                         </div>
                         <h1>Sign Up</h1>

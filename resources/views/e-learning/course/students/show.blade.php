@@ -248,7 +248,7 @@
                                                     @foreach ($module->lessons as $lesson)
                                                         {{-- @if (!empty($lesson->text) || !empty($lesson->audio) || !empty($lesson->video_link)) --}}
                                                         @if ($lesson->status == 'published' && now()->diffInMinutes($lesson->updated_at) > 10)
-                                                         
+
                                                             <li>
                                                                 @if (!isEnrolled($course->id))
                                                                     <a href="{{ route('students.checkout', ['slug' => $course->slug, 'subdomain' => config('app.subdomain')]) }}"
@@ -330,19 +330,19 @@
                                         <div class="course-single-item">
                                             <div class="course-thumb-box">
                                                 @if ($relatedCourse->thumbnail)
-                                                <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid"> 
-                                                @else 
+                                                <img src="{{ asset($relatedCourse->thumbnail) }}" alt="Course Thumbnail" class="img-fluid">
+                                                @else
                                                     <img src="{{ asset('latest/assets/images/courses/thumbnail.png') }}" alt="Course Thumbnail" class="img-fluid">
                                                 @endif
                                             </div>
                                             <div class="course-txt-box">
                                                 @if (isEnrolled($relatedCourse->id))
                                                     <a
-                                                        href="{{ url('students/courses/my-courses/details/' . $relatedCourse->slug) }}">
+                                                        href="{{ url('student/courses/my-courses/details/' . $relatedCourse->slug) }}">
                                                         {{ Str::limit($relatedCourse->title, 45) }}</a>
                                                 @else
                                                     <a
-                                                        href="{{ url('students/courses/overview/' . $relatedCourse->slug) }}">
+                                                        href="{{ url('student/courses/overview/' . $relatedCourse->slug) }}">
                                                         {{ Str::limit($relatedCourse->title, 50) }}</a>
                                                 @endif
 
@@ -387,14 +387,14 @@
                         </div>
                     </div>
                     {{-- related course --}}
-                    
+
                 </div>
             </div>
         </div>
     </main>
     <!-- course details page @E -->
 
-    
+
 @endsection
 
 
@@ -403,7 +403,7 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         $(document).ready(function() {
-            
+
             // inital load vimeo player
             var options = {
                     id: '{{ $defaultVideoId }}',
@@ -411,12 +411,12 @@
                     width: 500,
                 };
             var player = new Vimeo.Player(document.querySelector('.vimeo-player'), options);
-             
+
             // play all url
             let playUrl;
             playUrl = "{{ $playUrl }}";
 
-            // initial audio 
+            // initial audio
             var audioPlayer = document.getElementById('audioPlayer');
             var audioSource = audioPlayer.querySelector('source');
 
@@ -425,7 +425,7 @@
 
             $('.video-iframe-vox').hide();
             $('.audio-iframe-box').hide();
-            $('#textHideShow').hide();  
+            $('#textHideShow').hide();
             document.querySelector('.audio-iframe-box').classList.add('d-none');
 
             let crntLesson = "{{ $currentLesson ? $currentLesson->type : '' }}";
@@ -439,7 +439,7 @@
                     audioPlayer.pause();
                     $('.video-iframe-vox').show();
                     $('.audio-iframe-box').hide();
-                    $('#textHideShow').hide(); 
+                    $('#textHideShow').hide();
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
 
                     let lastVideoUrl = playUrl.replace('/videos/', '');
@@ -454,12 +454,12 @@
                     player.pause();
                     $('.video-iframe-vox').hide();
                     $('.audio-iframe-box').show();
-                    $('#textHideShow').hide(); 
+                    $('#textHideShow').hide();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
 
                     audioSource.src = baseUrl + '/' + playUrl;
                     audioPlayer.load();
-                    audioPlayer.play();  
+                    audioPlayer.play();
                 }
             }else if(crntLesson == 'text'){
                 $('#aboutCourse').html('Lesson Content');
@@ -471,7 +471,7 @@
 
                     $('.video-iframe-vox').hide();
                     $('.audio-iframe-box').hide();
-                    $('#textHideShow').show(); 
+                    $('#textHideShow').show();
                     $('#dataTextContainer').html(playUrl);
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
 
@@ -479,19 +479,19 @@
             }
 
             // play next video after end of the current video
-            player.on('ended', function() {  
+            player.on('ended', function() {
                 $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
-            }); 
+            });
 
             // play next lesson after end audio
             audioPlayer.onended = function() {
                 $('a.video_list_play.active .is_complete_lesson').click();
                 $('a.video_list_play.active').parent().next().find('a.video_list_play').click();
-            }; 
+            };
 
             $('a.video_list_play').click(function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 $('#aboutCourse').html('Lesson Content');
 
@@ -501,10 +501,10 @@
                 // initlay play lessons
                 let type = this.getAttribute('data-lesson-type');
 
-                if (type == 'video') { 
+                if (type == 'video') {
                     $('.video-iframe-vox').show();
                     $('.audio-iframe-box').hide();
-                    $('#textHideShow').hide(); 
+                    $('#textHideShow').hide();
                     audioPlayer.pause();
 
                     @if (isEnrolled($course->id))
@@ -529,8 +529,8 @@
 
                     audioSource.src = baseUrl + '/' + this.getAttribute('data-audio-url');
                     audioPlayer.load();
-                    audioPlayer.play();  
-                    
+                    audioPlayer.play();
+
 
                 } else if (type == 'text') {
                     player.pause();
@@ -538,7 +538,7 @@
 
                     $('#textHideShow').show();
                     $('.audio-iframe-box').hide();
-                    $('.video-iframe-vox').hide();  
+                    $('.video-iframe-vox').hide();
                 }
 
                 // send request per lesson click
@@ -553,8 +553,8 @@
                     data: data,
                     success: function(response) {
                         let currentLessons = response.currentPlayingLesson;
-                        
-                        if (currentLessons) {  
+
+                        if (currentLessons) {
                             if (currentLessons.short_description) {
                                 $('#lessonShortDesc').html(currentLessons.short_description);
                             }else{
@@ -572,7 +572,7 @@
                         // Handle errors, if any
                     }
                 });
-                
+
             });
 
             // is_complete_lesson on click check course is purchased or not and then check lesson video is completed or not after send to ajax
@@ -653,7 +653,7 @@
             const course_id = {{ $course->id }};
             const ins_id = {{ $course->user_id }};
 
-            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+            fetch(`${baseUrl}/student/course-like/${course_id}/${ins_id}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

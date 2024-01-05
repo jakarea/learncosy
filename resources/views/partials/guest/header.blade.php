@@ -49,7 +49,7 @@
                 </div>
 			@elseif (auth()->user() && auth()->user()->user_role == 'student')
                 <div class="d-flex">
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/students/dashboard')}}">Dashboard</a>
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{url('/student/dashboard')}}">Dashboard</a>
                 </div>
             @else
                 <div class="d-flex" >

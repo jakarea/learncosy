@@ -42,7 +42,7 @@
                     value="{{ isset($_GET['title']) ? $_GET['title'] : '' }}">
             </div>
             <div class="student-bttn-box">
-                <button class="btn btn-search" type="submit">Search</button> 
+                <button class="btn btn-search" type="submit">Search</button>
             </div>
         </div>
     </form>
@@ -75,7 +75,7 @@
                                     alt="{{ $course->slug}}" class="img-fluid">
                             </div>
                             <div class="course-txt-box">
-                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                <h3> <a href="{{url('student/courses/'.$course->slug )}}">{{ $course->title }} </a>
                                 </h3>
                                 <ul>
                                     <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>
@@ -90,10 +90,10 @@
                             </div>
                         </div>
                         <div class="course-ftr">
-                            <h5><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-play text-info"></i> Check Promo Video </a></h5> 
+                            <h5><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-play text-info"></i> Check Promo Video </a></h5>
                             <a href="javascript:void(0)" class="btn btn-exprec enroll__btn">Enroll Now</a>
                         </div>
-                         {{-- promo video modal @S --}} 
+                         {{-- promo video modal @S --}}
                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -105,7 +105,7 @@
                                     <div class="promo-video-box">
                                         <iframe width="100%" height="315" src="{{$course->promo_video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                                     alt="{{ $course->slug}}" class="img-fluid">
                             </div>
                             <div class="course-txt-box">
-                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                <h3> <a href="{{url('student/courses/'.$course->slug )}}">{{ $course->title }} </a>
                                 </h3>
                                 <ul>
                                     <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>
@@ -226,7 +226,7 @@
                                     alt="{{ $course->slug}}" class="img-fluid">
                             </div>
                             <div class="course-txt-box">
-                                <h3> <a href="{{url('students/courses/'.$course->slug )}}">{{ $course->title }} </a>
+                                <h3> <a href="{{url('student/courses/'.$course->slug )}}">{{ $course->title }} </a>
                                 </h3>
                                 <ul>
                                     <li><a href="#" class="text-dark">LESSONS: {{ $course->number_of_lesson}}</a></li>

@@ -139,7 +139,7 @@ $i = 0;
                                     </div>
                                 </button>
                             </div>
-                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse 
+                            <div id="collapse_{{ $module->id }}" class="accordion-collapse collapse
                                 {{ $currentLesson && $currentLesson->module_id == $module->id ? 'show' : '' }}"
                                 aria-labelledby="heading_{{ $module->id }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body p-0">
@@ -268,7 +268,7 @@ $i = 0;
 @endsection
 
 {{-- script section @S --}}
-@section('script') 
+@section('script')
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
     $(document).ready(function() {
@@ -310,7 +310,7 @@ $i = 0;
 
 
             $('a.video_list_play').click(function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 $('a.video_list_play').removeClass('active');
                 $(this).addClass('active');
@@ -328,24 +328,24 @@ $i = 0;
                     var videoId = $(this).data('video-id');
                     var videoUrl = $(this).attr('href');
                     videoUrl = videoUrl.replace('/videos/', '');
-                    player.loadVideo(videoUrl); 
+                    player.loadVideo(videoUrl);
 
                 }else if(type == 'audio'){
                     document.querySelector('#hideShow').classList.add('d-none');
                     player.pause();
                     document.querySelector('.audio-iframe-box').classList.remove('d-none');
                     document.querySelector('.video-iframe-vox').classList.add('d-none');
-                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');  
+                    var laravelURL = baseUrl +'/'+ this.getAttribute('data-audio-url');
                     let audioPlayer = document.getElementById('audioPlayer');
                     let audioSource = audioPlayer.querySelector('source');
-                    audioSource.src = laravelURL; 
-                    audioPlayer.load(); 
-                    audioPlayer.play(); 
+                    audioSource.src = laravelURL;
+                    audioPlayer.load();
+                    audioPlayer.play();
                     // document.querySelector('.download-files-box').querySelector('h4').innerText = 'Download Files';
                     document.getElementById('dataTextContainer').innerHTML = '';
 
                 }else if(type == 'text'){
-                    player.pause(); 
+                    player.pause();
                     audioPlayer.pause();
                     document.querySelector('#hideShow').classList.remove('d-none');
                     document.querySelector('.audio-iframe-box').classList.add('d-none');
@@ -354,7 +354,7 @@ $i = 0;
 
                     let lessonId =  this.getAttribute('data-lesson-id')
 
-                    fetch(`${baseUrl}/students/lessons/${lessonId}`, {
+                    fetch(`${baseUrl}/student/lessons/${lessonId}`, {
                         method: 'GET',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -370,8 +370,8 @@ $i = 0;
                         // console.error(error);
                     });
 
-                } 
-                
+                }
+
             });
 
         });

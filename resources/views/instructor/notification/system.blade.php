@@ -82,10 +82,10 @@ $layoutName = "layouts.latest.admin";
                                             <h5>
                                                 @if ($course)
                                                 @if (isEnrolled($course->id))
-                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                         {{$today['title']}}</a>
                                                 @else
-                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                         {{$today['title']}}</a>
                                                 @endif
                                                 @else
@@ -136,10 +136,10 @@ $layoutName = "layouts.latest.admin";
                                             <h5>
                                                 @if ($course)
                                                 @if (isEnrolled($course->id))
-                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                         {{$yestarday['title']}}</a>
                                                 @else
-                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                         {{$yestarday['title']}}</a>
                                                 @endif
                                                 @else
@@ -190,10 +190,10 @@ $layoutName = "layouts.latest.admin";
                                             <h5>
                                                 @if ($course)
                                                 @if (isEnrolled($course->id))
-                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                         {{$sevenDay['title']}}</a>
                                                 @else
-                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                         {{$sevenDay['title']}}</a>
                                                 @endif
                                                 @else
@@ -243,10 +243,10 @@ $layoutName = "layouts.latest.admin";
                                             <h5>
                                                 @if ($course)
                                                 @if (isEnrolled($course->id))
-                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                         {{$thirtyDay['title']}}</a>
                                                 @else
-                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                         {{$thirtyDay['title']}}</a>
                                                 @endif
                                                 @else
@@ -298,10 +298,10 @@ $layoutName = "layouts.latest.admin";
                                             <h5>
                                                 @if ($course)
                                                 @if (isEnrolled($course->id))
-                                                    <a href="{{ url('students/courses/my-courses/details/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/my-courses/details/' . $course->slug) }}">
                                                         {{$lastOneYear['title']}}</a>
                                                 @else
-                                                    <a href="{{ url('students/courses/overview/' . $course->slug) }}">
+                                                    <a href="{{ url('student/courses/overview/' . $course->slug) }}">
                                                         {{$lastOneYear['title']}}</a>
                                                 @endif
                                                 @else

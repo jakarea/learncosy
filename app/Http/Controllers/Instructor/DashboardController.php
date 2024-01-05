@@ -183,7 +183,7 @@ class DashboardController extends Controller
           $earningByMonth = $this->getEarningByMonth($enrolments);
           $course_wise_payments = $this->getCourseWisePayments($enrolments);
 
- 
+
         foreach ($enrolments as $enrolment) {
                 $students[$enrolment->user_id] = $enrolment->created_at;
             }
@@ -516,14 +516,14 @@ class DashboardController extends Controller
     }
 
     public function subdomain()
-    { 
+    {
         return view('latest-auth.subdomain');
     }
 
     public function checkSubdomain(Request $request,$subdomain,$user_id)
-    {  
+    {
         $request->validate([
-            'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u', 
+            'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
         ]);
 
         $proposedUsername = $request->subdomain;
@@ -554,17 +554,17 @@ class DashboardController extends Controller
             if (session('suggestedUsernames')) {
                 session()->forget('suggestedUsernames');
             }
-            
+
             $request = Request::capture();
             $host = $request->getHost();
             $sub_domain = explode('.', $host)[0];
-            
+
 
             if (($sub_domain == 'app' && $user->user_role == 'instructor') || ($sub_domain == $oldSubdomain && $user->user_role == 'instructor')) {
                 $sessionId = session()->getId();
                 $user->session_id = $sessionId;
                 $user->save();
-                
+
                 return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode)->with('success','Subdomain set Successfully!');
             }
 
@@ -581,7 +581,7 @@ class DashboardController extends Controller
             $permission = json_decode($managePage->pagePermissions);
        }else{
             $permission = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
-       } 
+       }
 
         return view('dashboard/instructor/access-page',compact('permission'));
     }
@@ -616,14 +616,14 @@ class DashboardController extends Controller
     public function loginAsStudent($userSessionId, $userId, $stuId)
     {
         if (!$userId || !$userSessionId) {
-            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
+            return redirect('/login')->with('error', 'Failed to Login as Student');
         }
 
         $instructorUserId = Crypt::decrypt($userId);
         $instructorUser = User::find($instructorUserId);
 
         if (!$instructorUser) {
-            return redirect('/admin/login')->with('error', 'Failed to Login as Student');
+            return redirect('/login')->with('error', 'Failed to Login as Student');
         }
 
         $reqSessionId = Crypt::decrypt($userSessionId);
@@ -640,6 +640,6 @@ class DashboardController extends Controller
             }
         }
 
-        return redirect('/admin/login')->with('error', 'Failed to Login as Student');
+        return redirect('/login')->with('error', 'Failed to Login as Student');
     }
 }

@@ -42,7 +42,7 @@
                     <img src="{{ asset('latest/assets/images/login2-logo.svg') }}" alt="logo" class="img-fluid light-ele">
                     <img src="{{ asset('latest/assets/images/logo-d.svg') }}" alt="logo" class="img-fluid dark-ele">
                 </a>
-                <a href="{{url('/admin/login')}}" class="signup-bttn">
+                <a href="{{url('/login')}}" class="signup-bttn">
                     SIGN IN
                 </a>
             </div>

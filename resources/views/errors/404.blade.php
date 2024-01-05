@@ -2,7 +2,12 @@
     $path = '';
     if (Auth::check()) {
         $user = auth()->user();
-        $path = $user->user_role == 'student' ? 'layouts.latest.students' : '';
+        if ($user->user_role == 'student') {
+            $path = 'layouts.latest.students';
+        }else {
+            $path = 'layouts.latest.' . $user->user_role;
+        }
+
     }
 @endphp
 

@@ -511,7 +511,7 @@
             const course_id = {{ $course->id }};
             const ins_id = {{ $course->user_id }};
 
-            fetch(`${baseUrl}/students/course-like/${course_id}/${ins_id}`, {
+            fetch(`${baseUrl}/student/course-like/${course_id}/${ins_id}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
