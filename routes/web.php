@@ -95,7 +95,6 @@ Route::get('/auth/password/reset', function () {
 // after registration redirect user
 Route::get('/home', function (Request $request) {
     // user role
-
     $role = Auth::user()->user_role;
 
     // instructor rediretion

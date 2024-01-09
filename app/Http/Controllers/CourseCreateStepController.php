@@ -130,6 +130,7 @@ class CourseCreateStepController extends Controller
 
 
     public function step3($subdomain,$id){
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -532,6 +533,8 @@ class CourseCreateStepController extends Controller
 
     public function stepLessonVideo($subdomain,$id,$module_id,$lesson_id)
     {
+
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -543,6 +546,11 @@ class CourseCreateStepController extends Controller
 
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
         $course = Course::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+
+
+        if( isVimeoConnected(auth()->user()->id)[1] !== 'Connected'){
+            return redirect()->route('account.settings', ['tab' => 'app', 'subdomain' => config('app.subdomain')])->withError(['Your vimeo isn\'t connected!!']);
+        }
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }
@@ -881,6 +889,7 @@ class CourseCreateStepController extends Controller
     }
 
     public function visibility(string $subdomain, $id){
+
         if(!$id){
             return redirect('instructor/courses');
         }
@@ -897,8 +906,12 @@ class CourseCreateStepController extends Controller
 
     public function visibilitySet(Request $request,$subdomain, $id){
 
-       if(!$id){
+        if(!$id){
             return redirect('instructor/courses');
+        }
+
+        if( isConnectedWithStripe()[1] ){
+            return redirect()->route('account.settings', ['tab' => 'app', 'subdomain' => config('app.subdomain')])->withError(['Your stripe isn\'t connected!!']);
         }
 
         $course = Course::where('id', $id)->where('instructor_id', Auth::user()->id)->firstOrFail();

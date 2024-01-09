@@ -53,8 +53,8 @@ class LoginController extends Controller
     public function showLoginForm()
     {
 
-          // set dark mode after user change domain
-          if(isset(request()->preferenceMode)){
+        // set dark mode after user change domain
+        if(isset(request()->preferenceMode)){
             session(['preferenceMode' => request()->preferenceMode]);
         }
 
@@ -108,7 +108,7 @@ class LoginController extends Controller
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
-        $user = User::where('email', $request->email)->first();
+       $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             $user->session_id = null;
@@ -121,11 +121,8 @@ class LoginController extends Controller
                 $user->save();
                 $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
                 return redirect()->to($defaultUrl);
-
             } elseif($user->user_role == 'admin' && $request->is('//app.', $domain)){
-
                 return redirect()->route('admin.dashboard');
-
             }elseif ($user->user_role == 'instructor') {
                 if ($user->subdomain && !$request->is('//app.', $domain)) {
                     $sessionId = session()->getId();
@@ -136,7 +133,6 @@ class LoginController extends Controller
                     return redirect()->intended('/instructor/dashboard');
                 }
             } elseif ($user->user_role == 'student') {
-
                 $sessionId = session()->getId();
                 $user->session_id = $sessionId;
                 $user->save();
