@@ -1,7 +1,7 @@
 @extends('layouts.latest.auth')
 
 @section('title')
-Connect
+Vimeo Connect
 @endsection
 
 @section('style')
@@ -21,9 +21,9 @@ Connect
             <div class="col-12">
                 <div class="back-bttn w-100 mt-0">
                     <a href="{{ url('instructor/profile/step-3/complete') }}">Back</a>
-                    @if(isVimeoConnected(auth()->user()->id)[1] == 'Connected' && isConnectedWithStripe()[1] == 'Connected')
-                    <a href="/instructor/profile/step-5/complete">Next Step</a>
-                    @endif
+                    {{-- @if(isVimeoConnected(auth()->user()->id)[1] == 'Connected' && isConnectedWithStripe()[1] == 'Connected') --}}
+                    <a href="/instructor/profile/step-5/complete">Do it later</a>
+                    {{-- @endif --}}
                 </div>
             </div>
         </div>
