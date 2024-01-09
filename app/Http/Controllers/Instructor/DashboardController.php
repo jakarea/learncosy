@@ -21,6 +21,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);

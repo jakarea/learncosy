@@ -63,7 +63,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         Route::get('instructor/dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
         Route::get('/instructor/analytics', [DashboardController::class, 'index'])->name('instructor.dashboard.index');
-        Route::get('/instructor/dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
+        // Route::get('/instructor/dashboard', [DashboardController::class, 'analytics'])->name('instructor.dashboard.analytics');
 
         // Course controller
         Route::get('instructor/courses', [CourseController::class, 'index'])->name('instructor.courses');

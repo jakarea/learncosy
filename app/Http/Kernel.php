@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'page.access' => \App\Http\Middleware\ManagePageAccess::class,
         'owner' => \App\Http\Middleware\GroupOwner::class,
         'member' => \App\Http\Middleware\GroupMember::class,
+        'authCheck' => \App\Http\Middleware\AuthCheckMiddleware::class,
     ];
 }
