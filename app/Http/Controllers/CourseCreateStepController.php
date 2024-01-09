@@ -308,10 +308,12 @@ class CourseCreateStepController extends Controller
         }else if( $request->input('lesson_type') == 'video_link'){
             $lesson->audio = NULL;
             $lesson->text = NULL;
+            $lesson->short_description = NULL;
             $lesson->status = 'pending';
         }else if($request->input('lesson_type') == 'text'){
             $lesson->audio = NULL;
             $lesson->video_link = NULL;
+            $lesson->short_description = NULL;
             $lesson->status = 'pending';
         }
 
