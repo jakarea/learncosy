@@ -2590,3 +2590,7 @@ body.dark-mode .dark-mode-bttn label:last-child i {
   background-color: #7A8FFA!important;
   color: #0D0D0D!important;
 }
+
+.dark-mode .go-to-stripe a{
+  color: #fff!important;
+}
