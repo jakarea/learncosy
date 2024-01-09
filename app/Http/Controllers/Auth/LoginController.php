@@ -108,59 +108,45 @@ class LoginController extends Controller
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
-       $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-        //    if( $user->user_role == 'admin' ){
-        //         return redirect()->to('//appl.' . $domain . '/login' )->with('error','You are not admin!!');
-        //    }
+        if ($user && Hash::check($request->password, $user->password)) {
+            $user->session_id = null;
+            $user->save();
+            Auth::login($user);
 
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $user->session_id = null;
+            if ($user->user_role == 'admin' && !$request->is('//app.', $domain)) {
+                $sessionId = session()->getId();
+                $user->session_id = $sessionId;
                 $user->save();
-                Auth::login($user);
+                $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
+                return redirect()->to($defaultUrl);
 
-                if ($user->user_role == 'admin' && !$request->is('//app.', $domain)) {
+            } elseif($user->user_role == 'admin' && $request->is('//app.', $domain)){
+
+                return redirect()->route('admin.dashboard');
+
+            }elseif ($user->user_role == 'instructor') {
+                if ($user->subdomain && !$request->is('//app.', $domain)) {
                     $sessionId = session()->getId();
                     $user->session_id = $sessionId;
                     $user->save();
-                    $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
-                    return redirect()->to($defaultUrl);
-
-                } elseif($user->user_role == 'admin' && $request->is('//app.', $domain)){
-                    return redirect()->route('admin.dashboard');
-                }elseif ($user->user_role == 'instructor') {
-                    // for live domain $user->subdomain
-                    if ($user->subdomain && !$request->is('//app.', $domain)) {
-                        $sessionId = session()->getId();
-                        $user->session_id = $sessionId;
-                        $user->save();
-                        return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
-                    } else {
-                        return redirect()->intended('/instructor/dashboard');
-                    }
-                } elseif ($user->user_role == 'student') {
-
-                    // $redirectUrl = $request->session()->pull('redirect_url');
-
-                    // if ($redirectUrl) {
-                    //     return redirect()->intended($redirectUrl);
-                    // }
-
-                    $sessionId = session()->getId();
-                    $user->session_id = $sessionId;
-                    $user->save();
-                    // return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
-
-                    $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
-                    return redirect()->to($defaultUrl);
+                    return redirect()->to('//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId);
+                } else {
+                    return redirect()->intended('/instructor/dashboard');
                 }
-            } else {
-                return redirect()->back()->with('error', 'Invalid Credentials');
+            } elseif ($user->user_role == 'student') {
+
+                $sessionId = session()->getId();
+                $user->session_id = $sessionId;
+                $user->save();
+                $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/login?singnature=' . $sessionId;
+                return redirect()->to($defaultUrl);
             }
         } else {
             return redirect()->back()->with('error', 'Invalid Credentials');
         }
+
     }
 
 
