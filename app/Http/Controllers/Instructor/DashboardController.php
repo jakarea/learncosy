@@ -522,6 +522,7 @@ class DashboardController extends Controller
 
     public function checkSubdomain(Request $request,$subdomain,$user_id)
     {
+
         $request->validate([
             'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
         ]);
@@ -565,7 +566,7 @@ class DashboardController extends Controller
                 $user->session_id = $sessionId;
                 $user->save();
 
-                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode)->with('success','Subdomain set Successfully!');
+                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode. '&step=4')->with('success','Subdomain set Successfully!');
             }
 
             return redirect('instructor/profile/step-4/complete')->with('success','Subdomain set Successfully!');
