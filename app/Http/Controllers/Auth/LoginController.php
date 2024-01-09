@@ -64,6 +64,9 @@ class LoginController extends Controller
                 Auth::login($user);
                 $user->session_id = null;
                 $user->save();
+                if( request()->step == 4 ){
+                    return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN').'/instructor/profile/step-4/complete');
+                }
                 return redirect($user->user_role.'/dashboard');
             }
         }
