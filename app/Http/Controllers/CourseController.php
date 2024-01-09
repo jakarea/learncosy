@@ -96,6 +96,9 @@ class CourseController extends Controller
             }
         }
 
+
+        $relatedCourses = [];
+
         if($course->categories){
             $categoryArray = explode(',', $course->categories);
 
@@ -110,6 +113,7 @@ class CourseController extends Controller
             ->take(3)
             ->get();
         }
+
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
 

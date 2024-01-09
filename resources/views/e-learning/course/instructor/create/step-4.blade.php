@@ -68,7 +68,7 @@ Course Create - Step 4
                             </div>
                         </div>
                         <div>
-                            <a href="{{ url('admin/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
+                            <a href="{{ url('instructor/courses/create/'.$lesson->course_id.'/audio/'.$lesson->module_id.'/content/'.$lesson->id.'/remove') }}" class="text-danger">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </div>
@@ -300,13 +300,25 @@ Course Create - Step 4
                 },
 
                 success: function (data) {
-                    $('.btn-submit').attr('disabled', false).text('Upload');
                     window.location.href = baseUrl + '/instructor/courses/create/' + courseId + '/lesson/' + moduleId + '/institute/' + lessonId;
                 },
 
+                complete: function(){
+                    $('.btn-submit').attr('disabled', false).text('Upload');
+                },
                 error: function (xhr, status, error) {
-                    console.error('Error during upload', error);
-                }
+                    $('.btn-submit').attr('disabled', false).text('Upload');
+                    var response = xhr.responseJSON;
+                    if (response.errors) {
+                        $.each(response.errors, function (field, errors) {
+                            $.each(errors, function (index, error) {
+                                toastr.error(error, "Error");
+                            });
+                        });
+                    } else {
+                        toastr.error(response.error, "Error");
+                    }
+                },
 
             });
         });

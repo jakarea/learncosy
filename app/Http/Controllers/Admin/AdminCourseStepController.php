@@ -267,7 +267,7 @@ class AdminCourseStepController extends Controller
 
             $file = $request->file('lesson_file');
             $filename = uniqid() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $file->move(public_path('uploads/lessons/files'), $filename);
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
         $lesson->status = 'published';
@@ -309,7 +309,7 @@ class AdminCourseStepController extends Controller
     }
 
     public function stepLessonFileRemove($lesson_id)
-    { 
+    {
         if(!$lesson_id){
             return redirect('admin/courses');
         }
@@ -320,7 +320,7 @@ class AdminCourseStepController extends Controller
             $previousLessonPath = public_path($lesson->lesson_file);
             if (file_exists($previousLessonPath)) {
                 unlink($previousLessonPath);
-            } 
+            }
             $lesson->lesson_file = NULL;
             $lesson->save();
             return redirect()->back()->with('success','Lesson File Successfully Deleted!');
@@ -344,7 +344,7 @@ class AdminCourseStepController extends Controller
                 'short_description' => 'nullable|string',
                 'audio' => 'nullable|mimes:mp3,wav|max:50000',
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
-    
+
             ]);
         }else{
             $request->validate([
@@ -352,12 +352,21 @@ class AdminCourseStepController extends Controller
                 'audio' => 'required|mimes:mp3,wav|max:50000',
                 'lesson_file.*' => 'mimes:pdf,doc,docx|max:50000',
             ]);
-        } 
+        }
 
-       
+
         $lesson->short_description = $request->input('short_description');
 
         if ($request->hasFile('audio')) {
+
+            $filePath = $request->file('audio')->getPathname();
+
+            $getID3 = new \getID3;
+
+            $audioFile = $getID3->analyze($filePath);
+
+            $audioDuration = round( $audioFile['playtime_seconds']);
+
             // Check if a previous audio file exists and delete it
             if ($lesson->audio) {
                 $previousAudioPath = public_path($lesson->audio);
@@ -367,7 +376,7 @@ class AdminCourseStepController extends Controller
             }
 
             $audio = $request->file('audio');
-            $audioName = 'lesson-audio' . '.' . $audio->getClientOriginalExtension();
+            $audioName = $lesson->slug . '.' . $audio->getClientOriginalExtension();
             $audio->move(public_path('uploads/audio/'), $audioName);
             $lesson->audio = 'uploads/audio/'.$audioName;
         }
@@ -382,9 +391,10 @@ class AdminCourseStepController extends Controller
 
             $file = $request->file('lesson_file');
             $filename = uniqid() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/lessons/files'), $filename); 
+            $file->move(public_path('uploads/lessons/files'), $filename);
             $lesson->lesson_file = 'uploads/lessons/files/' . $filename;
         }
+        $lesson->duration = $request->hasFile('audio') ? $audioDuration : $lesson->duration;
         $lesson->status = 'published';
         $lesson->save();
 
@@ -399,7 +409,7 @@ class AdminCourseStepController extends Controller
     }
 
     public function stepLessonAudioRemove($id,$module_id,$lesson_id){
- 
+
         if(!$id || !$module_id || !$lesson_id){
             return redirect('admin/courses');
         }
@@ -419,7 +429,7 @@ class AdminCourseStepController extends Controller
         }
 
         return redirect()->back()->with('warning','No Audio Found!');
- 
+
     }
 
     // done
@@ -445,28 +455,28 @@ class AdminCourseStepController extends Controller
 
         if ($lesson->video_link) {
             $request->validate([
-                'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000', 
-                'short_description' => 'nullable|string', 
+                'video_link' => 'nullable|mimes:mp4,mov,ogg,qt|max:1000000',
+                'short_description' => 'nullable|string',
             ],
-            [ 
+            [
                 'video_link.max' => 'Max file size is 1 GB!',
             ]);
 
         }else{
             $request->validate([
-                'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000', 
-                'short_description' => 'nullable|string', 
+                'video_link' => 'required|mimes:mp4,mov,ogg,qt|max:1000000',
+                'short_description' => 'nullable|string',
             ],
             [
                 'video_link.required' => 'Video file is required!',
                 'video_link.max' => 'Max file size is 1 GB!',
             ]);
-        } 
+        }
 
-       
+
         $lesson->short_description = $request->input('short_description');
         $lesson->status = 'published';
-        $lesson->save(); 
+        $lesson->save();
 
         if ($lesson) {
             $module = Module::find($lesson->module_id);

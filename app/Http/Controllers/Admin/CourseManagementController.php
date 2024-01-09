@@ -84,7 +84,7 @@ class CourseManagementController extends Controller
     // course show
     public function show($slug)
     {
- 
+
         $course = Course::where('slug', $slug)->with('modules.lessons','user')->first();
 
         //start group file
@@ -116,15 +116,15 @@ class CourseManagementController extends Controller
             })
             ->take(3)
             ->get();
-        } 
+        }
 
         $totalModules = $course->modules->where('status', 'published')->count();
 
-        $totalLessons = $course->modules->sum(function ($module) {
-            return $module->lessons->filter(function ($lesson) {
-                return $lesson->status == 'published';
-            })->count();
-        });
+        $totalLessons = $course->modules->filter(function ($module) {
+            return $module->status === 'published';
+        })->map(function ($module) {
+            return $module->lessons()->where('status', 'published')->count();
+        })->sum();
 
 
         // last playing video
