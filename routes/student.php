@@ -77,8 +77,6 @@ Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->g
     Route::get('student/profile/change-password', [StudentProfileController::class, 'passwordUpdate']);
     Route::post('student/profile/change-password', [StudentProfileController::class, 'postChangePassword'])->name('students.password.update');
 
-    Route::get('back-to-pavilion/{userId}', [StudentHomeController::class, 'backToPavilion'])->name('backto-pavilion');
-
 });
 
 

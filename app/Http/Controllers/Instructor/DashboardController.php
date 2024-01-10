@@ -628,7 +628,7 @@ class DashboardController extends Controller
 
         $instructorUser = User::find($instructorUserId);
 
-        session(['userId' => $instructorUser->id, 'userRole' => $instructorUser->user_role]);
+        session(['userId' => encrypt($instructorUser->id), 'userRole' => $instructorUser->user_role]);
 
         if (!$instructorUser) {
             return redirect('/login')->with('error', 'Failed to Login as Student');

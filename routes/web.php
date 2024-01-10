@@ -8,10 +8,11 @@ use App\Models\InstructorModuleSetting;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TypingController;
-use App\Http\Controllers\UserPreferenceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserPreferenceController;
 use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Instructor\DashboardController;
 
 /*
@@ -55,6 +56,7 @@ Route::get('/error-design', function () {
 Route::get('login-as-instructor/{userSessionId}/{userId}/{insId}', [HomepageController::class, 'loginAsinstructor']);
 Route::get('login-as-student/{userSessionId}/{userId}/{stuId}', [HomepageController::class, 'loginAsStudent']);
 Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardController::class, 'loginAsStudent']);
+Route::get('back-to-pavilion/{userId}', [StudentHomeController::class, 'backToPavilion'])->name('backto-pavilion');
 
 
 // theme settings register page

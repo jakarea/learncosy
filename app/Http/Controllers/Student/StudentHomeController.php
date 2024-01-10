@@ -787,8 +787,10 @@ class StudentHomeController extends Controller
         return redirect()->back()->with('success', 'Course Unlike Successfully Done!');
     }
 
-    public function backToPavilion($domain, $userId){
-        $user = User::find($userId);
+    public function backToPavilion($userId){
+
+        $user_id =decrypt($userId);
+        $user = User::find($user_id);
 
         $domain = env('APP_DOMAIN', 'learncosy.com');
 
