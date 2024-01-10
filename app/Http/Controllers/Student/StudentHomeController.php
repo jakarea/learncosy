@@ -28,6 +28,7 @@ use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
 
 class StudentHomeController extends Controller
 {
@@ -784,5 +785,25 @@ class StudentHomeController extends Controller
         }
 
         return redirect()->back()->with('success', 'Course Unlike Successfully Done!');
+    }
+
+    public function backToPavilion($userId){
+
+        $user_id =decrypt($userId);
+        $user = User::find($user_id);
+
+        $domain = env('APP_DOMAIN', 'learncosy.com');
+
+        if( $user->user_role == 'instructor' ){
+            Auth::logout();
+            Auth::login($user);
+            $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/instructor/dashboard';
+        }else if($user->user_role == 'admin'){
+            Auth::logout();
+            // Auth::login($user);
+            $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/admin/dashboard';
+        }
+
+        return redirect()->to($defaultUrl);
     }
 }

@@ -21,6 +21,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+
         $userId = Auth::user()->id;
 
         $checkout = Checkout::where('instructor_id', $userId);
@@ -616,12 +617,18 @@ class DashboardController extends Controller
     // login as student
     public function loginAsStudent($userSessionId, $userId, $stuId)
     {
+
+
+
         if (!$userId || !$userSessionId) {
             return redirect('/login')->with('error', 'Failed to Login as Student');
         }
 
         $instructorUserId = Crypt::decrypt($userId);
+
         $instructorUser = User::find($instructorUserId);
+
+        session(['userId' => encrypt($instructorUser->id), 'userRole' => $instructorUser->user_role]);
 
         if (!$instructorUser) {
             return redirect('/login')->with('error', 'Failed to Login as Student');
@@ -643,4 +650,5 @@ class DashboardController extends Controller
 
         return redirect('/login')->with('error', 'Failed to Login as Student');
     }
+
 }

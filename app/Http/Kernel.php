@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UsersActivity::class,
+            \App\Http\Middleware\AuthCheckMiddleware::class,
             // \App\Http\Middleware\SubdomainMiddleware::class,
         ],
 
@@ -72,5 +73,6 @@ class Kernel extends HttpKernel
         'page.access' => \App\Http\Middleware\ManagePageAccess::class,
         'owner' => \App\Http\Middleware\GroupOwner::class,
         'member' => \App\Http\Middleware\GroupMember::class,
+        // 'authCheck' => \App\Http\Middleware\AuthCheckMiddleware::class,
     ];
 }

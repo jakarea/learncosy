@@ -111,7 +111,7 @@ class LoginController extends Controller
         $domain = env('APP_DOMAIN', 'learncosy.com');
         $this->validateLogin($request);
 
-       $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             $user->session_id = null;
@@ -157,7 +157,6 @@ class LoginController extends Controller
 
     public function handleProviderCallback($social)
     {
-
 
         $domain = env('APP_DOMAIN', 'learncosy.com');
 
@@ -218,5 +217,12 @@ class LoginController extends Controller
         }
 
 
+    }
+
+
+    public function logout(){
+        auth()->logout();
+        cookie()->forget(config('app.subdomain'));
+        return redirect('/');
     }
 }
