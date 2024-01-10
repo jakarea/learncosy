@@ -158,7 +158,6 @@ class LoginController extends Controller
     public function handleProviderCallback($social)
     {
 
-
         $domain = env('APP_DOMAIN', 'learncosy.com');
 
         $userSocial = Socialite::driver($social)->user();
@@ -218,5 +217,12 @@ class LoginController extends Controller
         }
 
 
+    }
+
+
+    public function logout(){
+        auth()->logout();
+        cookie()->forget(config('app.subdomain'));
+        return redirect('/');
     }
 }

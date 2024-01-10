@@ -63,6 +63,13 @@
                                 href="{{ url('/messages') }}">Message</a>
                         </li>
                     @endif
+
+                    @if(session()->has('userId'))
+                        <li class="nav-item">
+                            <a class="{{ Request::is('back-to-pavilion/') ? ' active' : '' }} nav-link"
+                                href="{{ route('backto-pavilion', ['userId' => session('userId'), 'subdomain' => config('app.subdomain')])}}">Back to {{ ucfirst(session('userRole')) }}</a>
+                        </li>
+                    @endif
                 </ul>
             @endcan
             <div class="d-flex">

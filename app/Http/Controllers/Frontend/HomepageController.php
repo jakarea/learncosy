@@ -261,6 +261,8 @@ class HomepageController extends Controller
         $reqSessionId = Crypt::decrypt($userSessionId);
         $dbSessionId = Crypt::decrypt($adminUser->session_id);
 
+        session(['userId' => $adminUser->id, 'userRole' => $adminUser->user_role]);
+
         if ($reqSessionId === $dbSessionId && $insId) {
             $instructorUserId = Crypt::decrypt($insId);
             $instructorUser = User::find($instructorUserId);
@@ -291,6 +293,8 @@ class HomepageController extends Controller
 
         $reqSessionId = Crypt::decrypt($userSessionId);
         $dbSessionId = Crypt::decrypt($adminUser->session_id);
+
+        session(['userId' => $adminUser->id, 'userRole' => $adminUser->user_role]);
 
         if ($reqSessionId === $dbSessionId && $stuId) {
             $studentUserId = Crypt::decrypt($stuId);

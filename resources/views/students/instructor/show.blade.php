@@ -58,6 +58,7 @@
                             <p>{{ optional($student)->user_role }}</p>
                         </div>
 
+
                         @php
                             $domain = env('APP_DOMAIN', 'learncosy.com');
                             $url = '//';
@@ -68,6 +69,8 @@
                                 $url .= $domain;
                             }
                         @endphp
+
+                        {{-- @dd( $url); --}}
 
                         <a href="{{ $url }}" class="edit-profile">Login as {{ optional($student)->name }}</a>
                     </div>
@@ -196,22 +199,22 @@
 <script src="{{ asset('latest/assets/js/banner-crop.js') }}"></script>
 {{-- set user cover photo js --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () { 
-    const coverImgOutput = document.getElementById('item-img-output'); 
+    document.addEventListener('DOMContentLoaded', function () {
+    const coverImgOutput = document.getElementById('item-img-output');
     const uploadBtn = document.getElementById('uploadBtn');
     const cancelBtn = document.getElementById('cancelBtn');
 
     // Handle upload button click
     const coverImgBase64 = document.getElementById('coverImgBase64');
-    uploadBtn.addEventListener('click', function () { 
+    uploadBtn.addEventListener('click', function () {
         let fileBase64 = coverImgBase64.value;
-        uploadFile(fileBase64);  
+        uploadFile(fileBase64);
     });
 
     // Handle cancel button click
     cancelBtn.addEventListener('click', function () {
         cancelUpload();
-    }); 
+    });
 
     // Function to handle file upload
     function uploadFile(fileBase64) {
@@ -220,46 +223,46 @@
         const baseUrl = currentURL.split('/').slice(0, 3).join('/');
 
         if (fileBase64) {
-            const userId = "{{ $student->id }}"; 
+            const userId = "{{ $student->id }}";
             const requestData = {
                 cover_photo: fileBase64,
                 userId: userId,
             };
             cancelBtn.classList.add('d-none');
             uploadBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin-pulse"></i> Uploading`;
- 
+
             fetch(`${baseUrl}/instructor/students/cover/upload`, {
-                    method: 'POST', 
+                    method: 'POST',
                     body: JSON.stringify(requestData),
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', 
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
                 })
                 .then(response => response.json())
-                .then(data => { 
+                .then(data => {
                     if (data.message === 'UPLOADED') {
                         uploadBtn.innerHTML = `Save`;
                         uploadBtn.classList.add('d-none');
                         cancelBtn.classList.add('d-none');
                     }
                 })
-                .catch(error => { 
+                .catch(error => {
                     uploadBtn.innerHTML = `Failed`;
                 });
         }
     }
 
     // Function to handle cancel button click
-        function cancelUpload() { 
-            const userCoverPhoto = "{{ $student->cover_photo ?? null }}"; 
+        function cancelUpload() {
+            const userCoverPhoto = "{{ $student->cover_photo ?? null }}";
             coverImgOutput.src = userCoverPhoto
                 ? "{{ asset('') }}" + userCoverPhoto
                 : "{{ asset('latest/assets/images/cover.svg') }}";
             coverImgBase64.value = '';
             uploadBtn.classList.add('d-none');
             cancelBtn.classList.add('d-none');
-        } 
+        }
     });
 </script>
 @endsection

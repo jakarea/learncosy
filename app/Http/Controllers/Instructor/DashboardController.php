@@ -617,12 +617,18 @@ class DashboardController extends Controller
     // login as student
     public function loginAsStudent($userSessionId, $userId, $stuId)
     {
+
+
+
         if (!$userId || !$userSessionId) {
             return redirect('/login')->with('error', 'Failed to Login as Student');
         }
 
         $instructorUserId = Crypt::decrypt($userId);
+
         $instructorUser = User::find($instructorUserId);
+
+        session(['userId' => $instructorUser->id, 'userRole' => $instructorUser->user_role]);
 
         if (!$instructorUser) {
             return redirect('/login')->with('error', 'Failed to Login as Student');
@@ -644,4 +650,5 @@ class DashboardController extends Controller
 
         return redirect('/login')->with('error', 'Failed to Login as Student');
     }
+
 }

@@ -11,10 +11,13 @@ class AuthCheckMiddleware
     public function handle(Request $request, Closure $next)
     {
         $subdomain = config('app.subdomain');
+
         if ($subdomain === 'logout' && Auth::check()) {
             Auth::logout();
         }
 
         return $next($request);
     }
+
+
 }
