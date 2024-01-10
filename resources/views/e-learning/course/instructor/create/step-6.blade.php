@@ -49,6 +49,11 @@ Course Create - Initial Step
                         <span class="circle"></span>
                         <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
                     </div>
+
+                    {{-- <div class="step-box">
+                        <span class="circle"></span>
+                        <p><a href="{{ url('instructor/finish/edit') }}">Finish Edit</a></p>
+                    </div> --}}
                 </div>
                 {{-- course step --}}
             </div>

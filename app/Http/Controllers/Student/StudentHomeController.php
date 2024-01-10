@@ -797,13 +797,17 @@ class StudentHomeController extends Controller
         if( $user->user_role == 'instructor' ){
             Auth::logout();
             Auth::login($user);
+            session()->forget(['userId', 'userRole']);
             $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/instructor/dashboard';
         }else if($user->user_role == 'admin'){
             Auth::logout();
             // Auth::login($user);
+            session()->forget(['userId', 'userRole']);
             $defaultUrl = '//' . $user->subdomain . '.' . $domain . '/admin/dashboard';
         }
 
+
         return redirect()->to($defaultUrl);
+
     }
 }

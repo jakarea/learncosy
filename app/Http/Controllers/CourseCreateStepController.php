@@ -1008,4 +1008,8 @@ class CourseCreateStepController extends Controller
         return response()->json(['progress' => $progress]);
 
     }
+
+    public function finishEdit(){
+        return redirect('instructor/courses');
+    }
 }
