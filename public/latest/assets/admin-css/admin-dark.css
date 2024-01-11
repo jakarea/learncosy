@@ -1678,7 +1678,7 @@
 
 
 
-.dark-mode .person-suggest-box-list .media:hover, 
+.dark-mode .person-suggest-box-list .media:hover,
 .dark-mode .person-tab-body .media:hover{
   background-color: #000A39!important;
 }
@@ -2542,12 +2542,12 @@ body.dark-mode .dark-mode-bttn label:last-child i {
 }
 
 .dark-mode .form-control:-webkit-autofill,
-.dark-mode .form-control:-webkit-autofill:hover, 
-.dark-mode .form-control:-webkit-autofill:focus, 
+.dark-mode .form-control:-webkit-autofill:hover,
+.dark-mode .form-control:-webkit-autofill:focus,
 .dark-mode .form-control:-webkit-autofill:active{
     -webkit-background-clip: text!important;
     -webkit-text-fill-color: #ffffff!important;
-    transition: background-color 5000s ease-in-out 0s!important; 
+    transition: background-color 5000s ease-in-out 0s!important;
 }
 
 .dark-mode .current-plan{
@@ -2567,7 +2567,7 @@ body.dark-mode .dark-mode-bttn label:last-child i {
   color: #FFD07A!important;
 }
 
-.dark-mode .show-notification-item .delete-item .btn img{ 
+.dark-mode .show-notification-item .delete-item .btn img{
   filter: invert(99%) sepia(73%) saturate(599%) hue-rotate(191deg) brightness(113%) contrast(89%)!important;
 }
 
@@ -2586,7 +2586,7 @@ body.dark-mode .dark-mode-bttn label:last-child i {
   color: rgba(166, 177, 196, 0.48)!important;
 }
 
-.dark-mode .form-submit-bttns.mt-4 .btn-primary{
+.dark-mode .form-submit-bttns.mt-4 .btn-primary, .dark-mode .save-finish .btn{
   background-color: #7A8FFA!important;
   color: #0D0D0D!important;
 }

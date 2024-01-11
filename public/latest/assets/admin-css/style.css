@@ -416,7 +416,7 @@ input:visited {
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 1.75rem; 
+  line-height: 1.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -425,4 +425,15 @@ input:visited {
 
 .error-page-txt a i{
   margin-left: 0.5rem;
+}
+
+
+.save-finish {
+    right: 129px;
+    bottom: 5px;
+    position: absolute;
+}
+
+.save-finish .btn{
+    font-size: 14px;
 }

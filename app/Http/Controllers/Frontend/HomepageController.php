@@ -261,7 +261,13 @@ class HomepageController extends Controller
         $reqSessionId = Crypt::decrypt($userSessionId);
         $dbSessionId = Crypt::decrypt($adminUser->session_id);
 
-        session()->forget(['userId', 'userRole']);
+        $keysToForget = ['userId', 'userRole'];
+
+        foreach ($keysToForget as $key) {
+            if (session()->has($key)) {
+                session()->forget($key);
+            }
+        }
         session(['userId' => encrypt($adminUser->id), 'userRole' => $adminUser->user_role]);
 
         if ($reqSessionId === $dbSessionId && $insId) {
@@ -295,7 +301,13 @@ class HomepageController extends Controller
         $reqSessionId = Crypt::decrypt($userSessionId);
         $dbSessionId = Crypt::decrypt($adminUser->session_id);
 
-        session()->forget(['userId', 'userRole']);
+        $keysToForget = ['userId', 'userRole'];
+
+        foreach ($keysToForget as $key) {
+            if (session()->has($key)) {
+                session()->forget($key);
+            }
+        }
         session(['userId' => encrypt($adminUser->id), 'userRole' => $adminUser->user_role]);
 
         if ($reqSessionId === $dbSessionId && $stuId) {

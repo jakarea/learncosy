@@ -541,18 +541,25 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
+
         // session set
         if (!session()->has('course_id')) {
             session(['course_id' => $id]);
         }
 
+
         $lesson = Lesson::where('id', $lesson_id)->where('instructor_id', Auth::user()->id)->firstOrFail();
-        $course = Course::where('id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
+        $course = Course::where('id', $id)
+        ->where('user_id', Auth::user()->id)
+        ->firstOrFail();
+
 
 
         if( isVimeoConnected(auth()->user()->id)[1] !== 'Connected'){
             return redirect()->route('account.settings', ['tab' => 'app', 'subdomain' => config('app.subdomain')])->withError(['Your vimeo isn\'t connected!!']);
         }
+
+
 
         return view('e-learning/course/instructor/create/step-5',compact('course','lesson'));
     }

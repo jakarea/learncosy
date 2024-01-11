@@ -626,7 +626,13 @@ class DashboardController extends Controller
 
         $instructorUser = User::find($instructorUserId);
 
-        session()->forget(['userId', 'userRole']);
+        $keysToForget = ['userId', 'userRole'];
+
+        foreach ($keysToForget as $key) {
+            if (session()->has($key)) {
+                session()->forget($key);
+            }
+        }
         session(['userId' => encrypt($instructorUser->id), 'userRole' => $instructorUser->user_role]);
 
         if (!$instructorUser) {

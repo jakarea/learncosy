@@ -12,7 +12,7 @@ Course Create - Initial Step
 @section('content')
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center position-relative">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
                 <div class="course-create-step-wrap">
@@ -50,11 +50,13 @@ Course Create - Initial Step
                         <p><a href="{{ url('instructor/courses/create',optional(request())->route('id')).'/share' }}">Share</a></p>
                     </div>
 
-                    {{-- <div class="step-box">
-                        <span class="circle"></span>
-                        <p><a href="{{ url('instructor/finish/edit') }}">Finish Edit</a></p>
-                    </div> --}}
+
                 </div>
+
+                @if ( session()->has('course_id') )
+                    @include('e-learning.course.instructor.create.save-finish')
+                @endif
+
                 {{-- course step --}}
             </div>
         </div>
