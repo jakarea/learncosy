@@ -134,6 +134,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 
         Route::get('instructor/courses/create/{id}/share', [CourseCreateStepController::class, 'courseShare']);
         Route::get('instructor/courses/create/{id}/finish', [CourseCreateStepController::class, 'finish']);
+        Route::get('instructor/finish/edit', [CourseCreateStepController::class, 'finishEdit'])->name('backto-pavilion');
 
 
         // Course bundle

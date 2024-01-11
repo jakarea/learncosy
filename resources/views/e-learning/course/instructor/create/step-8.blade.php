@@ -43,7 +43,7 @@ Course Create - Design Step
 @section('content')
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center position-relative">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
                 <div class="course-create-step-wrap">
@@ -109,6 +109,10 @@ Course Create - Design Step
                     </div>
                 </div>
                 {{-- course step --}}
+
+                @if ( session()->has('course_id') )
+                    @include('e-learning.course.instructor.create.save-finish')
+                @endif
             </div>
         </div>
         <div class="row justify-content-center">

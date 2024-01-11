@@ -59,6 +59,9 @@ Route::get('ins-login-as-student/{userSessionId}/{userId}/{stuId}', [DashboardCo
 Route::get('back-to-pavilion/{userId}', [StudentHomeController::class, 'backToPavilion'])->name('backto-pavilion');
 
 
+
+
+
 // theme settings register page
 Route::get('/auth-register', function () {
 

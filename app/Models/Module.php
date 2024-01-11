@@ -34,13 +34,14 @@ class Module extends Model
     {
         $courseActivityCount = $this->courseActivities()->count();
         $publishedLessonCount = $this->lessons()->where('status', 'published')->count();
-        
-        return $courseActivityCount == $publishedLessonCount;        
+
+        return $courseActivityCount == $publishedLessonCount;
     }
 
     public function checkNumber() {
-        if( $this->course->numbershow ){
+        if( $this->course && $this->course->numbershow ){
             return true;
         }
+        return false;
     }
 }

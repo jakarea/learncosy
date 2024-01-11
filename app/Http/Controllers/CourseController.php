@@ -333,6 +333,13 @@ class CourseController extends Controller
 
     public function destroy($subdomain,$id)
     {
+
+
+        // forot session
+        if (session()->has('course_id')) {
+            session()->forget('course_id');
+        }
+
         // update bundle course for this course
         $selectedCourseValue = intval($id);
         $instructorId = Auth::user()->id;
