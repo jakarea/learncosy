@@ -2594,3 +2594,14 @@ body.dark-mode .dark-mode-bttn label:last-child i {
 .dark-mode .go-to-stripe a{
   color: #fff!important;
 }
+
+ .dark-mode .save-finish .btn{
+    border: 1px solid #7A8FFA !important;
+    color: #fff!important;
+    background: none !important;
+  }
+
+.dark-mode .save-finish .btn:hover{
+    background: #7A8FFA !important;
+}
+
