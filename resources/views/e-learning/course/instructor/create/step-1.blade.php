@@ -12,7 +12,7 @@ Course Create - Step 3
 @section('content')
 <main class="course-create-step-page-wrap">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center position-relative">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                 {{-- course step --}}
                 <div class="course-create-step-wrap">
@@ -53,7 +53,10 @@ Course Create - Step 3
                     </div>
                 </div>
                 {{-- course step --}}
- 
+
+                @if ( session()->has('course_id') )
+                    @include('e-learning.course.instructor.create.save-finish')
+                @endif
             </div>
         </div>
         <div class="row justify-content-center">
@@ -112,7 +115,7 @@ Course Create - Step 3
                             <h6>Category</h6>
                             <input id="categories" data-role="tagsinput" name="categories" class="form-control"
                                 placeholder="ex: Figma, Adobe XD" type="text"
-                                value="{{ $course ? $course->categories : old('categories') }}"> 
+                                value="{{ $course ? $course->categories : old('categories') }}">
                         </div>
                     </div>
 
