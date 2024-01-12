@@ -919,7 +919,7 @@ class CourseCreateStepController extends Controller
             return redirect('instructor/courses');
         }
 
-        if( isConnectedWithStripe()[1] ){
+        if(!isConnectedWithStripe()[1] == 'Connected'){
             return redirect()->route('account.settings', ['tab' => 'app', 'subdomain' => config('app.subdomain')])->withError(['Your stripe isn\'t connected!!']);
         }
 

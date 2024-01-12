@@ -39,6 +39,11 @@ Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->g
     Route::get('student/catalog/courses', [StudentHomeController::class,'catalog'])->name('students.catalog.courses');
     Route::get('student/courses/{slug}', [StudentHomeController::class,'show'])->name('students.show.courses');
     Route::get('student/file-download/{course_id}/{extension}', [StudentHomeController::class, 'fileDownload'])->name('file.download');
+
+    Route::post('/student/courses/file-download', [StudentHomeController::class,'fileDownloads'])->name('student.files.download');
+    Route::get('/student/lesson/extension', [StudentHomeController::class,'showLessonExtension'])->name('student.course.lesson.extension');
+
+
     Route::get('student/certificate-download/{slug}', [StudentHomeController::class, 'certificateDownload'])->name('students.download.courses-certificate');
     Route::get('student/certificate-view/{slug}', [StudentHomeController::class, 'certificateView'])->name('students.view.courses-certificate');
     Route::get('student/courses/overview/{slug}', [StudentHomeController::class, 'overview'])->name('students.overview.courses');

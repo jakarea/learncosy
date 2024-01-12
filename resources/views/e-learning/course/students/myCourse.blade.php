@@ -114,7 +114,7 @@
 
 
                                         <div class="number">
-                                            <h5>{{ $percentage }}<span>%</span>
+                                            <h5>{{ round($percentage) }}<span>%</span>
                                             </h5>
                                             <p>{{ $completedLessons }}/{{ $totalLessons }}</p>
                                         </div>
@@ -207,7 +207,7 @@
                                                     style="--percent: {{ $percentage }}"></circle>
                                             </svg>
                                             <div class="number">
-                                                <h6>{{ $percentage }}<span>%</span></h6>
+                                                <h6>{{ round( $percentage) }}<span>%</span></h6>
                                             </div>
                                         </div>
                                     </div>

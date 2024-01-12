@@ -80,22 +80,51 @@
                             </div>
                         </div>
 
-                        <div class="download-files-box">
+                        {{-- <div class="download-files-box d-none">
                             <h4>Download Files </h4>
 
 
                             @if (!empty($group_files))
                                 <div class="files">
                                     @foreach ($group_files as $fileExtension)
-                                        <a
-                                            href="{{ route('instructor.file.download', [$course->id, $fileExtension, 'subdomain' => config('app.subdomain')]) }}">
+                                        <a class="downloadFile"
+                                            href="{{ route('instructor.file.download', [$fileExtension, 'subdomain' => config('app.subdomain')]) }}"
+                                            data-file-url="{{ route('instructor.file.download', [$fileExtension, 'subdomain' => config('app.subdomain')]) }}"
+                                            data-lesson-id-file="">
                                             {{ strtoupper($fileExtension) }}<img
                                                 src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
                                                 title="" class="img-fluid">
                                         </a>
                                     @endforeach
+
+
+                                    <a class="downloadFile"
+                                            href="{{ route('instructor.file.download', [$fileExtension, 'subdomain' => config('app.subdomain')]) }}"
+                                            data-file-url="{{ route('instructor.file.download', [$fileExtension, 'subdomain' => config('app.subdomain')]) }}"
+                                            data-lesson-id-file="">
+                                            {{ strtoupper($fileExtension) }}<img
+                                                src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                                title="" class="img-fluid">
+                                        </a>
                                 </div>
                             @endif
+                        </div> --}}
+
+
+                        <div class="download-files-box d-none">
+                            <h4>Download File </h4>
+
+                            <div class="files">
+                                <a class="downloadFile"
+                                    href="javascript:;"
+                                    data-file-url="{{ route('instructor.files.download', ['subdomain' => config('app.subdomain')]) }}"
+                                    data-lesson-id-file="">
+
+                                    <div class="fileExtension"></div>
+                                    <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                        title="" class="img-fluid">
+                                </a>
+                            </div>
                         </div>
 
                         {{-- course review --}}
@@ -311,7 +340,67 @@
 
 {{-- script section @S --}}
 @section('script')
+
     <script src="https://player.vimeo.com/api/player.js"></script>
+
+
+    <script>
+        $(document).on("click", ".video_list_play", function(e){
+            var lessonId = $(this).closest('.video_list_play').data('lesson-id');
+            $(".downloadFile").attr("data-lesson-id-file", lessonId);
+
+            $.ajax({
+                type: "get",
+                url: "{{ route('course.lesson.extension', ['subdomain' => config('app.subdomain')]) }}",
+                data: {
+                    lessonId: lessonId,
+                },
+                success: function (data) {
+                    $(".fileExtension").text(data.extension);
+                    if( data.extension ){
+                        $(".download-files-box").removeClass("d-none");
+                    }
+                },
+                error: function () {
+                    console.error('Error initiating file download.');
+                }
+            });
+        });
+
+        $(document).on("click", ".downloadFile", function(e){
+            e.preventDefault();
+
+            var lessonId = $(".downloadFile").attr("data-lesson-id-file");
+
+            var fileUrl = $(this).data('file-url');
+
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            $.ajax({
+                type: "post",
+                url: fileUrl,
+                data: {
+                    lessonId: lessonId,
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function () {
+                    // Handle any errors that occur during the AJAX request
+                    console.error('Error initiating file download.');
+                }
+            });
+        });
+
+    </script>
+
+
     <script>
         document.querySelector('#hideShow').classList.add('d-none');
 

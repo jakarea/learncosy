@@ -26,7 +26,8 @@ use App\Models\CourseActivity;
 class CourseController extends Controller
 {
     // course list
-    public function index(){
+    public function index()
+    {
 
         $queryParams = request()->except('page');
 
@@ -51,42 +52,42 @@ class CourseController extends Controller
 
             if ($status == 'best_rated') {
                 $courses = Course::leftJoin('course_reviews', 'courses.id', '=', 'course_reviews.course_id')
-                ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
-                ->groupBy('courses.id')
-                ->where('courses.user_id', Auth::user()->id)
-                ->orderBy('avg_star', 'desc');
+                    ->select('courses.*', \DB::raw('COALESCE(AVG(course_reviews.star), 0) as avg_star'))
+                    ->groupBy('courses.id')
+                    ->where('courses.user_id', Auth::user()->id)
+                    ->orderBy('avg_star', 'desc');
             }
 
             if ($status == 'most_purchased') {
-                $courses = Course::with(['user','reviews'])
-                ->withCount('checkouts as sale_count')
-                ->where('user_id', auth()->id())
-                ->orderByDesc('sale_count','desc');
+                $courses = Course::with(['user', 'reviews'])
+                    ->withCount('checkouts as sale_count')
+                    ->where('user_id', auth()->id())
+                    ->orderByDesc('sale_count', 'desc');
             }
 
             if ($status == 'newest') {
                 $courses->orderBy('id', 'desc');
             }
-        }else{
+        } else {
             $courses->orderBy('id', 'desc');
         }
 
         $courses = $courses->paginate(12)->appends($queryParams);
 
-        return view('e-learning/course/instructor/list',compact('courses'));
+        return view('e-learning/course/instructor/list', compact('courses'));
     }
 
     // course show
     public function show($domain, $id)
     {
-        $course = Course::where('id', $id)->with('modules.lessons','user')->first();
+        $course = Course::where('id', $id)->with('modules.lessons', 'user')->first();
 
         //start group file
-        $lesson_files = Lesson::where('course_id',$course->id)->select('lesson_file as file')->get();
+        $lesson_files = Lesson::where('course_id', $course->id)->select('lesson_file as file')->get();
         $group_files = [];
 
-        foreach($lesson_files as $lesson_file){
-            if(!empty($lesson_file->file)){
+        foreach ($lesson_files as $lesson_file) {
+            if (!empty($lesson_file->file)) {
                 $file_name = $lesson_file->file;
                 $file_arr = explode('.', $lesson_file->file);
                 $extention = $file_arr[1];
@@ -99,19 +100,19 @@ class CourseController extends Controller
 
         $relatedCourses = [];
 
-        if($course->categories){
+        if ($course->categories) {
             $categoryArray = explode(',', $course->categories);
 
             $relatedCourses = Course::where('instructor_id', $course->instructor_id)
-            ->where('status','published')
-            ->where('id', '!=', $course->id)
-            ->where(function ($query) use ($categoryArray) {
-                foreach ($categoryArray as $category) {
-                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                }
-            })
-            ->take(3)
-            ->get();
+                ->where('status', 'published')
+                ->where('id', '!=', $course->id)
+                ->where(function ($query) use ($categoryArray) {
+                    foreach ($categoryArray as $category) {
+                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                    }
+                })
+                ->take(3)
+                ->get();
         }
 
 
@@ -133,20 +134,20 @@ class CourseController extends Controller
 
 
         // last playing video
-        $courseLog = CourseLog::where('course_id', $course->id)->where('user_id',auth()->user()->id)->first();
+        $courseLog = CourseLog::where('course_id', $course->id)->where('user_id', auth()->user()->id)->first();
         $currentLessonVideo = NULL;
         $currentLesson = NULL;
 
         if ($courseLog) {
             $lesson = Lesson::find($courseLog->lesson_id);
             if ($lesson) {
-               $currentLesson = $lesson;
-               $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
+                $currentLesson = $lesson;
+                $currentLessonVideo = str_replace("/videos/", "", $lesson->video_link);
             }
         }
 
         if ($course) {
-            return view('e-learning/course/instructor/show', compact('course','course_reviews','relatedCourses','totalModules','totalLessons','group_files','currentLessonVideo','currentLesson'));
+            return view('e-learning/course/instructor/show', compact('course', 'course_reviews', 'relatedCourses', 'totalModules', 'totalLessons', 'group_files', 'currentLessonVideo', 'currentLesson'));
         } else {
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
@@ -158,46 +159,47 @@ class CourseController extends Controller
     {
 
         $title = 'Course Overview';
-        $course = Course::where('slug', $slug)->with('modules.lessons','user')->firstOrFail();
+        $course = Course::where('slug', $slug)->with('modules.lessons', 'user')->firstOrFail();
         $promo_video_link = '';
-        if($course->promo_video != ''){
-            $ytarray=explode("/", $course->promo_video);
-            $ytendstring=end($ytarray);
-            $ytendarray=explode("?v=", $ytendstring);
-            $ytendstring=end($ytendarray);
-            $ytendarray=explode("&", $ytendstring);
-            $ytcode=$ytendarray[0];
+        if ($course->promo_video != '') {
+            $ytarray = explode("/", $course->promo_video);
+            $ytendstring = end($ytarray);
+            $ytendarray = explode("?v=", $ytendstring);
+            $ytendstring = end($ytendarray);
+            $ytendarray = explode("&", $ytendstring);
+            $ytcode = $ytendarray[0];
             $promo_video_link = $ytcode;
         }
 
         $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-        $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
+        $courseEnrolledNumber = Checkout::where('course_id', $course->id)->count();
 
         $related_course = [];
         if ($course) {
 
-            if($course->categories){
+            if ($course->categories) {
                 $categoryArray = explode(',', $course->categories);
 
                 $related_course = Course::where('instructor_id', $course->instructor_id)
-                ->where('status','published')
-                ->where('id', '!=', $course->id)
-                ->where(function ($query) use ($categoryArray) {
-                    foreach ($categoryArray as $category) {
-                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                    }
-                })
-                ->take(4)
-                ->get();
+                    ->where('status', 'published')
+                    ->where('id', '!=', $course->id)
+                    ->where(function ($query) use ($categoryArray) {
+                        foreach ($categoryArray as $category) {
+                            $query->orWhere('categories', 'like', '%' . trim($category) . '%');
+                        }
+                    })
+                    ->take(4)
+                    ->get();
             }
 
-            return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
+            return view('e-learning/course/instructor/overview', compact('title', 'course', 'promo_video_link', 'course_reviews', 'related_course', 'courseEnrolledNumber'));
         } else {
             return redirect('instructor/dashboard')->with('error', 'Course not found!');
         }
     }
 
-    public function storeCourseLog(Request $request){
+    public function storeCourseLog(Request $request)
+    {
 
         $courseId = (int)$request->input('courseId');
         $lessonId = (int)$request->input('lessonId');
@@ -205,9 +207,9 @@ class CourseController extends Controller
         $userId = auth()->user()->id;
 
         $existingCourse = Course::find($courseId);
-        $courseLog = CourseLog::where('course_id', $courseId)->where('user_id',$userId)->first();
+        $courseLog = CourseLog::where('course_id', $courseId)->where('user_id', $userId)->first();
 
-        if(!$courseLog){
+        if (!$courseLog) {
             $courseLogInfo = new CourseLog([
                 'course_id' => $courseId,
                 'instructor_id' => $userId,
@@ -224,7 +226,7 @@ class CourseController extends Controller
                 'lesson_id' => $lessonId,
                 'user_id'   => $userId,
             ]);
-        }else{
+        } else {
             $courseLog->course_id = $courseId;
             $courseLog->instructor_id = $userId;
             $courseLog->module_id = $moduleId;
@@ -240,98 +242,156 @@ class CourseController extends Controller
                 'user_id'   => $userId,
             ]);
         }
-
     }
 
 
-        // course overview
-        public function preview($model, $slug)
-        {
-            $title = 'Course Preview';
-            $course = Course::where('slug', $slug)->with('modules.lessons','user')->firstOrFail();
-            $promo_video_link = '';
-            if($course->promo_video != ''){
-                $ytarray=explode("/", $course->promo_video);
-                $ytendstring=end($ytarray);
-                $ytendarray=explode("?v=", $ytendstring);
-                $ytendstring=end($ytendarray);
-                $ytendarray=explode("&", $ytendstring);
-                $ytcode=$ytendarray[0];
-                $promo_video_link = $ytcode;
-            }
-
-            $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
-            $courseEnrolledNumber = Checkout::where('course_id',$course->id)->count();
-
-            $related_course = [];
-            if ($course) {
-                if($course->categories){
-                    $categoryArray = explode(',', $course->categories);
-                    $query = Course::query();
-
-                    foreach ($categoryArray as $category) {
-                        $query->orWhere('categories', 'like', '%' . trim($category) . '%');
-                    }
-                    $related_course = $query->take(4)->get();
-                }
-
-
-                return view('e-learning/course/instructor/overview', compact('title','course','promo_video_link','course_reviews','related_course','courseEnrolledNumber'));
-            } else {
-                return redirect('instructor/dashboard')->with('error', 'Course not found!');
-            }
+    // course overview
+    public function preview($model, $slug)
+    {
+        $title = 'Course Preview';
+        $course = Course::where('slug', $slug)->with('modules.lessons', 'user')->firstOrFail();
+        $promo_video_link = '';
+        if ($course->promo_video != '') {
+            $ytarray = explode("/", $course->promo_video);
+            $ytendstring = end($ytarray);
+            $ytendarray = explode("?v=", $ytendstring);
+            $ytendstring = end($ytendarray);
+            $ytendarray = explode("&", $ytendstring);
+            $ytcode = $ytendarray[0];
+            $promo_video_link = $ytcode;
         }
 
+        $course_reviews = CourseReview::where('course_id', $course->id)->with('user')->get();
+        $courseEnrolledNumber = Checkout::where('course_id', $course->id)->count();
 
-    public function fileDownload($subdomain,$course_id,$file_extension){
+        $related_course = [];
+        if ($course) {
+            if ($course->categories) {
+                $categoryArray = explode(',', $course->categories);
+                $query = Course::query();
 
-        $lesson_files = Lesson::where('course_id',$course_id)->select('lesson_file as file')->get();
-        foreach($lesson_files as $lesson_file){
-            if(!empty($lesson_file->file)){
-                $file_name = $lesson_file->file;
-                $file_arr = explode('.', $file_name);
-                $extension = $file_arr['1'];
-                if($file_extension == $extension){
-                    $files[] = public_path($file_name);
-               }
-            }
-        }
-
-        $zip = new ZipArchive;
-        $zipFileName = $file_extension.'_'.time().'.zip';
-        $is_have_file = '';
-        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-            foreach ($files as $file) {
-                if(file_exists($file)){
-                    $zip->addFile($file, basename($file));
-                }else{
-                   $is_have_file = 'There are no files in your storage!!!!';
-                   break;
+                foreach ($categoryArray as $category) {
+                    $query->orWhere('categories', 'like', '%' . trim($category) . '%');
                 }
+                $related_course = $query->take(4)->get();
             }
-            if(!empty($is_have_file)){
-              return redirect('admin/courses')->with('error', $is_have_file);
-            }
-            $zip->close();
 
-            // Set appropriate headers for the download
-            header('Content-Type: application/zip');
-            header("Content-Disposition: attachment; filename=" . $zipFileName);
-            header('Content-Length: ' . filesize($zipFileName));
-            header("Pragma: no-cache");
-            header("Expires: 0");
-            readfile($zipFileName);
 
-            // Delete the zip file after download
-            unlink($zipFileName);
-            exit;
+            return view('e-learning/course/instructor/overview', compact('title', 'course', 'promo_video_link', 'course_reviews', 'related_course', 'courseEnrolledNumber'));
         } else {
-            // Handle the case when the zip file could not be created
-            echo 'Failed to create the zip file.';
+            return redirect('instructor/dashboard')->with('error', 'Course not found!');
         }
     }
 
-    public function destroy($subdomain,$id)
+
+    // public function fileDownload($subdomain, $course_id, $file_extension)
+    // {
+
+    //     $lesson_files = Lesson::where('course_id', $course_id)->select('lesson_file as file')->get();
+    //     foreach ($lesson_files as $lesson_file) {
+    //         if (!empty($lesson_file->file)) {
+    //             $file_name = $lesson_file->file;
+    //             $file_arr = explode('.', $file_name);
+    //             $extension = $file_arr['1'];
+    //             if ($file_extension == $extension) {
+    //                 $files[] = public_path($file_name);
+    //             }
+    //         }
+    //     }
+
+    //     $zip = new ZipArchive;
+    //     $zipFileName = $file_extension . '_' . time() . '.zip';
+    //     $is_have_file = '';
+    //     if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+    //         foreach ($files as $file) {
+    //             if (file_exists($file)) {
+    //                 $zip->addFile($file, basename($file));
+    //             } else {
+    //                 $is_have_file = 'There are no files in your storage!!!!';
+    //                 break;
+    //             }
+    //         }
+    //         if (!empty($is_have_file)) {
+    //             return redirect('admin/courses')->with('error', $is_have_file);
+    //         }
+    //         $zip->close();
+
+    //         // Set appropriate headers for the download
+    //         header('Content-Type: application/zip');
+    //         header("Content-Disposition: attachment; filename=" . $zipFileName);
+    //         header('Content-Length: ' . filesize($zipFileName));
+    //         header("Pragma: no-cache");
+    //         header("Expires: 0");
+    //         readfile($zipFileName);
+
+    //         // Delete the zip file after download
+    //         unlink($zipFileName);
+    //         exit;
+    //     } else {
+    //         // Handle the case when the zip file could not be created
+    //         echo 'Failed to create the zip file.';
+    //     }
+    // }
+
+
+
+    public function fileDownloads(Request $request, $subdomain)
+    {
+        if ($request->ajax()) {
+            $lessonId = $request->input('lessonId');
+            $lesson = Lesson::where('id', $lessonId)->first();
+            if ($lesson && !empty($lesson->lesson_file)) {
+                $file_path = public_path($lesson->lesson_file);
+
+                if (File::exists($file_path)) {
+                    $zipFileName = public_path('/uploads/lessons/files/lesson_' . $lessonId . '_file.zip');
+
+                    $zip = new ZipArchive;
+
+                    if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+                        $zip->addFile($file_path, basename($file_path));
+                        $zip->close();
+
+
+                        $headers = [
+                            'Content-Type' => 'application/zip',
+                            'Content-Disposition' => 'attachment; filename="' . $zipFileName . '"',
+                            'Content-Length' => filesize($zipFileName),
+                            'Pragma' => 'no-cache',
+                            'Expires' => '0',
+                        ];
+
+                        return response()->download($zipFileName);
+                        // ->deleteFileAfterSend(true);
+                    } else {
+                        return 'Failed to create the ZIP file. Error: ' . $zip->getStatusString();
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    public function showLessonExtension(Request $request, $subdomain)
+    {
+        if ($request->ajax()) {
+            $lessonId = $request->input('lessonId');
+            $lesson = Lesson::where('id', $lessonId)->first();
+            if( $lesson ){
+                $lessonFilePath = $lesson->lesson_file;
+                $extension = pathinfo($lessonFilePath, PATHINFO_EXTENSION);
+                return response()->json(['extension' => strtoupper($extension)]);
+            }
+        }
+
+    }
+
+
+
+
+
+    public function destroy($subdomain, $id)
     {
 
 
@@ -359,7 +419,7 @@ class CourseController extends Controller
         }
 
         // delete bundleselected for this course
-        $bundleSelection = BundleSelect::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $bundleSelection = BundleSelect::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($bundleSelection) {
             foreach ($bundleSelection as $bundleSelected) {
                 $bundleSelected->delete();
@@ -367,7 +427,7 @@ class CourseController extends Controller
         }
 
         // update cart
-        $cartSelects = Cart::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $cartSelects = Cart::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($cartSelects) {
             foreach ($cartSelects as $cartSelect) {
                 $cartSelect->delete();
@@ -375,7 +435,7 @@ class CourseController extends Controller
         }
 
         // certificate delete
-        $certificate = Certificate::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->first();
+        $certificate = Certificate::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->first();
         if ($certificate) {
             $certificateOldLogo = public_path($certificate->logo);
             if (file_exists($certificateOldLogo)) {
@@ -390,7 +450,7 @@ class CourseController extends Controller
         }
 
         // checkout controller update
-        $totalCheckout = Checkout::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $totalCheckout = Checkout::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($totalCheckout) {
             foreach ($totalCheckout as $checkout) {
                 $checkout->status = 'deleted';
@@ -399,7 +459,7 @@ class CourseController extends Controller
         }
 
         // course activities
-        $totalActivity = CourseActivity::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $totalActivity = CourseActivity::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($totalActivity) {
             foreach ($totalActivity as $activity) {
                 $activity->delete();
@@ -407,7 +467,7 @@ class CourseController extends Controller
         }
 
         // course likes
-        $course_likes = course_like::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $course_likes = course_like::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($course_likes) {
             foreach ($course_likes as $course_liked) {
                 $course_liked->delete();
@@ -415,7 +475,7 @@ class CourseController extends Controller
         }
 
         // course Log
-        $course_logs = CourseLog::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $course_logs = CourseLog::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($course_logs) {
             foreach ($course_logs as $course_log) {
                 $course_log->delete();
@@ -423,7 +483,7 @@ class CourseController extends Controller
         }
 
         // course review
-        $course_reviews = CourseReview::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $course_reviews = CourseReview::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($course_reviews) {
             foreach ($course_reviews as $course_review) {
                 $course_review->delete();
@@ -431,17 +491,17 @@ class CourseController extends Controller
         }
 
         // course users
-        $course_useres = DB::table('course_user')->where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $course_useres = DB::table('course_user')->where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($course_useres) {
             foreach ($course_useres as $course_usere) {
                 DB::table('course_user')
-                ->where('id', $course_usere->id)
-                ->delete();
+                    ->where('id', $course_usere->id)
+                    ->delete();
             }
         }
 
         // delete notification for this course
-        $course_notifications = Notification::where(['course_id'=> $selectedCourseValue,'instructor_id' => $instructorId])->get();
+        $course_notifications = Notification::where(['course_id' => $selectedCourseValue, 'instructor_id' => $instructorId])->get();
         if ($course_notifications) {
             foreach ($course_notifications as $course_notification) {
                 $course_notification->delete();
@@ -449,7 +509,7 @@ class CourseController extends Controller
         }
 
         // delete main course
-        $course = Course::where(['id'=> $selectedCourseValue,'user_id' => $instructorId])->first();
+        $course = Course::where(['id' => $selectedCourseValue, 'user_id' => $instructorId])->first();
 
         if ($course) {
             //delete thumbnail
@@ -489,5 +549,4 @@ class CourseController extends Controller
             return redirect('instructor/courses')->with('error', 'Course not found!');
         }
     }
-
 }

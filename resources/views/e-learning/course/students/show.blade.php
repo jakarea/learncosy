@@ -124,6 +124,23 @@
                             </div>
                         @endif
                     </div> --}}
+
+                    <div class="download-files-box d-none">
+                        <h4>Download File </h4>
+
+                        <div class="files">
+                            <a class="downloadFile"
+                                href="javascript:;"
+                                data-student-file-url="{{ route('student.files.download', ['subdomain' => config('app.subdomain')]) }}"
+                                data-lesson-id-file="">
+
+                                <div class="fileExtension"></div>
+                                <img src="{{ asset('latest/assets/images/icons/download.svg') }}" alt="clock"
+                                    title="" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+
                     @if ($course->allow_review)
                         {{-- course review --}}
                         <div class="course-review-wrap">
@@ -401,6 +418,67 @@
 {{-- script section @S --}}
 @section('script')
     <script src="https://player.vimeo.com/api/player.js"></script>
+
+
+    <script>
+        $(document).on("click", ".video_list_play", function(e){
+            var lessonId = $(this).closest('.video_list_play').data('lesson-id');
+            $(".downloadFile").attr("data-lesson-id-file", lessonId);
+            $.ajax({
+                type: "get",
+                url: "{{ route('student.course.lesson.extension', ['subdomain' => config('app.subdomain')]) }}",
+                data: {
+                    lessonId: lessonId,
+                },
+                success: function (data) {
+                    $(".fileExtension").text(data.extension);
+                    if( data.extension ){
+                        $(".download-files-box").removeClass("d-none");
+                    }
+                },
+                error: function () {
+                    console.error('Error initiating file download.');
+                }
+            });
+        });
+
+        $(document).on("click", ".downloadFile", function(e){
+            e.preventDefault();
+
+            var lessonId = $(".downloadFile").attr("data-lesson-id-file");
+
+            var fileUrl = $(this).data('student-file-url');
+
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            $.ajax({
+                type: "post",
+                url: fileUrl,
+                data: {
+                    lessonId: lessonId,
+                },
+                success: function (data) {
+
+                },
+                error: function () {
+                    // Handle any errors that occur during the AJAX request
+                    console.error('Error initiating file download.');
+                }
+            });
+        });
+
+    </script>
+
+
+
+
+
     <script>
         $(document).ready(function() {
 
