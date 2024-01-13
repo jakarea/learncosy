@@ -115,8 +115,7 @@
                             <h4>Download File </h4>
 
                             <div class="files">
-                                <a class="downloadFile"
-                                    href="javascript:;"
+                                <a class="downloadFile" href="javascript:;"
                                     data-file-url="{{ route('instructor.files.download', ['subdomain' => config('app.subdomain')]) }}"
                                     data-lesson-id-file="">
 
@@ -259,7 +258,8 @@
                                 @endif
                             @endforeach
                             <div class="text-center add-lesson-bttn mt-2">
-                                <a href="{{ url('instructor/courses/create/' . $course->id) }}" class="add_lesson_bttn">Add
+                                <a href="{{ url('instructor/courses/create/' . $course->id) }}"
+                                    class="add_lesson_bttn">Add
                                     More</a>
                             </div>
                         </div>
@@ -340,12 +340,11 @@
 
 {{-- script section @S --}}
 @section('script')
-
     <script src="https://player.vimeo.com/api/player.js"></script>
 
 
     <script>
-        $(document).on("click", ".video_list_play", function(e){
+        $(document).on("click", ".video_list_play", function(e) {
             var lessonId = $(this).closest('.video_list_play').data('lesson-id');
             $(".downloadFile").attr("data-lesson-id-file", lessonId);
 
@@ -355,19 +354,19 @@
                 data: {
                     lessonId: lessonId,
                 },
-                success: function (data) {
+                success: function(data) {
                     $(".fileExtension").text(data.extension);
-                    if( data.extension ){
+                    if (data.extension) {
                         $(".download-files-box").removeClass("d-none");
                     }
                 },
-                error: function () {
+                error: function() {
                     console.error('Error initiating file download.');
                 }
             });
         });
 
-        $(document).on("click", ".downloadFile", function(e){
+        $(document).on("click", ".downloadFile", function(e) {
             e.preventDefault();
 
             var lessonId = $(".downloadFile").attr("data-lesson-id-file");
@@ -383,21 +382,39 @@
             });
 
             $.ajax({
-                type: "post",
+                type: 'POST',
                 url: fileUrl,
                 data: {
                     lessonId: lessonId,
                 },
-                success: function (data) {
-                    console.log(data);
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (data, status, xhr) {
+                    if (xhr.status === 200) {
+                        var contentType = xhr.getResponseHeader('content-type');
+
+                        if (contentType && contentType.includes('application/zip')) {
+                            var link = document.createElement('a');
+                            link.href = URL.createObjectURL(new Blob([data], { type: contentType }));
+                            link.download = 'downloaded_files.zip';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        } else {
+                            console.error('Invalid content type for file download.');
+                        }
+                    } else {
+                        console.error('Unexpected status code:', xhr.status);
+                    }
                 },
                 error: function () {
-                    // Handle any errors that occur during the AJAX request
                     console.error('Error initiating file download.');
                 }
             });
-        });
 
+
+        });
     </script>
 
 

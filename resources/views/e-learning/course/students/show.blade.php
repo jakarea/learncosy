@@ -458,16 +458,33 @@
             });
 
             $.ajax({
-                type: "post",
+                type: 'POST',
                 url: fileUrl,
                 data: {
                     lessonId: lessonId,
                 },
-                success: function (data) {
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (data, status, xhr) {
+                    if (xhr.status === 200) {
+                        var contentType = xhr.getResponseHeader('content-type');
 
+                        if (contentType && contentType.includes('application/zip')) {
+                            var link = document.createElement('a');
+                            link.href = URL.createObjectURL(new Blob([data], { type: contentType }));
+                            link.download = 'downloaded_files.zip';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        } else {
+                            console.error('Invalid content type for file download.');
+                        }
+                    } else {
+                        console.error('Unexpected status code:', xhr.status);
+                    }
                 },
                 error: function () {
-                    // Handle any errors that occur during the AJAX request
                     console.error('Error initiating file download.');
                 }
             });

@@ -452,15 +452,12 @@ class StudentHomeController extends Controller
                         $zip->addFile($file_path, basename($file_path));
                         $zip->close();
 
-                        $headers = [
-                            'Content-Type' => 'application/zip',
-                            'Content-Disposition' => 'attachment; filename="' . $zipFileName . '"',
-                            'Content-Length' => filesize($zipFileName),
-                            'Pragma' => 'no-cache',
-                            'Expires' => '0',
-                        ];
+                        if (file_exists($zipFileName)) {
+                            return response()->download($zipFileName)->deleteFileAfterSend(true);
 
-                        return response()->file($zipFileName, $headers)->deleteFileAfterSend(true);;
+                        } else {
+                            return ['status'=>'zip file does not exist'];
+                        }
 
                     } else {
                         return 'Failed to create the ZIP file. Error: ' . $zip->getStatusString();
