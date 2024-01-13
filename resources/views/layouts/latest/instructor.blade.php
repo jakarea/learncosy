@@ -50,8 +50,12 @@
         {{-- jquery ui --}}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+        {{-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script> --}}
+
+
+
 
         <style>
             .user-name-avatar{
@@ -145,11 +149,12 @@
         {{-- dark mode js --}}
 
         <script>
-            $(document).ready(function() {
-                $('.summernote').summernote({
-                    height: 200,
-                });
-            });
+            // $(document).ready(function() {
+            //     $('.summernote').summernote({
+            //         height: 200,
+            //     });
+            // });
+
             const htmlBody = document.querySelector("body");
             const modeBttn = document.getElementById("darkModeBttn");
 

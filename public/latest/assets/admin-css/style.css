@@ -448,7 +448,7 @@ input:visited {
     }
 }
 
-.note-editor.note-frame{
+/* .note-editor.note-frame{
     border-radius: 10px
 }
 
@@ -460,4 +460,4 @@ input:visited {
 
 .note-editor.note-frame .note-editable p{
     margin-top: 10px;
-}
+} */

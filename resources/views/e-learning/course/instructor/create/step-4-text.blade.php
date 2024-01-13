@@ -45,7 +45,7 @@ Course Create - Lesson Text Content Add
 
                             {{-- <textarea class="form-control summernote" name="text">
                                 @if ($lesson->text)
-                                {!! $lesson->text !!}
+                                    {!! $lesson->text !!}
                                 @endif
                             </textarea> --}}
 
