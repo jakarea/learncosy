@@ -2605,3 +2605,18 @@ body.dark-mode .dark-mode-bttn label:last-child i {
     background: #7A8FFA !important;
 }
 
+/* Summernote css for dark mode */
+.dark-mode .note-editor.note-frame{
+    background-color: #222f3e;
+    color: #fff;
+}
+.dark-mode .note-toolbar button, .dark-mode .note-toolbar i, .dark-mode .note-editable p {
+    color: #fff !important;
+}
+
+.dark-mode .note-editor.note-frame .panel-heading.note-toolbar {
+    padding: 0 0 0px 5px;
+    border-bottom: 1px solid #2a3644;
+    box-shadow: 0 1px 16px #151c25;
+  }
+

@@ -42,9 +42,16 @@ Course Create - Lesson Text Content Add
                                 {!! $lesson->text !!}
                                 @endif
                             </textarea>
+
+                            {{-- <textarea class="form-control summernote" name="text">
+                                @if ($lesson->text)
+                                {!! $lesson->text !!}
+                                @endif
+                            </textarea> --}}
+
                             <span class="invalid-feedback">@error('text'){{ $message }}
                                 @enderror</span>
-                        </div> 
+                        </div>
 
                         <div class="form-group form-upload">
                             <label for="file-input" class="txt">Upload New File</label>
@@ -62,14 +69,14 @@ Course Create - Lesson Text Content Add
                             <!-- Uploaded files will be displayed here -->
                         </div>
 
-                        @if ($lesson->lesson_file) 
+                        @if ($lesson->lesson_file)
                         <div class="lesson-edit-form-wrap course-content-box course-page-edit-box flex-column mt-2 align-items-start">
                             <h4>Current Lesson File:</h4>
                             <div class="title d-flex w-100 justify-content-between">
                                 <div class="media">
-                                    <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem"> 
+                                    <img id="audio-thumbnail" src="{{ asset('latest/assets/images/icons/file.svg') }}" alt="Audio" class="img-fluid" style="width: 2rem">
                                     <div class="media-body">
-                                        <h5> {{ basename($lesson->lesson_file) }}</h5> 
+                                        <h5> {{ basename($lesson->lesson_file) }}</h5>
                                         <p>Uploaded: {{ $lesson->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
@@ -79,8 +86,8 @@ Course Create - Lesson Text Content Add
                                     </a>
                                 </div>
                             </div>
-                        </div> 
-                    @endif 
+                        </div>
+                    @endif
                     {{-- course page file box end --}}
                 </div>
 
@@ -98,11 +105,11 @@ Course Create - Lesson Text Content Add
 @endsection
 {{-- page content @E --}}
 
-@section('script') 
+@section('script')
 <script src="{{asset('latest/assets/js/tinymce.js')}}" type="text/javascript"></script>
 <script>
     const fileInput = document.getElementById('file-input');
-    const fileList = document.getElementById('file-list'); 
+    const fileList = document.getElementById('file-list');
 
     fileInput.addEventListener('change', function () {
         const file = fileInput.files[0];
@@ -131,7 +138,7 @@ Course Create - Lesson Text Content Add
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li> 
+                    <li><a class="dropdown-item remove-file-button" href="javascript:void(0)">Remove file</a></li>
                 </ul>
             </div>
         `;
