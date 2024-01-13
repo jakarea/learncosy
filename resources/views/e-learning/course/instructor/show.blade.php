@@ -77,7 +77,14 @@
                             <h3>About Course</h3>
                             <div class="course-desc-txt">
                                 {!! $course->description !!}
+
                             </div>
+
+                        </div>
+                        <div class="files mt-3">
+                            <a  href="{{ route('instructor.file.download', ['course_id' => $course->id, 'subdomain' => config('app.subdomain')]) }}">
+                                Download All Course Material
+                            </a>
                         </div>
 
                         {{-- <div class="download-files-box d-none">
@@ -344,7 +351,10 @@
 
 
     <script>
+        document.querySelector('#hideShow').classList.add('d-none');
+
         $(document).on("click", ".video_list_play", function(e) {
+            // e.preventDefault();
             var lessonId = $(this).closest('.video_list_play').data('lesson-id');
             $(".downloadFile").attr("data-lesson-id-file", lessonId);
 
@@ -419,7 +429,6 @@
 
 
     <script>
-        document.querySelector('#hideShow').classList.add('d-none');
 
         $(document).ready(function() {
             let currentURL = window.location.href;

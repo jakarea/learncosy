@@ -71,7 +71,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
         Route::get('/instructor/courses/overview/{slug}', [CourseController::class,'overview'])->name('instructor.course.overview');
         Route::get('/instructor/courses-log', [CourseController::class, 'storeCourseLog'])->name('instructor.log.courses');
         Route::get('/instructor/courses/overview/{slug}/preview', [CourseController::class,'preview'])->name('instructor.course.overview.preview');
-        Route::get('/instructor/courses/file-download/{course_id}/{extension}', [CourseController::class,'fileDownload'])->name('instructor.file.download');
+        Route::get('/instructor/courses/file-download/{course_id}', [CourseController::class,'fileDownload'])->name('instructor.file.download');
 
         Route::post('/instructor/courses/file-download', [CourseController::class,'fileDownloads'])->name('instructor.files.download');
         Route::get('/instructor/courses/{id}', [CourseController::class,'show'])->name('course.show')->where('id', '[0-9]+');

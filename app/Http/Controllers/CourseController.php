@@ -284,54 +284,51 @@ class CourseController extends Controller
     }
 
 
-    // public function fileDownload($subdomain, $course_id, $file_extension)
-    // {
+    public function fileDownload($subdomain, $course_id)
+    {
+        $lesson_files = Lesson::where('course_id', $course_id)->select('lesson_file as file')->get();
+        $files = [];
+        $file_extension = 'zip';
 
-    //     $lesson_files = Lesson::where('course_id', $course_id)->select('lesson_file as file')->get();
-    //     foreach ($lesson_files as $lesson_file) {
-    //         if (!empty($lesson_file->file)) {
-    //             $file_name = $lesson_file->file;
-    //             $file_arr = explode('.', $file_name);
-    //             $extension = $file_arr['1'];
-    //             if ($file_extension == $extension) {
-    //                 $files[] = public_path($file_name);
-    //             }
-    //         }
-    //     }
+        foreach ($lesson_files as $lesson_file) {
+            if (!empty($lesson_file->file)) {
+                $file_name = public_path($lesson_file->file);
+                if (file_exists($file_name)) {
+                    $files[] = $file_name;
+                }
+            }
+        }
 
-    //     $zip = new ZipArchive;
-    //     $zipFileName = $file_extension . '_' . time() . '.zip';
-    //     $is_have_file = '';
-    //     if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-    //         foreach ($files as $file) {
-    //             if (file_exists($file)) {
-    //                 $zip->addFile($file, basename($file));
-    //             } else {
-    //                 $is_have_file = 'There are no files in your storage!!!!';
-    //                 break;
-    //             }
-    //         }
-    //         if (!empty($is_have_file)) {
-    //             return redirect('admin/courses')->with('error', $is_have_file);
-    //         }
-    //         $zip->close();
+        $zip = new ZipArchive;
+        $zipFileName = $file_extension . '_' . time() . '.zip';
+        $is_have_file = '';
 
-    //         // Set appropriate headers for the download
-    //         header('Content-Type: application/zip');
-    //         header("Content-Disposition: attachment; filename=" . $zipFileName);
-    //         header('Content-Length: ' . filesize($zipFileName));
-    //         header("Pragma: no-cache");
-    //         header("Expires: 0");
-    //         readfile($zipFileName);
+        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+            foreach ($files as $file) {
+                $zip->addFile($file, basename($file));
+            }
 
-    //         // Delete the zip file after download
-    //         unlink($zipFileName);
-    //         exit;
-    //     } else {
-    //         // Handle the case when the zip file could not be created
-    //         echo 'Failed to create the zip file.';
-    //     }
-    // }
+            $zip->close();
+
+            // Set appropriate headers for the download
+            header('Content-Type: application/zip');
+            header("Content-Disposition: attachment; filename=" . $zipFileName);
+            header('Content-Length: ' . filesize($zipFileName));
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            // Read and output the file content
+            readfile($zipFileName);
+
+            // Delete the zip file after download
+            unlink($zipFileName);
+            exit;
+        } else {
+            // Handle the case when the zip file could not be created
+            echo 'Failed to create the zip file.';
+        }
+    }
+
 
 
 

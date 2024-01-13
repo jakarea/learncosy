@@ -98,6 +98,13 @@
                         </div>
                     </div>
 
+                    <div class="files mt-3">
+                        <a  href="{{ route('file.download', ['course_id' => $course->id, 'subdomain' => config('app.subdomain')]) }}">
+                            Download All Course Material
+                        </a>
+                    </div>
+
+
                     {{-- <div class="download-files-box">
                         <h4>Download Files </h4>
 
@@ -541,7 +548,7 @@
                     player.loadVideo(lastVideoUrl);
                 }
             }else if(crntLesson == 'audio'){
-                $('#aboutCourse').html('Lesson Content');
+                $('#aboutCourse').html('Lesson Description');
 
                 $('#lessonShortDesc').html(crntLessonShort);
 
@@ -557,7 +564,7 @@
                     audioPlayer.play();
                 }
             }else if(crntLesson == 'text'){
-                $('#aboutCourse').html('Lesson Content');
+                $('#aboutCourse').html('Lesson Description');
                 $('#lessonShortDesc').html(crntLessonShort);
 
                 if (playUrl !== null) {

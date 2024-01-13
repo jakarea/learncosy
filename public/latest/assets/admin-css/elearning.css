@@ -257,7 +257,7 @@ span.finsihLesson {
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.download-files-box .files a {
+.download-files-box .files a , .files a {
   border-radius: 0.375rem;
   border: 1px solid #DCE0F2;
   background: #EAEDFF;

@@ -383,36 +383,31 @@ class StudentHomeController extends Controller
         }
     }
 
-    public function fileDownload($domain, $course_id, $file_extension)
+    public function fileDownload($domain, $course_id)
     {
 
         $lesson_files = Lesson::where('course_id', $course_id)->select('lesson_file as file')->get();
+        $files = [];
+        $file_extension = 'zip';
+
         foreach ($lesson_files as $lesson_file) {
             if (!empty($lesson_file->file)) {
-                $file_name = $lesson_file->file;
-                $file_arr = explode('.', $file_name);
-                $extension = $file_arr['1'];
-                if ($file_extension == $extension) {
-                    $files[] = public_path($file_name);
+                $file_name = public_path($lesson_file->file);
+                if (file_exists($file_name)) {
+                    $files[] = $file_name;
                 }
             }
         }
+
         $zip = new ZipArchive;
         $zipFileName = $file_extension . '_' . time() . '.zip';
         $is_have_file = '';
+
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             foreach ($files as $file) {
+                $zip->addFile($file, basename($file));
+            }
 
-                if (file_exists($file)) {
-                    $zip->addFile($file, basename($file));
-                } else {
-                    $is_have_file = 'There are no files in your storage!!!!';
-                    break;
-                }
-            }
-            if (!empty($is_have_file)) {
-                return redirect('students/courses')->with('error', $is_have_file);
-            }
             $zip->close();
 
             // Set appropriate headers for the download
@@ -421,6 +416,8 @@ class StudentHomeController extends Controller
             header('Content-Length: ' . filesize($zipFileName));
             header("Pragma: no-cache");
             header("Expires: 0");
+
+            // Read and output the file content
             readfile($zipFileName);
 
             // Delete the zip file after download
