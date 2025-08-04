@@ -196,7 +196,6 @@ Route::fallback(function () {
 
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
-Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 // custom login for student and instructor
 Route::get('/login', function () {
 
@@ -240,6 +239,8 @@ Route::get('/login', function () {
     }
 
 })->middleware('guest')->name('login');
+
+Route::domain('{subdomain?}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 });
 
 
