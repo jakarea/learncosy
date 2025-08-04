@@ -79,7 +79,6 @@ class InstructorController extends Controller
        // add instructor
        $instructor = new User([
            'name' => $request->name,
-           'subdomain' => $request->subdomain,
            'user_role' => 'instructor',
            'email' => $request->email,
            'phone' => $request->phone,
@@ -166,9 +165,6 @@ class InstructorController extends Controller
 
         $user = User::where('id', $userId)->first();
         $user->name = $request->name;
-        if (!$user->subdomain && $request->subdomain) {
-           $user->subdomain =  Str::slug($request->subdomain);
-        }
         if ($request->user_role) {
            $user->user_role =  $user->user_role;
         }

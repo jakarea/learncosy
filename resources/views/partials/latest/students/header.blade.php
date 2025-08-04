@@ -17,22 +17,7 @@
                 <ul class="navbar-nav m-auto">
                     {{-- check permission --}}
                     @php
-                        $host = request()->getHost();
-                        $subdomain = explode('.', $host)[0];
-                        $instructor = \App\Models\User::where('subdomain', $subdomain)
-                            ->where('user_role', 'instructor')
-                            ->first();
-
                         $userPermissions = json_decode('{"dashboard":1,"homePage":1,"messagePage":1,"certificatePage":1}');
-
-                        if ($instructor) {
-                            $pageAccess = \App\Models\ManagePage::where('instructor_id', $instructor->id)->first();
-
-                            if ($pageAccess) {
-                                $userPermissions = json_decode($pageAccess->pagePermissions);
-                            }
-                        }
-
                     @endphp
                     {{-- check permission --}}
                     @if ($userPermissions->dashboard == 1)
@@ -76,7 +61,7 @@
                 <a href="{{ url('student/home') }}" class="bttn">
                     <img src="{{ asset('latest/assets/images/icons/search.svg') }}" alt="S" class="img-fluid">
                 </a>
-                <a href="{{ route('cart.index', config('app.subdomain')) }}"
+                <a href="{{ route('cart.index') }}"
                     class="bttn {{ Request::is('student/cart*') ? ' active' : '' }}">
 
                     <img src="{{ asset('latest/assets/images/icons/cart-icon.svg') }}" alt="Cart"

@@ -409,7 +409,7 @@ class DashboardController extends Controller
     }
 
     // instructor notification delete
-    public function notifyRemove($domain, $id)
+    public function notifyRemove($id)
     {
         $notify = Notification::find($id);
         $notify->delete();
@@ -516,64 +516,7 @@ class DashboardController extends Controller
         return $course_wise_payments;
     }
 
-    public function subdomain()
-    {
-        return view('latest-auth.subdomain');
-    }
-
-    public function checkSubdomain(Request $request,$subdomain,$user_id)
-    {
-
-        $request->validate([
-            'subdomain' => 'required|string|max:32|regex:/^[a-zA-Z0-9]+$/u',
-        ]);
-
-        $proposedUsername = $request->subdomain;
-
-        $existingUser = User::where('subdomain', $proposedUsername)->where('id','!=',$user_id)->first();
-
-        if ($existingUser) {
-            $suggestedUsernames = [];
-            $count = rand(10, 99);
-
-            while (count($suggestedUsernames) < 2) {
-                $suggestedUsername = $proposedUsername . $count;
-                if (!User::where('subdomain', $suggestedUsername)->exists()) {
-                    $suggestedUsernames[] = $suggestedUsername;
-                }
-                $count++;
-            }
-            session(['suggestedUsernames' => $suggestedUsernames]);
-
-            return redirect()->back();
-
-        } else {
-            $user = User::find($user_id);
-            $oldSubdomain = $user->subdomain;
-            $user->subdomain = $request->subdomain;
-            $user->save();
-
-            if (session('suggestedUsernames')) {
-                session()->forget('suggestedUsernames');
-            }
-
-            $request = Request::capture();
-            $host = $request->getHost();
-            $sub_domain = explode('.', $host)[0];
-
-
-            if (($sub_domain == 'app' && $user->user_role == 'instructor') || ($sub_domain == $oldSubdomain && $user->user_role == 'instructor')) {
-                $sessionId = session()->getId();
-                $user->session_id = $sessionId;
-                $user->save();
-
-                return redirect()->to('//' . $user->subdomain . '.' . env('APP_DOMAIN') . '/login?singnature=' . $sessionId . '&preferenceMode=' . $request->preferenceMode. '&step=4')->with('success','Subdomain set Successfully!');
-            }
-
-            return redirect('instructor/profile/step-4/complete')->with('success','Subdomain set Successfully!');
-        }
-
-    }
+    
 
     public function manageAccess(){
 

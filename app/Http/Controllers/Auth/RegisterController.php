@@ -67,30 +67,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $subdomain = explode('.', request()->getHost())[0];
-        if ($subdomain == 'app') {
-            return view('custom-auth/register/register');
-        }
-        $instrcutor = User::where('subdomain', $subdomain)->firstOrFail();
-        $instrcutorModuleSettings = InstructorModuleSetting::where('instructor_id', $instrcutor->id)->firstOrFail();
-        $value = '{"primary_color":"","secondary_color":"","lp_layout":"","meta_title":"","meta_desc":""}';
-        $registerPageStyle = json_decode($instrcutorModuleSettings->value ?$instrcutorModuleSettings->value :$value);
-
-        if ($registerPageStyle) {
-            if ($registerPageStyle->lp_layout == 'fullwidth') {
-                return view('custom-auth/register/register2');
-            } elseif ($registerPageStyle->lp_layout == 'default') {
-                return view('custom-auth/register/register');
-            } elseif ($registerPageStyle->lp_layout == 'leftsidebar') {
-                return view('custom-auth/register/register3');
-            } elseif ($registerPageStyle->lp_layout == 'rightsidebar') {
-                return view('custom-auth/register/register4');
-            } else {
-                return view('custom-auth/register/register');
-            }
-        } else {
-            return view('custom-auth/register/register');
-        }
+         return view('custom-auth/register/register');
     }
 
     /**
@@ -102,24 +79,12 @@ class RegisterController extends Controller
     
     protected function create(array $data)
     {
-
-        $serverName = $_SERVER['SERVER_NAME'];
-        $subdomain = explode('.', $serverName);
-
-        if (count($subdomain) > 1) {
-            $subdomain = $subdomain[0];
-        }
-
-        // return $data;
         $email_verified_at = null;
 
         if ($data['user_role'] == 'student') {
             $email_verified_at = now()->format('Y-m-d H:i:s');
         }
 
-        if( $data['user_role'] == 'instructor'){
-            $subdomain = null;
-        }
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -127,7 +92,6 @@ class RegisterController extends Controller
             'company_name' => isset( $data['company_name']) ? $data['company_name'] : "",
             'user_role' => $data['user_role'],
             'password' => Hash::make($data['password']),
-            'subdomain' =>  $subdomain
         ]);
         return $user;
     }

@@ -51,7 +51,7 @@ Route::get('/courses/{slug}', [HomepageController::class, 'homeInstructorCourseD
 
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
-Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
+Route::middleware(['web', 'auth', 'verified', 'role:instructor'])->group(function () {
 
 
     Route::group(['middleware' => ['subscription.check']], function () {
@@ -301,15 +301,7 @@ Route::domain('{subdomain}.' . $domain)->middleware(['web', 'auth', 'verified', 
 });
 
 
-// SubscriptionPaymentController
 
-Route::domain('{subdomain}.' . $domain)->group(function () {
-    Route::get('instructor/subscription', [SubscriptionPaymentController::class, 'index'])->name('instructor.subscription');
-    Route::get('instructor/subscription/create-payment/{id}', [SubscriptionPaymentController::class, 'createPayment'])->name('instructor.subscription.create.payment');
-    Route::post('instructor/subscription/payment', [SubscriptionPaymentController::class, 'payment'])->name('instructor.subscription.payment');
-    Route::get('instructor/subscription/cancel', [SubscriptionPaymentController::class, 'cancel'])->name('instructor.subscription.cancel');
-    Route::get('instructor/subscription/status/{id}', [SubscriptionPaymentController::class, 'status'])->name('instructor.subscription.status');
-});
 
 
 // SubscriptionController

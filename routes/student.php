@@ -31,7 +31,7 @@ Route::post('student/notification-details/destroy/{id}', [NotificationController
 $domain = env('APP_DOMAIN', 'learncosy.com');
 
 
-Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->group(function () {
+Route::middleware(['auth', 'role:student'])->group(function () {
 
     Route::get('student/dashboard', [StudentHomeController::class, 'dashboard'])->name('students.dashboard')->middleware('page.access');
     Route::get('student/dashboard/enrolled', [StudentHomeController::class,'enrolled'])->name('students.dashboard.enrolled');
@@ -77,26 +77,16 @@ Route::domain('{subdomain}.' . $domain)->middleware(['auth', 'role:student'])->g
     Route::get('student/profile/change-password', [StudentProfileController::class, 'passwordUpdate']);
     Route::post('student/profile/change-password', [StudentProfileController::class, 'postChangePassword'])->name('students.password.update');
 
-});
+    Route::get('student/cart', [CartController::class, 'index'])->name('cart.index');
 
-
-
-Route::domain('{subdomain}.' . $domain)->group(function () {
-    Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
-        Route::get('student/cart', [CartController::class, 'index'])->name('cart.index');
-
-        // Route::post('student/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
-        Route::post('student/cart/add/{course}', [CartController::class, 'add'])->name('cart.add');
-        Route::post('student/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-    });
-
-
-
-    Route::post('student/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
-
-
-    Route::post('student/cart/added/{course}', [CartController::class, 'addToCartSkippLogin'])->name('cart.added');
-    Route::post('student/cart/bundle/{bundlecourse}', [CartController::class, 'addToCartBundlekippLogin'])->name('cart.added.bundle');
+    // Route::post('student/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
+    Route::post('student/cart/add/{course}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('student/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
 });
+
+Route::post('student/cart/buycourse/{id}', [CartController::class, 'buyCourse'])->name('buy.course');
+Route::post('student/cart/added/{course}', [CartController::class, 'addToCartSkippLogin'])->name('cart.added');
+Route::post('student/cart/bundle/{bundlecourse}', [CartController::class, 'addToCartBundlekippLogin'])->name('cart.added.bundle');
+
 

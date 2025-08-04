@@ -2,14 +2,14 @@
     <div class="container">
         @if ( Auth::check() )
             @can('student')
-            <a class="navbar-brand" href="{{ route('students.dashboard', config('app.subdomain') )}}">
+            <a class="navbar-brand" href="{{ route('students.dashboard')}}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
                 @else
                     <img src="{{asset('latest/assets/images/black-logo.png')}}" alt="Logo" class="-img-fluid">
                 @endif
             @else
-            <a class="navbar-brand" href="{{ route('instructor.dashboard.index', config('app.subdomain')) }}">
+            <a class="navbar-brand" href="{{ route('instructor.dashboard.index') }}">
                 @if ( modulesetting('logo') )
                     <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
                 @else
@@ -19,7 +19,7 @@
             @endcan
         </a>
         @else
-        <a class="navbar-brand" href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">
+        <a class="navbar-brand" href="{{ route('login') }}">
             @if ( modulesetting('logo') )
                 <img src="{{asset(modulesetting('logo'))}}" alt="Logo" class="img-fluid">
             @else
@@ -53,8 +53,8 @@
                 </div>
             @else
                 <div class="d-flex" >
-                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login', ['subdomain' => config('app.subdomain')]) }}">Login</a>
-                    {{-- <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister', ['subdomain' => config('app.subdomain')]) }}">Register</a> --}}
+                    <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('login') }}">Login</a>
+                    {{-- <a style="color: {{modulesetting('secondary_color')}}" href="{{ route('tregister') }}">Register</a> --}}
                 </div>
             @endif
         </div>

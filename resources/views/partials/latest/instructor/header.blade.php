@@ -93,7 +93,6 @@
                         <li><a class="dropdown-item {{ Request::is('instructor/subscription*') ? ' active' : '' }}" href="{{ url('/instructor/subscription') }}">Subscription Plan</a></li>
                         <li><a class="dropdown-item {{ Request::routeIs('module.setting.dns') ? 'active' : '' }}" href="{{ url('/instructor/theme/setting/dns') }}">Theme Setting</a></li>
                         <li><a class="dropdown-item  {{ Request::is('instructor/manage-access*') ? ' active' : '' }}" href="{{ url('/instructor/manage-access') }}">Manage Pages</a></li>
-                        <li><a class="dropdown-item {{ Request::routeIs('module.setting.dns', ['instructor' => 'value', 'tab' => 'dns']) ? 'active' : '' }}" href="{{ route('module.setting.dns', ['subdomain' => config('app.subdomain') ,'instructor' => 'value', 'tab' => 'dns']) }}">DNS</a></li>
                         <li> <a class="dropdown-item" href="{{ url('logout') }}"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
