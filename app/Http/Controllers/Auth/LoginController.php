@@ -52,12 +52,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        // set dark mode after user change domain
-        if(isset(request()->preferenceMode)){
-            session(['preferenceMode' => request()->preferenceMode]);
-        }
-
-        return view('auth/login');
+        return view('auth.login');
     }
 
     public function login(Request $request)

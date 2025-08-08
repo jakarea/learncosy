@@ -299,55 +299,7 @@ if (!function_exists('totalAmountPaidByStudent')) {
     }
 }
 
-/*
-* Helper function to get the instructor's module setting value by key.
-*/
-if (!function_exists('modulesetting')) {
-    /**
-     * Get the module setting value by key.
-     *
-     * @param string $key
-     * @return mixed|null
-     */
-    function modulesetting($key)
-    {
-        $request = app('request');
-        $subdomain = $request->getHost(); // Get the host (e.g., "teacher1.learncosy.local")
-        $segments = explode('.', $subdomain); // Split the host into segments
-        $sub_domain = $segments[0]; // Get the first segment as the subdomain
 
-        if ($sub_domain) {
-            $instructor = User::where('subdomain', $sub_domain)->where('user_role','instructor')->first();
-
-            if (!$instructor) {
-                return redirect($sub_domain . '/dashboard');
-            }
-
-            $setting = \App\Models\InstructorModuleSetting::where('instructor_id', $instructor->id)->first();
-
-            if ($setting) {
-                $setting->value = json_decode($setting->value);
-
-                if ($key == 'logo') {
-                    return $setting->logo ?? null;
-                } elseif ($key == 'image') {
-                    return $setting->image ?? null;
-                } elseif ($key == 'lp_bg_image') {
-                    return $setting->lp_bg_image ?? null;
-                } elseif ($key == 'favicon') {
-                    return $setting->favicon ?? null;
-                } else {
-                    return $setting->value->$key ?? null;
-                }
-            }
-        } elseif (Auth::check() && Auth::user()->user_role == 'admin') {
-            return null;
-        }
-
-        return null;
-    }
-
-}
 
 
 /**
